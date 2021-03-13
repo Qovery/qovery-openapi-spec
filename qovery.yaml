@@ -7,7 +7,7 @@ servers:
 paths:
   /organization:
     get:
-      summary: 'List current user organizations quwyruoaaawdad toto tata xxx ttt'
+      summary: 'Returns a list of organizations'
       operationId: listOrganization
       tags:
         - organization
@@ -17,36 +17,64 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Organization'
+                $ref: '#/components/schemas/OrganizationResponseList'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
         default:
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/UnexpectedError'
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
-    Organization:
+    BaseResponse:
       type: object
       required:
         - id
-        - name
+        - created_at
       properties:
         id:
-          type: integer
-          format: int64
-        name:
           type: string
+          readOnly: true
         created_at:
           type: string
-    Error:
+          readOnly: true
+          format: date-time
+    OrganizationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+            updated_at:
+              type: string
+              nullable: true
+              format: date-time
+    OrganizationResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationResponse'
+    UnexpectedError:
       type: object
       required:
-        - code
         - message
       properties:
-        code:
-          type: integer
-          format: int32
         message:
           type: string
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+security:
+  - bearerAuth: [ ]
