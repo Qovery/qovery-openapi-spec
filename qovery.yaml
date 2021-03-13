@@ -29,7 +29,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrganizationRequest'
+              $ref: '#'
       responses:
         '200':
           description: 'Create organization'
@@ -48,22 +48,24 @@ components:
   schemas:
     BaseResponse:
       type: object
+      required:
+        - id
+        - created_at
       properties:
         id:
           type: string
           readOnly: true
-          required: true
         created_at:
           type: string
-          format: date-time
           readOnly: true
-          required: true
+          format: date-time
     OrganizationRequest:
       type: object
+      required:
+        - name
       properties:
         name:
           type: string
-          required: true
         website_url:
           type: string
           nullable: true
@@ -71,10 +73,11 @@ components:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
+          required:
+            - name
           properties:
             name:
               type: string
-              required: true
             updated_at:
               type: string
               nullable: true
@@ -88,10 +91,11 @@ components:
             $ref: '#/components/schemas/OrganizationResponse'
     UnexpectedError:
       type: object
+      required:
+        - message
       properties:
         message:
           type: string
-          required: true
   responses:
     401:
       description: Access token is missing or invalid
