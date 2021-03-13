@@ -7,7 +7,7 @@ servers:
 paths:
   /organization:
     get:
-      summary: 'List current user organizations quwyruoaaawdad toto'
+      summary: 'List current user organizations quwyruoaaawdad toto tata'
       operationId: listOrganization
       tags:
         - organization
