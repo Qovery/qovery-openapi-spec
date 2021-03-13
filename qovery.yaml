@@ -44,7 +44,15 @@ paths:
   /organization/{organizationId}:
     put:
       summary: 'Edit an organization'
+      description: 'To edit an organization you must have the admin permission'
       operationId: editOrganization
+      parameters:
+        - name: organizationId
+          in: path
+          description: Organization ID
+          required: true
+          schema:
+            type: string
       tags:
         - organization
       requestBody:
@@ -59,6 +67,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrganizationResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Organization name is already taken
+    delete:
+      summary: 'Delete an organization'
+      description: 'To delete an organization you must have the admin permission'
+      operationId: deleteOrganization
+      parameters:
+        - name: organizationId
+          in: path
+          description: Organization ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - organization
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -110,6 +142,9 @@ components:
               type: string
               nullable: true
               format: date-time
+            logo_url:
+              type: string
+              format: uri
     OrganizationResponseList:
       type: object
       properties:
@@ -125,6 +160,8 @@ components:
         message:
           type: string
   responses:
+    204-deletion:
+      description: The resource was deleted successfully
     401:
       description: Access token is missing or invalid
     403:
