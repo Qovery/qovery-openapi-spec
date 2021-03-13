@@ -39,6 +39,8 @@ paths:
                 $ref: '#/components/schemas/OrganizationResponse'
         '401':
           $ref: '#/components/responses/401'
+        '409':
+          description: Organization name is already taken
   /organization/{organizationId}:
     put:
       summary: 'Edit an organization'
@@ -63,6 +65,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: Organization name is already taken
 components:
   securitySchemes:
     bearerAuth:
@@ -127,5 +131,7 @@ components:
       description: Access forbidden
     404:
       description: Resource not found
+    409:
+      description: Conflict
 security:
   - bearerAuth: [ ]
