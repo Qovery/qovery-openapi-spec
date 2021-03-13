@@ -29,7 +29,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#'
+              $ref: '#/components/schemas/OrganizationRequest'
       responses:
         '200':
           description: 'Create organization'
@@ -39,6 +39,30 @@ paths:
                 $ref: '#/components/schemas/OrganizationResponse'
         '401':
           $ref: '#/components/responses/401'
+  /organization/{organizationId}:
+    put:
+      summary: 'Edit an organization'
+      operationId: editOrganization
+      tags:
+        - organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationRequest'
+      responses:
+        '200':
+          description: 'Edit an organization'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   securitySchemes:
     bearerAuth:
@@ -99,5 +123,9 @@ components:
   responses:
     401:
       description: Access token is missing or invalid
+    403:
+      description: Access forbidden
+    404:
+      description: Resource not found
 security:
   - bearerAuth: [ ]
