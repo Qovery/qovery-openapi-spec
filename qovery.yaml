@@ -78,6 +78,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - organization
       requestBody:
@@ -111,6 +112,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - organization
       responses:
@@ -133,6 +135,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - project
       responses:
@@ -154,6 +157,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - project
       requestBody:
@@ -183,6 +187,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - project
       responses:
@@ -209,6 +214,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - project
       requestBody:
@@ -242,6 +248,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - project
       responses:
@@ -264,6 +271,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - environment
       responses:
@@ -285,6 +293,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - environment
       requestBody:
@@ -314,6 +323,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - environment
       responses:
@@ -340,6 +350,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - environment
       requestBody:
@@ -373,6 +384,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - environment
       responses:
@@ -395,6 +407,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - application
       responses:
@@ -416,6 +429,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - application
       requestBody:
@@ -445,6 +459,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - application
       responses:
@@ -471,6 +486,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - application
       requestBody:
@@ -504,6 +520,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - application
       responses:
@@ -526,6 +543,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - database
       responses:
@@ -547,6 +565,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - database
       requestBody:
@@ -576,6 +595,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - database
       responses:
@@ -602,6 +622,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - database
       requestBody:
@@ -635,6 +656,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       tags:
         - database
       responses:
