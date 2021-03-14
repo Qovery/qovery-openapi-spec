@@ -122,8 +122,137 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /organization/{organizationId}/project:
+    get:
+      summary: 'List organization projects'
+      operationId: listProject
+      parameters:
+        - name: organizationId
+          in: path
+          description: Organization ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - organization
+      responses:
+        '200':
+          description: 'List projects'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      summary: 'Create a project within an organization'
+      operationId: createProject
+      parameters:
+        - name: organizationId
+          in: path
+          description: Organization ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+      responses:
+        '200':
+          description: 'Create project'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '401':
+          $ref: '#/components/responses/401'
         '409':
-          description: Organization name is already taken
+          description: Project name is already taken
+  /project/{projectId}:
+    get:
+      summary: 'Get project by ID'
+      operationId: getProject
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - project
+      responses:
+        '200':
+          description: 'Get project by ID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: 'Edit an project'
+      description: 'To edit an project you must have the admin permission'
+      operationId: editProject
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+      responses:
+        '200':
+          description: 'Edit an project'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Project name is already taken
+    delete:
+      summary: 'Delete a project'
+      description: 'To delete a project you must have the admin permission'
+      operationId: deleteProject
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - project
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   securitySchemes:
     bearerAuth:
@@ -169,6 +298,9 @@ components:
               type: string
               nullable: true
               format: date-time
+            website_url:
+              type: string
+              nullable: true
             logo_url:
               type: string
               format: uri
@@ -179,6 +311,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrganizationResponse'
+    ProjectRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: name is case insensitive
+    ProjectResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+            updated_at:
+              type: string
+              nullable: true
+              format: date-time
+    ProjectResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectResponse'
     UnexpectedError:
       type: object
       required:
