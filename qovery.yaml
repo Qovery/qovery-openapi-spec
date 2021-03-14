@@ -126,6 +126,7 @@ components:
       properties:
         name:
           type: string
+          description: name is case insensitive
         website_url:
           type: string
           nullable: true
