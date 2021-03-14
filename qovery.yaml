@@ -42,6 +42,24 @@ paths:
         '409':
           description: Organization name is already taken
   /organization/{organizationId}:
+    get:
+      summary: 'Get organization by ID'
+      operationId: getOrganization
+      tags:
+        - organization
+      responses:
+        '200':
+          description: 'Get organization by ID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     put:
       summary: 'Edit an organization'
       description: 'To edit an organization you must have the admin permission'
