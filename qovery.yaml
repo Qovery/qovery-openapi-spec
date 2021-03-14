@@ -124,7 +124,7 @@ paths:
           $ref: '#/components/responses/404'
   /organization/{organizationId}/project:
     get:
-      summary: 'List organization projects'
+      summary: 'List projects'
       operationId: listProject
       parameters:
         - name: organizationId
@@ -134,7 +134,7 @@ paths:
           schema:
             type: string
       tags:
-        - organization
+        - project
       responses:
         '200':
           description: 'List projects'
@@ -155,7 +155,7 @@ paths:
           schema:
             type: string
       tags:
-        - organization
+        - project
       requestBody:
         content:
           application/json:
@@ -199,8 +199,8 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     put:
-      summary: 'Edit an project'
-      description: 'To edit an project you must have the admin permission'
+      summary: 'Edit a project'
+      description: 'To edit a project you must have the admin permission'
       operationId: editProject
       parameters:
         - name: projectId
@@ -218,7 +218,7 @@ paths:
               $ref: '#/components/schemas/ProjectRequest'
       responses:
         '200':
-          description: 'Edit an project'
+          description: 'Edit a project'
           content:
             application/json:
               schema:
@@ -244,6 +244,137 @@ paths:
             type: string
       tags:
         - project
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /project/{projectId}/environment:
+    get:
+      summary: 'List environments'
+      operationId: listEnvironment
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - environment
+      responses:
+        '200':
+          description: 'List environments'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      summary: 'Create an environment'
+      operationId: createEnvironment
+      parameters:
+        - name: projectId
+          in: path
+          description: Project ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentRequest'
+      responses:
+        '200':
+          description: 'Create environment'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Environment name is already taken
+  /environment/{environmentId}:
+    get:
+      summary: 'Get environment by ID'
+      operationId: getEnvironment
+      parameters:
+        - name: environmentId
+          in: path
+          description: Environment ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - environment
+      responses:
+        '200':
+          description: 'Get environment by ID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: 'Edit an environment'
+      description: 'To edit an environment you must have the admin permission'
+      operationId: editEnvironment
+      parameters:
+        - name: environmentId
+          in: path
+          description: Environment ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentRequest'
+      responses:
+        '200':
+          description: 'Edit an environment'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Environment name is already taken
+    delete:
+      summary: 'Delete an environment'
+      description: 'To delete an environment you must have the admin permission'
+      operationId: deleteEnvironment
+      parameters:
+        - name: environmentId
+          in: path
+          description: Environment ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - environment
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -339,6 +470,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProjectResponse'
+    EnvironmentRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: name is case insensitive
+    EnvironmentResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+            updated_at:
+              type: string
+              nullable: true
+              format: date-time
+    EnvironmentResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentResponse'
     UnexpectedError:
       type: object
       required:
