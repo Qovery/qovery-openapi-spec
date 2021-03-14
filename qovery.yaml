@@ -45,6 +45,13 @@ paths:
     get:
       summary: 'Get organization by ID'
       operationId: getOrganization
+      parameters:
+        - name: organizationId
+          in: path
+          description: Organization ID
+          required: true
+          schema:
+            type: string
       tags:
         - organization
       responses:
