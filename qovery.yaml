@@ -384,6 +384,268 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /environment/{environmentId}/application:
+    get:
+      summary: 'List applications'
+      operationId: listApplication
+      parameters:
+        - name: environmentId
+          in: path
+          description: Environment ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - application
+      responses:
+        '200':
+          description: 'List applications'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      summary: 'Create an application'
+      operationId: createApplication
+      parameters:
+        - name: environmentId
+          in: path
+          description: Environment ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationRequest'
+      responses:
+        '200':
+          description: 'Create application'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Application name is already taken
+  /application/{applicationId}:
+    get:
+      summary: 'Get application by ID'
+      operationId: getApplication
+      parameters:
+        - name: applicationId
+          in: path
+          description: Application ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - application
+      responses:
+        '200':
+          description: 'Get application by ID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: 'Edit an application'
+      description: 'To edit an application you must have the admin permission'
+      operationId: editApplication
+      parameters:
+        - name: applicationId
+          in: path
+          description: Application ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationRequest'
+      responses:
+        '200':
+          description: 'Edit an application'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Application name is already taken
+    delete:
+      summary: 'Delete an application'
+      description: 'To delete an application you must have the admin permission'
+      operationId: deleteApplication
+      parameters:
+        - name: applicationId
+          in: path
+          description: Application ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - application
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /environment/{environmentId}/database:
+    get:
+      summary: 'List databases'
+      operationId: listDatabase
+      parameters:
+        - name: environmentId
+          in: path
+          description: Environment ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - database
+      responses:
+        '200':
+          description: 'List databases'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      summary: 'Create a database'
+      operationId: createDatabase
+      parameters:
+        - name: environmentId
+          in: path
+          description: Environment ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatabaseRequest'
+      responses:
+        '200':
+          description: 'Create database'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Database name is already taken
+  /database/{databaseId}:
+    get:
+      summary: 'Get database by ID'
+      operationId: getDatabase
+      parameters:
+        - name: databaseId
+          in: path
+          description: Database ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - database
+      responses:
+        '200':
+          description: 'Get database by ID'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: 'Edit a database'
+      description: 'To edit a database you must have the admin permission'
+      operationId: editDatabase
+      parameters:
+        - name: databaseId
+          in: path
+          description: Database ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatabaseRequest'
+      responses:
+        '200':
+          description: 'Edit an application'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Database name is already taken
+    delete:
+      summary: 'Delete a database'
+      description: 'To delete a database you must have the admin permission'
+      operationId: deleteDatabase
+      parameters:
+        - name: databaseId
+          in: path
+          description: Database ID
+          required: true
+          schema:
+            type: string
+      tags:
+        - database
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   securitySchemes:
     bearerAuth:
@@ -498,6 +760,62 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentResponse'
+    ApplicationRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: name is case insensitive
+    ApplicationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+            updated_at:
+              type: string
+              nullable: true
+              format: date-time
+    ApplicationResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationResponse'
+    DatabaseRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: name is case insensitive
+    DatabaseResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+            updated_at:
+              type: string
+              nullable: true
+              format: date-time
+    DatabaseResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatabaseResponse'
     UnexpectedError:
       type: object
       required:
