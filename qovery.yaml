@@ -145,7 +145,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
     post:
-      summary: 'Create a project within an organization'
+      summary: 'Create a project'
       operationId: createProject
       parameters:
         - name: organizationId
