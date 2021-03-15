@@ -532,6 +532,52 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /application/{applicationId}/contributor:
+    get:
+      summary: 'List contributors'
+      operationId: listApplicationContributor
+      parameters:
+        - name: applicationId
+          in: path
+          description: Application ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - application
+      responses:
+        '200':
+          description: 'List application contributors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  /application/{applicationId}/tag:
+    get:
+      summary: 'List tags'
+      operationId: listApplicationTag
+      parameters:
+        - name: applicationId
+          in: path
+          description: Application ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - application
+      responses:
+        '200':
+          description: 'List application tags'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagResponseList'
+        '401':
+          $ref: '#/components/responses/401'
   /environment/{environmentId}/database:
     get:
       summary: 'List databases'
@@ -786,10 +832,44 @@ components:
       type: object
       required:
         - name
+        - git_repository_url
+        - git_commit_id
       properties:
         name:
           type: string
           description: name is case insensitive
+        description:
+          type: string
+        build_mode:
+          type: string
+          enum:
+            - DOCKER
+            - BUILDPACKS
+          description: |
+            `DOCKER` required `dockerfile_path`
+            `BUILDPACKS` does not required any `dockerfile_path`
+        dockerfile_path:
+          type: string
+          description: The path of the associated Dockerfile
+        git_repository_url:
+          type: string
+          description: application git repository URL
+        git_repository_branch:
+          type: string
+          description: |
+            Name of the branch to use. This is optional
+            If not specified, then the branch used is the `main` or `master` one
+        git_commit_id:
+          type: string
+          description: Current Git commit ID
+        tags:
+          type: array
+          items:
+            type: string
+            example:
+              - nodejs
+              - toto
+              - tata
     ApplicationResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
@@ -810,6 +890,41 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationResponse'
+    UserResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+            profile_picture_url:
+              type: string
+              format: uri
+    UserResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
+    TagResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+    TagResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagResponse'
     DatabaseRequest:
       type: object
       required:
