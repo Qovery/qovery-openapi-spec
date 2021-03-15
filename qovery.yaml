@@ -175,7 +175,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '409':
-          description: Project name is already taken
+          description: Project name within the organization is already taken
   /project/{projectId}:
     get:
       summary: 'Get project by ID'
@@ -236,7 +236,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
         '409':
-          description: Project name is already taken
+          description: Project name within the organization is already taken
     delete:
       summary: 'Delete a project'
       description: 'To delete a project you must have the admin permission'
@@ -311,7 +311,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '409':
-          description: Environment name is already taken
+          description: Environment name within the project is already taken
   /environment/{environmentId}:
     get:
       summary: 'Get environment by ID'
@@ -372,7 +372,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
         '409':
-          description: Environment name is already taken
+          description: Environment name within the project is already taken
     delete:
       summary: 'Delete an environment'
       description: 'To delete an environment you must have the admin permission'
@@ -447,7 +447,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '409':
-          description: Application name is already taken
+          description: Application name within the environment is already taken
   /application/{applicationId}:
     get:
       summary: 'Get application by ID'
@@ -508,7 +508,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
         '409':
-          description: Application name is already taken
+          description: Application name within the environment is already taken
     delete:
       summary: 'Delete an application'
       description: 'To delete an application you must have the admin permission'
@@ -583,7 +583,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '409':
-          description: Database name is already taken
+          description: Database name within the environment is already taken
   /database/{databaseId}:
     get:
       summary: 'Get database by ID'
@@ -644,7 +644,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
         '409':
-          description: Database name is already taken
+          description: Database name within the environment is already taken
     delete:
       summary: 'Delete a database'
       description: 'To delete a database you must have the admin permission'
