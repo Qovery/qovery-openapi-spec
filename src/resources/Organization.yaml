@@ -1,0 +1,65 @@
+get:
+  summary: 'Get organization by ID'
+  operationId: getOrganization
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - organization
+  responses:
+    '200':
+      description: 'Get organization by ID'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+put:
+  summary: 'Edit an organization'
+  description: 'To edit an organization you must have the admin permission'
+  operationId: editOrganization
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - organization
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/OrganizationRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit an organization'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+    '409':
+      description: Organization name is already taken
+delete:
+  summary: 'Delete an organization'
+  description: 'To delete an organization you must have the admin permission'
+  operationId: deleteOrganization
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - organization
+  responses:
+    '204':
+      $ref: '../responses/Deleted.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

@@ -1,0 +1,65 @@
+get:
+  summary: 'Get database by ID'
+  operationId: getDatabase
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+  tags:
+    - database
+  responses:
+    '200':
+      description: 'Get database by ID'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/DatabaseResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+put:
+  summary: 'Edit a database'
+  description: 'To edit a database you must have the admin permission'
+  operationId: editDatabase
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+  tags:
+    - database
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/DatabaseRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit an application'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/DatabaseResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+    '409':
+      description: Database name within the environment is already taken
+delete:
+  summary: 'Delete a database'
+  description: 'To delete a database you must have the admin permission'
+  operationId: deleteDatabase
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+  tags:
+    - database
+  responses:
+    '204':
+      $ref: '../responses/Deleted.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

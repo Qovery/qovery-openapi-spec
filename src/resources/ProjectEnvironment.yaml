@@ -1,0 +1,39 @@
+get:
+  summary: 'List environments'
+  operationId: listEnvironment
+  parameters:
+    - $ref: '../parameters/path/projectId.yaml'
+  tags:
+    - environment
+  responses:
+    '200':
+      description: 'List environments'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+post:
+  summary: 'Create an environment'
+  operationId: createEnvironment
+  parameters:
+    - $ref: '../parameters/path/projectId.yaml'
+  tags:
+    - environment
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/EnvironmentRequest.yaml'
+  responses:
+    '200':
+      description: 'Create environment'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: Environment name within the project is already taken

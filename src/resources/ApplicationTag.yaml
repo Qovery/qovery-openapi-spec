@@ -1,0 +1,16 @@
+get:
+  summary: 'List tags'
+  operationId: listApplicationTag
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'List application tags'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/TagResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

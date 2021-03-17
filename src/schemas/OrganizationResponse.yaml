@@ -1,0 +1,18 @@
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+      updated_at:
+        type: string
+        nullable: true
+        format: date-time
+      website_url:
+        type: string
+        nullable: true
+      logo_url:
+        type: string
+        format: uri

@@ -1,0 +1,121 @@
+type: object
+required:
+  - name
+  - git_repository_url
+  - git_commit_id
+properties:
+  name:
+    type: string
+    description: name is case insensitive
+  description:
+    type: string
+  build_mode:
+    type: string
+    enum:
+      - DOCKER
+      - BUILDPACKS
+    description: |
+      `DOCKER` required `dockerfile_path`
+      `BUILDPACKS` does not required any `dockerfile_path`
+  dockerfile_path:
+    type: string
+    description: The path of the associated Dockerfile
+  git_repository_url:
+    type: string
+    description: application git repository URL
+  git_repository_branch:
+    type: string
+    description: |
+      Name of the branch to use. This is optional
+      If not specified, then the branch used is the `main` or `master` one
+  git_commit_id:
+    type: string
+    description: Current Git commit ID
+  cpu:
+    type: string
+    default: 250m
+    example:
+      - 250m
+      - 1000m
+      - 1
+      - 1.2
+      - 2
+  memory:
+    type: string
+    default: 256MB
+    example:
+      - 256MB
+      - 1024MB
+      - 1GB
+      - 1.2GB
+      - 2GB
+  min_running_instances:
+    type: integer
+    minimum: 0
+    description: |
+      Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+      Note: 0 means that there is no application running.
+  max_running_instances:
+    type: integer
+    maximum: -1
+    description: |
+      Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+      Note: -1 means that there is no limit.
+  storage:
+    type: array
+    items:
+      type: object
+      required:
+        - name
+        - type
+        - size
+        - mount_point
+      properties:
+        name:
+          type: string
+          example: images
+        type:
+          type: string
+          enum:
+            - SLOW_HDD
+            - HDD
+            - SSD
+            - FAST_SSD
+        size:
+          type: string
+          description: Size can be in GB and TB only
+          example:
+            - 1GB
+            - 16GB
+            - 1TB
+        mount_point:
+          type: string
+          example: /mnt/images
+  ports:
+    type: array
+    items:
+      type: object
+      required:
+        - internal_port
+        - protocol
+      properties:
+        internal_port:
+          type: integer
+          example: 8080
+          description: The listening port of your application
+        external_port:
+          type: integer
+          example: 8080
+          description: The exposed port for your application. This is optional. If not set a default port will be used.
+        publicly_accessible:
+          type: boolean
+          default: true
+          description: Expose the port to the world
+        protocol:
+          type: string
+          default: HTTPS
+          enum:
+            - HTTPS
+            - HTTP
+            - TCP
+            - UDP

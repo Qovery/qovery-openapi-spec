@@ -1,0 +1,13 @@
+type: object
+required:
+  - id
+  - created_at
+properties:
+  id:
+    type: string
+    format: uuid
+    readOnly: true
+  created_at:
+    type: string
+    readOnly: true
+    format: date-time

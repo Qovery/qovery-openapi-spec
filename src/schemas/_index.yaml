@@ -1,0 +1,44 @@
+BaseResponse:
+  $ref: ./BaseResponse.yaml
+OrganizationRequest:
+  $ref: ./OrganizationRequest.yaml
+OrganizationResponse:
+  $ref: ./OrganizationResponse.yaml
+OrganizationResponseList:
+  $ref: ./OrganizationResponseList.yaml
+ProjectRequest:
+  $ref: ./ProjectRequest.yaml
+ProjectResponse:
+  $ref: ./ProjectResponse.yaml
+ProjectResponseList:
+  $ref: ./ProjectResponseList.yaml
+EnvironmentRequest:
+  $ref: ./EnvironmentRequest.yaml
+EnvironmentResponse:
+  $ref: ./EnvironmentResponse.yaml
+EnvironmentResponseList:
+  $ref: ./EnvironmentResponseList.yaml
+ApplicationRequest:
+  $ref: ./ApplicationRequest.yaml
+ApplicationResponse:
+  $ref: ./ApplicationResponse.yaml
+ApplicationResponseList:
+  $ref: ./ApplicationResponseList.yaml
+DatabaseRequest:
+  $ref: ./DatabaseRequest.yaml
+DatabaseResponse:
+  $ref: ./DatabaseResponse.yaml
+DatabaseResponseList:
+  $ref: ./DatabaseResponseList.yaml
+AttachApplicationToDatabaseRequest:
+  $ref: ./AttachApplicationToDatabaseRequest.yaml
+AttachApplicationToDatabaseResponse:
+  $ref: ./AttachApplicationToDatabaseResponse.yaml
+AttachApplicationToDatabaseResponseList:
+  $ref: ./AttachApplicationToDatabaseResponseList.yaml
+UnexpectedError:
+  $ref: ./UnexpectedError.yaml
+TagResponse:
+  $ref: ./TagResponse.yaml
+TagResponseList:
+  $ref: ./TagResponseList.yaml

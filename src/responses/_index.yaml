@@ -1,0 +1,12 @@
+204-deletion:
+  $ref: ./Deleted.yaml
+409:
+  $ref: ./Conflict.yaml
+403:
+  $ref: ./Forbidden.yaml
+204:
+  $ref: ./NoContent.yaml
+401:
+  $ref: ./NotAuthorized.yaml
+404:
+  $ref: ./NotFound.yaml

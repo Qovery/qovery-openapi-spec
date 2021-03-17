@@ -1,0 +1,14 @@
+post:
+  summary: 'Start application'
+  operationId: startApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'Application start has been requested'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: 'Application is already started or an operation is in progress'

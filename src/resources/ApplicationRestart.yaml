@@ -1,0 +1,14 @@
+post:
+  summary: 'Restart application'
+  operationId: restartApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'Application restart has been requested'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: An operation is in progress

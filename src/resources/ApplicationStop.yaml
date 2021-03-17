@@ -1,0 +1,14 @@
+post:
+  summary: 'Stop application'
+  operationId: stopApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'Application stop has been requested'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: 'Application is already stopped or an operation is in progress'

@@ -1,0 +1,65 @@
+get:
+  summary: 'Get application by ID'
+  operationId: getApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'Get application by ID'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ApplicationResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+put:
+  summary: 'Edit application'
+  description: 'To edit the application you must have the admin permission'
+  operationId: editApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/ApplicationRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit application'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ApplicationResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+    '409':
+      description: Application name within the environment is already taken
+delete:
+  summary: 'Delete application'
+  description: 'To delete the application you must have the admin permission'
+  operationId: deleteApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '204':
+      $ref: '../responses/Deleted.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

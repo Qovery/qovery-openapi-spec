@@ -1,0 +1,35 @@
+get:
+  summary: 'List user organizations'
+  operationId: listOrganization
+  tags:
+    - organization
+  responses:
+    '200':
+      description: 'List organizations'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+post:
+  summary: 'Create an organization'
+  operationId: createOrganization
+  tags:
+    - organization
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/OrganizationRequest.yaml'
+  responses:
+    '200':
+      description: 'Create organization'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: Organization name is already taken

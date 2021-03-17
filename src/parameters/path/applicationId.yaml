@@ -1,0 +1,6 @@
+name: applicationId
+in: path
+description: Application ID
+required: true
+schema:
+  type: string
