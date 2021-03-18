@@ -30,6 +30,8 @@ paths:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:
     $ref: './resources/ApplicationTag.yaml'
+  /application/{applicationId}/dependency:
+    $ref: './resources/ApplicationDependency.yaml'
   /application/{applicationId}/commit:
     $ref: './resources/ApplicationCommit.yaml'
   /application/{applicationId}/deploy:

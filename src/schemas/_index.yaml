@@ -58,6 +58,8 @@ CommitResponseList:
   $ref: ./CommitResponseList.yaml
 DeployRequest:
   $ref: ./DeployRequest.yaml
+ApplicationDependencyRequest:
+  $ref: ./ApplicationDependencyRequest.yaml
 LogResponse:
   $ref: ./LogResponse.yaml
 LogResponseList:
