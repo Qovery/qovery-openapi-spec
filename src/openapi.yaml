@@ -30,6 +30,18 @@ paths:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:
     $ref: './resources/ApplicationTag.yaml'
+  /application/{applicationId}/event:
+    $ref: './resources/ApplicationEvent.yaml'
+  /application/{applicationId}/environmentVariable:
+    $ref: './resources/ApplicationEnvironmentVariable.yaml'
+  /environmentVariable/{environmentVariableId}:
+    $ref: './resources/EnvironmentVariable.yaml'
+  /application/{applicationId}/secret:
+    $ref: './resources/ApplicationSecret.yaml'
+  /secret/{secretId}:
+    $ref: './resources/Secret.yaml'
+  /application/{applicationId}/log:
+    $ref: './resources/ApplicationLog.yaml'
   /application/{applicationId}/database:
     $ref: './resources/ApplicationDatabase.yaml'
   /application/{applicationId}/start:

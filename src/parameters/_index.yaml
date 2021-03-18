@@ -9,6 +9,8 @@ applicationId:
   $ref: './path/applicationId.yaml'
 databaseId:
   $ref: './path/databaseId.yaml'
+environmentVariableId:
+  $ref: './path/environmentVariableId.yaml'
 
 # queries
 limit:

@@ -1,0 +1,16 @@
+get:
+  summary: 'List logs'
+  operationId: listApplicationLog
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'List logs'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/LogResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

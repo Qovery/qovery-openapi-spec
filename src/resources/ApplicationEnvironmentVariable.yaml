@@ -1,0 +1,39 @@
+get:
+  summary: 'List environment variables'
+  operationId: listApplicationEnvironmentVariable
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'List environment variables'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentVariableResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+post:
+  summary: 'Add an environment variable to the application'
+  description: |
+    Add an environment variable to the application. If the environment variable name does already exists, then it will be replaced by the new one.
+  operationId: createApplicationEnvironmentVariable
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/EnvironmentVariableRequest.yaml'
+  responses:
+    '201':
+      description: 'Add an environment variable'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentVariableResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

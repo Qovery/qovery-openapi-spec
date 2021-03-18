@@ -4,3 +4,4 @@ description: Database ID
 required: true
 schema:
   type: string
+  format: uuid

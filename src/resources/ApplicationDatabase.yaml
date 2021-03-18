@@ -35,3 +35,5 @@ post:
             $ref: '../schemas/AttachApplicationToDatabaseResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: This database is already linked to the application

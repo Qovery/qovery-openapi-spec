@@ -36,6 +36,26 @@ AttachApplicationToDatabaseResponse:
   $ref: ./AttachApplicationToDatabaseResponse.yaml
 AttachApplicationToDatabaseResponseList:
   $ref: ./AttachApplicationToDatabaseResponseList.yaml
+EnvironmentVariableRequest:
+  $ref: ./EnvironmentVariableRequest.yaml
+EnvironmentVariableResponse:
+  $ref: ./EnvironmentVariableResponse.yaml
+EnvironmentVariableResponseList:
+  $ref: ./EnvironmentVariableResponseList.yaml
+SecretRequest:
+  $ref: ./SecretRequest.yaml
+SecretResponse:
+  $ref: ./SecretResponse.yaml
+SecretResponseList:
+  $ref: ./SecretResponseList.yaml
+EventResponse:
+  $ref: ./EventResponse.yaml
+EventResponseList:
+  $ref: ./EventResponseList.yaml
+LogResponse:
+  $ref: ./LogResponse.yaml
+LogResponseList:
+  $ref: ./LogResponseList.yaml
 UnexpectedError:
   $ref: ./UnexpectedError.yaml
 TagResponse:

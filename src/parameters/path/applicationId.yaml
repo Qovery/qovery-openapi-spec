@@ -4,3 +4,4 @@ description: Application ID
 required: true
 schema:
   type: string
+  format: uuid

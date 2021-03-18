@@ -4,3 +4,4 @@ description: Environment ID
 required: true
 schema:
   type: string
+  format: uuid
