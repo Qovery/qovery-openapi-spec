@@ -479,6 +479,258 @@ paths:
                 $ref: '#/components/schemas/TagResponseList'
         '401':
           $ref: '#/components/responses/401'
+  '/application/{applicationId}/event':
+    get:
+      summary: List events
+      operationId: listApplicationEvent
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: List events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/environmentVariable':
+    get:
+      summary: List environment variables
+      operationId: listApplicationEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: List environment variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      summary: Add an environment variable to the application
+      description: |
+        Add an environment variable to the application. If the environment variable name does already exists, then it will be replaced by the new one.
+      operationId: createApplicationEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableRequest'
+      responses:
+        '201':
+          description: Add an environment variable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+  '/environmentVariable/{environmentVariableId}':
+    get:
+      summary: Get environment variable by ID
+      operationId: getEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - environmentVariable
+      responses:
+        '200':
+          description: Get environment variable by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit an organization
+      description: To edit an environment variable you must have the project user permission
+      operationId: editEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - environmentVariable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableRequest'
+      responses:
+        '200':
+          description: Edit an environment variable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Environment variable name is already taken
+    delete:
+      summary: Delete an environment variable
+      description: To delete an environment variable you must have the project user permission
+      operationId: deleteEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - environmentVariable
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/application/{applicationId}/secret':
+    get:
+      summary: List secrets
+      operationId: listApplicationSecrets
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: List secrets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      summary: Add a secret
+      description: |
+        Add a secret to the application. If the secret name does already exists, then it will be replaced by the new one.
+      operationId: createApplicationSecret
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretRequest'
+      responses:
+        '201':
+          description: Add a secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '401':
+          $ref: '#/components/responses/401'
+  '/secret/{secretId}':
+    get:
+      summary: Get a secret by ID
+      operationId: getSecret
+      parameters:
+        - name: secretId
+          in: path
+          description: Secret ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - secret
+      responses:
+        '200':
+          description: Get secret by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a secret
+      description: To edit a secret you must have the project user permission
+      operationId: editSecret
+      parameters:
+        - $ref: '#/paths/~1secret~1%7BsecretId%7D/get/parameters/0'
+      tags:
+        - secret
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretRequest'
+      responses:
+        '200':
+          description: Edit a secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Secret name is already taken
+    delete:
+      summary: Delete a secret
+      description: To delete a secret you must have the project user permission
+      operationId: deleteSecret
+      parameters:
+        - $ref: '#/paths/~1secret~1%7BsecretId%7D/get/parameters/0'
+      tags:
+        - secret
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/application/{applicationId}/log':
+    get:
+      summary: List logs
+      operationId: listApplicationLog
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: List logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogResponseList'
+        '401':
+          $ref: '#/components/responses/401'
   '/application/{applicationId}/database':
     get:
       summary: List linked databases
@@ -517,6 +769,8 @@ paths:
                 $ref: '#/components/schemas/AttachApplicationToDatabaseResponse'
         '401':
           $ref: '#/components/responses/401'
+        '409':
+          description: This database is already linked to the application
   '/application/{applicationId}/start':
     post:
       summary: Start application
@@ -677,6 +931,7 @@ components:
       required: true
       schema:
         type: string
+        format: uuid
     projectId:
       name: projectId
       in: path
@@ -684,6 +939,7 @@ components:
       required: true
       schema:
         type: string
+        format: uuid
     environmentId:
       name: environmentId
       in: path
@@ -691,6 +947,7 @@ components:
       required: true
       schema:
         type: string
+        format: uuid
     applicationId:
       name: applicationId
       in: path
@@ -698,6 +955,7 @@ components:
       required: true
       schema:
         type: string
+        format: uuid
     databaseId:
       name: databaseId
       in: path
@@ -705,6 +963,15 @@ components:
       required: true
       schema:
         type: string
+        format: uuid
+    environmentVariableId:
+      name: environmentVariableId
+      in: path
+      description: Environment Variable ID
+      required: true
+      schema:
+        type: string
+        format: uuid
     limit:
       name: limit
       in: query
@@ -1010,6 +1277,86 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AttachApplicationToDatabaseResponse'
+    EnvironmentVariableRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: name is case insensitive
+    EnvironmentVariableResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+    EnvironmentVariableResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentVariableResponse'
+    SecretRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: name is case insensitive
+    SecretResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+    SecretResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SecretResponse'
+    EventResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+    EventResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventResponse'
+    LogResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+    LogResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogResponse'
     UnexpectedError:
       type: object
       required:
