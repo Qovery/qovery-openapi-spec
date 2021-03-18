@@ -27,7 +27,7 @@ post:
         schema:
           $ref: '../schemas/EnvironmentRequest.yaml'
   responses:
-    '200':
+    '201':
       description: 'Create environment'
       content:
         application/json:

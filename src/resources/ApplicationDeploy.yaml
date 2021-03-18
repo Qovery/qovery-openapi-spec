@@ -1,0 +1,19 @@
+post:
+  summary: 'Deploy a specific version'
+  operationId: deployApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'Deploy a specific version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/DeployRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

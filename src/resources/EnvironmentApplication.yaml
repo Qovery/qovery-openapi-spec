@@ -27,7 +27,7 @@ post:
         schema:
           $ref: '../schemas/ApplicationRequest.yaml'
   responses:
-    '200':
+    '201':
       description: 'Create application'
       content:
         application/json:

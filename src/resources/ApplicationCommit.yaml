@@ -1,0 +1,16 @@
+get:
+  summary: 'List commits'
+  operationId: listApplicationCommit
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'List commits'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/CommitResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

@@ -23,7 +23,7 @@ post:
         schema:
           $ref: '../schemas/OrganizationRequest.yaml'
   responses:
-    '200':
+    '201':
       description: 'Create organization'
       content:
         application/json:

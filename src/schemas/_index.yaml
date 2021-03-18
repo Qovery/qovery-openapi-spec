@@ -52,6 +52,12 @@ EventResponse:
   $ref: ./EventResponse.yaml
 EventResponseList:
   $ref: ./EventResponseList.yaml
+CommitResponse:
+  $ref: ./CommitResponse.yaml
+CommitResponseList:
+  $ref: ./CommitResponseList.yaml
+DeployRequest:
+  $ref: ./DeployRequest.yaml
 LogResponse:
   $ref: ./LogResponse.yaml
 LogResponseList:

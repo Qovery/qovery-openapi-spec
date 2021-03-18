@@ -30,6 +30,10 @@ paths:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:
     $ref: './resources/ApplicationTag.yaml'
+  /application/{applicationId}/commit:
+    $ref: './resources/ApplicationCommit.yaml'
+  /application/{applicationId}/deploy:
+    $ref: './resources/ApplicationDeploy.yaml'
   /application/{applicationId}/event:
     $ref: './resources/ApplicationEvent.yaml'
   /application/{applicationId}/environmentVariable:

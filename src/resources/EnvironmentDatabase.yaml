@@ -27,7 +27,7 @@ post:
         schema:
           $ref: '../schemas/DatabaseRequest.yaml'
   responses:
-    '200':
+    '201':
       description: 'Create database'
       content:
         application/json:
