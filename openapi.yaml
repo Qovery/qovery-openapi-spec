@@ -479,6 +479,45 @@ paths:
                 $ref: '#/components/schemas/TagResponseList'
         '401':
           $ref: '#/components/responses/401'
+  '/application/{applicationId}/dependency':
+    get:
+      summary: List application dependencies
+      operationId: listApplicationDependency
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: List dependencies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      summary: Add application dependencies to this application.
+      description: Add application dependencies to this application to prevent this application starting before the dependencies
+      operationId: createApplicationDependency
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationDependencyRequest'
+      responses:
+        '201':
+          description: Add application dependencies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '401':
+          $ref: '#/components/responses/401'
   '/application/{applicationId}/commit':
     get:
       summary: List commits
@@ -1137,6 +1176,7 @@ components:
           description: name is case insensitive
         description:
           type: string
+          description: give a description to this application
         build_mode:
           type: string
           enum:
@@ -1145,9 +1185,6 @@ components:
           description: |
             `DOCKER` required `dockerfile_path`
             `BUILDPACKS` does not required any `dockerfile_path`
-        dockerfile_path:
-          type: string
-          description: The path of the associated Dockerfile
         git_repository_url:
           type: string
           description: application git repository URL
@@ -1159,6 +1196,13 @@ components:
         git_commit_id:
           type: string
           description: Current Git commit ID
+        dockerfile_path:
+          type: string
+          description: The path of the associated Dockerfile
+        root_path:
+          type: string
+          default: /
+          description: indicates the root path of the application.
         cpu:
           type: string
           default: 250m
@@ -1402,6 +1446,20 @@ components:
         name:
           type: commit_id
           description: Commit ID to deploy
+    ApplicationDependencyRequest:
+      type: object
+      properties:
+        applications:
+          type: object
+          properties:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Set application ID
+                  format: uuid
     LogResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
