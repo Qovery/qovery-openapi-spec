@@ -1148,15 +1148,14 @@ components:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
-          required:
-            - name
           properties:
-            name:
-              type: string
             updated_at:
               type: string
               nullable: true
               format: date-time
+            status:
+              $ref: '#/components/schemas/Status'
+        - $ref: '#/components/schemas/EnvironmentRequest'
     EnvironmentResponseList:
       type: object
       properties:
@@ -1295,15 +1294,14 @@ components:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
-          required:
-            - name
           properties:
-            name:
-              type: string
             updated_at:
               type: string
               nullable: true
               format: date-time
+            status:
+              $ref: '#/components/schemas/Status'
+        - $ref: '#/components/schemas/ApplicationRequest'
     ApplicationResponseList:
       type: object
       properties:
@@ -1323,15 +1321,14 @@ components:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
-          required:
-            - name
           properties:
-            name:
-              type: string
             updated_at:
               type: string
               nullable: true
               format: date-time
+            status:
+              $ref: '#/components/schemas/Status'
+        - $ref: '#/components/schemas/DatabaseRequest'
     DatabaseResponseList:
       type: object
       properties:
@@ -1499,6 +1496,35 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TagResponse'
+    Status:
+      type: object
+      required:
+        - state
+      properties:
+        state:
+          type: string
+          description: |
+            Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state. Then finish with `*_ERROR` or any termination state.
+          enum:
+            - BUILDING
+            - BUILD_ERROR
+            - BUILT
+            - DEPLOYING
+            - DEPLOYMENT_ERROR
+            - DEPLOYED
+            - STOPPING
+            - STOP_ERROR
+            - STOPPED
+            - DELETING
+            - DELETE_ERROR
+            - DELETED
+            - RUNNING
+            - WARNING
+            - ERROR
+        message:
+          type: string
+          nullable: true
+          description: message related to the state
   responses:
     '204':
       description: no content
