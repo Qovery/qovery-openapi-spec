@@ -1,0 +1,28 @@
+type: object
+required:
+  - state
+properties:
+  state:
+    type: string
+    description: |
+      Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state. Then finish with `*_ERROR` or any termination state.
+    enum:
+      - BUILDING
+      - BUILD_ERROR
+      - BUILT
+      - DEPLOYING
+      - DEPLOYMENT_ERROR
+      - DEPLOYED
+      - STOPPING
+      - STOP_ERROR
+      - STOPPED
+      - DELETING
+      - DELETE_ERROR
+      - DELETED
+      - RUNNING
+      - WARNING
+      - ERROR
+  message:
+    type: string
+    nullable: true
+    description: message related to the state

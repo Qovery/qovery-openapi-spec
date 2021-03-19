@@ -70,3 +70,5 @@ TagResponse:
   $ref: ./TagResponse.yaml
 TagResponseList:
   $ref: ./TagResponseList.yaml
+Status:
+  $ref: ./Status.yaml

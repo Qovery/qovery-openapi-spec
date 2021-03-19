@@ -1,12 +1,11 @@
 allOf:
   - $ref: './BaseResponse.yaml'
   - type: object
-    required:
-      - name
     properties:
-      name:
-        type: string
       updated_at:
         type: string
         nullable: true
         format: date-time
+      status:
+        $ref: './Status.yaml'
+  - $ref: './EnvironmentRequest.yaml'
