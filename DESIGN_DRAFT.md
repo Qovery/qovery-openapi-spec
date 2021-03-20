@@ -1,4 +1,6 @@
-## This is a design draft document
+# This is a design draft document
+
+## Application
 
 ### list applications
 
@@ -125,7 +127,13 @@ GET /application/:id/status
 
 ### get application logs
 
+#### list last 20 logs
+
 GET /application/:id/log
+
+#### list last 50 logs
+
+GET /application/:id/log?tail=50
 
 ```json
 {
@@ -137,7 +145,7 @@ GET /application/:id/log
       "id": "uuid",
       "created_at": "2021-03-20T09:01:28.103Z",
       "status": {
-        "state": "DEPLOYMENT_IN_PROGRESS|OK|FAILED",
+        "state": "DEPLOYING|...",
         "message": "Deployment is in progress"
       },
       "owner": {
@@ -149,7 +157,32 @@ GET /application/:id/log
         "short_id": "string",
         "long_id": "string",
         "message": "fix: xxxxxxxxxxx"
-      }
+      },
+      "message(nullable)": "log message",
+      "message_human_explanation(nullable)": "explain what the error means -- Markdown can be injected",
+      "hint(nullable)": "give a possible action to the user -- Markdown can be injected"
+    }
+  ]
+}
+```
+
+#### list last logs from lastId
+
+GET /application/:id/log?lastId=xxx
+
+```json
+{
+  "results": [
+    {
+      "id": "uuid",
+      "created_at": "2021-03-20T09:01:28.103Z",
+      "status": {
+        "state": "DEPLOYING|...",
+        "message": "Deployment is in progress"
+      },
+      "message(nullable)": "log message",
+      "message_human_explanation(nullable)": "explain what the error means -- Markdown can be injected",
+      "hint(nullable)": "give a possible action to the user -- Markdown can be injected"
     }
   ]
 }
@@ -177,16 +210,6 @@ GET /application/:id/event?tail=50
       "status": {
         "state": "OK|WARNING|ERROR",
         "message": "Deployment is in progress"
-      },
-      "owner(nullable)": {
-        "id": "uuid",
-        "name": "Firstname Lastname",
-        "picture_profile_url": "uri"
-      },
-      "service": {
-        "type": "APPLICATION|DATABASE",
-        "id": "uuid",
-        "name": "string"
       },
       "commit(nullable)": {
         "short_id": "string",
@@ -227,6 +250,77 @@ GET /application/:id/event?lastId=xxx
         "long_id": "string",
         "message": "fix: xxxxxxxxxxx"
       }
+    }
+  ]
+}
+```
+
+## Environment
+
+### list environments
+
+GET /project/:id/environment
+
+```json
+{
+  "results": [
+    {
+      "id": "uuid",
+      "created_at": "2021-03-20T09:01:28.103Z",
+      "updated_at": "2021-03-20T09:01:28.103Z",
+      "name": "string",
+      "status": {
+        "state": "OK|WARNING|ERROR",
+        "message(nullable)": "app 1 is down"
+      },
+      "last_updater": {
+        "id": "uuid",
+        "name": "Firstname Lastname",
+        "picture_profile_url": "uri"
+      },
+      "cloud_provider": {
+        "id": "uuid",
+        "name": "Amazon Web Services",
+        "short_name": "AWS",
+        "logo_url": "https://..."
+      },
+      "total_services": 18,
+      "archived": "false"
+    }
+  ]
+}
+```
+
+#### list archived environments
+
+GET /project/:id/environment?archived=true
+
+> An archived environment can't be started
+
+```json
+{
+  "results": [
+    {
+      "id": "uuid",
+      "created_at": "2021-03-20T09:01:28.103Z",
+      "updated_at": "2021-03-20T09:01:28.103Z",
+      "name": "string",
+      "status": {
+        "state": "OK|WARNING|ERROR",
+        "message(nullable)": "app 1 is down"
+      },
+      "last_updater": {
+        "id": "uuid",
+        "name": "Firstname Lastname",
+        "picture_profile_url": "uri"
+      },
+      "cloud_provider": {
+        "name": "Amazon Web Services",
+        "short_name": "AWS",
+        "logo_url": "https://..."
+      },
+      "total_services": 18,
+      "archived": "true"
     }
   ]
 }
