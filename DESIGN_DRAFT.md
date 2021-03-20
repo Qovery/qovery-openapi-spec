@@ -255,6 +255,101 @@ GET /application/:id/event?lastId=xxx
 }
 ```
 
+## Environment variable
+
+### list application environment variables
+
+GET /application/:id/environmentVariable
+
+```json
+{
+  "results": [
+    {
+      "id": "uuid",
+      "key": "KEY_1",
+      "value": "VALUE_1",
+      "scope": "BUILT_IN|ORGANIZATION|PROJECT|ENVIRONMENT|APPLICATION"
+    }
+  ]
+}
+```
+
+Same for:
+
+* GET /organization/:id/environmentVariable
+* GET /project/:id/environmentVariable
+* GET /environment/:id/environmentVariable
+
+### create environment variable
+
+POST /application/:id/environmentVariable
+
+```json
+{
+  "key": "KEY_1",
+  "value": "VALUE_1",
+  "scope": "ORGANIZATION|PROJECT|ENVIRONMENT|APPLICATION"
+}
+```
+
+Same for:
+
+* POST /organization/:id/environmentVariable
+* POST /project/:id/environmentVariable
+* POST /environment/:id/environmentVariable
+
+### delete environment variable
+
+DELETE /environmentVariable/:id
+
+## Secret
+
+### list application secrets
+
+GET /application/:id/secret
+
+```json
+{
+  "results": [
+    {
+      "id": "uuid",
+      "key": "KEY_1",
+      "scope": "BUILT_IN|ORGANIZATION|PROJECT|ENVIRONMENT|APPLICATION",
+      "description": "string"
+    }
+  ]
+}
+```
+
+Same for:
+
+* GET /organization/:id/secret
+* GET /project/:id/secret
+* GET /environment/:id/secret
+
+### create secret
+
+POST /application/:id/secret
+
+```json
+{
+  "key": "KEY_1",
+  "value": "VALUE_1",
+  "scope": "ORGANIZATION|PROJECT|ENVIRONMENT|APPLICATION",
+  "description": "string"
+}
+```
+
+Same for:
+
+* POST /organization/:id/secret
+* POST /project/:id/secret
+* POST /environment/:id/secret
+
+### delete environment variable
+
+DELETE /environmentVariable/:id
+
 ## Environment
 
 ### list environments
