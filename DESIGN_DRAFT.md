@@ -1,10 +1,84 @@
 # This is a design draft document
 
+## SQL schema draft
+
+```sql
+CREATE TABLE _user
+(
+    id UUID PRIMARY KEY
+);
+
+CREATE TABLE organization
+(
+    id       UUID PRIMARY KEY,
+    owner_id UUID NOT NULL REFERENCES _user (id),
+);
+
+CREATE TABLE project
+(
+    id              UUID PRIMARY KEY,
+    created_at      TIMESTAMP NOT NULL DEFAULT now(),
+    organization_id UUID      NOT NULL REFERENCES organization (id),
+    owner_id        UUID      NOT NULL REFERENCES _user (id),
+);
+
+CREATE TABLE environment
+(
+    id         UUID PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT now(),
+    project_id UUID      NOT NULL REFERENCES project (id),
+    owner_id   UUID REFERENCES _user (id),
+);
+
+CREATE TABLE environment_deployment
+(
+    id             UUID PRIMARY KEY,
+    created_at     TIMESTAMP NOT NULL DEFAULT now(),
+    environment_id UUID      NOT NULL REFERENCES environment (id),
+    owner_id       UUID REFERENCES _user (id),
+);
+
+CREATE TABLE application
+(
+    id             UUID PRIMARY KEY,
+    created_at     TIMESTAMP NOT NULL DEFAULT now(),
+    environment_id UUID      NOT NULL REFERENCES environment (id),
+    owner_id       UUID REFERENCES _user (id),
+);
+
+CREATE TABLE application_deployment
+(
+    id             UUID PRIMARY KEY,
+    created_at     TIMESTAMP NOT NULL DEFAULT now(),
+    application_id UUID      NOT NULL REFERENCES application (id),
+    owner_id       UUID REFERENCES _user (id),
+
+);
+
+CREATE TABLE _database
+(
+    id             UUID PRIMARY KEY,
+    created_at     TIMESTAMP NOT NULL DEFAULT now(),
+    environment_id UUID      NOT NULL REFERENCES environment (id),
+    owner_id       UUID REFERENCES _user (id),
+);
+
+CREATE TABLE database_deployment
+(
+    id          UUID PRIMARY KEY,
+    created_at  TIMESTAMP NOT NULL DEFAULT now(),
+    database_id UUID      NOT NULL REFERENCES _database (id),
+    owner_id    UUID REFERENCES _user (id),
+);
+```
+
 ## Application
 
 ### list applications
 
 GET /environment/:id/application
+
+> This is partial info to add to the application
 
 ```json
 {
@@ -33,7 +107,8 @@ GET /application/:id/instantMetric
     "warning_threshold_in_percent": 80,
     "alert_threshold_in_percent": 95,
     "status": {
-      "state": "OK|WARNING|ALERT",
+      "state": "OK|WARNING|ERROR",
+      "simple_state": "OK|WARNING|ERROR",
       "message(nullable)": "can be null"
     }
   },
@@ -44,18 +119,20 @@ GET /application/:id/instantMetric
     "warning_threshold_in_percent": 80,
     "alert_threshold_in_percent": 95,
     "status": {
-      "state": "OK|WARNING|ALERT",
+      "state": "OK|WARNING|ERROR",
+      "simple_state": "OK|WARNING|ERROR",
       "message(nullable)": "can be null"
     }
   },
-  "storage(optional)": {
+  "storage(nullable)": {
     "requested_in_gb": 20,
     "consumed_in_gb": 8,
     "consumed_in_percent": 40.0,
     "warning_threshold_in_percent": 80,
     "alert_threshold_in_percent": 90,
     "status": {
-      "state": "OK|WARNING|ALERT",
+      "state": "OK|WARNING|ERROR",
+      "simple_state": "OK|WARNING|ERROR",
       "message(nullable)": "can be null"
     }
   },
@@ -67,7 +144,8 @@ GET /application/:id/instantMetric
     "warning_threshold_in_percent": 80,
     "alert_threshold_in_percent": 90,
     "status": {
-      "state": "OK|WARNING|ALERT",
+      "state": "OK|WARNING|ERROR",
+      "simple_state": "OK|WARNING|ERROR",
       "message(nullable)": "can be null"
     }
   }
@@ -85,7 +163,7 @@ GET /application/:id/metric/cpu?lastDays=30
   "results": [
     {
       "instance_name": "instance 1",
-      "data_points": [
+      "data": [
         {
           "created_at": "2021-03-20T09:01:28.103Z",
           "value": 2.3
@@ -94,7 +172,7 @@ GET /application/:id/metric/cpu?lastDays=30
     },
     {
       "instance_name": "instance 2",
-      "data_points": [
+      "data": [
         {
           "created_at": "2021-03-20T09:01:28.103Z",
           "value": 0.8
@@ -112,7 +190,7 @@ same for:
 * GET /application/:id/metric/storage?lastDays=30
 * GET /application/:id/metric/instance?lastDays=30
 
-### get application status
+### get current application status
 
 GET /application/:id/status
 
@@ -120,12 +198,13 @@ GET /application/:id/status
 {
   "status": {
     "state": "BUILDING_ERROR",
+    "simple_state": "OK|WARNING|ERROR",
     "message": "Java.xxxx.yyyy not found"
   }
 }
 ```
 
-### get application logs
+### get current application logs
 
 #### list last 20 logs
 
@@ -146,6 +225,7 @@ GET /application/:id/log?tail=50
       "created_at": "2021-03-20T09:01:28.103Z",
       "status": {
         "state": "DEPLOYING|...",
+        "simple_state": "OK|WARNING|ERROR",
         "message": "Deployment is in progress"
       },
       "owner": {
@@ -178,6 +258,7 @@ GET /application/:id/log?lastId=xxx
       "created_at": "2021-03-20T09:01:28.103Z",
       "status": {
         "state": "DEPLOYING|...",
+        "simple_state": "OK|WARNING|ERROR",
         "message": "Deployment is in progress"
       },
       "message(nullable)": "log message",
@@ -209,7 +290,18 @@ GET /application/:id/event?tail=50
       "created_at": "2021-03-20T09:01:28.103Z",
       "status": {
         "state": "OK|WARNING|ERROR",
+        "simple_state": "OK|WARNING|ERROR",
         "message": "Deployment is in progress"
+      },
+      "owner(nullable)": {
+        "id": "uuid",
+        "name": "Firstname Lastname",
+        "picture_profile_url": "uri"
+      },
+      "service": {
+        "type": "APPLICATION",
+        "id": "uuid",
+        "name": "string"
       },
       "commit(nullable)": {
         "short_id": "string",
@@ -233,6 +325,7 @@ GET /application/:id/event?lastId=xxx
       "created_at": "2021-03-20T09:01:28.103Z",
       "status": {
         "state": "OK|WARNING|ERROR",
+        "simple_state": "OK|WARNING|ERROR",
         "message": "Deployment is in progress"
       },
       "owner(nullable)": {
@@ -241,7 +334,7 @@ GET /application/:id/event?lastId=xxx
         "picture_profile_url": "uri"
       },
       "service": {
-        "type": "APPLICATION|DATABASE",
+        "type": "APPLICATION",
         "id": "uuid",
         "name": "string"
       },
@@ -254,6 +347,78 @@ GET /application/:id/event?lastId=xxx
   ]
 }
 ```
+
+### list app deployments
+
+GET /application/:id/deployment?tail=50
+
+```json
+{
+  "page": 1,
+  "page_size": 20,
+  "total": 100,
+  "results": [
+    {
+      "id": "uuid",
+      "created_at": "2021-03-20T09:01:28.103Z",
+      "status": {
+        "state": "DEPLOYMENT_IN_PROGRESS|OK|FAILED",
+        "simple_state": "OK|WARNING|ERROR",
+        "message": "Deployment is in progress"
+      },
+      "owner(nullable)": {
+        "id": "uuid",
+        "name": "Firstname Lastname",
+        "picture_profile_url": "uri"
+      },
+      "commit(nullable)": {
+        "short_id": "string",
+        "long_id": "string",
+        "message": "fix: xxxxxxxxxxx"
+      }
+    }
+  ]
+}
+```
+
+#### list last app deployments from the lastId
+
+GET /application/:id/deployment?lastId=xxx
+
+```json
+{
+  "results": [
+    {
+      "id": "uuid",
+      "created_at": "2021-03-20T09:01:28.103Z",
+      "status": {
+        "state": "DEPLOYMENT_IN_PROGRESS|OK|FAILED",
+        "simple_state": "OK|WARNING|ERROR",
+        "message": "Deployment is in progress"
+      },
+      "owner(nullable)": {
+        "id": "uuid",
+        "name": "Firstname Lastname",
+        "picture_profile_url": "uri"
+      },
+      "commit(nullable)": {
+        "short_id": "string",
+        "long_id": "string",
+        "message": "fix: xxxxxxxxxxx"
+      }
+    }
+  ]
+}
+```
+
+### rollback a complete environment
+
+POST /environment/:envId/deployment/:id/rollback
+
+### abort deployment task
+
+POST /environment/:envId/deployment/:id/abortDeploy
+
 
 ## Environment variable
 
@@ -402,6 +567,7 @@ GET /project/:id/environment?archived=true
       "name": "string",
       "status": {
         "state": "OK|WARNING|ERROR",
+        "simple_state": "OK|WARNING|ERROR",
         "message(nullable)": "app 1 is down"
       },
       "last_updater": {
@@ -432,9 +598,90 @@ POST /environment/:id/clone
 }
 ```
 
-### list deployments
+### get environment events
 
-GET /environment/:id/deployment
+#### list last 20 events
+
+GET /environment/:id/event
+
+#### list last 50 events
+
+GET /environment/:id/event?tail=50
+
+```json
+{
+  "page": 1,
+  "page_size": 20,
+  "total": 100,
+  "results": [
+    {
+      "id": "uuid",
+      "created_at": "2021-03-20T09:01:28.103Z",
+      "status": {
+        "state": "OK|WARNING|ERROR",
+        "simple_state": "OK|WARNING|ERROR",
+        "message": "Deployment is in progress"
+      },
+      "owner(nullable)": {
+        "id": "uuid",
+        "name": "Firstname Lastname",
+        "picture_profile_url": "uri"
+      },
+      "service": {
+        "type": "APPLICATION|DATABASE|JOB|EXTERNAL_SERVICE",
+        "id": "uuid",
+        "name": "string"
+      },
+      "commit(nullable)": {
+        "short_id": "string",
+        "long_id": "string",
+        "message": "fix: xxxxxxxxxxx"
+      }
+    }
+  ]
+}
+```
+
+#### list last events from the lastId
+
+GET /environment/:id/event?lastId=xxx
+
+```json
+{
+  "results": [
+    {
+      "id": "uuid",
+      "created_at": "2021-03-20T09:01:28.103Z",
+      "status": {
+        "state": "OK|WARNING|ERROR",
+        "simple_state": "OK|WARNING|ERROR",
+        "message": "Deployment is in progress"
+      },
+      "owner(nullable)": {
+        "id": "uuid",
+        "name": "Firstname Lastname",
+        "picture_profile_url": "uri"
+      },
+      "service": {
+        "type": "APPLICATION|DATABASE|JOB|EXTERNAL_SERVICE",
+        "id": "uuid",
+        "name": "string"
+      },
+      "commit(nullable)": {
+        "short_id": "string",
+        "long_id": "string",
+        "message": "fix: xxxxxxxxxxx"
+      }
+    }
+  ]
+}
+```
+
+## Deployment
+
+### list environment deployments
+
+GET /environment/:id/deployment?tail=50
 
 ```json
 {
@@ -447,14 +694,15 @@ GET /environment/:id/deployment
       "created_at": "2021-03-20T09:01:28.103Z",
       "status": {
         "state": "DEPLOYMENT_IN_PROGRESS|OK|FAILED",
+        "simple_state": "OK|WARNING|ERROR",
         "message": "Deployment is in progress"
       },
-      "owner": {
+      "owner(nullable)": {
         "id": "uuid",
         "name": "Firstname Lastname",
         "picture_profile_url": "uri"
       },
-      "commit": {
+      "commit(nullable)": {
         "short_id": "string",
         "long_id": "string",
         "message": "fix: xxxxxxxxxxx"
@@ -464,10 +712,40 @@ GET /environment/:id/deployment
 }
 ```
 
-### rollback an environment
+#### list last environment deployments from the lastId
 
-POST /environment/:id/deployment/:deploymentId/rollback
+GET /environment/:id/deployment?lastId=xxx
 
-### abort deployment task
+```json
+{
+  "results": [
+    {
+      "id": "uuid",
+      "created_at": "2021-03-20T09:01:28.103Z",
+      "status": {
+        "state": "DEPLOYMENT_IN_PROGRESS|OK|FAILED",
+        "simple_state": "OK|WARNING|ERROR",
+        "message": "Deployment is in progress"
+      },
+      "owner(nullable)": {
+        "id": "uuid",
+        "name": "Firstname Lastname",
+        "picture_profile_url": "uri"
+      },
+      "commit(nullable)": {
+        "short_id": "string",
+        "long_id": "string",
+        "message": "fix: xxxxxxxxxxx"
+      }
+    }
+  ]
+}
+```
 
-POST /deployment/:id/abortDeploy
+### rollback a complete environment
+
+POST /environment/:envId/deployment/:id/rollback
+
+### abort environment deployment task
+
+POST /environment/:envId/deployment/:id/abortDeploy
