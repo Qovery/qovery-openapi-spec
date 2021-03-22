@@ -30,7 +30,15 @@ CREATE TABLE environment
     owner_id   UUID REFERENCES _user (id),
 );
 
-CREATE TABLE environment_deployment
+CREATE TABLE environment_deployment -- store environment deployments
+(
+    id             UUID PRIMARY KEY,
+    created_at     TIMESTAMP NOT NULL DEFAULT now(),
+    environment_id UUID      NOT NULL REFERENCES environment (id),
+    owner_id       UUID REFERENCES _user (id),
+);
+
+CREATE TABLE environment_event -- store environment events
 (
     id             UUID PRIMARY KEY,
     created_at     TIMESTAMP NOT NULL DEFAULT now(),
@@ -46,13 +54,20 @@ CREATE TABLE application
     owner_id       UUID REFERENCES _user (id),
 );
 
-CREATE TABLE application_deployment
+CREATE TABLE application_deployment -- store app deployments
 (
     id             UUID PRIMARY KEY,
     created_at     TIMESTAMP NOT NULL DEFAULT now(),
     application_id UUID      NOT NULL REFERENCES application (id),
     owner_id       UUID REFERENCES _user (id),
+);
 
+CREATE TABLE application_event -- store app events
+(
+    id             UUID PRIMARY KEY,
+    created_at     TIMESTAMP NOT NULL DEFAULT now(),
+    application_id UUID      NOT NULL REFERENCES application (id),
+    owner_id       UUID REFERENCES _user (id),
 );
 
 CREATE TABLE _database
@@ -63,7 +78,15 @@ CREATE TABLE _database
     owner_id       UUID REFERENCES _user (id),
 );
 
-CREATE TABLE database_deployment
+CREATE TABLE database_deployment -- store database deployments
+(
+    id          UUID PRIMARY KEY,
+    created_at  TIMESTAMP NOT NULL DEFAULT now(),
+    database_id UUID      NOT NULL REFERENCES _database (id),
+    owner_id    UUID REFERENCES _user (id),
+);
+
+CREATE TABLE database_event -- store database events
 (
     id          UUID PRIMARY KEY,
     created_at  TIMESTAMP NOT NULL DEFAULT now(),
