@@ -123,42 +123,47 @@ GET /application/:id/instantMetric
 
 ```json
 {
-  "cpu": {
-    "requested_in_float": 4.0,
-    "consumed_in_float": 2.4,
-    "consumed_in_percent": 60.0,
-    "warning_threshold_in_percent": 80,
-    "alert_threshold_in_percent": 95,
-    "status": {
-      "state": "OK|WARNING|ERROR",
-      "simple_state": "OK|WARNING|ERROR",
-      "message(nullable)": "can be null"
+  "instances": [
+    {
+      "instance_id": "uuid",
+      "cpu": {
+        "requested_in_float": 4.0,
+        "consumed_in_float": 2.4,
+        "consumed_in_percent": 60.0,
+        "warning_threshold_in_percent": 80,
+        "alert_threshold_in_percent": 95,
+        "status": {
+          "state": "OK|WARNING|ERROR",
+          "simple_state": "OK|WARNING|ERROR",
+          "message(nullable)": "can be null"
+        }
+      },
+      "memory": {
+        "requested_in_mb": 4096,
+        "consumed_in_mb": 3255,
+        "consumed_in_percent": 79.6,
+        "warning_threshold_in_percent": 80,
+        "alert_threshold_in_percent": 95,
+        "status": {
+          "state": "OK|WARNING|ERROR",
+          "simple_state": "OK|WARNING|ERROR",
+          "message(nullable)": "can be null"
+        }
+      },
+      "storage(nullable)": {
+        "requested_in_gb": 20,
+        "consumed_in_gb": 8,
+        "consumed_in_percent": 40.0,
+        "warning_threshold_in_percent": 80,
+        "alert_threshold_in_percent": 90,
+        "status": {
+          "state": "OK|WARNING|ERROR",
+          "simple_state": "OK|WARNING|ERROR",
+          "message(nullable)": "can be null"
+        }
+      }
     }
-  },
-  "memory": {
-    "requested_in_mb": 4096,
-    "consumed_in_mb": 3255,
-    "consumed_in_percent": 79.6,
-    "warning_threshold_in_percent": 80,
-    "alert_threshold_in_percent": 95,
-    "status": {
-      "state": "OK|WARNING|ERROR",
-      "simple_state": "OK|WARNING|ERROR",
-      "message(nullable)": "can be null"
-    }
-  },
-  "storage(nullable)": {
-    "requested_in_gb": 20,
-    "consumed_in_gb": 8,
-    "consumed_in_percent": 40.0,
-    "warning_threshold_in_percent": 80,
-    "alert_threshold_in_percent": 90,
-    "status": {
-      "state": "OK|WARNING|ERROR",
-      "simple_state": "OK|WARNING|ERROR",
-      "message(nullable)": "can be null"
-    }
-  },
+  ],
   "instance": {
     "min": 0,
     "max": 8,
@@ -441,7 +446,6 @@ POST /environment/:envId/deployment/:id/rollback
 ### abort deployment task
 
 POST /environment/:envId/deployment/:id/abortDeploy
-
 
 ## Environment variable
 
