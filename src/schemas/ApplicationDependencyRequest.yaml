@@ -3,7 +3,6 @@ properties:
   applications:
     type: object
     properties:
-      type: array
       items:
         type: object
         properties:
