@@ -1441,7 +1441,7 @@ components:
         - commit_id
       properties:
         name:
-          type: commit_id
+          type: string
           description: Commit ID to deploy
     ApplicationDependencyRequest:
       type: object
