@@ -127,7 +127,7 @@ GET /application/:id/
 
 ### get application resource settings
 
-GET /application/:id/settings/resource
+GET /application/:id/resource_settings
 
 ```json
 {
@@ -148,7 +148,7 @@ GET /application/:id/settings/resource
 
 ### get application dependencies
 
-GET /application/:id/dependencies
+GET /application/:id/dependency
 
 ```json
 {
@@ -164,9 +164,22 @@ GET /application/:id/dependencies
 ```
 
 
+### add dependecies to an application
+
+POST /application/:id/dependency
+
+```json
+{
+  "dependencies": [
+    "dependency_uri"
+  ]
+}
+```
+
+
 ### get application port settings
 
-GET /application/:id/settings/port
+GET /application/:id/port
 
 ```json
 {
@@ -180,9 +193,21 @@ GET /application/:id/settings/port
 }
 ```
 
+### add port to an application
+
+POST /application/:id/port
+
+```json
+{
+  "protocol": "HTTPS|TCP",
+  "port_number": "int",
+  "publicly_accessible": "bool"
+}
+```
+
 ### get application custom domains settings
 
-GET /application/:id/settings/domains
+GET /application/:id/domain
 
 ```json
 {
@@ -193,6 +218,16 @@ GET /application/:id/settings/domains
       "dns_configuration_status": "OK|WARNING"
     }
   ]
+}
+```
+
+### add custom domain to an application
+
+POST /application/:id/domain
+
+```json
+{
+  "custom_url": "url"
 }
 ```
 
