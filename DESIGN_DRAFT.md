@@ -97,6 +97,105 @@ CREATE TABLE database_event -- store database events
 
 ## Application
 
+### get application detail
+
+GET /application/:id/
+
+```json
+{ 
+  "id": "uuid",
+  "name": "string",
+  "description": "string",
+  "status": {
+    "state": "BUILDING_ERROR",
+    "simple_state": "OK|WARNING|ERROR",
+    "message": "Java.xxxx.yyyy not found"
+  },
+  "created_at": "2021-03-20T09:01:28.103Z",
+  "tags": [ "tag1", "tag2", "tag3" ],
+  "repository_data": {
+    "url": "github or gitlab url",
+    "branch": "string",
+    "last_commit_short_id": "string"
+  },
+  "build_info": {
+    "mode": "dockerfile|buildpacks",
+    "dockerfile_path": "string" // nullable, required only if build mode = dockerfile
+  }
+}
+```
+
+### get application resource settings
+
+GET /application/:id/settings/resource
+
+```json
+{
+      "cpu": {
+        "requested_in_float": 4.0,
+        "consumed_in_float": 2.4,
+      },
+      "ram": {
+        "requested_in_float": 4.0,
+        "consumed_in_float": 2.4,
+      },
+      "instances": {
+        "requested_in_float": 4.0,
+        "consumed_in_float": 2.4,
+      }
+}
+```
+
+### get application dependencies
+
+GET /application/:id/dependencies
+
+```json
+{
+  "results": [
+    {
+      "id": "uuid",
+      "name": "string",
+      "type": "application|database",
+      "dependency_uri": "uri"
+    }
+  ]
+}
+```
+
+
+### get application port settings
+
+GET /application/:id/settings/port
+
+```json
+{
+  "results": [
+    {
+      "protocol": "HTTPS|TCP",
+      "port_number": "int",
+      "publicly_accessible": "bool"
+    }
+  ]
+}
+```
+
+### get application custom domains settings
+
+GET /application/:id/settings/domains
+
+```json
+{
+  "results": [
+    {
+      "custom_url": "url",
+      "validation url": "url",
+      "dns_configuration_status": "OK|WARNING"
+    }
+  ]
+}
+```
+
 ### list applications
 
 GET /environment/:id/application
