@@ -546,11 +546,6 @@ paths:
       responses:
         '200':
           description: Deploy a specific version
-          requestBody:
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/DeployRequest'
         '401':
           $ref: '#/components/responses/401'
         '404':
