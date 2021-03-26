@@ -57,7 +57,7 @@ properties:
       - 2GB
   min_running_instances:
     type: integer
-    minimum: 1
+    minimum: 0
     description: |
       Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
       Note: 0 means that there is no application running.
