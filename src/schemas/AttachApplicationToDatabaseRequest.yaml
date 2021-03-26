@@ -1,5 +1,9 @@
 type: object
 properties:
-  name:
-    type: string
-    description: name is case insensitive
+  database:
+    type: object
+    properties:
+          id:
+            type: string
+            description: Set database ID
+            format: uuid

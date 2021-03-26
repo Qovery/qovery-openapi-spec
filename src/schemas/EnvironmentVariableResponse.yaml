@@ -2,7 +2,9 @@ allOf:
   - $ref: './BaseResponse.yaml'
   - type: object
     required:
-      - name
+      - key
     properties:
-      name:
+      key:
         type: string
+      value:
+        type: key

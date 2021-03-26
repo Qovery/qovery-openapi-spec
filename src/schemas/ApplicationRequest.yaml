@@ -3,6 +3,7 @@ required:
   - name
   - git_repository_url
   - git_commit_id
+  - git_repository_branch
 properties:
   name:
     type: string
@@ -56,16 +57,18 @@ properties:
       - 2GB
   min_running_instances:
     type: integer
-    minimum: 0
+    minimum: 1
     description: |
       Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
       Note: 0 means that there is no application running.
+    default: 1
   max_running_instances:
     type: integer
-    maximum: -1
+    maximum: 1
     description: |
       Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
       Note: -1 means that there is no limit.
+    default: 1
   storage:
     type: array
     items:
