@@ -5,6 +5,11 @@ post:
     - $ref: '../parameters/path/applicationId.yaml'
   tags:
     - application
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/DeployRequest.yaml'
   responses:
     '200':
       description: 'Deploy a specific version'

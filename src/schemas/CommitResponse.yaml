@@ -2,7 +2,7 @@ allOf:
   - $ref: './BaseResponse.yaml'
   - type: object
     required:
-      - name
+      - git_commit_id
     properties:
-      name:
+      git_commit_id:
         type: string

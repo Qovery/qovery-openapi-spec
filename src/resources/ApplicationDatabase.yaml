@@ -11,11 +11,11 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/AttachApplicationToDatabaseResponseList.yaml'
+            $ref: '../schemas/DatabaseResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
 post:
-  summary: 'Link the application to a database'
+  summary: 'Link a database to the application'
   operationId: attachApplicationToDatabase
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
@@ -28,11 +28,11 @@ post:
           $ref: '../schemas/AttachApplicationToDatabaseRequest.yaml'
   responses:
     '201':
-      description: 'Link the application to a database'
+      description: 'Link a application to the application'
       content:
         application/json:
           schema:
-            $ref: '../schemas/AttachApplicationToDatabaseResponse.yaml'
+            $ref: '../schemas/ApplicationResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '409':

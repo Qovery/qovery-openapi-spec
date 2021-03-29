@@ -19,7 +19,7 @@ get:
     '404':
       $ref: '../responses/NotFound.yaml'
 put:
-  summary: 'Edit an organization'
+  summary: 'Edit an environment variable'
   description: 'To edit an environment variable you must have the project user permission'
   operationId: editEnvironmentVariable
   parameters:
