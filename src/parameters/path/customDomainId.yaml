@@ -1,0 +1,7 @@
+name: customDomainId
+in: path
+description: Custom DOmain ID
+required: true
+schema:
+  type: string
+  format: uuid

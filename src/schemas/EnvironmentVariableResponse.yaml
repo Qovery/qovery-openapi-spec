@@ -1,10 +1,9 @@
 allOf:
   - $ref: './BaseResponse.yaml'
   - type: object
-    required:
-      - key
     properties:
-      key:
+      updated_at:
         type: string
-      value:
-        type: key
+        nullable: true
+        format: date-time
+  - $ref: './EnvironmentVariableRequest.yaml'
