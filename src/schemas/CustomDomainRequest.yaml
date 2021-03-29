@@ -1,0 +1,7 @@
+type: object
+required:
+  - custom_url
+properties:
+  custom_url:
+    type: string
+    description: URL of your domain

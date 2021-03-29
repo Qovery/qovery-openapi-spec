@@ -28,7 +28,7 @@ post:
           $ref: '../schemas/AttachApplicationToDatabaseRequest.yaml'
   responses:
     '201':
-      description: 'Link a application to the application'
+      description: 'Linked the database to the application'
       content:
         application/json:
           schema:

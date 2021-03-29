@@ -30,7 +30,7 @@ post:
           $ref: '../schemas/EnvironmentVariableRequest.yaml'
   responses:
     '201':
-      description: 'Add an environment variable'
+      description: 'Added an environment variable'
       content:
         application/json:
           schema:

@@ -1,0 +1,64 @@
+get:
+  summary: 'Get custom domain by ID'
+  operationId: getCustomDOmain
+  parameters:
+    - $ref: '../parameters/path/customDomainId.yaml'
+  tags:
+    - customDomain
+  responses:
+    '200':
+      description: 'Get Custom Domain by ID'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/CustomDomainResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+put:
+  summary: 'Edit a Custom Domain'
+  description: 'To edit a Custom Domain  you must have the project user permission'
+  operationId: editCustomDomain
+  parameters:
+    - $ref: '../parameters/path/customDomainId.yaml'
+  tags:
+    - customDomain
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/CustomDomainRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit a CustomDomain'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/CustomDomainResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+
+delete:
+  summary: 'Delete a Custom Domain'
+  description: 'To delete an CustomDomain you must have the project user permission'
+  operationId: deleteCustomDomain
+  parameters:
+    - $ref: '../parameters/path/customDomainId.yaml'
+  tags:
+    - customDomain
+  responses:
+    '204':
+      $ref: '../responses/Deleted.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

@@ -40,6 +40,8 @@ paths:
     $ref: './resources/ApplicationEvent.yaml'
   /application/{applicationId}/environmentVariable:
     $ref: './resources/ApplicationEnvironmentVariable.yaml'
+  /application/{applicationId}/customDomain:
+    $ref: './resources/ApplicationCustomDomain.yaml'
   /environmentVariable/{environmentVariableId}:
     $ref: './resources/EnvironmentVariable.yaml'
   /application/{applicationId}/secret:
@@ -60,6 +62,8 @@ paths:
     $ref: './resources/EnvironmentDatabase.yaml'
   /database/{databaseId}:
     $ref: './resources/Database.yaml'
+  /customDomain/{customDomainId}:
+    $ref: './resources/CustomDomain.yaml'
 components:
   parameters:
     $ref: './parameters/_index.yaml'
