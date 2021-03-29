@@ -31,6 +31,10 @@ properties:
   git_commit_id:
     type: string
     description: Current Git commit ID
+  git_last_commit_date:
+    type: string
+    readOnly: true
+    format: date-time
   dockerfile_path:
     type: string
     description: The path of the associated Dockerfile

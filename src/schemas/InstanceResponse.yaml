@@ -1,0 +1,50 @@
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - type: object
+    properties:
+      updated_at:
+        type: string
+        nullable: true
+        format: date-time
+      cpu:
+        type: object
+        properties:
+          requested_in_float: float
+          consumed_in_float: float
+          consumed_in_percent: float
+          warning_threshold_in_percent: float
+          alert_threshold_in_percent: float
+          status:
+            type: string
+            enum:
+              - OK
+              - Warning
+              - Error
+      memory:
+        type: object
+        properties:
+          requested_in_mb: integer
+          consumed_in_mb: integer
+          consumed_in_percent: float
+          warning_threshold_in_percent: float
+          alert_threshold_in_percent: float
+          status:
+            type: string
+            enum:
+              - OK
+              - Warning
+              - Error
+      storage:
+        type: object
+        properties:
+          requested_in_gb: integer
+          consumed_in_gb: integer
+          consumed_in_percent: float
+          warning_threshold_in_percent: float
+          alert_threshold_in_percent: float
+          status:
+            type: string
+            enum:
+              - OK
+              - Warning
+              - Error

@@ -30,6 +30,8 @@ paths:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:
     $ref: './resources/ApplicationTag.yaml'
+  /application/{applicationId}/instantMetric:
+    $ref: './resources/ApplicationInstantMetric.yaml'
   /application/{applicationId}/dependency:
     $ref: './resources/ApplicationDependency.yaml'
   /application/{applicationId}/commit:
@@ -64,6 +66,8 @@ paths:
     $ref: './resources/Database.yaml'
   /customDomain/{customDomainId}:
     $ref: './resources/CustomDomain.yaml'
+  /instance/{instanceId}:
+    $ref: './resources/Instance.yaml'
 components:
   parameters:
     $ref: './parameters/_index.yaml'
