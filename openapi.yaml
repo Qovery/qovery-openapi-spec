@@ -543,6 +543,11 @@ paths:
         - $ref: '#/components/parameters/applicationId'
       tags:
         - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeployRequest'
       responses:
         '200':
           description: Deploy a specific version
@@ -629,7 +634,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     put:
-      summary: Edit an organization
+      summary: Edit an environment variable
       description: To edit an environment variable you must have the project user permission
       operationId: editEnvironmentVariable
       parameters:
@@ -816,11 +821,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AttachApplicationToDatabaseResponseList'
+                $ref: '#/components/schemas/DatabaseResponseList'
         '401':
           $ref: '#/components/responses/401'
     post:
-      summary: Link the application to a database
+      summary: Link a database to the application
       operationId: attachApplicationToDatabase
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -833,11 +838,11 @@ paths:
               $ref: '#/components/schemas/AttachApplicationToDatabaseRequest'
       responses:
         '201':
-          description: Link the application to a database
+          description: Link a application to the application
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AttachApplicationToDatabaseResponse'
+                $ref: '#/components/schemas/ApplicationResponse'
         '401':
           $ref: '#/components/responses/401'
         '409':
@@ -1164,6 +1169,8 @@ components:
         - name
         - git_repository_url
         - git_commit_id
+        - git_repository_branch
+        - root_path
       properties:
         name:
           type: string
@@ -1221,12 +1228,14 @@ components:
           description: |
             Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
             Note: 0 means that there is no application running.
+          default: 1
         max_running_instances:
           type: integer
           maximum: -1
           description: |
             Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
             Note: -1 means that there is no limit.
+          default: 1
         storage:
           type: array
           items:
@@ -1334,9 +1343,13 @@ components:
     AttachApplicationToDatabaseRequest:
       type: object
       properties:
-        name:
-          type: string
-          description: name is case insensitive
+        database:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Set database ID
+              format: uuid
     AttachApplicationToDatabaseResponse:
       type: object
       properties:
@@ -1353,20 +1366,25 @@ components:
     EnvironmentVariableRequest:
       type: object
       required:
-        - name
+        - key
       properties:
-        name:
+        key:
           type: string
-          description: name is case insensitive
+          description: key is case insensitive
+        value:
+          type: string
+          description: value of the env variable.
     EnvironmentVariableResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
           required:
-            - name
+            - key
           properties:
-            name:
+            key:
               type: string
+            value:
+              type: key
     EnvironmentVariableResponseList:
       type: object
       properties:
@@ -1419,9 +1437,9 @@ components:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
           required:
-            - name
+            - git_commit_id
           properties:
-            name:
+            git_commit_id:
               type: string
     CommitResponseList:
       type: object
@@ -1433,9 +1451,9 @@ components:
     DeployRequest:
       type: object
       required:
-        - commit_id
+        - git_commit_id
       properties:
-        name:
+        git_commit_id:
           type: string
           description: Commit ID to deploy
     ApplicationDependencyRequest:
