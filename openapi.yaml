@@ -479,6 +479,101 @@ paths:
                 $ref: '#/components/schemas/TagResponseList'
         '401':
           $ref: '#/components/responses/401'
+  '/application/{applicationId}/currentInstance':
+    get:
+      summary: Get current metrics for running instances of the application
+      operationId: getApplicationCurrentInstance
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Know current resource consumption of the application for each running instance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1instance~1%7BinstanceId%7D/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/currentScale':
+    get:
+      summary: Get current number of running instances of the application
+      operationId: getApplicationCurrentScale
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Know number of running instances of the application
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  min:
+                    type: integer
+                  max:
+                    type: integer
+                  running:
+                    type: integer
+                  running_in_percent:
+                    type: number
+                  warning_threshold_in_percent:
+                    type: number
+                  alert_threshold_in_percent:
+                    type: number
+                  status:
+                    type: string
+                    enum:
+                      - OK
+                      - Warning
+                      - Error
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/metric/cpu':
+    get:
+      summary: Get CPU consumption metric over time for the application
+      operationId: getApplicationCpuMetric
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/lastDays'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Cpu consumption
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        results:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              instance_name:
+                                type: string
+                              created_at:
+                                type: string
+                                readOnly: true
+                                format: date-time
+                              value:
+                                type: number
+        '401':
+          $ref: '#/components/responses/401'
   '/application/{applicationId}/dependency':
     get:
       summary: List application dependencies
@@ -503,13 +598,7 @@ paths:
       operationId: createApplicationDependency
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - name: targetApplicationId
-          in: path
-          description: Target application ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/targetApplicationId'
       tags:
         - application
       responses:
@@ -526,7 +615,7 @@ paths:
       operationId: removeApplicationDependency
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1dependency~1%7BtargetApplicationId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/targetApplicationId'
       tags:
         - application
       responses:
@@ -783,13 +872,7 @@ paths:
       summary: Get a secret by ID
       operationId: getSecret
       parameters:
-        - name: secretId
-          in: path
-          description: Secret ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/secretId'
       tags:
         - secret
       responses:
@@ -810,7 +893,7 @@ paths:
       description: To edit a secret you must have the project user permission
       operationId: editSecret
       parameters:
-        - $ref: '#/paths/~1secret~1%7BsecretId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/secretId'
       tags:
         - secret
       requestBody:
@@ -838,7 +921,7 @@ paths:
       description: To delete a secret you must have the project user permission
       operationId: deleteSecret
       parameters:
-        - $ref: '#/paths/~1secret~1%7BsecretId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/secretId'
       tags:
         - secret
       responses:
@@ -884,29 +967,39 @@ paths:
                 $ref: '#/components/schemas/DatabaseResponseList'
         '401':
           $ref: '#/components/responses/401'
+  '/application/{applicationId}/database/{targetDatabaseId}':
     post:
       summary: Link a database to the application
       operationId: attachApplicationToDatabase
       parameters:
         - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/targetDatabaseId'
       tags:
         - application
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AttachApplicationToDatabaseRequest'
       responses:
         '201':
           description: Linked the database to the application
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponse'
+                $ref: '#/components/schemas/DatabaseResponse'
         '401':
           $ref: '#/components/responses/401'
         '409':
           description: This database is already linked to the application
+    delete:
+      summary: Remove database link to this application.
+      operationId: removeDatabaseFromApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/targetDatabaseId'
+      tags:
+        - application
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
   '/application/{applicationId}/start':
     post:
       summary: Start application
@@ -1063,13 +1156,7 @@ paths:
       summary: Get custom domain by ID
       operationId: getCustomDOmain
       parameters:
-        - name: customDomainId
-          in: path
-          description: Custom DOmain ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/customDomainId'
       tags:
         - customDomain
       responses:
@@ -1082,10 +1169,6 @@ paths:
                   - $ref: '#/components/schemas/BaseResponse'
                   - type: object
                     properties:
-                      updated_at:
-                        type: string
-                        nullable: true
-                        format: date-time
                       validation_domain:
                         type: string
                         description: URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
@@ -1107,7 +1190,7 @@ paths:
       description: To edit a Custom Domain  you must have the project user permission
       operationId: editCustomDomain
       parameters:
-        - $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/customDomainId'
       tags:
         - customDomain
       requestBody:
@@ -1140,12 +1223,93 @@ paths:
       description: To delete an CustomDomain you must have the project user permission
       operationId: deleteCustomDomain
       parameters:
-        - $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/customDomainId'
       tags:
         - customDomain
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/instance/{instanceId}':
+    get:
+      summary: Get Instance by ID
+      operationId: getInstance
+      parameters:
+        - $ref: '#/components/parameters/instanceId'
+      tags:
+        - instance
+      responses:
+        '200':
+          description: Get Instance by ID
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      cpu:
+                        type: object
+                        properties:
+                          requested_in_float:
+                            type: number
+                          consumed_in_number:
+                            type: number
+                          consumed_in_percent:
+                            type: number
+                          warning_threshold_in_percent:
+                            type: number
+                          alert_threshold_in_percent:
+                            type: number
+                          status:
+                            type: string
+                            enum:
+                              - OK
+                              - Warning
+                              - Error
+                      memory:
+                        type: object
+                        properties:
+                          requested_in_mb:
+                            type: integer
+                          consumed_in_mb:
+                            type: integer
+                          consumed_in_percent:
+                            type: number
+                          warning_threshold_in_percent:
+                            type: number
+                          alert_threshold_in_percent:
+                            type: number
+                          status:
+                            type: string
+                            enum:
+                              - OK
+                              - Warning
+                              - Error
+                      storage:
+                        type: object
+                        properties:
+                          requested_in_gb:
+                            type: integer
+                          consumed_in_gb:
+                            type: integer
+                          consumed_in_percent:
+                            type: number
+                          warning_threshold_in_percent:
+                            type: number
+                          alert_threshold_in_percent:
+                            type: number
+                          status:
+                            type: string
+                            enum:
+                              - OK
+                              - Warning
+                              - Error
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1202,6 +1366,46 @@ components:
       schema:
         type: string
         format: uuid
+    instanceId:
+      name: instanceId
+      in: path
+      description: Instance ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    customDomainId:
+      name: customDomainId
+      in: path
+      description: Custom DOmain ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    secretId:
+      name: secretId
+      in: path
+      description: Secret ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    targetApplicationId:
+      name: targetApplicationId
+      in: path
+      description: Target application ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    targetDatabaseId:
+      name: targetDatabaseId
+      in: path
+      description: Target database ID
+      required: true
+      schema:
+        type: string
+        format: uuid
     limit:
       name: limit
       in: query
@@ -1210,6 +1414,13 @@ components:
       schema:
         type: integer
         format: int32
+    lastDays:
+      name: lastDays
+      in: query
+      description: Up to how many days in the past to ask analytics results
+      required: true
+      schema:
+        type: number
   schemas:
     BaseResponse:
       type: object
@@ -1222,6 +1433,10 @@ components:
           format: uuid
           readOnly: true
         created_at:
+          type: string
+          readOnly: true
+          format: date-time
+        updated_at:
           type: string
           readOnly: true
           format: date-time
@@ -1245,10 +1460,6 @@ components:
           properties:
             name:
               type: string
-            updated_at:
-              type: string
-              nullable: true
-              format: date-time
             website_url:
               type: string
               nullable: true
@@ -1279,10 +1490,6 @@ components:
           properties:
             name:
               type: string
-            updated_at:
-              type: string
-              nullable: true
-              format: date-time
             organization:
               $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
     ProjectResponseList:
@@ -1305,10 +1512,6 @@ components:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
           properties:
-            updated_at:
-              type: string
-              nullable: true
-              format: date-time
             project:
               type: object
               required:
@@ -1362,6 +1565,10 @@ components:
         git_commit_id:
           type: string
           description: Current Git commit ID
+        git_last_commit_date:
+          type: string
+          readOnly: true
+          format: date-time
         dockerfile_path:
           type: string
           description: The path of the associated Dockerfile
@@ -1464,10 +1671,6 @@ components:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
           properties:
-            updated_at:
-              type: string
-              nullable: true
-              format: date-time
             environment:
               $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
             status:
@@ -1493,10 +1696,6 @@ components:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
           properties:
-            updated_at:
-              type: string
-              nullable: true
-              format: date-time
             status:
               $ref: '#/components/schemas/Status'
         - $ref: '#/components/schemas/DatabaseRequest'
@@ -1509,14 +1708,13 @@ components:
             $ref: '#/components/schemas/DatabaseResponse'
     AttachApplicationToDatabaseRequest:
       type: object
+      required:
+        - id
       properties:
-        database:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Set database ID
-              format: uuid
+        id:
+          type: string
+          description: Set database ID
+          format: uuid
     AttachApplicationToDatabaseResponse:
       type: object
       properties:
@@ -1537,7 +1735,7 @@ components:
       properties:
         key:
           type: string
-          description: key is case insensitive
+          description: key is case sensitive
         value:
           type: string
           description: value of the env variable.
@@ -1545,11 +1743,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
-          properties:
-            updated_at:
-              type: string
-              nullable: true
-              format: date-time
         - $ref: '#/components/schemas/EnvironmentVariableRequest'
     EnvironmentVariableResponseList:
       type: object
