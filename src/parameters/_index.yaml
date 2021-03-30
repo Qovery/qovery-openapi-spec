@@ -11,7 +11,19 @@ databaseId:
   $ref: './path/databaseId.yaml'
 environmentVariableId:
   $ref: './path/environmentVariableId.yaml'
+instanceId:
+  $ref: './path/instanceId.yaml'
+customDomainId:
+  $ref: './path/customDomainId.yaml'
+secretId:
+  $ref: './path/secretId.yaml'
+targetApplicationId:
+  $ref: './path/targetApplicationId.yaml'
+targetDatabaseId:
+  $ref: './path/targetDatabaseId.yaml'
 
 # queries
 limit:
   $ref: './query/limit.yaml'
+lastDays:
+  $ref: './query/lastDays.yaml'

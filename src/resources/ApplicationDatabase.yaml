@@ -14,26 +14,3 @@ get:
             $ref: '../schemas/DatabaseResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
-post:
-  summary: 'Link a database to the application'
-  operationId: attachApplicationToDatabase
-  parameters:
-    - $ref: '../parameters/path/applicationId.yaml'
-  tags:
-    - application
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: '../schemas/AttachApplicationToDatabaseRequest.yaml'
-  responses:
-    '201':
-      description: 'Linked the database to the application'
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/ApplicationResponse.yaml'
-    '401':
-      $ref: '../responses/NotAuthorized.yaml'
-    '409':
-      description: This database is already linked to the application

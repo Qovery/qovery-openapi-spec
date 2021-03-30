@@ -16,6 +16,7 @@ post:
             $ref: '../schemas/ApplicationResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+      
 delete:
   summary: 'Remove application dependency to this application.'
   operationId: removeApplicationDependency

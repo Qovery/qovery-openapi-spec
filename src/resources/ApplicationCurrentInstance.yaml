@@ -1,0 +1,16 @@
+get:
+  summary: 'Get current metrics for running instances of the application'
+  operationId: getApplicationCurrentInstance
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'Know current resource consumption of the application for each running instance'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/InstanceResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

@@ -6,10 +6,6 @@ allOf:
     properties:
       name:
         type: string
-      updated_at:
-        type: string
-        nullable: true
-        format: date-time
       website_url:
         type: string
         nullable: true
