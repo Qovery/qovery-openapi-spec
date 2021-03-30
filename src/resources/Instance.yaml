@@ -2,7 +2,7 @@ get:
   summary: 'Get Instance by ID'
   operationId: getInstance
   parameters:
-    - $ref: '../parameters/path/InstanceId.yaml'
+    - $ref: '../parameters/path/instanceId.yaml'
   tags:
     - instance
   responses:
