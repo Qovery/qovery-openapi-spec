@@ -1,9 +1,8 @@
 type: object
+required:
+  - id
 properties:
-  database:
-    type: object
-    properties:
-          id:
-            type: string
-            description: Set database ID
-            format: uuid
+  id:
+    type: string
+    description: Set database ID
+    format: uuid

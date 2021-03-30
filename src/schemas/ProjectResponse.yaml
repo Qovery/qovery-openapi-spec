@@ -6,9 +6,5 @@ allOf:
     properties:
       name:
         type: string
-      updated_at:
-        type: string
-        nullable: true
-        format: date-time
       organization:
         $ref: './ReferenceObject.yaml'

@@ -2,18 +2,19 @@ allOf:
   - $ref: './BaseResponse.yaml'
   - type: object
     properties:
-      updated_at:
-        type: string
-        nullable: true
-        format: date-time
       cpu:
         type: object
         properties:
-          requested_in_float: float
-          consumed_in_float: float
-          consumed_in_percent: float
-          warning_threshold_in_percent: float
-          alert_threshold_in_percent: float
+          requested_in_float:
+            type: number
+          consumed_in_number:
+            type: number
+          consumed_in_percent:
+            type: number
+          warning_threshold_in_percent:
+            type: number
+          alert_threshold_in_percent:
+            type: number
           status:
             type: string
             enum:
@@ -23,11 +24,16 @@ allOf:
       memory:
         type: object
         properties:
-          requested_in_mb: integer
-          consumed_in_mb: integer
-          consumed_in_percent: float
-          warning_threshold_in_percent: float
-          alert_threshold_in_percent: float
+          requested_in_mb:
+            type: integer
+          consumed_in_mb:
+            type: integer
+          consumed_in_percent:
+            type: number
+          warning_threshold_in_percent:
+            type: number
+          alert_threshold_in_percent:
+            type: number
           status:
             type: string
             enum:
@@ -37,11 +43,16 @@ allOf:
       storage:
         type: object
         properties:
-          requested_in_gb: integer
-          consumed_in_gb: integer
-          consumed_in_percent: float
-          warning_threshold_in_percent: float
-          alert_threshold_in_percent: float
+          requested_in_gb:
+            type: integer
+          consumed_in_gb:
+            type: integer
+          consumed_in_percent:
+            type: number
+          warning_threshold_in_percent:
+            type: number
+          alert_threshold_in_percent:
+            type: number
           status:
             type: string
             enum:

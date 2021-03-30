@@ -11,3 +11,7 @@ properties:
     type: string
     readOnly: true
     format: date-time
+  updated_at:
+    type: string
+    readOnly: true
+    format: date-time

@@ -1,0 +1,10 @@
+type: object
+properties:
+  instance_name:
+    type: string
+  created_at:
+    type: string
+    readOnly: true
+    format: date-time
+  value:
+    type: number

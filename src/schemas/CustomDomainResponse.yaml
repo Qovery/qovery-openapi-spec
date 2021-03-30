@@ -2,10 +2,6 @@ allOf:
   - $ref: './BaseResponse.yaml'
   - type: object
     properties:
-      updated_at:
-        type: string
-        nullable: true
-        format: date-time
       validation_domain:
         type: string
         description: URL provided by Qovery. You must create a CNAME on your DNS provider using that URL

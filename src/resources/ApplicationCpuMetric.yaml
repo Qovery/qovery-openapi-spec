@@ -1,0 +1,22 @@
+get:
+  summary: 'Get CPU consumption metric over time for the application'
+  operationId: getApplicationCpuMetric
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/query/lastDays.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'Cpu consumption'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '../schemas/DatapointResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
