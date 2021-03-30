@@ -1,0 +1,10 @@
+type: object
+properties:
+  alias_key:
+    type: string
+  alias_scope: 
+    type: string
+    enum:
+      - ENVIRONMENT
+      - APPLICATION
+      - PROJECT

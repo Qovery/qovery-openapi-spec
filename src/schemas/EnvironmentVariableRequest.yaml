@@ -8,3 +8,10 @@ properties:
   value:
     type: string
     description: value of the env variable.
+  scope:
+    type: string
+    enum:
+      - BUILT_IN
+      - ENVIRONMENT
+      - PROJECT
+      - APPLICATION

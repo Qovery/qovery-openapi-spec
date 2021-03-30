@@ -1,4 +1,9 @@
 allOf:
   - $ref: './BaseResponse.yaml'
   - type: object
+    properties:
+      override:
+        $ref: './EnvironmentVariableOverride.yaml'
+      alias:
+        $ref: './EnvironmentVariableAlias.yaml'
   - $ref: './EnvironmentVariableRequest.yaml'

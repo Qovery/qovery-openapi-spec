@@ -1,0 +1,12 @@
+type: object
+properties:
+  override_key:
+    type: string
+  override_value:
+    type: string
+  override_scope: 
+    type: string
+    enum:
+      - ENVIRONMENT
+      - APPLICATION
+      - PROJECT

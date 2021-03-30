@@ -48,6 +48,10 @@ paths:
     $ref: './resources/ApplicationEvent.yaml'
   /application/{applicationId}/environmentVariable:
     $ref: './resources/ApplicationEnvironmentVariable.yaml'
+  /application/{applicationId}/environmentVariable/{environmentVariableId}/override:
+    $ref: './resources/ApplicationEnvironmentVariableOverride.yaml'
+  /application/{applicationId}/environmentVariable/{environmentVariableId}/alias:
+    $ref: './resources/ApplicationEnvironmentVariableAlias.yaml'
   /application/{applicationId}/customDomain:
     $ref: './resources/ApplicationCustomDomain.yaml'
   /environmentVariable/{environmentVariableId}:
