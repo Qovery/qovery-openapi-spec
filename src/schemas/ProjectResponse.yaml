@@ -10,3 +10,5 @@ allOf:
         type: string
         nullable: true
         format: date-time
+      organization:
+        $ref: './ReferenceObject.yaml'

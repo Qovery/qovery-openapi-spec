@@ -14,25 +14,3 @@ get:
             $ref: '../schemas/ApplicationResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
-post:
-  summary: 'Add application dependencies to this application.'
-  description: 'Add application dependencies to this application to prevent this application starting before the dependencies'
-  operationId: createApplicationDependency
-  parameters:
-    - $ref: '../parameters/path/applicationId.yaml'
-  tags:
-    - application
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: '../schemas/ApplicationDependencyRequest.yaml'
-  responses:
-    '201':
-      description: 'Add application dependencies'
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/ApplicationResponse.yaml'
-    '401':
-      $ref: '../responses/NotAuthorized.yaml'

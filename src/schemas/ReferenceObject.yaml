@@ -4,5 +4,5 @@ required:
 properties:
   id:
     type: string
-    description: Set application ID
     format: uuid
+    readOnly: true

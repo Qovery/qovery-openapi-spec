@@ -6,6 +6,8 @@ allOf:
         type: string
         nullable: true
         format: date-time
+      project:
+        $ref: './ReferenceObject.yaml'
       status:
         $ref: './Status.yaml'
   - $ref: './EnvironmentRequest.yaml'

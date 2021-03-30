@@ -1,7 +1,8 @@
 type: object
 required:
-  - custom_url
+  - domain
 properties:
-  custom_url:
+  domain:
     type: string
-    description: URL of your domain
+    description: your custom domain
+    example: my.domain.tld

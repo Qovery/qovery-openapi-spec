@@ -11,7 +11,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/CustomDOmainResponseList.yaml'
+            $ref: '../schemas/CustomDomainResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
 post:
