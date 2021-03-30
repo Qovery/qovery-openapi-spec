@@ -1267,6 +1267,8 @@ components:
               type: string
               nullable: true
               format: date-time
+            organization:
+              $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
     ProjectResponseList:
       type: object
       properties:
@@ -1291,6 +1293,15 @@ components:
               type: string
               nullable: true
               format: date-time
+            project:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                  readOnly: true
             status:
               $ref: '#/components/schemas/Status'
         - $ref: '#/components/schemas/EnvironmentRequest'
@@ -1441,6 +1452,8 @@ components:
               type: string
               nullable: true
               format: date-time
+            environment:
+              $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
             status:
               $ref: '#/components/schemas/Status'
         - $ref: '#/components/schemas/ApplicationRequest'
