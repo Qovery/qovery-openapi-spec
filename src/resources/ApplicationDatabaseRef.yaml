@@ -6,11 +6,6 @@ post:
     - $ref: '../parameters/path/targetDatabaseId.yaml'
   tags:
     - application
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: '../schemas/AttachApplicationToDatabaseRequest.yaml'
   responses:
     '201':
       description: 'Linked the database to the application'
