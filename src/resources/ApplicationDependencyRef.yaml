@@ -1,0 +1,31 @@
+post:
+  summary: 'Add application dependency to this application.'
+  description: 'Add application dependency to this application to prevent this application starting before the linked dependencies'
+  operationId: createApplicationDependency
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/targetApplicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'Add application dependencies'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ApplicationResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+delete:
+  summary: 'Remove application dependency to this application.'
+  operationId: removeApplicationDependency
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/targetApplicationId.yaml'
+  tags:
+    - application
+  responses:
+    '204':
+      $ref: '../responses/NoContent.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

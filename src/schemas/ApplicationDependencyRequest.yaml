@@ -1,12 +1,8 @@
 type: object
+required:
+  - id
 properties:
-  applications:
-    type: object
-    properties:
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            description: Set application ID
-            format: uuid
+  id:
+    type: string
+    description: Set application ID
+    format: uuid
