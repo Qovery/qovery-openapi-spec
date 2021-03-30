@@ -117,13 +117,31 @@ GET /environment/:id/application
 }
 ```
 
-### get application instant metrics
+### get application instant metrics on scale and running instances
 
-GET /application/:id/instantMetric
+GET /application/:id/currentScale
 
 ```json
 {
-  "instances": [
+  "min": 0,
+  "max": 8,
+  "running": 3,
+  "running_in_percent": 37.5,
+  "warning_threshold_in_percent": 80,
+  "alert_threshold_in_percent": 90,
+  "status": {
+    "state": "OK|WARNING|ERROR",
+    "simple_state": "OK|WARNING|ERROR",
+    "message(nullable)": "can be null"
+  }
+}
+```
+
+GET /application/:id/currentInstance
+
+```json
+{
+  "results": [
     {
       "instance_id": "uuid",
       "cpu": {
@@ -163,20 +181,7 @@ GET /application/:id/instantMetric
         }
       }
     }
-  ],
-  "instance": {
-    "min": 0,
-    "max": 8,
-    "running": 3,
-    "running_in_percent": 37.5,
-    "warning_threshold_in_percent": 80,
-    "alert_threshold_in_percent": 90,
-    "status": {
-      "state": "OK|WARNING|ERROR",
-      "simple_state": "OK|WARNING|ERROR",
-      "message(nullable)": "can be null"
-    }
-  }
+  ]
 }
 ```
 
