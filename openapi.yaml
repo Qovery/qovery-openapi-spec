@@ -496,26 +496,42 @@ paths:
                 $ref: '#/components/schemas/ApplicationResponseList'
         '401':
           $ref: '#/components/responses/401'
+  '/application/{applicationId}/dependency/{targetApplicationId}':
     post:
-      summary: Add application dependencies to this application.
-      description: Add application dependencies to this application to prevent this application starting before the dependencies
+      summary: Add application dependency to this application.
+      description: Add application dependency to this application to prevent this application starting before the linked dependencies
       operationId: createApplicationDependency
       parameters:
         - $ref: '#/components/parameters/applicationId'
+        - name: targetApplicationId
+          in: path
+          description: Target application ID
+          required: true
+          schema:
+            type: string
+            format: uuid
       tags:
         - application
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ApplicationDependencyRequest'
       responses:
-        '201':
+        '200':
           description: Add application dependencies
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationResponse'
+        '401':
+          $ref: '#/components/responses/401'
+    delete:
+      summary: Remove application dependency to this application.
+      operationId: removeApplicationDependency
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1dependency~1%7BtargetApplicationId%7D/post/parameters/1'
+      tags:
+        - application
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/commit':
@@ -1608,17 +1624,13 @@ components:
           description: Commit ID to deploy
     ApplicationDependencyRequest:
       type: object
+      required:
+        - id
       properties:
-        applications:
-          type: object
-          properties:
-            items:
-              type: object
-              properties:
-                id:
-                  type: string
-                  description: Set application ID
-                  format: uuid
+        id:
+          type: string
+          description: Set application ID
+          format: uuid
     LogResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
