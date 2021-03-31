@@ -3,7 +3,7 @@ get:
   operationId: getApplicationMetricStorage
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
-    - $ref: '../parameters/query/lastHours.yaml'
+    - $ref: '../parameters/query/lastSeconds.yaml'
   tags:
     - application
   responses:
@@ -17,6 +17,6 @@ get:
               results:
                 type: array
                 items:
-                  $ref: '../schemas/MetricResponse.yaml'
+                  $ref: '../schemas/MetricStorageResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'

@@ -1,0 +1,13 @@
+type: object
+required:
+  - created_at
+  - requested_in_mb
+  - consumed_in_mb
+  - consumed_in_percent
+properties:
+  requested_in_gb:
+    type: integer
+  consumed_in_gb:
+    type: integer
+  consumed_in_percent:
+    type: number

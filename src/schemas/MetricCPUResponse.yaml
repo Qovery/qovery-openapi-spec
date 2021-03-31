@@ -1,0 +1,12 @@
+type: object
+required:
+  - instance_name
+  - data
+properties:
+  instance_name:
+    type: string
+    example: instance 1
+  data:
+    type: array
+    items:
+      $ref: '../schemas/MetricCPUDatapointResponse.yaml'

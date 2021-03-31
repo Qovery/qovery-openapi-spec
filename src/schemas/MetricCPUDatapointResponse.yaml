@@ -1,0 +1,13 @@
+type: object
+required:
+  - created_at
+  - requested_in_float
+  - consumed_in_number
+  - consumed_in_percent
+properties:
+  requested_in_float:
+    type: number
+  consumed_in_number:
+    type: number
+  consumed_in_percent:
+    type: number
