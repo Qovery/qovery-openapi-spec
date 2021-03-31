@@ -1,9 +1,10 @@
 get:
   summary: 'Get Health Check latency  metric over time for the application'
+  description: 'The value returned corresponds to the 95th centile'
   operationId: getApplicationMetricHealthCheck
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
-    - $ref: '../parameters/query/lastHours.yaml'
+    - $ref: '../parameters/query/lastSeconds.yaml'
   tags:
     - application
   responses:
@@ -17,6 +18,6 @@ get:
               results:
                 type: array
                 items:
-                  $ref: '../schemas/MetricResponse.yaml'
+                  $ref: '../schemas/MetricGenericResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'

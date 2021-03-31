@@ -1,6 +1,0 @@
-name: lastHours
-in: query
-description: Up to how many hours in the past to ask analytics results
-required: true
-schema:
-  type: number

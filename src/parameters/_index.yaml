@@ -26,4 +26,4 @@ targetDatabaseId:
 limit:
   $ref: './query/limit.yaml'
 lastDays:
-  $ref: './query/lastDays.yaml'
+  $ref: './query/lastSeconds.yaml'

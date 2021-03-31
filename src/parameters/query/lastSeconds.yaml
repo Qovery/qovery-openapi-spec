@@ -1,0 +1,6 @@
+name: lastSeconds
+in: query
+description: Up to how many seconds in the past to ask analytics results
+required: true
+schema:
+  type: number
