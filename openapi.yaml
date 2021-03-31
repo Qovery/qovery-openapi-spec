@@ -258,6 +258,51 @@ paths:
           $ref: '#/components/responses/401'
         '409':
           description: Environment name within the project is already taken
+  '/project/{projectId}/environmentVariable':
+    post:
+      summary: Add an environment variable to the project
+      description: |
+        - Add an environment variable to the project.
+          - If the environment variable key already exists, then it will be replaced by the new one.
+          - If the environment variable value points toward an existing environment variable key, it will be considered as an alias.
+      operationId: createEnvironmentEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableRequest'
+      responses:
+        '201':
+          description: Added an environment variable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+  '/project/{projectId}/environmentVariable/{environmentVariableId}':
+    delete:
+      summary: Delete an environment variable from a project
+      description: To delete an environment variable from a project you must have the project user permission
+      operationId: deleteProjectEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - project
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}':
     get:
       summary: Get environment by ID
@@ -364,6 +409,51 @@ paths:
           $ref: '#/components/responses/401'
         '409':
           description: Application name within the environment is already taken
+  '/environment/{environmentId}/environmentVariable':
+    post:
+      summary: Add an environment variable to the environment
+      description: |
+        - Add an environment variable to the environment.
+          - If the environment variable key already exists, then it will be replaced by the new one.
+          - If the environment variable value points toward an existing environment variable key, it will be considered as an alias.
+      operationId: createEnvironmentEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableRequest'
+      responses:
+        '201':
+          description: Added an environment variable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+  '/environment/{environmentId}/environmentVariable/{environmentVariableId}':
+    delete:
+      summary: Delete an environment variable from an environment
+      description: To delete an environment variable from an environment you must have the project user permission
+      operationId: deleteEnvironmentEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - environment
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}':
     get:
       summary: Get application by ID
@@ -773,7 +863,9 @@ paths:
     post:
       summary: Add an environment variable to the application
       description: |
-        Add an environment variable to the application. If the environment variable name does already exists, then it will be replaced by the new one.
+        - Add an environment variable to the application.
+          - If the environment variable key already exists, then it will be replaced by the new one.
+          - If the environment variable value points toward an existing environment variable key, it will be considered as an alias.
       operationId: createApplicationEnvironmentVariable
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -793,6 +885,25 @@ paths:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
         '401':
           $ref: '#/components/responses/401'
+  '/application/{applicationId}/environmentVariable/{environmentVariableId}':
+    delete:
+      summary: Delete an environment variable from an application
+      description: To delete an environment variable from an application you must have the project user permission
+      operationId: deleteApplicationEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - application
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/customDomain':
     get:
       summary: List application custom domains
@@ -1808,6 +1919,7 @@ components:
       type: object
       required:
         - key
+        - value
       properties:
         key:
           type: string
@@ -1819,6 +1931,34 @@ components:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
+          required:
+            - scope
+          properties:
+            overriden_variable:
+              type: object
+              properties:
+                key:
+                  type: string
+                scope:
+                  type: string
+                  enum:
+                    - BUILT_IN
+                    - ENVIRONMENT
+                    - PROJECT
+                    - APPLICATION
+            aliased_variable:
+              type: object
+              properties:
+                key:
+                  type: string
+                  example: QOVERY_DATABASE_PSQL_NAME
+            scope:
+              type: string
+              enum:
+                - BUILT_IN
+                - ENVIRONMENT
+                - PROJECT
+                - APPLICATION
         - $ref: '#/components/schemas/EnvironmentVariableRequest'
     EnvironmentVariableResponseList:
       type: object
@@ -1830,20 +1970,19 @@ components:
     SecretRequest:
       type: object
       required:
-        - name
+        - key
       properties:
-        name:
+        key:
           type: string
-          description: name is case insensitive
+          description: key is case sensitive
+        value:
+          type: string
+          description: value of the env variable.
     SecretResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
-          required:
-            - name
-          properties:
-            name:
-              type: string
+        - $ref: '#/components/schemas/SecretRequest'
     SecretResponseList:
       type: object
       properties:
