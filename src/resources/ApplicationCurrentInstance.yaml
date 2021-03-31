@@ -1,5 +1,5 @@
 get:
-  summary: 'Get current metrics for running instances of the application'
+  summary: 'List currently running instances of the application with their resource metrics'
   operationId: getApplicationCurrentInstance
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'

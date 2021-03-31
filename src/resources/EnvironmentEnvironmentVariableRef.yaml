@@ -16,3 +16,34 @@ delete:
       $ref: '../responses/Forbidden.yaml'
     '404':
       $ref: '../responses/NotFound.yaml'
+
+put:
+  summary: 'Change value of an environment variable belonging to the environment'
+  operationId: editEnvironmentEnvironmentVariable
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+    - $ref: '../parameters/path/environmentVariableId.yaml'
+  tags:
+    - environment
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            value:
+              type: string
+  responses:
+    '200':
+      description: 'Edited the environment variable value'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentVariableResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

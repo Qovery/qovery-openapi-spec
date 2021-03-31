@@ -20,7 +20,7 @@ allOf:
             enum:
               - OK
               - Warning
-              - Error
+              - Alert
       memory:
         type: object
         properties:
@@ -39,7 +39,7 @@ allOf:
             enum:
               - OK
               - Warning
-              - Error
+              - Alert
       storage:
         type: object
         properties:
@@ -58,4 +58,4 @@ allOf:
             enum:
               - OK
               - Warning
-              - Error
+              - Alert
