@@ -38,7 +38,7 @@ paths:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:
     $ref: './resources/ApplicationTag.yaml'
-  /application/{applicationId}/currentInstance:
+  /application/{applicationId}/Instance:
     $ref: './resources/ApplicationCurrentInstance.yaml'
   /application/{applicationId}/currentScale:
     $ref: './resources/ApplicationCurrentScale.yaml'
