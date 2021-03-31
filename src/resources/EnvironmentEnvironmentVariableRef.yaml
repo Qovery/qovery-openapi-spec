@@ -1,0 +1,18 @@
+delete:
+  summary: 'Delete an environment variable from an environment'
+  description: 'To delete an environment variable from an environment you must have the project user permission'
+  operationId: deleteEnvironmentEnvironmentVariable
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+    - $ref: '../parameters/path/environmentVariableId.yaml'
+  tags:
+    - environment
+  responses:
+    '204':
+      $ref: '../responses/Deleted.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

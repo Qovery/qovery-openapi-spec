@@ -17,7 +17,9 @@ get:
 post:
   summary: 'Add an environment variable to the application'
   description: |
-    Add an environment variable to the application. If the environment variable name does already exists, then it will be replaced by the new one.
+    - Add an environment variable to the application.
+      - If the environment variable key already exists, then it will be replaced by the new one.
+      - If the environment variable value points toward an existing environment variable key, it will be considered as an alias.
   operationId: createApplicationEnvironmentVariable
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'

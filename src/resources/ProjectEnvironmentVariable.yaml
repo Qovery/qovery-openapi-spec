@@ -1,0 +1,25 @@
+post:
+  summary: 'Add an environment variable to the project'
+  description: |
+    - Add an environment variable to the project.
+      - If the environment variable key already exists, then it will be replaced by the new one.
+      - If the environment variable value points toward an existing environment variable key, it will be considered as an alias.
+  operationId: createEnvironmentEnvironmentVariable
+  parameters:
+    - $ref: '../parameters/path/projectId.yaml'
+  tags:
+    - project
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/EnvironmentVariableRequest.yaml'
+  responses:
+    '201':
+      description: 'Added an environment variable'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentVariableResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

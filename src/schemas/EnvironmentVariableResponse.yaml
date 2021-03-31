@@ -1,4 +1,32 @@
 allOf:
   - $ref: './BaseResponse.yaml'
   - type: object
+    required:
+      - scope
+    properties:
+      overriden_variable:
+        type: object
+        properties:
+          key:
+            type: string
+          scope:
+            type: string
+            enum:
+              - BUILT_IN
+              - ENVIRONMENT
+              - PROJECT
+              - APPLICATION
+      aliased_variable:
+        type: object
+        properties:
+          key:
+            type: string
+            example: QOVERY_DATABASE_PSQL_NAME
+      scope:
+        type: string
+        enum:
+          - BUILT_IN
+          - ENVIRONMENT
+          - PROJECT
+          - APPLICATION
   - $ref: './EnvironmentVariableRequest.yaml'
