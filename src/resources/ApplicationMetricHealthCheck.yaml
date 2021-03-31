@@ -1,0 +1,22 @@
+get:
+  summary: 'Get Health Check latency  metric over time for the application'
+  operationId: getApplicationMetricHealthCheck
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/query/lastDays.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'Health Check Latency'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '../schemas/MetricResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

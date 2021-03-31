@@ -36,6 +36,12 @@ paths:
     $ref: './resources/ApplicationCurrentScale.yaml'
   /application/{applicationId}/metric/cpu:
     $ref: './resources/ApplicationMetricCpu.yaml'
+  /application/{applicationId}/metric/memory:
+    $ref: './resources/ApplicationMetricMemory.yaml'    
+  /application/{applicationId}/metric/healthCheck:
+    $ref: './resources/ApplicationMetricHealthCheck.yaml'  
+  /application/{applicationId}/metric/storage:
+    $ref: './resources/ApplicationMetricStorage.yaml'      
   /application/{applicationId}/dependency:
     $ref: './resources/ApplicationDependency.yaml'
   /application/{applicationId}/dependency/{targetApplicationId}:
