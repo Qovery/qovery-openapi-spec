@@ -540,7 +540,7 @@ paths:
   '/application/{applicationId}/metric/cpu':
     get:
       summary: Get CPU consumption metric over time for the application
-      operationId: getApplicationCpuMetric
+      operationId: getApplicationMetricCpu
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/lastDays'
@@ -548,7 +548,7 @@ paths:
         - application
       responses:
         '200':
-          description: Cpu consumption
+          description: CPU consumption
           content:
             application/json:
               schema:
@@ -558,14 +558,21 @@ paths:
                     type: array
                     items:
                       type: object
+                      required:
+                        - instance_name
+                        - data
                       properties:
-                        results:
+                        instance_name:
+                          type: string
+                          example: instance 1
+                        data:
                           type: array
                           items:
                             type: object
+                            required:
+                              - created_at
+                              - value
                             properties:
-                              instance_name:
-                                type: string
                               created_at:
                                 type: string
                                 readOnly: true
