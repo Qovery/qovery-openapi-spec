@@ -303,6 +303,36 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+    put:
+      summary: Change value of an environment variable belonging to the project
+      operationId: editProjectEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+      responses:
+        '200':
+          description: Edited the environment variable value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}':
     get:
       summary: Get environment by ID
@@ -454,6 +484,36 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+    put:
+      summary: Change value of an environment variable belonging to the environment
+      operationId: editEnvironmentEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - environment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+      responses:
+        '200':
+          description: Edited the environment variable value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}':
     get:
       summary: Get application by ID
@@ -571,7 +631,7 @@ paths:
           $ref: '#/components/responses/401'
   '/application/{applicationId}/currentInstance':
     get:
-      summary: Get current metrics for running instances of the application
+      summary: List currently running instances of the application with their resource metrics
       operationId: getApplicationCurrentInstance
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -624,7 +684,11 @@ paths:
                     enum:
                       - OK
                       - Warning
-                      - Error
+                      - Alert
+                  updated_at:
+                    type: string
+                    readOnly: true
+                    format: date-time
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/metric/cpu':
@@ -633,7 +697,12 @@ paths:
       operationId: getApplicationMetricCpu
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/lastDays'
+        - name: lastHours
+          in: query
+          description: Up to how many hours in the past to ask analytics results
+          required: true
+          schema:
+            type: number
       tags:
         - application
       responses:
@@ -677,7 +746,7 @@ paths:
       operationId: getApplicationMetricMemory
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/lastDays'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/parameters/1'
       tags:
         - application
       responses:
@@ -700,7 +769,7 @@ paths:
       operationId: getApplicationMetricHealthCheck
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/lastDays'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/parameters/1'
       tags:
         - application
       responses:
@@ -723,7 +792,7 @@ paths:
       operationId: getApplicationMetricStorage
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/lastDays'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/parameters/1'
       tags:
         - application
       responses:
@@ -904,6 +973,36 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+    put:
+      summary: Change value of an environment variable belonging to the application
+      operationId: editApplicationEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+      responses:
+        '200':
+          description: Edited the environment variable value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/customDomain':
     get:
       summary: List application custom domains
@@ -963,51 +1062,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    put:
-      summary: Edit an environment variable
-      description: To edit an environment variable you must have the project user permission
-      operationId: editEnvironmentVariable
-      parameters:
-        - $ref: '#/components/parameters/environmentVariableId'
-      tags:
-        - environmentVariable
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EnvironmentVariableRequest'
-      responses:
-        '200':
-          description: Edit an environment variable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Environment variable name is already taken
-    delete:
-      summary: Delete an environment variable
-      description: To delete an environment variable you must have the project user permission
-      operationId: deleteEnvironmentVariable
-      parameters:
-        - $ref: '#/components/parameters/environmentVariableId'
-      tags:
-        - environmentVariable
-      responses:
-        '204':
-          $ref: '#/components/responses/204-deletion'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1458,7 +1512,7 @@ paths:
                             enum:
                               - OK
                               - Warning
-                              - Error
+                              - Alert
                       memory:
                         type: object
                         properties:
@@ -1477,7 +1531,7 @@ paths:
                             enum:
                               - OK
                               - Warning
-                              - Error
+                              - Alert
                       storage:
                         type: object
                         properties:
@@ -1496,7 +1550,7 @@ paths:
                             enum:
                               - OK
                               - Warning
-                              - Error
+                              - Alert
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1938,6 +1992,9 @@ components:
               type: object
               properties:
                 key:
+                  type: string
+                  readony: true
+                value:
                   type: string
                 scope:
                   type: string
