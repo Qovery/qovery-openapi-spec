@@ -3,7 +3,7 @@ get:
   operationId: getApplicationMetricStorage
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
-    - $ref: '../parameters/query/lastDays.yaml'
+    - $ref: '../parameters/query/lastHours.yaml'
   tags:
     - application
   responses:

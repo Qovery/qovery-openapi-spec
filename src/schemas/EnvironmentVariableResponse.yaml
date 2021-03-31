@@ -9,6 +9,9 @@ allOf:
         properties:
           key:
             type: string
+            readony: true
+          value:
+            type: string
           scope:
             type: string
             enum:

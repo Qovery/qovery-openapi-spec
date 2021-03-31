@@ -30,6 +30,10 @@ get:
                 enum:
                   - OK
                   - Warning
-                  - Error
+                  - Alert
+              updated_at:
+                type: string
+                readOnly: true
+                format: date-time
     '401':
       $ref: '../responses/NotAuthorized.yaml'
