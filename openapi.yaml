@@ -697,17 +697,105 @@ paths:
       operationId: getApplicationMetricCpu
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - name: lastHours
-          in: query
-          description: Up to how many hours in the past to ask analytics results
-          required: true
-          schema:
-            type: number
+        - $ref: '#/components/parameters/lastDays'
       tags:
         - application
       responses:
         '200':
           description: CPU consumption
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - instance_name
+                        - data
+                      properties:
+                        instance_name:
+                          type: string
+                          example: instance 1
+                        data:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                              - created_at
+                              - requested_in_float
+                              - consumed_in_number
+                              - consumed_in_percent
+                            properties:
+                              requested_in_float:
+                                type: number
+                              consumed_in_number:
+                                type: number
+                              consumed_in_percent:
+                                type: number
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/metric/memory':
+    get:
+      summary: Get Memory consumption metric over time for the application
+      operationId: getApplicationMetricMemory
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/lastDays'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Memory consumption
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - instance_name
+                        - data
+                      properties:
+                        instance_name:
+                          type: string
+                          example: instance 1
+                        data:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                              - created_at
+                              - requested_in_mb
+                              - consumed_in_mb
+                              - consumed_in_percent
+                            properties:
+                              requested_in_mb:
+                                type: integer
+                              consumed_in_mb:
+                                type: integer
+                              consumed_in_percent:
+                                type: number
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/metric/healthCheck':
+    get:
+      summary: Get Health Check latency  metric over time for the application
+      description: The value returned corresponds to the 95th centile
+      operationId: getApplicationMetricHealthCheck
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/lastDays'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Health Check Latency
           content:
             application/json:
               schema:
@@ -740,59 +828,13 @@ paths:
                                 type: number
         '401':
           $ref: '#/components/responses/401'
-  '/application/{applicationId}/metric/memory':
-    get:
-      summary: Get Memory consumption metric over time for the application
-      operationId: getApplicationMetricMemory
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/parameters/1'
-      tags:
-        - application
-      responses:
-        '200':
-          description: Memory consumption
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/responses/200/content/application~1json/schema/properties/results/items'
-        '401':
-          $ref: '#/components/responses/401'
-  '/application/{applicationId}/metric/healthCheck':
-    get:
-      summary: Get Health Check latency  metric over time for the application
-      operationId: getApplicationMetricHealthCheck
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/parameters/1'
-      tags:
-        - application
-      responses:
-        '200':
-          description: Health Check Latency
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/responses/200/content/application~1json/schema/properties/results/items'
-        '401':
-          $ref: '#/components/responses/401'
   '/application/{applicationId}/metric/storage':
     get:
       summary: Get Storage consumption metric over time for the application
       operationId: getApplicationMetricStorage
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/parameters/1'
+        - $ref: '#/components/parameters/lastDays'
       tags:
         - application
       responses:
@@ -806,7 +848,30 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/responses/200/content/application~1json/schema/properties/results/items'
+                      type: object
+                      required:
+                        - instance_name
+                        - data
+                      properties:
+                        instance_name:
+                          type: string
+                          example: instance 1
+                        data:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                              - created_at
+                              - requested_in_mb
+                              - consumed_in_mb
+                              - consumed_in_percent
+                            properties:
+                              requested_in_gb:
+                                type: integer
+                              consumed_in_gb:
+                                type: integer
+                              consumed_in_percent:
+                                type: number
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/dependency':
@@ -1656,9 +1721,9 @@ components:
         type: integer
         format: int32
     lastDays:
-      name: lastDays
+      name: lastSeconds
       in: query
-      description: Up to how many days in the past to ask analytics results
+      description: Up to how many seconds in the past to ask analytics results
       required: true
       schema:
         type: number
