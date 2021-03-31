@@ -35,7 +35,7 @@ paths:
   /application/{applicationId}/currentScale:
     $ref: './resources/ApplicationCurrentScale.yaml'
   /application/{applicationId}/metric/cpu:
-    $ref: './resources/ApplicationCpuMetric.yaml'
+    $ref: './resources/ApplicationMetricCpu.yaml'
   /application/{applicationId}/dependency:
     $ref: './resources/ApplicationDependency.yaml'
   /application/{applicationId}/dependency/{targetApplicationId}:

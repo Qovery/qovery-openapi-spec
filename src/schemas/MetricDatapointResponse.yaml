@@ -1,7 +1,8 @@
 type: object
+required:
+  - created_at
+  - value
 properties:
-  instance_name:
-    type: string
   created_at:
     type: string
     readOnly: true
