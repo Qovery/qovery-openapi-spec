@@ -581,6 +581,75 @@ paths:
                                 type: number
         '401':
           $ref: '#/components/responses/401'
+  '/application/{applicationId}/metric/memory':
+    get:
+      summary: Get Memory consumption metric over time for the application
+      operationId: getApplicationMetricMemory
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/lastDays'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Memory consumption
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/responses/200/content/application~1json/schema/properties/results/items'
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/metric/healthCheck':
+    get:
+      summary: Get Health Check latency  metric over time for the application
+      operationId: getApplicationMetricHealthCheck
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/lastDays'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Health Check Latency
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/responses/200/content/application~1json/schema/properties/results/items'
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/metric/storage':
+    get:
+      summary: Get Storage consumption metric over time for the application
+      operationId: getApplicationMetricStorage
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/lastDays'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Storage consumption
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1cpu/get/responses/200/content/application~1json/schema/properties/results/items'
+        '401':
+          $ref: '#/components/responses/401'
   '/application/{applicationId}/dependency':
     get:
       summary: List application dependencies
