@@ -1,0 +1,7 @@
+name: tail
+in: query
+description: Number of last results to return
+required: true
+schema:
+  type: integer
+  format: int32

@@ -1,0 +1,18 @@
+get:
+  summary: 'List XX last events'
+  description: Returns all last XX events. Result is not paginated
+  operationId: listApplicationEventTail
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/query/tail.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'List events'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EventResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

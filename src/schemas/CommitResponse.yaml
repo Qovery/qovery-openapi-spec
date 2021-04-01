@@ -6,3 +6,5 @@ allOf:
     properties:
       git_commit_id:
         type: string
+      message:
+        type: string

@@ -1,0 +1,7 @@
+name: startId
+in: query
+description: Starting point after which to return results 
+required: false
+schema:
+  type: string
+  format: uuid
