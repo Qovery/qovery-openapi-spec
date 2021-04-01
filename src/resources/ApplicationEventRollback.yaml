@@ -1,0 +1,18 @@
+post:
+  summary: 'Rollback application from a given event'
+  description: 'Rollback your application to a specific event that occured on your application'
+  operationId: rollbackApplicationFromEvent
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/eventId.yaml'
+  tags:
+    - application
+  responses:
+    '201':
+      description: 'Application rollbacked'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EventResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

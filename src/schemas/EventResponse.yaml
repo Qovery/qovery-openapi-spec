@@ -1,8 +1,10 @@
 allOf:
   - $ref: './BaseResponse.yaml'
-  - type: object
-    required:
-      - name
+  - type: object    
     properties:
-      name:
-        type: string
+      owner:
+        $ref: './UserResponse.yaml'
+      commit:
+        $ref: './CommitResponse.yaml'
+      status:
+        $ref: './Status.yaml'

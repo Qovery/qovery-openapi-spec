@@ -1,8 +1,10 @@
 get:
-  summary: 'List events'
+  summary: 'List last events'
+  description: By default it returns the 20 last results. The result is paginated. In order to request the next page, you can use the startId quesry parameter
   operationId: listApplicationEvent
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/query/startId.yaml'
   tags:
     - application
   responses:
@@ -11,6 +13,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/EventResponseList.yaml'
+            $ref: '../schemas/EventPaginatedResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+
