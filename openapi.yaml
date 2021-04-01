@@ -1875,6 +1875,9 @@ components:
           type: string
           readOnly: true
           format: date-time
+        git_last_commit_contributor:
+          type: string
+          format: uuid
         dockerfile_path:
           type: string
           description: The path of the associated Dockerfile
