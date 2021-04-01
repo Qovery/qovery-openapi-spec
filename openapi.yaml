@@ -599,17 +599,7 @@ paths:
                   results:
                     type: array
                     items:
-                      allOf:
-                        - $ref: '#/components/schemas/BaseResponse'
-                        - type: object
-                          properties:
-                            first_name:
-                              type: string
-                            last_name:
-                              type: string
-                            profile_picture_url:
-                              type: string
-                              format: uri
+                      $ref: '#/components/schemas/EventResponse/allOf/1/properties/owner'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/tag':
@@ -962,10 +952,60 @@ paths:
           $ref: '#/components/responses/404'
   '/application/{applicationId}/event':
     get:
-      summary: List events
+      summary: List last events
+      description: 'By default it returns the 20 last results. The result is paginated. In order to request the next page, you can use the startId quesry parameter'
       operationId: listApplicationEvent
       parameters:
         - $ref: '#/components/parameters/applicationId'
+        - name: startId
+          in: query
+          description: Starting point after which to return results
+          required: false
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - application
+      responses:
+        '200':
+          description: List events
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - page
+                      - page_size
+                    properties:
+                      page:
+                        type: number
+                        example: 1
+                      page_size:
+                        type: number
+                        example: 20
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/EventResponse'
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/event?tail=':
+    get:
+      summary: List XX last events
+      description: Returns all last XX events. Result is not paginated
+      operationId: listApplicationEventTail
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - name: tail
+          in: query
+          description: Number of last results to return
+          required: true
+          schema:
+            type: integer
+            format: int32
       tags:
         - application
       responses:
@@ -975,6 +1015,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/event?lastId=':
+    get:
+      summary: List all the last events after a certain event Id
+      description: 'Returns all last events that happened on the application, after the event ID you specify in the lastId query parameter. Result is not paginated'
+      operationId: listApplicationEventLastId
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - name: lastId
+          in: query
+          description: ID of the last object after which to return all results
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - application
+      responses:
+        '200':
+          description: List events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/event/{eventId}/rollback':
+    post:
+      summary: Rollback application from a given event
+      description: Rollback your application to a specific event that occured on your application
+      operationId: rollbackApplicationFromEvent
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - name: eventId
+          in: path
+          description: Event ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - application
+      responses:
+        '201':
+          description: Application rollbacked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/environmentVariable':
@@ -2119,11 +2209,23 @@ components:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
-          required:
-            - name
           properties:
-            name:
-              type: string
+            owner:
+              allOf:
+                - $ref: '#/components/schemas/BaseResponse'
+                - type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    profile_picture_url:
+                      type: string
+                      format: uri
+            commit:
+              $ref: '#/components/schemas/CommitResponse'
+            status:
+              $ref: '#/components/schemas/Status'
     EventResponseList:
       type: object
       properties:
@@ -2139,6 +2241,8 @@ components:
             - git_commit_id
           properties:
             git_commit_id:
+              type: string
+            message:
               type: string
     CommitResponseList:
       type: object
