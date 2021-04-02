@@ -135,3 +135,14 @@ properties:
             - HTTP
             - TCP
             - UDP
+  healthcheck:
+    type: object
+    properties:
+      protocol:
+        type: string
+        enum:
+          - TCP
+          - HTTP
+          - None
+      value:
+        type: string
