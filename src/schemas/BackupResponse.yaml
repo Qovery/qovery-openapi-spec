@@ -1,0 +1,8 @@
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - type: object    
+    properties:
+      message:
+        type: string
+      status:
+        $ref: './Status.yaml'

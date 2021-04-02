@@ -101,6 +101,28 @@ paths:
     $ref: './resources/EnvironmentDatabase.yaml'
   /database/{databaseId}:
     $ref: './resources/Database.yaml'
+  /database/{databaseId}/restart:
+    $ref: './resources/DatabaseRestart.yaml'
+  /database/{databaseId}/stop:
+    $ref: './resources/DatabaseStop.yaml'
+  /database/{databaseId}/clone:
+    $ref: './resources/DatabaseClone.yaml'
+  /database/{databaseId}/application:
+    $ref: './resources/DatabaseApplication.yaml'
+  /database/{databaseId}/application/{targetApplicationId}:
+    $ref: './resources/DatabaseApplicationRef.yaml'
+  /database/{databaseId}/currentMetric:
+    $ref: './resources/DatabaseCurrentMetric.yaml'
+  /database/{databaseId}/metric/cpu:
+    $ref: './resources/DatabaseMetricCpu.yaml'
+  /database/{databaseId}/metric/memory:
+    $ref: './resources/DatabaseMetricMemory.yaml'
+  /database/{databaseId}/metric/storage:
+    $ref: './resources/DatabaseMetricStorage.yaml'
+  /database/{databaseId}/backup:
+    $ref: './resources/DatabaseBackup.yaml'
+  /database/{databaseId}/backup/{backupId}:
+    $ref: './resources/DatabaseBackupRef.yaml'
   /customDomain/{customDomainId}:
     $ref: './resources/CustomDomain.yaml'
   /instance/{instanceId}:

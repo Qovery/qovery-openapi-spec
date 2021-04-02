@@ -1,0 +1,7 @@
+name: backupId
+in: path
+description: Database Backup ID
+required: true
+schema:
+  type: string
+  format: uuid

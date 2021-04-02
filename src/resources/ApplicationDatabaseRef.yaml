@@ -1,6 +1,6 @@
 post:
   summary: 'Link a database to the application'
-  operationId: attachApplicationToDatabase
+  operationId: attachDatabasetoApplication
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/path/targetDatabaseId.yaml'
