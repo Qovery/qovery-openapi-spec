@@ -960,13 +960,7 @@ paths:
       operationId: listApplicationEvent
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - name: startId
-          in: query
-          description: Starting point after which to return results
-          required: false
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/parameters/1'
       tags:
         - application
       responses:
@@ -976,17 +970,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - type: object
-                    required:
-                      - page
-                      - page_size
-                    properties:
-                      page:
-                        type: number
-                        example: 1
-                      page_size:
-                        type: number
-                        example: 20
+                  - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/responses/200/content/application~1json/schema/allOf/0'
                   - type: object
                     properties:
                       results:
@@ -1327,6 +1311,13 @@ paths:
       description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
       parameters:
         - $ref: '#/components/parameters/applicationId'
+        - name: startId
+          in: query
+          description: Starting point after which to return results
+          required: false
+          schema:
+            type: string
+            format: uuid
       tags:
         - application
       responses:
@@ -1335,7 +1326,24 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LogResponseList'
+                allOf:
+                  - type: object
+                    required:
+                      - page
+                      - page_size
+                    properties:
+                      page:
+                        type: number
+                        example: 1
+                      page_size:
+                        type: number
+                        example: 20
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/LogResponse'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/log?tail=':
