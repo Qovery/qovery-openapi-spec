@@ -1,8 +1,19 @@
 allOf:
   - $ref: './BaseResponse.yaml'
-  - type: object
-    required:
-      - name
+  - type: object    
     properties:
-      name:
+      owner:
+        $ref: './UserResponse.yaml'
+      commit:
+        $ref: './CommitResponse.yaml'
+      status:
+        $ref: './Status.yaml'
+      message:
         type: string
+        example: log message
+      message_human_explanation:
+        type: string
+        example: explain what the error means -- Markdown can be injected
+      hint:
+        type: string
+        example: give a possible action to the user -- Markdown can be injected

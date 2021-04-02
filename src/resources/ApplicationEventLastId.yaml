@@ -1,6 +1,6 @@
 get:
-  summary: 'List all the last events after a certain event Id'
-  description: Returns all last events that happened on the application, after the event ID you specify in the lastId query parameter. Result is not paginated
+  summary: 'List all the last application events after a certain event Id'
+  description: Returns all last events that happened on the application, after the event ID you specify in the lastId query parameter. Response is not paginated
   operationId: listApplicationEventLastId
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'

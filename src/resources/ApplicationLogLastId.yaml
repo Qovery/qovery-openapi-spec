@@ -1,9 +1,10 @@
 get:
-  summary: 'List logs'
-  operationId: listApplicationLog
-  description: By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
+  summary: 'List all the last application logs after a certain log Id'
+  description: Returns all last logs that happened on the application, after the log ID you specify in the lastId query parameter. Response is not paginated
+  operationId: listApplicationLogLastId
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/query/lastId.yaml'
   tags:
     - application
   responses:

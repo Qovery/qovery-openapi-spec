@@ -1,7 +1,7 @@
 get:
-  summary: 'List XX last application events'
-  description: Returns all last XX events. Response is not paginated
-  operationId: listApplicationEventTail
+  summary: 'List XX last application logs'
+  description: Returns all last XX application logs. Response is not paginated
+  operationId: listApplicationLogTail
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/query/tail.yaml'
@@ -9,10 +9,10 @@ get:
     - application
   responses:
     '200':
-      description: 'List events'
+      description: 'List logs'
       content:
         application/json:
           schema:
-            $ref: '../schemas/EventResponseList.yaml'
+            $ref: '../schemas/LogResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
