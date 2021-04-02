@@ -7,6 +7,9 @@ info:
     name: Qovery Support Team
     url: https://discord.qovery.com
     email: support+api+documentation@qovery.com
+  x-logo:
+    url: 'https://uploads-ssl.webflow.com/5de176c0d41c9b4a1dbbb0aa/5f9b214e6d66a454556d8b5b_qovery_logo_with_name_dark_2048.png'
+    altText: Qovery 
 servers:
   - url: 'https://api.qovery.com'
 paths:
