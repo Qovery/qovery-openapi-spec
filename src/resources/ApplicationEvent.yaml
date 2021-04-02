@@ -1,6 +1,6 @@
 get:
-  summary: 'List last events'
-  description: By default it returns the 20 last results. The result is paginated. In order to request the next page, you can use the startId quesry parameter
+  summary: 'List application events'
+  description: By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
   operationId: listApplicationEvent
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
