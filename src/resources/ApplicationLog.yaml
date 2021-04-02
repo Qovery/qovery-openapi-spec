@@ -4,6 +4,7 @@ get:
   description: By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/query/startId.yaml'
   tags:
     - application
   responses:
@@ -12,6 +13,6 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/LogResponseList.yaml'
+            $ref: '../schemas/LogPaginatedResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
