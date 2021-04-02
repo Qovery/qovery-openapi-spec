@@ -2,6 +2,7 @@ type: object
 required:
   - name
   - database_type
+  - database_version
 properties:
   name:
     type: string
@@ -37,4 +38,10 @@ properties:
       - 1GB
       - 1.2GB
       - 2GB
-  
+  storage:
+    type: string
+    description: Size can be in GB and TB only
+    example:
+      - 1GB
+      - 16GB
+      - 1TB
