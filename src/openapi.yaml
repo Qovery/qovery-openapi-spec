@@ -24,6 +24,10 @@ paths:
     $ref: './resources/ProjectEnvironmentVariable.yaml'
   /project/{projectId}/environmentVariable/{environmentVariableId}:
     $ref: './resources/ProjectEnvironmentVariableRef.yaml'
+  /project/{projectId}/secret:
+    $ref: './resources/ProjectSecret.yaml'
+  /project/{projectId}/secret/{secretId}:
+    $ref: './resources/ProjectSecretRef.yaml'
   /environment/{environmentId}:
     $ref: './resources/Environment.yaml'
   /environment/{environmentId}/application:
@@ -32,6 +36,10 @@ paths:
     $ref: './resources/EnvironmentEnvironmentVariable.yaml'
   /environment/{environmentId}/environmentVariable/{environmentVariableId}:
     $ref: './resources/EnvironmentEnvironmentVariableRef.yaml'
+  /environment/{environmentId}/secret:
+    $ref: './resources/EnvironmentSecret.yaml'
+  /environment/{environmentId}/secret/{secretId}:
+    $ref: './resources/EnvironmentSecretRef.yaml'
   /application/{applicationId}:
     $ref: './resources/Application.yaml'
   /application/{applicationId}/contributor:
@@ -64,12 +72,14 @@ paths:
     $ref: './resources/ApplicationEnvironmentVariable.yaml'
   /application/{applicationId}/environmentVariable/{environmentVariableId}:
     $ref: './resources/ApplicationEnvironmentVariableRef.yaml'
-  /application/{applicationId}/customDomain:
-    $ref: './resources/ApplicationCustomDomain.yaml'
   /environmentVariable/{environmentVariableId}:
     $ref: './resources/EnvironmentVariable.yaml'
   /application/{applicationId}/secret:
     $ref: './resources/ApplicationSecret.yaml'
+  /application/{applicationId}/secret/{secretId}:
+    $ref: './resources/ApplicationSecretRef.yaml'
+  /application/{applicationId}/customDomain:
+    $ref: './resources/ApplicationCustomDomain.yaml'
   /secret/{secretId}:
     $ref: './resources/Secret.yaml'
   /application/{applicationId}/log:
