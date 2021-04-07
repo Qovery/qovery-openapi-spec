@@ -1,13 +1,13 @@
 get:
-  summary: 'Get current metric consumption of the database'
-  operationId: getDatabaseCurrentMetric
+  summary: 'Get current metric consumption of the database service'
+  operationId: getDatabaseServiceCurrentMetric
   parameters:
-    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/path/databaseServiceId.yaml'
   tags:
-    - database
+    - databaseService
   responses:
     '200':
-      description: 'Get database current metric'
+      description: 'Get database service current metric'
       content:
         application/json:
           schema:

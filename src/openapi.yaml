@@ -75,12 +75,8 @@ paths:
     $ref: './resources/ApplicationEnvironmentVariableRef.yaml'
   /application/{applicationId}/customDomain:
     $ref: './resources/ApplicationCustomDomain.yaml'
-  /environmentVariable/{environmentVariableId}:
-    $ref: './resources/EnvironmentVariable.yaml'
   /application/{applicationId}/secret:
     $ref: './resources/ApplicationSecret.yaml'
-  /secret/{secretId}:
-    $ref: './resources/Secret.yaml'
   /application/{applicationId}/log:
     $ref: './resources/ApplicationLog.yaml'
   /application/{applicationId}/log?tail=:
@@ -97,36 +93,58 @@ paths:
     $ref: './resources/ApplicationStop.yaml'
   /application/{applicationId}/restart:
     $ref: './resources/ApplicationRestart.yaml'
-  /environment/{environmentId}/database:
-    $ref: './resources/EnvironmentDatabase.yaml'
+  /environment/{environmentId}/databaseService:
+    $ref: './resources/EnvironmentDatabaseService.yaml'
+  /databaseService/{databaseServiceId}:
+    $ref: './resources/DatabaseService.yaml'
+  /databaseService/{databaseServiceId}/masterCredentials:
+    $ref: './resources/DatabaseServiceMasterCredentials.yaml'
+  /databaseService/{databaseServiceId}/database:
+    $ref: './resources/DatabaseServiceDatabase.yaml'
+  /databaseService/{databaseServiceId}/application:
+    $ref: './resources/DatabaseServiceApplication.yaml'
+  /databaseService/{databaseServiceId}/application/{targetApplicationId}:
+    $ref: './resources/DatabaseServiceApplicationRef.yaml'
+  /databaseService/{databaseServiceId}/restart:
+    $ref: './resources/DatabaseServiceRestart.yaml'
+  /databaseService/{databaseServiceId}/stop:
+    $ref: './resources/DatabaseServiceStop.yaml'
+  /databaseService/{databaseServiceId}/clone:
+    $ref: './resources/DatabaseServiceClone.yaml'
+  /databaseService/{databaseServiceId}/currentMetric:
+    $ref: './resources/DatabaseServiceCurrentMetric.yaml'
+  /databaseService/{databaseServiceId}/metric/cpu:
+    $ref: './resources/DatabaseServiceMetricCpu.yaml'
+  /databaseService/{databaseServiceId}/metric/memory:
+    $ref: './resources/DatabaseServiceMetricMemory.yaml'
+  /databaseService/{databaseServiceId}/metric/storage:
+    $ref: './resources/DatabaseServiceMetricStorage.yaml'
+  /databaseService/{databaseServiceId}/metric/healthCheck:
+    $ref: './resources/DatabaseServiceMetricHealthCheck.yaml'
+  /databaseService/{databaseServiceId}/backup:
+    $ref: './resources/DatabaseServiceBackup.yaml'
+  /databaseService/{databaseServiceId}/backup/{backupId}:
+    $ref: './resources/DatabaseServiceBackupRef.yaml'
+  /databaseService/{databaseServiceId}/event:
+    $ref: './resources/DatabaseServiceEvent.yaml'
+  /databaseService/{databaseServiceId}/event?tail=:
+    $ref: './resources/DatabaseServiceEventTail.yaml'
+  /databaseService/{databaseServiceId}/event?lastId=:
+    $ref: './resources/DatabaseServiceEventLastId.yaml'
   /database/{databaseId}:
     $ref: './resources/Database.yaml'
-  /database/{databaseId}/restart:
-    $ref: './resources/DatabaseRestart.yaml'
-  /database/{databaseId}/stop:
-    $ref: './resources/DatabaseStop.yaml'
-  /database/{databaseId}/clone:
-    $ref: './resources/DatabaseClone.yaml'
+  /database/{databaseId}/credentials:
+    $ref: './resources/DatabaseCredentials.yaml'
   /database/{databaseId}/application:
     $ref: './resources/DatabaseApplication.yaml'
-  /database/{databaseId}/application/{targetApplicationId}:
-    $ref: './resources/DatabaseApplicationRef.yaml'
-  /database/{databaseId}/currentMetric:
-    $ref: './resources/DatabaseCurrentMetric.yaml'
-  /database/{databaseId}/metric/cpu:
-    $ref: './resources/DatabaseMetricCpu.yaml'
-  /database/{databaseId}/metric/memory:
-    $ref: './resources/DatabaseMetricMemory.yaml'
-  /database/{databaseId}/metric/storage:
-    $ref: './resources/DatabaseMetricStorage.yaml'
-  /database/{databaseId}/backup:
-    $ref: './resources/DatabaseBackup.yaml'
-  /database/{databaseId}/backup/{backupId}:
-    $ref: './resources/DatabaseBackupRef.yaml'
   /customDomain/{customDomainId}:
     $ref: './resources/CustomDomain.yaml'
   /instance/{instanceId}:
     $ref: './resources/Instance.yaml'
+  /environmentVariable/{environmentVariableId}:
+    $ref: './resources/EnvironmentVariable.yaml'
+  /secret/{secretId}:
+    $ref: './resources/Secret.yaml'
 components:
   parameters:
     $ref: './parameters/_index.yaml'

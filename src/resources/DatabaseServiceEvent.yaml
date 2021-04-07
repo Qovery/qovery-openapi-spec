@@ -1,19 +1,19 @@
 get:
-  summary: 'List database backups'
+  summary: 'List database service events'
   description: By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
-  operationId: listDatabaseBackup
+  operationId: listDatabaseServiceEvent
   parameters:
-    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/path/databaseServiceId.yaml'
     - $ref: '../parameters/query/startId.yaml'
   tags:
-    - database
+    - databaseService
   responses:
     '200':
-      description: 'List backups'
+      description: 'List events'
       content:
         application/json:
           schema:
-            $ref: '../schemas/BackupPaginatedResponseList.yaml'
+            $ref: '../schemas/EventPaginatedResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
 

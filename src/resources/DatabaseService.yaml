@@ -1,0 +1,65 @@
+get:
+  summary: 'Get database service by ID'
+  operationId: getDatabaseService
+  parameters:
+    - $ref: '../parameters/path/databaseServiceId.yaml'
+  tags:
+    - databaseService
+  responses:
+    '200':
+      description: 'Get database service by ID'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/DatabaseServiceResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+put:
+  summary: 'Edit a database service'
+  description: 'To edit a database service you must have the admin permission'
+  operationId: editDatabaseService
+  parameters:
+    - $ref: '../parameters/path/databaseServiceId.yaml'
+  tags:
+    - databaseService
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/DatabaseServiceRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit a database service'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/DatabaseServiceResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+    '409':
+      description: Database service name within the environment is already taken
+delete:
+  summary: 'Delete a database service'
+  description: 'To delete a database you must have the admin permission'
+  operationId: deleteDatabaseService
+  parameters:
+    - $ref: '../parameters/path/databaseServiceId.yaml'
+  tags:
+    - databaseService
+  responses:
+    '204':
+      $ref: '../responses/Deleted.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

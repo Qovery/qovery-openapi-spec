@@ -1,15 +1,15 @@
 get:
-  summary: 'Get Storage consumption metric over time for the database'
-  operationId: getDatabaseMetricStorage
+  summary: 'Get CPU consumption metric over time for the database service'
+  operationId: getDatabaseServiceMetricCpu
   parameters:
-    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/path/databaseServiceId.yaml'
     - $ref: '../parameters/query/lastSeconds.yaml'
 
   tags:
-    - database
+    - databaseService
   responses:
     '200':
-      description: 'Storage consumption'
+      description: 'CPU consumption'
       content:
         application/json:
           schema:
@@ -18,6 +18,6 @@ get:
               results:
                 type: array
                 items:
-                  $ref: '../schemas/MetricStorageDatapointResponse.yaml'
+                  $ref: '../schemas/MetricCPUDatapointResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'

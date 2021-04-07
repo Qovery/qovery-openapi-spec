@@ -2,8 +2,8 @@ allOf:
   - $ref: './BaseResponse.yaml'
   - type: object
     properties:
-      database_service:
+      environment:
         $ref: './ReferenceObject.yaml'
       status:
         $ref: './Status.yaml'
-  - $ref: './DatabaseRequest.yaml'
+  - $ref: './DatabaseServiceRequest.yaml'

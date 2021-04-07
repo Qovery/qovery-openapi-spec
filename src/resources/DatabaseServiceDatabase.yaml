@@ -1,0 +1,35 @@
+get:
+  summary: 'List databases of a database service'
+  operationId: listDatabaseServiceDatabase
+  parameters:
+    - $ref: '../parameters/path/databaseServiceId.yaml'
+  tags:
+    - databaseService
+  responses:
+    '200':
+      description: 'List databases'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/DatabaseResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+
+post:
+  summary: 'Create a database on the database Service'
+  operationId: createDatabaseOnDatabaseService
+  parameters:
+    - $ref: '../parameters/path/databaseServiceId.yaml'
+  tags:
+    - databaseService
+  responses:
+    '201':
+      description: 'Created database on the database Service'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/DatabaseResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: Databse with this name already exists on the database Service
