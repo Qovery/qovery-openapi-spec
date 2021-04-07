@@ -1,0 +1,17 @@
+      
+delete:
+  summary: 'Remove database service backup'
+  operationId: removeDatabaseServiceBackup
+  parameters:
+    - $ref: '../parameters/path/databaseServiceId.yaml'
+    - $ref: '../parameters/path/backupId.yaml'
+  tags:
+    - databaseService
+  responses:
+    '204':
+      $ref: '../responses/NoContent.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+
+
+

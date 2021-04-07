@@ -20,7 +20,6 @@ get:
       $ref: '../responses/NotFound.yaml'
 put:
   summary: 'Edit a database'
-  description: 'To edit a database you must have the admin permission'
   operationId: editDatabase
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'
@@ -33,7 +32,7 @@ put:
           $ref: '../schemas/DatabaseRequest.yaml'
   responses:
     '200':
-      description: 'Edit an application'
+      description: 'Edit a Database'
       content:
         application/json:
           schema:
@@ -44,11 +43,10 @@ put:
       $ref: '../responses/Forbidden.yaml'
     '404':
       $ref: '../responses/NotFound.yaml'
-    '409':
-      description: Database name within the environment is already taken
+
 delete:
   summary: 'Delete a database'
-  description: 'To delete a database you must have the admin permission'
+  description: 'To delete an database you must have the project user permission'
   operationId: deleteDatabase
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'

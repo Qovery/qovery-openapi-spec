@@ -1,0 +1,7 @@
+name: databaseServiceId
+in: path
+description: Database Service ID
+required: true
+schema:
+  type: string
+  format: uuid

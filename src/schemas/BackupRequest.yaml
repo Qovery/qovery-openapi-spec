@@ -1,10 +1,9 @@
 type: object
 required:
   - name
+  - message
 properties:
   name:
     type: string
-    description: name is case insensitive
-  description:
+  message:
     type: string
-    
