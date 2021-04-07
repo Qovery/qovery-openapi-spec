@@ -268,7 +268,7 @@ paths:
         - Add an environment variable to the project.
           - If the environment variable key already exists, then it will be replaced by the new one.
           - If the environment variable value points toward an existing environment variable key, it will be considered as an alias.
-      operationId: createEnvironmentEnvironmentVariable
+      operationId: createProjectEnvironmentVariable
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
@@ -330,6 +330,81 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/project/{projectId}/secret':
+    post:
+      summary: Add a secret to the project
+      description: |
+        - Add a secret to the project.
+          - If the secret key already exists, then it will be replaced by the new one.
+          - If the secret value points toward an existing secret key, it will be considered as an alias.
+      operationId: createProjectSecret
+      parameters:
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretRequest'
+      responses:
+        '201':
+          description: Added a secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '401':
+          $ref: '#/components/responses/401'
+  '/project/{projectId}/secret/{secretId}':
+    delete:
+      summary: Delete a secret from a project
+      description: To delete a secret from a project you must have the project user permission
+      operationId: deleteProjectSecret
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - project
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Change value of a secret belonging to the project
+      operationId: editProjectSecret
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+      responses:
+        '200':
+          description: Edited the secret value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -511,6 +586,81 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/secret':
+    post:
+      summary: Add a secret to the environment
+      description: |
+        - Add a secret to the environment.
+          - If the secret key already exists, then it will be replaced by the new one.
+          - If the secret value points toward an existing secret key, it will be considered as an alias.
+      operationId: createEnvironmentSecret
+      parameters:
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretRequest'
+      responses:
+        '201':
+          description: Added a secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '401':
+          $ref: '#/components/responses/401'
+  '/environment/{environmentId}/secret/{secretId}':
+    delete:
+      summary: Delete a secret from the environment
+      description: To delete a secret from the environment you must have the project user permission
+      operationId: deleteEnvironmentSecret
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - environment
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Change value of a secret belonging to the environment
+      operationId: editEnvironmentSecret
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - environment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+      responses:
+        '200':
+          description: Edited the secret value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1133,6 +1283,119 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environmentVariable/{environmentVariableId}':
+    get:
+      summary: Get environment variable by ID
+      operationId: getEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - environmentVariable
+      responses:
+        '200':
+          description: Get environment variable by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/application/{applicationId}/secret':
+    get:
+      summary: List application secrets
+      description: 'Secrets are like environment variables, but they are secured and can''t be revealed.'
+      operationId: listApplicationSecrets
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: List secrets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      summary: Add a secret to the application
+      description: |
+        - Add a secret to the application.
+          - If the secret key already exists, then it will be replaced by the new one.
+          - If the secret value points toward an existing secret key, it will be considered as an alias.
+      operationId: createApplicationSecret
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretRequest'
+      responses:
+        '201':
+          description: Add a secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/secret/{secretId}':
+    delete:
+      summary: Delete a secret from an application
+      description: To delete a secret from an application you must have the project user permission
+      operationId: deleteApplicationSecret
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - application
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Change value of a secret belonging to the application
+      operationId: editApplicationSecret
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+      responses:
+        '200':
+          description: Edited the secret value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/customDomain':
     get:
       summary: List application custom domains
@@ -1177,67 +1440,6 @@ paths:
                 $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
-  '/environmentVariable/{environmentVariableId}':
-    get:
-      summary: Get environment variable by ID
-      operationId: getEnvironmentVariable
-      parameters:
-        - $ref: '#/components/parameters/environmentVariableId'
-      tags:
-        - environmentVariable
-      responses:
-        '200':
-          description: Get environment variable by ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/application/{applicationId}/secret':
-    get:
-      summary: List secrets
-      operationId: listApplicationSecrets
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - application
-      responses:
-        '200':
-          description: List secrets
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SecretResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-    post:
-      summary: Add a secret
-      description: |
-        Add a secret to the application. If the secret name does already exists, then it will be replaced by the new one.
-      operationId: createApplicationSecret
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - application
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SecretRequest'
-      responses:
-        '201':
-          description: Add a secret
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SecretResponse'
-        '401':
-          $ref: '#/components/responses/401'
   '/secret/{secretId}':
     get:
       summary: Get a secret by ID
@@ -1253,51 +1455,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SecretResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    put:
-      summary: Edit a secret
-      description: To edit a secret you must have the project user permission
-      operationId: editSecret
-      parameters:
-        - $ref: '#/components/parameters/secretId'
-      tags:
-        - secret
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SecretRequest'
-      responses:
-        '200':
-          description: Edit a secret
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SecretResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Secret name is already taken
-    delete:
-      summary: Delete a secret
-      description: To delete a secret you must have the project user permission
-      operationId: deleteSecret
-      parameters:
-        - $ref: '#/components/parameters/secretId'
-      tags:
-        - secret
-      responses:
-        '204':
-          $ref: '#/components/responses/204-deletion'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2247,18 +2404,50 @@ components:
       type: object
       required:
         - key
+        - value
       properties:
         key:
           type: string
           description: key is case sensitive
         value:
           type: string
-          description: value of the env variable.
+          description: value of the secret. Clear value will never be returned
     SecretResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
-        - $ref: '#/components/schemas/SecretRequest'
+          required:
+            - scope
+          properties:
+            key:
+              type: string
+              description: key is case sensitive
+            overriden_secret:
+              type: object
+              properties:
+                key:
+                  type: string
+                  readony: true
+                scope:
+                  type: string
+                  enum:
+                    - BUILT_IN
+                    - ENVIRONMENT
+                    - PROJECT
+                    - APPLICATION
+            aliased_secret:
+              type: object
+              properties:
+                key:
+                  type: string
+                  example: QOVERY_DATABASE_PSQL_NAME
+            scope:
+              type: string
+              enum:
+                - BUILT_IN
+                - ENVIRONMENT
+                - PROJECT
+                - APPLICATION
     SecretResponseList:
       type: object
       properties:
