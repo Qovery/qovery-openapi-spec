@@ -865,19 +865,7 @@ paths:
                         data:
                           type: array
                           items:
-                            type: object
-                            required:
-                              - created_at
-                              - requested_in_float
-                              - consumed_in_number
-                              - consumed_in_percent
-                            properties:
-                              requested_in_float:
-                                type: number
-                              consumed_in_number:
-                                type: number
-                              consumed_in_percent:
-                                type: number
+                            $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D~1metric~1cpu/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/metric/memory':
@@ -911,19 +899,7 @@ paths:
                         data:
                           type: array
                           items:
-                            type: object
-                            required:
-                              - created_at
-                              - requested_in_mb
-                              - consumed_in_mb
-                              - consumed_in_percent
-                            properties:
-                              requested_in_mb:
-                                type: integer
-                              consumed_in_mb:
-                                type: integer
-                              consumed_in_percent:
-                                type: number
+                            $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D~1metric~1memory/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/metric/healthCheck':
@@ -1002,19 +978,7 @@ paths:
                         data:
                           type: array
                           items:
-                            type: object
-                            required:
-                              - created_at
-                              - requested_in_mb
-                              - consumed_in_mb
-                              - consumed_in_percent
-                            properties:
-                              requested_in_gb:
-                                type: integer
-                              consumed_in_gb:
-                                type: integer
-                              consumed_in_percent:
-                                type: number
+                            $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D~1metric~1storage/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/dependency':
@@ -1283,27 +1247,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/environmentVariable/{environmentVariableId}':
-    get:
-      summary: Get environment variable by ID
-      operationId: getEnvironmentVariable
-      parameters:
-        - $ref: '#/components/parameters/environmentVariableId'
-      tags:
-        - environmentVariable
-      responses:
-        '200':
-          description: Get environment variable by ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/application/{applicationId}/secret':
     get:
       summary: List application secrets
@@ -1440,27 +1383,6 @@ paths:
                 $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
-  '/secret/{secretId}':
-    get:
-      summary: Get a secret by ID
-      operationId: getSecret
-      parameters:
-        - $ref: '#/components/parameters/secretId'
-      tags:
-        - secret
-      responses:
-        '200':
-          description: Get secret by ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SecretResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/application/{applicationId}/log':
     get:
       summary: List logs
@@ -1573,7 +1495,7 @@ paths:
   '/application/{applicationId}/database/{targetDatabaseId}':
     post:
       summary: Link a database to the application
-      operationId: attachApplicationToDatabase
+      operationId: attachDatabasetoApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/targetDatabaseId'
@@ -1648,14 +1570,221 @@ paths:
           $ref: '#/components/responses/401'
         '409':
           description: An operation is in progress
-  '/environment/{environmentId}/database':
+  '/environment/{environmentId}/databaseService':
     get:
-      summary: List databases
-      operationId: listDatabase
+      summary: List environment database services
+      operationId: listDatabaseService
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - database
+        - databaseService
+      responses:
+        '200':
+          description: List database services
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      summary: Create a database service
+      operationId: createDatabaseService
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - databaseService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D/put/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Create database service
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Database Service name within the environment is already taken
+  '/databaseService/{databaseServiceId}':
+    get:
+      summary: Get database service by ID
+      operationId: getDatabaseService
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: Get database service by ID
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      environment:
+                        $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
+                      status:
+                        $ref: '#/components/schemas/Status'
+                  - $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D/put/requestBody/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a database service
+      description: To edit a database service you must have the admin permission
+      operationId: editDatabaseService
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - database_type
+                - database_version
+              properties:
+                name:
+                  type: string
+                  description: name is case insensitive
+                database_type:
+                  type: string
+                  enum:
+                    - postgresql
+                    - mysql
+                    - mongodb
+                    - redis
+                    - storage
+                database_version:
+                  type: string
+                  example: 10.1
+                uri:
+                  type: string
+                cpu:
+                  type: string
+                  default: 250m
+                  example:
+                    - 250m
+                    - 1000m
+                    - 1
+                    - 1.2
+                    - 2
+                memory:
+                  type: string
+                  default: 256MB
+                  example:
+                    - 256MB
+                    - 1024MB
+                    - 1GB
+                    - 1.2GB
+                    - 2GB
+                storage:
+                  type: string
+                  description: Size can be in GB and TB only
+                  example:
+                    - 1GB
+                    - 16GB
+                    - 1TB
+      responses:
+        '200':
+          description: Edit a database service
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Database service name within the environment is already taken
+    delete:
+      summary: Delete a database service
+      description: To delete a database you must have the admin permission
+      operationId: deleteDatabaseService
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/databaseService/{databaseServiceId}/masterCredentials':
+    get:
+      summary: Get master credentials of the database service
+      operationId: getDatabaseServiceMasterCredentials
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: get credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+    put:
+      summary: Edit database service master credentials
+      operationId: editDatabaseServiceCredentials
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/requestBody/content/application~1json/schema'
+      responses:
+        '200':
+          description: Edit database credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/databaseService/{databaseServiceId}/database':
+    get:
+      summary: List databases of a database service
+      operationId: listDatabaseServiceDatabase
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
       responses:
         '200':
           description: List databases
@@ -1666,20 +1795,15 @@ paths:
         '401':
           $ref: '#/components/responses/401'
     post:
-      summary: Create a database
-      operationId: createDatabase
+      summary: Create a database on the database Service
+      operationId: createDatabaseOnDatabaseService
       parameters:
-        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
       tags:
-        - database
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DatabaseRequest'
+        - databaseService
       responses:
         '201':
-          description: Create database
+          description: Created database on the database Service
           content:
             application/json:
               schema:
@@ -1687,7 +1811,448 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '409':
-          description: Database name within the environment is already taken
+          description: Databse with this name already exists on the database Service
+  '/databaseService/{databaseServiceId}/application':
+    get:
+      summary: List applications using the database service
+      operationId: listDatabaseServiceApplication
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: List linked applications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/databaseService/{databaseServiceId}/application/{targetApplicationId}':
+    post:
+      summary: Add an application to the database Service
+      operationId: attachApplicationToDatabaseService
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/targetApplicationId'
+      tags:
+        - databaseService
+      responses:
+        '201':
+          description: Added the application to the database Service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: This application is already added on the database Service
+    delete:
+      summary: Remove an application from this database Service
+      operationId: removeApplicationFromDatabaseService
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/targetApplicationId'
+      tags:
+        - databaseService
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+  '/databaseService/{databaseServiceId}/restart':
+    post:
+      summary: Retart database service
+      operationId: restartDatabaseService
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: Database Service restart has been requested
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Database Service is already started or an operation is in progress
+  '/databaseService/{databaseServiceId}/stop':
+    post:
+      summary: Stop database Service
+      operationId: stopDatabaseService
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: Database Service stop has been requested
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Database Service is already stopped or an operation is in progress
+  '/databaseService/{databaseServiceId}/clone':
+    post:
+      summary: Clone database Service
+      operationId: cloneDatabaseService
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: Database Service clone has been requested
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Operation is in progress
+  '/databaseService/{databaseServiceId}/currentMetric':
+    get:
+      summary: Get current metric consumption of the database service
+      operationId: getDatabaseServiceCurrentMetric
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: Get database service current metric
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cpu:
+                    type: object
+                    properties:
+                      requested_in_float:
+                        type: number
+                      consumed_in_number:
+                        type: number
+                      consumed_in_percent:
+                        type: number
+                      warning_threshold_in_percent:
+                        type: number
+                      alert_threshold_in_percent:
+                        type: number
+                      status:
+                        type: string
+                        enum:
+                          - OK
+                          - Warning
+                          - Alert
+                  memory:
+                    type: object
+                    properties:
+                      requested_in_mb:
+                        type: integer
+                      consumed_in_mb:
+                        type: integer
+                      consumed_in_percent:
+                        type: number
+                      warning_threshold_in_percent:
+                        type: number
+                      alert_threshold_in_percent:
+                        type: number
+                      status:
+                        type: string
+                        enum:
+                          - OK
+                          - Warning
+                          - Alert
+                  storage:
+                    type: object
+                    properties:
+                      requested_in_gb:
+                        type: integer
+                      consumed_in_gb:
+                        type: integer
+                      consumed_in_percent:
+                        type: number
+                      warning_threshold_in_percent:
+                        type: number
+                      alert_threshold_in_percent:
+                        type: number
+                      status:
+                        type: string
+                        enum:
+                          - OK
+                          - Warning
+                          - Alert
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/databaseService/{databaseServiceId}/metric/cpu':
+    get:
+      summary: Get CPU consumption metric over time for the database service
+      operationId: getDatabaseServiceMetricCpu
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/lastDays'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: CPU consumption
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - created_at
+                        - requested_in_float
+                        - consumed_in_number
+                        - consumed_in_percent
+                      properties:
+                        requested_in_float:
+                          type: number
+                        consumed_in_number:
+                          type: number
+                        consumed_in_percent:
+                          type: number
+        '401':
+          $ref: '#/components/responses/401'
+  '/databaseService/{databaseServiceId}/metric/memory':
+    get:
+      summary: Get Memory consumption metric over time for the database Service
+      operationId: getDatabaseServiceMetricMemory
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/lastDays'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: Memory consumption
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - created_at
+                        - requested_in_mb
+                        - consumed_in_mb
+                        - consumed_in_percent
+                      properties:
+                        requested_in_mb:
+                          type: integer
+                        consumed_in_mb:
+                          type: integer
+                        consumed_in_percent:
+                          type: number
+        '401':
+          $ref: '#/components/responses/401'
+  '/databaseService/{databaseServiceId}/metric/storage':
+    get:
+      summary: Get Storage consumption metric over time for the database Service
+      operationId: getDatabaseServiceMetricStorage
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/lastDays'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: Storage consumption
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - created_at
+                        - requested_in_mb
+                        - consumed_in_mb
+                        - consumed_in_percent
+                      properties:
+                        requested_in_gb:
+                          type: integer
+                        consumed_in_gb:
+                          type: integer
+                        consumed_in_percent:
+                          type: number
+        '401':
+          $ref: '#/components/responses/401'
+  '/databaseService/{databaseServiceId}/metric/healthCheck':
+    get:
+      summary: Get Health Check latency  metric over time for the database service
+      description: The value returned corresponds to the 95th centile
+      operationId: getDatabaseServiceMetricHealthCheck
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/lastDays'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: Health Check Latency
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1healthCheck/get/responses/200/content/application~1json/schema/properties/results/items'
+        '401':
+          $ref: '#/components/responses/401'
+  '/databaseService/{databaseServiceId}/backup':
+    get:
+      summary: List database service backups
+      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
+      operationId: listDatabaseServiceBackup
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/parameters/1'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: List backups
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/responses/200/content/application~1json/schema/allOf/0'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D~1backup/post/responses/201/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      summary: Add a backup to the Database Service
+      operationId: addBackupDatabaseService
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - message
+              properties:
+                name:
+                  type: string
+                message:
+                  type: string
+      responses:
+        '201':
+          description: Added backup
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      status:
+                        $ref: '#/components/schemas/Status'
+                  - $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D~1backup/post/requestBody/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+  '/databaseService/{databaseServiceId}/backup/{backupId}':
+    delete:
+      summary: Remove database service backup
+      operationId: removeDatabaseServiceBackup
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - name: backupId
+          in: path
+          description: Database Backup ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - databaseService
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+  '/databaseService/{databaseServiceId}/event':
+    get:
+      summary: List database service events
+      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
+      operationId: listDatabaseServiceEvent
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/parameters/1'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: List events
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1application~1%7BapplicationId%7D~1event/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+  '/databaseService/{databaseServiceId}/event?tail=':
+    get:
+      summary: List XX last database service events
+      description: Returns all last XX events. Response is not paginated
+      operationId: listDatabaseServiceEventTail
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log%3Ftail%3D/get/parameters/1'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: List events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/databaseService/{databaseServiceId}/event?lastId=':
+    get:
+      summary: List all the last database service events after a certain event Id
+      description: 'Returns all last events that happened on the database service, after the event ID you specify in the lastId query parameter. Response is not paginated'
+      operationId: listDatabaseServiceEventLastId
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log%3FlastId%3D/get/parameters/1'
+      tags:
+        - databaseService
+      responses:
+        '200':
+          description: List events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponseList'
+        '401':
+          $ref: '#/components/responses/401'
   '/database/{databaseId}':
     get:
       summary: Get database by ID
@@ -1711,7 +2276,6 @@ paths:
           $ref: '#/components/responses/404'
     put:
       summary: Edit a database
-      description: To edit a database you must have the admin permission
       operationId: editDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
@@ -1724,7 +2288,7 @@ paths:
               $ref: '#/components/schemas/DatabaseRequest'
       responses:
         '200':
-          description: Edit an application
+          description: Edit a Database
           content:
             application/json:
               schema:
@@ -1735,11 +2299,9 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-        '409':
-          description: Database name within the environment is already taken
     delete:
       summary: Delete a database
-      description: To delete a database you must have the admin permission
+      description: To delete an database you must have the project user permission
       operationId: deleteDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
@@ -1754,6 +2316,80 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/database/{databaseId}/credentials':
+    get:
+      summary: Get  credentials of the database
+      operationId: getDatabaseCredentials
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - database
+      responses:
+        '200':
+          description: get credentials
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/requestBody/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+    put:
+      summary: Edit database credentials
+      operationId: editDatabaseCredentials
+      parameters:
+        - name: databaseServiceId
+          in: path
+          description: Database Service ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - login
+                - password
+              properties:
+                login:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Edit database credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/database/{databaseId}/application':
+    get:
+      summary: List linked applications
+      operationId: listDatabaseApplication
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - database
+      responses:
+        '200':
+          description: List linked applications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponseList'
+        '401':
+          $ref: '#/components/responses/401'
   '/customDomain/{customDomainId}':
     get:
       summary: Get custom domain by ID
@@ -1913,6 +2549,48 @@ paths:
                               - OK
                               - Warning
                               - Alert
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environmentVariable/{environmentVariableId}':
+    get:
+      summary: Get environment variable by ID
+      operationId: getEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - environmentVariable
+      responses:
+        '200':
+          description: Get environment variable by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/secret/{secretId}':
+    get:
+      summary: Get a secret by ID
+      operationId: getSecret
+      parameters:
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - secret
+      responses:
+        '200':
+          description: Get secret by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2308,11 +2986,15 @@ components:
         name:
           type: string
           description: name is case insensitive
+        description:
+          type: string
     DatabaseResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
           properties:
+            database_service:
+              $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
             status:
               $ref: '#/components/schemas/Status'
         - $ref: '#/components/schemas/DatabaseRequest'
