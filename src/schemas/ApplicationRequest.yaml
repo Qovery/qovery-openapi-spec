@@ -12,42 +12,6 @@ properties:
   description:
     type: string
     description: give a description to this application
-  git_repository:
-    type: object
-    properties:
-      provider:
-        type: string
-        enum:
-          - GITHUB
-          - GITLAB
-          - BITBUCKET
-      name:
-        type: string
-      owner: 
-        type: string
-        description: name of the person who connected the git repository
-      url:
-        type: string
-        description: application git repository URL
-      branch:
-        type: string
-        description: |
-          Name of the branch to use. This is optional
-          If not specified, then the branch used is the `main` or `master` one
-      root_path:
-        type: string
-        default: /
-        description: indicates the root path of the application.
-      last_commit_id:
-        type: string
-        description: last git commit id
-      last_commit_date:
-        type: string
-        readOnly: true
-        format: date-time
-      last_commit_contributor:
-        type: string
-        format: uuid
   build_mode:
     type: string
     enum:
@@ -56,9 +20,31 @@ properties:
     description: |
       `DOCKER` required `dockerfile_path`
       `BUILDPACKS` does not required any `dockerfile_path`
+  git_repository_url:
+    type: string
+    description: application git repository URL
+  git_repository_branch:
+    type: string
+    description: |
+      Name of the branch to use. This is optional
+      If not specified, then the branch used is the `main` or `master` one
+  git_commit_id:
+    type: string
+    description: Current Git commit ID
+  git_last_commit_date:
+    type: string
+    readOnly: true
+    format: date-time
+  git_last_commit_contributor:
+    type: string
+    format: uuid
   dockerfile_path:
     type: string
     description: The path of the associated Dockerfile
+  root_path:
+    type: string
+    default: /
+    description: indicates the root path of the application.
   cpu:
     type: string
     default: 250m
