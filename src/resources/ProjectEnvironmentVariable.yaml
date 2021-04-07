@@ -4,7 +4,7 @@ post:
     - Add an environment variable to the project.
       - If the environment variable key already exists, then it will be replaced by the new one.
       - If the environment variable value points toward an existing environment variable key, it will be considered as an alias.
-  operationId: createEnvironmentEnvironmentVariable
+  operationId: createProjectEnvironmentVariable
   parameters:
     - $ref: '../parameters/path/projectId.yaml'
   tags:
