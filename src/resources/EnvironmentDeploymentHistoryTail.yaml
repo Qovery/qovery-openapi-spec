@@ -1,0 +1,18 @@
+get:
+  summary: 'List XX last environment deploys'
+  description: Returns all last XX deploys. Response is not paginated
+  operationId: listEnvironmentDeploymentHistoryTail
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+    - $ref: '../parameters/query/tail.yaml'
+  tags:
+    - environment
+  responses:
+    '200':
+      description: 'List events'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/DeploymentHistoryResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

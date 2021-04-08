@@ -1,0 +1,22 @@
+post:
+  summary: 'Rollback application to a previous version'
+  description: 'Rollback your application. You must provide the git commit id you want to rollback to'
+  operationId: rollbackApplicationCommit
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/DeployRequest.yaml'
+  responses:
+    '201':
+      description: 'Application rollbacked'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EventResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

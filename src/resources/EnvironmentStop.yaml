@@ -1,0 +1,14 @@
+post:
+  summary: 'Stop environment'
+  operationId: stopEnvironment
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+  tags:
+    - environment
+  responses:
+    '200':
+      description: 'Environment stop has been requested'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: 'Environment is already stopped or an operation is in progress'

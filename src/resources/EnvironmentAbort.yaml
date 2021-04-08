@@ -1,0 +1,14 @@
+post:
+  summary: 'Abort environment'
+  operationId: cloneEnvironment
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+  tags:
+    - environment
+  responses:
+    '200':
+      description: 'Environment abort has been requested'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: 'Operation is in progress'
