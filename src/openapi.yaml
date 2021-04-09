@@ -146,7 +146,7 @@ paths:
   /application/{applicationId}/log?lastId=:
     $ref: './resources/ApplicationLogLastId.yaml'
   /application/{applicationId}/logicalDatabase:
-    $ref: './resources/ApplicationlogicalDatabase.yaml'
+    $ref: './resources/ApplicationLogicalDatabase.yaml'
   /application/{applicationId}/logicalDatabase/{targetlogicalDatabaseId}:
     $ref: './resources/ApplicationlogicalDatabaseRef.yaml'
   /application/{applicationId}/link:
