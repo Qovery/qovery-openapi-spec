@@ -1,10 +1,10 @@
 get:
-  summary: 'List applications using the database'
-  operationId: listDatabaseApplication
+  summary: 'List linked applications'
+  operationId: listLogicalDatabaseApplication
   parameters:
-    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/path/logicalDatabaseId.yaml'
   tags:
-    - database
+    - logicalDatabase
   responses:
     '200':
       description: 'List linked applications'

@@ -1,0 +1,16 @@
+get:
+  summary: 'List linked logical databases'
+  operationId: listApplicationLogicalDatabase
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'List linked databases'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/LogicalDatabaseResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

@@ -1,0 +1,14 @@
+post:
+  summary: 'Clone database '
+  operationId: cloneDatabase
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+  tags:
+    - database
+  responses:
+    '200':
+      description: 'Database  clone has been requested'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: 'Operation is in progress'

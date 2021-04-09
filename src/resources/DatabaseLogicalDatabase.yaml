@@ -1,0 +1,40 @@
+get:
+  summary: 'List logical databases of a database'
+  operationId: listLogicalDatabaseDatabase
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+  tags:
+    - database
+  responses:
+    '200':
+      description: 'List logical databases'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/LogicalDatabaseResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+
+post:
+  summary: 'Create a logical database on the database'
+  operationId: createLogicalDatabaseOnDatabase
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+  tags:
+    - database
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/LogicalDatabaseRequest.yaml'
+  responses:
+    '201':
+      description: 'Created database on the database'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/LogicalDatabaseResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: Logical Database with this name already exists on the database
