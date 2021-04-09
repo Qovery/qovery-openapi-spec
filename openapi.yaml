@@ -444,7 +444,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EnvironmentRequest'
+              type: object
+              properties:
+                name:
+                  type: string
+                reference_branch:
+                  type: string
       responses:
         '200':
           description: Edit an environment
@@ -477,6 +482,143 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/service':
+    get:
+      summary: List environment services
+      description: 'List all services within the environment (applications, databases, jobs, gateways...)'
+      operationId: listEnvironmentService
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: List environment services
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/BaseResponse'
+                        - type: object
+                          properties:
+                            type:
+                              type: string
+                              description: 'type of the service (application, database, job, gateway...)'
+                              enum:
+                                - APPLICATION
+                                - DATABASE
+                            name:
+                              type: string
+                              description: name of the service
+                            id:
+                              type: string
+                              description: 'uuid of the associated service (application, database, job, gateway...)'
+                              format: uuid
+                            status:
+                              $ref: '#/components/schemas/Status'
+                            last_updated_by:
+                              type: string
+                              format: uuid
+                              description: uuid of the user that made the last update
+                            consumed_resources_in_percent:
+                              type: number
+                              description: global overview of resources consumption of the service
+                            service_typology:
+                              type: string
+                              example: container
+                              description: 'describes the typology of service (container, postgresl, redis...)'
+                            service_version:
+                              type: string
+                              description: for databases this field exposes the database version
+                              example: v12
+        '401':
+          $ref: '#/components/responses/401'
+  '/environment/{environment}/deploy':
+    post:
+      summary: Deploy environment
+      description: This will deploy all the services of this environment to their latest version.
+      operationId: deployEnvironment
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeployRequest'
+      responses:
+        '200':
+          description: Deploy environment
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environment}/stop':
+    post:
+      summary: Stop environment
+      operationId: stopEnvironment
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: Environment stop has been requested
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Environment is already stopped or an operation is in progress
+  '/environment/{environment}/restart':
+    post:
+      summary: Restart environment
+      operationId: restartEnvironment
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: Environment restart has been requested
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: An operation is in progress
+  '/environment/{environment}/abort':
+    post:
+      summary: Abort environment
+      operationId: cloneEnvironment
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: Environment abort has been requested
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Operation is in progress
+  '/environment/{environment}/clone':
+    post:
+      summary: Clone environment
+      operationId: cloneEnvironment
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: Environment clone has been requested
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Operation is in progress
   '/environment/{environmentId}/application':
     get:
       summary: List applications
@@ -517,6 +659,95 @@ paths:
           $ref: '#/components/responses/401'
         '409':
           description: Application name within the environment is already taken
+  '/environment/{environmentId}/deploymentHistory':
+    get:
+      summary: List environment deploys
+      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
+      operationId: listEnvironmentDeploymentHistory
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/parameters/1'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/responses/200/content/application~1json/schema/allOf/0'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/paths/~1environment~1%7Benvironment%7D~1deploymentHistory%3Ftail%3D/get/responses/200/content/application~1json/schema/properties/results/items'
+        '401':
+          $ref: '#/components/responses/401'
+  '/environment/{environment}/deploymentHistory?tail=':
+    get:
+      summary: List XX last environment deploys
+      description: Returns all last XX deploys. Response is not paginated
+      operationId: listEnvironmentDeploymentHistoryTail
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log%3Ftail%3D/get/parameters/1'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: List events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/BaseResponse'
+                        - type: object
+                          properties:
+                            service:
+                              type: object
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - APPLICATION
+                                    - DATABASE
+                                name:
+                                  type: string
+                                id:
+                                  type: string
+                                  format: uuid
+                            commit:
+                              $ref: '#/components/schemas/CommitResponse'
+                            status:
+                              $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+  '/environment/{environment}/deploymentHistory?lastId=':
+    get:
+      summary: List all the last environment deploys after a certain event Id
+      description: 'Returns all last deploys that happened on the environment, after the event ID you specify in the lastId query parameter. Response is not paginated'
+      operationId: listEnvironmentDeploymentHistoryLastId
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log%3FlastId%3D/get/parameters/1'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: List deploys
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1environment~1%7Benvironment%7D~1deploymentHistory%3Ftail%3D/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
   '/environment/{environmentId}/environmentVariable':
     post:
       summary: Add an environment variable to the environment
@@ -667,6 +898,35 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environment}/link':
+    get:
+      summary: List all URLs of the environment
+      description: This will return you all the different URLs of all the applications within this environment
+      operationId: listEnvironmentLinks
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: List links
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      allOf:
+                        - type: object
+                          properties:
+                            name:
+                              type: string
+                            url:
+                              type: string
+        '401':
+          $ref: '#/components/responses/401'
   '/application/{applicationId}':
     get:
       summary: Get application by ID
@@ -1049,7 +1309,8 @@ paths:
           $ref: '#/components/responses/401'
   '/application/{applicationId}/deploy':
     post:
-      summary: Deploy a specific version
+      summary: Deploy application
+      description: 'If you don''t specify any git commit id, we will deploy the latest version'
       operationId: deployApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -1062,11 +1323,79 @@ paths:
               $ref: '#/components/schemas/DeployRequest'
       responses:
         '200':
-          description: Deploy a specific version
+          description: Deploy application
         '401':
           $ref: '#/components/responses/401'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/rollback':
+    post:
+      summary: Rollback application to a previous version
+      description: Rollback your application. You must provide the git commit id you want to rollback to
+      operationId: rollbackApplicationCommit
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeployRequest'
+      responses:
+        '201':
+          description: Application rollbacked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/stop':
+    post:
+      summary: Stop application
+      operationId: stopApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Application stop has been requested
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Application is already stopped or an operation is in progress
+  '/application/{applicationId}/restart':
+    post:
+      summary: Restart application
+      operationId: restartApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Application restart has been requested
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: An operation is in progress
+  '/application/{applicationId}/abort':
+    post:
+      summary: Abort application
+      operationId: abortApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Application abort has been requested
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: 'Application is not building or deploying at the moment, or an operation is in progress'
   '/application/{applicationId}/event':
     get:
       summary: List application events
@@ -1525,51 +1854,23 @@ paths:
           $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
-  '/application/{applicationId}/start':
-    post:
-      summary: Start application
-      operationId: startApplication
+  '/application/{applicationId}/link':
+    get:
+      summary: List all URLs of the application
+      operationId: listApplicationLinks
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
         - application
       responses:
         '200':
-          description: Application start has been requested
+          description: List links
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1environment~1%7Benvironment%7D~1link/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
-        '409':
-          description: Application is already started or an operation is in progress
-  '/application/{applicationId}/stop':
-    post:
-      summary: Stop application
-      operationId: stopApplication
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - application
-      responses:
-        '200':
-          description: Application stop has been requested
-        '401':
-          $ref: '#/components/responses/401'
-        '409':
-          description: Application is already stopped or an operation is in progress
-  '/application/{applicationId}/restart':
-    post:
-      summary: Restart application
-      operationId: restartApplication
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - application
-      responses:
-        '200':
-          description: Application restart has been requested
-        '401':
-          $ref: '#/components/responses/401'
-        '409':
-          description: An operation is in progress
   '/environment/{environmentId}/databaseService':
     get:
       summary: List environment database services
@@ -1892,6 +2193,27 @@ paths:
           $ref: '#/components/responses/401'
         '409':
           description: Database Service is already stopped or an operation is in progress
+  '/databaseService/{databaseServiceId}/deploy':
+    post:
+      summary: Deploy database service
+      description: 'If you don''t specify any git commit id, we will deploy the latest version'
+      operationId: deployDatabaseService
+      parameters:
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+      tags:
+        - databaseService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeployRequest'
+      responses:
+        '200':
+          description: Deploy database service
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
   '/databaseService/{databaseServiceId}/clone':
     post:
       summary: Clone database Service
@@ -2788,6 +3110,22 @@ components:
         name:
           type: string
           description: name is case insensitive
+        reference_branch:
+          type: string
+        cloud_provider:
+          type: object
+          properties:
+            provider:
+              type: string
+              example: aws
+            cluster:
+              type: string
+              example: us-east-2
+        mode:
+          type: string
+          enum:
+            - PRODUCTION
+            - DEVELOPMENT
     EnvironmentResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
@@ -3166,6 +3504,8 @@ components:
               type: string
             message:
               type: string
+            user:
+              $ref: '#/components/schemas/LogResponse/allOf/1/properties/owner'
     CommitResponseList:
       type: object
       properties:
@@ -3175,8 +3515,6 @@ components:
             $ref: '#/components/schemas/CommitResponse'
     DeployRequest:
       type: object
-      required:
-        - git_commit_id
       properties:
         git_commit_id:
           type: string
