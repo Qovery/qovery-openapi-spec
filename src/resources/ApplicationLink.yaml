@@ -1,0 +1,16 @@
+get:
+  summary: 'List all URLs of the application'
+  operationId: listApplicationLinks
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'List links'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/LinkResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

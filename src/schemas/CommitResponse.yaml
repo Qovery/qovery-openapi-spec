@@ -8,3 +8,5 @@ allOf:
         type: string
       message:
         type: string
+      user:
+        $ref: './UserResponse.yaml'

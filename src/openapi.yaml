@@ -33,8 +33,26 @@ paths:
     $ref: './resources/ProjectSecretRef.yaml'
   /environment/{environmentId}:
     $ref: './resources/Environment.yaml'
+  /environment/{environmentId}/service:
+    $ref: './resources/EnvironmentService.yaml'
+  /environment/{environment}/deploy:
+    $ref: './resources/EnvironmentDeploy.yaml'
+  /environment/{environment}/stop:
+    $ref: './resources/EnvironmentStop.yaml'
+  /environment/{environment}/restart:
+    $ref: './resources/EnvironmentRestart.yaml'
+  /environment/{environment}/abort:
+    $ref: './resources/EnvironmentAbort.yaml'
+  /environment/{environment}/clone:
+    $ref: './resources/EnvironmentClone.yaml'
   /environment/{environmentId}/application:
     $ref: './resources/EnvironmentApplication.yaml'
+  /environment/{environmentId}/deploymentHistory:
+    $ref: './resources/EnvironmentDeploymentHistory.yaml'
+  /environment/{environment}/deploymentHistory?tail=:
+    $ref: './resources/EnvironmentDeploymentHistoryTail.yaml'
+  /environment/{environment}/deploymentHistory?lastId=:
+    $ref: './resources/EnvironmentDeploymentHistoryLastId.yaml'
   /environment/{environmentId}/environmentVariable:
     $ref: './resources/EnvironmentEnvironmentVariable.yaml'
   /environment/{environmentId}/environmentVariable/{environmentVariableId}:
@@ -43,6 +61,8 @@ paths:
     $ref: './resources/EnvironmentSecret.yaml'
   /environment/{environmentId}/secret/{secretId}:
     $ref: './resources/EnvironmentSecretRef.yaml'
+  /environment/{environment}/link:
+    $ref: './resources/EnvironmentLink.yaml'    
   /application/{applicationId}:
     $ref: './resources/Application.yaml'
   /application/{applicationId}/contributor:
@@ -69,6 +89,14 @@ paths:
     $ref: './resources/ApplicationCommit.yaml'
   /application/{applicationId}/deploy:
     $ref: './resources/ApplicationDeploy.yaml'
+  /application/{applicationId}/rollback:
+    $ref: './resources/ApplicationRollbackCommit.yaml'
+  /application/{applicationId}/stop:
+    $ref: './resources/ApplicationStop.yaml'
+  /application/{applicationId}/restart:
+    $ref: './resources/ApplicationRestart.yaml'
+  /application/{applicationId}/abort:
+    $ref: './resources/ApplicationAbort.yaml'
   /application/{applicationId}/event:
     $ref: './resources/ApplicationEvent.yaml'
   /application/{applicationId}/event?tail=:
@@ -97,12 +125,8 @@ paths:
     $ref: './resources/ApplicationDatabase.yaml'
   /application/{applicationId}/database/{targetDatabaseId}:
     $ref: './resources/ApplicationDatabaseRef.yaml'
-  /application/{applicationId}/start:
-    $ref: './resources/ApplicationStart.yaml'
-  /application/{applicationId}/stop:
-    $ref: './resources/ApplicationStop.yaml'
-  /application/{applicationId}/restart:
-    $ref: './resources/ApplicationRestart.yaml'
+  /application/{applicationId}/link:
+    $ref: './resources/ApplicationLink.yaml'    
   /environment/{environmentId}/databaseService:
     $ref: './resources/EnvironmentDatabaseService.yaml'
   /databaseService/{databaseServiceId}:
@@ -119,6 +143,8 @@ paths:
     $ref: './resources/DatabaseServiceRestart.yaml'
   /databaseService/{databaseServiceId}/stop:
     $ref: './resources/DatabaseServiceStop.yaml'
+  /databaseService/{databaseServiceId}/deploy:
+    $ref: './resources/DatabaseServiceDeploy.yaml'
   /databaseService/{databaseServiceId}/clone:
     $ref: './resources/DatabaseServiceClone.yaml'
   /databaseService/{databaseServiceId}/currentMetric:

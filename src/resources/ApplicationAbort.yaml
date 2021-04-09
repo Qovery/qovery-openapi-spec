@@ -1,0 +1,14 @@
+post:
+  summary: 'Abort application'
+  operationId: abortApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'Application abort has been requested'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: 'Application is not building or deploying at the moment, or an operation is in progress'

@@ -30,7 +30,12 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../schemas/EnvironmentRequest.yaml'
+          type: object
+          properties:
+            name:
+              type: string
+            reference_branch:
+              type: string
   responses:
     '200':
       description: 'Edit an environment'

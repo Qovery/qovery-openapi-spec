@@ -1,0 +1,17 @@
+get:
+  summary: 'List all URLs of the environment'
+  description: This will return you all the different URLs of all the applications within this environment
+  operationId: listEnvironmentLinks
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+  tags:
+    - environment
+  responses:
+    '200':
+      description: 'List links'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/LinkResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

@@ -1,11 +1,11 @@
 post:
-  summary: 'Deploy application'
-  description: If you don't specify any git commit id, we will deploy the latest version
-  operationId: deployApplication
+  summary: 'Deploy environment'
+  description: This will deploy all the services of this environment to their latest version.
+  operationId: deployEnvironment
   parameters:
-    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/environmentId.yaml'
   tags:
-    - application
+    - environment
   requestBody:
     content:
       application/json:
@@ -13,7 +13,7 @@ post:
           $ref: '../schemas/DeployRequest.yaml'
   responses:
     '200':
-      description: 'Deploy application'
+      description: 'Deploy environment'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '404':
