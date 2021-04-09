@@ -148,7 +148,7 @@ paths:
   /application/{applicationId}/logicalDatabase:
     $ref: './resources/ApplicationLogicalDatabase.yaml'
   /application/{applicationId}/logicalDatabase/{targetlogicalDatabaseId}:
-    $ref: './resources/ApplicationlogicalDatabaseRef.yaml'
+    $ref: './resources/ApplicationLogicalDatabaseRef.yaml'
   /application/{applicationId}/link:
     $ref: './resources/ApplicationLink.yaml'    
   /environment/{environmentId}/database:
@@ -158,7 +158,7 @@ paths:
   /database/{databaseId}/masterCredentials:
     $ref: './resources/DatabaseMasterCredentials.yaml'
   /database/{databaseId}/logicalDatabase:
-    $ref: './resources/DatabaselogicalDatabase.yaml'
+    $ref: './resources/DatabaseLogicalDatabase.yaml'
   /database/{databaseId}/application:
     $ref: './resources/DatabaseApplication.yaml'
   /database/{databaseId}/application/{targetApplicationId}:
