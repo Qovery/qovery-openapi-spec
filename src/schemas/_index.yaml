@@ -30,12 +30,6 @@ DatabaseResponse:
   $ref: ./DatabaseResponse.yaml
 DatabaseResponseList:
   $ref: ./DatabaseResponseList.yaml
-AttachApplicationToDatabaseRequest:
-  $ref: ./AttachApplicationToDatabaseRequest.yaml
-AttachApplicationToDatabaseResponse:
-  $ref: ./AttachApplicationToDatabaseResponse.yaml
-AttachApplicationToDatabaseResponseList:
-  $ref: ./AttachApplicationToDatabaseResponseList.yaml
 EnvironmentVariableRequest:
   $ref: ./EnvironmentVariableRequest.yaml
 EnvironmentVariableResponse:

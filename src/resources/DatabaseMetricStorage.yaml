@@ -1,0 +1,23 @@
+get:
+  summary: 'Get Storage consumption metric over time for the database'
+  operationId: getDatabaseMetricStorage
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/query/lastSeconds.yaml'
+
+  tags:
+    - database
+  responses:
+    '200':
+      description: 'Storage consumption'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '../schemas/MetricStorageDatapointResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

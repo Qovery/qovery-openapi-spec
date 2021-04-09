@@ -19,8 +19,7 @@ secretId:
   $ref: './path/secretId.yaml'
 targetApplicationId:
   $ref: './path/targetApplicationId.yaml'
-targetDatabaseId:
-  $ref: './path/targetDatabaseId.yaml'
+
 
 # queries
 limit:

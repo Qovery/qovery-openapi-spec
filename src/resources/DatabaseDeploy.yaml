@@ -1,0 +1,20 @@
+post:
+  summary: 'Deploy database '
+  description: If you don't specify any git commit id, we will deploy the latest version
+  operationId: deployDatabase
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+  tags:
+    - database
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/DeployRequest.yaml'
+  responses:
+    '200':
+      description: 'Deploy database '
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

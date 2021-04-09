@@ -1,0 +1,29 @@
+post:
+  summary: 'Create an environment variable override at the environment level'
+  description: |
+    - Allows you to override at environment level an environment variable that has a higher scope.
+    - You only have to specify a value in the request body
+    - The system will create a new environment variable at environment level with the same key as the one corresponding to the variable id in the path
+    - Information regarding the overriden_variable will be exposed in the "overriden_variable" field of the newly created variable
+  operationId: createEnvironmentEnvironmentVariableOverride
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+    - $ref: '../parameters/path/environmentVariableId.yaml'
+  tags:
+    - environment
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/Value.yaml'
+  responses:
+    '201':
+      description: 'Create variable override'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentVariableResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '400':
+      description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION

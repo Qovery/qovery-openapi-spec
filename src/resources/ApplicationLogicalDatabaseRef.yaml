@@ -1,0 +1,34 @@
+post:
+  summary: 'Link a logical database to the application'
+  operationId: attachLogicalDatabasetoApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/targetLogicalDatabaseId.yaml'
+  tags:
+    - application
+  responses:
+    '201':
+      description: 'Linked the Logical database to the application'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/LogicalDatabaseResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '409':
+      description: This logical database is already linked to the application
+
+      
+delete:
+  summary: 'Remove logical database link to this application.'
+  operationId: removeLogicalDatabaseFromApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/targetLogicalDatabaseId.yaml'
+  tags:
+    - application
+  responses:
+    '204':
+      $ref: '../responses/NoContent.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

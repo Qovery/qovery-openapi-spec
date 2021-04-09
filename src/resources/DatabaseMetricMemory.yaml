@@ -1,0 +1,23 @@
+get:
+  summary: 'Get Memory consumption metric over time for the database'
+  operationId: getDatabaseMetricMemory
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/query/lastSeconds.yaml'
+
+  tags:
+    - database
+  responses:
+    '200':
+      description: 'Memory consumption'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '../schemas/MetricMemoryDatapointResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

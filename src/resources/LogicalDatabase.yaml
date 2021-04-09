@@ -1,17 +1,17 @@
 get:
-  summary: 'Get database by ID'
-  operationId: getDatabase
+  summary: 'Get logical database by ID'
+  operationId: getLogicalDatabase
   parameters:
-    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/path/logicalDatabaseId.yaml'
   tags:
-    - database
+    - logicalDatabase
   responses:
     '200':
-      description: 'Get database  by ID'
+      description: 'Get logical database by ID'
       content:
         application/json:
           schema:
-            $ref: '../schemas/DatabaseResponse.yaml'
+            $ref: '../schemas/LogicalDatabaseResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
@@ -19,41 +19,39 @@ get:
     '404':
       $ref: '../responses/NotFound.yaml'
 put:
-  summary: 'Edit a database '
-  description: 'To edit a database  you must have the admin permission'
-  operationId: editDatabase
+  summary: 'Edit a logical database'
+  operationId: editLogicalDatabase
   parameters:
-    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/path/logicaldatabaseId.yaml'
   tags:
-    - database
+    - logicalDatabase
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '../schemas/DatabaseRequest.yaml'
+          $ref: '../schemas/LogicalDatabaseRequest.yaml'
   responses:
     '200':
-      description: 'Edit a database '
+      description: 'Edit a Logical Database'
       content:
         application/json:
           schema:
-            $ref: '../schemas/DatabaseResponse.yaml'
+            $ref: '../schemas/LogicalDatabaseResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
       $ref: '../responses/Forbidden.yaml'
     '404':
       $ref: '../responses/NotFound.yaml'
-    '409':
-      description: Database  name within the environment is already taken
+
 delete:
-  summary: 'Delete a database '
-  description: 'To delete a database you must have the admin permission'
-  operationId: deleteDatabase
+  summary: 'Delete a Logical database'
+  description: 'To delete a logical database you must have the project user permission'
+  operationId: deleteLogicalDatabase
   parameters:
-    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/path/logicalDatabaseId.yaml'
   tags:
-    - database
+    - logicalDatabase
   responses:
     '204':
       $ref: '../responses/Deleted.yaml'
