@@ -262,6 +262,22 @@ paths:
         '409':
           description: Environment name within the project is already taken
   '/project/{projectId}/environmentVariable':
+    get:
+      summary: List project environment variables
+      operationId: listProjectEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - project
+      responses:
+        '200':
+          description: List project environment variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponseList'
+        '401':
+          $ref: '#/components/responses/401'
     post:
       summary: Add an environment variable to the project
       description: |
@@ -336,7 +352,82 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/project/{projectId}/environmentVariable/{environmentVariableId}/override':
+    post:
+      summary: Create an environment variable override at the project level
+      description: |
+        - Allows you to override at project level an environment variable that has a higher scope.
+        - You only have to specify a value in the request body
+        - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path
+        - Information regarding the overriden_variable will be exposed in the "overriden_variable" field of the newly created variable
+      operationId: createProjectEnvironmentVariableOverride
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1secret~1%7BsecretId%7D~1override/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Create variable override
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+  '/project/{projectId}/environmentVariable/{environmentVariableId}/alias':
+    post:
+      summary: Create an environment variable alias at the project level
+      description: |
+        - Allows you to add an alias on an existing environment variable, at project level, in order to customize its key.
+        - You only have to specify a key in the request body
+        - The system will create a new environment variable at project level with the same value as the one corresponding to the variable id in the path
+        - Information regarding the aliased_variable will be exposed in the "aliased_variable" field of the newly created variable
+        - Only 1 alias level is allowed. You can't create an alias on an alias
+      operationId: createProjectEnvironmentVariableAlias
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1secret~1%7BsecretId%7D~1alias/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Create variable alias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
   '/project/{projectId}/secret':
+    get:
+      summary: List project secrets
+      operationId: listProjectSecrets
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - project
+      responses:
+        '200':
+          description: List project secrets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponseList'
+        '401':
+          $ref: '#/components/responses/401'
     post:
       summary: Add a secret to the project
       description: |
@@ -411,6 +502,75 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/project/{projectId}/secret/{secretId}/override':
+    post:
+      summary: Create a secret override at the project level
+      description: |
+        - Allows you to override at project level a secret that has a higher scope.
+        - You only have to specify a value in the request body
+        - The system will create a new secret at project level with the same key as the one corresponding to the secret id in the path
+        - Information regarding the overriden_secret will be exposed in the "overriden_secret" field of the newly created secret
+      operationId: createProjectSecretOverride
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - value
+              properties:
+                value:
+                  type: string
+      responses:
+        '201':
+          description: Create secret override
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '400':
+          description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+  '/project/{projectId}/secret/{secretId}/alias':
+    post:
+      summary: Create a secret alias at the project level
+      description: |
+        - Allows you to add an alias on an existing secret, at project level, in order to customize its key.
+        - You only have to specify a key in the request body
+        - The system will create a new secret at project level with the same value as the one corresponding to the secret id in the path
+        - Information regarding the aliased_secret will be exposed in the "aliased_secret" field of the newly created secret
+        - Only 1 alias level is allowed. You can't create an alias on an alias
+      operationId: createProjectSecretAlias
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - key
+              properties:
+                key:
+                  type: string
+      responses:
+        '201':
+          description: Create secret alias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '401':
+          $ref: '#/components/responses/401'
   '/environment/{environmentId}':
     get:
       summary: Get environment by ID
@@ -666,7 +826,7 @@ paths:
       operationId: listEnvironmentDeploymentHistory
       parameters:
         - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/parameters/1'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
       tags:
         - environment
       responses:
@@ -676,7 +836,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema/allOf/0'
                   - type: object
                     properties:
                       results:
@@ -692,7 +852,7 @@ paths:
       operationId: listEnvironmentDeploymentHistoryTail
       parameters:
         - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log%3Ftail%3D/get/parameters/1'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3Ftail%3D/get/parameters/1'
       tags:
         - environment
       responses:
@@ -736,7 +896,7 @@ paths:
       operationId: listEnvironmentDeploymentHistoryLastId
       parameters:
         - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log%3FlastId%3D/get/parameters/1'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3FlastId%3D/get/parameters/1'
       tags:
         - environment
       responses:
@@ -749,6 +909,22 @@ paths:
         '401':
           $ref: '#/components/responses/401'
   '/environment/{environmentId}/environmentVariable':
+    get:
+      summary: List environment variables
+      operationId: listEnvironmentEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: List environment variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponseList'
+        '401':
+          $ref: '#/components/responses/401'
     post:
       summary: Add an environment variable to the environment
       description: |
@@ -823,7 +999,82 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/environmentVariable/{environmentVariableId}/override':
+    post:
+      summary: Create an environment variable override at the environment level
+      description: |
+        - Allows you to override at environment level an environment variable that has a higher scope.
+        - You only have to specify a value in the request body
+        - The system will create a new environment variable at environment level with the same key as the one corresponding to the variable id in the path
+        - Information regarding the overriden_variable will be exposed in the "overriden_variable" field of the newly created variable
+      operationId: createEnvironmentEnvironmentVariableOverride
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1secret~1%7BsecretId%7D~1override/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Create variable override
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+  '/environment/{environmentId}/environmentVariable/{environmentVariableId}/alias':
+    post:
+      summary: Create an environment variable alias at the environment level
+      description: |
+        - Allows you to add an alias on an existing environment variable, at environment level, in order to customize its key.
+        - You only have to specify a key in the request body
+        - The system will create a new environment variable at environment level with the same value as the one corresponding to the variable id in the path
+        - Information regarding the aliased_variable will be exposed in the "aliased_variable" field of the newly created variable
+        - Only 1 alias level is allowed. You can't create an alias on an alias
+      operationId: createEnvironmentEnvironmentVariableAlias
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1secret~1%7BsecretId%7D~1alias/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Create variable alias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
   '/environment/{environmentId}/secret':
+    get:
+      summary: List environment secrets
+      operationId: listEnvironmentSecrets
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: List environment secrets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponseList'
+        '401':
+          $ref: '#/components/responses/401'
     post:
       summary: Add a secret to the environment
       description: |
@@ -898,6 +1149,65 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/secret/{secretId}/override':
+    post:
+      summary: Create a secret override at the environment level
+      description: |
+        - Allows you to override at environment level a secret that has a higher scope.
+        - You only have to specify a value in the request body
+        - The system will create a new secret at environment level with the same key as the one corresponding to the secret id in the path
+        - Information regarding the overriden_secret will be exposed in the "overriden_secret" field of the newly created secret
+      operationId: createEnvironmentSecretOverride
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1secret~1%7BsecretId%7D~1override/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Create secret override
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '400':
+          description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+  '/environment/{environmentId}/secret/{secretId}/alias':
+    post:
+      summary: Create a secret alias at the environment level
+      description: |
+        - Allows you to add an alias on an existing secret, at environment level, in order to customize its key.
+        - You only have to specify a key in the request body
+        - The system will create a new secret at environment level with the same value as the one corresponding to the secret id in the path
+        - Information regarding the aliased_secret will be exposed in the "aliased_secret" field of the newly created secret
+        - Only 1 alias level is allowed. You can't create an alias on an alias
+      operationId: createEnvironmentSecretAlias
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1secret~1%7BsecretId%7D~1alias/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Create secret alias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '401':
+          $ref: '#/components/responses/401'
   '/environment/{environment}/link':
     get:
       summary: List all URLs of the environment
@@ -1125,7 +1435,7 @@ paths:
                         data:
                           type: array
                           items:
-                            $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D~1metric~1cpu/get/responses/200/content/application~1json/schema/properties/results/items'
+                            $ref: '#/paths/~1database~1%7BdatabaseId%7D~1metric~1cpu/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/metric/memory':
@@ -1159,7 +1469,7 @@ paths:
                         data:
                           type: array
                           items:
-                            $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D~1metric~1memory/get/responses/200/content/application~1json/schema/properties/results/items'
+                            $ref: '#/paths/~1database~1%7BdatabaseId%7D~1metric~1memory/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/metric/healthCheck':
@@ -1183,28 +1493,7 @@ paths:
                   results:
                     type: array
                     items:
-                      type: object
-                      required:
-                        - instance_name
-                        - data
-                      properties:
-                        instance_name:
-                          type: string
-                          example: instance 1
-                        data:
-                          type: array
-                          items:
-                            type: object
-                            required:
-                              - created_at
-                              - value
-                            properties:
-                              created_at:
-                                type: string
-                                readOnly: true
-                                format: date-time
-                              value:
-                                type: number
+                      $ref: '#/paths/~1database~1%7BdatabaseId%7D~1metric~1healthCheck/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/metric/storage':
@@ -1238,7 +1527,7 @@ paths:
                         data:
                           type: array
                           items:
-                            $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D~1metric~1storage/get/responses/200/content/application~1json/schema/properties/results/items'
+                            $ref: '#/paths/~1database~1%7BdatabaseId%7D~1metric~1storage/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/dependency':
@@ -1403,7 +1692,7 @@ paths:
       operationId: listApplicationEvent
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/parameters/1'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
       tags:
         - application
       responses:
@@ -1412,14 +1701,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/responses/200/content/application~1json/schema/allOf/0'
-                  - type: object
-                    properties:
-                      results:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/EventResponse'
+                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
   '/application/{applicationId}/event?tail=':
@@ -1429,7 +1711,7 @@ paths:
       operationId: listApplicationEventTail
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log%3Ftail%3D/get/parameters/1'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3Ftail%3D/get/parameters/1'
       tags:
         - application
       responses:
@@ -1448,7 +1730,7 @@ paths:
       operationId: listApplicationEventLastId
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log%3FlastId%3D/get/parameters/1'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3FlastId%3D/get/parameters/1'
       tags:
         - application
       responses:
@@ -1506,8 +1788,6 @@ paths:
       summary: Add an environment variable to the application
       description: |
         - Add an environment variable to the application.
-          - If the environment variable key already exists, then it will be replaced by the new one.
-          - If the environment variable value points toward an existing environment variable key, it will be considered as an alias.
       operationId: createApplicationEnvironmentVariable
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -1576,6 +1856,65 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/environmentVariable/{environmentVariableId}/override':
+    post:
+      summary: Create an environment variable override at the application level
+      description: |
+        - Allows you to override at application level an environment variable that has a higher scope.
+        - You only have to specify a value in the request body
+        - The system will create a new environment variable at application level with the same key as the one corresponding to the variable id in the path
+        - Information regarding the overriden_variable will be exposed in the "overriden_variable" field of the newly created variable
+      operationId: createApplicationEnvironmentVariableOverride
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1secret~1%7BsecretId%7D~1override/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Create variable override
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/environmentVariable/{environmentVariableId}/alias':
+    post:
+      summary: Create an environment variable alias at the application level
+      description: |
+        - Allows you to add an alias on an existing environment variable, at application level, in order to customize its key.
+        - You only have to specify a key in the request body
+        - The system will create a new environment variable at application level with the same value as the one corresponding to the variable id in the path
+        - Information regarding the aliased_variable will be exposed in the "aliased_variable" field of the newly created variable
+        - Only 1 alias level is allowed. You can't create an alias on an alias
+      operationId: createApplicationEnvironmentVariableAlias
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1secret~1%7BsecretId%7D~1alias/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Create variable alias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '401':
+          $ref: '#/components/responses/401'
   '/application/{applicationId}/secret':
     get:
       summary: List application secrets
@@ -1598,8 +1937,6 @@ paths:
       summary: Add a secret to the application
       description: |
         - Add a secret to the application.
-          - If the secret key already exists, then it will be replaced by the new one.
-          - If the secret value points toward an existing secret key, it will be considered as an alias.
       operationId: createApplicationSecret
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -1668,6 +2005,65 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/secret/{secretId}/override':
+    post:
+      summary: Create a secret override at the application level
+      description: |
+        - Allows you to override at application level a secret that has a higher scope.
+        - You only have to specify a value in the request body
+        - The system will create a new secret at application level with the same key as the one corresponding to the secret id in the path
+        - Information regarding the overriden_secret will be exposed in the "overriden_secret" field of the newly created secret
+      operationId: createApplicationSecretOverride
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1secret~1%7BsecretId%7D~1override/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Create secret override
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '400':
+          description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+  '/application/{applicationId}/secret/{secretId}/alias':
+    post:
+      summary: Create a secret alias at the application level
+      description: |
+        - Allows you to add an alias on an existing secret, at application level, in order to customize its key.
+        - You only have to specify a key in the request body
+        - The system will create a new secret at application level with the same value as the one corresponding to the secret id in the path
+        - Information regarding the aliased_secret will be exposed in the "aliased_secret" field of the newly created secret
+        - Only 1 alias level is allowed. You can't create an alias on an alias
+      operationId: createApplicationSecretAlias
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1secret~1%7BsecretId%7D~1alias/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Create secret alias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '401':
+          $ref: '#/components/responses/401'
   '/application/{applicationId}/customDomain':
     get:
       summary: List application custom domains
@@ -1719,13 +2115,7 @@ paths:
       description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - name: startId
-          in: query
-          description: Starting point after which to return results
-          required: false
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
       tags:
         - application
       responses:
@@ -1735,17 +2125,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - type: object
-                    required:
-                      - page
-                      - page_size
-                    properties:
-                      page:
-                        type: number
-                        example: 1
-                      page_size:
-                        type: number
-                        example: 20
+                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema/allOf/0'
                   - type: object
                     properties:
                       results:
@@ -1761,13 +2141,7 @@ paths:
       operationId: listApplicationLogTail
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - name: tail
-          in: query
-          description: Number of last results to return
-          required: true
-          schema:
-            type: integer
-            format: int32
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3Ftail%3D/get/parameters/1'
       tags:
         - application
       responses:
@@ -1786,13 +2160,7 @@ paths:
       operationId: listApplicationLogLastId
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - name: lastId
-          in: query
-          description: ID of the last object after which to return all results
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3FlastId%3D/get/parameters/1'
       tags:
         - application
       responses:
@@ -1804,10 +2172,10 @@ paths:
                 $ref: '#/components/schemas/LogResponseList'
         '401':
           $ref: '#/components/responses/401'
-  '/application/{applicationId}/database':
+  '/application/{applicationId}/logicalDatabase':
     get:
-      summary: List linked databases
-      operationId: listApplicationDatabase
+      summary: List linked logical databases
+      operationId: listApplicationLogicalDatabase
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
@@ -1818,35 +2186,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseResponseList'
+                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1logicalDatabase/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
-  '/application/{applicationId}/database/{targetDatabaseId}':
+  '/application/{applicationId}/logicalDatabase/{targetlogicalDatabaseId}':
     post:
-      summary: Link a database to the application
-      operationId: attachDatabasetoApplication
+      summary: Link a logical database to the application
+      operationId: attachLogicalDatabasetoApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/targetDatabaseId'
+        - name: targetDatabaseId
+          in: path
+          description: Target database ID
+          required: true
+          schema:
+            type: string
+            format: uuid
       tags:
         - application
       responses:
         '201':
-          description: Linked the database to the application
+          description: Linked the Logical database to the application
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseResponse'
+                $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '409':
-          description: This database is already linked to the application
+          description: This logical database is already linked to the application
     delete:
-      summary: Remove database link to this application.
-      operationId: removeDatabaseFromApplication
+      summary: Remove logical database link to this application.
+      operationId: removeLogicalDatabaseFromApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/targetDatabaseId'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1logicalDatabase~1%7BtargetlogicalDatabaseId%7D/post/parameters/1'
       tags:
         - application
       responses:
@@ -1871,221 +2245,14 @@ paths:
                 $ref: '#/paths/~1environment~1%7Benvironment%7D~1link/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
-  '/environment/{environmentId}/databaseService':
+  '/environment/{environmentId}/database':
     get:
-      summary: List environment database services
-      operationId: listDatabaseService
+      summary: List environment databases
+      operationId: listDatabase
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - databaseService
-      responses:
-        '200':
-          description: List database services
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D/get/responses/200/content/application~1json/schema'
-        '401':
-          $ref: '#/components/responses/401'
-    post:
-      summary: Create a database service
-      operationId: createDatabaseService
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-      tags:
-        - databaseService
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D/put/requestBody/content/application~1json/schema'
-      responses:
-        '201':
-          description: Create database service
-          content:
-            application/json:
-              schema:
-                $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D/get/responses/200/content/application~1json/schema'
-        '401':
-          $ref: '#/components/responses/401'
-        '409':
-          description: Database Service name within the environment is already taken
-  '/databaseService/{databaseServiceId}':
-    get:
-      summary: Get database service by ID
-      operationId: getDatabaseService
-      parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
-      tags:
-        - databaseService
-      responses:
-        '200':
-          description: Get database service by ID
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/BaseResponse'
-                  - type: object
-                    properties:
-                      environment:
-                        $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
-                      status:
-                        $ref: '#/components/schemas/Status'
-                  - $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D/put/requestBody/content/application~1json/schema'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    put:
-      summary: Edit a database service
-      description: To edit a database service you must have the admin permission
-      operationId: editDatabaseService
-      parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
-      tags:
-        - databaseService
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - name
-                - database_type
-                - database_version
-              properties:
-                name:
-                  type: string
-                  description: name is case insensitive
-                database_type:
-                  type: string
-                  enum:
-                    - postgresql
-                    - mysql
-                    - mongodb
-                    - redis
-                    - storage
-                database_version:
-                  type: string
-                  example: 10.1
-                uri:
-                  type: string
-                cpu:
-                  type: string
-                  default: 250m
-                  example:
-                    - 250m
-                    - 1000m
-                    - 1
-                    - 1.2
-                    - 2
-                memory:
-                  type: string
-                  default: 256MB
-                  example:
-                    - 256MB
-                    - 1024MB
-                    - 1GB
-                    - 1.2GB
-                    - 2GB
-                storage:
-                  type: string
-                  description: Size can be in GB and TB only
-                  example:
-                    - 1GB
-                    - 16GB
-                    - 1TB
-      responses:
-        '200':
-          description: Edit a database service
-          content:
-            application/json:
-              schema:
-                $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D/get/responses/200/content/application~1json/schema'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Database service name within the environment is already taken
-    delete:
-      summary: Delete a database service
-      description: To delete a database you must have the admin permission
-      operationId: deleteDatabaseService
-      parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
-      tags:
-        - databaseService
-      responses:
-        '204':
-          $ref: '#/components/responses/204-deletion'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/databaseService/{databaseServiceId}/masterCredentials':
-    get:
-      summary: Get master credentials of the database service
-      operationId: getDatabaseServiceMasterCredentials
-      parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
-      tags:
-        - databaseService
-      responses:
-        '200':
-          description: get credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/get/responses/200/content/application~1json/schema'
-        '401':
-          $ref: '#/components/responses/401'
-    put:
-      summary: Edit database service master credentials
-      operationId: editDatabaseServiceCredentials
-      parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
-      tags:
-        - databaseService
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/requestBody/content/application~1json/schema'
-      responses:
-        '200':
-          description: Edit database credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/get/responses/200/content/application~1json/schema'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/databaseService/{databaseServiceId}/database':
-    get:
-      summary: List databases of a database service
-      operationId: listDatabaseServiceDatabase
-      parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
-      tags:
-        - databaseService
+        - database
       responses:
         '200':
           description: List databases
@@ -2096,15 +2263,20 @@ paths:
         '401':
           $ref: '#/components/responses/401'
     post:
-      summary: Create a database on the database Service
-      operationId: createDatabaseOnDatabaseService
+      summary: 'Create a database '
+      operationId: createDatabase
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/environmentId'
       tags:
-        - databaseService
+        - database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatabaseRequest'
       responses:
         '201':
-          description: Created database on the database Service
+          description: 'Create database '
           content:
             application/json:
               schema:
@@ -2112,15 +2284,177 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '409':
-          description: Databse with this name already exists on the database Service
-  '/databaseService/{databaseServiceId}/application':
+          description: Database name within the environment is already taken
+  '/database/{databaseId}':
     get:
-      summary: List applications using the database service
-      operationId: listDatabaseServiceApplication
+      summary: Get database by ID
+      operationId: getDatabase
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
       tags:
-        - databaseService
+        - database
+      responses:
+        '200':
+          description: Get database  by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: 'Edit a database '
+      description: To edit a database  you must have the admin permission
+      operationId: editDatabase
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatabaseRequest'
+      responses:
+        '200':
+          description: 'Edit a database '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Database  name within the environment is already taken
+    delete:
+      summary: 'Delete a database '
+      description: To delete a database you must have the admin permission
+      operationId: deleteDatabase
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - database
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/database/{databaseId}/masterCredentials':
+    get:
+      summary: Get master credentials of the database
+      operationId: getDatabaseMasterCredentials
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - database
+      responses:
+        '200':
+          description: get credentials
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1masterCredentials/put/requestBody/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+    put:
+      summary: Edit database  master credentials
+      operationId: editDatabaseCredentials
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - login
+                - password
+              properties:
+                login:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Edit database credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1masterCredentials/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/database/{databaseId}/logicalDatabase':
+    get:
+      summary: List logical databases of a database
+      operationId: listLogicalDatabaseDatabase
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - database
+      responses:
+        '200':
+          description: List logical databases
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+    post:
+      summary: Create a logical database on the database
+      operationId: createLogicalDatabaseOnDatabase
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/put/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Created database on the database
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          description: Logical Database with this name already exists on the database
+  '/database/{databaseId}/application':
+    get:
+      summary: List applications using the database
+      operationId: listDatabaseApplication
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - database
       responses:
         '200':
           description: List linked applications
@@ -2130,18 +2464,18 @@ paths:
                 $ref: '#/components/schemas/ApplicationResponseList'
         '401':
           $ref: '#/components/responses/401'
-  '/databaseService/{databaseServiceId}/application/{targetApplicationId}':
+  '/database/{databaseId}/application/{targetApplicationId}':
     post:
-      summary: Add an application to the database Service
-      operationId: attachApplicationToDatabaseService
+      summary: 'Add an application to the database '
+      operationId: attachApplicationToDatabase
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/targetApplicationId'
       tags:
-        - databaseService
+        - database
       responses:
         '201':
-          description: Added the application to the database Service
+          description: 'Added the application to the database '
           content:
             application/json:
               schema:
@@ -2149,59 +2483,59 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '409':
-          description: This application is already added on the database Service
+          description: This application is already added on the database
     delete:
-      summary: Remove an application from this database Service
-      operationId: removeApplicationFromDatabaseService
+      summary: 'Remove an application from this database '
+      operationId: removeApplicationFromDatabase
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/targetApplicationId'
       tags:
-        - databaseService
+        - database
       responses:
         '204':
           $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
-  '/databaseService/{databaseServiceId}/restart':
+  '/database/{databaseId}/restart':
     post:
-      summary: Retart database service
-      operationId: restartDatabaseService
+      summary: Retart database
+      operationId: restartDatabase
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
       tags:
-        - databaseService
+        - database
       responses:
         '200':
-          description: Database Service restart has been requested
+          description: Database  restart has been requested
         '401':
           $ref: '#/components/responses/401'
         '409':
-          description: Database Service is already started or an operation is in progress
-  '/databaseService/{databaseServiceId}/stop':
+          description: Database  is already started or an operation is in progress
+  '/database/{databaseId}/stop':
     post:
-      summary: Stop database Service
-      operationId: stopDatabaseService
+      summary: Stop database
+      operationId: stopDatabase
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
       tags:
-        - databaseService
+        - database
       responses:
         '200':
-          description: Database Service stop has been requested
+          description: Database  stop has been requested
         '401':
           $ref: '#/components/responses/401'
         '409':
-          description: Database Service is already stopped or an operation is in progress
-  '/databaseService/{databaseServiceId}/deploy':
+          description: Database  is already stopped or an operation is in progress
+  '/database/{databaseId}/deploy':
     post:
-      summary: Deploy database service
+      summary: 'Deploy database '
       description: 'If you don''t specify any git commit id, we will deploy the latest version'
-      operationId: deployDatabaseService
+      operationId: deployDatabase
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
       tags:
-        - databaseService
+        - database
       requestBody:
         content:
           application/json:
@@ -2209,37 +2543,37 @@ paths:
               $ref: '#/components/schemas/DeployRequest'
       responses:
         '200':
-          description: Deploy database service
+          description: 'Deploy database '
         '401':
           $ref: '#/components/responses/401'
         '404':
           $ref: '#/components/responses/404'
-  '/databaseService/{databaseServiceId}/clone':
+  '/database/{databaseId}/clone':
     post:
-      summary: Clone database Service
-      operationId: cloneDatabaseService
+      summary: 'Clone database '
+      operationId: cloneDatabase
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
       tags:
-        - databaseService
+        - database
       responses:
         '200':
-          description: Database Service clone has been requested
+          description: Database  clone has been requested
         '401':
           $ref: '#/components/responses/401'
         '409':
           description: Operation is in progress
-  '/databaseService/{databaseServiceId}/currentMetric':
+  '/database/{databaseId}/currentMetric':
     get:
-      summary: Get current metric consumption of the database service
-      operationId: getDatabaseServiceCurrentMetric
+      summary: 'Get current metric consumption of the database '
+      operationId: getDatabaseCurrentMetric
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
       tags:
-        - databaseService
+        - database
       responses:
         '200':
-          description: Get database service current metric
+          description: Get database  current metric
           content:
             application/json:
               schema:
@@ -2308,15 +2642,15 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/databaseService/{databaseServiceId}/metric/cpu':
+  '/database/{databaseId}/metric/cpu':
     get:
-      summary: Get CPU consumption metric over time for the database service
-      operationId: getDatabaseServiceMetricCpu
+      summary: Get CPU consumption metric over time for the database
+      operationId: getDatabaseMetricCpu
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - databaseService
+        - database
       responses:
         '200':
           description: CPU consumption
@@ -2343,15 +2677,15 @@ paths:
                           type: number
         '401':
           $ref: '#/components/responses/401'
-  '/databaseService/{databaseServiceId}/metric/memory':
+  '/database/{databaseId}/metric/memory':
     get:
-      summary: Get Memory consumption metric over time for the database Service
-      operationId: getDatabaseServiceMetricMemory
+      summary: Get Memory consumption metric over time for the database
+      operationId: getDatabaseMetricMemory
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - databaseService
+        - database
       responses:
         '200':
           description: Memory consumption
@@ -2378,15 +2712,15 @@ paths:
                           type: number
         '401':
           $ref: '#/components/responses/401'
-  '/databaseService/{databaseServiceId}/metric/storage':
+  '/database/{databaseId}/metric/storage':
     get:
-      summary: Get Storage consumption metric over time for the database Service
-      operationId: getDatabaseServiceMetricStorage
+      summary: Get Storage consumption metric over time for the database
+      operationId: getDatabaseMetricStorage
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - databaseService
+        - database
       responses:
         '200':
           description: Storage consumption
@@ -2413,16 +2747,16 @@ paths:
                           type: number
         '401':
           $ref: '#/components/responses/401'
-  '/databaseService/{databaseServiceId}/metric/healthCheck':
+  '/database/{databaseId}/metric/healthCheck':
     get:
-      summary: Get Health Check latency  metric over time for the database service
+      summary: Get Health Check latency  metric over time for the database
       description: The value returned corresponds to the 95th centile
-      operationId: getDatabaseServiceMetricHealthCheck
+      operationId: getDatabaseMetricHealthCheck
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - databaseService
+        - database
       responses:
         '200':
           description: Health Check Latency
@@ -2434,19 +2768,40 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/paths/~1application~1%7BapplicationId%7D~1metric~1healthCheck/get/responses/200/content/application~1json/schema/properties/results/items'
+                      type: object
+                      required:
+                        - instance_name
+                        - data
+                      properties:
+                        instance_name:
+                          type: string
+                          example: instance 1
+                        data:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                              - created_at
+                              - value
+                            properties:
+                              created_at:
+                                type: string
+                                readOnly: true
+                                format: date-time
+                              value:
+                                type: number
         '401':
           $ref: '#/components/responses/401'
-  '/databaseService/{databaseServiceId}/backup':
+  '/database/{databaseId}/backup':
     get:
-      summary: List database service backups
+      summary: List database  backups
       description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
-      operationId: listDatabaseServiceBackup
+      operationId: listDatabaseBackup
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/parameters/1'
+        - $ref: '#/components/parameters/databaseId'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
       tags:
-        - databaseService
+        - database
       responses:
         '200':
           description: List backups
@@ -2454,22 +2809,22 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema/allOf/0'
                   - type: object
                     properties:
                       results:
                         type: array
                         items:
-                          $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D~1backup/post/responses/201/content/application~1json/schema'
+                          $ref: '#/paths/~1database~1%7BdatabaseId%7D~1backup/post/responses/201/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
     post:
-      summary: Add a backup to the Database Service
-      operationId: addBackupDatabaseService
+      summary: 'Add a backup to the Database '
+      operationId: addBackupDatabase
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
       tags:
-        - databaseService
+        - database
       requestBody:
         content:
           application/json:
@@ -2495,15 +2850,15 @@ paths:
                     properties:
                       status:
                         $ref: '#/components/schemas/Status'
-                  - $ref: '#/paths/~1databaseService~1%7BdatabaseServiceId%7D~1backup/post/requestBody/content/application~1json/schema'
+                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1backup/post/requestBody/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
-  '/databaseService/{databaseServiceId}/backup/{backupId}':
+  '/database/{databaseId}/backup/{backupId}':
     delete:
-      summary: Remove database service backup
-      operationId: removeDatabaseServiceBackup
+      summary: Remove database  backup
+      operationId: removeDatabaseBackup
       parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
+        - $ref: '#/components/parameters/databaseId'
         - name: backupId
           in: path
           description: Database Backup ID
@@ -2512,84 +2867,133 @@ paths:
             type: string
             format: uuid
       tags:
-        - databaseService
+        - database
       responses:
         '204':
           $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
-  '/databaseService/{databaseServiceId}/event':
+  '/database/{databaseId}/event':
     get:
-      summary: List database service events
+      summary: List database  events
       description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
-      operationId: listDatabaseServiceEvent
-      parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log/get/parameters/1'
-      tags:
-        - databaseService
-      responses:
-        '200':
-          description: List events
-          content:
-            application/json:
-              schema:
-                $ref: '#/paths/~1application~1%7BapplicationId%7D~1event/get/responses/200/content/application~1json/schema'
-        '401':
-          $ref: '#/components/responses/401'
-  '/databaseService/{databaseServiceId}/event?tail=':
-    get:
-      summary: List XX last database service events
-      description: Returns all last XX events. Response is not paginated
-      operationId: listDatabaseServiceEventTail
-      parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log%3Ftail%3D/get/parameters/1'
-      tags:
-        - databaseService
-      responses:
-        '200':
-          description: List events
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-  '/databaseService/{databaseServiceId}/event?lastId=':
-    get:
-      summary: List all the last database service events after a certain event Id
-      description: 'Returns all last events that happened on the database service, after the event ID you specify in the lastId query parameter. Response is not paginated'
-      operationId: listDatabaseServiceEventLastId
-      parameters:
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/parameters/0'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1log%3FlastId%3D/get/parameters/1'
-      tags:
-        - databaseService
-      responses:
-        '200':
-          description: List events
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-  '/database/{databaseId}':
-    get:
-      summary: Get database by ID
-      operationId: getDatabase
+      operationId: listDatabaseEvent
       parameters:
         - $ref: '#/components/parameters/databaseId'
+        - name: startId
+          in: query
+          description: Starting point after which to return results
+          required: false
+          schema:
+            type: string
+            format: uuid
       tags:
         - database
       responses:
         '200':
-          description: Get database by ID
+          description: List events
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseResponse'
+                allOf:
+                  - type: object
+                    required:
+                      - page
+                      - page_size
+                    properties:
+                      page:
+                        type: number
+                        example: 1
+                      page_size:
+                        type: number
+                        example: 20
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/EventResponse'
+        '401':
+          $ref: '#/components/responses/401'
+  '/database/{databaseId}/event?tail=':
+    get:
+      summary: List XX last database events
+      description: Returns all last XX events. Response is not paginated
+      operationId: listDatabaseEventTail
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+        - name: tail
+          in: query
+          description: Number of last results to return
+          required: true
+          schema:
+            type: integer
+            format: int32
+      tags:
+        - database
+      responses:
+        '200':
+          description: List events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/database/{databaseId}/event?lastId=':
+    get:
+      summary: List all the last database  events after a certain event Id
+      description: 'Returns all last events that happened on the database , after the event ID you specify in the lastId query parameter. Response is not paginated'
+      operationId: listDatabaseEventLastId
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+        - name: lastId
+          in: query
+          description: ID of the last object after which to return all results
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - database
+      responses:
+        '200':
+          description: List events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/logicalDatabase/{logicalDatabaseId}':
+    get:
+      summary: Get logical database by ID
+      operationId: getLogicalDatabase
+      parameters:
+        - name: logicalDatabaseId
+          in: path
+          description: Logical Database ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - logicalDatabase
+      responses:
+        '200':
+          description: Get logical database by ID
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      database:
+                        $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
+                      status:
+                        $ref: '#/components/schemas/Status'
+                  - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/put/requestBody/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2597,24 +3001,32 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     put:
-      summary: Edit a database
-      operationId: editDatabase
+      summary: Edit a logical database
+      operationId: editLogicalDatabase
       parameters:
-        - $ref: '#/components/parameters/databaseId'
+        - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/parameters/0'
       tags:
-        - database
+        - logicalDatabase
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DatabaseRequest'
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: name is case insensitive
+                description:
+                  type: string
       responses:
         '200':
-          description: Edit a Database
+          description: Edit a Logical Database
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseResponse'
+                $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2622,13 +3034,13 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     delete:
-      summary: Delete a database
-      description: To delete an database you must have the project user permission
-      operationId: deleteDatabase
+      summary: Delete a Logical database
+      description: To delete a logical database you must have the project user permission
+      operationId: deleteLogicalDatabase
       parameters:
-        - $ref: '#/components/parameters/databaseId'
+        - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/parameters/0'
       tags:
-        - database
+        - logicalDatabase
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -2638,71 +3050,56 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/database/{databaseId}/credentials':
+  '/logicalDatabase/{logicalDatabaseId}/credentials':
     get:
-      summary: Get  credentials of the database
-      operationId: getDatabaseCredentials
+      summary: Get  credentials of the logical database
+      operationId: getLogicalDatabaseCredentials
       parameters:
-        - $ref: '#/components/parameters/databaseId'
+        - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/parameters/0'
       tags:
-        - database
+        - logicalDatabase
       responses:
         '200':
           description: get credentials
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/put/requestBody/content/application~1json/schema'
+                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1masterCredentials/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
     put:
-      summary: Edit database credentials
-      operationId: editDatabaseCredentials
+      summary: Edit logical database credentials
+      operationId: editLogicalDatabaseCredentials
       parameters:
-        - name: databaseServiceId
-          in: path
-          description: Database Service ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/parameters/0'
       tags:
-        - database
+        - logicalDatabase
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - login
-                - password
-              properties:
-                login:
-                  type: string
-                password:
-                  type: string
+              $ref: '#/paths/~1database~1%7BdatabaseId%7D~1masterCredentials/put/requestBody/content/application~1json/schema'
       responses:
         '200':
-          description: Edit database credentials
+          description: Edit logical database credentials
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1credentials/get/responses/200/content/application~1json/schema'
+                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1masterCredentials/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/database/{databaseId}/application':
+  '/logicalDatabase/{logicalDatabaseId}/application':
     get:
       summary: List linked applications
-      operationId: listDatabaseApplication
+      operationId: listLogicalDatabaseApplication
       parameters:
-        - $ref: '#/components/parameters/databaseId'
+        - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/parameters/0'
       tags:
-        - database
+        - logicalDatabase
       responses:
         '200':
           description: List linked applications
@@ -2997,14 +3394,6 @@ components:
       name: targetApplicationId
       in: path
       description: Target application ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    targetDatabaseId:
-      name: targetDatabaseId
-      in: path
-      description: Target database ID
       required: true
       schema:
         type: string
@@ -3320,18 +3709,56 @@ components:
       type: object
       required:
         - name
+        - database_type
+        - database_version
       properties:
         name:
           type: string
           description: name is case insensitive
-        description:
+        database_type:
           type: string
+          enum:
+            - postgresql
+            - mysql
+            - mongodb
+            - redis
+            - storage
+        database_version:
+          type: string
+          example: 10.1
+        uri:
+          type: string
+        cpu:
+          type: string
+          default: 250m
+          example:
+            - 250m
+            - 1000m
+            - 1
+            - 1.2
+            - 2
+        memory:
+          type: string
+          default: 256MB
+          example:
+            - 256MB
+            - 1024MB
+            - 1GB
+            - 1.2GB
+            - 2GB
+        storage:
+          type: string
+          description: Size can be in GB and TB only
+          example:
+            - 1GB
+            - 16GB
+            - 1TB
     DatabaseResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
           properties:
-            database_service:
+            environment:
               $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
             status:
               $ref: '#/components/schemas/Status'
@@ -3343,28 +3770,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DatabaseResponse'
-    AttachApplicationToDatabaseRequest:
-      type: object
-      required:
-        - id
-      properties:
-        id:
-          type: string
-          description: Set database ID
-          format: uuid
-    AttachApplicationToDatabaseResponse:
-      type: object
-      properties:
-        name:
-          type: string
-          description: name is case insensitive
-    AttachApplicationToDatabaseResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttachApplicationToDatabaseResponse'
     EnvironmentVariableRequest:
       type: object
       required:
