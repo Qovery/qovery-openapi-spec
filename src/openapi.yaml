@@ -43,23 +43,23 @@ paths:
     $ref: './resources/Environment.yaml'
   /environment/{environmentId}/service:
     $ref: './resources/EnvironmentService.yaml'
-  /environment/{environment}/deploy:
+  /environment/{environmentId}/deploy:
     $ref: './resources/EnvironmentDeploy.yaml'
-  /environment/{environment}/stop:
+  /environment/{environmentId}/stop:
     $ref: './resources/EnvironmentStop.yaml'
-  /environment/{environment}/restart:
+  /environment/{environmentId}/restart:
     $ref: './resources/EnvironmentRestart.yaml'
-  /environment/{environment}/abort:
+  /environment/{environmentId}/abort:
     $ref: './resources/EnvironmentAbort.yaml'
-  /environment/{environment}/clone:
+  /environment/{environmentId}/clone:
     $ref: './resources/EnvironmentClone.yaml'
   /environment/{environmentId}/application:
     $ref: './resources/EnvironmentApplication.yaml'
   /environment/{environmentId}/deploymentHistory:
     $ref: './resources/EnvironmentDeploymentHistory.yaml'
-  /environment/{environment}/deploymentHistory?tail=:
+  /environment/{environmentId}/deploymentHistory?tail=:
     $ref: './resources/EnvironmentDeploymentHistoryTail.yaml'
-  /environment/{environment}/deploymentHistory?lastId=:
+  /environment/{environmentId}/deploymentHistory?lastId=:
     $ref: './resources/EnvironmentDeploymentHistoryLastId.yaml'
   /environment/{environmentId}/environmentVariable:
     $ref: './resources/EnvironmentEnvironmentVariable.yaml'
@@ -77,7 +77,7 @@ paths:
     $ref: './resources/EnvironmentSecretOverride.yaml'
   /environment/{environmentId}/secret/{secretId}/alias:
     $ref: './resources/EnvironmentSecretAlias.yaml'
-  /environment/{environment}/link:
+  /environment/{environmentId}/link:
     $ref: './resources/EnvironmentLink.yaml'    
   /application/{applicationId}:
     $ref: './resources/Application.yaml'
@@ -147,7 +147,7 @@ paths:
     $ref: './resources/ApplicationLogLastId.yaml'
   /application/{applicationId}/logicalDatabase:
     $ref: './resources/ApplicationLogicalDatabase.yaml'
-  /application/{applicationId}/logicalDatabase/{targetlogicalDatabaseId}:
+  /application/{applicationId}/logicalDatabase/{targetLogicalDatabaseId}:
     $ref: './resources/ApplicationLogicalDatabaseRef.yaml'
   /application/{applicationId}/link:
     $ref: './resources/ApplicationLink.yaml'    
