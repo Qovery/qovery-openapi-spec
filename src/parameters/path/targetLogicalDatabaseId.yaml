@@ -1,4 +1,4 @@
-name: targetDatabaseId
+name: targetLogicalDatabaseId
 in: path
 description: Target database ID
 required: true

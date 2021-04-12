@@ -1,6 +1,6 @@
 post:
   summary: 'Abort environment'
-  operationId: cloneEnvironment
+  operationId: abortEnvironment
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
