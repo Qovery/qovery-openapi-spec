@@ -436,7 +436,7 @@ paths:
           - If the secret value points toward an existing secret key, it will be considered as an alias.
       operationId: createProjectSecret
       parameters:
-        - $ref: '#/components/parameters/secretId'
+        - $ref: '#/components/parameters/projectId'
       tags:
         - project
       requestBody:
@@ -698,7 +698,7 @@ paths:
                               example: v12
         '401':
           $ref: '#/components/responses/401'
-  '/environment/{environment}/deploy':
+  '/environment/{environmentId}/deploy':
     post:
       summary: Deploy environment
       description: This will deploy all the services of this environment to their latest version.
@@ -719,7 +719,7 @@ paths:
           $ref: '#/components/responses/401'
         '404':
           $ref: '#/components/responses/404'
-  '/environment/{environment}/stop':
+  '/environment/{environmentId}/stop':
     post:
       summary: Stop environment
       operationId: stopEnvironment
@@ -734,7 +734,7 @@ paths:
           $ref: '#/components/responses/401'
         '409':
           description: Environment is already stopped or an operation is in progress
-  '/environment/{environment}/restart':
+  '/environment/{environmentId}/restart':
     post:
       summary: Restart environment
       operationId: restartEnvironment
@@ -749,10 +749,10 @@ paths:
           $ref: '#/components/responses/401'
         '409':
           description: An operation is in progress
-  '/environment/{environment}/abort':
+  '/environment/{environmentId}/abort':
     post:
       summary: Abort environment
-      operationId: cloneEnvironment
+      operationId: abortEnvironment
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
@@ -764,7 +764,7 @@ paths:
           $ref: '#/components/responses/401'
         '409':
           description: Operation is in progress
-  '/environment/{environment}/clone':
+  '/environment/{environmentId}/clone':
     post:
       summary: Clone environment
       operationId: cloneEnvironment
@@ -842,10 +842,10 @@ paths:
                       results:
                         type: array
                         items:
-                          $ref: '#/paths/~1environment~1%7Benvironment%7D~1deploymentHistory%3Ftail%3D/get/responses/200/content/application~1json/schema/properties/results/items'
+                          $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1deploymentHistory%3Ftail%3D/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
-  '/environment/{environment}/deploymentHistory?tail=':
+  '/environment/{environmentId}/deploymentHistory?tail=':
     get:
       summary: List XX last environment deploys
       description: Returns all last XX deploys. Response is not paginated
@@ -889,7 +889,7 @@ paths:
                               $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
-  '/environment/{environment}/deploymentHistory?lastId=':
+  '/environment/{environmentId}/deploymentHistory?lastId=':
     get:
       summary: List all the last environment deploys after a certain event Id
       description: 'Returns all last deploys that happened on the environment, after the event ID you specify in the lastId query parameter. Response is not paginated'
@@ -905,7 +905,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1environment~1%7Benvironment%7D~1deploymentHistory%3Ftail%3D/get/responses/200/content/application~1json/schema'
+                $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1deploymentHistory%3Ftail%3D/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
   '/environment/{environmentId}/environmentVariable':
@@ -1083,7 +1083,7 @@ paths:
           - If the secret value points toward an existing secret key, it will be considered as an alias.
       operationId: createEnvironmentSecret
       parameters:
-        - $ref: '#/components/parameters/secretId'
+        - $ref: '#/components/parameters/environmentId'
       tags:
         - environment
       requestBody:
@@ -1208,7 +1208,7 @@ paths:
                 $ref: '#/components/schemas/SecretResponse'
         '401':
           $ref: '#/components/responses/401'
-  '/environment/{environment}/link':
+  '/environment/{environmentId}/link':
     get:
       summary: List all URLs of the environment
       description: This will return you all the different URLs of all the applications within this environment
@@ -2189,13 +2189,13 @@ paths:
                 $ref: '#/paths/~1database~1%7BdatabaseId%7D~1logicalDatabase/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
-  '/application/{applicationId}/logicalDatabase/{targetlogicalDatabaseId}':
+  '/application/{applicationId}/logicalDatabase/{targetLogicalDatabaseId}':
     post:
       summary: Link a logical database to the application
       operationId: attachLogicalDatabasetoApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - name: targetDatabaseId
+        - name: targetLogicalDatabaseId
           in: path
           description: Target database ID
           required: true
@@ -2220,7 +2220,7 @@ paths:
       operationId: removeLogicalDatabaseFromApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1logicalDatabase~1%7BtargetlogicalDatabaseId%7D/post/parameters/1'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1logicalDatabase~1%7BtargetLogicalDatabaseId%7D/post/parameters/1'
       tags:
         - application
       responses:
@@ -2242,7 +2242,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1environment~1%7Benvironment%7D~1link/get/responses/200/content/application~1json/schema'
+                $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1link/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
   '/environment/{environmentId}/database':
@@ -3794,7 +3794,6 @@ components:
               properties:
                 key:
                   type: string
-                  readony: true
                 value:
                   type: string
                 scope:
@@ -3852,7 +3851,6 @@ components:
               properties:
                 key:
                   type: string
-                  readony: true
                 scope:
                   type: string
                   enum:
