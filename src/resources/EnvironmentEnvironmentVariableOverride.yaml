@@ -4,6 +4,7 @@ post:
     - Allows you to override at environment level an environment variable that has a higher scope.
     - You only have to specify a value in the request body
     - The system will create a new environment variable at environment level with the same key as the one corresponding to the variable id in the path
+    - The response body will contain the newly created variable
     - Information regarding the overriden_variable will be exposed in the "overriden_variable" field of the newly created variable
   operationId: createEnvironmentEnvironmentVariableOverride
   parameters:

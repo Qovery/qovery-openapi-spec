@@ -13,6 +13,7 @@ get:
       content:
         application/json:
           schema:
+            $ref: '../schemas/LogResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
