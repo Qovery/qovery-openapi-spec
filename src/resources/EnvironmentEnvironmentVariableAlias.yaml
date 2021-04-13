@@ -4,6 +4,7 @@ post:
     - Allows you to add an alias on an existing environment variable, at environment level, in order to customize its key.
     - You only have to specify a key in the request body
     - The system will create a new environment variable at environment level with the same value as the one corresponding to the variable id in the path
+    - The response body will contain the newly created variable
     - Information regarding the aliased_variable will be exposed in the "aliased_variable" field of the newly created variable
     - Only 1 alias level is allowed. You can't create an alias on an alias
   operationId: createEnvironmentEnvironmentVariableAlias

@@ -1,9 +1,12 @@
 allOf:
-  - $ref: './BaseResponse.yaml'
   - type: object
     required:
       - git_commit_id
+      - created_at
     properties:
+      created_at:
+        type: string
+        format: date-time
       git_commit_id:
         type: string
       message:

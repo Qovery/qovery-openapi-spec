@@ -1,30 +1,3 @@
-post:
-  summary: 'Add an application to the database '
-  operationId: attachApplicationToDatabase
-  parameters:
-    - $ref: '../parameters/path/databaseId.yaml'
-    - $ref: '../parameters/path/targetApplicationId.yaml'
-  tags:
-    - database
-  responses:
-    '201':
-      description: 'Added the application to the database '
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/ApplicationResponse.yaml'
-    '400':
-      $ref: '../responses/BadRequest.yaml'
-    '401':
-      $ref: '../responses/NotAuthorized.yaml'
-    '403':
-      $ref: '../responses/Forbidden.yaml'
-    '404':
-      $ref: '../responses/NotFound.yaml'
-    '409':
-      description: This application is already added on the database 
-
-      
 delete:
   summary: 'Remove an application from this database '
   operationId: removeApplicationFromDatabase

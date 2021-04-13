@@ -6,11 +6,6 @@ post:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
     - environment
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: '../schemas/DeployRequest.yaml'
   responses:
     '202':
       description: 'Deploy environment'
