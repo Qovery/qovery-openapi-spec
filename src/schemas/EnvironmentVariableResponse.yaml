@@ -24,6 +24,15 @@ allOf:
           key:
             type: string
             example: QOVERY_DATABASE_PSQL_NAME
+          value:
+            type: string
+          scope:
+            type: string
+            enum:
+              - BUILT_IN
+              - ENVIRONMENT
+              - PROJECT
+              - APPLICATION
       scope:
         type: string
         enum:

@@ -30,7 +30,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../schemas/DatabaseRequest.yaml'
+          $ref: '../schemas/DatabaseEditRequest.yaml'
   responses:
     '200':
       description: 'Edit a database '
@@ -38,6 +38,8 @@ put:
         application/json:
           schema:
             $ref: '../schemas/DatabaseResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

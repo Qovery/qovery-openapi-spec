@@ -1,13 +1,13 @@
 type: object
 required:
   - name
-  - database_type
-  - database_version
+  - type
+  - version
 properties:
   name:
     type: string
     description: name is case insensitive
-  database_type:
+  type:
     type: string
     enum:
       - postgresql
@@ -15,11 +15,9 @@ properties:
       - mongodb
       - redis
       - storage
-  database_version:
+  version:
     type: string
     example: 10.1
-  uri:
-    type: string
   cpu:
     type: string
     default: 250m

@@ -1,5 +1,6 @@
 get:
   summary: 'List logical databases of a database'
+  description: A logical database exists inside a database. The database is a service that exists within an environment, that you can deploy, and that has allocated resources. A database can have several logical databases
   operationId: listLogicalDatabaseDatabase
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'
@@ -14,9 +15,14 @@ get:
             $ref: '../schemas/LogicalDatabaseResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
 
 post:
   summary: 'Create a logical database on the database'
+  description: If you don't specify credentials, Qovery will autogenerate them.
   operationId: createLogicalDatabaseOnDatabase
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'
@@ -26,7 +32,17 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../schemas/LogicalDatabaseRequest.yaml'
+          allOf:
+            - $ref: '../schemas/LogicalDatabaseRequest.yaml'
+            - type: object
+              properties:
+                credentials:
+                  type: object
+                  properties:
+                    login:
+                      type: string
+                    password:
+                      type: string
   responses:
     '201':
       description: 'Created database on the database'
@@ -34,7 +50,13 @@ post:
         application/json:
           schema:
             $ref: '../schemas/LogicalDatabaseResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
     '409':
       description: Logical Database with this name already exists on the database

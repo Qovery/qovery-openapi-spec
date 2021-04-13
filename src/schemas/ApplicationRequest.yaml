@@ -1,10 +1,7 @@
 type: object
 required:
   - name
-  - git_repository_url
-  - git_commit_id
-  - git_repository_branch
-  - root_path
+  - git_repository
 properties:
   name:
     type: string
@@ -18,33 +15,11 @@ properties:
       - DOCKER
       - BUILDPACKS
     description: |
-      `DOCKER` required `dockerfile_path`
-      `BUILDPACKS` does not required any `dockerfile_path`
-  git_repository_url:
-    type: string
-    description: application git repository URL
-  git_repository_branch:
-    type: string
-    description: |
-      Name of the branch to use. This is optional
-      If not specified, then the branch used is the `main` or `master` one
-  git_commit_id:
-    type: string
-    description: Current Git commit ID
-  git_last_commit_date:
-    type: string
-    readOnly: true
-    format: date-time
-  git_last_commit_contributor:
-    type: string
-    format: uuid
+      `DOCKER` requires `dockerfile_path`
+      `BUILDPACKS` does not require any `dockerfile_path`
   dockerfile_path:
     type: string
     description: The path of the associated Dockerfile
-  root_path:
-    type: string
-    default: /
-    description: indicates the root path of the application.
   cpu:
     type: string
     default: 250m

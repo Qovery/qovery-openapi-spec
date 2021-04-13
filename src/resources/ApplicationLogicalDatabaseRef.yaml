@@ -13,11 +13,16 @@ post:
         application/json:
           schema:
             $ref: '../schemas/LogicalDatabaseResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
     '409':
       description: This logical database is already linked to the application
-
       
 delete:
   summary: 'Remove logical database link to this application.'
@@ -32,3 +37,7 @@ delete:
       $ref: '../responses/NoContent.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

@@ -1,0 +1,33 @@
+type: object
+properties:
+  name:
+    type: string
+    description: name is case insensitive
+  version:
+    type: string
+    example: 10.1
+  cpu:
+    type: string
+    default: 250m
+    example:
+      - 250m
+      - 1000m
+      - 1
+      - 1.2
+      - 2
+  memory:
+    type: string
+    default: 256MB
+    example:
+      - 256MB
+      - 1024MB
+      - 1GB
+      - 1.2GB
+      - 2GB
+  storage:
+    type: string
+    description: Size can be in GB and TB only
+    example:
+      - 1GB
+      - 16GB
+      - 1TB

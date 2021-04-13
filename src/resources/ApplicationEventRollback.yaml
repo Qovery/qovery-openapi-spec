@@ -8,11 +8,17 @@ post:
   tags:
     - application
   responses:
-    '201':
+    '202':
       description: 'Application rollbacked'
       content:
         application/json:
           schema:
             $ref: '../schemas/EventResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

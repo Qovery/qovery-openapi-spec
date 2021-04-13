@@ -1,0 +1,22 @@
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - type: object
+    required:
+      - name
+      - credentials
+    properties:
+      name:
+        type: string
+        example: GITHUB
+      credentials:
+        type: object
+        properties:
+          login:
+            type: string
+            example: x-access-token
+          access_token:
+            type: string
+            example: xxx
+          expires_at:
+            type: string
+            format: date-time

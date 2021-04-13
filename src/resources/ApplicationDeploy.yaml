@@ -12,9 +12,19 @@ post:
         schema:
           $ref: '../schemas/DeployRequest.yaml'
   responses:
-    '200':
+    '202':
       description: 'Deploy application'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ApplicationResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
     '404':
       $ref: '../responses/NotFound.yaml'
+    '409':
+      description: 'Operation is in progress'

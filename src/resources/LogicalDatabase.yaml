@@ -1,5 +1,6 @@
 get:
   summary: 'Get logical database by ID'
+  description: A logical database exists inside a database. The database is a service that exists within an environment, that you can deploy, and that has allocated resources. A database can have several logical databases
   operationId: getLogicalDatabase
   parameters:
     - $ref: '../parameters/path/logicalDatabaseId.yaml'
@@ -37,6 +38,8 @@ put:
         application/json:
           schema:
             $ref: '../schemas/LogicalDatabaseResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

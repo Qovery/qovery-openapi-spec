@@ -38,6 +38,8 @@ put:
         application/json:
           schema:
             $ref: '../schemas/ProjectResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

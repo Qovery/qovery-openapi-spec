@@ -4,6 +4,8 @@ allOf:
     properties:
       environment:
         $ref: './ReferenceObject.yaml'
+      git_repository:
+        $ref: './ApplicationGitRepositoryResponse.yaml'
       status:
         $ref: './Status.yaml'
   - $ref: './ApplicationRequest.yaml'

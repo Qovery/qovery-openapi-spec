@@ -1,0 +1,33 @@
+type: object
+required:
+ - provider
+ - owner
+ - name
+ - url
+properties:
+  provider:
+    type: string
+    enum:
+      - GITHUB
+      - GITLAB
+  owner:
+    type: string
+    example: John Doe
+  url:
+    type: string
+    description: application git repository URL
+    example: https://github.com/Qovery/simple-node-app
+  name:
+    type: string
+    description: repository name
+    example: simple-node-app
+  branch:
+    type: string
+    description: |
+      Name of the branch to use. This is optional
+      If not specified, then the branch used is the `main` or `master` one
+    example: feat/text_xxx
+  root_path:
+    type: string
+    default: /
+    description: indicates the root path of the application.

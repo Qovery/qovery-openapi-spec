@@ -14,8 +14,14 @@ post:
         application/json:
           schema:
             $ref: '../schemas/ApplicationResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
       
 delete:
   summary: 'Remove application dependency to this application.'
@@ -27,6 +33,10 @@ delete:
     - application
   responses:
     '204':
-      $ref: '../responses/NoContent.yaml'
+      $ref: '../responses/Deleted.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

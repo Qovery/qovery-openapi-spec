@@ -6,9 +6,17 @@ post:
   tags:
     - application
   responses:
-    '200':
+    '202':
       description: 'Application restart has been requested'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ApplicationResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
     '409':
-      description: An operation is in progress
+      description: 'Operation is in progress'
