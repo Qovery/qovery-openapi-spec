@@ -1,0 +1,14 @@
+get:
+  summary: 'Get git provider accounts'
+  operationId: getGitProviderAccount
+  tags:
+    - account
+  responses:
+    '200':
+      description: 'Get account'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/gitAuthProviderResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

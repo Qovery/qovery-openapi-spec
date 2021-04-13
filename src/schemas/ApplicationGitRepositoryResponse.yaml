@@ -1,0 +1,16 @@
+allOf:
+  - type: object
+    properties:
+      has_access:
+        type: boolean
+      last_commit_id:
+        type: string
+        description: Current Git commit ID
+      last_commit_date:
+        type: string
+        readOnly: true
+        format: date-time
+      last_commit_contributor:
+        type: string
+        format: uuid
+  - $ref: './ApplicationGitRepositoryRequest.yaml'

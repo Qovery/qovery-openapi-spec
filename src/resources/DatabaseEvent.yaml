@@ -16,4 +16,8 @@ get:
             $ref: '../schemas/EventPaginatedResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
 

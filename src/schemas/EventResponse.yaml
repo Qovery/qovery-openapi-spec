@@ -2,7 +2,7 @@ allOf:
   - $ref: './BaseResponse.yaml'
   - type: object    
     properties:
-      owner:
+      user:
         $ref: './UserResponse.yaml'
       commit:
         $ref: './CommitResponse.yaml'

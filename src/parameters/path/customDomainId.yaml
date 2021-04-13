@@ -1,6 +1,6 @@
 name: customDomainId
 in: path
-description: Custom DOmain ID
+description: Custom Domain ID
 required: true
 schema:
   type: string

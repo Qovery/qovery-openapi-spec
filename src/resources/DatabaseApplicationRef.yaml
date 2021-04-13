@@ -13,8 +13,14 @@ post:
         application/json:
           schema:
             $ref: '../schemas/ApplicationResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
     '409':
       description: This application is already added on the database 
 
@@ -32,3 +38,7 @@ delete:
       $ref: '../responses/NoContent.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

@@ -1,0 +1,14 @@
+get:
+  summary: 'Get github repositories of the connected user'
+  operationId: getGithubRepositories
+  tags:
+    - account
+  responses:
+    '200':
+      description: 'Get github repositories'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/gitRepositoryResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

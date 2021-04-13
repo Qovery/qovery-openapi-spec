@@ -5,6 +5,9 @@ required:
   - consumed_in_mb
   - consumed_in_percent
 properties:
+  created_at:
+    type: string
+    format: date-time
   requested_in_gb:
     type: integer
   consumed_in_gb:
