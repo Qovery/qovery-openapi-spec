@@ -28,6 +28,10 @@ paths:
                 $ref: '#/components/schemas/OrganizationResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Create an organization
       operationId: createOrganization
@@ -45,8 +49,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrganizationResponse'
+        '400':
+          description: Bad request
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: Organization name is already taken
   '/organization/{organizationId}':
@@ -90,6 +100,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrganizationResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -132,6 +144,10 @@ paths:
                 $ref: '#/components/schemas/ProjectResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Create a project
       operationId: createProject
@@ -151,8 +167,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProjectResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: Project name within the organization is already taken
   '/project/{projectId}':
@@ -196,6 +218,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProjectResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -238,6 +262,10 @@ paths:
                 $ref: '#/components/schemas/EnvironmentResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Create an environment
       operationId: createEnvironment
@@ -257,8 +285,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: Environment name within the project is already taken
   '/project/{projectId}/environmentVariable':
@@ -278,6 +312,10 @@ paths:
                 $ref: '#/components/schemas/EnvironmentVariableResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Add an environment variable to the project
       description: |
@@ -301,8 +339,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/project/{projectId}/environmentVariable/{environmentVariableId}':
     delete:
       summary: Delete an environment variable from a project
@@ -346,6 +390,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -382,6 +428,10 @@ paths:
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/project/{projectId}/environmentVariable/{environmentVariableId}/alias':
     post:
       summary: Create an environment variable alias at the project level
@@ -409,8 +459,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/project/{projectId}/secret':
     get:
       summary: List project secrets
@@ -428,6 +484,10 @@ paths:
                 $ref: '#/components/schemas/SecretResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Add a secret to the project
       description: |
@@ -451,8 +511,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SecretResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/project/{projectId}/secret/{secretId}':
     delete:
       summary: Delete a secret from a project
@@ -496,6 +562,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SecretResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -537,6 +605,10 @@ paths:
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/project/{projectId}/secret/{secretId}/alias':
     post:
       summary: Create a secret alias at the project level
@@ -569,8 +641,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SecretResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}':
     get:
       summary: Get environment by ID
@@ -617,6 +695,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -698,6 +778,10 @@ paths:
                               example: v12
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/deploy':
     post:
       summary: Deploy environment
@@ -713,12 +797,20 @@ paths:
             schema:
               $ref: '#/components/schemas/DeployRequest'
       responses:
-        '200':
+        '202':
           description: Deploy environment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   '/environment/{environmentId}/stop':
     post:
       summary: Stop environment
@@ -728,10 +820,18 @@ paths:
       tags:
         - environment
       responses:
-        '200':
+        '202':
           description: Environment stop has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: Environment is already stopped or an operation is in progress
   '/environment/{environmentId}/restart':
@@ -743,12 +843,20 @@ paths:
       tags:
         - environment
       responses:
-        '200':
+        '202':
           description: Environment restart has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
-          description: An operation is in progress
+          description: Operation is in progress
   '/environment/{environmentId}/abort':
     post:
       summary: Abort environment
@@ -760,8 +868,16 @@ paths:
       responses:
         '200':
           description: Environment abort has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
   '/environment/{environmentId}/clone':
@@ -773,10 +889,18 @@ paths:
       tags:
         - environment
       responses:
-        '200':
+        '202':
           description: Environment clone has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
   '/environment/{environmentId}/application':
@@ -796,6 +920,10 @@ paths:
                 $ref: '#/components/schemas/ApplicationResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Create an application
       operationId: createApplication
@@ -815,8 +943,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: Application name within the environment is already taken
   '/environment/{environmentId}/deploymentHistory':
@@ -845,6 +979,10 @@ paths:
                           $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1deploymentHistory%3Ftail%3D/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/deploymentHistory?tail=':
     get:
       summary: List XX last environment deploys
@@ -889,6 +1027,10 @@ paths:
                               $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/deploymentHistory?lastId=':
     get:
       summary: List all the last environment deploys after a certain event Id
@@ -908,6 +1050,10 @@ paths:
                 $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1deploymentHistory%3Ftail%3D/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/environmentVariable':
     get:
       summary: List environment variables
@@ -925,6 +1071,10 @@ paths:
                 $ref: '#/components/schemas/EnvironmentVariableResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Add an environment variable to the environment
       description: |
@@ -948,8 +1098,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/environmentVariable/{environmentVariableId}':
     delete:
       summary: Delete an environment variable from an environment
@@ -993,6 +1149,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1029,6 +1187,10 @@ paths:
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/environmentVariable/{environmentVariableId}/alias':
     post:
       summary: Create an environment variable alias at the environment level
@@ -1056,8 +1218,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/secret':
     get:
       summary: List environment secrets
@@ -1075,6 +1243,10 @@ paths:
                 $ref: '#/components/schemas/SecretResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Add a secret to the environment
       description: |
@@ -1098,8 +1270,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SecretResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/secret/{secretId}':
     delete:
       summary: Delete a secret from the environment
@@ -1143,6 +1321,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SecretResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1179,6 +1359,10 @@ paths:
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/secret/{secretId}/alias':
     post:
       summary: Create a secret alias at the environment level
@@ -1206,8 +1390,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SecretResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/link':
     get:
       summary: List all URLs of the environment
@@ -1237,6 +1427,10 @@ paths:
                               type: string
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}':
     get:
       summary: Get application by ID
@@ -1278,6 +1472,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1297,6 +1493,67 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/application/{applicationId}/repository':
+    post:
+      summary: Link a git repository to the application.
+      description: 'Allows to link a git repository to an existing application. If a git repository was already linked, then it will be replaced by the new one'
+      operationId: linkApplicationToGitRepository
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - provider
+                - owner
+                - name
+                - url
+              properties:
+                provider:
+                  type: string
+                  enum:
+                    - GITHUB
+                    - GITLAB
+                owner:
+                  type: string
+                  example: John Doe
+                url:
+                  type: string
+                  description: application git repository URL
+                  example: 'https://github.com/Qovery/simple-node-app'
+                name:
+                  type: string
+                  description: repository name
+                  example: simple-node-app
+                branch:
+                  type: string
+                  description: |
+                    Name of the branch to use. This is optional
+                    If not specified, then the branch used is the `main` or `master` one
+                  example: feat/text_xxx
+                root_path:
+                  type: string
+                  default: /
+                  description: indicates the root path of the application.
+      responses:
+        '201':
+          description: Link git repository
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1325,6 +1582,10 @@ paths:
                       $ref: '#/components/schemas/LogResponse/allOf/1/properties/owner'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/tag':
     get:
       summary: List tags
@@ -1342,6 +1603,10 @@ paths:
                 $ref: '#/components/schemas/TagResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/Instance':
     get:
       summary: List currently running instances of the application with their resource metrics
@@ -1364,6 +1629,10 @@ paths:
                       $ref: '#/paths/~1instance~1%7BinstanceId%7D/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/currentScale':
     get:
       summary: Get current number of running instances of the application
@@ -1404,6 +1673,10 @@ paths:
                     format: date-time
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/metric/cpu':
     get:
       summary: Get CPU consumption metric over time for the application
@@ -1438,6 +1711,10 @@ paths:
                             $ref: '#/paths/~1database~1%7BdatabaseId%7D~1metric~1cpu/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/metric/memory':
     get:
       summary: Get Memory consumption metric over time for the application
@@ -1472,6 +1749,10 @@ paths:
                             $ref: '#/paths/~1database~1%7BdatabaseId%7D~1metric~1memory/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/metric/healthCheck':
     get:
       summary: Get Health Check latency  metric over time for the application
@@ -1496,6 +1777,10 @@ paths:
                       $ref: '#/paths/~1database~1%7BdatabaseId%7D~1metric~1healthCheck/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/metric/storage':
     get:
       summary: Get Storage consumption metric over time for the application
@@ -1530,6 +1815,10 @@ paths:
                             $ref: '#/paths/~1database~1%7BdatabaseId%7D~1metric~1storage/get/responses/200/content/application~1json/schema/properties/results/items'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/dependency':
     get:
       summary: List application dependencies
@@ -1547,6 +1836,10 @@ paths:
                 $ref: '#/components/schemas/ApplicationResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/dependency/{targetApplicationId}':
     post:
       summary: Add application dependency to this application.
@@ -1564,8 +1857,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     delete:
       summary: Remove application dependency to this application.
       operationId: removeApplicationDependency
@@ -1576,9 +1875,13 @@ paths:
         - application
       responses:
         '204':
-          $ref: '#/components/responses/204'
+          $ref: '#/components/responses/204-deletion'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/commit':
     get:
       summary: List commits
@@ -1596,6 +1899,10 @@ paths:
                 $ref: '#/components/schemas/CommitResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/deploy':
     post:
       summary: Deploy application
@@ -1611,12 +1918,22 @@ paths:
             schema:
               $ref: '#/components/schemas/DeployRequest'
       responses:
-        '200':
+        '202':
           description: Deploy application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   '/application/{applicationId}/rollback':
     post:
       summary: Rollback application to a previous version
@@ -1632,14 +1949,22 @@ paths:
             schema:
               $ref: '#/components/schemas/DeployRequest'
       responses:
-        '201':
+        '202':
           description: Application rollbacked
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EventResponse'
+                $ref: '#/components/schemas/ApplicationResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   '/application/{applicationId}/stop':
     post:
       summary: Stop application
@@ -1649,10 +1974,18 @@ paths:
       tags:
         - application
       responses:
-        '200':
+        '202':
           description: Application stop has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: Application is already stopped or an operation is in progress
   '/application/{applicationId}/restart':
@@ -1664,12 +1997,20 @@ paths:
       tags:
         - application
       responses:
-        '200':
+        '202':
           description: Application restart has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
-          description: An operation is in progress
+          description: Operation is in progress
   '/application/{applicationId}/abort':
     post:
       summary: Abort application
@@ -1681,8 +2022,16 @@ paths:
       responses:
         '200':
           description: Application abort has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: 'Application is not building or deploying at the moment, or an operation is in progress'
   '/application/{applicationId}/event':
@@ -1704,6 +2053,10 @@ paths:
                 $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/event?tail=':
     get:
       summary: List XX last application events
@@ -1723,6 +2076,10 @@ paths:
                 $ref: '#/components/schemas/EventResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/event?lastId=':
     get:
       summary: List all the last application events after a certain event Id
@@ -1742,6 +2099,10 @@ paths:
                 $ref: '#/components/schemas/EventResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/event/{eventId}/rollback':
     post:
       summary: Rollback application from a given event
@@ -1759,14 +2120,20 @@ paths:
       tags:
         - application
       responses:
-        '201':
+        '202':
           description: Application rollbacked
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/environmentVariable':
     get:
       summary: List environment variables
@@ -1784,6 +2151,10 @@ paths:
                 $ref: '#/components/schemas/EnvironmentVariableResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Add an environment variable to the application
       description: |
@@ -1805,8 +2176,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/environmentVariable/{environmentVariableId}':
     delete:
       summary: Delete an environment variable from an application
@@ -1850,6 +2227,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1886,6 +2265,10 @@ paths:
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/environmentVariable/{environmentVariableId}/alias':
     post:
       summary: Create an environment variable alias at the application level
@@ -1913,8 +2296,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentVariableResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/secret':
     get:
       summary: List application secrets
@@ -1933,6 +2322,10 @@ paths:
                 $ref: '#/components/schemas/SecretResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Add a secret to the application
       description: |
@@ -1954,8 +2347,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SecretResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/secret/{secretId}':
     delete:
       summary: Delete a secret from an application
@@ -1999,6 +2398,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SecretResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2035,6 +2436,10 @@ paths:
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/secret/{secretId}/alias':
     post:
       summary: Create a secret alias at the application level
@@ -2062,8 +2467,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SecretResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/customDomain':
     get:
       summary: List application custom domains
@@ -2086,6 +2497,10 @@ paths:
                       $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Add custom domain to the application.
       description: Add a custom domain to this application in order not to use qovery autogenerated domain
@@ -2106,8 +2521,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/log':
     get:
       summary: List logs
@@ -2123,17 +2544,13 @@ paths:
           description: List logs
           content:
             application/json:
-              schema:
-                allOf:
-                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema/allOf/0'
-                  - type: object
-                    properties:
-                      results:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/LogResponse'
+              schema: null
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/log?tail=':
     get:
       summary: List XX last application logs
@@ -2153,6 +2570,10 @@ paths:
                 $ref: '#/components/schemas/LogResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/log?lastId=':
     get:
       summary: List all the last application logs after a certain log Id
@@ -2172,6 +2593,10 @@ paths:
                 $ref: '#/components/schemas/LogResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/logicalDatabase':
     get:
       summary: List linked logical databases
@@ -2189,6 +2614,10 @@ paths:
                 $ref: '#/paths/~1database~1%7BdatabaseId%7D~1logicalDatabase/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/logicalDatabase/{targetLogicalDatabaseId}':
     post:
       summary: Link a logical database to the application
@@ -2211,8 +2640,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: This logical database is already linked to the application
     delete:
@@ -2228,6 +2663,10 @@ paths:
           $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/link':
     get:
       summary: List all URLs of the application
@@ -2245,6 +2684,10 @@ paths:
                 $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1link/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/database':
     get:
       summary: List environment databases
@@ -2262,6 +2705,10 @@ paths:
                 $ref: '#/components/schemas/DatabaseResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: 'Create a database '
       operationId: createDatabase
@@ -2281,8 +2728,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DatabaseResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: Database name within the environment is already taken
   '/database/{databaseId}':
@@ -2318,7 +2771,39 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DatabaseRequest'
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: name is case insensitive
+                version:
+                  type: string
+                  example: 10.1
+                cpu:
+                  type: string
+                  default: 250m
+                  example:
+                    - 250m
+                    - 1000m
+                    - 1
+                    - 1.2
+                    - 2
+                memory:
+                  type: string
+                  default: 256MB
+                  example:
+                    - 256MB
+                    - 1024MB
+                    - 1GB
+                    - 1.2GB
+                    - 2GB
+                storage:
+                  type: string
+                  description: Size can be in GB and TB only
+                  example:
+                    - 1GB
+                    - 16GB
+                    - 1TB
       responses:
         '200':
           description: 'Edit a database '
@@ -2326,6 +2811,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DatabaseResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2369,6 +2856,10 @@ paths:
                   - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1masterCredentials/put/requestBody/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     put:
       summary: Edit database  master credentials
       operationId: editDatabaseCredentials
@@ -2396,6 +2887,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/paths/~1database~1%7BdatabaseId%7D~1masterCredentials/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2405,6 +2898,7 @@ paths:
   '/database/{databaseId}/logicalDatabase':
     get:
       summary: List logical databases of a database
+      description: 'A logical database exists inside a database. The database is a service that exists within an environment, that you can deploy, and that has allocated resources. A database can have several logical databases'
       operationId: listLogicalDatabaseDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
@@ -2424,8 +2918,13 @@ paths:
                       $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Create a logical database on the database
+      description: 'If you don''t specify credentials, Qovery will autogenerate them.'
       operationId: createLogicalDatabaseOnDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
@@ -2435,7 +2934,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/put/requestBody/content/application~1json/schema'
+              allOf:
+                - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/put/requestBody/content/application~1json/schema'
+                - type: object
+                  properties:
+                    credentials:
+                      type: object
+                      properties:
+                        login:
+                          type: string
+                        password:
+                          type: string
       responses:
         '201':
           description: Created database on the database
@@ -2443,8 +2952,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: Logical Database with this name already exists on the database
   '/database/{databaseId}/application':
@@ -2464,6 +2979,10 @@ paths:
                 $ref: '#/components/schemas/ApplicationResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}/application/{targetApplicationId}':
     post:
       summary: 'Add an application to the database '
@@ -2480,8 +2999,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: This application is already added on the database
     delete:
@@ -2497,6 +3022,10 @@ paths:
           $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}/restart':
     post:
       summary: Retart database
@@ -2506,12 +3035,20 @@ paths:
       tags:
         - database
       responses:
-        '200':
+        '202':
           description: Database  restart has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
-          description: Database  is already started or an operation is in progress
+          description: Operation is in progress
   '/database/{databaseId}/stop':
     post:
       summary: Stop database
@@ -2521,33 +3058,43 @@ paths:
       tags:
         - database
       responses:
-        '200':
+        '202':
           description: Database  stop has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
-          description: Database  is already stopped or an operation is in progress
+          description: Operation is in progress
   '/database/{databaseId}/deploy':
     post:
       summary: 'Deploy database '
-      description: 'If you don''t specify any git commit id, we will deploy the latest version'
       operationId: deployDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
         - database
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeployRequest'
       responses:
-        '200':
+        '202':
           description: 'Deploy database '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   '/database/{databaseId}/clone':
     post:
       summary: 'Clone database '
@@ -2557,10 +3104,18 @@ paths:
       tags:
         - database
       responses:
-        '200':
+        '202':
           description: Database  clone has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
   '/database/{databaseId}/currentMetric':
@@ -2669,7 +3224,10 @@ paths:
                         - consumed_in_number
                         - consumed_in_percent
                       properties:
-                        requested_in_float:
+                        created_at:
+                          type: string
+                          format: date-time
+                        requested_in_number:
                           type: number
                         consumed_in_number:
                           type: number
@@ -2677,6 +3235,10 @@ paths:
                           type: number
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}/metric/memory':
     get:
       summary: Get Memory consumption metric over time for the database
@@ -2704,6 +3266,9 @@ paths:
                         - consumed_in_mb
                         - consumed_in_percent
                       properties:
+                        created_at:
+                          type: string
+                          format: date-time
                         requested_in_mb:
                           type: integer
                         consumed_in_mb:
@@ -2712,6 +3277,10 @@ paths:
                           type: number
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}/metric/storage':
     get:
       summary: Get Storage consumption metric over time for the database
@@ -2739,6 +3308,9 @@ paths:
                         - consumed_in_mb
                         - consumed_in_percent
                       properties:
+                        created_at:
+                          type: string
+                          format: date-time
                         requested_in_gb:
                           type: integer
                         consumed_in_gb:
@@ -2747,6 +3319,10 @@ paths:
                           type: number
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}/metric/healthCheck':
     get:
       summary: Get Health Check latency  metric over time for the database
@@ -2792,6 +3368,10 @@ paths:
                                 type: number
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}/backup':
     get:
       summary: List database  backups
@@ -2818,6 +3398,10 @@ paths:
                           $ref: '#/paths/~1database~1%7BdatabaseId%7D~1backup/post/responses/201/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: 'Add a backup to the Database '
       operationId: addBackupDatabase
@@ -2851,8 +3435,14 @@ paths:
                       status:
                         $ref: '#/components/schemas/Status'
                   - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1backup/post/requestBody/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}/backup/{backupId}':
     delete:
       summary: Remove database  backup
@@ -2873,6 +3463,10 @@ paths:
           $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}/event':
     get:
       summary: List database  events
@@ -2915,6 +3509,10 @@ paths:
                           $ref: '#/components/schemas/EventResponse'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}/event?tail=':
     get:
       summary: List XX last database events
@@ -2940,6 +3538,10 @@ paths:
                 $ref: '#/components/schemas/EventResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}/event?lastId=':
     get:
       summary: List all the last database  events after a certain event Id
@@ -2965,9 +3567,14 @@ paths:
                 $ref: '#/components/schemas/EventResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/logicalDatabase/{logicalDatabaseId}':
     get:
       summary: Get logical database by ID
+      description: 'A logical database exists inside a database. The database is a service that exists within an environment, that you can deploy, and that has allocated resources. A database can have several logical databases'
       operationId: getLogicalDatabase
       parameters:
         - name: logicalDatabaseId
@@ -3027,6 +3634,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3067,6 +3676,10 @@ paths:
                 $ref: '#/paths/~1database~1%7BdatabaseId%7D~1masterCredentials/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     put:
       summary: Edit logical database credentials
       operationId: editLogicalDatabaseCredentials
@@ -3086,6 +3699,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/paths/~1database~1%7BdatabaseId%7D~1masterCredentials/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3109,6 +3724,10 @@ paths:
                 $ref: '#/components/schemas/ApplicationResponseList'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/customDomain/{customDomainId}':
     get:
       summary: Get custom domain by ID
@@ -3170,6 +3789,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3211,6 +3832,9 @@ paths:
                   - $ref: '#/components/schemas/BaseResponse'
                   - type: object
                     properties:
+                      name:
+                        type: string
+                        example: instance 1
                       cpu:
                         type: object
                         properties:
@@ -3316,6 +3940,99 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /account/gitAuthProvider:
+    get:
+      summary: Get git provider accounts
+      operationId: getGitProviderAccount
+      tags:
+        - account
+      responses:
+        '200':
+          description: Get account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/BaseResponse'
+                        - type: object
+                          required:
+                            - name
+                            - credentials
+                          properties:
+                            name:
+                              type: string
+                              example: GITHUB
+                            credentials:
+                              type: object
+                              properties:
+                                login:
+                                  type: string
+                                  example: x-access-token
+                                access_token:
+                                  type: string
+                                  example: xxx
+                                expires_at:
+                                  type: string
+                                  format: date-time
+        '401':
+          $ref: '#/components/responses/401'
+  /account/github/repository:
+    get:
+      summary: Get github repositories of the connected user
+      operationId: getGithubRepositories
+      tags:
+        - account
+      responses:
+        '200':
+          description: Get github repositories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/BaseResponse'
+                        - type: object
+                          required:
+                            - name
+                            - url
+                          properties:
+                            name:
+                              type: string
+                              example: simple-node-app
+                            url:
+                              type: string
+                              example: 'https://github.com/Qovery/simple-node-app'
+                            default_branch:
+                              type: string
+                              example: master
+                            is_private:
+                              type: boolean
+        '401':
+          $ref: '#/components/responses/401'
+  /account/gitlab/repository:
+    get:
+      summary: Get gitlab repositories of the connected user
+      operationId: getGitlabRepositories
+      tags:
+        - account
+      responses:
+        '200':
+          description: Get gitlab repositories
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1account~1github~1repository/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
 components:
   parameters:
     organizationId:
@@ -3377,7 +4094,7 @@ components:
     customDomainId:
       name: customDomainId
       in: path
-      description: Custom DOmain ID
+      description: Custom Domain ID
       required: true
       schema:
         type: string
@@ -3543,10 +4260,7 @@ components:
       type: object
       required:
         - name
-        - git_repository_url
-        - git_commit_id
-        - git_repository_branch
-        - root_path
+        - git_repository
       properties:
         name:
           type: string
@@ -3560,33 +4274,11 @@ components:
             - DOCKER
             - BUILDPACKS
           description: |
-            `DOCKER` required `dockerfile_path`
-            `BUILDPACKS` does not required any `dockerfile_path`
-        git_repository_url:
-          type: string
-          description: application git repository URL
-        git_repository_branch:
-          type: string
-          description: |
-            Name of the branch to use. This is optional
-            If not specified, then the branch used is the `main` or `master` one
-        git_commit_id:
-          type: string
-          description: Current Git commit ID
-        git_last_commit_date:
-          type: string
-          readOnly: true
-          format: date-time
-        git_last_commit_contributor:
-          type: string
-          format: uuid
+            `DOCKER` requires `dockerfile_path`
+            `BUILDPACKS` does not require any `dockerfile_path`
         dockerfile_path:
           type: string
           description: The path of the associated Dockerfile
-        root_path:
-          type: string
-          default: /
-          description: indicates the root path of the application.
         cpu:
           type: string
           default: 250m
@@ -3695,6 +4387,23 @@ components:
           properties:
             environment:
               $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
+            git_repository:
+              allOf:
+                - type: object
+                  properties:
+                    has_access:
+                      type: boolean
+                    last_commit_id:
+                      type: string
+                      description: Current Git commit ID
+                    last_commit_date:
+                      type: string
+                      readOnly: true
+                      format: date-time
+                    last_commit_contributor:
+                      type: string
+                      format: uuid
+                - $ref: '#/paths/~1application~1%7BapplicationId%7D~1repository/post/requestBody/content/application~1json/schema'
             status:
               $ref: '#/components/schemas/Status'
         - $ref: '#/components/schemas/ApplicationRequest'
@@ -3709,13 +4418,13 @@ components:
       type: object
       required:
         - name
-        - database_type
-        - database_version
+        - type
+        - version
       properties:
         name:
           type: string
           description: name is case insensitive
-        database_type:
+        type:
           type: string
           enum:
             - postgresql
@@ -3723,11 +4432,9 @@ components:
             - mongodb
             - redis
             - storage
-        database_version:
+        version:
           type: string
           example: 10.1
-        uri:
-          type: string
         cpu:
           type: string
           default: 250m
@@ -3760,6 +4467,8 @@ components:
           properties:
             environment:
               $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
+            uri:
+              type: string
             status:
               $ref: '#/components/schemas/Status'
         - $ref: '#/components/schemas/DatabaseRequest'
@@ -3809,6 +4518,15 @@ components:
                 key:
                   type: string
                   example: QOVERY_DATABASE_PSQL_NAME
+                value:
+                  type: string
+                scope:
+                  type: string
+                  enum:
+                    - BUILT_IN
+                    - ENVIRONMENT
+                    - PROJECT
+                    - APPLICATION
             scope:
               type: string
               enum:
@@ -3864,6 +4582,13 @@ components:
                 key:
                   type: string
                   example: QOVERY_DATABASE_PSQL_NAME
+                scope:
+                  type: string
+                  enum:
+                    - BUILT_IN
+                    - ENVIRONMENT
+                    - PROJECT
+                    - APPLICATION
             scope:
               type: string
               enum:
@@ -3883,7 +4608,7 @@ components:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
           properties:
-            owner:
+            user:
               $ref: '#/components/schemas/LogResponse/allOf/1/properties/owner'
             commit:
               $ref: '#/components/schemas/CommitResponse'
