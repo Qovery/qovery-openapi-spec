@@ -7,27 +7,16 @@ properties:
     type: string
     example: 10.1
   cpu:
-    type: string
-    default: 250m
-    example:
-      - 250m
-      - 1000m
-      - 1
-      - 1.2
-      - 2
+    type: number
+    description: unit is millicores (m). 1000m = 1 cpu
+    default: 250
+    example: 1250
   memory:
-    type: string
-    default: 256MB
-    example:
-      - 256MB
-      - 1024MB
-      - 1GB
-      - 1.2GB
-      - 2GB
+    type: number
+    description: unit is MB. 1024 MB = 1GB
+    default: 256
+    example: 1024
   storage:
-    type: string
-    description: Size can be in GB and TB only
-    example:
-      - 1GB
-      - 16GB
-      - 1TB
+    type: number
+    description: unit is GB
+    example: 4
