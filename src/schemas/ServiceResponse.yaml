@@ -15,8 +15,6 @@ allOf:
         type: string
         description: uuid of the associated service (application, database, job, gateway...)
         format: uuid
-      status:
-        $ref: './Status.yaml'
       last_updated_by:
         type: string
         format: uuid

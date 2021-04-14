@@ -2,7 +2,24 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-04-13 : changes based on patryk's feedbacks
+# 2021-04-14 : changes based on Romain's feedbacks
+
+* updated application resource fields cpu, memomry, and storage size, to change their type to "number" instead of "string". Added in each field description the unit that is used.
+* same thing on database resource
+* updated application resource, to specify default port to HTTP instead of HTTPS
+* added INITIALIZED in status possible values
+* removed status field from application, database and environment resources
+* added GET application/id/status
+* added GET database/id/status
+* added GET environment/id/status
+* added GET environment/id/service/status --> returns a list of id (the id of each service) and associated status
+* added GET environment/id/application/status --> returns a list of id (the id of each app) and status
+* added GET environment/id/database/status --> returns a list of id (the id of each db) and associated status
+* updated application log resource to remove user, commit and message_human_explanation field
+* removed POST database/id/clone call
+* updated POST environment/id/clone to request name in body request, for the new env that will be created. Added also a description on the endpoint
+
+# 2021-04-13 : changes based on Patryk's feedbacks
 
 * updated commit resource to remove id and updated_at fields
 * updated application log resource to remove updated_at field

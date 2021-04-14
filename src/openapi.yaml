@@ -41,8 +41,12 @@ paths:
     $ref: './resources/ProjectSecretAlias.yaml'
   /environment/{environmentId}:
     $ref: './resources/Environment.yaml'
+  /environment/{environmentId}/status:
+    $ref: './resources/EnvironmentStatus.yaml'
   /environment/{environmentId}/service:
     $ref: './resources/EnvironmentService.yaml'
+  /environment/{environmentId}/service/status:
+    $ref: './resources/EnvironmentServiceStatus.yaml'
   /environment/{environmentId}/deploy:
     $ref: './resources/EnvironmentDeploy.yaml'
   /environment/{environmentId}/stop:
@@ -55,6 +59,8 @@ paths:
     $ref: './resources/EnvironmentClone.yaml'
   /environment/{environmentId}/application:
     $ref: './resources/EnvironmentApplication.yaml'
+  /environment/{environmentId}/application/status:
+    $ref: './resources/EnvironmentApplicationStatus.yaml'
   /environment/{environmentId}/deploymentHistory:
     $ref: './resources/EnvironmentDeploymentHistory.yaml'
   /environment/{environmentId}/deploymentHistory?tail=:
@@ -81,6 +87,8 @@ paths:
     $ref: './resources/EnvironmentLink.yaml'    
   /application/{applicationId}:
     $ref: './resources/Application.yaml'
+  /application/{applicationId}/status:
+    $ref: './resources/ApplicationStatus.yaml'
   /application/{applicationId}/repository:
     $ref: './resources/ApplicationGitRepository.yaml'
   /application/{applicationId}/contributor:
@@ -155,8 +163,12 @@ paths:
     $ref: './resources/ApplicationLink.yaml'    
   /environment/{environmentId}/database:
     $ref: './resources/EnvironmentDatabase.yaml'
+  /environment/{environmentId}/database/status:
+    $ref: './resources/EnvironmentDatabaseStatus.yaml'
   /database/{databaseId}:
     $ref: './resources/Database.yaml'
+  /database/{databaseId}/status:
+    $ref: './resources/DatabaseStatus.yaml'
   /database/{databaseId}/masterCredentials:
     $ref: './resources/DatabaseMasterCredentials.yaml'
   /database/{databaseId}/logicalDatabase:
@@ -171,8 +183,6 @@ paths:
     $ref: './resources/DatabaseStop.yaml'
   /database/{databaseId}/deploy:
     $ref: './resources/DatabaseDeploy.yaml'
-  /database/{databaseId}/clone:
-    $ref: './resources/DatabaseClone.yaml'
   /database/{databaseId}/currentMetric:
     $ref: './resources/DatabaseCurrentMetric.yaml'
   /database/{databaseId}/metric/cpu:

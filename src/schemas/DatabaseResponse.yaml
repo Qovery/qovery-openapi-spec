@@ -6,6 +6,4 @@ allOf:
         $ref: './ReferenceObject.yaml'
       uri:
         type: string
-      status:
-        $ref: './Status.yaml'
   - $ref: './DatabaseRequest.yaml'
