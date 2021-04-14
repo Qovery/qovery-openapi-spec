@@ -11,18 +11,11 @@ properties:
   created_at:
     type: string
     format: date-time
-  user:
-    $ref: './UserResponse.yaml'
-  commit:
-    $ref: './CommitResponse.yaml'
   status:
     $ref: './Status.yaml'
   message:
     type: string
     example: log message
-  message_human_explanation:
-    type: string
-    example: explain what the error means -- Markdown can be injected
   hint:
     type: string
     example: give a possible action to the user -- Markdown can be injected

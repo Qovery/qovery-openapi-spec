@@ -4,6 +4,4 @@ allOf:
     properties:
       project:
         $ref: './ReferenceObject.yaml'
-      status:
-        $ref: './Status.yaml'
   - $ref: './EnvironmentRequest.yaml'

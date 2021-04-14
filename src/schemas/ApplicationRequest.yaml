@@ -21,23 +21,19 @@ properties:
     type: string
     description: The path of the associated Dockerfile
   cpu:
-    type: string
+    type: number
+    description: unit is millicores (m). 1000m = 1 cpu
     default: 250m
     example:
-      - 250m
-      - 1000m
-      - 1
-      - 1.2
-      - 2
+      - 250
+      - 1000
   memory:
-    type: string
-    default: 256MB
+    type: number
+    description: unit is MB. 1024 MB = 1GB
+    default: 256
     example:
-      - 256MB
-      - 1024MB
-      - 1GB
-      - 1.2GB
-      - 2GB
+      - 256
+      - 1024
   min_running_instances:
     type: integer
     minimum: 0
@@ -73,12 +69,11 @@ properties:
             - SSD
             - FAST_SSD
         size:
-          type: string
-          description: Size can be in GB and TB only
+          type: number
+          description: unit is GB
           example:
-            - 1GB
-            - 16GB
-            - 1TB
+            - 1
+            - 16
         mount_point:
           type: string
           example: /mnt/images
@@ -104,7 +99,7 @@ properties:
           description: Expose the port to the world
         protocol:
           type: string
-          default: HTTPS
+          default: HTTP
           enum:
             - HTTPS
             - HTTP

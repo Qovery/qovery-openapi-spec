@@ -5,8 +5,9 @@ properties:
   state:
     type: string
     description: |
-      Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state. Then finish with `*_ERROR` or any termination state.
+      Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state.
     enum:
+      - INITIALIZED
       - BUILDING
       - BUILD_ERROR
       - BUILT
