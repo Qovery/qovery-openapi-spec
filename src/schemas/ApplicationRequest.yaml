@@ -23,17 +23,13 @@ properties:
   cpu:
     type: number
     description: unit is millicores (m). 1000m = 1 cpu
-    default: 250m
-    example:
-      - 250
-      - 1000
+    default: 250
+    example: 1250
   memory:
     type: number
     description: unit is MB. 1024 MB = 1GB
     default: 256
-    example:
-      - 256
-      - 1024
+    example: 1024
   min_running_instances:
     type: integer
     minimum: 0
@@ -71,9 +67,7 @@ properties:
         size:
           type: number
           description: unit is GB
-          example:
-            - 1
-            - 16
+          example: 16
         mount_point:
           type: string
           example: /mnt/images
