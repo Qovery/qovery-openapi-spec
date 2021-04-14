@@ -726,6 +726,27 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/status':
+    get:
+      summary: Get environment status
+      operationId: getEnvironmentStatus
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/service':
     get:
       summary: List environment services
@@ -763,8 +784,6 @@ paths:
                               type: string
                               description: 'uuid of the associated service (application, database, job, gateway...)'
                               format: uuid
-                            status:
-                              $ref: '#/components/schemas/Status'
                             last_updated_by:
                               type: string
                               format: uuid
@@ -780,6 +799,37 @@ paths:
                               type: string
                               description: for databases this field exposes the database version
                               example: v12
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/service/status':
+    get:
+      summary: Get all environment services statuses
+      description: Returns a list of services with only their id and status.
+      operationId: getEnvironmentServiceStatus
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        readOnly: true
+                  - $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -882,11 +932,22 @@ paths:
   '/environment/{environmentId}/clone':
     post:
       summary: Clone environment
+      description: 'You must provide a name. This will create a new environment, with the same configuration, and same applications and databases. Database data is not cloned.'
       operationId: cloneEnvironment
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
         - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
       responses:
         '202':
           description: Environment clone has been requested
@@ -952,6 +1013,30 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Application name within the environment is already taken
+  '/environment/{environmentId}/application/status':
+    get:
+      summary: Get all environment applications statuses
+      description: Returns a list of applications with only their id and status.
+      operationId: getEnvironmentApplicationStatus
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/deploymentHistory':
     get:
       summary: List environment deploys
@@ -1502,6 +1587,27 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/status':
+    get:
+      summary: Get application status
+      operationId: getApplicationStatus
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/repository':
     post:
       summary: Link a git repository to the application.
@@ -1582,7 +1688,7 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/components/schemas/LogResponse/properties/user'
+                      $ref: '#/components/schemas/EventResponse/allOf/1/properties/user'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2747,6 +2853,30 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Database name within the environment is already taken
+  '/environment/{environmentId}/database/status':
+    get:
+      summary: Get all environment databases statuses
+      description: Returns a list of databases with only their id and status.
+      operationId: getEnvironmentDatabaseStatus
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - database
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}':
     get:
       summary: Get database by ID
@@ -2841,6 +2971,27 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/database/{databaseId}/status':
+    get:
+      summary: Get database status
+      operationId: getDatabaseStatus
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - database
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3067,29 +3218,6 @@ paths:
       responses:
         '202':
           description: 'Deploy database '
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DatabaseResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Operation is in progress
-  '/database/{databaseId}/clone':
-    post:
-      summary: 'Clone database '
-      operationId: cloneDatabase
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-      tags:
-        - database
-      responses:
-        '202':
-          description: Database  clone has been requested
           content:
             application/json:
               schema:
@@ -3581,9 +3709,7 @@ paths:
                   - type: object
                     properties:
                       database:
-                        $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
-                      status:
-                        $ref: '#/components/schemas/Status'
+                        $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/put/requestBody/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
@@ -4184,7 +4310,7 @@ components:
             name:
               type: string
             organization:
-              $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
+              $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
     ProjectResponseList:
       type: object
       properties:
@@ -4222,16 +4348,7 @@ components:
         - type: object
           properties:
             project:
-              type: object
-              required:
-                - id
-              properties:
-                id:
-                  type: string
-                  format: uuid
-                  readOnly: true
-            status:
-              $ref: '#/components/schemas/Status'
+              $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
         - $ref: '#/components/schemas/EnvironmentRequest'
     EnvironmentResponseList:
       type: object
@@ -4264,23 +4381,19 @@ components:
           type: string
           description: The path of the associated Dockerfile
         cpu:
-          type: string
+          type: number
+          description: unit is millicores (m). 1000m = 1 cpu
           default: 250m
           example:
-            - 250m
-            - 1000m
-            - 1
-            - 1.2
-            - 2
+            - 250
+            - 1000
         memory:
-          type: string
-          default: 256MB
+          type: number
+          description: unit is MB. 1024 MB = 1GB
+          default: 256
           example:
-            - 256MB
-            - 1024MB
-            - 1GB
-            - 1.2GB
-            - 2GB
+            - 256
+            - 1024
         min_running_instances:
           type: integer
           minimum: 0
@@ -4316,12 +4429,11 @@ components:
                   - SSD
                   - FAST_SSD
               size:
-                type: string
-                description: Size can be in GB and TB only
+                type: number
+                description: unit is GB
                 example:
-                  - 1GB
-                  - 16GB
-                  - 1TB
+                  - 1
+                  - 16
               mount_point:
                 type: string
                 example: /mnt/images
@@ -4347,7 +4459,7 @@ components:
                 description: Expose the port to the world
               protocol:
                 type: string
-                default: HTTPS
+                default: HTTP
                 enum:
                   - HTTPS
                   - HTTP
@@ -4370,7 +4482,7 @@ components:
         - type: object
           properties:
             environment:
-              $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
+              $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
             git_repository:
               allOf:
                 - type: object
@@ -4388,8 +4500,6 @@ components:
                       type: string
                       format: uuid
                 - $ref: '#/paths/~1application~1%7BapplicationId%7D~1repository/post/requestBody/content/application~1json/schema'
-            status:
-              $ref: '#/components/schemas/Status'
         - $ref: '#/components/schemas/ApplicationRequest'
     ApplicationResponseList:
       type: object
@@ -4420,41 +4530,34 @@ components:
           type: string
           example: 10.1
         cpu:
-          type: string
+          type: number
+          description: unit is millicores (m). 1000m = 1 cpu
           default: 250m
           example:
-            - 250m
-            - 1000m
-            - 1
-            - 1.2
-            - 2
+            - 250
+            - 1000
         memory:
-          type: string
-          default: 256MB
+          type: number
+          description: unit is MB. 1024 MB = 1GB
+          default: 256
           example:
-            - 256MB
-            - 1024MB
-            - 1GB
-            - 1.2GB
-            - 2GB
+            - 256
+            - 1024
         storage:
-          type: string
-          description: Size can be in GB and TB only
+          type: number
+          description: unit is GB
           example:
-            - 1GB
-            - 16GB
-            - 1TB
+            - 1
+            - 16
     DatabaseResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
           properties:
             environment:
-              $ref: '#/components/schemas/EnvironmentResponse/allOf/1/properties/project'
+              $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
             uri:
               type: string
-            status:
-              $ref: '#/components/schemas/Status'
         - $ref: '#/components/schemas/DatabaseRequest'
     DatabaseResponseList:
       type: object
@@ -4593,7 +4696,17 @@ components:
         - type: object
           properties:
             user:
-              $ref: '#/components/schemas/LogResponse/properties/user'
+              allOf:
+                - $ref: '#/components/schemas/BaseResponse'
+                - type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    profile_picture_url:
+                      type: string
+                      format: uri
             commit:
               $ref: '#/components/schemas/CommitResponse'
             status:
@@ -4620,7 +4733,7 @@ components:
             message:
               type: string
             user:
-              $ref: '#/components/schemas/LogResponse/properties/user'
+              $ref: '#/components/schemas/EventResponse/allOf/1/properties/user'
     CommitResponseList:
       type: object
       properties:
@@ -4657,28 +4770,11 @@ components:
         created_at:
           type: string
           format: date-time
-        user:
-          allOf:
-            - $ref: '#/components/schemas/BaseResponse'
-            - type: object
-              properties:
-                first_name:
-                  type: string
-                last_name:
-                  type: string
-                profile_picture_url:
-                  type: string
-                  format: uri
-        commit:
-          $ref: '#/components/schemas/CommitResponse'
         status:
           $ref: '#/components/schemas/Status'
         message:
           type: string
           example: log message
-        message_human_explanation:
-          type: string
-          example: explain what the error means -- Markdown can be injected
         hint:
           type: string
           example: give a possible action to the user -- Markdown can be injected
@@ -4720,8 +4816,9 @@ components:
         state:
           type: string
           description: |
-            Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state. Then finish with `*_ERROR` or any termination state.
+            Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state.
           enum:
+            - INITIALIZED
             - BUILDING
             - BUILD_ERROR
             - BUILT
