@@ -1037,6 +1037,121 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/log':
+    get:
+      summary: List environment deployment logs
+      operationId: listEnvironmentLog
+      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: List logs
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema/allOf/0'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1log%3Ftail%3D/get/responses/200/content/application~1json/schema/properties/results/items'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/log?tail=':
+    get:
+      summary: List XX last environment deployment logs
+      description: Returns all last XX environment logs. Response is not paginated
+      operationId: listEnvironmentLogTail
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3Ftail%3D/get/parameters/1'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: List logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - id
+                        - created_at
+                        - service
+                        - status
+                        - message
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        created_at:
+                          type: string
+                          format: date-time
+                        service:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                                - APPLICATION
+                                - DATABASE
+                            name:
+                              type: string
+                            id:
+                              type: string
+                              format: uuid
+                        status:
+                          $ref: '#/components/schemas/Status'
+                        message:
+                          type: string
+                          example: log message
+                        hint:
+                          type: string
+                          example: give a possible action to the user -- Markdown can be injected
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/log?lastId=':
+    get:
+      summary: List all the last environment deployment logs after a certain log Id
+      description: 'Returns all last logs that happened on the environment, after the log ID you specify in the lastId query parameter. Response is not paginated'
+      operationId: listEnvironmentLogLastId
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3FlastId%3D/get/parameters/1'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: List logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1log%3Ftail%3D/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/deploymentHistory':
     get:
       summary: List environment deploys
@@ -2658,7 +2773,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LogResponseList'
+                allOf:
+                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema/allOf/0'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/LogResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
