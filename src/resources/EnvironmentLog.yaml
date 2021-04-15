@@ -1,19 +1,19 @@
 get:
-  summary: 'List logs'
-  operationId: listApplicationLog
+  summary: 'List environment deployment logs'
+  operationId: listEnvironmentLog
   description: By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
   parameters:
-    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/environmentId.yaml'
     - $ref: '../parameters/query/startId.yaml'
   tags:
-    - application
+    - environment
   responses:
     '200':
       description: 'List logs'
       content:
         application/json:
           schema:
-            $ref: '../schemas/LogPaginatedResponseList.yaml'
+            $ref: '../schemas/EnvironmentLogPaginatedResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

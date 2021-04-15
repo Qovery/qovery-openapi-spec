@@ -1,0 +1,22 @@
+get:
+  summary: 'List all the last environment deployment logs after a certain log Id'
+  description: Returns all last logs that happened on the environment, after the log ID you specify in the lastId query parameter. Response is not paginated
+  operationId: listEnvironmentLogLastId
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+    - $ref: '../parameters/query/lastId.yaml'
+  tags:
+    - environment
+  responses:
+    '200':
+      description: 'List logs'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentLogResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

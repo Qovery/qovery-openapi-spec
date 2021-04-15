@@ -1,0 +1,35 @@
+type: object
+required:
+  - id
+  - created_at
+  - service
+  - status
+  - message
+properties:
+  id:
+    type: string
+    format: uuid
+  created_at:
+    type: string
+    format: date-time
+  service:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - APPLICATION
+          - DATABASE
+      name:
+        type: string
+      id:
+        type: string
+        format: uuid 
+  status:
+    $ref: './Status.yaml'
+  message:
+    type: string
+    example: log message
+  hint:
+    type: string
+    example: give a possible action to the user -- Markdown can be injected

@@ -1,0 +1,22 @@
+get:
+  summary: 'List XX last environment deployment logs'
+  description: Returns all last XX environment logs. Response is not paginated
+  operationId: listEnvironmentLogTail
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+    - $ref: '../parameters/query/tail.yaml'
+  tags:
+    - environment
+  responses:
+    '200':
+      description: 'List logs'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentLogResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
