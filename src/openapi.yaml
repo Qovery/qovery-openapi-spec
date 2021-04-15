@@ -61,6 +61,12 @@ paths:
     $ref: './resources/EnvironmentApplication.yaml'
   /environment/{environmentId}/application/status:
     $ref: './resources/EnvironmentApplicationStatus.yaml'
+  /environment/{environmentId}/log:
+    $ref: './resources/EnvironmentLog.yaml'
+  /environment/{environmentId}/log?tail=:
+    $ref: './resources/EnvironmentLogTail.yaml'
+  /environment/{environmentId}/log?lastId=:
+    $ref: './resources/EnvironmentLogLastId.yaml'
   /environment/{environmentId}/deploymentHistory:
     $ref: './resources/EnvironmentDeploymentHistory.yaml'
   /environment/{environmentId}/deploymentHistory?tail=:
