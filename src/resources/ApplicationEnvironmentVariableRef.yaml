@@ -1,6 +1,9 @@
 delete:
   summary: 'Delete an environment variable from an application'
-  description: 'To delete an environment variable from an application you must have the project user permission'
+  description: |
+    - To delete an environment variable from an application you must have the project user permission
+    - You can't delete a BUILT_IN variable
+    - If you delete a variable having override or alias, the associated override/alias will be deleted as well
   operationId: deleteApplicationEnvironmentVariable
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
@@ -18,7 +21,12 @@ delete:
       $ref: '../responses/NotFound.yaml'
 
 put:
-  summary: 'Change value of an environment variable belonging to the application'
+  summary: 'Edit an environment variable belonging to the application'
+  description: |
+    - You can't edit a BUILT_IN variable
+    - For an override, you can't edit the key
+    - For an alias, you can't edit the value
+    - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION)
   operationId: editApplicationEnvironmentVariable
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
@@ -34,6 +42,14 @@ put:
           properties:
             value:
               type: string
+            key:
+              type: string
+            scope:
+              type: string
+              enum:
+                - APPLICATION
+                - ENVIRONMENT
+                - BUILT_IN
   responses:
     '200':
       description: 'Edited the environment variable value'

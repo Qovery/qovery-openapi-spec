@@ -2,13 +2,18 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-04-15 : added environment logs
+# 2021-04-15 : added environment logs and business rules on DEL/PUT for environment variables and secrets
 
 * added calls regarding environment logs, which correspond to deployment logs. They have same payload as application/id/logs but with "service" info in addition, and the exact same logic.
 * GET environment/id/log (paginated call, with query param startId)
 * GET environment/id/log?tail= (not paginated call)
 * GET environment/id/log?lastId= (not paginated call)
 * fixed GET application/id/log call, because response payload was not paginated, it was because of a syntax error.
+* updated PUT {application/environment/project}/id/environmentVariable/id to add key and scope
+* updated PUT {application/environment/project}/id/environmentVariable/id to add business rules in description
+* updated PUT {application/environment/project}/id/secret/id to add business rules in description
+* updated DEL {application/environment/project}/id/environmentVariable/id to add business rules in description
+* updated DEL {application/environment/project}/id/secret/id to add business rules in description
 
 # 2021-04-14 : changes based on Romain's feedbacks
 
