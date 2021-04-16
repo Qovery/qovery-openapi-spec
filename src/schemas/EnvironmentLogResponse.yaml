@@ -20,6 +20,7 @@ properties:
         enum:
           - APPLICATION
           - DATABASE
+          - ENVIRONMENT
       name:
         type: string
       id:
@@ -27,9 +28,9 @@ properties:
         format: uuid 
   status:
     $ref: './Status.yaml'
-  message:
+  execution_id:
     type: string
-    example: log message
+    description: Only for errors. Helps Qovery team to investigate.
   hint:
     type: string
-    example: give a possible action to the user -- Markdown can be injected
+    example: only for errors. it gives a possible action to the user -- Markdown can be injected

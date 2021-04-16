@@ -135,8 +135,6 @@ paths:
     $ref: './resources/ApplicationEventTail.yaml'
   /application/{applicationId}/event?lastId=:
     $ref: './resources/ApplicationEventLastId.yaml'
-  /application/{applicationId}/event/{eventId}/rollback:
-    $ref: './resources/ApplicationEventRollback.yaml'
   /application/{applicationId}/environmentVariable:
     $ref: './resources/ApplicationEnvironmentVariable.yaml'
   /application/{applicationId}/environmentVariable/{environmentVariableId}:
