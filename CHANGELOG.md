@@ -2,6 +2,15 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-04-16 : updated log resource
+
+* removed "message" from log resource, as there is already a message inside the "status" object of the log
+* added execution_id to log resource
+* added ENVIRONMENT as possible service type for environment logs
+* added type, message and log_id in Event resource
+* removed POST application/id/event/id/rollback
+* added mode and accessibility fields in database ressource (mode is not editable, accessibility is editable)
+
 # 2021-04-15 : added environment logs and business rules on DEL/PUT for environment variables and secrets
 
 * added calls regarding environment logs, which correspond to deployment logs. They have same payload as application/id/logs but with "service" info in addition, and the exact same logic.
