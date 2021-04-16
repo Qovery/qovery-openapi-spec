@@ -1141,6 +1141,7 @@ paths:
                               enum:
                                 - APPLICATION
                                 - DATABASE
+                                - ENVIRONMENT
                             name:
                               type: string
                             id:
@@ -1148,12 +1149,12 @@ paths:
                               format: uuid
                         status:
                           $ref: '#/components/schemas/Status'
-                        message:
+                        execution_id:
                           type: string
-                          example: log message
+                          description: Only for errors. Helps Qovery team to investigate.
                         hint:
                           type: string
-                          example: give a possible action to the user -- Markdown can be injected
+                          example: only for errors. it gives a possible action to the user -- Markdown can be injected
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2389,37 +2390,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/application/{applicationId}/event/{eventId}/rollback':
-    post:
-      summary: Rollback application from a given event
-      description: Rollback your application to a specific event that occured on your application
-      operationId: rollbackApplicationFromEvent
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - name: eventId
-          in: path
-          description: Event ID
-          required: true
-          schema:
-            type: string
-            format: uuid
-      tags:
-        - application
-      responses:
-        '202':
-          description: Application rollbacked
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApplicationResponse'
-        '400':
-          $ref: '#/paths/~1organization/post/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/application/{applicationId}/environmentVariable':
     get:
       summary: List environment variables
@@ -2855,7 +2825,7 @@ paths:
     get:
       summary: List logs
       operationId: listApplicationLog
-      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
+      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter.'
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
@@ -3134,6 +3104,11 @@ paths:
                 version:
                   type: string
                   example: 10.1
+                accessibility:
+                  type: string
+                  enum:
+                    - public
+                    - private
                 cpu:
                   type: number
                   description: unit is millicores (m). 1000m = 1 cpu
@@ -4728,6 +4703,16 @@ components:
         version:
           type: string
           example: 10.1
+        mode:
+          type: string
+          enum:
+            - managed
+            - container
+        accessibility:
+          type: string
+          enum:
+            - public
+            - private
         cpu:
           type: number
           description: unit is millicores (m). 1000m = 1 cpu
@@ -4904,6 +4889,11 @@ components:
               $ref: '#/components/schemas/CommitResponse'
             status:
               $ref: '#/components/schemas/Status'
+            type:
+              type: string
+              description: DRAFT - we have to specify here all the possible events
+            log:
+              $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
     EventResponseList:
       type: object
       properties:
@@ -4965,12 +4955,12 @@ components:
           format: date-time
         status:
           $ref: '#/components/schemas/Status'
-        message:
+        execution_id:
           type: string
-          example: log message
+          description: Only for errors. Helps Qovery team to investigate.
         hint:
           type: string
-          example: give a possible action to the user -- Markdown can be injected
+          example: only for errors. it gives a possible action to the user -- Markdown can be injected
     LogResponseList:
       type: object
       properties:
