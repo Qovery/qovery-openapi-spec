@@ -1133,7 +1133,7 @@ paths:
                         created_at:
                           type: string
                           format: date-time
-                        service:
+                        scope:
                           type: object
                           properties:
                             type:
