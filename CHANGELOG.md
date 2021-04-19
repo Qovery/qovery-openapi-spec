@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-04-19 : updated log resource
+
+* renamed "service" field to "scope" in environment logs as a log can concern an environment
+
 # 2021-04-16 : updated log resource
 
 * removed "message" from log resource, as there is already a message inside the "status" object of the log
