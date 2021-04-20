@@ -2,7 +2,7 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-04-20 : updated log resource
+# 2021-04-20 : updated project resource and endpoints
 
 * added description in Project resource
 * added GET project/id/environment/status --> returns list of environment id and status
