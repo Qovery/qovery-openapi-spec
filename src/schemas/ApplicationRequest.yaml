@@ -25,9 +25,19 @@ properties:
     description: unit is millicores (m). 1000m = 1 cpu
     default: 250
     example: 1250
+  maximum_cpu:
+    type: number
+    description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+    default: 250
+    example: 1250
   memory:
     type: number
     description: unit is MB. 1024 MB = 1GB
+    default: 256
+    example: 1024
+  maximum_memory:
+    type: number
+    description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
     default: 256
     example: 1024
   min_running_instances:
