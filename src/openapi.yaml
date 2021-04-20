@@ -19,6 +19,8 @@ paths:
     $ref: './resources/Organization.yaml'
   /organization/{organizationId}/project:
     $ref: './resources/OrganizationProject.yaml'
+  /organization/{organizationId}/project/stats:
+    $ref: './resources/OrganizationProjectStats.yaml'
   /project/{projectId}:
     $ref: './resources/Project.yaml'
   /project/{projectId}/environment:
@@ -39,6 +41,10 @@ paths:
     $ref: './resources/ProjectSecretOverride.yaml'
   /project/{projectId}/secret/{secretId}/alias:
     $ref: './resources/ProjectSecretAlias.yaml'
+  /project/{projectId}/environment/status:
+    $ref: './resources/ProjectEnvironmentStatus.yaml'
+  /project/{projectId}/environment/service/number:
+    $ref: './resources/ProjectEnvironmentServiceNumber.yaml'
   /environment/{environmentId}:
     $ref: './resources/Environment.yaml'
   /environment/{environmentId}/status:

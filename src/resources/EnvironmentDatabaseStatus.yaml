@@ -1,5 +1,5 @@
 get:
-  summary: 'Get all environment databases statuses'
+  summary: 'List all environment databases statuses'
   description: Returns a list of databases with only their id and status.
   operationId: getEnvironmentDatabaseStatus
   parameters:
