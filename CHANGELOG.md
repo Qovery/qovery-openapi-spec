@@ -4,6 +4,7 @@ Please add a changelog here each time you update the API documentation.
 
 # 2021-04-20 : updated project resource and endpoints
 
+* added maximum_cpu and maximum_memory in application resource
 * added description in Project resource
 * added GET project/id/environment/status --> returns list of environment id and status
 * added GET project/id/environment/service/number --> returns list of environment id, and total number of services
