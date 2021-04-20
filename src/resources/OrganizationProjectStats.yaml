@@ -1,0 +1,24 @@
+get:
+  summary: 'List total number of services and environments for each project of the organization'
+  description: Returns a list of project ids, and for each its total numberof services and environments
+  operationId: getOrganizationProjectStats
+  parameters:
+    - $ref: '../parameters/path/projectId.yaml'
+  tags:
+    - project
+  responses:
+    '200':
+      description: 'Get number of services'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../schemas/ReferenceObject.yaml'
+              - $ref: '../schemas/EnvironmentTotalNumber.yaml'
+              - $ref: '../schemas/ServiceTotalNumber.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

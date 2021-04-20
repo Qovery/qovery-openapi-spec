@@ -2,6 +2,13 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-04-20 : updated log resource
+
+* added description in Project resource
+* added GET project/id/environment/status --> returns list of environment id and status
+* added GET project/id/environment/service/number --> returns list of environment id, and total number of services
+* added GET organization/id/project/stats --> returns list of project id, and total number of services and environments.
+
 # 2021-04-19 : updated log resource
 
 * renamed "service" field to "scope" in environment logs as a log can concern an environment

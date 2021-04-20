@@ -1,11 +1,11 @@
 get:
-  summary: 'List all environment applications statuses'
-  description: Returns a list of applications with only their id and status.
-  operationId: getEnvironmentApplicationStatus
+  summary: 'List environments statuses'
+  description: Returns a list of environments with only their id and status.
+  operationId: getProjectEnvironmentStatus
   parameters:
-    - $ref: '../parameters/path/environmentId.yaml'
+    - $ref: '../parameters/path/projectId.yaml'
   tags:
-    - application
+    - environment
   responses:
     '200':
       description: 'Get status'

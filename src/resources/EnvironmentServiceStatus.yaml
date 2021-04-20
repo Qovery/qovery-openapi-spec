@@ -1,5 +1,5 @@
 get:
-  summary: 'Get all environment services statuses'
+  summary: 'List all environment services statuses'
   description: Returns a list of services with only their id and status.
   operationId: getEnvironmentServiceStatus
   parameters:

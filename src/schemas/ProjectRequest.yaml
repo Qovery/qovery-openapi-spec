@@ -5,3 +5,5 @@ properties:
   name:
     type: string
     description: name is case insensitive
+  description: 
+    type: string
