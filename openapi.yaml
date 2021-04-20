@@ -177,6 +177,41 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Project name within the organization is already taken
+  '/organization/{organizationId}/project/stats':
+    get:
+      summary: List total number of services and environments for each project of the organization
+      description: 'Returns a list of project ids, and for each its total numberof services and environments'
+      operationId: getOrganizationProjectStats
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - project
+      responses:
+        '200':
+          description: Get number of services
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                  - type: object
+                    required:
+                      - number
+                    properties:
+                      environment_total_number:
+                        type: number
+                  - type: object
+                    required:
+                      - number
+                    properties:
+                      service_total_number:
+                        type: number
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/project/{projectId}':
     get:
       summary: Get project by ID
@@ -684,6 +719,61 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/project/{projectId}/environment/status':
+    get:
+      summary: List environments statuses
+      description: Returns a list of environments with only their id and status.
+      operationId: getProjectEnvironmentStatus
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        readOnly: true
+                  - $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/project/{projectId}/environment/service/number':
+    get:
+      summary: List total number of services for each environment of the project
+      description: 'Returns a list of environment ids, and for each its total numberof services'
+      operationId: getProjectEnvironmentServiceNumber
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: Get number of services
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1project~1stats/get/responses/200/content/application~1json/schema/allOf/2'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}':
     get:
       summary: Get environment by ID
@@ -838,7 +928,7 @@ paths:
           $ref: '#/components/responses/404'
   '/environment/{environmentId}/service/status':
     get:
-      summary: Get all environment services statuses
+      summary: List all environment services statuses
       description: Returns a list of services with only their id and status.
       operationId: getEnvironmentServiceStatus
       parameters:
@@ -852,14 +942,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - type: object
-                    required:
-                      - id
-                    properties:
-                      id:
-                        type: string
-                        format: uuid
-                        readOnly: true
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
@@ -1046,7 +1129,7 @@ paths:
           description: Application name within the environment is already taken
   '/environment/{environmentId}/application/status':
     get:
-      summary: Get all environment applications statuses
+      summary: List all environment applications statuses
       description: Returns a list of applications with only their id and status.
       operationId: getEnvironmentApplicationStatus
       parameters:
@@ -1060,7 +1143,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
@@ -3041,7 +3124,7 @@ paths:
           description: Database name within the environment is already taken
   '/environment/{environmentId}/database/status':
     get:
-      summary: Get all environment databases statuses
+      summary: List all environment databases statuses
       description: Returns a list of databases with only their id and status.
       operationId: getEnvironmentDatabaseStatus
       parameters:
@@ -3055,7 +3138,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
@@ -3889,7 +3972,7 @@ paths:
                   - type: object
                     properties:
                       database:
-                        $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                        $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/put/requestBody/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
@@ -4480,6 +4563,8 @@ components:
         name:
           type: string
           description: name is case insensitive
+        description:
+          type: string
     ProjectResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
@@ -4490,7 +4575,7 @@ components:
             name:
               type: string
             organization:
-              $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
     ProjectResponseList:
       type: object
       properties:
@@ -4528,7 +4613,7 @@ components:
         - type: object
           properties:
             project:
-              $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
         - $ref: '#/components/schemas/EnvironmentRequest'
     EnvironmentResponseList:
       type: object
@@ -4656,7 +4741,7 @@ components:
         - type: object
           properties:
             environment:
-              $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
             git_repository:
               allOf:
                 - type: object
@@ -4733,7 +4818,7 @@ components:
         - type: object
           properties:
             environment:
-              $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
             uri:
               type: string
         - $ref: '#/components/schemas/DatabaseRequest'
@@ -4893,7 +4978,7 @@ components:
               type: string
               description: DRAFT - we have to specify here all the possible events
             log:
-              $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1service~1status/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
     EventResponseList:
       type: object
       properties:
