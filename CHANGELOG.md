@@ -2,7 +2,7 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-04-21 : updated project resource and endpoints
+# 2021-04-21 : added deployment rule endpoints on project and environment
 
 * removed "created_at", "updated_at" for application tag.
 * added POST application/id/tag
