@@ -1,0 +1,7 @@
+name: deploymentRuleId
+in: path
+description: Deployment Rule ID
+required: true
+schema:
+  type: string
+  format: uuid

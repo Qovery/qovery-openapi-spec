@@ -1,0 +1,19 @@
+type: object
+required:
+ - selector_type
+properties:
+  type:
+    type: string
+    enum:
+    - ALL
+    - IS
+    - IS_NOT
+    - STARTS_WITH
+    - ENDS_WITH
+    - CONTAINS
+    - DOES_NOT_CONTAIN
+    example: STARTS_WITH
+  tags:
+    type: array
+    items:
+      $ref: './TagRequest.yaml'

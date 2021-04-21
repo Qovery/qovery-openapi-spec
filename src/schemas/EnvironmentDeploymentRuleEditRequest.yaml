@@ -1,0 +1,24 @@
+type: object
+properties:
+  name:
+    type: string
+    description: name is case insensitive
+  description: 
+    type: string
+  auto_deploy:
+    type: boolean
+    default: true
+  auto_delete:
+    type: boolean
+    default: false
+  start_time:
+    type: string
+    format: date-time
+  stop_time:
+    type: string
+    format: date-time
+  weekday:
+    type: string
+    enum: [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY]
+    example: [MONDAY, WEDNESDAY, FRIDAY]
+

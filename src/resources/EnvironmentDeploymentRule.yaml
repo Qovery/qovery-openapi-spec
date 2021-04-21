@@ -1,0 +1,20 @@
+get:
+  summary: 'Get environment deployment rule'
+  operationId: getEnvironmentDeploymentRule
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+  tags:
+    - environment
+  responses:
+    '200':
+      description: 'Get deployment rule'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentDeploymentRuleResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

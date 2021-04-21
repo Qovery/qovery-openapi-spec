@@ -1,0 +1,13 @@
+type: object
+required:
+  - selectors
+properties:
+  selectors:
+    type: array
+    items:
+      $ref: './SelectorResponse.yaml'
+    example:
+      - type: STARTS_WITH
+        value: feat/
+      - type: DOES_NOT_CONTAIN
+        value: prod

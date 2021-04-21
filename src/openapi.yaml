@@ -23,6 +23,10 @@ paths:
     $ref: './resources/OrganizationProjectStats.yaml'
   /project/{projectId}:
     $ref: './resources/Project.yaml'
+  /project/{projectId}/deploymentRule:
+    $ref: './resources/ProjectDeploymentRule.yaml'
+  /project/{projectId}/deploymentRule/{deploymentRuleId}:
+    $ref: './resources/ProjectDeploymentRuleRef.yaml'
   /project/{projectId}/environment:
     $ref: './resources/ProjectEnvironment.yaml'
   /project/{projectId}/environmentVariable:
@@ -49,6 +53,10 @@ paths:
     $ref: './resources/Environment.yaml'
   /environment/{environmentId}/status:
     $ref: './resources/EnvironmentStatus.yaml'
+  /environment/{environmentId}/deploymentRule:
+    $ref: './resources/EnvironmentDeploymentRule.yaml'
+  /environment/{environmentId}/deploymentRule/{deploymentRuleId}:
+    $ref: './resources/EnvironmentDeploymentRuleRef.yaml'
   /environment/{environmentId}/service:
     $ref: './resources/EnvironmentService.yaml'
   /environment/{environmentId}/service/status:
@@ -107,6 +115,8 @@ paths:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:
     $ref: './resources/ApplicationTag.yaml'
+  /application/{applicationId}/tag/{tagId}:
+    $ref: './resources/ApplicationTagRef.yaml'
   /application/{applicationId}/Instance:
     $ref: './resources/ApplicationCurrentInstance.yaml'
   /application/{applicationId}/currentScale:

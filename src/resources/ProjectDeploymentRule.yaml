@@ -1,17 +1,17 @@
 get:
-  summary: 'List tags'
-  operationId: listApplicationTag
+  summary: 'List project deployment rules'
+  operationId: listProjectDeploymentRule
   parameters:
-    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/projectId.yaml'
   tags:
-    - application
+    - project
   responses:
     '200':
-      description: 'List application tags'
+      description: 'Get deployment rules'
       content:
         application/json:
           schema:
-            $ref: '../schemas/TagResponseList.yaml'
+            $ref: '../schemas/ProjectDeploymentRuleResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
@@ -19,26 +19,25 @@ get:
     '404':
       $ref: '../responses/NotFound.yaml'
 
-
 post:
-  summary: 'Add application tag'
-  operationId: createApplicationTag
+  summary: 'Create a deployment rule'
+  operationId: createDeploymentRule
   parameters:
-    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/projectId.yaml'
   tags:
-    - application
+    - project
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '../schemas/TagRequest.yaml'
+          $ref: '../schemas/ProjectDeploymentRuleRequest.yaml'
   responses:
     '201':
-      description: 'Create application'
+      description: 'Create deployment rule'
       content:
         application/json:
           schema:
-            $ref: '../schemas/TagResponseList.yaml'
+            $ref: '../schemas/ProjectDeploymentRuleResponse.yaml'
     '400':
       $ref: '../responses/BadRequest.yaml'
     '401':

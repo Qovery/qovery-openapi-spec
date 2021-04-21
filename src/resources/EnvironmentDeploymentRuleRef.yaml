@@ -1,0 +1,29 @@
+put:
+  summary: 'Edit an environment deployment rule'
+  operationId: editEnvironmentDeployemtnRule
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+    - $ref: '../parameters/path/deploymentRuleId.yaml'
+
+  tags:
+    - environment
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/EnvironmentDeploymentRuleEditRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit environment deployment rule'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentDeploymentRuleResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
