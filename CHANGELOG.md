@@ -2,6 +2,16 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-04-21 : updated project resource and endpoints
+
+* removed "created_at", "updated_at" for application tag.
+* added POST application/id/tag
+* added DEL application/id/tag/id
+* created new endpoint GET/POST project/id/deploymentRule
+* created new endpoints GET/PUT/DEL project/id/deploymentRule/id/
+* created new endpoint GET environment/id/deplopymentRule
+* created new endpoint PUT environment/id/deplopymentRule/id
+
 # 2021-04-20 : updated project resource and endpoints
 
 * added maximum_cpu and maximum_memory in database resource

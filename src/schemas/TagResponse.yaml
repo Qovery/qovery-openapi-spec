@@ -1,8 +1,7 @@
 allOf:
-  - $ref: './BaseResponse.yaml'
+  - $ref: './TagRequest.yaml'
   - type: object
-    required:
-      - name
     properties:
-      name:
+      id:
         type: string
+        format: uuid
