@@ -280,6 +280,216 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/project/{projectId}/deploymentRule':
+    get:
+      summary: List project deployment rules
+      operationId: listProjectDeploymentRule
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - project
+      responses:
+        '200':
+          description: Get deployment rules
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule/post/responses/201/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a deployment rule
+      operationId: createDeploymentRule
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - type: object
+                  required:
+                    - name
+                    - mode
+                    - cluster
+                    - start_time
+                    - stop_time
+                    - weekday
+                  properties:
+                    name:
+                      type: string
+                      description: name is case insensitive
+                    description:
+                      type: string
+                    mode:
+                      type: string
+                      enum:
+                        - PRODUCTION
+                        - DEVELOPMENT
+                    cluster:
+                      type: string
+                      format: uuid
+                    auto_deploy:
+                      type: boolean
+                      default: true
+                    auto_delete:
+                      type: boolean
+                      default: false
+                    start_time:
+                      type: string
+                      format: date-time
+                    stop_time:
+                      type: string
+                      format: date-time
+                    weekday:
+                      type: string
+                      enum:
+                        - MONDAY
+                        - TUESDAY
+                        - WEDNESDAY
+                        - THURSDAY
+                        - FRIDAY
+                        - SATURDAY
+                        - SUNDAY
+                      example:
+                        - MONDAY
+                        - WEDNESDAY
+                        - FRIDAY
+                - type: object
+                  required:
+                    - selectors
+                  properties:
+                    selectors:
+                      type: array
+                      items:
+                        allOf:
+                          - type: object
+                            required:
+                              - selector_type
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                  - ALL
+                                  - IS
+                                  - IS_NOT
+                                  - STARTS_WITH
+                                  - ENDS_WITH
+                                  - CONTAINS
+                                  - DOES_NOT_CONTAIN
+                                example: STARTS_WITH
+                              tags:
+                                type: array
+                                items:
+                                  $ref: '#/paths/~1application~1%7BapplicationId%7D~1tag/post/requestBody/content/application~1json/schema'
+                      example:
+                        - type: STARTS_WITH
+                          value: feat/
+                        - type: DOES_NOT_CONTAIN
+                          value: prod
+      responses:
+        '201':
+          description: Create deployment rule
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule/post/requestBody/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/project/{projectId}/deploymentRule/{deploymentRuleId}':
+    get:
+      summary: Get project deployment rule
+      operationId: getProjectDeploymentRule
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - name: deploymentRuleId
+          in: path
+          description: Deployment Rule ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - project
+      responses:
+        '200':
+          description: Get deployment rule
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule/post/responses/201/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a project deployment rule
+      operationId: editProjectDeployemtnRule
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule~1%7BdeploymentRuleId%7D/get/parameters/1'
+      tags:
+        - project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule/post/requestBody/content/application~1json/schema'
+      responses:
+        '200':
+          description: Edit a project deployment rule
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule/post/responses/201/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Project name within the organization is already taken
+    delete:
+      summary: Delete a project deployment rule
+      operationId: deleteProjectDeploymentRule
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule~1%7BdeploymentRuleId%7D/get/parameters/1'
+      tags:
+        - project
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/project/{projectId}/environment':
     get:
       summary: List environments
@@ -862,6 +1072,89 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/deploymentRule':
+    get:
+      summary: Get environment deployment rule
+      operationId: getEnvironmentDeploymentRule
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - environment
+      responses:
+        '200':
+          description: Get deployment rule
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule/post/requestBody/content/application~1json/schema/allOf/0'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/deploymentRule/{deploymentRuleId}':
+    put:
+      summary: Edit an environment deployment rule
+      operationId: editEnvironmentDeployemtnRule
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule~1%7BdeploymentRuleId%7D/get/parameters/1'
+      tags:
+        - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: name is case insensitive
+                description:
+                  type: string
+                auto_deploy:
+                  type: boolean
+                  default: true
+                auto_delete:
+                  type: boolean
+                  default: false
+                start_time:
+                  type: string
+                  format: date-time
+                stop_time:
+                  type: string
+                  format: date-time
+                weekday:
+                  type: string
+                  enum:
+                    - MONDAY
+                    - TUESDAY
+                    - WEDNESDAY
+                    - THURSDAY
+                    - FRIDAY
+                    - SATURDAY
+                    - SUNDAY
+                  example:
+                    - MONDAY
+                    - WEDNESDAY
+                    - FRIDAY
+      responses:
+        '200':
+          description: Edit environment deployment rule
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1deploymentRule/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2079,6 +2372,62 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TagResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Add application tag
+      operationId: createApplicationTag
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Create application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagResponseList'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/application/{applicationId}/tag/{tagId}':
+    delete:
+      summary: Delete application tag
+      operationId: deleteApplicationTag
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - name: tagId
+          in: path
+          description: Tag ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - application
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5190,13 +5539,12 @@ components:
           type: string
     TagResponse:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1tag/post/requestBody/content/application~1json/schema'
         - type: object
-          required:
-            - name
           properties:
-            name:
+            id:
               type: string
+              format: uuid
     TagResponseList:
       type: object
       properties:
