@@ -1,3 +1,10 @@
 allOf:
   - $ref: './DeploymentRuleRequest.yaml'
-  - $ref: './SelectorResponseList.yaml'
+  - type: object
+    required:
+      - environment_target
+    properties:
+      environment_target:
+        type: string
+        description: specify here a regex based on environment name that will target new environments after their creation
+        example: ^feat
