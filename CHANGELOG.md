@@ -2,6 +2,12 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-04-22 : updated deployment rule resource and added endpoint for database versions
+
+* changed "selectors" field of project deployment rule to "environment_target" that is a string (will contain a regex)
+* added "always_up" field in deployment rule resource. And added "nullable:true" on "start_time", "stop_time" and "weekday"
+* added endpoint GET database/id/version that lists the elligible versions for the given database based on databse type (redis, postgresql...) and mode (managed or container)
+
 # 2021-04-21 : added deployment rule endpoints on project and environment
 
 * removed "created_at", "updated_at" for application tag.
