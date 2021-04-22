@@ -323,9 +323,7 @@ paths:
                     - name
                     - mode
                     - cluster
-                    - start_time
-                    - stop_time
-                    - weekday
+                    - always_up
                   properties:
                     name:
                       type: string
@@ -346,12 +344,19 @@ paths:
                     auto_delete:
                       type: boolean
                       default: false
+                    always_up:
+                      type: boolean
+                      default: false
                     start_time:
                       type: string
                       format: date-time
+                      nullable: true
+                      description: specify value only if always_up = false
                     stop_time:
                       type: string
                       format: date-time
+                      nullable: true
+                      description: specify value only if always_up = false
                     weekday:
                       type: string
                       enum:
@@ -366,38 +371,16 @@ paths:
                         - MONDAY
                         - WEDNESDAY
                         - FRIDAY
+                      nullable: true
+                      description: specify value only if always_up = false
                 - type: object
                   required:
-                    - selectors
+                    - environment_target
                   properties:
-                    selectors:
-                      type: array
-                      items:
-                        allOf:
-                          - type: object
-                            required:
-                              - selector_type
-                            properties:
-                              type:
-                                type: string
-                                enum:
-                                  - ALL
-                                  - IS
-                                  - IS_NOT
-                                  - STARTS_WITH
-                                  - ENDS_WITH
-                                  - CONTAINS
-                                  - DOES_NOT_CONTAIN
-                                example: STARTS_WITH
-                              tags:
-                                type: array
-                                items:
-                                  $ref: '#/paths/~1application~1%7BapplicationId%7D~1tag/post/requestBody/content/application~1json/schema'
-                      example:
-                        - type: STARTS_WITH
-                          value: feat/
-                        - type: DOES_NOT_CONTAIN
-                          value: prod
+                    environment_target:
+                      type: string
+                      description: specify here a regex based on environment name that will target new environments after their creation
+                      example: ^feat
       responses:
         '201':
           description: Create deployment rule
@@ -3712,6 +3695,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/database/{databaseId}/version':
+    get:
+      summary: List elligible versions for the database
+      operationId: listDatabaseVersion
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - database
+      responses:
+        '200':
+          description: List alligible versions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - name
+                      properties:
+                        name:
+                          type: string
+                          example: '10.1'
         '401':
           $ref: '#/components/responses/401'
         '403':
