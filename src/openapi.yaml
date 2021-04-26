@@ -67,8 +67,6 @@ paths:
     $ref: './resources/EnvironmentStop.yaml'
   /environment/{environmentId}/restart:
     $ref: './resources/EnvironmentRestart.yaml'
-  /environment/{environmentId}/abort:
-    $ref: './resources/EnvironmentAbort.yaml'
   /environment/{environmentId}/clone:
     $ref: './resources/EnvironmentClone.yaml'
   /environment/{environmentId}/application:
@@ -143,8 +141,6 @@ paths:
     $ref: './resources/ApplicationStop.yaml'
   /application/{applicationId}/restart:
     $ref: './resources/ApplicationRestart.yaml'
-  /application/{applicationId}/abort:
-    $ref: './resources/ApplicationAbort.yaml'
   /application/{applicationId}/event:
     $ref: './resources/ApplicationEvent.yaml'
   /application/{applicationId}/event?tail=:

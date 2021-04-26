@@ -2,6 +2,13 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-04-26 : updated status object, removed abort endpoints and fixed issue in app and db creation endpoints
+
+* added RUNNING_ERROR as a possible state
+* removed POST application/id/abort --> we will only have /stop endpoint, in order to reduce confusion for end-user.
+* removed POST application/id/abort and POST environment/id/abort  --> we will only have /stop endpoint, in order to reduce confusion for end-user.
+* fixed app and db creation endpoints : removed maximum_cpu and maxmum_memory, as these are read only fields
+
 # 2021-04-22 : updated deployment rule resource and added endpoint for database versions
 
 * changed "selectors" field of project deployment rule to "environment_target" that is a string (will contain a regex)
