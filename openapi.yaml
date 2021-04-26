@@ -1296,29 +1296,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/environment/{environmentId}/abort':
-    post:
-      summary: Abort environment
-      operationId: abortEnvironment
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-      tags:
-        - environment
-      responses:
-        '200':
-          description: Environment abort has been requested
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Operation is in progress
   '/environment/{environmentId}/clone':
     post:
       summary: Clone environment
@@ -2821,29 +2798,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/application/{applicationId}/abort':
-    post:
-      summary: Abort application
-      operationId: abortApplication
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - application
-      responses:
-        '200':
-          description: Application abort has been requested
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApplicationResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: 'Application is not building or deploying at the moment, or an operation is in progress'
   '/application/{applicationId}/event':
     get:
       summary: List application events
@@ -5122,19 +5076,9 @@ components:
           description: unit is millicores (m). 1000m = 1 cpu
           default: 250
           example: 1250
-        maximum_cpu:
-          type: number
-          description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-          default: 250
-          example: 1250
         memory:
           type: number
           description: unit is MB. 1024 MB = 1GB
-          default: 256
-          example: 1024
-        maximum_memory:
-          type: number
-          description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
           default: 256
           example: 1024
         min_running_instances:
@@ -5241,6 +5185,16 @@ components:
                       type: string
                       format: uuid
                 - $ref: '#/paths/~1application~1%7BapplicationId%7D~1repository/post/requestBody/content/application~1json/schema'
+            maximum_cpu:
+              type: number
+              description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            maximum_memory:
+              type: number
+              description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
         - $ref: '#/components/schemas/ApplicationRequest'
     ApplicationResponseList:
       type: object
@@ -5285,19 +5239,9 @@ components:
           description: unit is millicores (m). 1000m = 1 cpu
           default: 250
           example: 1250
-        maximum_cpu:
-          type: number
-          description: Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-          default: 250
-          example: 1250
         memory:
           type: number
           description: unit is MB. 1024 MB = 1GB
-          default: 256
-          example: 1024
-        maximum_memory:
-          type: number
-          description: Maximum memory that can be allocated to the database based on organization cluster configuration. unit is MB. 1024 MB = 1GB
           default: 256
           example: 1024
         storage:
@@ -5313,6 +5257,16 @@ components:
               $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
             uri:
               type: string
+            maximum_cpu:
+              type: number
+              description: Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            maximum_memory:
+              type: number
+              description: Maximum memory that can be allocated to the database based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
         - $ref: '#/components/schemas/DatabaseRequest'
     DatabaseResponseList:
       type: object
@@ -5591,8 +5545,7 @@ components:
             - DELETE_ERROR
             - DELETED
             - RUNNING
-            - WARNING
-            - ERROR
+            - RUNNING_ERROR
         message:
           type: string
           nullable: true
