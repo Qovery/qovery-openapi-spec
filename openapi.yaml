@@ -1281,6 +1281,15 @@ paths:
         - $ref: '#/components/parameters/environmentId'
       tags:
         - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                restart_db:
+                  type: boolean
+                  default: false
       responses:
         '202':
           description: Environment restart has been requested
@@ -3263,7 +3272,7 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/get/responses/200/content/application~1json/schema'
+                      $ref: '#/paths/~1application~1%7BapplicationId%7D~1customDomain/post/responses/201/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3282,16 +3291,84 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/put/requestBody/content/application~1json/schema'
+              type: object
+              required:
+                - domain
+              properties:
+                domain:
+                  type: string
+                  description: your custom domain
+                  example: my.domain.tld
       responses:
         '201':
           description: Added application custom domain
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/get/responses/200/content/application~1json/schema'
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      validation_domain:
+                        type: string
+                        description: URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
+                      status:
+                        type: string
+                        enum:
+                          - validation_pending
+                          - live
+                          - error
+                  - $ref: '#/paths/~1application~1%7BapplicationId%7D~1customDomain/post/requestBody/content/application~1json/schema'
         '400':
           $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/application/{applicationId}/customDomain/{customDomainId}':
+    put:
+      summary: Edit a Custom Domain
+      description: To edit a Custom Domain  you must have the project user permission
+      operationId: editCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/customDomainId'
+      tags:
+        - application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1application~1%7BapplicationId%7D~1customDomain/post/requestBody/content/application~1json/schema'
+      responses:
+        '200':
+          description: Edit a CustomDomain
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1application~1%7BapplicationId%7D~1customDomain/post/responses/201/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a Custom Domain
+      description: To delete an CustomDomain you must have the project user permission
+      operationId: deleteCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/customDomainId'
+      tags:
+        - application
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -4521,92 +4598,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/customDomain/{customDomainId}':
-    get:
-      summary: Get custom domain by ID
-      operationId: getCustomDOmain
-      parameters:
-        - $ref: '#/components/parameters/customDomainId'
-      tags:
-        - customDomain
-      responses:
-        '200':
-          description: Get Custom Domain by ID
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/BaseResponse'
-                  - type: object
-                    properties:
-                      validation_domain:
-                        type: string
-                        description: URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
-                      status:
-                        type: string
-                        enum:
-                          - validation_pending
-                          - live
-                          - error
-                  - $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/put/requestBody/content/application~1json/schema'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    put:
-      summary: Edit a Custom Domain
-      description: To edit a Custom Domain  you must have the project user permission
-      operationId: editCustomDomain
-      parameters:
-        - $ref: '#/components/parameters/customDomainId'
-      tags:
-        - customDomain
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - domain
-              properties:
-                domain:
-                  type: string
-                  description: your custom domain
-                  example: my.domain.tld
-      responses:
-        '200':
-          description: Edit a CustomDomain
-          content:
-            application/json:
-              schema:
-                $ref: '#/paths/~1customDomain~1%7BcustomDomainId%7D/get/responses/200/content/application~1json/schema'
-        '400':
-          $ref: '#/paths/~1organization/post/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    delete:
-      summary: Delete a Custom Domain
-      description: To delete an CustomDomain you must have the project user permission
-      operationId: deleteCustomDomain
-      parameters:
-        - $ref: '#/components/parameters/customDomainId'
-      tags:
-        - customDomain
-      responses:
-        '204':
-          $ref: '#/components/responses/204-deletion'
         '401':
           $ref: '#/components/responses/401'
         '403':
