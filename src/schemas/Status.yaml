@@ -21,8 +21,7 @@ properties:
       - DELETE_ERROR
       - DELETED
       - RUNNING
-      - WARNING
-      - ERROR
+      - RUNNING_ERROR
   message:
     type: string
     nullable: true
