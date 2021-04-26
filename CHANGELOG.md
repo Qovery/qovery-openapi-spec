@@ -2,6 +2,15 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-04-26 : DEL and PUT api call on domain put at the application level, and small updates
+
+* deleted DEL customDomain/id
+* added DEL application/id/customDomain/id
+* deleted PUT customDomain/id
+* added PUT application/id/customDomain/id
+* updated POST environment/id/restart to add an option "restart_db" true/false in the payload
+
+
 # 2021-04-26 : updated status object, removed abort endpoints and fixed issue in app and db creation endpoints
 
 * added RUNNING_ERROR as a possible state

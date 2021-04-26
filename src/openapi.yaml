@@ -165,6 +165,8 @@ paths:
     $ref: './resources/ApplicationSecretAlias.yaml'
   /application/{applicationId}/customDomain:
     $ref: './resources/ApplicationCustomDomain.yaml'
+  /application/{applicationId}/customDomain/{customDomainId}:
+    $ref: './resources/ApplicationCustomDomainRef.yaml'
   /application/{applicationId}/log:
     $ref: './resources/ApplicationLog.yaml'
   /application/{applicationId}/log?tail=:
@@ -227,8 +229,6 @@ paths:
     $ref: './resources/LogicalDatabaseCredentials.yaml'
   /logicalDatabase/{logicalDatabaseId}/application:
     $ref: './resources/LogicalDatabaseApplication.yaml'
-  /customDomain/{customDomainId}:
-    $ref: './resources/CustomDomain.yaml'
   /instance/{instanceId}:
     $ref: './resources/Instance.yaml'
   /environmentVariable/{environmentVariableId}:
