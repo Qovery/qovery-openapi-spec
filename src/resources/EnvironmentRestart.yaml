@@ -5,6 +5,15 @@ post:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
     - environment
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            restart_db:
+              type: boolean
+              default: false
   responses:
     '202':
       description: 'Environment restart has been requested'
