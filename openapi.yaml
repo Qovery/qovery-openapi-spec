@@ -1181,6 +1181,9 @@ paths:
                               type: string
                               description: 'uuid of the associated service (application, database, job, gateway...)'
                               format: uuid
+                            deployed_commit_id:
+                              type: string
+                              description: Git commit ID corresponding to the deployed version of the application
                             last_updated_by:
                               type: string
                               format: uuid
@@ -1196,6 +1199,8 @@ paths:
                               type: string
                               description: for databases this field exposes the database version
                               example: v12
+                            to_update:
+                              type: boolean
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1552,7 +1557,23 @@ paths:
                       results:
                         type: array
                         items:
-                          $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1deploymentHistory%3Ftail%3D/get/responses/200/content/application~1json/schema/properties/results/items'
+                          allOf:
+                            - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1deploymentHistory%3Ftail%3D/get/responses/200/content/application~1json/schema/properties/results/items'
+                            - type: object
+                              properties:
+                                service:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      enum:
+                                        - APPLICATION
+                                        - DATABASE
+                                    name:
+                                      type: string
+                                    id:
+                                      type: string
+                                      format: uuid
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1584,23 +1605,13 @@ paths:
                         - $ref: '#/components/schemas/BaseResponse'
                         - type: object
                           properties:
-                            service:
-                              type: object
-                              properties:
-                                type:
-                                  type: string
-                                  enum:
-                                    - APPLICATION
-                                    - DATABASE
-                                name:
-                                  type: string
-                                id:
-                                  type: string
-                                  format: uuid
                             commit:
                               $ref: '#/components/schemas/CommitResponse'
                             status:
-                              $ref: '#/components/schemas/Status'
+                              type: string
+                              enum:
+                                - SUCCESS
+                                - FAILED
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2681,9 +2692,17 @@ paths:
   '/application/{applicationId}/commit':
     get:
       summary: List commits
+      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by  git_commit_id'
       operationId: listApplicationCommit
       parameters:
         - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
+        - name: gitCommitId
+          in: query
+          description: Git Commit ID
+          schema:
+            type: string
+            format: uuid
       tags:
         - application
       responses:
@@ -2692,7 +2711,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommitResponseList'
+                allOf:
+                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema/allOf/0'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/CommitResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2702,7 +2728,7 @@ paths:
   '/application/{applicationId}/deploy':
     post:
       summary: Deploy application
-      description: 'If you don''t specify any git commit id, we will deploy the latest version'
+      description: You must provide a git commit id
       operationId: deployApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -2716,37 +2742,6 @@ paths:
       responses:
         '202':
           description: Deploy application
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApplicationResponse'
-        '400':
-          $ref: '#/paths/~1organization/post/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Operation is in progress
-  '/application/{applicationId}/rollback':
-    post:
-      summary: Rollback application to a previous version
-      description: Rollback your application. You must provide the git commit id you want to rollback to
-      operationId: rollbackApplicationCommit
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - application
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeployRequest'
-      responses:
-        '202':
-          description: Application rollbacked
           content:
             application/json:
               schema:
@@ -2807,6 +2802,42 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/application/{applicationId}/deploymentHistory':
+    get:
+      summary: List application deploys
+      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id'
+      operationId: listApplicationDeploymentHistory
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
+        - name: status
+          in: query
+          description: status
+          schema:
+            type: string
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1commit/get/parameters/2'
+      tags:
+        - application
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema/allOf/0'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1deploymentHistory%3Ftail%3D/get/responses/200/content/application~1json/schema/properties/results/items'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/event':
     get:
       summary: List application events
@@ -5165,16 +5196,18 @@ components:
                   properties:
                     has_access:
                       type: boolean
-                    last_commit_id:
+                    deployed_commit_id:
                       type: string
-                      description: Current Git commit ID
-                    last_commit_date:
+                      description: Git commit ID corresponding to the deployed version of the app
+                    deployed_commit_date:
                       type: string
                       readOnly: true
                       format: date-time
-                    last_commit_contributor:
+                      description: Git commit date corresponding to the deployed version of the app
+                    deployed_commit_contributor:
                       type: string
                       format: uuid
+                      description: Git commit user corresponding to the deployed version of the app
                 - $ref: '#/paths/~1application~1%7BapplicationId%7D~1repository/post/requestBody/content/application~1json/schema'
             maximum_cpu:
               type: number
@@ -5448,6 +5481,8 @@ components:
             $ref: '#/components/schemas/CommitResponse'
     DeployRequest:
       type: object
+      required:
+        - git_commit_id
       properties:
         git_commit_id:
           type: string
