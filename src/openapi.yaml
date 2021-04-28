@@ -135,12 +135,12 @@ paths:
     $ref: './resources/ApplicationCommit.yaml'
   /application/{applicationId}/deploy:
     $ref: './resources/ApplicationDeploy.yaml'
-  /application/{applicationId}/rollback:
-    $ref: './resources/ApplicationRollbackCommit.yaml'
   /application/{applicationId}/stop:
     $ref: './resources/ApplicationStop.yaml'
   /application/{applicationId}/restart:
     $ref: './resources/ApplicationRestart.yaml'
+  /application/{applicationId}/deploymentHistory:
+    $ref: './resources/ApplicationDeploymentHistory.yaml'
   /application/{applicationId}/event:
     $ref: './resources/ApplicationEvent.yaml'
   /application/{applicationId}/event?tail=:

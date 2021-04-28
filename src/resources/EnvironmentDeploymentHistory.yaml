@@ -13,7 +13,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/DeploymentHistoryPaginatedResponseList.yaml'
+            $ref: '../schemas/DeploymentHistoryEnvironmentPaginatedResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

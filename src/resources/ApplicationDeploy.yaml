@@ -1,6 +1,6 @@
 post:
   summary: 'Deploy application'
-  description: If you don't specify any git commit id, we will deploy the latest version
+  description: You must provide a git commit id
   operationId: deployApplication
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
