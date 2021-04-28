@@ -15,6 +15,9 @@ allOf:
         type: string
         description: uuid of the associated service (application, database, job, gateway...)
         format: uuid
+      deployed_commit_id:
+        type: string
+        description: Git commit ID corresponding to the deployed version of the application
       last_updated_by:
         type: string
         format: uuid
@@ -30,6 +33,8 @@ allOf:
         type: string
         description: for databases this field exposes the database version
         example: v12
+      to_update:
+        type: boolean
 
 
 

@@ -2,20 +2,10 @@ allOf:
   - $ref: './BaseResponse.yaml'
   - type: object    
     properties:
-      service:
-        type: object
-        properties:
-          type:
-            type: string
-            enum:
-              - APPLICATION
-              - DATABASE
-          name:
-            type: string
-          id:
-            type: string
-            format: uuid   
       commit:
         $ref: './CommitResponse.yaml'
       status:
-        $ref: './Status.yaml'
+        type: string
+        enum:
+          - SUCCESS
+          - FAILED

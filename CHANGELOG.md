@@ -2,6 +2,17 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-04-28 : updates linked to all calls regarding deployment
+
+* removed POST application/id/rollback
+* updated git_commit_id to be mandatory in /deploy calls
+* replaced last_commit_id, last_commit_date, last_commit_contributor to deployed_commit_id, deployed_commit_date and deployed_commit_contributor
+* added deployed_commit_id in GET environment/id/service
+* added pagination GET application/id/commit and add query param ?git_commit_id
+* added GET application/id/deploymentHistory with possible query parameters ?status= and ?git_commit_id=
+* updated deploymentHistory resource (for env and app) so that possible statuses can be "success" and "failed".
+* added "to_update" field on GET environment/id/service
+
 # 2021-04-26 : DEL and PUT api call on domain put at the application level, and small updates
 
 * deleted DEL customDomain/id

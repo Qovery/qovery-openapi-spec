@@ -3,14 +3,16 @@ allOf:
     properties:
       has_access:
         type: boolean
-      last_commit_id:
+      deployed_commit_id:
         type: string
-        description: Current Git commit ID
-      last_commit_date:
+        description: Git commit ID corresponding to the deployed version of the app
+      deployed_commit_date:
         type: string
         readOnly: true
         format: date-time
-      last_commit_contributor:
+        description: Git commit date corresponding to the deployed version of the app
+      deployed_commit_contributor:
         type: string
         format: uuid
+        description: Git commit user corresponding to the deployed version of the app
   - $ref: './ApplicationGitRepositoryRequest.yaml'
