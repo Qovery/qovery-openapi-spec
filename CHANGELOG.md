@@ -2,6 +2,14 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-04-29 : merge git repo linking call with application POST/PUT + added calls on app/database
+
+* removed POST application/id/repository
+* added repository linking in POST application and PUT application/id
+* added POST/DEL application/id/database/id
+* added GET application/id/database
+* updated all deploy, restart, stop endpoints (app, env, database) to return the object status instead of the object payload.
+
 # 2021-04-28 : updates linked to all calls regarding deployment
 
 * removed POST application/id/rollback

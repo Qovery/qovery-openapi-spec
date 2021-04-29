@@ -9,6 +9,8 @@ properties:
   description:
     type: string
     description: give a description to this application
+  git_repository:
+    $ref: './ApplicationGitRepositoryRequest.yaml'
   build_mode:
     type: string
     enum:

@@ -12,7 +12,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../schemas/EnvironmentResponse.yaml'
+            $ref: '../schemas/Status.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

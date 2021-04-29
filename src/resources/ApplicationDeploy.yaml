@@ -17,7 +17,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../schemas/ApplicationResponse.yaml'
+            $ref: '../schemas/Status.yaml'
     '400':
       $ref: '../responses/BadRequest.yaml'
     '401':
