@@ -1,0 +1,20 @@
+get:
+  summary: 'List linked databases'
+  operationId: listApplicationDatabase
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - application
+  responses:
+    '200':
+      description: 'List linked databases'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/DatabaseResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

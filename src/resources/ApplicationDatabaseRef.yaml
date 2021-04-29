@@ -1,0 +1,43 @@
+post:
+  summary: 'Link a database to the application'
+  operationId: attachDatabasetoApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/targetDatabaseId.yaml'
+  tags:
+    - application
+  responses:
+    '201':
+      description: 'Linked the database to the application'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/DatabaseResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+    '409':
+      description: This database is already linked to the application
+      
+delete:
+  summary: 'Remove database link to this application.'
+  operationId: removeDatabaseFromApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/targetDatabaseId.yaml'
+  tags:
+    - application
+  responses:
+    '204':
+      $ref: '../responses/NoContent.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
