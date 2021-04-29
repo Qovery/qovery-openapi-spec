@@ -1246,7 +1246,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentResponse'
+                $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1269,7 +1269,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentResponse'
+                $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1301,7 +1301,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentResponse'
+                $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2094,6 +2094,8 @@ paths:
                 description:
                   type: string
                   description: give a description to this application
+                git_repository:
+                  $ref: '#/components/schemas/ApplicationRequest/properties/git_repository'
                 build_mode:
                   type: string
                   enum:
@@ -2244,67 +2246,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Status'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/application/{applicationId}/repository':
-    post:
-      summary: Link a git repository to the application.
-      description: 'Allows to link a git repository to an existing application. If a git repository was already linked, then it will be replaced by the new one'
-      operationId: linkApplicationToGitRepository
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - application
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - provider
-                - owner
-                - name
-                - url
-              properties:
-                provider:
-                  type: string
-                  enum:
-                    - GITHUB
-                    - GITLAB
-                owner:
-                  type: string
-                  example: John Doe
-                url:
-                  type: string
-                  description: application git repository URL
-                  example: 'https://github.com/Qovery/simple-node-app'
-                name:
-                  type: string
-                  description: repository name
-                  example: simple-node-app
-                branch:
-                  type: string
-                  description: |
-                    Name of the branch to use. This is optional
-                    If not specified, then the branch used is the `main` or `master` one
-                  example: feat/text_xxx
-                root_path:
-                  type: string
-                  default: /
-                  description: indicates the root path of the application.
-      responses:
-        '201':
-          description: Link git repository
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApplicationResponse'
-        '400':
-          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2745,7 +2686,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponse'
+                $ref: '#/components/schemas/Status'
         '400':
           $ref: '#/paths/~1organization/post/responses/400'
         '401':
@@ -2770,7 +2711,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponse'
+                $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2793,7 +2734,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponse'
+                $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3482,6 +3423,76 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/database':
+    get:
+      summary: List linked databases
+      operationId: listApplicationDatabase
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - application
+      responses:
+        '200':
+          description: List linked databases
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/application/{applicationId}/database/{targetDatabaseId}':
+    post:
+      summary: Link a database to the application
+      operationId: attachDatabasetoApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - name: targetDatabaseId
+          in: path
+          description: Target database ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - application
+      responses:
+        '201':
+          description: Linked the database to the application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponse'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: This database is already linked to the application
+    delete:
+      summary: Remove database link to this application.
+      operationId: removeDatabaseFromApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1database~1%7BtargetDatabaseId%7D/post/parameters/1'
+      tags:
+        - application
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/logicalDatabase':
     get:
       summary: List linked logical databases
@@ -3972,7 +3983,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseResponse'
+                $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3995,7 +4006,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseResponse'
+                $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -4018,7 +4029,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseResponse'
+                $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5082,6 +5093,40 @@ components:
         description:
           type: string
           description: give a description to this application
+        git_repository:
+          type: object
+          required:
+            - provider
+            - owner
+            - name
+            - url
+          properties:
+            provider:
+              type: string
+              enum:
+                - GITHUB
+                - GITLAB
+            owner:
+              type: string
+              example: John Doe
+            url:
+              type: string
+              description: application git repository URL
+              example: 'https://github.com/Qovery/simple-node-app'
+            name:
+              type: string
+              description: repository name
+              example: simple-node-app
+            branch:
+              type: string
+              description: |
+                Name of the branch to use. This is optional
+                If not specified, then the branch used is the `main` or `master` one
+              example: feat/text_xxx
+            root_path:
+              type: string
+              default: /
+              description: indicates the root path of the application.
         build_mode:
           type: string
           enum:
@@ -5208,7 +5253,7 @@ components:
                       type: string
                       format: uuid
                       description: Git commit user corresponding to the deployed version of the app
-                - $ref: '#/paths/~1application~1%7BapplicationId%7D~1repository/post/requestBody/content/application~1json/schema'
+                - $ref: '#/components/schemas/ApplicationRequest/properties/git_repository'
             maximum_cpu:
               type: number
               description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
