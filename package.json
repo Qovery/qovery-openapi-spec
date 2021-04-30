@@ -6,8 +6,8 @@
   "scripts": {
     "build": "swagger-cli bundle src/openapi.yaml --outfile _build/openapi.yaml --type yaml",
     "test": "npm run build && spectral lint _build/openapi.yaml",
-    "preview": "npm run build && redoc-cli serve _build/openapi.yaml --options=src/theme.json",
-    "html": "npm run build && redoc-cli bundle _build/openapi.yaml  --output _build/index.html --options=src/theme.json",
+    "preview": "npm run build && redoc-cli serve _build/openapi.yaml --options src/theme.json",
+    "html": "npm run build && redoc-cli bundle _build/openapi.yaml  --output _build/index.html --options src/theme.json",
     "clean": "rm -r _build",
     "deploy": "./deploy.sh"
   },

@@ -5,7 +5,7 @@ get:
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'
   tags:
-    - database
+    - Logical Database
   responses:
     '200':
       description: 'List logical databases'

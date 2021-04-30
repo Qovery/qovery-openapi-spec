@@ -6,7 +6,7 @@ get:
     - $ref: '../parameters/path/environmentId.yaml'
     - $ref: '../parameters/query/lastId.yaml'
   tags:
-    - environment
+    - Environment Logs
   responses:
     '200':
       description: 'List logs'

@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
   tags:
-    - application
+    - Application Main Calls
   responses:
     '200':
       description: 'List application contributors'

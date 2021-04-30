@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
   tags:
-    - project
+    - Project Main Calls
   responses:
     '200':
       description: 'List projects'
@@ -24,7 +24,7 @@ post:
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
   tags:
-    - project
+    - Project Main Calls
   requestBody:
     content:
       application/json:

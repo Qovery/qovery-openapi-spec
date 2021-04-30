@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
   tags:
-    - application
+    - Application Metrics
   responses:
     '200':
       description: 'Know number of running instances of the application'

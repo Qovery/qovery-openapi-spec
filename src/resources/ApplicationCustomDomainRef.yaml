@@ -7,7 +7,7 @@ put:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/path/customDomainId.yaml'
   tags:
-    - application
+    - Custom Domain
   requestBody:
     content:
       application/json:
@@ -37,7 +37,7 @@ delete:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/path/customDomainId.yaml'
   tags:
-    - application
+    - Custom Domain
   responses:
     '204':
       $ref: '../responses/Deleted.yaml'

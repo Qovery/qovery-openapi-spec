@@ -6,7 +6,7 @@ get:
     - $ref: '../parameters/path/databaseId.yaml'
     - $ref: '../parameters/query/startId.yaml'
   tags:
-    - database
+    - Database Event
   responses:
     '200':
       description: 'List events'

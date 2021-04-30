@@ -2,7 +2,7 @@ get:
   summary: 'Get gitlab repositories of the connected user'
   operationId: getGitlabRepositories
   tags:
-    - account
+    - Git repositories
   responses:
     '200':
       description: 'Get gitlab repositories'

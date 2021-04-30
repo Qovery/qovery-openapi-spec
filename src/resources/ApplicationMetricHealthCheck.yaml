@@ -6,7 +6,7 @@ get:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/query/lastSeconds.yaml'
   tags:
-    - application
+    - Application Metrics
   responses:
     '200':
       description: 'Health Check Latency'

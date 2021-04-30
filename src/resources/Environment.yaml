@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
-    - environment
+    - Environment Main Calls
   responses:
     '200':
       description: 'Get environment by ID'
@@ -25,7 +25,7 @@ put:
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
-    - environment
+    - Environment Main Calls
   requestBody:
     content:
       application/json:
@@ -60,7 +60,7 @@ delete:
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
-    - environment
+    - Environment Main Calls
   responses:
     '204':
       $ref: '../responses/Deleted.yaml'

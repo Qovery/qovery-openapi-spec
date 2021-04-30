@@ -2,7 +2,7 @@ get:
   summary: 'Get github repositories of the connected user'
   operationId: getGithubRepositories
   tags:
-    - account
+    - Git repositories
   responses:
     '200':
       description: 'Get github repositories'

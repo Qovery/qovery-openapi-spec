@@ -6,7 +6,7 @@ get:
     - $ref: '../parameters/query/lastSeconds.yaml'
 
   tags:
-    - database
+    - Database Metrics
   responses:
     '200':
       description: 'Memory consumption'

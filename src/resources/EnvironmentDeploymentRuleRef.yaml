@@ -6,7 +6,7 @@ put:
     - $ref: '../parameters/path/deploymentRuleId.yaml'
 
   tags:
-    - environment
+    - Environment Deployment Rule
   requestBody:
     content:
       application/json:

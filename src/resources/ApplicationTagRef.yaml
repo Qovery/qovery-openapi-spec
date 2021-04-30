@@ -5,7 +5,7 @@ delete:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/path/tagId.yaml'
   tags:
-    - application
+    - Application Main Calls
   responses:
     '204':
       $ref: '../responses/Deleted.yaml'

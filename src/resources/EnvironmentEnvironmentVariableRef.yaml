@@ -9,7 +9,7 @@ delete:
     - $ref: '../parameters/path/environmentId.yaml'
     - $ref: '../parameters/path/environmentVariableId.yaml'
   tags:
-    - environment
+    - Environment Variable
   responses:
     '204':
       $ref: '../responses/Deleted.yaml'
@@ -32,7 +32,7 @@ put:
     - $ref: '../parameters/path/environmentId.yaml'
     - $ref: '../parameters/path/environmentVariableId.yaml'
   tags:
-    - environment
+    - Environment Variable
   requestBody:
     required: true
     content:

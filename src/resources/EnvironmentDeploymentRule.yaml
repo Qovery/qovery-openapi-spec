@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
-    - environment
+    - Environment Deployment Rule
   responses:
     '200':
       description: 'Get deployment rule'

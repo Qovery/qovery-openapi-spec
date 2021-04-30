@@ -6,7 +6,7 @@ get:
     - $ref: '../parameters/path/databaseId.yaml'
     - $ref: '../parameters/query/startId.yaml'
   tags:
-    - database
+    - Backups
   responses:
     '200':
       description: 'List backups'
@@ -27,7 +27,7 @@ post:
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'
   tags:
-    - database
+    - Backups
   requestBody:
     content:
       application/json:

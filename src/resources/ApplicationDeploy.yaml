@@ -5,7 +5,7 @@ post:
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
   tags:
-    - application
+    - Application Actions
   requestBody:
     content:
       application/json:
