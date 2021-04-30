@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'
   tags:
-    - database
+    - Database Application
   responses:
     '200':
       description: 'List linked applications'

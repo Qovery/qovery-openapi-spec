@@ -6,7 +6,7 @@ post:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/path/targetApplicationId.yaml'
   tags:
-    - application
+    - Dependency
   responses:
     '200':
       description: 'Add application dependencies'
@@ -30,7 +30,7 @@ delete:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/path/targetApplicationId.yaml'
   tags:
-    - application
+    - Dependency
   responses:
     '204':
       $ref: '../responses/Deleted.yaml'

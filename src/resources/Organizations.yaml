@@ -2,7 +2,7 @@ get:
   summary: 'List user organizations'
   operationId: listOrganization
   tags:
-    - organization
+    - Organization Main Calls
   responses:
     '200':
       description: 'List organizations'
@@ -20,7 +20,7 @@ post:
   summary: 'Create an organization'
   operationId: createOrganization
   tags:
-    - organization
+    - Organization Main Calls
   requestBody:
     content:
       application/json:

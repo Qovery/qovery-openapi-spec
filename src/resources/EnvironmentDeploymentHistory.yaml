@@ -6,7 +6,7 @@ get:
     - $ref: '../parameters/path/environmentId.yaml'
     - $ref: '../parameters/query/startId.yaml'
   tags:
-    - environment
+    - Environment Deployment History
   responses:
     '200':
       description: 'List deployment history'

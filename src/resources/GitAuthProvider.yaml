@@ -2,7 +2,7 @@ get:
   summary: 'Get git provider accounts'
   operationId: getGitProviderAccount
   tags:
-    - account
+    - Git repositories
   responses:
     '200':
       description: 'Get account'

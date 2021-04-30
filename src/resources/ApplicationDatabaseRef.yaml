@@ -5,7 +5,7 @@ post:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/path/targetDatabaseId.yaml'
   tags:
-    - application
+    - Application Database
   responses:
     '201':
       description: 'Linked the database to the application'
@@ -31,7 +31,7 @@ delete:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/path/targetDatabaseId.yaml'
   tags:
-    - application
+    - Application Database
   responses:
     '204':
       $ref: '../responses/NoContent.yaml'

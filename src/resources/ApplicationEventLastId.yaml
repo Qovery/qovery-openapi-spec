@@ -6,7 +6,7 @@ get:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/query/lastId.yaml'
   tags:
-    - application
+    - Application Event
   responses:
     '200':
       description: 'List events'

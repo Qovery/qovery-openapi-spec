@@ -8,8 +8,54 @@ info:
     url: https://discord.qovery.com
     email: support+api+documentation@qovery.com
   x-logo:
-    url: 'https://uploads-ssl.webflow.com/5de176c0d41c9b4a1dbbb0aa/5f9b214e6d66a454556d8b5b_qovery_logo_with_name_dark_2048.png'
-    altText: Qovery 
+    url: 'https://uploads-ssl.webflow.com/5de176bfd41c9b0a91bbb0a4/5de17d653719a1f46cdb62ae_image%20(3).png'
+    altText: Qovery
+x-tagGroups:
+  - name: Organization
+    tags:
+      - Organization Main Calls
+  - name: Project
+    tags:
+      - Project Main Calls
+      - Project Deployment Rule
+      - Project Environment Variable
+      - Project Secret
+  - name: Environment
+    tags:
+      - Environment Main Calls
+      - Environment Actions
+      - Services
+      - Environment Logs
+      - Environment Deployment History
+      - Environment Deployment Rule
+      - Environment Variable
+      - Environment Secret
+  - name: Application
+    tags:
+      - Application Main Calls
+      - Application Actions
+      - Custom Domain
+      - Dependency
+      - Application Metrics
+      - Application Database
+      - Application Logs
+      - Application Deployment History
+      - Application Environment Variable
+      - Application Secret
+      - Application Event
+  - name: Database
+    tags:
+      - Database Main Calls
+      - Database Actions
+      - Database Metrics
+      - Database Applications
+      - Logical Database
+      - Database Application
+      - Backups
+      - Database Event
+  - name: Account
+    tags:
+      - Git repositories
 servers:
   - url: 'https://api.qovery.com'
 paths:
@@ -231,12 +277,6 @@ paths:
     $ref: './resources/LogicalDatabaseCredentials.yaml'
   /logicalDatabase/{logicalDatabaseId}/application:
     $ref: './resources/LogicalDatabaseApplication.yaml'
-  /instance/{instanceId}:
-    $ref: './resources/Instance.yaml'
-  /environmentVariable/{environmentVariableId}:
-    $ref: './resources/EnvironmentVariable.yaml'
-  /secret/{secretId}:
-    $ref: './resources/Secret.yaml'
   /account/gitAuthProvider:
     $ref: './resources/GitAuthProvider.yaml'
   /account/github/repository:

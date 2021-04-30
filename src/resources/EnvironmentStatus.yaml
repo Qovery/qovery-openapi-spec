@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
-    - environment
+    - Environment Mail Calls
   responses:
     '200':
       description: 'Get status'

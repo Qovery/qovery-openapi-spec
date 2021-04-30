@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/projectId.yaml'
   tags:
-    - project
+    - Project Deployment Rule
   responses:
     '200':
       description: 'Get deployment rules'
@@ -25,7 +25,7 @@ post:
   parameters:
     - $ref: '../parameters/path/projectId.yaml'
   tags:
-    - project
+    - Project Deployment Rule
   requestBody:
     content:
       application/json:

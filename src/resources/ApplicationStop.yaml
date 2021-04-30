@@ -4,7 +4,7 @@ post:
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
   tags:
-    - application
+    - Application Actions
   responses:
     '202':
       description: 'Application stop has been requested'

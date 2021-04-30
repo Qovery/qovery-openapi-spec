@@ -11,7 +11,7 @@ post:
     - $ref: '../parameters/path/projectId.yaml'
     - $ref: '../parameters/path/environmentVariableId.yaml'
   tags:
-    - project
+    - Project Environment Variable
   requestBody:
     content:
       application/json:

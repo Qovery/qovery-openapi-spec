@@ -5,7 +5,7 @@ delete:
     - $ref: '../parameters/path/databaseId.yaml'
     - $ref: '../parameters/path/targetApplicationId.yaml'
   tags:
-    - database
+    - Database Application
   responses:
     '204':
       $ref: '../responses/NoContent.yaml'

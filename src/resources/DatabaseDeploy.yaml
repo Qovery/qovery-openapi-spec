@@ -4,7 +4,7 @@ post:
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'
   tags:
-    - database
+    - Database Actions
   responses:
     '202':
       description: 'Deploy database '

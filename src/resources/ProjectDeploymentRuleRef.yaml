@@ -5,7 +5,7 @@ get:
     - $ref: '../parameters/path/projectId.yaml'
     - $ref: '../parameters/path/deploymentRuleId.yaml'
   tags:
-    - project
+    - Project Deployment Rule
   responses:
     '200':
       description: 'Get deployment rule'
@@ -28,7 +28,7 @@ put:
     - $ref: '../parameters/path/deploymentRuleId.yaml'
 
   tags:
-    - project
+    - Project Deployment Rule
   requestBody:
     content:
       application/json:
@@ -59,7 +59,7 @@ delete:
     - $ref: '../parameters/path/deploymentRuleId.yaml'
 
   tags:
-    - project
+    - Project Deployment Rule
   responses:
     '204':
       $ref: '../responses/Deleted.yaml'

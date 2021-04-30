@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/projectId.yaml'
   tags:
-    - project
+    - Project Environment Variable
   responses:
     '200':
       description: 'List project environment variables'
@@ -29,7 +29,7 @@ post:
   parameters:
     - $ref: '../parameters/path/projectId.yaml'
   tags:
-    - project
+    - Project Environment Variable
   requestBody:
     content:
       application/json:

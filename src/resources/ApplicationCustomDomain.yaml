@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
   tags:
-    - application
+    - Custom Domain
   responses:
     '200':
       description: 'List custom domains'
@@ -25,7 +25,7 @@ post:
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
   tags:
-    - application
+    - Custom Domain
   requestBody:
     content:
       application/json:

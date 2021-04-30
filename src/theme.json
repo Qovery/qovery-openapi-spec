@@ -1,9 +1,24 @@
 {
-  "referenceDocs": {
-    "theme": {
-      "sidebar": {
-        "width": "450px"
+  "theme": {
+    "sidebar": {
+      "width": "400px",
+      "backgroundColor": "#161B2C",
+      "textColor": "#FFF",
+      "activeTextColor": "#bebfff"
+    },
+    "logo": {
+      "maxHeight": "100px",
+      "maxWidth": "100px" 
+    },
+    "colors":{
+      "primary":{
+        "main": "#5A43C1",
+        "contrastText":"#FFF"
       }
+    },
+    "rightPanel": {
+      "backgroundColor": "#161B2C",
+      "textColor": "#FFF"
     }
-  }
+  } 
 }

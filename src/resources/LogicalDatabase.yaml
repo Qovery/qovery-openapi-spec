@@ -5,7 +5,7 @@ get:
   parameters:
     - $ref: '../parameters/path/logicalDatabaseId.yaml'
   tags:
-    - logicalDatabase
+    - Logical Database
   responses:
     '200':
       description: 'Get logical database by ID'
@@ -25,7 +25,7 @@ put:
   parameters:
     - $ref: '../parameters/path/logicalDatabaseId.yaml'
   tags:
-    - logicalDatabase
+    - Logical Database
   requestBody:
     content:
       application/json:
@@ -54,7 +54,7 @@ delete:
   parameters:
     - $ref: '../parameters/path/logicalDatabaseId.yaml'
   tags:
-    - logicalDatabase
+    - Logical Database
   responses:
     '204':
       $ref: '../responses/Deleted.yaml'

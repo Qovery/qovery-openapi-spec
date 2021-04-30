@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
   tags:
-    - application
+    - Dependency
   responses:
     '200':
       description: 'List dependencies'

@@ -6,7 +6,7 @@ delete:
     - $ref: '../parameters/path/databaseId.yaml'
     - $ref: '../parameters/path/backupId.yaml'
   tags:
-    - database
+    - Backups
   responses:
     '204':
       $ref: '../responses/NoContent.yaml'

@@ -9,7 +9,7 @@ get:
     - $ref: '../parameters/query/gitCommitId.yaml'
 
   tags:
-    - application
+    - Application Deployment History
   responses:
     '200':
       description: 'List deployment history'
