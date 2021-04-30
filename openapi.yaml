@@ -8,8 +8,54 @@ info:
     url: 'https://discord.qovery.com'
     email: support+api+documentation@qovery.com
   x-logo:
-    url: 'https://uploads-ssl.webflow.com/5de176c0d41c9b4a1dbbb0aa/5f9b214e6d66a454556d8b5b_qovery_logo_with_name_dark_2048.png'
+    url: 'https://uploads-ssl.webflow.com/5de176bfd41c9b0a91bbb0a4/5de17d653719a1f46cdb62ae_image%20(3).png'
     altText: Qovery
+x-tagGroups:
+  - name: Organization
+    tags:
+      - Organization Main Calls
+  - name: Project
+    tags:
+      - Project Main Calls
+      - Project Deployment Rule
+      - Project Environment Variable
+      - Project Secret
+  - name: Environment
+    tags:
+      - Environment Main Calls
+      - Environment Actions
+      - Services
+      - Environment Logs
+      - Environment Deployment History
+      - Environment Deployment Rule
+      - Environment Variable
+      - Environment Secret
+  - name: Application
+    tags:
+      - Application Main Calls
+      - Application Actions
+      - Custom Domain
+      - Dependency
+      - Application Metrics
+      - Application Database
+      - Application Logs
+      - Application Deployment History
+      - Application Environment Variable
+      - Application Secret
+      - Application Event
+  - name: Database
+    tags:
+      - Database Main Calls
+      - Database Actions
+      - Database Metrics
+      - Database Applications
+      - Logical Database
+      - Database Application
+      - Backups
+      - Database Event
+  - name: Account
+    tags:
+      - Git repositories
 servers:
   - url: 'https://api.qovery.com'
 paths:
@@ -18,7 +64,7 @@ paths:
       summary: List user organizations
       operationId: listOrganization
       tags:
-        - organization
+        - Organization Main Calls
       responses:
         '200':
           description: List organizations
@@ -36,7 +82,7 @@ paths:
       summary: Create an organization
       operationId: createOrganization
       tags:
-        - organization
+        - Organization Main Calls
       requestBody:
         content:
           application/json:
@@ -66,7 +112,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
       tags:
-        - organization
+        - name: Organization Main Calls
       responses:
         '200':
           description: Get organization by ID
@@ -87,7 +133,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
       tags:
-        - organization
+        - Organization Main Calls
       requestBody:
         content:
           application/json:
@@ -117,7 +163,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
       tags:
-        - organization
+        - Organization Main Calls
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -134,7 +180,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
       tags:
-        - project
+        - Project Main Calls
       responses:
         '200':
           description: List projects
@@ -154,7 +200,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
       tags:
-        - project
+        - Project Main Calls
       requestBody:
         content:
           application/json:
@@ -185,7 +231,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - project
+        - Project Main Calls
       responses:
         '200':
           description: Get number of services
@@ -219,7 +265,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - project
+        - Project Main Calls
       responses:
         '200':
           description: Get project by ID
@@ -240,7 +286,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - project
+        - Project Main Calls
       requestBody:
         content:
           application/json:
@@ -270,7 +316,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - project
+        - Project Main Calls
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -287,7 +333,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - project
+        - Project Deployment Rule
       responses:
         '200':
           description: Get deployment rules
@@ -312,7 +358,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - project
+        - Project Deployment Rule
       requestBody:
         content:
           application/json:
@@ -412,7 +458,7 @@ paths:
             type: string
             format: uuid
       tags:
-        - project
+        - Project Deployment Rule
       responses:
         '200':
           description: Get deployment rule
@@ -433,7 +479,7 @@ paths:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule~1%7BdeploymentRuleId%7D/get/parameters/1'
       tags:
-        - project
+        - Project Deployment Rule
       requestBody:
         content:
           application/json:
@@ -463,7 +509,7 @@ paths:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule~1%7BdeploymentRuleId%7D/get/parameters/1'
       tags:
-        - project
+        - Project Deployment Rule
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -480,7 +526,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - environment
+        - Environment Main Calls
       responses:
         '200':
           description: List environments
@@ -500,7 +546,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - environment
+        - Environment Main Calls
       requestBody:
         content:
           application/json:
@@ -530,7 +576,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - project
+        - Project Environment Variable
       responses:
         '200':
           description: List project environment variables
@@ -554,7 +600,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - project
+        - Project Environment Variable
       requestBody:
         content:
           application/json:
@@ -587,7 +633,7 @@ paths:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - project
+        - Project Environment Variable
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -609,7 +655,7 @@ paths:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - project
+        - Project Environment Variable
       requestBody:
         required: true
         content:
@@ -656,7 +702,7 @@ paths:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - project
+        - Project Environment Variable
       requestBody:
         content:
           application/json:
@@ -692,7 +738,7 @@ paths:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - project
+        - Project Environment Variable
       requestBody:
         content:
           application/json:
@@ -720,7 +766,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - project
+        - Project Secret
       responses:
         '200':
           description: List project secrets
@@ -744,7 +790,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - project
+        - Project Secret
       requestBody:
         content:
           application/json:
@@ -776,7 +822,7 @@ paths:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - project
+        - Project Secret
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -798,7 +844,7 @@ paths:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - project
+        - Project Secret
       requestBody:
         required: true
         content:
@@ -845,7 +891,7 @@ paths:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - project
+        - Project Secret
       requestBody:
         content:
           application/json:
@@ -886,7 +932,7 @@ paths:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - project
+        - Project Secret
       requestBody:
         content:
           application/json:
@@ -920,7 +966,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - environment
+        - Environment Main Calls
       responses:
         '200':
           description: Get status
@@ -951,7 +997,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - environment
+        - Environment Main Calls
       responses:
         '200':
           description: Get number of services
@@ -974,7 +1020,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Main Calls
       responses:
         '200':
           description: Get environment by ID
@@ -995,7 +1041,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Main Calls
       requestBody:
         content:
           application/json:
@@ -1030,7 +1076,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Main Calls
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -1047,7 +1093,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Mail Calls
       responses:
         '200':
           description: Get status
@@ -1068,7 +1114,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Deployment Rule
       responses:
         '200':
           description: Get deployment rule
@@ -1091,7 +1137,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule~1%7BdeploymentRuleId%7D/get/parameters/1'
       tags:
-        - environment
+        - Environment Deployment Rule
       requestBody:
         content:
           application/json:
@@ -1152,7 +1198,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Services
       responses:
         '200':
           description: List environment services
@@ -1215,7 +1261,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Services
       responses:
         '200':
           description: Get status
@@ -1239,7 +1285,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Actions
       responses:
         '202':
           description: Deploy environment
@@ -1262,7 +1308,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Actions
       responses:
         '202':
           description: Environment stop has been requested
@@ -1285,7 +1331,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Actions
       requestBody:
         content:
           application/json:
@@ -1318,7 +1364,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Actions
       requestBody:
         content:
           application/json:
@@ -1351,7 +1397,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - application
+        - Application Main Calls
       responses:
         '200':
           description: List applications
@@ -1402,7 +1448,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - application
+        - pplication Main Calls
       responses:
         '200':
           description: Get status
@@ -1427,7 +1473,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
       tags:
-        - environment
+        - Environment Logs
       responses:
         '200':
           description: List logs
@@ -1457,7 +1503,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3Ftail%3D/get/parameters/1'
       tags:
-        - environment
+        - Environment Logs
       responses:
         '200':
           description: List logs
@@ -1520,7 +1566,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3FlastId%3D/get/parameters/1'
       tags:
-        - environment
+        - Environment Logs
       responses:
         '200':
           description: List logs
@@ -1543,7 +1589,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
       tags:
-        - environment
+        - Environment Deployment History
       responses:
         '200':
           description: List deployment history
@@ -1589,7 +1635,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3Ftail%3D/get/parameters/1'
       tags:
-        - environment
+        - Environment Deployment History
       responses:
         '200':
           description: List events
@@ -1627,7 +1673,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3FlastId%3D/get/parameters/1'
       tags:
-        - environment
+        - Environment Deployment History
       responses:
         '200':
           description: List deploys
@@ -1648,7 +1694,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Variable
       responses:
         '200':
           description: List environment variables
@@ -1672,7 +1718,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Variable
       requestBody:
         content:
           application/json:
@@ -1705,7 +1751,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - environment
+        - Environment Variable
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -1727,7 +1773,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - environment
+        - Environment Variable
       requestBody:
         required: true
         content:
@@ -1774,7 +1820,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - environment
+        - Environment Variable
       requestBody:
         content:
           application/json:
@@ -1810,7 +1856,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - environment
+        - Environment Variable
       requestBody:
         content:
           application/json:
@@ -1838,7 +1884,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Secret
       responses:
         '200':
           description: List environment secrets
@@ -1862,7 +1908,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Secret
       requestBody:
         content:
           application/json:
@@ -1894,7 +1940,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - environment
+        - Environment Secret
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -1916,7 +1962,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - environment
+        - Environment Secret
       requestBody:
         required: true
         content:
@@ -1963,7 +2009,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - environment
+        - Environment Secret
       requestBody:
         content:
           application/json:
@@ -1999,7 +2045,7 @@ paths:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - environment
+        - Environment Secret
       requestBody:
         content:
           application/json:
@@ -2028,7 +2074,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - environment
+        - Environment Main Calls
       responses:
         '200':
           description: List links
@@ -2060,7 +2106,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Main Calls
       responses:
         '200':
           description: Get application by ID
@@ -2081,7 +2127,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Main Calls
       requestBody:
         content:
           application/json:
@@ -2221,7 +2267,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Main Calls
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -2238,7 +2284,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Main Calls
       responses:
         '200':
           description: Get status
@@ -2259,7 +2305,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Main Calls
       responses:
         '200':
           description: List application contributors
@@ -2285,7 +2331,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Main Calls
       responses:
         '200':
           description: List application tags
@@ -2345,7 +2391,7 @@ paths:
             type: string
             format: uuid
       tags:
-        - application
+        - Application Main Calls
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -2362,7 +2408,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Metrics
       responses:
         '200':
           description: Know current resource consumption of the application for each running instance
@@ -2374,7 +2420,70 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/paths/~1instance~1%7BinstanceId%7D/get/responses/200/content/application~1json/schema'
+                      allOf:
+                        - $ref: '#/components/schemas/BaseResponse'
+                        - type: object
+                          properties:
+                            name:
+                              type: string
+                              example: instance 1
+                            cpu:
+                              type: object
+                              properties:
+                                requested_in_float:
+                                  type: number
+                                consumed_in_number:
+                                  type: number
+                                consumed_in_percent:
+                                  type: number
+                                warning_threshold_in_percent:
+                                  type: number
+                                alert_threshold_in_percent:
+                                  type: number
+                                status:
+                                  type: string
+                                  enum:
+                                    - OK
+                                    - Warning
+                                    - Alert
+                            memory:
+                              type: object
+                              properties:
+                                requested_in_mb:
+                                  type: integer
+                                consumed_in_mb:
+                                  type: integer
+                                consumed_in_percent:
+                                  type: number
+                                warning_threshold_in_percent:
+                                  type: number
+                                alert_threshold_in_percent:
+                                  type: number
+                                status:
+                                  type: string
+                                  enum:
+                                    - OK
+                                    - Warning
+                                    - Alert
+                            storage:
+                              type: object
+                              properties:
+                                requested_in_gb:
+                                  type: integer
+                                consumed_in_gb:
+                                  type: integer
+                                consumed_in_percent:
+                                  type: number
+                                warning_threshold_in_percent:
+                                  type: number
+                                alert_threshold_in_percent:
+                                  type: number
+                                status:
+                                  type: string
+                                  enum:
+                                    - OK
+                                    - Warning
+                                    - Alert
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2388,7 +2497,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Metrics
       responses:
         '200':
           description: Know number of running instances of the application
@@ -2433,7 +2542,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - application
+        - Application Metrics
       responses:
         '200':
           description: CPU consumption
@@ -2471,7 +2580,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - application
+        - Application Metrics
       responses:
         '200':
           description: Memory consumption
@@ -2510,7 +2619,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - application
+        - Application Metrics
       responses:
         '200':
           description: Health Check Latency
@@ -2537,7 +2646,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - application
+        - Application Metrics
       responses:
         '200':
           description: Storage consumption
@@ -2574,7 +2683,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Dependency
       responses:
         '200':
           description: List dependencies
@@ -2597,7 +2706,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/targetApplicationId'
       tags:
-        - application
+        - Dependency
       responses:
         '200':
           description: Add application dependencies
@@ -2620,7 +2729,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/targetApplicationId'
       tags:
-        - application
+        - Dependency
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -2645,7 +2754,7 @@ paths:
             type: string
             format: uuid
       tags:
-        - application
+        - Application Main Calls
       responses:
         '200':
           description: List commits
@@ -2674,7 +2783,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Actions
       requestBody:
         content:
           application/json:
@@ -2704,7 +2813,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Actions
       responses:
         '202':
           description: Application stop has been requested
@@ -2727,7 +2836,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Actions
       responses:
         '202':
           description: Application restart has been requested
@@ -2758,7 +2867,7 @@ paths:
             type: string
         - $ref: '#/paths/~1application~1%7BapplicationId%7D~1commit/get/parameters/2'
       tags:
-        - application
+        - Application Deployment History
       responses:
         '200':
           description: List deployment history
@@ -2788,7 +2897,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
       tags:
-        - application
+        - Application Event
       responses:
         '200':
           description: List events
@@ -2811,7 +2920,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3Ftail%3D/get/parameters/1'
       tags:
-        - application
+        - Application Event
       responses:
         '200':
           description: List events
@@ -2834,7 +2943,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3FlastId%3D/get/parameters/1'
       tags:
-        - application
+        - Application Event
       responses:
         '200':
           description: List events
@@ -2855,7 +2964,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Environment Variable
       responses:
         '200':
           description: List environment variables
@@ -2877,7 +2986,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Environment Variable
       requestBody:
         content:
           application/json:
@@ -2910,7 +3019,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - application
+        - Application Environment Variable
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -2932,7 +3041,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - application
+        - Application Environment Variable
       requestBody:
         required: true
         content:
@@ -2979,7 +3088,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - application
+        - Application Environment Variable
       requestBody:
         content:
           application/json:
@@ -3015,7 +3124,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
-        - application
+        - Application Environment Variable
       requestBody:
         content:
           application/json:
@@ -3044,7 +3153,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Secret
       responses:
         '200':
           description: List secrets
@@ -3066,7 +3175,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Secret
       requestBody:
         content:
           application/json:
@@ -3099,7 +3208,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - application
+        - Application Secret
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -3121,7 +3230,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - application
+        - Application Secret
       requestBody:
         required: true
         content:
@@ -3168,7 +3277,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - application
+        - Application Secret
       requestBody:
         content:
           application/json:
@@ -3204,7 +3313,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - application
+        - Application Secret
       requestBody:
         content:
           application/json:
@@ -3232,7 +3341,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Custom Domain
       responses:
         '200':
           description: List custom domains
@@ -3258,7 +3367,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Custom Domain
       requestBody:
         content:
           application/json:
@@ -3308,7 +3417,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/customDomainId'
       tags:
-        - application
+        - Custom Domain
       requestBody:
         content:
           application/json:
@@ -3337,7 +3446,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/customDomainId'
       tags:
-        - application
+        - Custom Domain
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -3356,7 +3465,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
       tags:
-        - application
+        - Application Logs
       responses:
         '200':
           description: List logs
@@ -3386,7 +3495,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3Ftail%3D/get/parameters/1'
       tags:
-        - application
+        - Application Logs
       responses:
         '200':
           description: List logs
@@ -3409,7 +3518,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3FlastId%3D/get/parameters/1'
       tags:
-        - application
+        - Application Logs
       responses:
         '200':
           description: List logs
@@ -3430,7 +3539,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Database
       responses:
         '200':
           description: List linked databases
@@ -3458,7 +3567,7 @@ paths:
             type: string
             format: uuid
       tags:
-        - application
+        - Application Database
       responses:
         '201':
           description: Linked the database to the application
@@ -3483,7 +3592,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/paths/~1application~1%7BapplicationId%7D~1database~1%7BtargetDatabaseId%7D/post/parameters/1'
       tags:
-        - application
+        - Application Database
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -3500,7 +3609,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Database
       responses:
         '200':
           description: List linked databases
@@ -3528,7 +3637,7 @@ paths:
             type: string
             format: uuid
       tags:
-        - application
+        - Application Database
       responses:
         '201':
           description: Linked the Logical database to the application
@@ -3553,7 +3662,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/paths/~1application~1%7BapplicationId%7D~1logicalDatabase~1%7BtargetLogicalDatabaseId%7D/post/parameters/1'
       tags:
-        - application
+        - Application Database
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -3571,7 +3680,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Main Calls
       responses:
         '200':
           description: List links
@@ -3592,7 +3701,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - database
+        - Database Main Calls
       responses:
         '200':
           description: List databases
@@ -3643,7 +3752,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - database
+        - Database Main Calls
       responses:
         '200':
           description: Get status
@@ -3666,7 +3775,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Main Calls
       responses:
         '200':
           description: Get database  by ID
@@ -3687,7 +3796,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Main Calls
       requestBody:
         content:
           application/json:
@@ -3743,7 +3852,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Main Calls
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -3760,7 +3869,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Main Calls
       responses:
         '200':
           description: Get status
@@ -3781,7 +3890,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Main Calls
       responses:
         '200':
           description: List alligible versions
@@ -3813,7 +3922,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Main Calls
       responses:
         '200':
           description: get credentials
@@ -3834,7 +3943,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Main Calls
       requestBody:
         content:
           application/json:
@@ -3871,7 +3980,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Logical Database
       responses:
         '200':
           description: List logical databases
@@ -3937,7 +4046,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Application
       responses:
         '200':
           description: List linked applications
@@ -3959,7 +4068,7 @@ paths:
         - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/targetApplicationId'
       tags:
-        - database
+        - Database Application
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -3976,7 +4085,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Actions
       responses:
         '202':
           description: Database  restart has been requested
@@ -3999,7 +4108,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Actions
       responses:
         '202':
           description: Database  stop has been requested
@@ -4022,7 +4131,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Actions
       responses:
         '202':
           description: 'Deploy database '
@@ -4045,7 +4154,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Database Metrics
       responses:
         '200':
           description: Get database  current metric
@@ -4125,7 +4234,7 @@ paths:
         - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - database
+        - Database Metrics
       responses:
         '200':
           description: CPU consumption
@@ -4167,7 +4276,7 @@ paths:
         - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - database
+        - Database Metrics
       responses:
         '200':
           description: Memory consumption
@@ -4209,7 +4318,7 @@ paths:
         - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - database
+        - Database Metrics
       responses:
         '200':
           description: Storage consumption
@@ -4252,7 +4361,7 @@ paths:
         - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/lastDays'
       tags:
-        - database
+        - Database Metrics
       responses:
         '200':
           description: Health Check Latency
@@ -4301,7 +4410,7 @@ paths:
         - $ref: '#/components/parameters/databaseId'
         - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
       tags:
-        - database
+        - Backups
       responses:
         '200':
           description: List backups
@@ -4328,7 +4437,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Backups
       requestBody:
         content:
           application/json:
@@ -4377,7 +4486,7 @@ paths:
             type: string
             format: uuid
       tags:
-        - database
+        - Backups
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -4402,7 +4511,7 @@ paths:
             type: string
             format: uuid
       tags:
-        - database
+        - Database Event
       responses:
         '200':
           description: List events
@@ -4448,7 +4557,7 @@ paths:
             type: integer
             format: int32
       tags:
-        - database
+        - Database Event
       responses:
         '200':
           description: List events
@@ -4477,7 +4586,7 @@ paths:
             type: string
             format: uuid
       tags:
-        - database
+        - Database Event
       responses:
         '200':
           description: List events
@@ -4505,7 +4614,7 @@ paths:
             type: string
             format: uuid
       tags:
-        - logicalDatabase
+        - Logical Database
       responses:
         '200':
           description: Get logical database by ID
@@ -4531,7 +4640,7 @@ paths:
       parameters:
         - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/parameters/0'
       tags:
-        - logicalDatabase
+        - Logical Database
       requestBody:
         content:
           application/json:
@@ -4567,7 +4676,7 @@ paths:
       parameters:
         - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/parameters/0'
       tags:
-        - logicalDatabase
+        - Logical Database
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -4584,7 +4693,7 @@ paths:
       parameters:
         - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/parameters/0'
       tags:
-        - logicalDatabase
+        - Logical Database
       responses:
         '200':
           description: get credentials
@@ -4632,7 +4741,7 @@ paths:
       parameters:
         - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/get/parameters/0'
       tags:
-        - logicalDatabase
+        - Logical Database
       responses:
         '200':
           description: List linked applications
@@ -4646,138 +4755,12 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/instance/{instanceId}':
-    get:
-      summary: Get Instance by ID
-      operationId: getInstance
-      parameters:
-        - $ref: '#/components/parameters/instanceId'
-      tags:
-        - instance
-      responses:
-        '200':
-          description: Get Instance by ID
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/BaseResponse'
-                  - type: object
-                    properties:
-                      name:
-                        type: string
-                        example: instance 1
-                      cpu:
-                        type: object
-                        properties:
-                          requested_in_float:
-                            type: number
-                          consumed_in_number:
-                            type: number
-                          consumed_in_percent:
-                            type: number
-                          warning_threshold_in_percent:
-                            type: number
-                          alert_threshold_in_percent:
-                            type: number
-                          status:
-                            type: string
-                            enum:
-                              - OK
-                              - Warning
-                              - Alert
-                      memory:
-                        type: object
-                        properties:
-                          requested_in_mb:
-                            type: integer
-                          consumed_in_mb:
-                            type: integer
-                          consumed_in_percent:
-                            type: number
-                          warning_threshold_in_percent:
-                            type: number
-                          alert_threshold_in_percent:
-                            type: number
-                          status:
-                            type: string
-                            enum:
-                              - OK
-                              - Warning
-                              - Alert
-                      storage:
-                        type: object
-                        properties:
-                          requested_in_gb:
-                            type: integer
-                          consumed_in_gb:
-                            type: integer
-                          consumed_in_percent:
-                            type: number
-                          warning_threshold_in_percent:
-                            type: number
-                          alert_threshold_in_percent:
-                            type: number
-                          status:
-                            type: string
-                            enum:
-                              - OK
-                              - Warning
-                              - Alert
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/environmentVariable/{environmentVariableId}':
-    get:
-      summary: Get environment variable by ID
-      operationId: getEnvironmentVariable
-      parameters:
-        - $ref: '#/components/parameters/environmentVariableId'
-      tags:
-        - environmentVariable
-      responses:
-        '200':
-          description: Get environment variable by ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/secret/{secretId}':
-    get:
-      summary: Get a secret by ID
-      operationId: getSecret
-      parameters:
-        - $ref: '#/components/parameters/secretId'
-      tags:
-        - secret
-      responses:
-        '200':
-          description: Get secret by ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SecretResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   /account/gitAuthProvider:
     get:
       summary: Get git provider accounts
       operationId: getGitProviderAccount
       tags:
-        - account
+        - Git repositories
       responses:
         '200':
           description: Get account
@@ -4818,7 +4801,7 @@ paths:
       summary: Get github repositories of the connected user
       operationId: getGithubRepositories
       tags:
-        - account
+        - Git repositories
       responses:
         '200':
           description: Get github repositories
@@ -4855,7 +4838,7 @@ paths:
       summary: Get gitlab repositories of the connected user
       operationId: getGitlabRepositories
       tags:
-        - account
+        - Git repositories
       responses:
         '200':
           description: Get gitlab repositories
