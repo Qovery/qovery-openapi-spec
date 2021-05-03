@@ -8,7 +8,7 @@ info:
     url: 'https://discord.qovery.com'
     email: support+api+documentation@qovery.com
   x-logo:
-    url: 'https://uploads-ssl.webflow.com/5de176bfd41c9b0a91bbb0a4/5de17d653719a1f46cdb62ae_image%20(3).png'
+    url: 'https://raw.githubusercontent.com/Qovery/public-resources/master/qovery%20logo%20white%20text%20HQ.png'
     altText: Qovery
 x-tagGroups:
   - name: Organization
@@ -1417,7 +1417,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - application
+        - Application Main Calls
       requestBody:
         content:
           application/json:
@@ -3721,7 +3721,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - database
+        - Database Main Calls
       requestBody:
         content:
           application/json:
@@ -5083,6 +5083,7 @@ components:
             - owner
             - name
             - url
+            - root_path
           properties:
             provider:
               type: string
@@ -5261,6 +5262,7 @@ components:
         - name
         - type
         - version
+        - mode
       properties:
         name:
           type: string
