@@ -24,7 +24,7 @@ post:
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
-    - database
+    - Database Main Calls
   requestBody:
     content:
       application/json:

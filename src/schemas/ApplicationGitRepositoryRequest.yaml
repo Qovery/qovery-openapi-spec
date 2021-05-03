@@ -4,6 +4,7 @@ required:
  - owner
  - name
  - url
+ - root_path
 properties:
   provider:
     type: string

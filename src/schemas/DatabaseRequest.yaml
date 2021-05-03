@@ -3,6 +3,7 @@ required:
   - name
   - type
   - version
+  - mode
 properties:
   name:
     type: string
