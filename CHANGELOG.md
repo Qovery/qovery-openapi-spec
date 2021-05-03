@@ -2,11 +2,18 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-05-03 : merge git repo linking call with application POST/PUT + added calls on app/database
+# 2021-05-04 : GET env/id/databaseConfiguration
+
+* added endpoint GET environment/id/databaseConfiguration
+
+# 2021-05-03 : update create app, env, database endpoints to specify required and default values
 
 * changed tag on POST application and POST database to make them appear in the doc
 * updated root_path field to be mandatory on application creation endpoint
 * updated mode field to be mandatory on database creation endpoint
+* updated database accessibility field to specify default value = private
+* updated database storage field to specify default value = 10
+
 
 # 2021-04-29 : merge git repo linking call with application POST/PUT + added calls on app/database
 

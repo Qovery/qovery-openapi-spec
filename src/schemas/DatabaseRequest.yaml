@@ -18,7 +18,7 @@ properties:
       - storage
   version:
     type: string
-    example: 10.1
+    example: "10.1"
   mode:
     type: string
     enum:
@@ -26,6 +26,7 @@ properties:
       - container
   accessibility:
     type: string
+    default: private
     enum:
       - public
       - private
@@ -43,3 +44,4 @@ properties:
     type: number
     description: unit is GB
     example: 4
+    default: 10
