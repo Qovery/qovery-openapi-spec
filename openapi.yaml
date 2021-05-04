@@ -1190,6 +1190,27 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/application/to-update':
+    get:
+      summary: List applications to update
+      operationId: listApplicationToUpdate
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Main Calls
+      responses:
+        '200':
+          description: List applications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/service':
     get:
       summary: List environment services
@@ -5157,9 +5178,6 @@ components:
               - size
               - mount_point
             properties:
-              name:
-                type: string
-                example: images
               type:
                 type: string
                 enum:
@@ -5238,6 +5256,15 @@ components:
                       type: string
                       format: uuid
                       description: Git commit user corresponding to the deployed version of the app
+                    deployed_commit_tag:
+                      type: string
+                      example: v1.0.1
+                    last_commit_id:
+                      type: string
+                      description: Git commit ID corresponding to the last version of the app
+                    last_commit_tag:
+                      type: string
+                      example: v2.0.1
                 - $ref: '#/components/schemas/ApplicationRequest/properties/git_repository'
             maximum_cpu:
               type: number
@@ -5271,25 +5298,24 @@ components:
         type:
           type: string
           enum:
-            - postgresql
-            - mysql
-            - mongodb
-            - redis
-            - storage
+            - POSTGRESQL
+            - MYSQL
+            - MONGODB
+            - REDIS
         version:
           type: string
           example: '10.1'
         mode:
           type: string
           enum:
-            - managed
-            - container
+            - MANAGED
+            - CONTAINER
         accessibility:
           type: string
           default: private
           enum:
-            - public
-            - private
+            - PUBLIC
+            - PRIVATE
         cpu:
           type: number
           description: unit is millicores (m). 1000m = 1 cpu
@@ -5312,8 +5338,11 @@ components:
           properties:
             environment:
               $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
-            uri:
+            host:
               type: string
+            port:
+              type: integer
+              example: 5432
             maximum_cpu:
               type: number
               description: Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
@@ -5501,6 +5530,9 @@ components:
               format: date-time
             git_commit_id:
               type: string
+            tag:
+              type: string
+              example: v2.1.1
             message:
               type: string
             user:
