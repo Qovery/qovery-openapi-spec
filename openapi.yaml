@@ -2120,6 +2120,56 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/databaseConfiguration':
+    get:
+      summary: 'List elligible database types, versions and modes for the environment'
+      operationId: listEnvironmentDatabaseConfig
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Main Calls
+      responses:
+        '200':
+          description: List elligible database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        database_type:
+                          type: string
+                          example: REDIS
+                          enum:
+                            - POSTGRESQL
+                            - MYSQL
+                            - MONGODB
+                            - REDIS
+                        version:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                example: '10.1'
+                              supported_mode:
+                                type: string
+                                enum:
+                                  - CONTAINER
+                                  - MANAGED
+                                example:
+                                  - CONTAINER
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}':
     get:
       summary: Get application by ID
@@ -3914,7 +3964,7 @@ paths:
         - Database Main Calls
       responses:
         '200':
-          description: List alligible versions
+          description: List elligible versions
           content:
             application/json:
               schema:
