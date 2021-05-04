@@ -5029,6 +5029,7 @@ components:
       type: object
       required:
         - name
+        - cloud_provider
       properties:
         name:
           type: string
@@ -5277,7 +5278,7 @@ components:
             - storage
         version:
           type: string
-          example: 10.1
+          example: '10.1'
         mode:
           type: string
           enum:
@@ -5285,6 +5286,7 @@ components:
             - container
         accessibility:
           type: string
+          default: private
           enum:
             - public
             - private
@@ -5302,6 +5304,7 @@ components:
           type: number
           description: unit is GB
           example: 4
+          default: 10
     DatabaseResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
