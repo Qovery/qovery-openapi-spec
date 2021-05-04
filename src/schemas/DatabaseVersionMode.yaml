@@ -1,0 +1,9 @@
+type: object
+properties:
+  name:
+    type: string
+    example: "10.1"
+  supported_mode:
+    type: string
+    enum: [CONTAINER, MANAGED]
+    example: [CONTAINER]

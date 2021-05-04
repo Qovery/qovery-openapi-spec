@@ -1,0 +1,14 @@
+type: object
+properties:
+  database_type:
+    type: string
+    example: REDIS
+    enum:
+      - POSTGRESQL
+      - MYSQL
+      - MONGODB
+      - REDIS
+  version:
+    type: array
+    items:
+      $ref: '../schemas/DatabaseVersionMode.yaml'

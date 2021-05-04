@@ -10,6 +10,7 @@ Please add a changelog here each time you update the API documentation.
 * added deployed_commit_tag, last_commit_id and last_commit_tag in application resource. This way in application resource (in git_repository object) we have on one side the deployed_commit information which is the current version of the app, that has been deployed, and also the last_commit information which is the latest version of the app (that may not been deployed yet). For instance if deployed_commit_id is not equal to last_commit_id it means the app is not up to date
 * added "tag" field in commit resource (GET application/id/commit)
 * added new endpoint GET environment/id/application/to-update that lists all apps of the env that are not up-to-date (last commit id not equal to deployed commit id)
+* added GET environment/id/databaseConfiguration that returns list of database types, and for each of them, versions and modes that are supported.
 
 # 2021-05-03 : update create app, env, database endpoints to specify required and default values
 

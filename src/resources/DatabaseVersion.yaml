@@ -7,7 +7,7 @@ get:
     - Database Main Calls
   responses:
     '200':
-      description: 'List alligible versions'
+      description: 'List elligible versions'
       content:
         application/json:
           schema:
