@@ -56,9 +56,6 @@ properties:
         - size
         - mount_point
       properties:
-        name:
-          type: string
-          example: images
         type:
           type: string
           enum:

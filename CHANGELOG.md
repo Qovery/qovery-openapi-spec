@@ -2,9 +2,14 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-05-04 : GET env/id/databaseConfiguration
+# 2021-05-04 : changed regarding commit info, new endpoint for outdated apps
 
-* added endpoint GET environment/id/databaseConfiguration
+* removed "storage" as possible database type in database resource
+* put in uppercase the enum values in database resource
+* removed storage name in GET application/id
+* added deployed_commit_tag, last_commit_id and last_commit_tag in application resource. This way in application resource (in git_repository object) we have on one side the deployed_commit information which is the current version of the app, that has been deployed, and also the last_commit information which is the latest version of the app (that may not been deployed yet). For instance if deployed_commit_id is not equal to last_commit_id it means the app is not up to date
+* added "tag" field in commit resource (GET application/id/commit)
+* added new endpoint GET environment/id/application/to-update that lists all apps of the env that are not up-to-date (last commit id not equal to deployed commit id)
 
 # 2021-05-03 : update create app, env, database endpoints to specify required and default values
 

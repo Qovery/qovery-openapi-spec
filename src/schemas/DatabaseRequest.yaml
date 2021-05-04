@@ -11,25 +11,24 @@ properties:
   type:
     type: string
     enum:
-      - postgresql
-      - mysql
-      - mongodb
-      - redis
-      - storage
+      - POSTGRESQL
+      - MYSQL
+      - MONGODB
+      - REDIS
   version:
     type: string
     example: "10.1"
   mode:
     type: string
     enum:
-      - managed
-      - container
+      - MANAGED
+      - CONTAINER
   accessibility:
     type: string
     default: private
     enum:
-      - public
-      - private
+      - PUBLIC
+      - PRIVATE
   cpu:
     type: number
     description: unit is millicores (m). 1000m = 1 cpu
