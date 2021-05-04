@@ -103,6 +103,8 @@ paths:
     $ref: './resources/EnvironmentDeploymentRule.yaml'
   /environment/{environmentId}/deploymentRule/{deploymentRuleId}:
     $ref: './resources/EnvironmentDeploymentRuleRef.yaml'
+  /environment/{environmentId}/application/to-update:
+    $ref: './resources/EnvironmentApplicationToUpdate.yaml'
   /environment/{environmentId}/service:
     $ref: './resources/EnvironmentService.yaml'
   /environment/{environmentId}/service/status:

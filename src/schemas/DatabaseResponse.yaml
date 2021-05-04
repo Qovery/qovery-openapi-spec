@@ -4,8 +4,11 @@ allOf:
     properties:
       environment:
         $ref: './ReferenceObject.yaml'
-      uri:
+      host:
         type: string
+      port:
+        type: integer
+        example: 5432
       maximum_cpu:
         type: number
         description: Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu

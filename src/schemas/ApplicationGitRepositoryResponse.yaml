@@ -15,4 +15,13 @@ allOf:
         type: string
         format: uuid
         description: Git commit user corresponding to the deployed version of the app
+      deployed_commit_tag:
+        type: string
+        example: "v1.0.1"
+      last_commit_id:
+        type: string
+        description: Git commit ID corresponding to the last version of the app
+      last_commit_tag:
+        type: string
+        example: "v2.0.1"
   - $ref: './ApplicationGitRepositoryRequest.yaml'
