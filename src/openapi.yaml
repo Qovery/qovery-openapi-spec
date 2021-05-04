@@ -150,7 +150,9 @@ paths:
   /environment/{environmentId}/secret/{secretId}/alias:
     $ref: './resources/EnvironmentSecretAlias.yaml'
   /environment/{environmentId}/link:
-    $ref: './resources/EnvironmentLink.yaml'    
+    $ref: './resources/EnvironmentLink.yaml' 
+  /environment/{environmentId}/databaseConfiguration:
+    $ref: './resources/EnvironmentDatabaseConfiguration.yaml'    
   /application/{applicationId}:
     $ref: './resources/Application.yaml'
   /application/{applicationId}/status:
