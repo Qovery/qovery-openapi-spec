@@ -1,5 +1,5 @@
 get:
-  summary: 'List elligible database types, versions and modes for the environment'
+  summary: 'List eligible database types, versions and modes for the environment'
   operationId: listEnvironmentDatabaseConfig
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
@@ -7,7 +7,7 @@ get:
     - Environment Main Calls
   responses:
     '200':
-      description: 'List elligible database'
+      description: 'List eligible database'
       content:
         application/json:
           schema:
