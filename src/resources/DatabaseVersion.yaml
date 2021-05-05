@@ -1,5 +1,5 @@
 get:
-  summary: 'List elligible versions for the database'
+  summary: 'List eligible versions for the database'
   operationId: listDatabaseVersion
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'
@@ -7,7 +7,7 @@ get:
     - Database Main Calls
   responses:
     '200':
-      description: 'List elligible versions'
+      description: 'List eligible versions'
       content:
         application/json:
           schema:
