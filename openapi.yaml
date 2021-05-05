@@ -2122,7 +2122,7 @@ paths:
           $ref: '#/components/responses/404'
   '/environment/{environmentId}/databaseConfiguration':
     get:
-      summary: 'List elligible database types, versions and modes for the environment'
+      summary: 'List eligible database types, versions and modes for the environment'
       operationId: listEnvironmentDatabaseConfig
       parameters:
         - $ref: '#/components/parameters/environmentId'
@@ -2130,7 +2130,7 @@ paths:
         - Environment Main Calls
       responses:
         '200':
-          description: List elligible database
+          description: List eligible database
           content:
             application/json:
               schema:
@@ -3957,7 +3957,7 @@ paths:
           $ref: '#/components/responses/404'
   '/database/{databaseId}/version':
     get:
-      summary: List elligible versions for the database
+      summary: List eligible versions for the database
       operationId: listDatabaseVersion
       parameters:
         - $ref: '#/components/parameters/databaseId'
@@ -3965,7 +3965,7 @@ paths:
         - Database Main Calls
       responses:
         '200':
-          description: List elligible versions
+          description: List eligible versions
           content:
             application/json:
               schema:
