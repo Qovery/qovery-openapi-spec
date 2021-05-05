@@ -5,6 +5,7 @@ Please add a changelog here each time you update the API documentation.
 # 2021-05-05 : 
 
 * removed updated_at and id on instance
+* added QUEUED state
 
 # 2021-05-04 : changed regarding commit info, new endpoint for outdated apps
 
