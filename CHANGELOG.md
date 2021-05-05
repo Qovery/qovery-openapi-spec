@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-05 : 
+
+* removed updated_at and id on instance
+
 # 2021-05-04 : changed regarding commit info, new endpoint for outdated apps
 
 * removed "storage" as possible database type in database resource
