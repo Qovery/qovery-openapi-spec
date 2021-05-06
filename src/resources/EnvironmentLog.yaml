@@ -1,10 +1,9 @@
 get:
   summary: 'List environment deployment logs'
   operationId: listEnvironmentLog
-  description: By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
+  description: This returns the last 1000 environment deployment logs.
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
-    - $ref: '../parameters/query/startId.yaml'
   tags:
     - Environment Logs
   responses:
@@ -13,7 +12,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/EnvironmentLogPaginatedResponseList.yaml'
+            $ref: '../schemas/EnvironmentLogResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
