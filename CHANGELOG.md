@@ -5,6 +5,7 @@ Please add a changelog here each time you update the API documentation.
 # 2021-05-06 : remove pagination on logs
 
 * removed pagination concept on app and env logs
+* added dry run query param for env var and secrets
 
 # 2021-05-05 : changes on instance and status
 
