@@ -11,6 +11,8 @@ post:
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
     - $ref: '../parameters/path/environmentVariableId.yaml'
+    - $ref: '../parameters/query/dryRun.yaml'
+
   tags:
     - Environment Variable
   requestBody:
