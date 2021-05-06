@@ -2,7 +2,11 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-05-05 : 
+# 2021-05-06 : remove pagination on logs
+
+* removed pagination concept on app and env logs
+
+# 2021-05-05 : changes on instance and status
 
 * removed updated_at and id on instance
 * added QUEUED state
