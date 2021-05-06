@@ -28,6 +28,8 @@ post:
   operationId: createEnvironmentEnvironmentVariable
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
+    - $ref: '../parameters/query/dryRun.yaml'
+
   tags:
     - Environment Variable
   requestBody:
