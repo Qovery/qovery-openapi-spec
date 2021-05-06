@@ -1,7 +1,7 @@
 post:
   summary: 'Create an environment variable alias at the project level'
   description: |
-    - Allows you to add an alias on an existing environment variable, at project level, in order to customize its key.
+    - Allows you to add an alias at project level on an existing environment variable having higher scope, in order to customize its key.
     - You only have to specify a key in the request body
     - The system will create a new environment variable at project level with the same value as the one corresponding to the variable id in the path
     - The response body will contain the newly created variable
@@ -26,7 +26,7 @@ post:
           schema:
             $ref: '../schemas/EnvironmentVariableResponse.yaml'
     '400':
-      $ref: '../responses/BadRequest.yaml'
+      description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
