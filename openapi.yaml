@@ -599,6 +599,7 @@ paths:
       operationId: createProjectEnvironmentVariable
       parameters:
         - $ref: '#/components/parameters/projectId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Project Environment Variable
       requestBody:
@@ -632,6 +633,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Project Environment Variable
       responses:
@@ -654,6 +656,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Project Environment Variable
       requestBody:
@@ -701,6 +704,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Project Environment Variable
       requestBody:
@@ -737,6 +741,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Project Environment Variable
       requestBody:
@@ -789,6 +794,11 @@ paths:
       operationId: createProjectSecret
       parameters:
         - $ref: '#/components/parameters/projectId'
+        - name: dryRun
+          in: query
+          description: 'boolean to specify behaviour of the request. If dryRun=true, API request will be simulated so that you can preview the result before making the action'
+          schema:
+            type: boolean
       tags:
         - Project Secret
       requestBody:
@@ -821,6 +831,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Project Secret
       responses:
@@ -843,6 +854,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Project Secret
       requestBody:
@@ -890,6 +902,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Project Secret
       requestBody:
@@ -931,6 +944,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Project Secret
       requestBody:
@@ -1684,6 +1698,7 @@ paths:
       operationId: createEnvironmentEnvironmentVariable
       parameters:
         - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Environment Variable
       requestBody:
@@ -1717,6 +1732,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Environment Variable
       responses:
@@ -1739,6 +1755,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Environment Variable
       requestBody:
@@ -1786,6 +1803,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Environment Variable
       requestBody:
@@ -1822,6 +1840,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Environment Variable
       requestBody:
@@ -1874,6 +1893,7 @@ paths:
       operationId: createEnvironmentSecret
       parameters:
         - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Environment Secret
       requestBody:
@@ -1906,6 +1926,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Environment Secret
       responses:
@@ -1928,6 +1949,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Environment Secret
       requestBody:
@@ -1975,6 +1997,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Environment Secret
       requestBody:
@@ -2011,6 +2034,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Environment Secret
       requestBody:
@@ -3003,6 +3027,7 @@ paths:
       operationId: createApplicationEnvironmentVariable
       parameters:
         - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Application Environment Variable
       requestBody:
@@ -3036,6 +3061,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Application Environment Variable
       responses:
@@ -3058,6 +3084,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Application Environment Variable
       requestBody:
@@ -3105,6 +3132,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Application Environment Variable
       requestBody:
@@ -3141,6 +3169,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/environmentVariableId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Application Environment Variable
       requestBody:
@@ -3192,6 +3221,7 @@ paths:
       operationId: createApplicationSecret
       parameters:
         - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Application Secret
       requestBody:
@@ -3225,6 +3255,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Application Secret
       responses:
@@ -3247,6 +3278,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Application Secret
       requestBody:
@@ -3294,6 +3326,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Application Secret
       requestBody:
@@ -3330,6 +3363,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/secretId'
+        - $ref: '#/paths/~1project~1%7BprojectId%7D~1secret/post/parameters/1'
       tags:
         - Application Secret
       requestBody:
