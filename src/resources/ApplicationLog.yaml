@@ -1,10 +1,9 @@
 get:
   summary: 'List logs'
   operationId: listApplicationLog
-  description: By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. 
+  description: This will list the last 1000 logs of the application
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
-    - $ref: '../parameters/query/startId.yaml'
   tags:
     - Application Logs
   responses:
@@ -13,7 +12,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/LogPaginatedResponseList.yaml'
+            $ref: '../schemas/LogResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
