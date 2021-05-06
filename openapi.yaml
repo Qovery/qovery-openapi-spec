@@ -1489,40 +1489,9 @@ paths:
     get:
       summary: List environment deployment logs
       operationId: listEnvironmentLog
-      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
+      description: This returns the last 1000 environment deployment logs.
       parameters:
         - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
-      tags:
-        - Environment Logs
-      responses:
-        '200':
-          description: List logs
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema/allOf/0'
-                  - type: object
-                    properties:
-                      results:
-                        type: array
-                        items:
-                          $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1log%3Ftail%3D/get/responses/200/content/application~1json/schema/properties/results/items'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/environment/{environmentId}/log?tail=':
-    get:
-      summary: List XX last environment deployment logs
-      description: Returns all last XX environment logs. Response is not paginated
-      operationId: listEnvironmentLogTail
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3Ftail%3D/get/parameters/1'
       tags:
         - Environment Logs
       responses:
@@ -1572,29 +1541,6 @@ paths:
                         hint:
                           type: string
                           example: only for errors. it gives a possible action to the user -- Markdown can be injected
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/environment/{environmentId}/log?lastId=':
-    get:
-      summary: List all the last environment deployment logs after a certain log Id
-      description: 'Returns all last logs that happened on the environment, after the log ID you specify in the lastId query parameter. Response is not paginated'
-      operationId: listEnvironmentLogLastId
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3FlastId%3D/get/parameters/1'
-      tags:
-        - Environment Logs
-      responses:
-        '200':
-          description: List logs
-          content:
-            application/json:
-              schema:
-                $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1log%3Ftail%3D/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3532,63 +3478,9 @@ paths:
     get:
       summary: List logs
       operationId: listApplicationLog
-      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter.'
+      description: This will list the last 1000 logs of the application
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/parameters/1'
-      tags:
-        - Application Logs
-      responses:
-        '200':
-          description: List logs
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema/allOf/0'
-                  - type: object
-                    properties:
-                      results:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/LogResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/application/{applicationId}/log?tail=':
-    get:
-      summary: List XX last application logs
-      description: Returns all last XX application logs. Response is not paginated
-      operationId: listApplicationLogTail
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3Ftail%3D/get/parameters/1'
-      tags:
-        - Application Logs
-      responses:
-        '200':
-          description: List logs
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LogResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/application/{applicationId}/log?lastId=':
-    get:
-      summary: List all the last application logs after a certain log Id
-      description: 'Returns all last logs that happened on the application, after the log ID you specify in the lastId query parameter. Response is not paginated'
-      operationId: listApplicationLogLastId
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event%3FlastId%3D/get/parameters/1'
       tags:
         - Application Logs
       responses:
