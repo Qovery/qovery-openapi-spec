@@ -2,6 +2,11 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-07 : minor updates here and there
+
+* added "last_updated_by" on environment resource
+* changed database storage field to specify unit is MB and not GB, and that default is 10240
+
 # 2021-05-06 : remove pagination on logs
 
 * removed pagination concept on app and env logs

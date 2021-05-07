@@ -4,4 +4,8 @@ allOf:
     properties:
       project:
         $ref: './ReferenceObject.yaml'
+      last_updated_by:
+        type: string
+        format: uuid
+        description: uuid of the user that made the last update
   - $ref: './EnvironmentRequest.yaml'
