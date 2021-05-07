@@ -5055,6 +5055,10 @@ components:
           properties:
             project:
               $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+            last_updated_by:
+              type: string
+              format: uuid
+              description: uuid of the user that made the last update
         - $ref: '#/components/schemas/EnvironmentRequest'
     EnvironmentResponseList:
       type: object
@@ -5305,9 +5309,9 @@ components:
           example: 1024
         storage:
           type: number
-          description: unit is GB
+          description: unit is MB
           example: 4
-          default: 10
+          default: 10240
     DatabaseResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
