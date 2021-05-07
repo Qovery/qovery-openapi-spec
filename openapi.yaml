@@ -5293,7 +5293,7 @@ components:
             - CONTAINER
         accessibility:
           type: string
-          default: private
+          default: PRIVATE
           enum:
             - PUBLIC
             - PRIVATE
