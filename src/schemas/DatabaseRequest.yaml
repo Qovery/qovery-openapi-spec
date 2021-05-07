@@ -42,5 +42,4 @@ properties:
   storage:
     type: number
     description: unit is MB
-    example: 4
     default: 10240
