@@ -3,11 +3,15 @@ allOf:
   - type: object
     required:
       - name
+      - owner
       - credentials
     properties:
       name:
         type: string
-        example: GITHUB
+        example: "GITHUB"
+      owner:
+        type: string
+        example: "John Doe"
       credentials:
         type: object
         properties:

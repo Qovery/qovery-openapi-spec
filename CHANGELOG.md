@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-10 : added owner on gitAuthProvider
+
+* added "owern" (string) field on GET account/gitAuthProvider response
+
 # 2021-05-07 : minor updates here and there
 
 * added "last_updated_by" on environment resource
