@@ -2,9 +2,11 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-05-10 : added owner on gitAuthProvider
+# 2021-05-10 : changed according to feedbacks
 
 * added "owern" (string) field on GET account/gitAuthProvider response
+* removed status, hint, execution id from Application logs (GET application/id/log). Put the "message" directly in the resource
+* changed GET environment/id/log response format : state and message are now directly inlined and not in a "'status" object
 
 # 2021-05-07 : minor updates here and there
 

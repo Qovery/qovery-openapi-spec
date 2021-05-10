@@ -11,11 +11,5 @@ properties:
   created_at:
     type: string
     format: date-time
-  status:
-    $ref: './Status.yaml'
-  execution_id:
+  message:
     type: string
-    description: Only for errors. Helps Qovery team to investigate.
-  hint:
-    type: string
-    example: only for errors. it gives a possible action to the user -- Markdown can be injected
