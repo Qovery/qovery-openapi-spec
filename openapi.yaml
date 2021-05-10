@@ -4775,11 +4775,15 @@ paths:
                         - type: object
                           required:
                             - name
+                            - owner
                             - credentials
                           properties:
                             name:
                               type: string
                               example: GITHUB
+                            owner:
+                              type: string
+                              example: John Doe
                             credentials:
                               type: object
                               properties:
