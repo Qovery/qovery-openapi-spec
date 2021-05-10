@@ -1107,7 +1107,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - Environment Mail Calls
+        - Environment Main Calls
       responses:
         '200':
           description: Get status
@@ -1547,8 +1547,31 @@ paths:
                             id:
                               type: string
                               format: uuid
-                        status:
-                          $ref: '#/components/schemas/Status'
+                        state:
+                          type: string
+                          description: |
+                            Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state.
+                          enum:
+                            - INITIALIZED
+                            - QUEUED
+                            - BUILDING
+                            - BUILD_ERROR
+                            - BUILT
+                            - DEPLOYING
+                            - DEPLOYMENT_ERROR
+                            - DEPLOYED
+                            - STOPPING
+                            - STOP_ERROR
+                            - STOPPED
+                            - DELETING
+                            - DELETE_ERROR
+                            - DELETED
+                            - RUNNING
+                            - RUNNING_ERROR
+                        message:
+                          type: string
+                          nullable: true
+                          description: Log message
                         execution_id:
                           type: string
                           description: Only for errors. Helps Qovery team to investigate.
@@ -5559,14 +5582,8 @@ components:
         created_at:
           type: string
           format: date-time
-        status:
-          $ref: '#/components/schemas/Status'
-        execution_id:
+        message:
           type: string
-          description: Only for errors. Helps Qovery team to investigate.
-        hint:
-          type: string
-          example: only for errors. it gives a possible action to the user -- Markdown can be injected
     LogResponseList:
       type: object
       properties:
