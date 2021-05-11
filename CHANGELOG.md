@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-11 : removed credentials from git auth provider
+
+* removed credentials field in GET account/gitAuthProvider
+
 # 2021-05-10 : changed according to feedbacks
 
 * added "owern" (string) field on GET account/gitAuthProvider response
