@@ -4793,20 +4793,19 @@ paths:
                   results:
                     type: array
                     items:
-                      allOf:
-                        - $ref: '#/components/schemas/BaseResponse'
-                        - type: object
-                          required:
-                            - name
-                            - owner
-                            - credentials
-                          properties:
-                            name:
-                              type: string
-                              example: GITHUB
-                            owner:
-                              type: string
-                              example: John Doe
+                      type: object
+                      required:
+                        - name
+                        - owner
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                          example: GITHUB
+                        owner:
+                          type: string
+                          example: John Doe
         '401':
           $ref: '#/components/responses/401'
   /account/github/repository:
@@ -4826,24 +4825,25 @@ paths:
                   results:
                     type: array
                     items:
-                      allOf:
-                        - $ref: '#/components/schemas/BaseResponse'
-                        - type: object
-                          required:
-                            - name
-                            - url
-                          properties:
-                            name:
-                              type: string
-                              example: simple-node-app
-                            url:
-                              type: string
-                              example: 'https://github.com/Qovery/simple-node-app'
-                            default_branch:
-                              type: string
-                              example: master
-                            is_private:
-                              type: boolean
+                      type: object
+                      required:
+                        - name
+                        - url
+                        - id
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                          example: simple-node-app
+                        url:
+                          type: string
+                          example: 'https://github.com/Qovery/simple-node-app'
+                        default_branch:
+                          type: string
+                          example: master
+                        is_private:
+                          type: boolean
         '401':
           $ref: '#/components/responses/401'
   /account/gitlab/repository:
@@ -5047,8 +5047,6 @@ components:
         name:
           type: string
           description: name is case insensitive
-        reference_branch:
-          type: string
         cloud_provider:
           type: object
           properties:
