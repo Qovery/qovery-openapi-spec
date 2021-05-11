@@ -1,14 +1,13 @@
-allOf:
-  - $ref: './BaseResponse.yaml'
-  - type: object
-    required:
-      - name
-      - owner
-      - credentials
-    properties:
-      name:
-        type: string
-        example: "GITHUB"
-      owner:
-        type: string
-        example: "John Doe"
+type: object
+required:
+  - name
+  - owner
+properties:
+  id:
+    type: string
+  name:
+    type: string
+    example: "GITHUB"
+  owner:
+    type: string
+    example: "John Doe"

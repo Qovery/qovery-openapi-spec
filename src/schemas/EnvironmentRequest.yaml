@@ -6,8 +6,6 @@ properties:
   name:
     type: string
     description: name is case insensitive
-  reference_branch:
-    type: string
   cloud_provider:
     type: object
     properties:
