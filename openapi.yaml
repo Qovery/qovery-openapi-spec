@@ -4807,18 +4807,6 @@ paths:
                             owner:
                               type: string
                               example: John Doe
-                            credentials:
-                              type: object
-                              properties:
-                                login:
-                                  type: string
-                                  example: x-access-token
-                                access_token:
-                                  type: string
-                                  example: xxx
-                                expires_at:
-                                  type: string
-                                  format: date-time
         '401':
           $ref: '#/components/responses/401'
   /account/github/repository:
