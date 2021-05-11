@@ -1,18 +1,19 @@
-allOf:
-  - $ref: './BaseResponse.yaml'
-  - type: object
-    required:
-      - name
-      - url
-    properties:
-      name:
-        type: string
-        example: simple-node-app
-      url:
-        type: string
-        example: https://github.com/Qovery/simple-node-app
-      default_branch:
-        type: string
-        example: master
-      is_private:
-        type: boolean
+type: object
+required:
+  - name
+  - url
+  - id
+properties:
+  id:
+    type: string
+  name:
+    type: string
+    example: simple-node-app
+  url:
+    type: string
+    example: https://github.com/Qovery/simple-node-app
+  default_branch:
+    type: string
+    example: master
+  is_private:
+    type: boolean

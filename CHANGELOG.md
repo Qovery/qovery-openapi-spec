@@ -5,8 +5,8 @@ Please add a changelog here each time you update the API documentation.
 # 2021-05-11 : changed on git auth provider
 
 * removed credentials field in GET account/gitAuthProvider
-* removed updated_at and created_at from gitAuthProvider
-* updated id of gitAuthProvider to specify it's a id/text not a uuid
+* removed updated_at and created_at from GET account/gitAuthProvider GET account/github(gitlab)/repository
+* updated id of GET account/gitAuthProvider and GET account/github(gitlab)/repository to specify it's a id/text not a uuid
 * removed reference_branch from environment resource
 
 # 2021-05-10 : changed according to feedbacks
