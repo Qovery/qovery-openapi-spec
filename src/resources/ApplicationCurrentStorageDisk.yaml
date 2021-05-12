@@ -1,17 +1,17 @@
 get:
-  summary: 'List currently running instances of the application with their CPU and RAM metrics'
-  operationId: getApplicationCurrentInstance
+  summary: 'List current storage disk usage'
+  operationId: getApplicationCurrentStorageDisk
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
   tags:
     - Application Metrics
   responses:
     '200':
-      description: 'Know current resource consumption of the application for each running instance'
+      description: 'Know current storage disk'
       content:
         application/json:
           schema:
-            $ref: '../schemas/InstanceResponseList.yaml'
+            $ref: '../schemas/StorageDiskResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

@@ -2,6 +2,13 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-12 : changed on git auth provider
+
+* corrected typo in GET application/id/instance (previously it was Instance)
+* removed storage from GET application/id/instance
+* added endpoint GET application/id/currentStorage to list storage disks
+* updated endpoint GET application/id/metric/storage to list storage disks instead of instances
+
 # 2021-05-11 : changed on git auth provider
 
 * removed credentials field in GET account/gitAuthProvider

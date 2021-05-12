@@ -11,6 +11,6 @@ properties:
   requested_in_gb:
     type: integer
   consumed_in_gb:
-    type: integer
+    type: number
   consumed_in_percent:
     type: number

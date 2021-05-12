@@ -3,9 +3,9 @@ required:
   - instance_name
   - data
 properties:
-  instance_name:
+  disk_name:
     type: string
-    example: instance 1
+    example: disk 1
   data:
     type: array
     items:
