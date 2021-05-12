@@ -163,8 +163,10 @@ paths:
     $ref: './resources/ApplicationTag.yaml'
   /application/{applicationId}/tag/{tagId}:
     $ref: './resources/ApplicationTagRef.yaml'
-  /application/{applicationId}/Instance:
+  /application/{applicationId}/instance:
     $ref: './resources/ApplicationCurrentInstance.yaml'
+  /application/{applicationId}/currentStorage:
+    $ref: './resources/ApplicationCurrentStorageDisk.yaml'
   /application/{applicationId}/currentScale:
     $ref: './resources/ApplicationCurrentScale.yaml'
   /application/{applicationId}/metric/cpu:
