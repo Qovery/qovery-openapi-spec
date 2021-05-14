@@ -78,6 +78,8 @@ properties:
         - internal_port
         - protocol
       properties:
+        name:
+          type: string
         internal_port:
           type: integer
           example: 8080

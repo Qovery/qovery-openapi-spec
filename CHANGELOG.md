@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-14 : added port name on aplication
+
+* added "name" on application port
+
 # 2021-05-12 : changed on git auth provider
 
 * corrected typo in GET application/id/instance (previously it was Instance)
