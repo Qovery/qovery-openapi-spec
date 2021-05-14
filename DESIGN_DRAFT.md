@@ -781,3 +781,224 @@ POST /environment/:envId/deployment/:id/rollback
 ### abort environment deployment task
 
 POST /environment/:envId/deployment/:id/abortDeploy
+
+## Billing module
+
+The billing module manage:
+
+2. the cost
+3. the billing
+4. the invoices
+
+### Get current cost
+
+GET /organization/:orgId/currentCost
+
+```json
+{
+  "remaining_credit": {
+    "total_in_cents": 0,
+    "total": 0.0,
+    "currency_code": "EUR"
+  },
+  "cost": {
+    "total_in_cents": 300000,
+    "total": 300.0,
+    "currency_code": "EUR"
+  },
+  "budget_threshold": {
+    "total_in_cents": 350000,
+    "total": 350.0,
+    "currency_code": "EUR"
+  },
+  "projects": [
+    {
+      "id": "string",
+      "name": "string",
+      "cost": {
+        "total_in_cents": 108,
+        "total": 1.08,
+        "currency_code": "EUR"
+      },
+      "environments": [
+        {
+          "id": "string",
+          "name": "string",
+          "consumed_time_in_seconds": 3600,
+          "cost": {
+            "total_in_cents": 108,
+            "total": 1.08,
+            "currency_code": "EUR"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Get budget threshold
+
+GET /organization/:orgId/costBudget
+
+```json
+{
+  "total_in_cents": 350000,
+  "total": 350.0,
+  "currency_code": "EUR"
+}
+```
+
+### Change budget threshold
+
+PUT /organization/:orgId/costBudget
+
+```json
+{
+  "total_in_cents": 350000
+}
+```
+
+### Get billing info
+
+GET /organization/:orgId/billingInfo
+
+```json
+{
+  "first_name": "string",
+  "last_name": "string",
+  "email": "string",
+  "address": "string",
+  "city": "string",
+  "zip": "string",
+  "state": "string",
+  "country_code": "string",
+  "company": "string",
+  "vat_number": "string"
+}
+```
+
+### Update billing info
+
+PUT /organization/:orgId/billingInfo
+
+```json
+{
+  "first_name": "string",
+  "last_name": "string",
+  "email": "string",
+  "address": "string",
+  "city": "string",
+  "zip": "string",
+  "state": "string",
+  "country_code": "string",
+  "company": "string",
+  "vat_number": "string"
+}
+```
+
+### List invoices
+
+GET /organization/:orgId/invoice
+
+```json
+{
+  "results": [
+    {
+      "id": "string",
+      "date": "date",
+      "status": "PAID|POSTED|PAYMENT_DUE|NOT_PAID|VOIDED|PENDING|UNKNOWN",
+      "total_in_cents": 10000,
+      "total": 100.0,
+      "currency_code": "EUR"
+    }
+  ]
+}
+```
+
+statuses
+
+```text
+PAID // Indicates a paid invoice.
+POSTED // Indicates the payment is not yet collected and will be in this state till the due date to indicate the due period.
+PAYMENT_DUE // Indicates the payment is not yet collected and is being retried as per retry settings.
+NOT_PAID // Indicates the payment is not made and all attempts to collect is failed.
+VOIDED // Indicates a voided invoice.
+PENDING // Indicates the invoice is not closed yet. New line items can be added when the invoice is in this state.
+UNKNOWN
+```
+
+### Get PDF invoice link
+
+GET /invoice/:invoiceId/download
+
+```json
+{
+  "url": "link_to_pdf"
+}
+```
+
+### Download all invoices
+
+POST /organization/:organizationId/downloadInvoices
+
+status response 202 -> send email with an attachment containing all invoices
+
+### List credit cards
+
+GET /organization/:organizationId/creditCard
+
+```json
+{
+  "results": [
+    {
+      "id": "string",
+      "expiry_month": 1,
+      "expiry_year": 2023,
+      "last_digit": "5487",
+      "is_expired": false
+    }
+  ]
+}
+```
+
+### Add credit card
+
+POST /organization/:organizationId/creditCard
+
+```json
+{
+  "number": "string",
+  "cvv": "string",
+  "expiry_month": 1,
+  "expiry_year": 2023
+}
+```
+
+### Delete credit card
+
+DELETE /creditCard/:creditCardId
+
+status code 204
+
+### Get cluster cost
+
+GET /cluster/:clusterId/currentCost
+
+```json
+{
+  "total_in_cents": 350000,
+  "total": 350.0,
+  "currency_code": "EUR"
+}
+```
+
+### Add credit code
+
+POST /organization/:orgId/creditCode
+
+```json
+{
+  "code": "string"
+}
+```
