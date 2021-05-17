@@ -75,7 +75,9 @@ paths:
   /organization/{organizationId}/billingInfo:
     $ref: './resources/OrganizationBillingInfo.yaml'
   /organization/{organizationId}/invoice:
-    $ref: './resources/OrganizationInvoice.yaml'
+    $ref: './resources/OrganizationInvoiceList.yaml'
+  /organization/{organizationId}/invoice/{invoiceId}:
+    $ref: './resources/OrganizationInvoiceDetail.yaml'
   /organization/{organizationId}/invoice/{invoiceId}/download:
     $ref: './resources/OrganizationInvoiceDownload.yaml'
   /organization/{organizationId}/downloadInvoices:
