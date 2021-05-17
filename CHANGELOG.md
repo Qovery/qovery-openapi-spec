@@ -6,6 +6,7 @@ Please add a changelog here each time you update the API documentation.
 
 * small fixe: removed reference_branch from PUT env/id (because we removed this field from the env resource)
 * small fix: removed name from GET application/id/link response and GET environment/id/link
+* small fix : added id, created_at and updated_at env GET environment/id/deploymentRule (don't know why I did not add it before)
 * added all endpoints in "billing" part of "Organization" section
  
 # 2021-05-14 : added port name on aplication
