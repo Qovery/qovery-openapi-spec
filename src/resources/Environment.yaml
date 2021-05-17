@@ -34,8 +34,6 @@ put:
           properties:
             name:
               type: string
-            reference_branch:
-              type: string
   responses:
     '200':
       description: 'Edit an environment'

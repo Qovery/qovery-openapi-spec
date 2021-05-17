@@ -1,2 +1,3 @@
 allOf:
+  - $ref: './BaseResponse.yaml'
   - $ref: './DeploymentRuleRequest.yaml'

@@ -14,6 +14,7 @@ x-tagGroups:
   - name: Organization
     tags:
       - Organization Main Calls
+      - Billing
   - name: Project
     tags:
       - Project Main Calls
@@ -63,6 +64,26 @@ paths:
     $ref: './resources/Organizations.yaml'
   /organization/{organizationId}:
     $ref: './resources/Organization.yaml'
+  /organization/{organizationId}/currentCost:
+    $ref: './resources/OrganizationCurrentCost.yaml'
+  /organization/{organizationId}/creditCode:
+    $ref: './resources/OrganizationCreditCode.yaml'
+  /organization/{organizationId}/cluster/{clusterId}/currentCost:
+    $ref: './resources/OrganizationClusterCurrentCost.yaml'
+  /organization/{organizationId}/costBudget:
+    $ref: './resources/OrganizationCostBudget.yaml'
+  /organization/{organizationId}/billingInfo:
+    $ref: './resources/OrganizationBillingInfo.yaml'
+  /organization/{organizationId}/invoice:
+    $ref: './resources/OrganizationInvoice.yaml'
+  /organization/{organizationId}/invoice/{invoiceId}/download:
+    $ref: './resources/OrganizationInvoiceDownload.yaml'
+  /organization/{organizationId}/downloadInvoices:
+    $ref: './resources/OrganizationInvoiceDownloadAll.yaml'
+  /organization/{organizationId}/creditCard:
+    $ref: './resources/OrganizationCreditCard.yaml'
+  /organization/{organizationId}/creditCard/{creditCardId}:
+    $ref: './resources/OrganizationCreditCardRef.yaml'
   /organization/{organizationId}/project:
     $ref: './resources/OrganizationProject.yaml'
   /organization/{organizationId}/project/stats:

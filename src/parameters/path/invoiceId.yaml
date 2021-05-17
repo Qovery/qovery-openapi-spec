@@ -1,0 +1,7 @@
+name: invoiceId
+in: path
+description: Invoice ID
+required: true
+schema:
+  type: string
+  format: uuid

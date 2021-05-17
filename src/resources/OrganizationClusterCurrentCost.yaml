@@ -1,0 +1,21 @@
+get:
+  summary: 'Get cluster current cost'
+  operationId: getClusterCurrentCost
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/clusterId.yaml'
+  tags:
+    - Billing
+  responses:
+    '200':
+      description: 'Get cluster cost'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/CostResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
