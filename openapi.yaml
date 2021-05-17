@@ -2924,7 +2924,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - application
+        - Application Main Calls
       requestBody:
         content:
           application/json:
