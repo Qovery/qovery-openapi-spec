@@ -1,0 +1,14 @@
+allOf:
+  - type: object
+    properties:
+      remaining_credits:
+        $ref: './CostResponse.yaml'
+  - type: object
+    properties:
+      cost:
+        $ref: './CostResponse.yaml'
+  - type: object
+    properties:
+      budget_threshold:
+        $ref: './CostResponse.yaml'
+  - $ref: './ProjectCurrentCostResponseList.yaml'

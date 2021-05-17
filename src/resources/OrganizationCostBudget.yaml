@@ -1,0 +1,51 @@
+get:
+  summary: 'Get organization cost Budget'
+  operationId: getOrganizationCostBudget
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Billing
+  responses:
+    '200':
+      description: 'Get Cost Budget'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/CostResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+
+put:
+  summary: 'Edit Organization Budget'
+  operationId: editOrganizationBudget
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Billing
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            total_in_cents:
+              type: integer
+  responses:
+    '200':
+      description: 'Edit cost budget'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/CostResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

@@ -1,0 +1,28 @@
+type: object
+required:
+  - id
+  - created_at
+  - expiry_month
+  - expiry_year
+  - last_digit
+  - is_expired
+properties:
+  id:
+    type: string
+    format: uuid
+  created_at:
+    type: string
+    format: date-time
+  expiry_month:
+    type: integer
+    example: 6
+  expiry_year:
+    type: integer
+    example: 2025
+  last_digit:
+    type: string
+    example: "7890"
+  is_expired:
+    type: boolean
+
+

@@ -1,7 +1,5 @@
 allOf:
   - type: object
     properties:
-      name:
-        type: string
       url:
         type: string

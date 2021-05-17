@@ -815,6 +815,7 @@ GET /organization/:orgId/currentCost
     {
       "id": "string",
       "name": "string",
+      "consumed_time_in_seconds": 3600,
       "cost": {
         "total_in_cents": 108,
         "total": 1.08,

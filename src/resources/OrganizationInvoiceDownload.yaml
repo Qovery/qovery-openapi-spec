@@ -1,0 +1,22 @@
+get:
+  summary: 'Get invoice link'
+  description: This will return URL of the invoice PDF
+  operationId: getOrganizationInvoicePDF
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/invoiceId.yaml'
+  tags:
+    -  Billing
+  responses:
+    '200':
+      description: 'Get invoice PDF'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/LinkResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

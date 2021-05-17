@@ -1,0 +1,17 @@
+type: object
+required:
+  - id
+  - name
+  - consumed_time_in_seconds
+  - cost
+properties:
+  id:
+    type: string
+    format: uuid
+  name: 
+    type: string
+  consumed_time_in_seconds:
+    type: integer
+    example: 3600
+  cost:
+    $ref: './CostResponse.yaml'

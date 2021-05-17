@@ -1,0 +1,19 @@
+type: object
+required:
+  - number
+  - cvv
+  - expiry_month
+  - expiry_year
+properties:
+  number:
+    type: string
+  cvv:
+    type: string
+  expiry_month:
+    type: integer
+    example: 6
+  expiry_year:
+    type: integer
+    example: 2025
+
+

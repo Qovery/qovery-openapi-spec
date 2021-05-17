@@ -2,6 +2,12 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-17 : made orga billing part and small fixes
+
+* small fixe: removed reference_branch from PUT env/id (because we removed this field from the env resource)
+* small fix: removed name from GET application/id/link response and GET environment/id/link
+* added all endpoints in "billing" part of "Organization" section
+
 # 2021-05-14 : added port name on aplication
 
 * added "name" on application port
