@@ -14,6 +14,7 @@ x-tagGroups:
   - name: Organization
     tags:
       - Organization Main Calls
+      - Billing
   - name: Project
     tags:
       - Project Main Calls
@@ -164,6 +165,499 @@ paths:
         - $ref: '#/components/parameters/organizationId'
       tags:
         - Organization Main Calls
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/currentCost':
+    get:
+      summary: Get organization current cost
+      operationId: getOrganizationCurrentCost
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      responses:
+        '200':
+          description: Get Cost
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      remaining_credits:
+                        $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
+                  - type: object
+                    properties:
+                      cost:
+                        $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
+                  - type: object
+                    properties:
+                      budget_threshold:
+                        $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
+                  - type: object
+                    properties:
+                      projects:
+                        type: array
+                        items:
+                          allOf:
+                            - type: object
+                              required:
+                                - id
+                                - name
+                                - consumed_time_in_seconds
+                                - cost
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                name:
+                                  type: string
+                                consumed_time_in_seconds:
+                                  type: integer
+                                  example: 3600
+                                cost:
+                                  $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
+                            - type: object
+                              properties:
+                                environments:
+                                  type: array
+                                  items:
+                                    $ref: '#/paths/~1organization~1%7BorganizationId%7D~1currentCost/get/responses/200/content/application~1json/schema/allOf/3/properties/projects/items/allOf/0'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/creditCode':
+    post:
+      summary: Add credit code
+      operationId: addCreditCode
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+      responses:
+        '200':
+          description: add credit code
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/currentCost':
+    get:
+      summary: Get cluster current cost
+      operationId: getClusterCurrentCost
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: clusterId
+          in: path
+          description: Cluster ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Billing
+      responses:
+        '200':
+          description: Get cluster cost
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/costBudget':
+    get:
+      summary: Get organization cost Budget
+      operationId: getOrganizationCostBudget
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      responses:
+        '200':
+          description: Get Cost Budget
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - total_in_cents
+                  - total
+                  - currency_code
+                properties:
+                  total_in_cents:
+                    type: integer
+                    example: 30000
+                  total:
+                    type: number
+                    example: 300
+                  currency_code:
+                    type: string
+                    example: EUR
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit Organization Budget
+      operationId: editOrganizationBudget
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                total_in_cents:
+                  type: integer
+      responses:
+        '200':
+          description: Edit cost budget
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/billingInfo':
+    get:
+      summary: Get organization billing info
+      operationId: getOrganizationBillingInfo
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      responses:
+        '200':
+          description: Get Billing Info
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1billingInfo/put/requestBody/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit Organization Billing Info
+      operationId: editOrganizationBillingInfo
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - first_name
+                - last_name
+                - email
+                - address
+                - zip
+                - country_code
+                - city
+                - company
+              properties:
+                first_name:
+                  type: string
+                  example: Forrest
+                last_name:
+                  type: string
+                  example: Gump
+                email:
+                  type: string
+                  format: email
+                  example: forrest@gump.com
+                  description: 'email used for billing, and to receive all invoices by email'
+                address:
+                  type: string
+                  example: 21 Jenny Street
+                city:
+                  type: string
+                  example: Greenbow
+                zip:
+                  type: string
+                  example: '36744'
+                state:
+                  type: string
+                  example: Alabama
+                  description: only for US
+                country_code:
+                  type: string
+                  description: ISO code of the country
+                  example: US
+                company:
+                  type: string
+                  description: name of the company to bill
+                vat_number:
+                  type: string
+      responses:
+        '200':
+          description: Edit billing info
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/invoice':
+    get:
+      summary: List organization invoices
+      operationId: listOrganizationInvoice
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      responses:
+        '200':
+          description: List Invoices
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      allOf:
+                        - type: object
+                          required:
+                            - id
+                            - created_at
+                            - status
+                            - total_in_cents
+                            - total
+                            - currency_code
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            created_at:
+                              type: string
+                              format: date-time
+                            status:
+                              type: string
+                              enum:
+                                - PAID
+                                - POSTED
+                                - PAYMENT_DUE
+                                - NOT_PAID
+                                - VOIDED
+                                - PENDING
+                                - UNKNOWN
+                        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/invoice/{invoiceId}/download':
+    get:
+      summary: Get invoice link
+      description: This will return URL of the invoice PDF
+      operationId: getOrganizationInvoicePDF
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: invoiceId
+          in: path
+          description: Invoice ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Billing
+      responses:
+        '200':
+          description: Get invoice PDF
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      url:
+                        type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/downloadInvoices':
+    post:
+      summary: Download all invoices
+      operationId: organizationDownloadAllInvoices
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      responses:
+        '202':
+          description: You will receive an email containing your invoices
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/creditCard':
+    get:
+      summary: List organization credit cards
+      operationId: listOrganizationCreditCards
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      responses:
+        '200':
+          description: List cfredit cards
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1organization~1%7BorganizationId%7D~1creditCard/post/responses/201/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Add credit card
+      operationId: addCreditCard
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - number
+                - cvv
+                - expiry_month
+                - expiry_year
+              properties:
+                number:
+                  type: string
+                cvv:
+                  type: string
+                expiry_month:
+                  type: integer
+                  example: 6
+                expiry_year:
+                  type: integer
+                  example: 2025
+      responses:
+        '201':
+          description: Add credit card
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - created_at
+                  - expiry_month
+                  - expiry_year
+                  - last_digit
+                  - is_expired
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  created_at:
+                    type: string
+                    format: date-time
+                  expiry_month:
+                    type: integer
+                    example: 6
+                  expiry_year:
+                    type: integer
+                    example: 2025
+                  last_digit:
+                    type: string
+                    example: '7890'
+                  is_expired:
+                    type: boolean
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/creditCard/{creditCardId}':
+    delete:
+      summary: Delete credit card
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: creditCardId
+          in: path
+          description: Credit Card ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Billing
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -1064,8 +1558,6 @@ paths:
               properties:
                 name:
                   type: string
-                reference_branch:
-                  type: string
       responses:
         '200':
           description: Edit an environment
@@ -1136,6 +1628,7 @@ paths:
             application/json:
               schema:
                 allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
                   - $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule/post/requestBody/content/application~1json/schema/allOf/0'
         '401':
           $ref: '#/components/responses/401'
@@ -2100,13 +2593,7 @@ paths:
                   results:
                     type: array
                     items:
-                      allOf:
-                        - type: object
-                          properties:
-                            name:
-                              type: string
-                            url:
-                              type: string
+                      $ref: '#/paths/~1organization~1%7BorganizationId%7D~1invoice~1%7BinvoiceId%7D~1download/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
