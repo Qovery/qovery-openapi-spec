@@ -467,33 +467,61 @@ paths:
                   results:
                     type: array
                     items:
-                      allOf:
-                        - type: object
-                          required:
-                            - id
-                            - created_at
-                            - status
-                            - total_in_cents
-                            - total
-                            - currency_code
-                          properties:
-                            id:
-                              type: string
-                              format: uuid
-                            created_at:
-                              type: string
-                              format: date-time
-                            status:
-                              type: string
-                              enum:
-                                - PAID
-                                - POSTED
-                                - PAYMENT_DUE
-                                - NOT_PAID
-                                - VOIDED
-                                - PENDING
-                                - UNKNOWN
-                        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
+                      $ref: '#/paths/~1organization~1%7BorganizationId%7D~1invoice~1%7BinvoiceId%7D/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/invoice/{invoiceId}':
+    get:
+      summary: Get organization invoice
+      operationId: getOrganizationInvoice
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: invoiceId
+          in: path
+          description: Invoice ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Billing
+      responses:
+        '200':
+          description: Get Invoice
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - id
+                      - created_at
+                      - status
+                      - total_in_cents
+                      - total
+                      - currency_code
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      created_at:
+                        type: string
+                        format: date-time
+                      status:
+                        type: string
+                        enum:
+                          - PAID
+                          - POSTED
+                          - PAYMENT_DUE
+                          - NOT_PAID
+                          - VOIDED
+                          - PENDING
+                          - UNKNOWN
+                  - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -507,13 +535,7 @@ paths:
       operationId: getOrganizationInvoicePDF
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - name: invoiceId
-          in: path
-          description: Invoice ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1invoice~1%7BinvoiceId%7D/get/parameters/1'
       tags:
         - Billing
       responses:
