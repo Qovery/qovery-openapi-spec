@@ -2,6 +2,13 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-18 : removed get environment/id/service
+
+* removed get environment/id/service
+* moved app and db list on the environment section
+* changed get environment/id/service/number to get environment/id/stats
+* added current metric calls for app and db at env level so get environment/id/application/instance, get environment/id/application/currentStorage, get environment/id/application/currentScale and get environment/id/database/currentMetric
+
 # 2021-05-17 : made orga billing part and small fixes
 
 * small fixe: removed reference_branch from PUT env/id (because we removed this field from the env resource)

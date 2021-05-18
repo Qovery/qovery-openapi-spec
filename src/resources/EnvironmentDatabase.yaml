@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
-    - Database Main Calls
+    - Databases
   responses:
     '200':
       description: 'List databases'
@@ -19,12 +19,12 @@ get:
     '404':
       $ref: '../responses/NotFound.yaml'
 post:
-  summary: 'Create a database '
+  summary: 'Create a database'
   operationId: createDatabase
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
-    - Database Main Calls
+    - Databases
   requestBody:
     content:
       application/json:
