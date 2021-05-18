@@ -14,18 +14,21 @@ x-tagGroups:
   - name: Organization
     tags:
       - Organization Main Calls
+      - Projects
       - Billing
   - name: Project
     tags:
       - Project Main Calls
+      - Environments
       - Project Deployment Rule
       - Project Environment Variable
       - Project Secret
   - name: Environment
     tags:
       - Environment Main Calls
+      - Applications
+      - Databases
       - Environment Actions
-      - Services
       - Environment Logs
       - Environment Deployment History
       - Environment Deployment Rule
@@ -696,7 +699,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
       tags:
-        - Project Main Calls
+        - Projects
       responses:
         '200':
           description: List projects
@@ -716,7 +719,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
       tags:
-        - Project Main Calls
+        - Projects
       requestBody:
         content:
           application/json:
@@ -747,7 +750,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - Project Main Calls
+        - Projects
       responses:
         '200':
           description: Get number of services
@@ -755,19 +758,14 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
                   - type: object
                     required:
                       - number
                     properties:
                       environment_total_number:
                         type: number
-                  - type: object
-                    required:
-                      - number
-                    properties:
-                      service_total_number:
-                        type: number
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/1'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1042,7 +1040,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - Environment Main Calls
+        - Environments
       responses:
         '200':
           description: List environments
@@ -1062,7 +1060,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - Environment Main Calls
+        - Environments
       requestBody:
         content:
           application/json:
@@ -1496,10 +1494,34 @@ paths:
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
-        - Environment Main Calls
+        - Environments
       responses:
         '200':
           description: Get status
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/project/{projectId}/environment/stats':
+    get:
+      summary: List total number of services for each environment of the project
+      description: 'Returns a list of environment ids, and for each its total numberof services'
+      operationId: getProjectEnvironmentServiceNumber
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - Environments
+      responses:
+        '200':
+          description: Get number of services
           content:
             application/json:
               schema:
@@ -1512,31 +1534,12 @@ paths:
                         type: string
                         format: uuid
                         readOnly: true
-                  - $ref: '#/components/schemas/Status'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/project/{projectId}/environment/service/number':
-    get:
-      summary: List total number of services for each environment of the project
-      description: 'Returns a list of environment ids, and for each its total numberof services'
-      operationId: getProjectEnvironmentServiceNumber
-      parameters:
-        - $ref: '#/components/parameters/projectId'
-      tags:
-        - Environment Main Calls
-      responses:
-        '200':
-          description: Get number of services
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
-                  - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1project~1stats/get/responses/200/content/application~1json/schema/allOf/2'
+                  - type: object
+                    required:
+                      - number
+                    properties:
+                      service_total_number:
+                        type: number
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1673,37 +1676,66 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                database:
                   type: string
-                  description: name is case insensitive
-                description:
-                  type: string
-                auto_deploy:
-                  type: boolean
-                  default: true
-                auto_delete:
-                  type: boolean
-                  default: false
-                start_time:
-                  type: string
-                  format: date-time
-                stop_time:
-                  type: string
-                  format: date-time
-                weekday:
-                  type: string
-                  enum:
-                    - MONDAY
-                    - TUESDAY
-                    - WEDNESDAY
-                    - THURSDAY
-                    - FRIDAY
-                    - SATURDAY
-                    - SUNDAY
-                  example:
-                    - MONDAY
-                    - WEDNESDAY
-                    - FRIDAY
+                  format: uuid
+                cpu:
+                  type: object
+                  properties:
+                    requested_in_float:
+                      type: number
+                    consumed_in_number:
+                      type: number
+                    consumed_in_percent:
+                      type: number
+                    warning_threshold_in_percent:
+                      type: number
+                    alert_threshold_in_percent:
+                      type: number
+                    status:
+                      type: string
+                      enum:
+                        - OK
+                        - Warning
+                        - Alert
+                memory:
+                  type: object
+                  properties:
+                    requested_in_mb:
+                      type: integer
+                    consumed_in_mb:
+                      type: integer
+                    consumed_in_percent:
+                      type: number
+                    warning_threshold_in_percent:
+                      type: number
+                    alert_threshold_in_percent:
+                      type: number
+                    status:
+                      type: string
+                      enum:
+                        - OK
+                        - Warning
+                        - Alert
+                storage:
+                  type: object
+                  properties:
+                    requested_in_gb:
+                      type: integer
+                    consumed_in_gb:
+                      type: integer
+                    consumed_in_percent:
+                      type: number
+                    warning_threshold_in_percent:
+                      type: number
+                    alert_threshold_in_percent:
+                      type: number
+                    status:
+                      type: string
+                      enum:
+                        - OK
+                        - Warning
+                        - Alert
       responses:
         '200':
           description: Edit environment deployment rule
@@ -1713,114 +1745,6 @@ paths:
                 $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1deploymentRule/get/responses/200/content/application~1json/schema'
         '400':
           $ref: '#/paths/~1organization/post/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/environment/{environmentId}/application/to-update':
-    get:
-      summary: List applications to update
-      operationId: listApplicationToUpdate
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-      tags:
-        - Environment Main Calls
-      responses:
-        '200':
-          description: List applications
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApplicationResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/environment/{environmentId}/service':
-    get:
-      summary: List environment services
-      description: 'List all services within the environment (applications, databases, jobs, gateways...)'
-      operationId: listEnvironmentService
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-      tags:
-        - Services
-      responses:
-        '200':
-          description: List environment services
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      allOf:
-                        - $ref: '#/components/schemas/BaseResponse'
-                        - type: object
-                          properties:
-                            type:
-                              type: string
-                              description: 'type of the service (application, database, job, gateway...)'
-                              enum:
-                                - APPLICATION
-                                - DATABASE
-                            name:
-                              type: string
-                              description: name of the service
-                            id:
-                              type: string
-                              description: 'uuid of the associated service (application, database, job, gateway...)'
-                              format: uuid
-                            deployed_commit_id:
-                              type: string
-                              description: Git commit ID corresponding to the deployed version of the application
-                            last_updated_by:
-                              type: string
-                              format: uuid
-                              description: uuid of the user that made the last update
-                            consumed_resources_in_percent:
-                              type: number
-                              description: global overview of resources consumption of the service
-                            service_typology:
-                              type: string
-                              example: container
-                              description: 'describes the typology of service (container, postgresl, redis...)'
-                            service_version:
-                              type: string
-                              description: for databases this field exposes the database version
-                              example: v12
-                            to_update:
-                              type: boolean
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/environment/{environmentId}/service/status':
-    get:
-      summary: List all environment services statuses
-      description: Returns a list of services with only their id and status.
-      operationId: getEnvironmentServiceStatus
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-      tags:
-        - Services
-      responses:
-        '200':
-          description: Get status
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
-                  - $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1947,7 +1871,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - Application Main Calls
+        - Applications
       responses:
         '200':
           description: List applications
@@ -1967,7 +1891,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - Application Main Calls
+        - Applications
       requestBody:
         content:
           application/json:
@@ -1998,7 +1922,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - Environment Main Calls
+        - Applications
       responses:
         '200':
           description: Get status
@@ -2006,8 +1930,156 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/application/to-update':
+    get:
+      summary: List applications to update
+      operationId: listApplicationToUpdate
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Applications
+      responses:
+        '200':
+          description: List applications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/application/instance':
+    get:
+      summary: List running instances with CPU and RAM usage for each application
+      operationId: getEnvironmentApplicationCurrentInstance
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Applications
+      responses:
+        '200':
+          description: Know current resource consumption for each application of the environment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - application
+                        - instances
+                      properties:
+                        application:
+                          type: string
+                          format: uuid
+                        instances:
+                          type: array
+                          items:
+                            $ref: '#/paths/~1application~1%7BapplicationId%7D~1instance/get/responses/200/content/application~1json/schema/properties/results/items'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/application/currentStorage':
+    get:
+      summary: List current storage disk usage for each application
+      operationId: getEnvironmentApplicationCurrentStorage
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Applications
+      responses:
+        '200':
+          description: Current storage disk usage
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - application
+                        - instances
+                      properties:
+                        application:
+                          type: string
+                          format: uuid
+                        disks:
+                          type: array
+                          items:
+                            $ref: '#/paths/~1application~1%7BapplicationId%7D~1currentStorage/get/responses/200/content/application~1json/schema/properties/results/items'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/application/currentScale':
+    get:
+      summary: List current scaling information for each application
+      description: 'Returns min, max, and running number of instances for each application'
+      operationId: getEnvironmentApplicationCurrentScale
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Applications
+      responses:
+        '200':
+          description: list applications with current scaling
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        application:
+                          type: string
+                          format: uuid
+                        min:
+                          type: integer
+                        max:
+                          type: integer
+                        running:
+                          type: integer
+                        running_in_percent:
+                          type: number
+                        warning_threshold_in_percent:
+                          type: number
+                        alert_threshold_in_percent:
+                          type: number
+                        status:
+                          type: string
+                          enum:
+                            - OK
+                            - Warning
+                            - Alert
+                        updated_at:
+                          type: string
+                          readOnly: true
+                          format: date-time
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2629,7 +2701,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - Environment Main Calls
+        - Databases
       responses:
         '200':
           description: List eligible database
@@ -3096,7 +3168,8 @@ paths:
           $ref: '#/components/responses/404'
   '/application/{applicationId}/currentScale':
     get:
-      summary: Get current number of running instances of the application
+      summary: Get current scaling of the application
+      description: 'Returns min, max, and running number of instances of the application'
       operationId: getApplicationCurrentScale
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -3104,7 +3177,7 @@ paths:
         - Application Metrics
       responses:
         '200':
-          description: Know number of running instances of the application
+          description: Get current scaling of the application
           content:
             application/json:
               schema:
@@ -4261,7 +4334,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - Database Main Calls
+        - Databases
       responses:
         '200':
           description: List databases
@@ -4276,12 +4349,12 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     post:
-      summary: 'Create a database '
+      summary: Create a database
       operationId: createDatabase
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - Database Main Calls
+        - Databases
       requestBody:
         content:
           application/json:
@@ -4312,7 +4385,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - Environment Main Calls
+        - Databases
       responses:
         '200':
           description: Get status
@@ -4320,8 +4393,95 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/database/currentMetric':
+    get:
+      summary: List current metric consumption for each database
+      operationId: listEnvironmentDatabaseCurrentMetric
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Databases
+      responses:
+        '200':
+          description: List current metric for each database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        database:
+                          type: string
+                          format: uuid
+                        cpu:
+                          type: object
+                          properties:
+                            requested_in_float:
+                              type: number
+                            consumed_in_number:
+                              type: number
+                            consumed_in_percent:
+                              type: number
+                            warning_threshold_in_percent:
+                              type: number
+                            alert_threshold_in_percent:
+                              type: number
+                            status:
+                              type: string
+                              enum:
+                                - OK
+                                - Warning
+                                - Alert
+                        memory:
+                          type: object
+                          properties:
+                            requested_in_mb:
+                              type: integer
+                            consumed_in_mb:
+                              type: integer
+                            consumed_in_percent:
+                              type: number
+                            warning_threshold_in_percent:
+                              type: number
+                            alert_threshold_in_percent:
+                              type: number
+                            status:
+                              type: string
+                              enum:
+                                - OK
+                                - Warning
+                                - Alert
+                        storage:
+                          type: object
+                          properties:
+                            requested_in_gb:
+                              type: integer
+                            consumed_in_gb:
+                              type: integer
+                            consumed_in_percent:
+                              type: number
+                            warning_threshold_in_percent:
+                              type: number
+                            alert_threshold_in_percent:
+                              type: number
+                            status:
+                              type: string
+                              enum:
+                                - OK
+                                - Warning
+                                - Alert
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5186,7 +5346,7 @@ paths:
                   - type: object
                     properties:
                       database:
-                        $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                        $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/put/requestBody/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
@@ -5569,7 +5729,7 @@ components:
             name:
               type: string
             organization:
-              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
     ProjectResponseList:
       type: object
       properties:
@@ -5606,7 +5766,7 @@ components:
         - type: object
           properties:
             project:
-              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
             last_updated_by:
               type: string
               format: uuid
@@ -5772,7 +5932,7 @@ components:
         - type: object
           properties:
             environment:
-              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
             git_repository:
               allOf:
                 - type: object
@@ -5871,7 +6031,7 @@ components:
         - type: object
           properties:
             environment:
-              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
             host:
               type: string
             port:
@@ -6044,7 +6204,7 @@ components:
               type: string
               description: DRAFT - we have to specify here all the possible events
             log:
-              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
     EventResponseList:
       type: object
       properties:
