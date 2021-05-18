@@ -6,7 +6,7 @@ Please add a changelog here each time you update the API documentation.
 
 * removed get environment/id/service
 * moved app and db list on the environment section
-* changed get environment/id/service/number to get environment/id/stats
+* changed get project/id/environment/service/number to get project/id/environment/stats
 * added current metric calls for app and db at env level so get environment/id/application/instance, get environment/id/application/currentStorage, get environment/id/application/currentScale and get environment/id/database/currentMetric
 
 # 2021-05-17 : made orga billing part and small fixes
