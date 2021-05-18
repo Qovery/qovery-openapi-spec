@@ -1998,7 +1998,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - pplication Main Calls
+        - Environment Main Calls
       responses:
         '200':
           description: Get status
@@ -4312,7 +4312,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - Database Main Calls
+        - Environment Main Calls
       responses:
         '200':
           description: Get status
