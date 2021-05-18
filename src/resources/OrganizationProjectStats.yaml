@@ -5,7 +5,7 @@ get:
   parameters:
     - $ref: '../parameters/path/projectId.yaml'
   tags:
-    - Project Main Calls
+    - Projects
   responses:
     '200':
       description: 'Get number of services'

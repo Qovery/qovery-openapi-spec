@@ -1,8 +1,5 @@
 type: object
 properties:
-  database:
-    type: string
-    format: uuid
   cpu:
     type: object
     properties:

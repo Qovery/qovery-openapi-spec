@@ -14,18 +14,21 @@ x-tagGroups:
   - name: Organization
     tags:
       - Organization Main Calls
+      - Projects
       - Billing
   - name: Project
     tags:
       - Project Main Calls
+      - Environments
       - Project Deployment Rule
       - Project Environment Variable
       - Project Secret
   - name: Environment
     tags:
       - Environment Main Calls
+      - Applications
+      - Databases
       - Environment Actions
-      - Services
       - Environment Logs
       - Environment Deployment History
       - Environment Deployment Rule
@@ -116,7 +119,7 @@ paths:
     $ref: './resources/ProjectSecretAlias.yaml'
   /project/{projectId}/environment/status:
     $ref: './resources/ProjectEnvironmentStatus.yaml'
-  /project/{projectId}/environment/service/number:
+  /project/{projectId}/environment/stats:
     $ref: './resources/ProjectEnvironmentServiceNumber.yaml'
   /environment/{environmentId}:
     $ref: './resources/Environment.yaml'
@@ -126,12 +129,6 @@ paths:
     $ref: './resources/EnvironmentDeploymentRule.yaml'
   /environment/{environmentId}/deploymentRule/{deploymentRuleId}:
     $ref: './resources/EnvironmentDeploymentRuleRef.yaml'
-  /environment/{environmentId}/application/to-update:
-    $ref: './resources/EnvironmentApplicationToUpdate.yaml'
-  /environment/{environmentId}/service:
-    $ref: './resources/EnvironmentService.yaml'
-  /environment/{environmentId}/service/status:
-    $ref: './resources/EnvironmentServiceStatus.yaml'
   /environment/{environmentId}/deploy:
     $ref: './resources/EnvironmentDeploy.yaml'
   /environment/{environmentId}/stop:
@@ -144,6 +141,14 @@ paths:
     $ref: './resources/EnvironmentApplication.yaml'
   /environment/{environmentId}/application/status:
     $ref: './resources/EnvironmentApplicationStatus.yaml'
+  /environment/{environmentId}/application/to-update:
+    $ref: './resources/EnvironmentApplicationToUpdate.yaml'
+  /environment/{environmentId}/application/instance:
+    $ref: './resources/EnvironmentApplicationCurrentInstance.yaml'
+  /environment/{environmentId}/application/currentStorage:
+    $ref: './resources/EnvironmentApplicationsCurrentStorage.yaml'
+  /environment/{environmentId}/application/currentScale:
+    $ref: './resources/EnvironmentApplicationCurrentScale.yaml'
   /environment/{environmentId}/log:
     $ref: './resources/EnvironmentLog.yaml'
   # /environment/{environmentId}/log?tail=:
@@ -260,6 +265,8 @@ paths:
     $ref: './resources/EnvironmentDatabase.yaml'
   /environment/{environmentId}/database/status:
     $ref: './resources/EnvironmentDatabaseStatus.yaml'
+  /environment/{environmentId}/database/currentMetric:
+    $ref: './resources/EnvironmentDatabasesCurrentMetric.yaml'
   /database/{databaseId}:
     $ref: './resources/Database.yaml'
   /database/{databaseId}/status:

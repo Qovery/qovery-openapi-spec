@@ -1,5 +1,6 @@
 get:
-  summary: 'Get current number of running instances of the application'
+  summary: 'Get current scaling of the application'
+  description: Returns min, max, and running number of instances of the application
   operationId: getApplicationCurrentScale
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
@@ -7,34 +8,11 @@ get:
     - Application Metrics
   responses:
     '200':
-      description: 'Know number of running instances of the application'
+      description: 'Get current scaling of the application'
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              min:
-                type: integer
-              max:
-                type: integer
-              running:
-                type: integer
-              running_in_percent:
-                type: number
-              warning_threshold_in_percent:
-                type: number
-              alert_threshold_in_percent:
-                type: number
-              status:
-                type: string
-                enum:
-                  - OK
-                  - Warning
-                  - Alert
-              updated_at:
-                type: string
-                readOnly: true
-                format: date-time
+            $ref: '../schemas/ApplicationCurrentScaleResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

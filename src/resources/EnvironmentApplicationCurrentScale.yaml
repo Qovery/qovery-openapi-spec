@@ -1,0 +1,21 @@
+get:
+  summary: 'List current scaling information for each application'
+  description: Returns min, max, and running number of instances for each application 
+  operationId: getEnvironmentApplicationCurrentScale
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+  tags:
+    - Applications
+  responses:
+    '200':
+      description: 'list applications with current scaling'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentApplicationsCurrentScaleResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

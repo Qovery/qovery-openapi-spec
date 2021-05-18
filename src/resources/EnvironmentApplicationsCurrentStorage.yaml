@@ -1,0 +1,25 @@
+get:
+  summary: 'List current storage disk usage for each application'
+  operationId: getEnvironmentApplicationCurrentStorage
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+  tags:
+    - Applications
+  responses:
+    '200':
+      description: 'Current storage disk usage'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '../schemas/EnvironmentApplicationsStorageResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

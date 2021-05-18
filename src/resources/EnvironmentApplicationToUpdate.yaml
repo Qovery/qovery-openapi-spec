@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
-    - Environment Main Calls
+    - Applications
   responses:
     '200':
       description: 'List applications'
