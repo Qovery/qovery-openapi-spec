@@ -3418,8 +3418,8 @@ paths:
           $ref: '#/components/responses/404'
   '/application/{applicationId}/commit':
     get:
-      summary: List commits
-      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by  git_commit_id'
+      summary: List last commits
+      description: Returns list of the last 100 commits made on the repository linked to the application
       operationId: listApplicationCommit
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -3438,14 +3438,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1event/get/responses/200/content/application~1json/schema/allOf/0'
-                  - type: object
-                    properties:
-                      results:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/CommitResponse'
+                $ref: '#/components/schemas/CommitResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5954,12 +5947,6 @@ components:
                     deployed_commit_tag:
                       type: string
                       example: v1.0.1
-                    last_commit_id:
-                      type: string
-                      description: Git commit ID corresponding to the last version of the app
-                    last_commit_tag:
-                      type: string
-                      example: v2.0.1
                 - $ref: '#/components/schemas/ApplicationRequest/properties/git_repository'
             maximum_cpu:
               type: number
