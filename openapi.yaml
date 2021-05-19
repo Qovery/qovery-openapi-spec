@@ -5673,28 +5673,25 @@ components:
       type: object
       required:
         - name
+        - plan
       properties:
         name:
           type: string
           description: name is case insensitive
+        description:
+          type: string
+        plan:
+          type: string
+          enum:
+            - FREE
+            - BUSINESS
         website_url:
           type: string
           nullable: true
     OrganizationResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
-        - type: object
-          required:
-            - name
-          properties:
-            name:
-              type: string
-            website_url:
-              type: string
-              nullable: true
-            logo_url:
-              type: string
-              format: uri
+        - $ref: '#/components/schemas/OrganizationRequest'
     OrganizationResponseList:
       type: object
       properties:
