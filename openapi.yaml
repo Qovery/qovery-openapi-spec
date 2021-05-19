@@ -5734,7 +5734,6 @@ components:
       type: object
       required:
         - name
-        - cloud_provider
       properties:
         name:
           type: string
@@ -5757,14 +5756,34 @@ components:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
+          required:
+            - name
+            - cloud_provider
+            - mode
           properties:
+            name:
+              type: string
+              description: name is case insensitive
             project:
               $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
             last_updated_by:
               type: string
               format: uuid
               description: uuid of the user that made the last update
-        - $ref: '#/components/schemas/EnvironmentRequest'
+            cloud_provider:
+              type: object
+              properties:
+                provider:
+                  type: string
+                  example: aws
+                cluster:
+                  type: string
+                  example: us-east-2
+            mode:
+              type: string
+              enum:
+                - PRODUCTION
+                - DEVELOPMENT
     EnvironmentResponseList:
       type: object
       properties:
