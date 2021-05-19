@@ -1,6 +1,6 @@
 get:
-  summary: 'List commits'
-  description: By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by  git_commit_id
+  summary: 'List last commits'
+  description: Returns list of the last 100 commits made on the repository linked to the application
 
   operationId: listApplicationCommit
   parameters:
@@ -16,7 +16,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/CommitPaginatedResponseList.yaml'
+            $ref: '../schemas/CommitResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
