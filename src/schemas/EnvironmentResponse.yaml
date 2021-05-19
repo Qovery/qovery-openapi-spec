@@ -1,11 +1,31 @@
 allOf:
   - $ref: './BaseResponse.yaml'
   - type: object
+    required:
+      - name
+      - cloud_provider
+      - mode
     properties:
+      name:
+        type: string
+        description: name is case insensitive
       project:
-        $ref: './ReferenceObject.yaml'
+              $ref: './ReferenceObject.yaml'
       last_updated_by:
         type: string
         format: uuid
         description: uuid of the user that made the last update
-  - $ref: './EnvironmentRequest.yaml'
+      cloud_provider:
+        type: object
+        properties:
+          provider:
+            type: string
+            example: aws
+          cluster:
+            type: string
+            example: us-east-2
+      mode:
+        type: string
+        enum:
+          - PRODUCTION
+          - DEVELOPMENT
