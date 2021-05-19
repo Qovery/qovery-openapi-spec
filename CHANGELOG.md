@@ -7,6 +7,7 @@ Please add a changelog here each time you update the API documentation.
 * removed last_commit_id and last_commit_tag from git_repository object inside application resource
 * remove apgination from GE application/id/commit
 * removed "required" tag on "cloud_provider" field when creating an environment
+* added "plan" field in orgabization resource
 
 # 2021-05-18 : removed get environment/id/service
 
