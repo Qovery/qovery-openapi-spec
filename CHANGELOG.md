@@ -2,10 +2,11 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-05-19 : removed last_commit fields in application resource
+# 2021-05-19 : removed last_commit fields in application resource and other minor fixes
 
 * removed last_commit_id and last_commit_tag from git_repository object inside application resource
 * remove apgination from GE application/id/commit
+* removed "required" tag on "cloud_provider" field when creating an environment
 
 # 2021-05-18 : removed get environment/id/service
 
