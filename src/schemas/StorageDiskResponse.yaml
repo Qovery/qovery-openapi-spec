@@ -3,9 +3,8 @@ properties:
   created_at:
     type: string
     format: date-time
-  disk_name:
+  storage_id:
     type: string
-    example: disk 1
   requested_in_gb:
     type: integer
   consumed_in_gb:
