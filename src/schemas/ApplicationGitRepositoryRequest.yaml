@@ -6,14 +6,6 @@ required:
  - url
  - root_path
 properties:
-  provider:
-    type: string
-    enum:
-      - GITHUB
-      - GITLAB
-  owner:
-    type: string
-    example: John Doe
   url:
     type: string
     description: application git repository URL
