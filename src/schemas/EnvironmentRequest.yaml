@@ -5,15 +5,9 @@ properties:
   name:
     type: string
     description: name is case insensitive
-  cloud_provider:
-    type: object
-    properties:
-      provider:
-        type: string
-        example: aws
-      cluster:
-        type: string
-        example: us-east-2
+  cluster:
+    type: string
+    format: uuid
   mode:
     type: string
     enum:

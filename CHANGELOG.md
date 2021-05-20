@@ -6,6 +6,11 @@ Please add a changelog here each time you update the API documentation.
 
 * fixed responses payload for PUT orga/id/billingInfo that was incorrect
 * added budget_exceeded true/false on Get orga/id/currentCost
+* updated CREATE environment endpoint to specify cluster id in request body rather than cloud provider name and region
+* fixed GET organization/id/project/stats to return a list and not a single result
+* fixed GET project/id/environment/stats to return a list and not a single result
+* fixed GET environment/id/application/status to return a list and not a single result
+* fixed GET environment/id/database/status to return a list and not a single result
 
 # 2021-05-19 : removed last_commit fields in application resource and other minor fixes
 

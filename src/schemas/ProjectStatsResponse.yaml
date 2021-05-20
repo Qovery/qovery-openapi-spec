@@ -1,0 +1,4 @@
+allOf:
+- $ref: '../schemas/ReferenceObject.yaml'
+- $ref: '../schemas/ServiceTotalNumber.yaml'
+- $ref: '../schemas/EnvironmentTotalNumber.yaml'
