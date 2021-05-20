@@ -442,7 +442,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1billingInfo/get/responses/200/content/application~1json/schema'
         '400':
           $ref: '#/paths/~1organization/post/responses/400'
         '401':
