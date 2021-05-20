@@ -5818,14 +5818,6 @@ components:
             - url
             - root_path
           properties:
-            provider:
-              type: string
-              enum:
-                - GITHUB
-                - GITLAB
-            owner:
-              type: string
-              example: John Doe
             url:
               type: string
               description: application git repository URL
@@ -5958,6 +5950,14 @@ components:
                   properties:
                     has_access:
                       type: boolean
+                    provider:
+                      type: string
+                      enum:
+                        - GITHUB
+                        - GITLAB
+                    owner:
+                      type: string
+                      example: John Doe
                     deployed_commit_id:
                       type: string
                       description: Git commit ID corresponding to the deployed version of the app
