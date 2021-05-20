@@ -37,7 +37,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../schemas/CostResponse.yaml'
+            $ref: '../schemas/BillingInfoResponse.yaml'
     '400':
       $ref: '../responses/BadRequest.yaml'
     '401':
