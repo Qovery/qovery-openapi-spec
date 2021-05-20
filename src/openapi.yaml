@@ -120,7 +120,7 @@ paths:
   /project/{projectId}/environment/status:
     $ref: './resources/ProjectEnvironmentStatus.yaml'
   /project/{projectId}/environment/stats:
-    $ref: './resources/ProjectEnvironmentServiceNumber.yaml'
+    $ref: './resources/ProjectEnvironmentStats.yaml'
   /environment/{environmentId}:
     $ref: './resources/Environment.yaml'
   /environment/{environmentId}/status:

@@ -12,10 +12,8 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '../schemas/ReferenceObject.yaml'
-              - $ref: '../schemas/EnvironmentTotalNumber.yaml'
-              - $ref: '../schemas/ServiceTotalNumber.yaml'
+            $ref: '../schemas/ProjectStatsResponseList.yaml'
+
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
