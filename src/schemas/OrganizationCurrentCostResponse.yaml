@@ -1,4 +1,5 @@
 allOf:
+  - $ref: './BudgetExceeded.yaml'
   - type: object
     properties:
       remaining_credits:
