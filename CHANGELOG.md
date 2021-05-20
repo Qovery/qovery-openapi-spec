@@ -12,6 +12,7 @@ Please add a changelog here each time you update the API documentation.
 * fixed GET environment/id/application/status to return a list and not a single result
 * fixed GET environment/id/database/status to return a list and not a single result
 * changed disk_name to storage_id in GET application/id/currentStorage
+* added "default = BUILDPACKS" on application "build_mode" field
 
 # 2021-05-19 : removed last_commit fields in application resource and other minor fixes
 
