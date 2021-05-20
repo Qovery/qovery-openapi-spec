@@ -3351,9 +3351,8 @@ paths:
                         - instance_name
                         - data
                       properties:
-                        disk_name:
+                        storage_id:
                           type: string
-                          example: disk 1
                         data:
                           type: array
                           items:
