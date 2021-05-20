@@ -194,6 +194,10 @@ paths:
                 allOf:
                   - type: object
                     properties:
+                      budget_exceeded:
+                        type: boolean
+                  - type: object
+                    properties:
                       remaining_credits:
                         $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
                   - type: object
@@ -232,7 +236,7 @@ paths:
                                 environments:
                                   type: array
                                   items:
-                                    $ref: '#/paths/~1organization~1%7BorganizationId%7D~1currentCost/get/responses/200/content/application~1json/schema/allOf/3/properties/projects/items/allOf/0'
+                                    $ref: '#/paths/~1organization~1%7BorganizationId%7D~1currentCost/get/responses/200/content/application~1json/schema/allOf/4/properties/projects/items/allOf/0'
         '401':
           $ref: '#/components/responses/401'
         '403':
