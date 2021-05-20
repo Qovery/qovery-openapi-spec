@@ -761,15 +761,20 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
-                  - type: object
-                    required:
-                      - number
-                    properties:
-                      environment_total_number:
-                        type: number
-                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/1'
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                        - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/properties/results/items/allOf/1'
+                        - type: object
+                          required:
+                            - number
+                          properties:
+                            environment_total_number:
+                              type: number
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1506,7 +1511,14 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
+                  - type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        readOnly: true
                   - $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
@@ -1529,21 +1541,19 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - type: object
-                    required:
-                      - id
-                    properties:
-                      id:
-                        type: string
-                        format: uuid
-                        readOnly: true
-                  - type: object
-                    required:
-                      - number
-                    properties:
-                      service_total_number:
-                        type: number
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                        - type: object
+                          required:
+                            - number
+                          properties:
+                            service_total_number:
+                              type: number
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1933,9 +1943,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
-                  - $ref: '#/components/schemas/Status'
+                $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1database~1status/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -4389,9 +4397,14 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
-                  - $ref: '#/components/schemas/Status'
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                        - $ref: '#/components/schemas/Status'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5343,7 +5356,7 @@ paths:
                   - type: object
                     properties:
                       database:
-                        $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
+                        $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/paths/~1logicalDatabase~1%7BlogicalDatabaseId%7D/put/requestBody/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
@@ -5723,7 +5736,7 @@ components:
             name:
               type: string
             organization:
-              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
     ProjectResponseList:
       type: object
       properties:
@@ -5739,15 +5752,9 @@ components:
         name:
           type: string
           description: name is case insensitive
-        cloud_provider:
-          type: object
-          properties:
-            provider:
-              type: string
-              example: aws
-            cluster:
-              type: string
-              example: us-east-2
+        cluster:
+          type: string
+          format: uuid
         mode:
           type: string
           enum:
@@ -5766,7 +5773,7 @@ components:
               type: string
               description: name is case insensitive
             project:
-              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
             last_updated_by:
               type: string
               format: uuid
@@ -5945,7 +5952,7 @@ components:
         - type: object
           properties:
             environment:
-              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
             git_repository:
               allOf:
                 - type: object
@@ -6038,7 +6045,7 @@ components:
         - type: object
           properties:
             environment:
-              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
             host:
               type: string
             port:
@@ -6211,7 +6218,7 @@ components:
               type: string
               description: DRAFT - we have to specify here all the possible events
             log:
-              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1stats/get/responses/200/content/application~1json/schema/allOf/0'
+              $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
     EventResponseList:
       type: object
       properties:
