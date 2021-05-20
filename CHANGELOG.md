@@ -2,6 +2,11 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-20 : fixes on orga billing and on other calls (env and project stats and list of statuses for apps and dbs)
+
+* fixed responses payload for PUT orga/id/billingInfo that was incorrect
+* added budget_exceeded true/false on Get orga/id/currentCost
+
 # 2021-05-19 : removed last_commit fields in application resource and other minor fixes
 
 * removed last_commit_id and last_commit_tag from git_repository object inside application resource
