@@ -5822,10 +5822,6 @@ components:
               type: string
               description: application git repository URL
               example: 'https://github.com/Qovery/simple-node-app'
-            name:
-              type: string
-              description: repository name
-              example: simple-node-app
             branch:
               type: string
               description: |
@@ -5958,6 +5954,10 @@ components:
                     owner:
                       type: string
                       example: John Doe
+                    name:
+                      type: string
+                      description: repository name
+                      example: simple-node-app
                     deployed_commit_id:
                       type: string
                       description: Git commit ID corresponding to the deployed version of the app
