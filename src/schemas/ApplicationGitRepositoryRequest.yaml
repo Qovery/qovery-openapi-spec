@@ -10,10 +10,6 @@ properties:
     type: string
     description: application git repository URL
     example: https://github.com/Qovery/simple-node-app
-  name:
-    type: string
-    description: repository name
-    example: simple-node-app
   branch:
     type: string
     description: |

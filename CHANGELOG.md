@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-21 : removed repo name from application creation and edition endpoints
+
+* removed "name" inside "git_repository" object in application POST and PUT calls
+
 # 2021-05-20 : fixes on orga billing and on other calls (env and project stats and list of statuses for apps and dbs)
 
 * fixed responses payload for PUT orga/id/billingInfo that was incorrect
