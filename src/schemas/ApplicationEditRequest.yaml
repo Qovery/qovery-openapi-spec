@@ -1,111 +1,59 @@
-type: object
-properties:
-  name:
-    type: string
-    description: name is case insensitive
-  description:
-    type: string
-    description: give a description to this application
-  git_repository:
-    $ref: './ApplicationGitRepositoryRequest.yaml'
-  build_mode:
-    type: string
-    enum:
-      - DOCKER
-      - BUILDPACKS
-    description: |
-      `DOCKER` requires `dockerfile_path`
-      `BUILDPACKS` does not require any `dockerfile_path`
-  dockerfile_path:
-    type: string
-    description: The path of the associated Dockerfile
-  cpu:
-    type: number
-    description: unit is millicores (m). 1000m = 1 cpu
-    default: 250
-    example: 1250
-  memory:
-    type: number
-    description: unit is MB. 1024 MB = 1GB
-    default: 256
-    example: 1024
-  min_running_instances:
-    type: integer
-    minimum: 0
-    description: |
-      Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-      Note: 0 means that there is no application running.
-    default: 1
-  max_running_instances:
-    type: integer
-    maximum: -1
-    description: |
-      Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-      Note: -1 means that there is no limit.
-    default: 1
-  storage:
-    type: array
-    items:
-      type: object
-      required:
-        - name
-        - type
-        - size
-        - mount_point
-      properties:
-        name:
-          type: string
-          example: images
-        type:
-          type: string
-          enum:
-            - SLOW_HDD
-            - HDD
-            - SSD
-            - FAST_SSD
-        size:
-          type: number
-          description: unit is GB
-          example: 16
-        mount_point:
-          type: string
-          example: /mnt/images
-  ports:
-    type: array
-    items:
-      type: object
-      required:
-        - internal_port
-        - protocol
-      properties:
-        internal_port:
-          type: integer
-          example: 8080
-          description: The listening port of your application
-        external_port:
-          type: integer
-          example: 8080
-          description: The exposed port for your application. This is optional. If not set a default port will be used.
-        publicly_accessible:
-          type: boolean
-          default: true
-          description: Expose the port to the world
-        protocol:
-          type: string
-          default: HTTP
-          enum:
-            - HTTPS
-            - HTTP
-            - TCP
-            - UDP
-  healthcheck:
-    type: object
+allOf:
+  - type: object
     properties:
-      protocol:
+      name:
+        type: string
+        description: name is case insensitive
+      description:
+        type: string
+        description: give a description to this application
+      git_repository:
+        $ref: './ApplicationGitRepositoryRequest.yaml'
+      build_mode:
         type: string
         enum:
-          - TCP
-          - HTTP
-          - None
-      value:
+          - DOCKER
+          - BUILDPACKS
+        description: |
+          `DOCKER` requires `dockerfile_path`
+          `BUILDPACKS` does not require any `dockerfile_path`
+      dockerfile_path:
         type: string
+        description: The path of the associated Dockerfile
+      cpu:
+        type: number
+        description: unit is millicores (m). 1000m = 1 cpu
+        default: 250
+        example: 1250
+      memory:
+        type: number
+        description: unit is MB. 1024 MB = 1GB
+        default: 256
+        example: 1024
+      min_running_instances:
+        type: integer
+        minimum: 0
+        description: |
+          Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+          Note: 0 means that there is no application running.
+        default: 1
+      max_running_instances:
+        type: integer
+        maximum: -1
+        description: |
+          Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+          Note: -1 means that there is no limit.
+        default: 1
+      healthcheck:
+        type: object
+        properties:
+          protocol:
+            type: string
+            enum:
+              - TCP
+              - HTTP
+              - None
+          value:
+            type: string
+  - $ref: './ApplicationStorageResponse.yaml'
+  - $ref: './ApplicationPortResponse.yaml'

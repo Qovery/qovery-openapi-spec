@@ -3,6 +3,9 @@ allOf:
     required:
       - git_commit_id
       - created_at
+      - author_name
+      - message
+      - tag
     properties:
       created_at:
         type: string
@@ -14,5 +17,8 @@ allOf:
         example: "v2.1.1"
       message:
         type: string
-      user:
-        $ref: './UserResponse.yaml'
+      author_name:
+        type: string
+      author_avatar_url:
+        type: string
+

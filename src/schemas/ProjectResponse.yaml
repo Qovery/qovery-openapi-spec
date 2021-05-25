@@ -6,5 +6,7 @@ allOf:
     properties:
       name:
         type: string
+      description: 
+        type: string
       organization:
         $ref: './ReferenceObject.yaml'

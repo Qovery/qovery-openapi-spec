@@ -2,6 +2,12 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-25 : updated app ports and storage management, and commits resource
+
+* changed GET application/id/commit payload : removed user field and replaced it by author_name and author_avatar_url fields.
+* added id for storage and port objects in application payload. These are nullable fields. It allows backend to know when receiving a PUT application/id if they have to create/update/delete a storage or a port.
+* added description in project payload
+
 # 2021-05-21 : removed repo name from application creation and edition endpoints
 
 * removed "name" inside "git_repository" object in application POST and PUT calls
