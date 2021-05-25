@@ -1,0 +1,28 @@
+type: object
+properties: 
+  storage:
+    type: array
+    items:
+      type: object
+      required:
+        - type
+        - size
+        - mount_point
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - SLOW_HDD
+            - HDD
+            - SSD
+            - FAST_SSD
+        size:
+          type: number
+          description: unit is GB
+          example: 16
+        mount_point:
+          type: string
+          example: /mnt/images

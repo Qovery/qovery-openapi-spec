@@ -20,7 +20,10 @@ get:
       $ref: '../responses/NotFound.yaml'
 put:
   summary: 'Edit application'
-  description: 'To edit the application you must have the admin permission'
+  description: |
+    - To edit the application you must have the admin permission.
+    - For port edition, if you provide a port id, we will update the corresponding port. If you don't we will create a new one. If you remove a port from the payload, we will delete it.
+    - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don't we will create a new one. If you remove a storage from the payload, we will delete it.
   operationId: editApplication
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'

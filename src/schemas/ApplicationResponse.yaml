@@ -16,4 +16,6 @@ allOf:
         description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
         default: 256
         example: 1024
+  - $ref: './ApplicationStorageResponse.yaml'
+  - $ref: './ApplicationPortResponse.yaml'
   - $ref: './ApplicationRequest.yaml'

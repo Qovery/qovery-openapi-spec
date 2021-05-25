@@ -1,0 +1,35 @@
+type: object
+properties: 
+  ports:
+    type: array
+    items:
+      type: object
+      required:
+        - internal_port
+        - protocol
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        internal_port:
+          type: integer
+          example: 8080
+          description: The listening port of your application
+        external_port:
+          type: integer
+          example: 8080
+          description: The exposed port for your application. This is optional. If not set a default port will be used.
+        publicly_accessible:
+          type: boolean
+          default: true
+          description: Expose the port to the world
+        protocol:
+          type: string
+          default: HTTP
+          enum:
+            - HTTPS
+            - HTTP
+            - TCP
+            - UDP
