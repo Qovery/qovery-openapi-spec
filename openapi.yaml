@@ -2779,7 +2779,10 @@ paths:
           $ref: '#/components/responses/404'
     put:
       summary: Edit application
-      description: To edit the application you must have the admin permission
+      description: |
+        - To edit the application you must have the admin permission.
+        - For port edition, if you provide a port id, we will update the corresponding port. If you don't we will create a new one. If you remove a port from the payload, we will delete it.
+        - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don't we will create a new one. If you remove a storage from the payload, we will delete it.
       operationId: editApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -2789,117 +2792,65 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: name is case insensitive
-                description:
-                  type: string
-                  description: give a description to this application
-                git_repository:
-                  $ref: '#/components/schemas/ApplicationRequest/properties/git_repository'
-                build_mode:
-                  type: string
-                  enum:
-                    - DOCKER
-                    - BUILDPACKS
-                  description: |
-                    `DOCKER` requires `dockerfile_path`
-                    `BUILDPACKS` does not require any `dockerfile_path`
-                dockerfile_path:
-                  type: string
-                  description: The path of the associated Dockerfile
-                cpu:
-                  type: number
-                  description: unit is millicores (m). 1000m = 1 cpu
-                  default: 250
-                  example: 1250
-                memory:
-                  type: number
-                  description: unit is MB. 1024 MB = 1GB
-                  default: 256
-                  example: 1024
-                min_running_instances:
-                  type: integer
-                  minimum: 0
-                  description: |
-                    Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-                    Note: 0 means that there is no application running.
-                  default: 1
-                max_running_instances:
-                  type: integer
-                  maximum: -1
-                  description: |
-                    Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-                    Note: -1 means that there is no limit.
-                  default: 1
-                storage:
-                  type: array
-                  items:
-                    type: object
-                    required:
-                      - name
-                      - type
-                      - size
-                      - mount_point
-                    properties:
-                      name:
-                        type: string
-                        example: images
-                      type:
-                        type: string
-                        enum:
-                          - SLOW_HDD
-                          - HDD
-                          - SSD
-                          - FAST_SSD
-                      size:
-                        type: number
-                        description: unit is GB
-                        example: 16
-                      mount_point:
-                        type: string
-                        example: /mnt/images
-                ports:
-                  type: array
-                  items:
-                    type: object
-                    required:
-                      - internal_port
-                      - protocol
-                    properties:
-                      internal_port:
-                        type: integer
-                        example: 8080
-                        description: The listening port of your application
-                      external_port:
-                        type: integer
-                        example: 8080
-                        description: The exposed port for your application. This is optional. If not set a default port will be used.
-                      publicly_accessible:
-                        type: boolean
-                        default: true
-                        description: Expose the port to the world
-                      protocol:
-                        type: string
-                        default: HTTP
-                        enum:
-                          - HTTPS
-                          - HTTP
-                          - TCP
-                          - UDP
-                healthcheck:
-                  type: object
+              allOf:
+                - type: object
                   properties:
-                    protocol:
+                    name:
+                      type: string
+                      description: name is case insensitive
+                    description:
+                      type: string
+                      description: give a description to this application
+                    git_repository:
+                      $ref: '#/components/schemas/ApplicationRequest/allOf/0/properties/git_repository'
+                    build_mode:
                       type: string
                       enum:
-                        - TCP
-                        - HTTP
-                        - None
-                    value:
+                        - DOCKER
+                        - BUILDPACKS
+                      description: |
+                        `DOCKER` requires `dockerfile_path`
+                        `BUILDPACKS` does not require any `dockerfile_path`
+                    dockerfile_path:
                       type: string
+                      description: The path of the associated Dockerfile
+                    cpu:
+                      type: number
+                      description: unit is millicores (m). 1000m = 1 cpu
+                      default: 250
+                      example: 1250
+                    memory:
+                      type: number
+                      description: unit is MB. 1024 MB = 1GB
+                      default: 256
+                      example: 1024
+                    min_running_instances:
+                      type: integer
+                      minimum: 0
+                      description: |
+                        Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                        Note: 0 means that there is no application running.
+                      default: 1
+                    max_running_instances:
+                      type: integer
+                      maximum: -1
+                      description: |
+                        Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                        Note: -1 means that there is no limit.
+                      default: 1
+                    healthcheck:
+                      type: object
+                      properties:
+                        protocol:
+                          type: string
+                          enum:
+                            - TCP
+                            - HTTP
+                            - None
+                        value:
+                          type: string
+                - $ref: '#/components/schemas/ApplicationResponse/allOf/2'
+                - $ref: '#/components/schemas/ApplicationResponse/allOf/3'
       responses:
         '200':
           description: Edit application
@@ -5733,6 +5684,8 @@ components:
           properties:
             name:
               type: string
+            description:
+              type: string
             organization:
               $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
     ProjectResponseList:
@@ -5798,141 +5751,145 @@ components:
           items:
             $ref: '#/components/schemas/EnvironmentResponse'
     ApplicationRequest:
-      type: object
-      required:
-        - name
-        - git_repository
-      properties:
-        name:
-          type: string
-          description: name is case insensitive
-        description:
-          type: string
-          description: give a description to this application
-        git_repository:
-          type: object
+      allOf:
+        - type: object
           required:
-            - provider
-            - owner
             - name
-            - url
-            - root_path
+            - git_repository
           properties:
-            url:
+            name:
               type: string
-              description: application git repository URL
-              example: 'https://github.com/Qovery/simple-node-app'
-            branch:
+              description: name is case insensitive
+            description:
               type: string
-              description: |
-                Name of the branch to use. This is optional
-                If not specified, then the branch used is the `main` or `master` one
-              example: feat/text_xxx
-            root_path:
-              type: string
-              default: /
-              description: indicates the root path of the application.
-        build_mode:
-          type: string
-          enum:
-            - DOCKER
-            - BUILDPACKS
-          default: BUILDPACKS
-          description: |
-            `DOCKER` requires `dockerfile_path`
-            `BUILDPACKS` does not require any `dockerfile_path`
-        dockerfile_path:
-          type: string
-          description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-        cpu:
-          type: number
-          description: unit is millicores (m). 1000m = 1 cpu
-          default: 250
-          example: 1250
-        memory:
-          type: number
-          description: unit is MB. 1024 MB = 1GB
-          default: 256
-          example: 1024
-        min_running_instances:
-          type: integer
-          minimum: 0
-          description: |
-            Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-            Note: 0 means that there is no application running.
-          default: 1
-        max_running_instances:
-          type: integer
-          maximum: -1
-          description: |
-            Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-            Note: -1 means that there is no limit.
-          default: 1
-        storage:
-          type: array
-          items:
-            type: object
-            required:
-              - name
-              - type
-              - size
-              - mount_point
-            properties:
-              type:
-                type: string
-                enum:
-                  - SLOW_HDD
-                  - HDD
-                  - SSD
-                  - FAST_SSD
-              size:
-                type: number
-                description: unit is GB
-                example: 16
-              mount_point:
-                type: string
-                example: /mnt/images
-        ports:
-          type: array
-          items:
-            type: object
-            required:
-              - internal_port
-              - protocol
-            properties:
-              name:
-                type: string
-              internal_port:
-                type: integer
-                example: 8080
-                description: The listening port of your application
-              external_port:
-                type: integer
-                example: 8080
-                description: The exposed port for your application. This is optional. If not set a default port will be used.
-              publicly_accessible:
-                type: boolean
-                default: true
-                description: Expose the port to the world
-              protocol:
-                type: string
-                default: HTTP
-                enum:
-                  - HTTPS
-                  - HTTP
-                  - TCP
-                  - UDP
-        healthcheck:
-          type: object
-          properties:
-            protocol:
+              description: give a description to this application
+            git_repository:
+              type: object
+              required:
+                - provider
+                - owner
+                - name
+                - url
+                - root_path
+              properties:
+                url:
+                  type: string
+                  description: application git repository URL
+                  example: 'https://github.com/Qovery/simple-node-app'
+                branch:
+                  type: string
+                  description: |
+                    Name of the branch to use. This is optional
+                    If not specified, then the branch used is the `main` or `master` one
+                  example: feat/text_xxx
+                root_path:
+                  type: string
+                  default: /
+                  description: indicates the root path of the application.
+            build_mode:
               type: string
               enum:
-                - TCP
-                - HTTP
-                - None
-            value:
+                - DOCKER
+                - BUILDPACKS
+              default: BUILDPACKS
+              description: |
+                `DOCKER` requires `dockerfile_path`
+                `BUILDPACKS` does not require any `dockerfile_path`
+            dockerfile_path:
               type: string
+              description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+            cpu:
+              type: number
+              description: unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            memory:
+              type: number
+              description: unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
+            min_running_instances:
+              type: integer
+              minimum: 0
+              description: |
+                Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: 0 means that there is no application running.
+              default: 1
+            max_running_instances:
+              type: integer
+              maximum: -1
+              description: |
+                Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: -1 means that there is no limit.
+              default: 1
+            healthcheck:
+              type: object
+              properties:
+                protocol:
+                  type: string
+                  enum:
+                    - TCP
+                    - HTTP
+                    - None
+                value:
+                  type: string
+        - type: object
+          properties:
+            storage:
+              type: array
+              items:
+                type: object
+                required:
+                  - type
+                  - size
+                  - mount_point
+                properties:
+                  type:
+                    type: string
+                    enum:
+                      - SLOW_HDD
+                      - HDD
+                      - SSD
+                      - FAST_SSD
+                  size:
+                    type: number
+                    description: unit is GB
+                    example: 16
+                  mount_point:
+                    type: string
+                    example: /mnt/images
+        - type: object
+          properties:
+            ports:
+              type: array
+              items:
+                type: object
+                required:
+                  - internal_port
+                  - protocol
+                properties:
+                  name:
+                    type: string
+                  internal_port:
+                    type: integer
+                    example: 8080
+                    description: The listening port of your application
+                  external_port:
+                    type: integer
+                    example: 8080
+                    description: The exposed port for your application. This is optional. If not set a default port will be used.
+                  publicly_accessible:
+                    type: boolean
+                    default: true
+                    description: Expose the port to the world
+                  protocol:
+                    type: string
+                    default: HTTP
+                    enum:
+                      - HTTPS
+                      - HTTP
+                      - TCP
+                      - UDP
     ApplicationResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
@@ -5973,7 +5930,7 @@ components:
                     deployed_commit_tag:
                       type: string
                       example: v1.0.1
-                - $ref: '#/components/schemas/ApplicationRequest/properties/git_repository'
+                - $ref: '#/components/schemas/ApplicationRequest/allOf/0/properties/git_repository'
             maximum_cpu:
               type: number
               description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
@@ -5984,6 +5941,69 @@ components:
               description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
               default: 256
               example: 1024
+        - type: object
+          properties:
+            storage:
+              type: array
+              items:
+                type: object
+                required:
+                  - type
+                  - size
+                  - mount_point
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  type:
+                    type: string
+                    enum:
+                      - SLOW_HDD
+                      - HDD
+                      - SSD
+                      - FAST_SSD
+                  size:
+                    type: number
+                    description: unit is GB
+                    example: 16
+                  mount_point:
+                    type: string
+                    example: /mnt/images
+        - type: object
+          properties:
+            ports:
+              type: array
+              items:
+                type: object
+                required:
+                  - internal_port
+                  - protocol
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                  internal_port:
+                    type: integer
+                    example: 8080
+                    description: The listening port of your application
+                  external_port:
+                    type: integer
+                    example: 8080
+                    description: The exposed port for your application. This is optional. If not set a default port will be used.
+                  publicly_accessible:
+                    type: boolean
+                    default: true
+                    description: Expose the port to the world
+                  protocol:
+                    type: string
+                    default: HTTP
+                    enum:
+                      - HTTPS
+                      - HTTP
+                      - TCP
+                      - UDP
         - $ref: '#/components/schemas/ApplicationRequest'
     ApplicationResponseList:
       type: object
@@ -6231,6 +6251,9 @@ components:
           required:
             - git_commit_id
             - created_at
+            - author_name
+            - message
+            - tag
           properties:
             created_at:
               type: string
@@ -6242,8 +6265,10 @@ components:
               example: v2.1.1
             message:
               type: string
-            user:
-              $ref: '#/components/schemas/EventResponse/allOf/1/properties/user'
+            author_name:
+              type: string
+            author_avatar_url:
+              type: string
     CommitResponseList:
       type: object
       properties:
