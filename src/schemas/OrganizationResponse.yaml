@@ -1,3 +1,9 @@
 allOf:
   - $ref: './BaseResponse.yaml'
   - $ref: './OrganizationRequest.yaml'
+  - type: object
+    properties:
+      owner:
+        type: string
+        format: uuid
+        description: uuid of the user owning the organization

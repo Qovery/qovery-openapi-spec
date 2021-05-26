@@ -6,6 +6,9 @@ allOf:
         type: string
       last_name:
         type: string
+      email:
+        type: string
+        format: email
       profile_picture_url:
         type: string
         format: uri

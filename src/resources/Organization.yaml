@@ -4,7 +4,7 @@ get:
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
   tags:
-    - name: Organization Main Calls
+    - Organization Main Calls
   responses:
     '200':
       description: 'Get organization by ID'

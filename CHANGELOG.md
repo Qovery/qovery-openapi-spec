@@ -2,6 +2,11 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-26 : updated orga section
+
+* added fields in the organization resource (repository, logo_url, icon_url, owner)
+* added endpoint GET organization/id/member listing the members.
+
 # 2021-05-25 : updated app ports and storage management, and commits resource
 
 * changed GET application/id/commit payload : removed user field and replaced it by author_name and author_avatar_url fields.
