@@ -15,6 +15,7 @@ x-tagGroups:
     tags:
       - Organization Main Calls
       - Projects
+      - Members
       - Billing
   - name: Project
     tags:
@@ -116,7 +117,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
       tags:
-        - name: Organization Main Calls
+        - Organization Main Calls
       responses:
         '200':
           description: Get organization by ID
@@ -171,6 +172,61 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/member':
+    get:
+      summary: Get organization members
+      operationId: getOrganizationMembers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Members
+      responses:
+        '200':
+          description: Get members
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/BaseResponse'
+                        - type: object
+                          properties:
+                            first_name:
+                              type: string
+                            last_name:
+                              type: string
+                            email:
+                              type: string
+                              format: email
+                            profile_picture_url:
+                              type: string
+                              format: uri
+                            last_activity:
+                              type: string
+                              format: date-time
+                              description: last time the user was connected
+                            role:
+                              type: string
+                              enum:
+                                - OWNER
+                                - ADMIN
+                                - DEVELOPER
+                                - VIEWER
+                            invitation_status:
+                              type: string
+                              enum:
+                                - PENDING
+                                - ACCEPTED
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5654,10 +5710,25 @@ components:
         website_url:
           type: string
           nullable: true
+        repository:
+          type: string
+          nullable: true
+        logo_url:
+          type: string
+          nullable: true
+        icon_url:
+          type: string
+          nullable: true
     OrganizationResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/OrganizationRequest'
+        - type: object
+          properties:
+            owner:
+              type: string
+              format: uuid
+              description: uuid of the user owning the organization
     OrganizationResponseList:
       type: object
       properties:
@@ -6226,6 +6297,9 @@ components:
                       type: string
                     last_name:
                       type: string
+                    email:
+                      type: string
+                      format: email
                     profile_picture_url:
                       type: string
                       format: uri
