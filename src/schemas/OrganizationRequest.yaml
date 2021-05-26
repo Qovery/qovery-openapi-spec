@@ -16,3 +16,12 @@ properties:
   website_url:
     type: string
     nullable: true
+  repository:
+    type: string
+    nullable: true
+  logo_url:
+    type: string
+    nullable: true
+  icon_url:
+    type: string
+    nullable: true

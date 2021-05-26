@@ -1,0 +1,30 @@
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+        format: email
+      profile_picture_url:
+        type: string
+        format: uri
+      last_activity:
+        type: string
+        format: date-time
+        description: last time the user was connected
+      role:
+        type: string
+        enum:
+          - OWNER
+          - ADMIN
+          - DEVELOPER
+          - VIEWER
+      invitation_status:
+        type: string
+        enum:
+          - PENDING
+          - ACCEPTED
