@@ -6,6 +6,7 @@ Please add a changelog here each time you update the API documentation.
 
 * budget threshold now optional in GET currentCost
 * company now optional in billingInfo
+* removed publicly_accessible = true on application ports. This logic will be handled on frontend
 
 # 2021-05-26 : updated orga section
 
