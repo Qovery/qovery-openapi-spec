@@ -7,7 +7,6 @@ required:
   - zip
   - country_code
   - city
-  - company
 properties:
   first_name:
     type: string

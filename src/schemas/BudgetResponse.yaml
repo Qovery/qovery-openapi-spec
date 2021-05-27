@@ -1,0 +1,11 @@
+type: object
+properties:
+  total_in_cents:
+    type: integer
+    example: 30000
+  total:
+    type: number
+    example: 300.00
+  currency_code:
+    type: string
+    example: "EUR"

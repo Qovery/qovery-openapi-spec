@@ -2,6 +2,11 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-05-27 : updated orga billing section
+
+* budget threshold now optional in GET currentCost
+* company now optional in billingInfo
+
 # 2021-05-26 : updated orga section
 
 * added fields in the organization resource (repository, logo_url, icon_url, owner)
