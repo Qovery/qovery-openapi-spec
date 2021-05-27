@@ -263,7 +263,17 @@ paths:
                   - type: object
                     properties:
                       budget_threshold:
-                        $ref: '#/paths/~1organization~1%7BorganizationId%7D~1costBudget/get/responses/200/content/application~1json/schema'
+                        type: object
+                        properties:
+                          total_in_cents:
+                            type: integer
+                            example: 30000
+                          total:
+                            type: number
+                            example: 300
+                          currency_code:
+                            type: string
+                            example: EUR
                   - type: object
                     properties:
                       projects:
@@ -461,7 +471,6 @@ paths:
                 - zip
                 - country_code
                 - city
-                - company
               properties:
                 first_name:
                   type: string
