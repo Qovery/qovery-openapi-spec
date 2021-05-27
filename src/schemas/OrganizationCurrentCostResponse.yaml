@@ -11,5 +11,5 @@ allOf:
   - type: object
     properties:
       budget_threshold:
-        $ref: './CostResponse.yaml'
+        $ref: './BudgetResponse.yaml'
   - $ref: './ProjectCurrentCostResponseList.yaml'
