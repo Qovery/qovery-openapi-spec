@@ -23,7 +23,6 @@ properties:
           description: The exposed port for your application. This is optional. If not set a default port will be used.
         publicly_accessible:
           type: boolean
-          default: true
           description: Expose the port to the world
         protocol:
           type: string
