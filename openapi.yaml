@@ -5915,7 +5915,7 @@ components:
                   type: string
         - type: object
           properties:
-            storages:
+            storage:
               type: array
               items:
                 type: object
@@ -6022,7 +6022,7 @@ components:
               example: 1024
         - type: object
           properties:
-            storages:
+            storage:
               type: array
               items:
                 type: object
