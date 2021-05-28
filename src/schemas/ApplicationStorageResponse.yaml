@@ -1,6 +1,6 @@
 type: object
 properties: 
-  storages:
+  storage:
     type: array
     items:
       type: object
