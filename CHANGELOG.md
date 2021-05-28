@@ -2,10 +2,6 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-05-28 : added "s" on storage field in app resource
-
-* added "s" on storage field in app resource
-
 # 2021-05-27 : updated orga billing section
 
 * budget threshold now optional in GET currentCost
