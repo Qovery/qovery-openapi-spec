@@ -1003,3 +1003,16 @@ POST /organization/:orgId/creditCode
   "code": "string"
 }
 ```
+
+## Referral and rewards
+
+Get referral information
+
+GET /referral
+
+```json
+{
+  "total_invited": 0,
+  "invitation_link": "https://join.qovery.com/xDowkWEl"
+}
+```
