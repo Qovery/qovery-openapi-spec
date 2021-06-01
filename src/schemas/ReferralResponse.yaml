@@ -1,0 +1,8 @@
+type: object
+properties:
+  total_invited:
+    type: integer
+    example: 2
+  invitation_link: 
+    type: string
+    example: "https://join.qovery.com/xDowkWEl"

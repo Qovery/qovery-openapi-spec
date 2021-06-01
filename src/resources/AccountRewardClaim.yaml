@@ -1,0 +1,15 @@
+post:
+  summary: 'Claim a reward'
+  description: A same code can be claimed only 3 times at max
+  operationId: postAccountRewardClaim
+  tags:
+    - Referral & Rewards
+  requestBody:
+    content:
+      application/json:
+        schema:
+            $ref: '../schemas/RewardClaimResponse.yaml'
+  responses:
+    '200':
+      description: 'Claim reward'
+

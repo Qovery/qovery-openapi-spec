@@ -2,9 +2,12 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-06-01 : updates on organization
+# 2021-06-01 : updates on organization and account
 
 * removed "plan" from PUT organization/id request body
+* added GET account/referral
+* added POST account/rewardClaim
+* added GET organization/id/billingStatus
 
 # 2021-05-27 : updated orga billing section
 
