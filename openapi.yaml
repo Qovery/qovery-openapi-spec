@@ -61,6 +61,7 @@ x-tagGroups:
   - name: Account
     tags:
       - Git repositories
+      - Referral & Rewards
 servers:
   - url: 'https://api.qovery.com'
 paths:
@@ -535,6 +536,35 @@ paths:
                 $ref: '#/paths/~1organization~1%7BorganizationId%7D~1billingInfo/get/responses/200/content/application~1json/schema'
         '400':
           $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/billingStatus':
+    get:
+      summary: Get organization billing status
+      description: |
+        This endpoint returns a "is_valid" boolean field reflecting the billing status of the organization:
+        - If true, the organization billing is valid
+        - For Business organization, it returns false if there is at least 1 invoice unpaid since 1 week
+        - For Free organization, it returns false if there is no credit left
+      operationId: getOrganizationBillingStatus
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      responses:
+        '200':
+          description: Get Billing Status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  is_valid:
+                    type: boolean
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5605,6 +5635,51 @@ paths:
                 $ref: '#/paths/~1account~1github~1repository/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
+  /account/referral:
+    get:
+      summary: Get your referral information
+      operationId: getAccountReferral
+      tags:
+        - Referral & Rewards
+      responses:
+        '200':
+          description: Get referral info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_invited:
+                    type: integer
+                    example: 2
+                  invitation_link:
+                    type: string
+                    example: 'https://join.qovery.com/xDowkWEl'
+        '401':
+          $ref: '#/components/responses/401'
+  /account/rewardClaim:
+    post:
+      summary: Claim a reward
+      description: A same code can be claimed only 3 times at max
+      operationId: postAccountRewardClaim
+      tags:
+        - Referral & Rewards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - INVITATION
+                code:
+                  type: string
+                  example: xDowkWEl
+      responses:
+        '200':
+          description: Claim reward
 components:
   parameters:
     organizationId:
