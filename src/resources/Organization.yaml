@@ -30,7 +30,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../schemas/OrganizationRequest.yaml'
+          $ref: '../schemas/OrganizationEditRequest.yaml'
   responses:
     '200':
       description: 'Edit an organization'
