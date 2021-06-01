@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-06-01 : updates on organization
+
+* removed "plan" from PUT organization/id request body
+
 # 2021-05-27 : updated orga billing section
 
 * budget threshold now optional in GET currentCost
