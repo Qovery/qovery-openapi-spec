@@ -61,6 +61,7 @@ x-tagGroups:
   - name: Account
     tags:
       - Git repositories
+      - Referral & Rewards
 servers:
   - url: 'https://api.qovery.com'
 paths:
@@ -80,6 +81,8 @@ paths:
     $ref: './resources/OrganizationCostBudget.yaml'
   /organization/{organizationId}/billingInfo:
     $ref: './resources/OrganizationBillingInfo.yaml'
+  /organization/{organizationId}/billingStatus:
+    $ref: './resources/OrganizationBillingStatus.yaml'
   /organization/{organizationId}/invoice:
     $ref: './resources/OrganizationInvoiceList.yaml'
   /organization/{organizationId}/invoice/{invoiceId}:
@@ -317,11 +320,15 @@ paths:
   /logicalDatabase/{logicalDatabaseId}/application:
     $ref: './resources/LogicalDatabaseApplication.yaml'
   /account/gitAuthProvider:
-    $ref: './resources/GitAuthProvider.yaml'
+    $ref: './resources/AccountGitAuthProvider.yaml'
   /account/github/repository:
-    $ref: './resources/GitRepositoryGithub.yaml'
+    $ref: './resources/AccountGitRepositoryGithub.yaml'
   /account/gitlab/repository:
-    $ref: './resources/GitRepositoryGitlab.yaml'
+    $ref: './resources/AccountGitRepositoryGitlab.yaml'
+  /account/referral:
+    $ref: './resources/AccountReferral.yaml'
+  /account/rewardClaim:
+    $ref: './resources/AccountRewardClaim.yaml'
 components:
   parameters:
     $ref: './parameters/_index.yaml'
