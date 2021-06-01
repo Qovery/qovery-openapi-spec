@@ -143,7 +143,28 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrganizationRequest'
+              type: object
+              required:
+                - name
+                - plan
+              properties:
+                name:
+                  type: string
+                  description: name is case insensitive
+                description:
+                  type: string
+                website_url:
+                  type: string
+                  nullable: true
+                repository:
+                  type: string
+                  nullable: true
+                logo_url:
+                  type: string
+                  nullable: true
+                icon_url:
+                  type: string
+                  nullable: true
       responses:
         '200':
           description: Edit an organization
