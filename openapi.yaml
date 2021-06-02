@@ -1784,7 +1784,43 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/BaseResponse'
-                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1deploymentRule/post/requestBody/content/application~1json/schema/allOf/0'
+                  - type: object
+                    properties:
+                      auto_deploy:
+                        type: boolean
+                        default: true
+                      auto_delete:
+                        type: boolean
+                        default: false
+                      always_up:
+                        type: boolean
+                        default: false
+                      start_time:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        description: specify value only if always_up = false
+                      stop_time:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        description: specify value only if always_up = false
+                      weekday:
+                        type: string
+                        enum:
+                          - MONDAY
+                          - TUESDAY
+                          - WEDNESDAY
+                          - THURSDAY
+                          - FRIDAY
+                          - SATURDAY
+                          - SUNDAY
+                        example:
+                          - MONDAY
+                          - WEDNESDAY
+                          - FRIDAY
+                        nullable: true
+                        description: specify value only if always_up = false
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1806,66 +1842,41 @@ paths:
             schema:
               type: object
               properties:
-                database:
+                auto_deploy:
+                  type: boolean
+                  default: true
+                auto_delete:
+                  type: boolean
+                  default: false
+                always_up:
+                  type: boolean
+                  default: false
+                start_time:
                   type: string
-                  format: uuid
-                cpu:
-                  type: object
-                  properties:
-                    requested_in_float:
-                      type: number
-                    consumed_in_number:
-                      type: number
-                    consumed_in_percent:
-                      type: number
-                    warning_threshold_in_percent:
-                      type: number
-                    alert_threshold_in_percent:
-                      type: number
-                    status:
-                      type: string
-                      enum:
-                        - OK
-                        - Warning
-                        - Alert
-                memory:
-                  type: object
-                  properties:
-                    requested_in_mb:
-                      type: integer
-                    consumed_in_mb:
-                      type: integer
-                    consumed_in_percent:
-                      type: number
-                    warning_threshold_in_percent:
-                      type: number
-                    alert_threshold_in_percent:
-                      type: number
-                    status:
-                      type: string
-                      enum:
-                        - OK
-                        - Warning
-                        - Alert
-                storage:
-                  type: object
-                  properties:
-                    requested_in_gb:
-                      type: integer
-                    consumed_in_gb:
-                      type: integer
-                    consumed_in_percent:
-                      type: number
-                    warning_threshold_in_percent:
-                      type: number
-                    alert_threshold_in_percent:
-                      type: number
-                    status:
-                      type: string
-                      enum:
-                        - OK
-                        - Warning
-                        - Alert
+                  format: date-time
+                  nullable: true
+                  description: specify value only if always_up = false
+                stop_time:
+                  type: string
+                  format: date-time
+                  nullable: true
+                  description: specify value only if always_up = false
+                weekday:
+                  type: string
+                  enum:
+                    - MONDAY
+                    - TUESDAY
+                    - WEDNESDAY
+                    - THURSDAY
+                    - FRIDAY
+                    - SATURDAY
+                    - SUNDAY
+                  example:
+                    - MONDAY
+                    - WEDNESDAY
+                    - FRIDAY
+                  nullable: true
+                  description: specify value only if always_up = false
       responses:
         '200':
           description: Edit environment deployment rule
