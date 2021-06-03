@@ -5565,7 +5565,7 @@ paths:
   /account:
     get:
       summary: Get Account information
-      operationId: getAccount Information
+      operationId: getAccountInformation
       tags:
         - Account Info
       responses:
