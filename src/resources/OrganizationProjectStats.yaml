@@ -3,7 +3,7 @@ get:
   description: Returns a list of project ids, and for each its total numberof services and environments
   operationId: getOrganizationProjectStats
   parameters:
-    - $ref: '../parameters/path/projectId.yaml'
+    - $ref: '../parameters/path/organizationId.yaml'
   tags:
     - Projects
   responses:
