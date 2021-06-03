@@ -60,6 +60,7 @@ x-tagGroups:
       - Database Event
   - name: Account
     tags:
+      - Account Info
       - Git repositories
       - Referral & Rewards
 servers:
@@ -5561,6 +5562,32 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /account:
+    get:
+      summary: Get Account information
+      operationId: getAccount Information
+      tags:
+        - Account Info
+      responses:
+        '200':
+          description: Get account info
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - username
+                properties:
+                  username:
+                    type: string
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  profile_picture_url:
+                    type: string
+        '401':
+          $ref: '#/components/responses/401'
   /account/gitAuthProvider:
     get:
       summary: Get git provider accounts
