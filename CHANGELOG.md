@@ -5,6 +5,7 @@ Please add a changelog here each time you update the API documentation.
 # 2021-06-03 : added GET /account
 
 * added GET /account
+* fixed something that was generating error on open api format validator (does not change the API doc spec)
 
 # 2021-06-02 : fixed isses on env deployment rule
 
