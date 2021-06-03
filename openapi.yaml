@@ -869,7 +869,7 @@ paths:
       description: 'Returns a list of project ids, and for each its total numberof services and environments'
       operationId: getOrganizationProjectStats
       parameters:
-        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/organizationId'
       tags:
         - Projects
       responses:
