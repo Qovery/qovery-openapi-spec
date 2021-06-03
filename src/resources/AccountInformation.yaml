@@ -1,0 +1,14 @@
+get:
+  summary: 'Get Account information'
+  operationId: getAccount Information
+  tags:
+    - Account Info
+  responses:
+    '200':
+      description: 'Get account info'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/AccountInfoResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

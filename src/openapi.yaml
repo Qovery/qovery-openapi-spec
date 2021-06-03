@@ -60,6 +60,7 @@ x-tagGroups:
       - Database Event
   - name: Account
     tags:
+      - Account Info
       - Git repositories
       - Referral & Rewards
 servers:
@@ -319,6 +320,8 @@ paths:
     $ref: './resources/LogicalDatabaseCredentials.yaml'
   /logicalDatabase/{logicalDatabaseId}/application:
     $ref: './resources/LogicalDatabaseApplication.yaml'
+  /account:
+    $ref: './resources/AccountInformation.yaml'
   /account/gitAuthProvider:
     $ref: './resources/AccountGitAuthProvider.yaml'
   /account/github/repository:

@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-06-03 : added GET /account
+
+* added GET /account
+
 # 2021-06-02 : fixed isses on env deployment rule
 
 * updated GET environment/id/deploymentRule and PUT environment/id/deploymentRule/id
