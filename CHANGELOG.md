@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-06-04 : improvements on orga billing
+
+* added "message" field in GET organization/id/billingStatus in order to explain to the user why his status can be invalid
+
 # 2021-06-03 : added GET /account
 
 * added GET /account
