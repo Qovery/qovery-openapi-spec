@@ -12,4 +12,4 @@ properties:
     example: 300.00
   currency_code:
     type: string
-    example: "EUR"
+    example: "USD"
