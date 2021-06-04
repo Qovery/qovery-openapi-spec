@@ -296,7 +296,7 @@ paths:
                             example: 300
                           currency_code:
                             type: string
-                            example: EUR
+                            example: USD
                   - type: object
                     properties:
                       projects:
@@ -415,7 +415,7 @@ paths:
                     example: 300
                   currency_code:
                     type: string
-                    example: EUR
+                    example: USD
         '401':
           $ref: '#/components/responses/401'
         '403':
