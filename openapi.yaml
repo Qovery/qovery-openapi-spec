@@ -566,6 +566,8 @@ paths:
                 properties:
                   is_valid:
                     type: boolean
+                  message:
+                    type: string
         '401':
           $ref: '#/components/responses/401'
         '403':
