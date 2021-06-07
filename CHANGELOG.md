@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-06-07 : added date range on currentCostn endpoint
+
+* added "billing_started_on" and "billing_ended_on" for orga, project and env in GET organization/id/currentCost endpoint
+
 # 2021-06-04 : improvements on orga billing
 
 * added "message" field in GET organization/id/billingStatus in order to explain to the user why his status can be invalid
