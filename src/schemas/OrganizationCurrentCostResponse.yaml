@@ -1,4 +1,12 @@
 allOf:
+  - type: object
+    properties:
+      billing_started_on:
+        type: string
+        format: date-time
+      billing_ended_on:
+        type: string
+        format: date-time
   - $ref: './BudgetExceeded.yaml'
   - type: object
     properties:
