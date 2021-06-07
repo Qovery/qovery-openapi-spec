@@ -273,6 +273,14 @@ paths:
                 allOf:
                   - type: object
                     properties:
+                      billing_started_on:
+                        type: string
+                        format: date-time
+                      billing_ended_on:
+                        type: string
+                        format: date-time
+                  - type: object
+                    properties:
                       budget_exceeded:
                         type: boolean
                   - type: object
@@ -309,12 +317,20 @@ paths:
                                 - name
                                 - consumed_time_in_seconds
                                 - cost
+                                - billing_started_on
+                                - billing_ended_on
                               properties:
                                 id:
                                   type: string
                                   format: uuid
                                 name:
                                   type: string
+                                billing_started_on:
+                                  type: string
+                                  format: date-time
+                                billing_ended_on:
+                                  type: string
+                                  format: date-time
                                 consumed_time_in_seconds:
                                   type: integer
                                   example: 3600
@@ -325,7 +341,7 @@ paths:
                                 environments:
                                   type: array
                                   items:
-                                    $ref: '#/paths/~1organization~1%7BorganizationId%7D~1currentCost/get/responses/200/content/application~1json/schema/allOf/4/properties/projects/items/allOf/0'
+                                    $ref: '#/paths/~1organization~1%7BorganizationId%7D~1currentCost/get/responses/200/content/application~1json/schema/allOf/5/properties/projects/items/allOf/0'
         '401':
           $ref: '#/components/responses/401'
         '403':
