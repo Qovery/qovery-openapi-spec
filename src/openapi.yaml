@@ -1,8 +1,10 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Qovery API
-  description: Qovery is the fastest way to deploy your full-stack apps on any Cloud provider
+  title: "[BETA] Qovery API"
+  description: |
+    - Qovery is the fastest way to deploy your full-stack apps on any Cloud provider.
+    - ℹ️ The API is in Beta and still in progress. Some endpoints are not available yet.
   contact:
     name: Qovery Support Team
     url: https://discord.qovery.com
