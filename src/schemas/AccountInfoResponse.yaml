@@ -2,7 +2,13 @@ type: object
 required:
  - username
 properties:
-  username:
+  id:
+    type: string
+    format: uuid
+  created_at:
+    type: string
+    format: date-time
+  nickname:
     type: string
   first_name:
     type: string
