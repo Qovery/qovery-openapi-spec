@@ -4,7 +4,7 @@ get:
     This endpoint returns a "is_valid" boolean field reflecting the billing status of the organization:
     - If true, the organization billing is valid
     - For Business organization, it returns false if there is at least 1 invoice unpaid since 1 week
-    - For Free organization, it returns false if there is no credit left
+    - For Community organization, it returns false if there is no credit left
   operationId: getOrganizationBillingStatus
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'

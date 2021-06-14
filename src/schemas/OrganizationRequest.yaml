@@ -11,7 +11,7 @@ properties:
   plan:
     type: string
     enum:
-      - FREE
+      - COMMUNITY
       - BUSINESS
   website_url:
     type: string
