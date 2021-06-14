@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-06-14 : changed FREE to COMMUNITY in orga plan field
+
+* changed FREE to COMMUNITY in "plan" field of an organization
+
 # 2021-06-11 : added BETA tag and information at the top of the doc
 
 * added note at the very beginning of the doc to inform it is still in beta and not all endpoints are supported yet.
