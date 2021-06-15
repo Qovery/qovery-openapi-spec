@@ -2,9 +2,9 @@
 
 Please add a changelog here each time you update the API documentation.
 
-# 2021-06-14 : changed BUSINESS to START_UP in orga plan field
+# 2021-06-14 : changed BUSINESS to STARTUP in orga plan field
 
-* changed BUSINESS to START_UP in "plan" field of an organization
+* changed BUSINESS to STARTUP in "plan" field of an organization
 
 # 2021-06-14 : changed FREE to COMMUNITY in orga plan field
 
