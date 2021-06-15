@@ -12,7 +12,7 @@ properties:
     type: string
     enum:
       - COMMUNITY
-      - START_UP
+      - STARTUP
   website_url:
     type: string
     nullable: true
