@@ -25,7 +25,6 @@ post:
   operationId: createApplicationEnvironmentVariable
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
-    - $ref: '../parameters/query/dryRun.yaml'
 
   tags:
     - Application Environment Variable

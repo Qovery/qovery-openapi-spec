@@ -11,7 +11,6 @@ post:
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/path/environmentVariableId.yaml'
-    - $ref: '../parameters/query/dryRun.yaml'
 
   tags:
     - Application Environment Variable

@@ -1,5 +1,0 @@
-name: dryRun
-in: query
-description: boolean to specify behaviour of the request. If dryRun=true, API request will be simulated so that you can preview the result before making the action
-schema:
-  type: boolean
