@@ -2,6 +2,11 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-06-18 : env variables and secrets change
+
+* removed dryRun parameter everywhere
+* removed scope from editable fields in PUT
+
 # 2021-06-14 : changed BUSINESS to STARTUP in orga plan field
 
 * changed BUSINESS to STARTUP in "plan" field of an organization
