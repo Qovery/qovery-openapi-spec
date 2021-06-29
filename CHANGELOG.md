@@ -6,6 +6,8 @@ Please add a changelog here each time you update the API documentation.
 
 * added all endpoints in Organization > Clusters section
 * added all endpoints in Organization > Cloud provider Credentials section
+* added DEPLOYING status for cluster
+* changed response for GET aws, do and scaleway credentials --> it only returns the name of the set of credentials. Meaning that access_key_id and secret_access_key can only be created or updated, but not read
 
 # 2021-06-18 : env variables and secrets change
 

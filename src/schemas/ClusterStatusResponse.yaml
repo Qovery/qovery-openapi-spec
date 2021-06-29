@@ -4,6 +4,7 @@ properties:
     type: string
     enum:
       - READY
+      - DEPLOYING
       - RUNNING
       - WARNING
       
