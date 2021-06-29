@@ -1,0 +1,50 @@
+get:
+  summary: 'Get cluster cloud provider info and credentials'
+  operationId: getOrganizationCloudProviderInfo
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/clusterId.yaml'
+  tags:
+    - Clusters
+  responses:
+    '200':
+      description: 'get cloud provider info and credentials'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterCloudProviderInfoResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+
+post:
+  summary: 'Specify cluster cloud provider info and credentials'
+  operationId: specifyClusterCloudProviderInfo
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/clusterId.yaml'
+  tags:
+    - Clusters
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/ClusterCloudProviderInfoRequest.yaml'
+  responses:
+    '201':
+      description: 'Create cluster'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterCloudProviderInfoResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

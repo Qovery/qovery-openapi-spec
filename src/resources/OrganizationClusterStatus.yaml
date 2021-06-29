@@ -1,0 +1,21 @@
+get:
+  summary: 'Get cluster status'
+  operationId: getClusterStatus
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/clusterId.yaml'
+  tags:
+    - Clusters
+  responses:
+    '200':
+      description: 'Get status'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterStatusResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

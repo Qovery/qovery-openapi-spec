@@ -1,0 +1,3 @@
+allOf:
+- $ref: '../schemas/ReferenceObject.yaml'
+- $ref: '../schemas/ClusterStatusResponse.yaml'

@@ -2,6 +2,11 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-06-29 : added all cluster management endpoints
+
+* added all endpoints in Organization > Clusters section
+* added all endpoints in Organization > Cloud provider Credentials section
+
 # 2021-06-18 : env variables and secrets change
 
 * removed dryRun parameter everywhere
