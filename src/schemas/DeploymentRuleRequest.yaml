@@ -21,9 +21,6 @@ properties:
   auto_deploy:
     type: boolean
     default: true
-  auto_delete:
-    type: boolean
-    default: false
   always_up:
     type: boolean
     default: false
