@@ -1,0 +1,18 @@
+get:
+  summary: 'List DO regions'
+  operationId: listDORegions
+  tags:
+    - Cloud Provider Credentials
+  responses:
+    '200':
+      description: 'list regions'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterRegionResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

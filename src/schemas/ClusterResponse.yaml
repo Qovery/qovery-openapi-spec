@@ -1,0 +1,26 @@
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - type: object
+    properties:
+      estimated_cloud_provider_cost:
+        type: number
+        description: This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
+      status:
+        type: string
+        enum:
+          - READY
+          - RUNNING
+          - WARNING
+      has_access:
+        type: boolean
+      version:
+        type: string
+      cloud_provider:
+        type: string
+        enum:
+          - AWS
+          - DIGITAL_OCEAN
+          - SCALEWAY
+      region:
+        type: string
+  - $ref: './ClusterRequest.yaml'

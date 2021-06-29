@@ -19,6 +19,8 @@ x-tagGroups:
       - Projects
       - Members
       - Billing
+      - Clusters
+      - Cloud Provider Credentials
   - name: Project
     tags:
       - Project Main Calls
@@ -102,6 +104,40 @@ paths:
     $ref: './resources/OrganizationProject.yaml'
   /organization/{organizationId}/project/stats:
     $ref: './resources/OrganizationProjectStats.yaml'
+  /organization/{organizationId}/cluster:
+    $ref: './resources/OrganizationCluster.yaml'
+  /organization/{organizationId}/cluster/status:
+    $ref: './resources/OrganizationClusterStatusList.yaml'
+  /organization/{organizationId}/cluster/{clusterId}:
+    $ref: './resources/OrganizationClusterRef.yaml'
+  /organization/{organizationId}/cluster/{clusterId}/status:
+    $ref: './resources/OrganizationClusterStatus.yaml'
+  /organization/{organizationId}/aws/credentials:
+    $ref: './resources/CloudProviderAWSCredentials.yaml'
+  /organization/{organizationId}/aws/credentials/{credentialsId}:
+    $ref: './resources/CloudProviderAWSCredentialsRef.yaml'
+  /organization/{organizationId}/digitalOcean/credentials:
+    $ref: './resources/CloudProviderDOCredentials.yaml'
+  /organization/{organizationId}/digitalOcean/credentials/{credentialsId}:
+    $ref: './resources/CloudProviderDOCredentialsRef.yaml'
+  /organization/{organizationId}/scaleway/credentials:
+    $ref: './resources/CloudProviderScalewayCredentials.yaml'
+  /organization/{organizationId}/scaleway/credentials/{credentialsId}:
+    $ref: './resources/CloudProviderScalewayCredentialsRef.yaml'
+  /aws/region:
+    $ref: './resources/CloudProviderAWSRegion.yaml'
+  /digitalOcean/region:
+    $ref: './resources/CloudProviderDORegion.yaml'
+  /scaleway/region:
+    $ref: './resources/CloudProviderScalewayRegion.yaml'
+  /organization/{organizationId}/cluster/{clusterId}/cloudProviderInfo:
+    $ref: './resources/OrganizationClusterCloudProviderInfo.yaml'
+  /organization/{organizationId}/cluster/{clusterId}/isReady:
+    $ref: './resources/OrganizationClusterIsReady.yaml'
+  /organization/{organizationId}/cluster/{clusterId}/deploy:
+    $ref: './resources/OrganizationClusterDeploy.yaml'
+  /organization/{organizationId}/cluster/{clusterId}/update:
+    $ref: './resources/OrganizationClusterUpdate.yaml'
   /project/{projectId}:
     $ref: './resources/Project.yaml'
   /project/{projectId}/deploymentRule:
