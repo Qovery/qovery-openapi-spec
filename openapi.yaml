@@ -19,6 +19,8 @@ x-tagGroups:
       - Projects
       - Members
       - Billing
+      - Clusters
+      - Cloud Provider Credentials
   - name: Project
     tags:
       - Project Main Calls
@@ -383,13 +385,7 @@ paths:
       operationId: getClusterCurrentCost
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - name: clusterId
-          in: path
-          description: Cluster ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D/put/parameters/1'
       tags:
         - Billing
       responses:
@@ -912,6 +908,734 @@ paths:
                           properties:
                             environment_total_number:
                               type: number
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster':
+    get:
+      summary: List organization clusters
+      operationId: listOrganizationCluster
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: List clusters
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster/post/responses/201/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a cluster
+      operationId: createCluster
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Clusters
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: name is case insensitive
+                description:
+                  type: string
+                auto_update:
+                  type: boolean
+                enable_historic_metric:
+                  type: boolean
+                enable_historic_log:
+                  type: boolean
+                cpu:
+                  type: number
+                  description: unit is millicores (m). 1000m = 1 cpu
+                  default: 250
+                  example: 1250
+                memory:
+                  type: number
+                  description: unit is MB. 1024 MB = 1GB
+                  default: 256
+                  example: 1024
+                min_running_nodes:
+                  type: integer
+                  default: 1
+                max_running_nodes:
+                  type: integer
+                  default: 1
+      responses:
+        '201':
+          description: Create cluster
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      estimated_cloud_provider_cost:
+                        type: number
+                        description: 'This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration'
+                      status:
+                        type: string
+                        enum:
+                          - READY
+                          - RUNNING
+                          - WARNING
+                      has_access:
+                        type: boolean
+                      version:
+                        type: string
+                      cloud_provider:
+                        type: string
+                        enum:
+                          - AWS
+                          - DIGITAL_OCEAN
+                          - SCALEWAY
+                      region:
+                        type: string
+                  - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster/post/requestBody/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/status':
+    get:
+      summary: List all clusters statuses
+      description: Returns a list of clusters with only their id and status.
+      operationId: getOrganizationClusterStatus
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: Get statuses
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1project~1%7BprojectId%7D~1environment~1status/get/responses/200/content/application~1json/schema/allOf/0'
+                  - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D~1status/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}':
+    delete:
+      summary: Delete a cluster
+      operationId: deleteCluster
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D/put/parameters/1'
+      tags:
+        - Clusters
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a cluster
+      operationId: editCluster
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: clusterId
+          in: path
+          description: Cluster ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Clusters
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster/post/requestBody/content/application~1json/schema'
+      responses:
+        '200':
+          description: Edited the cluster
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster/post/responses/201/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/status':
+    get:
+      summary: Get cluster status
+      operationId: getClusterStatus
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D/put/parameters/1'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - READY
+                      - RUNNING
+                      - WARNING
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/aws/credentials':
+    get:
+      summary: List AWS credentials
+      operationId: listAWSCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: list credentials
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create AWS credentials set
+      operationId: createAWSCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                access_key_id:
+                  type: string
+                secret_access_key:
+                  type: string
+      responses:
+        '201':
+          description: Credentials created
+          content:
+            application/json:
+              schema: null
+              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/aws/credentials/{credentialsId}':
+    put:
+      summary: Edit a set of AWS credentials
+      operationId: editAWSCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: credentialsId
+          in: path
+          description: Credentials ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/requestBody/content/application~1json/schema'
+      responses:
+        '200':
+          description: Edit a CustomDomain
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                  - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/requestBody/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a set of AWS credentials
+      operationId: deleteAWSCredentials
+      parameters:
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/parameters/1'
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/digitalOcean/credentials':
+    get:
+      summary: List DO credentials
+      operationId: listDOCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: list credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create Digital Ocean credentials set
+      operationId: createDOCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Credentials created
+          content:
+            application/json:
+              schema: null
+              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/digitalOcean/credentials/{credentialsId}':
+    put:
+      summary: Edit a set of Digital Ocean credentials
+      operationId: editDOCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/parameters/1'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/requestBody/content/application~1json/schema'
+      responses:
+        '200':
+          description: Edit a CustomDomain
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a set of Digital Ocean credentials
+      operationId: deleteDOCredentials
+      parameters:
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/parameters/1'
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/scaleway/credentials':
+    get:
+      summary: List Scaleway credentials
+      operationId: listScalewayCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: list credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create Scaleway credentials set
+      operationId: createScalewayCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/requestBody/content/application~1json/schema'
+      responses:
+        '201':
+          description: Credentials created
+          content:
+            application/json:
+              schema: null
+              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/scaleway/credentials/{credentialsId}':
+    put:
+      summary: Edit a set of Scaleway credentials
+      operationId: editScalewayCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/parameters/1'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/requestBody/content/application~1json/schema'
+      responses:
+        '200':
+          description: Edit a CustomDomain
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a set of Scaleway credentials
+      operationId: deleteScalewayCredentials
+      parameters:
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/parameters/1'
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /aws/region:
+    get:
+      summary: List AWS regions
+      operationId: listAWSRegions
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: list regions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /digitalOcean/region:
+    get:
+      summary: List DO regions
+      operationId: listDORegions
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: list regions
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1aws~1region/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /scaleway/region:
+    get:
+      summary: List Scaleway regions
+      operationId: listScalewayRegions
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: list regions
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1aws~1region/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/cloudProviderInfo':
+    get:
+      summary: Get cluster cloud provider info and credentials
+      operationId: getOrganizationCloudProviderInfo
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D/put/parameters/1'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: get cloud provider info and credentials
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D~1cloudProviderInfo/post/requestBody/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Specify cluster cloud provider info and credentials
+      operationId: specifyClusterCloudProviderInfo
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D/put/parameters/1'
+      tags:
+        - Clusters
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cloud_provider:
+                  type: string
+                  enum:
+                    - AWS
+                    - DIGITAL_OCEAN
+                    - SCALEWAY
+                credentials:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    name:
+                      type: string
+                region:
+                  type: string
+      responses:
+        '201':
+          description: Create cluster
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D~1cloudProviderInfo/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/isReady':
+    get:
+      summary: Know if a cluster is ready to be deployed or not
+      operationId: getClusterReadinessStatus
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D/put/parameters/1'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: Get Cluster Readiness Status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  is_ready:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/deploy':
+    post:
+      summary: Deploy a cluster
+      description: allows to deploy a cluster
+      operationId: deployCluster
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D/put/parameters/1'
+      tags:
+        - Clusters
+      responses:
+        '201':
+          description: Deploy cluster
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D~1status/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/update':
+    post:
+      summary: Update a cluster Version
+      description: allows to update cluster version
+      operationId: UpdateCluster
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D/put/parameters/1'
+      tags:
+        - Clusters
+      responses:
+        '201':
+          description: Update cluster
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D~1status/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/paths/~1organization/post/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
