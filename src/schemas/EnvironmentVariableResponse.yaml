@@ -4,7 +4,7 @@ allOf:
     required:
       - scope
     properties:
-      overriden_variable:
+      overridden_variable:
         type: object
         properties:
           key:
