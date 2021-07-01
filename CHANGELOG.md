@@ -2,6 +2,10 @@
 
 Please add a changelog here each time you update the API documentation.
 
+# 2021-07-01 : fixed typo overriden to overridden
+
+* fixed typo overriden to overridden
+
 # 2021-06-29 : added all cluster management endpoints
 
 * added all endpoints in Organization > Clusters section
