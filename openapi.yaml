@@ -2072,7 +2072,7 @@ paths:
         - You only have to specify a value in the request body
         - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path
         - The response body will contain the newly created variable
-        - Information regarding the overriden_variable will be exposed in the "overriden_variable" field of the newly created variable
+        - Information regarding the overridden_variable will be exposed in the "overridden_variable" field of the newly created variable
       operationId: createProjectEnvironmentVariableOverride
       parameters:
         - $ref: '#/components/parameters/projectId'
@@ -2255,7 +2255,7 @@ paths:
         - You only have to specify a value in the request body
         - The system will create a new secret at project level with the same key as the one corresponding to the secret id in the path
         - The response body will contain the newly created secret
-        - Information regarding the overriden_secret will be exposed in the "overriden_secret" field of the newly created secret
+        - Information regarding the overridden_secret will be exposed in the "overridden_secret" field of the newly created secret
       operationId: createProjectSecretOverride
       parameters:
         - $ref: '#/components/parameters/projectId'
@@ -3249,7 +3249,7 @@ paths:
         - You only have to specify a value in the request body
         - The system will create a new environment variable at environment level with the same key as the one corresponding to the variable id in the path
         - The response body will contain the newly created variable
-        - Information regarding the overriden_variable will be exposed in the "overriden_variable" field of the newly created variable
+        - Information regarding the overridden_variable will be exposed in the "overridden_variable" field of the newly created variable
       operationId: createEnvironmentEnvironmentVariableOverride
       parameters:
         - $ref: '#/components/parameters/environmentId'
@@ -3432,7 +3432,7 @@ paths:
         - You only have to specify a value in the request body
         - The system will create a new secret at environment level with the same key as the one corresponding to the secret id in the path
         - The response body will contain the newly created secret
-        - Information regarding the overriden_secret will be exposed in the "overriden_secret" field of the newly created secret
+        - Information regarding the overridden_secret will be exposed in the "overridden_secret" field of the newly created secret
       operationId: createEnvironmentSecretOverride
       parameters:
         - $ref: '#/components/parameters/environmentId'
@@ -4523,7 +4523,7 @@ paths:
         - You only have to specify a value in the request body
         - The system will create a new environment variable at application level with the same key as the one corresponding to the variable id in the path
         - The response body will contain the newly created variable
-        - Information regarding the overriden_variable will be exposed in the "overriden_variable" field of the newly created variable
+        - Information regarding the overridden_variable will be exposed in the "overridden_variable" field of the newly created variable
       operationId: createApplicationEnvironmentVariableOverride
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -4706,7 +4706,7 @@ paths:
         - You only have to specify a value in the request body
         - The system will create a new secret at application level with the same key as the one corresponding to the secret id in the path
         - The response body will contain the newly created secret
-        - Information regarding the overriden_secret will be exposed in the "overriden_secret" field of the newly created secret
+        - Information regarding the overridden_secret will be exposed in the "overridden_secret" field of the newly created secret
       operationId: createApplicationSecretOverride
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -6991,7 +6991,7 @@ components:
           required:
             - scope
           properties:
-            overriden_variable:
+            overridden_variable:
               type: object
               properties:
                 key:
@@ -7057,7 +7057,7 @@ components:
             key:
               type: string
               description: key is case sensitive
-            overriden_secret:
+            overridden_secret:
               type: object
               properties:
                 key:
