@@ -1149,7 +1149,7 @@ paths:
                       results:
                         type: array
                         items:
-                          $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+                          $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/responses/201/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1182,8 +1182,11 @@ paths:
           description: Credentials created
           content:
             application/json:
-              schema: null
-              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
         '400':
           $ref: '#/paths/~1organization/post/responses/400'
         '401':
@@ -1218,10 +1221,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  name:
-                    type: string
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/responses/201/content/application~1json/schema'
         '400':
           $ref: '#/paths/~1organization/post/responses/400'
         '401':
@@ -1285,8 +1285,8 @@ paths:
           description: Credentials created
           content:
             application/json:
-              schema: null
-              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/responses/201/content/application~1json/schema'
         '400':
           $ref: '#/paths/~1organization/post/responses/400'
         '401':
@@ -1315,7 +1315,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/responses/201/content/application~1json/schema'
         '400':
           $ref: '#/paths/~1organization/post/responses/400'
         '401':
@@ -1379,8 +1379,8 @@ paths:
           description: Credentials created
           content:
             application/json:
-              schema: null
-              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/responses/201/content/application~1json/schema'
         '400':
           $ref: '#/paths/~1organization/post/responses/400'
         '401':
@@ -1409,7 +1409,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials~1%7BcredentialsId%7D/put/responses/200/content/application~1json/schema'
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/responses/201/content/application~1json/schema'
         '400':
           $ref: '#/paths/~1organization/post/responses/400'
         '401':
@@ -1795,10 +1795,7 @@ paths:
                         - FRIDAY
                         - SATURDAY
                         - SUNDAY
-                      example:
-                        - MONDAY
-                        - WEDNESDAY
-                        - FRIDAY
+                      example: MONDAY
                       nullable: true
                       description: specify value only if always_up = false
                 - type: object
@@ -2529,10 +2526,7 @@ paths:
                           - FRIDAY
                           - SATURDAY
                           - SUNDAY
-                        example:
-                          - MONDAY
-                          - WEDNESDAY
-                          - FRIDAY
+                        example: FRIDAY
                         nullable: true
                         description: specify value only if always_up = false
         '401':
@@ -2582,10 +2576,7 @@ paths:
                     - FRIDAY
                     - SATURDAY
                     - SUNDAY
-                  example:
-                    - MONDAY
-                    - WEDNESDAY
-                    - FRIDAY
+                  example: MONDAY
                   nullable: true
                   description: specify value only if always_up = false
       responses:
@@ -3564,8 +3555,7 @@ paths:
                                 enum:
                                   - CONTAINER
                                   - MANAGED
-                                example:
-                                  - CONTAINER
+                                example: CONTAINER
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5281,7 +5271,7 @@ paths:
                   description: name is case insensitive
                 version:
                   type: string
-                  example: 10.1
+                  example: '10.1'
                 accessibility:
                   type: string
                   enum:
@@ -6995,7 +6985,8 @@ components:
               type: object
               properties:
                 id:
-                  type: uuid
+                  type: string
+                  format: uuid
                 key:
                   type: string
                 value:
@@ -7011,7 +7002,8 @@ components:
               type: object
               properties:
                 id:
-                  type: uuid
+                  type: string
+                  format: uuid
                 key:
                   type: string
                   example: QOVERY_DATABASE_PSQL_NAME
@@ -7065,7 +7057,8 @@ components:
               type: object
               properties:
                 id:
-                  type: uuid
+                  type: string
+                  format: uuid
                 key:
                   type: string
                 scope:
@@ -7079,7 +7072,8 @@ components:
               type: object
               properties:
                 id:
-                  type: uuid
+                  type: string
+                  format: uuid
                 key:
                   type: string
                   example: QOVERY_DATABASE_PSQL_NAME
