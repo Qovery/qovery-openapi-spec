@@ -7064,6 +7064,8 @@ components:
             overridden_secret:
               type: object
               properties:
+                id:
+                  type: uuid
                 key:
                   type: string
                 scope:
@@ -7076,6 +7078,8 @@ components:
             aliased_secret:
               type: object
               properties:
+                id:
+                  type: uuid
                 key:
                   type: string
                   example: QOVERY_DATABASE_PSQL_NAME
