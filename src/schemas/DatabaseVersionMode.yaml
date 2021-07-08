@@ -6,4 +6,4 @@ properties:
   supported_mode:
     type: string
     enum: [CONTAINER, MANAGED]
-    example: [CONTAINER]
+    example: CONTAINER

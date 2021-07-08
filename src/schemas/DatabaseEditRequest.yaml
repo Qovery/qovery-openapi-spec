@@ -5,7 +5,7 @@ properties:
     description: name is case insensitive
   version:
     type: string
-    example: 10.1
+    example: "10.1"
   accessibility:
     type: string
     enum:

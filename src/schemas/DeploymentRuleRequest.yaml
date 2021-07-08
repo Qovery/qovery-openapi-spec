@@ -37,7 +37,7 @@ properties:
   weekday:
     type: string
     enum: [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY]
-    example: [MONDAY, WEDNESDAY, FRIDAY]
+    example: MONDAY
     nullable: true
     description: specify value only if always_up = false
 
