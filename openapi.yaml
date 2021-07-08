@@ -6994,6 +6994,8 @@ components:
             overridden_variable:
               type: object
               properties:
+                id:
+                  type: uuid
                 key:
                   type: string
                 value:
@@ -7008,6 +7010,8 @@ components:
             aliased_variable:
               type: object
               properties:
+                id:
+                  type: uuid
                 key:
                   type: string
                   example: QOVERY_DATABASE_PSQL_NAME
