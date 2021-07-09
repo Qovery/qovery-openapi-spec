@@ -48,6 +48,8 @@ DatabaseResponseList:
   $ref: ./DatabaseResponseList.yaml
 LinkResponse:
   $ref: ./LinkResponse.yaml
+MetricStorageDatapointResponseList:
+  $ref: ./MetricStorageDatapointResponseList.yaml
 DeploymentHistoryEnvironmentResponse:
   $ref: ./DeploymentHistoryEnvironmentResponse.yaml
 LogResponse:
@@ -56,6 +58,8 @@ MetricMemoryResponse:
   $ref: ./MetricMemoryResponse.yaml
 EnvironmentTotalNumber:
   $ref: ./EnvironmentTotalNumber.yaml
+EnvironmentApplicationsStorageResponse:
+  $ref: ./EnvironmentApplicationsStorageResponse.yaml
 MetricCPUDatapointResponse:
   $ref: ./MetricCPUDatapointResponse.yaml
 VersionResponse:
@@ -192,8 +196,14 @@ ReferenceObject:
   $ref: ./ReferenceObject.yaml
 LogResponseList:
   $ref: ./LogResponseList.yaml
+MetricCPUDatapointResponseList:
+  $ref: ./MetricCPUDatapointResponseList.yaml
+MetricGenericResponseList:
+  $ref: ./MetricGenericResponseList.yaml
 EnvironmentRequest:
   $ref: ./EnvironmentRequest.yaml
+MetricMemoryDatapointResponseList:
+  $ref: ./MetricMemoryDatapointResponseList.yaml
 ClusterResponse:
   $ref: ./ClusterResponse.yaml
 BackupPaginatedResponseList:
@@ -214,6 +224,8 @@ ClusterCredentialsResponse:
   $ref: ./ClusterCredentialsResponse.yaml
 ProjectDeploymentRuleResponseList:
   $ref: ./ProjectDeploymentRuleResponseList.yaml
+MetricCPUResponseList:
+  $ref: ./MetricCPUResponseList.yaml
 DatabaseConfigurationResponseList:
   $ref: ./DatabaseConfigurationResponseList.yaml
 ProjectStatsResponse:
@@ -294,6 +306,8 @@ EventPaginatedResponseList:
   $ref: ./EventPaginatedResponseList.yaml
 InstanceResponse:
   $ref: ./InstanceResponse.yaml
+MetricStorageResponseList:
+  $ref: ./MetricStorageResponseList.yaml
 EventResponse:
   $ref: ./EventResponse.yaml
 EnvironmentDatabasesCurrentMetricResponseList:

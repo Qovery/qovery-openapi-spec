@@ -9,6 +9,6 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/gitAuthProviderResponseList.yaml'
+            $ref: '../schemas/GitAuthProviderResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'

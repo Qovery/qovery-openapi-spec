@@ -3,4 +3,4 @@ properties:
   results:
     type: array
     items:
-      $ref: './gitRepositoryResponse.yaml'
+      $ref: './GitRepositoryResponse.yaml'
