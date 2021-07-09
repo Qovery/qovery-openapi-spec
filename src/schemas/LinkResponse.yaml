@@ -1,5 +1,4 @@
-allOf:
-  - type: object
-    properties:
-      url:
-        type: string
+type: object
+properties:
+  url:
+    type: string
