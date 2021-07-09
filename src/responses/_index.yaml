@@ -10,3 +10,5 @@
   $ref: ./NotAuthorized.yaml
 404:
   $ref: ./NotFound.yaml
+400:
+  $ref: ./BadRequest.yaml
