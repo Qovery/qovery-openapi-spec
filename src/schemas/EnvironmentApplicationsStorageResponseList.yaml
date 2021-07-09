@@ -1,12 +1,6 @@
 type: object
-required:
-  - application
-  - instances
 properties:
-  application:
-    type: string
-    format: uuid
-  disks:
+  results:
     type: array
     items:
-      $ref: '../schemas/StorageDiskResponse.yaml'
+      $ref: '../schemas/EnvironmentApplicationsStorageResponse.yaml'

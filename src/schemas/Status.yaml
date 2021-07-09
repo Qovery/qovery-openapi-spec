@@ -2,6 +2,9 @@ type: object
 required:
   - state
 properties:
+  id:
+    type: string
+    format: uuid
   state:
     type: string
     description: |
