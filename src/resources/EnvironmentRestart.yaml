@@ -9,11 +9,7 @@ post:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            restart_db:
-              type: boolean
-              default: false
+          $ref: '../schemas/EnvironmentRestartRequest.yaml'
   responses:
     '202':
       description: 'Environment restart has been requested'

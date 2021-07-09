@@ -180,6 +180,8 @@ CreditCardResponse:
   $ref: ./CreditCardResponse.yaml
 MetricStorageResponse:
   $ref: ./MetricStorageResponse.yaml
+EnvironmentVariableEditRequest:
+  $ref: ./EnvironmentVariableEditRequest.yaml
 EnvironmentLogResponseList:
   $ref: ./EnvironmentLogResponseList.yaml
 DeploymentHistoryEnvironmentPaginatedResponseList:
@@ -216,22 +218,30 @@ DatabaseConfigurationResponseList:
   $ref: ./DatabaseConfigurationResponseList.yaml
 ProjectStatsResponse:
   $ref: ./ProjectStatsResponse.yaml
+EnvironmentRestartRequest:
+  $ref: ./EnvironmentRestartRequest.yaml
 SecretResponseList:
   $ref: ./SecretResponseList.yaml
 EnvironmentResponse:
   $ref: ./EnvironmentResponse.yaml
 CostResponse:
   $ref: ./CostResponse.yaml
+MetricMemoryResponseList:
+  $ref: ./MetricMemoryResponseList.yaml
 CreditCardRequest:
   $ref: ./CreditCardRequest.yaml
 CustomDomainResponseList:
   $ref: ./CustomDomainResponseList.yaml
+EnvironmentEditRequest:
+  $ref: ./EnvironmentEditRequest.yaml
 OrganizationCurrentCostResponse:
   $ref: ./OrganizationCurrentCostResponse.yaml
 GitRepositoryResponseList:
   $ref: ./GitRepositoryResponseList.yaml
 ApplicationPortResponse:
   $ref: ./ApplicationPortResponse.yaml
+OrganizationCreditCodeRequest:
+  $ref: ./OrganizationCreditCodeRequest.yaml
 EnvironmentStatsResponseList:
   $ref: ./EnvironmentStatsResponseList.yaml
 SecretResponse:
@@ -278,6 +288,8 @@ ApplicationGitRepositoryResponse:
   $ref: ./ApplicationGitRepositoryResponse.yaml
 TagResponseList:
   $ref: ./TagResponseList.yaml
+SecretEditRequest:
+  $ref: ./SecretEditRequest.yaml
 EventPaginatedResponseList:
   $ref: ./EventPaginatedResponseList.yaml
 InstanceResponse:
@@ -294,6 +306,8 @@ CommitResponseList:
   $ref: ./CommitResponseList.yaml
 EnvironmentApplicationsCurrentScaleResponse:
   $ref: ./EnvironmentApplicationsCurrentScaleResponse.yaml
+OrganizationBudgetEditRequest:
+  $ref: ./OrganizationBudgetEditRequest.yaml
 TagResponse:
   $ref: ./TagResponse.yaml
 EnvironmentApplicationsStorageResponseList:
