@@ -1,45 +1,17 @@
-allOf:
-  - $ref: './BaseResponse.yaml'
-  - $ref: './EnvironmentVariableRequest.yaml'
-  - type: object
-    required:
-      - scope
+type: object
+required:
+  - scope
+properties:
+  overridden_variable:
+    type: object
     properties:
-      overridden_variable:
-        type: object
-        properties:
-          id:
-            type: string
-            format: uuid
-          key:
-            type: string
-          value:
-            type: string
-          scope:
-            type: string
-            enum:
-              - BUILT_IN
-              - ENVIRONMENT
-              - PROJECT
-              - APPLICATION
-      aliased_variable:
-        type: object
-        properties:
-          id:
-            type: string
-            format: uuid
-          key:
-            type: string
-            example: QOVERY_DATABASE_PSQL_NAME
-          value:
-            type: string
-          scope:
-            type: string
-            enum:
-              - BUILT_IN
-              - ENVIRONMENT
-              - PROJECT
-              - APPLICATION
+      id:
+        type: string
+        format: uuid
+      key:
+        type: string
+      value:
+        type: string
       scope:
         type: string
         enum:
@@ -47,3 +19,31 @@ allOf:
           - ENVIRONMENT
           - PROJECT
           - APPLICATION
+  aliased_variable:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      key:
+        type: string
+        example: QOVERY_DATABASE_PSQL_NAME
+      value:
+        type: string
+      scope:
+        type: string
+        enum:
+          - BUILT_IN
+          - ENVIRONMENT
+          - PROJECT
+          - APPLICATION
+  scope:
+    type: string
+    enum:
+      - BUILT_IN
+      - ENVIRONMENT
+      - PROJECT
+      - APPLICATION
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - $ref: './EnvironmentVariableRequest.yaml'

@@ -1,23 +1,7 @@
 allOf:
-  - $ref: './BudgetExceeded.yaml'
-  - $ref: './ProjectCurrentCostResponseList.yaml'
-  - type: object
-    properties:
-      billing_started_on:
-        type: string
-        format: date-time
-      billing_ended_on:
-        type: string
-        format: date-time
-  - type: object
-    properties:
-      remaining_credits:
-        $ref: './CostResponse.yaml'
-  - type: object
-    properties:
-      cost:
-        $ref: './CostResponse.yaml'
-  - type: object
-    properties:
-      budget_threshold:
-        $ref: './BudgetResponse.yaml'
+- $ref: './BudgetThreshold.yaml'
+- $ref: './BillingPeriod.yaml'
+- $ref: './Cost.yaml'
+- $ref: './RemainingCredits.yaml'
+- $ref: './BudgetExceeded.yaml'
+- $ref: './ProjectCurrentCostResponseList.yaml'

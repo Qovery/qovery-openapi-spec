@@ -116,6 +116,8 @@ ApplicationEditRequest:
   $ref: ./ApplicationEditRequest.yaml
 DeploymentHistoryResponseList:
   $ref: ./DeploymentHistoryResponseList.yaml
+BudgetThreshold:
+  $ref: ./BudgetThreshold.yaml
 EventResponseList:
   $ref: ./EventResponseList.yaml
 DeploymentHistoryResponse:
@@ -154,8 +156,12 @@ ServiceResponse:
   $ref: ./ServiceResponse.yaml
 ApplicationResponseList:
   $ref: ./ApplicationResponseList.yaml
+RemainingCredits:
+  $ref: ./RemainingCredits.yaml
 BillingStatus:
   $ref: ./BillingStatus.yaml
+Cost:
+  $ref: ./Cost.yaml
 ServiceResponseList:
   $ref: ./ServiceResponseList.yaml
 EnvironmentDeploymentRuleResponse:
@@ -184,6 +190,8 @@ BudgetResponse:
   $ref: ./BudgetResponse.yaml
 CreditCardResponse:
   $ref: ./CreditCardResponse.yaml
+BillingPeriod:
+  $ref: ./BillingPeriod.yaml
 MetricStorageResponse:
   $ref: ./MetricStorageResponse.yaml
 EnvironmentVariableEditRequest:
@@ -236,6 +244,8 @@ ProjectStatsResponse:
   $ref: ./ProjectStatsResponse.yaml
 EnvironmentRestartRequest:
   $ref: ./EnvironmentRestartRequest.yaml
+BillingEnd:
+  $ref: ./BillingEnd.yaml
 SecretResponseList:
   $ref: ./SecretResponseList.yaml
 EnvironmentResponse:
@@ -276,6 +286,8 @@ EnvironmentVariableResponse:
   $ref: ./EnvironmentVariableResponse.yaml
 ReferralResponse:
   $ref: ./ReferralResponse.yaml
+BillingStart:
+  $ref: ./BillingStart.yaml
 UserResponseList:
   $ref: ./UserResponseList.yaml
 CreditCardResponseList:

@@ -1,17 +1,17 @@
+type: object
+properties:
+  service:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - APPLICATION
+          - DATABASE
+      name:
+        type: string
+      id:
+        type: string
+        format: uuid
 allOf:
   - $ref: './DeploymentHistoryResponse.yaml'
-  - type: object    
-    properties:
-      service:
-        type: object
-        properties:
-          type:
-            type: string
-            enum:
-              - APPLICATION
-              - DATABASE
-          name:
-            type: string
-          id:
-            type: string
-            format: uuid   
