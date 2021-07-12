@@ -1,14 +1,24 @@
-allOf:
-  - $ref: './BaseResponse.yaml'
-  - type: object
-    properties:
-      first_name:
-        type: string
-      last_name:
-        type: string
-      email:
-        type: string
-        format: email
-      profile_picture_url:
-        type: string
-        format: uri
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    readOnly: true
+  created_at:
+    type: string
+    readOnly: true
+    format: date-time
+  updated_at:
+    type: string
+    readOnly: true
+    format: date-time
+  first_name:
+    type: string
+  last_name:
+    type: string
+  email:
+    type: string
+    format: email
+  profile_picture_url:
+    type: string
+    format: uri

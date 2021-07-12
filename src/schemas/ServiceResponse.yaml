@@ -1,40 +1,37 @@
+type: object
+properties:
+  type:
+    type: string
+    description: type of the service (application, database, job, gateway...)
+    enum:
+      - APPLICATION
+      - DATABASE
+  name:
+    type: string
+    description: name of the service
+  id:
+    type: string
+    description: uuid of the associated service (application, database, job, gateway...)
+    format: uuid
+  deployed_commit_id:
+    type: string
+    description: Git commit ID corresponding to the deployed version of the application
+  last_updated_by:
+    type: string
+    format: uuid
+    description: uuid of the user that made the last update
+  consumed_resources_in_percent:
+    type: number
+    description: global overview of resources consumption of the service
+  service_typology:
+    type: string
+    example: container
+    description: describes the typology of service (container, postgresl, redis...)
+  service_version:
+    type: string
+    description: for databases this field exposes the database version
+    example: v12
+  to_update:
+    type: boolean
 allOf:
   - $ref: './BaseResponse.yaml'
-  - type: object
-    properties:
-      type:
-        type: string
-        description: type of the service (application, database, job, gateway...)
-        enum:
-          - APPLICATION
-          - DATABASE
-      name:
-        type: string
-        description: name of the service
-      id:
-        type: string
-        description: uuid of the associated service (application, database, job, gateway...)
-        format: uuid
-      deployed_commit_id:
-        type: string
-        description: Git commit ID corresponding to the deployed version of the application
-      last_updated_by:
-        type: string
-        format: uuid
-        description: uuid of the user that made the last update
-      consumed_resources_in_percent:
-        type: number
-        description: global overview of resources consumption of the service
-      service_typology:
-        type: string
-        example: container
-        description: describes the typology of service (container, postgresl, redis...)
-      service_version:
-        type: string
-        description: for databases this field exposes the database version
-        example: v12
-      to_update:
-        type: boolean
-
-
-

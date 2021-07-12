@@ -5,8 +5,6 @@ get:
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
     - $ref: '../parameters/query/startId.yaml'
-    - $ref: '../parameters/query/status.yaml'
-    - $ref: '../parameters/query/gitCommitId.yaml'
 
   tags:
     - Application Deployment History

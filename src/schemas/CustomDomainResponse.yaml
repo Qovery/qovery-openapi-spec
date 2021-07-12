@@ -1,14 +1,14 @@
+type: object
+properties:
+  validation_domain:
+    type: string
+    description: URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
+  status:
+    type: string
+    enum:
+      - validation_pending
+      - live
+      - error
 allOf:
   - $ref: './BaseResponse.yaml'
-  - type: object
-    properties:
-      validation_domain:
-        type: string
-        description: URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
-      status:
-        type: string
-        enum:
-          - validation_pending
-          - live
-          - error
   - $ref: './CustomDomainRequest.yaml'

@@ -13,12 +13,7 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              results:
-                type: array
-                items:
-                  $ref: '../schemas/MetricMemoryDatapointResponse.yaml'
+            $ref: '../schemas/MetricMemoryDatapointResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

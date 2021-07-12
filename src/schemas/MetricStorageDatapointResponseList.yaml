@@ -3,4 +3,4 @@ properties:
   results:
     type: array
     items:
-      $ref: './gitAuthProviderResponse.yaml'
+      $ref: './MetricStorageDatapointResponse.yaml'

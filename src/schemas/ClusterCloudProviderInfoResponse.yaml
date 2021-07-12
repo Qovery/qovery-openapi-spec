@@ -1,2 +1,18 @@
-allOf:
-  - $ref: './ClusterCloudProviderInfoRequest.yaml'
+type: object
+properties:
+  cloud_provider:
+    type: string
+    enum:
+      - AWS
+      - DIGITAL_OCEAN
+      - SCALEWAY
+  credentials:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+  region:
+    type: string

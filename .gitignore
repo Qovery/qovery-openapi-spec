@@ -9,6 +9,10 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea
+
+_build
+out
 
 # Generated files
 .idea/**/contentModel.xml

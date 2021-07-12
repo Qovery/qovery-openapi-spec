@@ -1,28 +1,27 @@
+type: object
+required:
+  - id
+  - created_at
+  - status
+  - total_in_cents
+  - total
+  - currency_code
+properties:
+  id:
+    type: string
+    format: uuid
+  created_at:
+    type: string
+    format: date-time
+  status:
+    type: string
+    enum:
+      - PAID
+      - POSTED
+      - PAYMENT_DUE
+      - NOT_PAID
+      - VOIDED
+      - PENDING
+      - UNKNOWN
 allOf:
-  - type: object
-    required:
-      - id
-      - created_at
-      - status
-      - total_in_cents
-      - total
-      - currency_code
-    properties:
-      id:
-        type: string
-        format: uuid
-      created_at:
-        type: string
-        format: date-time
-      status:
-        type: string
-        enum:
-          - PAID
-          - POSTED
-          - PAYMENT_DUE
-          - NOT_PAID
-          - VOIDED
-          - PENDING
-          - UNKNOWN
   - $ref: './CostResponse.yaml'
-

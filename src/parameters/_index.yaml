@@ -1,28 +1,59 @@
-# paths
-organizationId:
-  $ref: './path/organizationId.yaml'
-projectId:
-  $ref: './path/projectId.yaml'
-environmentId:
-  $ref: './path/environmentId.yaml'
-applicationId:
-  $ref: './path/applicationId.yaml'
-databaseId:
-  $ref: './path/databaseId.yaml'
-environmentVariableId:
-  $ref: './path/environmentVariableId.yaml'
-instanceId:
-  $ref: './path/instanceId.yaml'
-customDomainId:
-  $ref: './path/customDomainId.yaml'
+# PATH
+targetLogicalDatabaseId:
+  $ref: ./path/targetLogicalDatabaseId.yaml
+targetDatabaseId:
+  $ref: ./path/targetDatabaseId.yaml
+creditCardId:
+  $ref: ./path/creditCardId.yaml
 secretId:
-  $ref: './path/secretId.yaml'
+  $ref: ./path/secretId.yaml
+projectId:
+  $ref: ./path/projectId.yaml
+organizationId:
+  $ref: ./path/organizationId.yaml
+environmentVariableId:
+  $ref: ./path/environmentVariableId.yaml
+clusterId:
+  $ref: ./path/clusterId.yaml
+eventId:
+  $ref: ./path/eventId.yaml
+tagId:
+  $ref: ./path/tagId.yaml
 targetApplicationId:
-  $ref: './path/targetApplicationId.yaml'
+  $ref: ./path/targetApplicationId.yaml
+invoiceId:
+  $ref: ./path/invoiceId.yaml
+applicationId:
+  $ref: ./path/applicationId.yaml
+deploymentRuleId:
+  $ref: ./path/deploymentRuleId.yaml
+credentialsId:
+  $ref: ./path/credentialsId.yaml
+backupId:
+  $ref: ./path/backupId.yaml
+logicalDatabaseId:
+  $ref: ./path/logicalDatabaseId.yaml
+databaseId:
+  $ref: ./path/databaseId.yaml
+customDomainId:
+  $ref: ./path/customDomainId.yaml
+instanceId:
+  $ref: ./path/instanceId.yaml
+environmentId:
+  $ref: ./path/environmentId.yaml
 
-
-# queries
+# QUERY
+gitCommitId:
+  $ref: ./query/gitCommitId.yaml
+startId:
+  $ref: ./query/startId.yaml
+tail:
+  $ref: ./query/tail.yaml
 limit:
-  $ref: './query/limit.yaml'
-lastDays:
-  $ref: './query/lastSeconds.yaml'
+  $ref: ./query/limit.yaml
+lastId:
+  $ref: ./query/lastId.yaml
+status:
+  $ref: ./query/status.yaml
+lastSeconds:
+  $ref: ./query/lastSeconds.yaml

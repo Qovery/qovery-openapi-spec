@@ -1,2 +1,43 @@
-allOf:
-  - $ref: './BillingInfoRequest.yaml'
+type: object
+required:
+  - first_name
+  - last_name
+  - email
+  - address
+  - zip
+  - country_code
+  - city
+properties:
+  first_name:
+    type: string
+    example: Forrest
+  last_name:
+    type: string
+    example: Gump
+  email:
+    type: string
+    format: email
+    example: forrest@gump.com
+    description: email used for billing, and to receive all invoices by email
+  address:
+    type: string
+    example: "21 Jenny Street"
+  city:
+    type: string
+    example: Greenbow
+  zip:
+    type: string
+    example: "36744"
+  state:
+    type: string
+    example: Alabama
+    description: only for US
+  country_code:
+    type: string
+    description: ISO code of the country
+    example: "US"
+  company:
+    type: string
+    description: name of the company to bill
+  vat_number:
+    type: string

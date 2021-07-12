@@ -1,7 +1,6 @@
-allOf:
-  - type: object
-    properties:
-      results:
-        type: array
-        items:
-          $ref: './ClusterResponse.yaml'
+type: object
+properties:
+  results:
+    type: array
+    items:
+      $ref: './ClusterResponse.yaml'

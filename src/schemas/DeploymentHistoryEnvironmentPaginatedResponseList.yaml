@@ -1,8 +1,8 @@
+type: object
+properties:
+  results:
+    type: array
+    items:
+      $ref: './DeploymentHistoryEnvironmentResponse.yaml'
 allOf:
   - $ref: './PaginationDataResponse.yaml'
-  - type: object
-    properties:
-      results:
-        type: array
-        items:
-          $ref: './DeploymentHistoryEnvironmentResponse.yaml'

@@ -1,0 +1,11 @@
+type: object
+required:
+  - key
+  - value
+properties:
+  key:
+    type: string
+    description: key is case sensitive
+  value:
+    type: string
+    description: value of the env variable.

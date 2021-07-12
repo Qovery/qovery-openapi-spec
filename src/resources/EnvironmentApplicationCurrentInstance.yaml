@@ -11,12 +11,7 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              results:
-                type: array
-                items:
-                  $ref: '../schemas/EnvironmentApplicationsInstanceResponseList.yaml'
+            $ref: '../schemas/EnvironmentApplicationsInstanceResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

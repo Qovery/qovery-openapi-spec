@@ -1,7 +1,9 @@
-allOf:
-  - $ref: './TagRequest.yaml'
-  - type: object
-    properties:
-      id:
-        type: string
-        format: uuid
+type: object
+required:
+  - name
+properties:
+  name:
+    type: string
+  id:
+    type: string
+    format: uuid

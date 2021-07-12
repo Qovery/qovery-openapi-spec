@@ -1,12 +1,17 @@
 type: object
-required:
-  - application
-  - instances
 properties:
-  application:
-    type: string
-    format: uuid
-  instances:
+  results:
     type: array
     items:
-      $ref: '../schemas/InstanceResponse.yaml'
+      type: object
+      required:
+        - application
+        - instances
+      properties:
+        application:
+          type: string
+          format: uuid
+        instances:
+          type: array
+          items:
+            $ref: '../schemas/InstanceResponse.yaml'
