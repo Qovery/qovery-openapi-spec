@@ -10,7 +10,7 @@
     "html": "npm run build && redoc-cli bundle _build/openapi.yaml  --output _build/index.html --options src/theme.json",
     "clean": "rm -r _build",
     "deploy": "./deploy.sh",
-    "generate": "./clean_out.sh out _build && npm run test && openapi-generator-cli generate -i _build/openapi.yaml -o out/go/client -g go"
+    "generate": "./clean_out.sh out _build && npm run test && openapi-generator-cli generate -i _build/openapi.yaml -o out/go/client -g go -a bearer --api-package api --package-name qovery --model-package  model"
   },
   "repository": {
     "type": "git",
