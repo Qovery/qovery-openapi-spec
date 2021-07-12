@@ -1,24 +1,22 @@
-allOf:
-  - type: object
-    required:
-      - git_commit_id
-      - created_at
-      - author_name
-      - message
-      - tag
-    properties:
-      created_at:
-        type: string
-        format: date-time
-      git_commit_id:
-        type: string
-      tag: 
-        type: string
-        example: "v2.1.1"
-      message:
-        type: string
-      author_name:
-        type: string
-      author_avatar_url:
-        type: string
-
+type: object
+required:
+  - git_commit_id
+  - created_at
+  - author_name
+  - message
+  - tag
+properties:
+  created_at:
+    type: string
+    format: date-time
+  git_commit_id:
+    type: string
+  tag:
+    type: string
+    example: "v2.1.1"
+  message:
+    type: string
+  author_name:
+    type: string
+  author_avatar_url:
+    type: string

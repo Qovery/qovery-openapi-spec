@@ -102,6 +102,8 @@ BackupResponseList:
   $ref: ./BackupResponseList.yaml
 ProjectCurrentCostResponseList:
   $ref: ./ProjectCurrentCostResponseList.yaml
+Healthcheck:
+  $ref: ./Healthcheck.yaml
 CommitResponse:
   $ref: ./CommitResponse.yaml
 GenericObjectCurrentCostResponse:
@@ -190,6 +192,8 @@ EnvironmentLogResponseList:
   $ref: ./EnvironmentLogResponseList.yaml
 DeploymentHistoryEnvironmentPaginatedResponseList:
   $ref: ./DeploymentHistoryEnvironmentPaginatedResponseList.yaml
+AliasedSecret:
+  $ref: ./AliasedSecret.yaml
 EnvironmentVariableResponseList:
   $ref: ./EnvironmentVariableResponseList.yaml
 ReferenceObject:
@@ -286,6 +290,8 @@ CommitPaginatedResponseList:
   $ref: ./CommitPaginatedResponseList.yaml
 ClusterResponseList:
   $ref: ./ClusterResponseList.yaml
+OverriddenSecret:
+  $ref: ./OverriddenSecret.yaml
 BillingInfoResponse:
   $ref: ./BillingInfoResponse.yaml
 EnvironmentDeploymentRuleEditRequest:

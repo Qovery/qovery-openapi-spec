@@ -1,4 +1,5 @@
 allOf:
+  - $ref: './CostResponse.yaml'
   - type: object
     required:
       - id
@@ -24,5 +25,3 @@ allOf:
           - VOIDED
           - PENDING
           - UNKNOWN
-  - $ref: './CostResponse.yaml'
-

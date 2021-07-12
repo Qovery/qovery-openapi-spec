@@ -1,5 +1,6 @@
 allOf:
   - $ref: './BaseResponse.yaml'
+  - $ref: './ClusterRequest.yaml'
   - type: object
     properties:
       estimated_cloud_provider_cost:
@@ -23,4 +24,3 @@ allOf:
           - SCALEWAY
       region:
         type: string
-  - $ref: './ClusterRequest.yaml'

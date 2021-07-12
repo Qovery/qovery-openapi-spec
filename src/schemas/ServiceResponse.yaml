@@ -35,6 +35,3 @@ allOf:
         example: v12
       to_update:
         type: boolean
-
-
-

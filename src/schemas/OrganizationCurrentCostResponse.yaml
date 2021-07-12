@@ -1,4 +1,6 @@
 allOf:
+  - $ref: './BudgetExceeded.yaml'
+  - $ref: './ProjectCurrentCostResponseList.yaml'
   - type: object
     properties:
       billing_started_on:
@@ -7,7 +9,6 @@ allOf:
       billing_ended_on:
         type: string
         format: date-time
-  - $ref: './BudgetExceeded.yaml'
   - type: object
     properties:
       remaining_credits:
@@ -20,4 +21,3 @@ allOf:
     properties:
       budget_threshold:
         $ref: './BudgetResponse.yaml'
-  - $ref: './ProjectCurrentCostResponseList.yaml'

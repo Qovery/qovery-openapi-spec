@@ -1,7 +1,7 @@
 allOf:
   - $ref: './BaseResponse.yaml'
+  - $ref: './LogicalDatabaseRequest.yaml'
   - type: object
     properties:
       database:
         $ref: './ReferenceObject.yaml'
-  - $ref: './LogicalDatabaseRequest.yaml'

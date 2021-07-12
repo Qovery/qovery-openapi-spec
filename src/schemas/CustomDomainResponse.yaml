@@ -1,5 +1,6 @@
 allOf:
   - $ref: './BaseResponse.yaml'
+  - $ref: './CustomDomainRequest.yaml'
   - type: object
     properties:
       validation_domain:
@@ -11,4 +12,3 @@ allOf:
           - validation_pending
           - live
           - error
-  - $ref: './CustomDomainRequest.yaml'

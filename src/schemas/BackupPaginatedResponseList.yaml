@@ -1,8 +1,3 @@
 allOf:
   - $ref: './PaginationDataResponse.yaml'
-  - type: object
-    properties:
-      results:
-        type: array
-        items:
-          $ref: './BackupResponse.yaml'
+  - $ref: './BackupResponseList.yaml'

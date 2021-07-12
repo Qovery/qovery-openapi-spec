@@ -1,5 +1,6 @@
 allOf:
   - $ref: './BaseResponse.yaml'
+  - $ref: './EnvironmentVariableRequest.yaml'
   - type: object
     required:
       - scope
@@ -46,4 +47,3 @@ allOf:
           - ENVIRONMENT
           - PROJECT
           - APPLICATION
-  - $ref: './EnvironmentVariableRequest.yaml'

@@ -1,4 +1,6 @@
 allOf:
+  - $ref: './ApplicationStorageResponse.yaml'
+  - $ref: './ApplicationPortResponse.yaml'
   - type: object
     properties:
       name:
@@ -45,15 +47,4 @@ allOf:
           Note: -1 means that there is no limit.
         default: 1
       healthcheck:
-        type: object
-        properties:
-          protocol:
-            type: string
-            enum:
-              - TCP
-              - HTTP
-              - None
-          value:
-            type: string
-  - $ref: './ApplicationStorageResponse.yaml'
-  - $ref: './ApplicationPortResponse.yaml'
+        $ref: './Healthcheck.yaml'
