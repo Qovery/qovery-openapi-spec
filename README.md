@@ -15,3 +15,7 @@ link: https://api-doc.qovery.com
 ## Design draft document
 
 [DESIGN_DRAFT.md](DESIGN_DRAFT.md)
+
+## Generate API client
+
+`QOVERY_CLIENT_LANGUAGE=go npm run generate`
