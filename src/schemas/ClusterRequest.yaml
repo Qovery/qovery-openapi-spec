@@ -9,9 +9,9 @@ properties:
     type: string
   auto_update:
     type: boolean
-  enable_historic_metric:
+  enable_historical_metric:
     type: boolean
-  enable_historic_log:
+  enable_historical_log:
     type: boolean
   cpu:
     type: number

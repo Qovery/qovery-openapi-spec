@@ -1016,3 +1016,28 @@ GET /referral
   "invitation_link": "https://join.qovery.com/xDowkWEl"
 }
 ```
+
+## Addon module
+
+GET /project/:projectId/addon
+
+```json
+{
+  "results": [
+    {
+      "name": "Slack",
+      "short_description": "string",
+      "description": "string",
+      "is_trusted": true,
+      "is_installed": false,
+      "matching_environments_regex": "^feat/.*",
+      "metadata":{
+        
+      },
+      "settings": {
+        "api_key": "string"
+      }
+    }
+  ]
+}
+```
