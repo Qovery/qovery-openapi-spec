@@ -10,6 +10,7 @@ info:
     url: https://discord.qovery.com
     email: support+api+documentation@qovery.com
   x-logo:
+    url: 'https://raw.githubusercontent.com/Qovery/public-resources/master/qovery_new_logo_white.svg'
     altText: Qovery
 x-tagGroups:
   - name: Organization
