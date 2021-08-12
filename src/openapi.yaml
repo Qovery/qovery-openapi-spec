@@ -10,7 +10,7 @@ info:
     url: https://discord.qovery.com
     email: support+api+documentation@qovery.com
   x-logo:
-    url: 'https://raw.githubusercontent.com/Qovery/public-resources/master/qovery%20logo%20white%20text%20HQ.png'
+    url: 'https://raw.githubusercontent.com/Qovery/public-resources/master/qovery_new_logo_white.svg'
     altText: Qovery
 x-tagGroups:
   - name: Organization
@@ -215,9 +215,9 @@ paths:
   /environment/{environmentId}/secret/{secretId}/alias:
     $ref: './resources/EnvironmentSecretAlias.yaml'
   /environment/{environmentId}/link:
-    $ref: './resources/EnvironmentLink.yaml' 
+    $ref: './resources/EnvironmentLink.yaml'
   /environment/{environmentId}/databaseConfiguration:
-    $ref: './resources/EnvironmentDatabaseConfiguration.yaml'    
+    $ref: './resources/EnvironmentDatabaseConfiguration.yaml'
   /application/{applicationId}:
     $ref: './resources/Application.yaml'
   /application/{applicationId}/status:
@@ -237,11 +237,11 @@ paths:
   /application/{applicationId}/metric/cpu:
     $ref: './resources/ApplicationMetricCpu.yaml'
   /application/{applicationId}/metric/memory:
-    $ref: './resources/ApplicationMetricMemory.yaml'    
+    $ref: './resources/ApplicationMetricMemory.yaml'
   /application/{applicationId}/metric/healthCheck:
-    $ref: './resources/ApplicationMetricHealthCheck.yaml'  
+    $ref: './resources/ApplicationMetricHealthCheck.yaml'
   /application/{applicationId}/metric/storage:
-    $ref: './resources/ApplicationMetricStorage.yaml'      
+    $ref: './resources/ApplicationMetricStorage.yaml'
   /application/{applicationId}/dependency:
     $ref: './resources/ApplicationDependency.yaml'
   /application/{applicationId}/dependency/{targetApplicationId}:
@@ -289,7 +289,7 @@ paths:
   /application/{applicationId}/logicalDatabase/{targetLogicalDatabaseId}:
     $ref: './resources/ApplicationLogicalDatabaseRef.yaml'
   /application/{applicationId}/link:
-    $ref: './resources/ApplicationLink.yaml'    
+    $ref: './resources/ApplicationLink.yaml'
   /environment/{environmentId}/database:
     $ref: './resources/EnvironmentDatabase.yaml'
   /environment/{environmentId}/database/status:

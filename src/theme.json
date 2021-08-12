@@ -2,7 +2,7 @@
   "theme": {
     "sidebar": {
       "width": "400px",
-      "backgroundColor": "#161B2C",
+      "backgroundColor": "#131326",
       "textColor": "#FFF",
       "activeTextColor": "#bebfff"
     },
@@ -13,13 +13,13 @@
     },
     "colors":{
       "primary":{
-        "main": "#5A43C1",
+        "main": "#5219FF",
         "contrastText":"#FFF"
       }
     },
     "rightPanel": {
-      "backgroundColor": "#161B2C",
+      "backgroundColor": "#131326",
       "textColor": "#FFF"
     }
-  } 
+  }
 }
