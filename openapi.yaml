@@ -5512,6 +5512,7 @@ components:
         status:
           type: string
           enum:
+            - NOT_CONFIGURED
             - READY
             - DEPLOYING
             - RUNNING
