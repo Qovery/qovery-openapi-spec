@@ -20,6 +20,7 @@ x-tagGroups:
       - Members
       - Billing
       - Clusters
+      - Cloud Provider
       - Cloud Provider Credentials
   - name: Project
     tags:
@@ -124,6 +125,8 @@ paths:
     $ref: './resources/CloudProviderScalewayCredentials.yaml'
   /organization/{organizationId}/scaleway/credentials/{credentialsId}:
     $ref: './resources/CloudProviderScalewayCredentialsRef.yaml'
+  /cloudProvider:
+    $ref: './resources/CloudProvider.yaml'
   /aws/region:
     $ref: './resources/CloudProviderAWSRegion.yaml'
   /digitalOcean/region:

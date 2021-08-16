@@ -1,0 +1,12 @@
+type: object
+properties:
+  short_name:
+    type: string
+  name:
+    type: string
+  logo_url:
+    type: string
+  regions:
+    type: array
+    items:
+      $ref: '../schemas/ClusterRegionResponse.yaml'

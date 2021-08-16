@@ -1,15 +1,15 @@
 get:
-  summary: 'List DO regions'
-  operationId: listDORegions
+  summary: 'List Cloud providers available'
+  operationId: listCloudProvider
   tags:
     - Cloud Provider
   responses:
     '200':
-      description: 'list regions'
+      description: 'list cloud providers'
       content:
         application/json:
           schema:
-            $ref: '../schemas/ClusterRegionResponseList.yaml'
+            $ref: '../schemas/CloudProviderResponseList.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

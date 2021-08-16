@@ -2,7 +2,7 @@ get:
   summary: 'List AWS regions'
   operationId: listAWSRegions
   tags:
-    - Cloud Provider Credentials
+    - Cloud Provider
   responses:
     '200':
       description: 'list regions'

@@ -2,7 +2,7 @@ get:
   summary: 'List Scaleway regions'
   operationId: listScalewayRegions
   tags:
-    - Cloud Provider Credentials
+    - Cloud Provider
   responses:
     '200':
       description: 'list regions'
