@@ -20,6 +20,7 @@ x-tagGroups:
       - Members
       - Billing
       - Clusters
+      - Cloud Provider
       - Cloud Provider Credentials
   - name: Project
     tags:
@@ -1065,12 +1066,47 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /cloudProvider:
+    get:
+      summary: List Cloud providers available
+      operationId: listCloudProvider
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list cloud providers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        short_name:
+                          type: string
+                        name:
+                          type: string
+                        logo_url:
+                          type: string
+                        regions:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/ClusterRegionResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /aws/region:
     get:
       summary: List AWS regions
       operationId: listAWSRegions
       tags:
-        - Cloud Provider Credentials
+        - Cloud Provider
       responses:
         '200':
           description: list regions
@@ -1089,7 +1125,7 @@ paths:
       summary: List DO regions
       operationId: listDORegions
       tags:
-        - Cloud Provider Credentials
+        - Cloud Provider
       responses:
         '200':
           description: list regions
@@ -1108,7 +1144,7 @@ paths:
       summary: List Scaleway regions
       operationId: listScalewayRegions
       tags:
-        - Cloud Provider Credentials
+        - Cloud Provider
       responses:
         '200':
           description: list regions
