@@ -6374,8 +6374,19 @@ components:
             $ref: '#/components/schemas/LinkResponse'
     ClusterRegionResponse:
       type: object
+      required:
+        - name
+        - country_code
+        - country
+        - city
       properties:
         name:
+          type: string
+        country_code:
+          type: string
+        country:
+          type: string
+        city:
           type: string
     CredentialsRequest:
       type: object
