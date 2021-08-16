@@ -1,11 +1,21 @@
 type: object
 required:
   - name
+  - cloud_provider
+  - region
 properties:
   name:
     type: string
     description: name is case insensitive
   description:
+    type: string
+  cloud_provider:
+    type: string
+    enum:
+      - AWS
+      - DIGITAL_OCEAN
+      - SCALEWAY
+  region:
     type: string
   auto_update:
     type: boolean

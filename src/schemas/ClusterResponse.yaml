@@ -13,14 +13,6 @@ properties:
     type: boolean
   version:
     type: string
-  cloud_provider:
-    type: string
-    enum:
-      - AWS
-      - DIGITAL_OCEAN
-      - SCALEWAY
-  region:
-    type: string
 allOf:
   - $ref: './BaseResponse.yaml'
   - $ref: './ClusterRequest.yaml'
