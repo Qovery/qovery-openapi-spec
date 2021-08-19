@@ -5025,7 +5025,9 @@ components:
           type: string
           enum:
             - COMMUNITY
-            - STARTUP
+            - FREE
+            - PROFESSIONAL
+            - BUSINESS
         website_url:
           type: string
           nullable: true
@@ -6364,11 +6366,48 @@ components:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/LogicalDatabaseRequest'
-    BudgetExceeded:
+    CurrentCost:
       type: object
       properties:
-        budget_exceeded:
+        plan:
+          type: string
+          enum:
+            - COMMUNITY
+            - FREE
+            - PROFESSIONAL
+            - BUSINESS
+        remaining_trial_day:
+          type: integer
+          description: number of days remaining before the end of the trial period
+    PaidUsage:
+      type: object
+      properties:
+        paid_usage:
+          $ref: '#/components/schemas/PaidUsageResponse'
+    PaidUsageResponse:
+      type: object
+      properties:
+        max_deployments_per_month:
+          type: integer
+        consumed_deployments:
+          type: integer
+        remaining_deployments:
+          type: integer
+        deployments_exceeded:
           type: boolean
+        next_renewal:
+          type: string
+          readOnly: true
+          format: date-time
+    CommunityUsage:
+      type: object
+      properties:
+        community_usage:
+          $ref: '#/components/schemas/CommunityUsageResponse'
+    CommunityUsageResponse:
+      allOf:
+        - $ref: '#/components/schemas/BudgetThreshold'
+        - $ref: '#/components/schemas/ProjectCurrentCostResponseList'
     DatabaseVersionMode:
       type: object
       properties:
@@ -6809,12 +6848,11 @@ components:
           type: string
     OrganizationCurrentCostResponse:
       allOf:
-        - $ref: '#/components/schemas/BudgetThreshold'
-        - $ref: '#/components/schemas/BillingPeriod'
+        - $ref: '#/components/schemas/CurrentCost'
         - $ref: '#/components/schemas/Cost'
         - $ref: '#/components/schemas/RemainingCredits'
-        - $ref: '#/components/schemas/BudgetExceeded'
-        - $ref: '#/components/schemas/ProjectCurrentCostResponseList'
+        - $ref: '#/components/schemas/PaidUsage'
+        - $ref: '#/components/schemas/CommunityUsage'
     GitRepositoryResponseList:
       type: object
       properties:
