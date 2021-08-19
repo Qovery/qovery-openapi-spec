@@ -1,0 +1,4 @@
+type: object
+properties:
+  paid_usage:
+    $ref: './PaidUsageResponse.yaml'

@@ -1,7 +1,6 @@
 allOf:
-- $ref: './BudgetThreshold.yaml'
-- $ref: './BillingPeriod.yaml'
+- $ref: './CurrentCost.yaml'
 - $ref: './Cost.yaml'
 - $ref: './RemainingCredits.yaml'
-- $ref: './BudgetExceeded.yaml'
-- $ref: './ProjectCurrentCostResponseList.yaml'
+- $ref: './PaidUsage.yaml'
+- $ref: './CommunityUsage.yaml'

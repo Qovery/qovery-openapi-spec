@@ -12,7 +12,9 @@ properties:
     type: string
     enum:
       - COMMUNITY
-      - STARTUP
+      - FREE
+      - PROFESSIONAL
+      - BUSINESS
   website_url:
     type: string
     nullable: true

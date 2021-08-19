@@ -796,6 +796,8 @@ GET /organization/:orgId/currentCost
 
 ```json
 {
+  "plan": "COMMUNITY",
+  "remaining_trial_day": 14,
   "remaining_credit": {
     "total_in_cents": 0,
     "total": 0.0,
@@ -806,35 +808,52 @@ GET /organization/:orgId/currentCost
     "total": 300.0,
     "currency_code": "EUR"
   },
-  "budget_threshold": {
-    "total_in_cents": 350000,
-    "total": 350.0,
-    "currency_code": "EUR"
+  "paid_usage": {
+    "max_deployments_per_month": 500,
+    "consumed_deployments": 300,
+    "remaining_deployments": 200,
+    "exceeded_deployments": false,
+    "next_renewal": "2021-09-01T00:00:00.000Z",
+    "addons": [
+      {
+        "id": "2093029",
+        "slug": "",
+        "name": "",
+        "description": ""
+      }
+    ]
   },
-  "projects": [
-    {
-      "id": "string",
-      "name": "string",
-      "consumed_time_in_seconds": 3600,
-      "cost": {
-        "total_in_cents": 108,
-        "total": 1.08,
-        "currency_code": "EUR"
-      },
-      "environments": [
-        {
-          "id": "string",
-          "name": "string",
-          "consumed_time_in_seconds": 3600,
-          "cost": {
-            "total_in_cents": 108,
-            "total": 1.08,
-            "currency_code": "EUR"
+  "community_usage": {
+    "budget_threshold": {
+      "total_in_cents": 350000,
+      "total": 350.0,
+      "currency_code": "EUR"
+    },
+    "projects": [
+      {
+        "id": "string",
+        "name": "string",
+        "consumed_time_in_seconds": 3600,
+        "cost": {
+          "total_in_cents": 108,
+          "total": 1.08,
+          "currency_code": "EUR"
+        },
+        "environments": [
+          {
+            "id": "string",
+            "name": "string",
+            "consumed_time_in_seconds": 3600,
+            "cost": {
+              "total_in_cents": 108,
+              "total": 1.08,
+              "currency_code": "EUR"
+            }
           }
-        }
-      ]
-    }
-  ]
+        ]
+      }
+    ]
+  }
 }
 ```
 
@@ -1031,8 +1050,7 @@ GET /project/:projectId/addon
       "is_trusted": true,
       "is_installed": false,
       "matching_environments_regex": "^feat/.*",
-      "metadata":{
-        
+      "metadata": {
       },
       "settings": {
         "api_key": "string"

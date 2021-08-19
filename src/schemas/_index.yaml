@@ -172,8 +172,16 @@ EnvironmentResponseList:
   $ref: ./EnvironmentResponseList.yaml
 LogicalDatabaseResponse:
   $ref: ./LogicalDatabaseResponse.yaml
-BudgetExceeded:
-  $ref: ./BudgetExceeded.yaml
+CurrentCost:
+  $ref: ./CurrentCost.yaml
+PaidUsage:
+  $ref: ./PaidUsage.yaml
+PaidUsageResponse:
+  $ref: ./PaidUsageResponse.yaml
+CommunityUsage:
+  $ref: ./CommunityUsage.yaml
+CommunityUsageResponse:
+  $ref: ./CommunityUsageResponse.yaml
 DatabaseVersionMode:
   $ref: ./DatabaseVersionMode.yaml
 ProjectResponse:

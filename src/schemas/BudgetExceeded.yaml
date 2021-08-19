@@ -1,4 +1,0 @@
-type: object
-properties:
-  budget_exceeded:
-    type: boolean

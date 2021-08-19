@@ -1,0 +1,14 @@
+type: object
+properties:
+  max_deployments_per_month:
+    type: integer
+  consumed_deployments:
+    type: integer
+  remaining_deployments:
+    type: integer
+  deployments_exceeded:
+    type: boolean
+  next_renewal:
+    type: string
+    readOnly: true
+    format: date-time
