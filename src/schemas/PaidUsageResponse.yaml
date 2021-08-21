@@ -8,7 +8,7 @@ properties:
     type: integer
   deployments_exceeded:
     type: boolean
-  next_renewal:
+  renewal_at:
     type: string
     readOnly: true
     format: date-time
