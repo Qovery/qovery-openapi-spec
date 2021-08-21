@@ -1,4 +1,0 @@
-type: object
-properties:
-  total_in_cents:
-    type: integer

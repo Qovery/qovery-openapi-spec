@@ -346,8 +346,6 @@ CommitResponseList:
   $ref: ./CommitResponseList.yaml
 EnvironmentApplicationsCurrentScaleResponse:
   $ref: ./EnvironmentApplicationsCurrentScaleResponse.yaml
-OrganizationBudgetEditRequest:
-  $ref: ./OrganizationBudgetEditRequest.yaml
 TagResponse:
   $ref: ./TagResponse.yaml
 EnvironmentApplicationsStorageResponseList:
