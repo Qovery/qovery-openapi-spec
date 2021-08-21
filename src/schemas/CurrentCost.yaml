@@ -10,3 +10,7 @@ properties:
   remaining_trial_day:
     type: integer
     description: number of days remaining before the end of the trial period
+  remaining_credits:
+   $ref: './RemainingCredits.yaml'
+  cost:
+   $ref: './Cost.yaml'

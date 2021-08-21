@@ -4,20 +4,12 @@ required:
   - name
   - consumed_time_in_seconds
   - cost
-  - billing_started_on
-  - billing_ended_on
 properties:
   id:
     type: string
     format: uuid
-  name: 
+  name:
     type: string
-  billing_started_on:
-    type: string
-    format: date-time
-  billing_ended_on:
-    type: string
-    format: date-time
   consumed_time_in_seconds:
     type: integer
     example: 3600
