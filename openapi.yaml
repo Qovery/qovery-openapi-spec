@@ -273,54 +273,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/costBudget':
-    get:
-      summary: Get organization cost Budget
-      operationId: getOrganizationCostBudget
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-      tags:
-        - Billing
-      responses:
-        '200':
-          description: Get Cost Budget
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CostResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    put:
-      summary: Edit Organization Budget
-      operationId: editOrganizationBudget
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-      tags:
-        - Billing
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OrganizationBudgetEditRequest'
-      responses:
-        '200':
-          description: Edit cost budget
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CostResponse'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/organization/{organizationId}/billingInfo':
     get:
       summary: Get organization billing info
@@ -7568,11 +7520,6 @@ components:
           type: string
           readOnly: true
           format: date-time
-    OrganizationBudgetEditRequest:
-      type: object
-      properties:
-        total_in_cents:
-          type: integer
     TagResponse:
       type: object
       required:
