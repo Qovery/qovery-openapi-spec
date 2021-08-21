@@ -5825,20 +5825,12 @@ components:
         - name
         - consumed_time_in_seconds
         - cost
-        - billing_started_on
-        - billing_ended_on
       properties:
         id:
           type: string
           format: uuid
         name:
           type: string
-        billing_started_on:
-          type: string
-          format: date-time
-        billing_ended_on:
-          type: string
-          format: date-time
         consumed_time_in_seconds:
           type: integer
           example: 3600
@@ -6379,6 +6371,10 @@ components:
         remaining_trial_day:
           type: integer
           description: number of days remaining before the end of the trial period
+        remaining_credits:
+          $ref: '#/components/schemas/RemainingCredits'
+        cost:
+          $ref: '#/components/schemas/Cost'
     PaidUsage:
       type: object
       properties:
@@ -6406,7 +6402,6 @@ components:
           $ref: '#/components/schemas/CommunityUsageResponse'
     CommunityUsageResponse:
       allOf:
-        - $ref: '#/components/schemas/BudgetThreshold'
         - $ref: '#/components/schemas/ProjectCurrentCostResponseList'
     DatabaseVersionMode:
       type: object
@@ -6849,8 +6844,6 @@ components:
     OrganizationCurrentCostResponse:
       allOf:
         - $ref: '#/components/schemas/CurrentCost'
-        - $ref: '#/components/schemas/Cost'
-        - $ref: '#/components/schemas/RemainingCredits'
         - $ref: '#/components/schemas/PaidUsage'
         - $ref: '#/components/schemas/CommunityUsage'
     GitRepositoryResponseList:
