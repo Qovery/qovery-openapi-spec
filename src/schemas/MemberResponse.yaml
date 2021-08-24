@@ -1,4 +1,9 @@
 type: object
+required:
+  - email
+  - last_activity_at
+  - role
+  - invitation_status
 properties:
   first_name:
     type: string
@@ -10,7 +15,7 @@ properties:
   profile_picture_url:
     type: string
     format: uri
-  last_activity:
+  last_activity_at:
     type: string
     format: date-time
     description: last time the user was connected
