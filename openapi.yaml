@@ -5469,8 +5469,6 @@ components:
       type: object
       required:
         - email
-        - last_activity_at
-        - role
         - invitation_status
       properties:
         first_name:
