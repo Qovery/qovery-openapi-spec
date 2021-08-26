@@ -1059,3 +1059,64 @@ GET /project/:projectId/addon
   ]
 }
 ```
+
+## Organization member
+
+GET /organization/:id/member
+
+```json
+{
+  "results": [
+    {
+      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+      "first_name": "string",
+      "last_name": "string",
+      "email": "user@example.com",
+      "profile_picture_url": "http://example.com",
+      "last_activity_at": "2019-08-24T14:15:22Z",
+      "role": "OWNER",
+      "invitation_status": "PENDING",
+      "created_at": "2019-08-24T14:15:22Z",
+      "updated_at": "2019-08-24T14:15:22Z"
+    }
+  ]
+}
+```
+
+POST /organization/:id/transferOwnership
+
+```json
+{
+  "user_id": "UUID"
+}
+```
+
+POST /organization/:id/inviteMember
+
+```json
+{
+  "email": "string",
+  "role": "ADMIN|DEVELOPER|VIEWER"
+}
+```
+
+response
+
+```json
+{
+  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+  "email": "user@example.com",
+  "invitation_link": "string",
+  "role": "ADMIN|DEVELOPER|VIEWER",
+  "invitation_status": "PENDING",
+  "created_at": "2019-08-24T14:15:22Z"
+}
+```
+
+POST /organization/:id/removeMember
+
+```json
+{
+  "user_id": "UUID"
+}
+```
