@@ -5502,6 +5502,9 @@ components:
     ClusterStatusResponse:
       type: object
       properties:
+        cluster_id:
+          type: string
+          format: uuid
         status:
           type: string
           enum:
