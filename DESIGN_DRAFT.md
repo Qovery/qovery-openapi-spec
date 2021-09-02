@@ -1113,10 +1113,6 @@ response
 }
 ```
 
-POST /organization/:id/removeMember
+DELETE /organization/:id/member/:userId
 
-```json
-{
-  "user_id": "UUID"
-}
-```
+
