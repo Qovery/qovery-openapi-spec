@@ -206,6 +206,176 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/member/{userId}':
+    delete:
+      summary: Remove a member
+      operationId: deleteMember
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: userId
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - O
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/inviteMember':
+    get:
+      summary: Get invited members
+      operationId: getOrganizationInvitedMembers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Members
+      responses:
+        '200':
+          description: Get invited members
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1organization~1%7BorganizationId%7D~1inviteMember/post/responses/201/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Invite someone in the organization
+      operationId: postInviteMember
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - role
+              properties:
+                email:
+                  type: string
+                role:
+                  type: string
+                  enum:
+                    - ADMIN
+                    - DEVELOPER
+                    - VIEWER
+      responses:
+        '201':
+          description: User invited
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - email
+                  - role
+                  - invitation_link
+                  - invitation_status
+                properties:
+                  email:
+                    type: string
+                    format: email
+                  role:
+                    type: string
+                    enum:
+                      - ADMIN
+                      - DEVELOPER
+                      - VIEWER
+                  invitation_link:
+                    type: string
+                    format: uri
+                  invitation_status:
+                    type: string
+                    enum:
+                      - PENDING
+                      - EXPIRED
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: User already invited
+  '/organization/{organizationId}/inviteMember/{inviteId}':
+    delete:
+      summary: Remove an invited member
+      operationId: deleteInviteMember
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: inviteId
+          in: path
+          description: Invite ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Members
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/transferOwnership':
+    post:
+      summary: Transfer organization ownership to another user
+      operationId: postOrganizationTransferOwnership
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user_id
+              properties:
+                user_id:
+                  type: string
+                  format: uuid
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/currentCost':
     get:
       summary: Get organization current cost
@@ -5469,7 +5639,6 @@ components:
       type: object
       required:
         - email
-        - invitation_status
       properties:
         first_name:
           type: string
@@ -5492,11 +5661,6 @@ components:
             - ADMIN
             - DEVELOPER
             - VIEWER
-        invitation_status:
-          type: string
-          enum:
-            - PENDING
-            - ACCEPTED
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
     ClusterStatusResponse:
@@ -5508,11 +5672,13 @@ components:
         status:
           type: string
           enum:
-            - NOT_CONFIGURED
+            - QUEUED
             - READY
             - DEPLOYING
+            - DEPLOYMENT_ERROR
             - RUNNING
             - WARNING
+            - ERROR
     InvoiceResponseList:
       type: object
       properties:
