@@ -5203,7 +5203,6 @@ components:
                 example: /mnt/images
     ClusterStatusResponseList:
       allOf:
-        - $ref: '#/components/schemas/ReferenceObject'
         - $ref: '#/components/schemas/ClusterStatusResponse'
     MetricGenericResponse:
       type: object
