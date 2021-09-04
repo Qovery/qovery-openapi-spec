@@ -1,0 +1,7 @@
+name: inviteId
+in: path
+description: Invite ID
+required: true
+schema:
+  type: string
+  format: uuid

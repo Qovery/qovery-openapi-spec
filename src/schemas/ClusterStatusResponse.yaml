@@ -6,8 +6,10 @@ properties:
   status:
     type: string
     enum:
-      - NOT_CONFIGURED
+      - QUEUED
       - READY
       - DEPLOYING
+      - DEPLOYMENT_ERROR
       - RUNNING
       - WARNING
+      - ERROR

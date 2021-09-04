@@ -1115,4 +1115,6 @@ response
 
 DELETE /organization/:id/member/:userId
 
+DELETE /organization/:id/inviteMember/:userId
+
 

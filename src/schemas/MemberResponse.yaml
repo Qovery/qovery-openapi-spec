@@ -1,7 +1,6 @@
 type: object
 required:
   - email
-  - invitation_status
 properties:
   first_name:
     type: string
@@ -24,10 +23,5 @@ properties:
       - ADMIN
       - DEVELOPER
       - VIEWER
-  invitation_status:
-    type: string
-    enum:
-      - PENDING
-      - ACCEPTED
 allOf:
   - $ref: './BaseResponse.yaml'

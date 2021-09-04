@@ -77,6 +77,14 @@ paths:
     $ref: './resources/Organization.yaml'
   /organization/{organizationId}/member:
     $ref: './resources/OrganizationMember.yaml'
+  /organization/{organizationId}/member/{userId}:
+    $ref: './resources/OrganizationMemberRef.yaml'
+  /organization/{organizationId}/inviteMember:
+    $ref: './resources/OrganizationInviteMember.yaml'
+  /organization/{organizationId}/inviteMember/{inviteId}:
+    $ref: './resources/OrganizationInviteMemberRef.yaml'
+  /organization/{organizationId}/transferOwnership:
+    $ref: './resources/OrganizationTransferOwnership.yaml'
   /organization/{organizationId}/currentCost:
     $ref: './resources/OrganizationCurrentCost.yaml'
   /organization/{organizationId}/creditCode:

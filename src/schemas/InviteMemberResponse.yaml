@@ -1,0 +1,26 @@
+type: object
+required:
+  - email
+  - role
+  - invitation_link
+  - invitation_status
+properties:
+  email:
+    type: string
+    format: email
+  role:
+    type: string
+    enum:
+      - ADMIN
+      - DEVELOPER
+      - VIEWER
+  invitation_link:
+    type: string
+    format: uri
+  invitation_status:
+    type: string
+    enum:
+      - PENDING
+      - EXPIRED
+allOf:
+  - $ref: './BaseResponse.yaml'

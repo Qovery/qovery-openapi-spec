@@ -1,0 +1,13 @@
+type: object
+required:
+  - email
+  - role
+properties:
+  email:
+    type: string
+  role:
+    type: string
+    enum:
+      - ADMIN
+      - DEVELOPER
+      - VIEWER
