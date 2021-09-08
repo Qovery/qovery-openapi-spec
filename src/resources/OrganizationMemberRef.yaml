@@ -5,7 +5,7 @@ delete:
     - $ref: '../parameters/path/organizationId.yaml'
     - $ref: '../parameters/path/userId.yaml'
   tags:
-    - O
+    - Members
   responses:
     '204':
       $ref: '../responses/Deleted.yaml'
