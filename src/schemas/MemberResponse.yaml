@@ -2,9 +2,9 @@ type: object
 required:
   - email
 properties:
-  first_name:
+  name:
     type: string
-  last_name:
+  nickname:
     type: string
   email:
     type: string
