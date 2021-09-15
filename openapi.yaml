@@ -329,9 +329,9 @@ paths:
         '409':
           description: User already invited
   '/organization/{organizationId}/inviteMember/{inviteId}':
-    delete:
-      summary: Remove an invited member
-      operationId: deleteInviteMember
+    post:
+      summary: Accept Invite in the organization
+      operationId: postAcceptInviteMember
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - name: inviteId
@@ -341,6 +341,31 @@ paths:
           schema:
             type: string
             format: uuid
+      tags:
+        - Members
+      responses:
+        '201':
+          description: User invited
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1inviteMember/post/responses/201/content/application~1json/schema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: User already invited
+    delete:
+      summary: Remove an invited member
+      operationId: deleteInviteMember
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1inviteMember~1%7BinviteId%7D/post/parameters/1'
       tags:
         - Members
       responses:
