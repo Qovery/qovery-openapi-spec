@@ -4,6 +4,7 @@ required:
   - role
   - invitation_link
   - invitation_status
+  - inviter
 properties:
   email:
     type: string
@@ -22,5 +23,10 @@ properties:
     enum:
       - PENDING
       - EXPIRED
+  inviter:
+    type: string
+  logo_url:
+    type: string
+    format: uri   
 allOf:
   - $ref: './BaseResponse.yaml'
