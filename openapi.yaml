@@ -292,6 +292,7 @@ paths:
                   - role
                   - invitation_link
                   - invitation_status
+                  - inviter
                 properties:
                   email:
                     type: string
@@ -310,6 +311,11 @@ paths:
                     enum:
                       - PENDING
                       - EXPIRED
+                  inviter:
+                    type: string
+                  logo_url:
+                    type: string
+                    format: uri
                 allOf:
                   - $ref: '#/components/schemas/BaseResponse'
         '400':
