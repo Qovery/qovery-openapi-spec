@@ -47,28 +47,3 @@ post:
       $ref: '../responses/NotFound.yaml'
     '409':
       description: User already invited
-post:
-  summary: 'Accept Invite in the organization'
-  operationId: postAcceptInviteMember
-  parameters:
-    - $ref: '../parameters/path/organizationId.yaml'
-    - $ref: '../parameters/path/inviteId.yaml'
-  tags:
-    - Members
-  responses:
-    '201':
-      description: 'User invited'
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/InviteMemberResponse.yaml'
-    '400':
-      $ref: '../responses/BadRequest.yaml'
-    '401':
-      $ref: '../responses/NotAuthorized.yaml'
-    '403':
-      $ref: '../responses/Forbidden.yaml'
-    '404':
-      $ref: '../responses/NotFound.yaml'
-    '409':
-      description: User already invited
