@@ -6541,6 +6541,10 @@ components:
           type: integer
         consumed_deployments:
           type: integer
+        monthly_plan_cost:
+          type: number
+        monthly_plan_cost_in_cents:
+          type: integer
         remaining_deployments:
           type: integer
         deployments_exceeded:
