@@ -1,0 +1,6 @@
+name: repositoryId
+in: path
+description: Repository ID
+required: true
+schema:
+  type: string

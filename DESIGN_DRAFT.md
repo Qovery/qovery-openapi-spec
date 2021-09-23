@@ -1118,3 +1118,15 @@ DELETE /organization/:id/member/:userId
 DELETE /organization/:id/inviteMember/:userId
 
 
+GET /account/gitlab/repository/:repositoryId/branch
+GET /account/github/repository/:repositoryId/branch
+
+```json
+{
+  "results": [
+    {
+      "branch": "string"
+    }
+  ]
+}
+```

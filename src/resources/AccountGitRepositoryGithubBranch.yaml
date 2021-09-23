@@ -1,0 +1,14 @@
+get:
+  summary: 'Get github branches of the specified repository'
+  operationId: getGithubRepositoryBranches
+  tags:
+    - Git repositories
+  responses:
+    '200':
+      description: 'Get github repository branches'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/GitRepositoryBranchResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
