@@ -6529,19 +6529,21 @@ components:
           format: date-time
           nullable: true
           description: specify value only if always_up = false
-        weekday:
-          type: string
-          enum:
-            - MONDAY
-            - TUESDAY
-            - WEDNESDAY
-            - THURSDAY
-            - FRIDAY
-            - SATURDAY
-            - SUNDAY
-          example: FRIDAY
+        weekdays:
+          type: array
           nullable: true
           description: specify value only if always_up = false
+          items:
+            type: string
+            enum:
+              - MONDAY
+              - TUESDAY
+              - WEDNESDAY
+              - THURSDAY
+              - FRIDAY
+              - SATURDAY
+              - SUNDAY
+            example: MONDAY
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
     MetricMemoryDatapointResponse:
@@ -7284,19 +7286,21 @@ components:
           format: date-time
           nullable: true
           description: specify value only if always_up = false
-        weekday:
-          type: string
-          enum:
-            - MONDAY
-            - TUESDAY
-            - WEDNESDAY
-            - THURSDAY
-            - FRIDAY
-            - SATURDAY
-            - SUNDAY
-          example: MONDAY
+        weekdays:
+          type: array
           nullable: true
           description: specify value only if always_up = false
+          items:
+            type: string
+            enum:
+              - MONDAY
+              - TUESDAY
+              - WEDNESDAY
+              - THURSDAY
+              - FRIDAY
+              - SATURDAY
+              - SUNDAY
+            example: MONDAY
     ProjectCurrentCostResponse:
       type: object
       properties:
@@ -7522,19 +7526,21 @@ components:
           format: date-time
           nullable: true
           description: specify value only if always_up = false
-        weekday:
-          type: string
-          enum:
-            - MONDAY
-            - TUESDAY
-            - WEDNESDAY
-            - THURSDAY
-            - FRIDAY
-            - SATURDAY
-            - SUNDAY
-          example: MONDAY
+        weekdays:
+          type: array
           nullable: true
           description: specify value only if always_up = false
+          items:
+            type: string
+            enum:
+              - MONDAY
+              - TUESDAY
+              - WEDNESDAY
+              - THURSDAY
+              - FRIDAY
+              - SATURDAY
+              - SUNDAY
+            example: MONDAY
     ReferenceObjectStatusResponseList:
       type: object
       properties:
