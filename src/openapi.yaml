@@ -353,11 +353,11 @@ paths:
     $ref: './resources/AccountGitAuthProvider.yaml'
   /account/github/repository:
     $ref: './resources/AccountGitRepositoryGithub.yaml'
-  /account/github/repository/{repositoryId}/branch:
+  /account/github/repository/branch:
     $ref: './resources/AccountGitRepositoryGithubBranch.yaml'
   /account/gitlab/repository:
     $ref: './resources/AccountGitRepositoryGitlab.yaml'
-  /account/gitlab/repository/{repositoryId}/branch:
+  /account/gitlab/repository/branch:
     $ref: './resources/AccountGitRepositoryGitlabBranch.yaml'
   /account/referral:
     $ref: './resources/AccountReferral.yaml'
