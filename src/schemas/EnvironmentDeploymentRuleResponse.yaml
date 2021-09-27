@@ -16,11 +16,13 @@ properties:
     format: date-time
     nullable: true
     description: specify value only if always_up = false
-  weekday:
-    type: string
-    enum: [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY]
-    example: FRIDAY
+  weekdays:
+    type: array
     nullable: true
     description: specify value only if always_up = false
+    items:
+      type: string
+      enum: [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY]
+      example: MONDAY
 allOf:
   - $ref: './BaseResponse.yaml'
