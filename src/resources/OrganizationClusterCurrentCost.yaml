@@ -1,6 +1,9 @@
 get:
   summary: 'Get cluster current cost'
   operationId: getClusterCurrentCost
+  description: |
+    Get your cluster cost range. We are unable to give a precise cost of your infrastructure at the moment.
+    But Qovery guarantees that the cost of your cluster will not exceed the max range.
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
     - $ref: '../parameters/path/clusterId.yaml'
@@ -12,7 +15,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/CostResponse.yaml'
+            $ref: '../schemas/CostRangeResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
