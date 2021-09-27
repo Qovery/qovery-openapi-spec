@@ -4895,12 +4895,18 @@ paths:
                 $ref: '#/components/schemas/GitRepositoryResponseList'
         '401':
           $ref: '#/components/responses/401'
-  '/account/github/repository/{repositoryId}/branch':
+  /account/github/repository/branch:
     get:
       summary: Get github branches of the specified repository
       operationId: getGithubRepositoryBranches
       tags:
         - Git repositories
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: The name of the repository where to retrieve the branches
       responses:
         '200':
           description: Get github repository branches
@@ -4936,19 +4942,25 @@ paths:
                 $ref: '#/components/schemas/GitRepositoryResponseList'
         '401':
           $ref: '#/components/responses/401'
-  '/account/gitlab/repository/{repositoryId}/branch':
+  /account/gitlab/repository/branch:
     get:
       summary: Get gitlab branches of the specified repository
       operationId: getGitlabRepositoryBranches
       tags:
         - Git repositories
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: The name of the repository to retrieve the branches
       responses:
         '200':
           description: Get gitlab repository branches
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1account~1github~1repository~1%7BrepositoryId%7D~1branch/get/responses/200/content/application~1json/schema'
+                $ref: '#/paths/~1account~1github~1repository~1branch/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
   /account/referral:
