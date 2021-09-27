@@ -456,6 +456,9 @@ paths:
     get:
       summary: Get cluster current cost
       operationId: getClusterCurrentCost
+      description: |
+        Get your cluster cost range. We are unable to give a precise cost of your infrastructure at the moment.
+        But Qovery guarantees that the cost of your cluster will not exceed the max range.
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/clusterId'
@@ -467,7 +470,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CostResponse'
+                type: object
+                required:
+                  - total_in_cents
+                  - total
+                  - currency_code
+                properties:
+                  min_cost_in_cents:
+                    type: integer
+                    example: 15000
+                  min_cost:
+                    type: number
+                    example: 150
+                  max_cost_in_cents:
+                    type: integer
+                    example: 30000
+                  max_cost:
+                    type: number
+                    example: 300
+                  currency_code:
+                    type: string
+                    example: USD
         '401':
           $ref: '#/components/responses/401'
         '403':
