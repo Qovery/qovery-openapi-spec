@@ -6519,6 +6519,11 @@ components:
         always_up:
           type: boolean
           default: false
+        timezone:
+          type: string
+          nullable: false
+          default: Europe/London
+          description: specify value only if always_up = false
         start_time:
           type: string
           format: date-time
@@ -7276,6 +7281,11 @@ components:
         always_up:
           type: boolean
           default: false
+        timezone:
+          type: string
+          nullable: false
+          default: Europe/London
+          description: specify value only if always_up = false
         start_time:
           type: string
           format: date-time
@@ -7516,6 +7526,11 @@ components:
         always_up:
           type: boolean
           default: false
+        timezone:
+          type: string
+          nullable: false
+          default: Europe/London
+          description: specify value only if always_up = false
         start_time:
           type: string
           format: date-time
