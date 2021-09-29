@@ -3,6 +3,7 @@ get:
   operationId: listApplication
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
+    - $ref: '../parameters/query/toUpdate.yaml'
   tags:
     - Applications
   responses:

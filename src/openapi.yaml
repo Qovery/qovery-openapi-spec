@@ -195,8 +195,6 @@ paths:
     $ref: './resources/EnvironmentApplication.yaml'
   /environment/{environmentId}/application/status:
     $ref: './resources/EnvironmentApplicationStatus.yaml'
-  /environment/{environmentId}/application/to-update:
-    $ref: './resources/EnvironmentApplicationToUpdate.yaml'
   /environment/{environmentId}/application/instance:
     $ref: './resources/EnvironmentApplicationCurrentInstance.yaml'
   /environment/{environmentId}/application/currentStorage:
