@@ -5684,15 +5684,15 @@ components:
       properties:
         name:
           type: string
-          description: name is case insensitive
+          description: name is case-insensitive
         version:
           type: string
           example: '10.1'
         accessibility:
           type: string
           enum:
-            - public
-            - private
+            - PUBLIC
+            - PRIVATE
         cpu:
           type: number
           description: unit is millicores (m). 1000m = 1 cpu
