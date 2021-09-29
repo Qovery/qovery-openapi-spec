@@ -2341,6 +2341,13 @@ paths:
       operationId: listApplication
       parameters:
         - $ref: '#/components/parameters/environmentId'
+        - name: toUpdate
+          in: query
+          description: return (or not) results that must be updated
+          required: false
+          schema:
+            type: boolean
+            default: null
       tags:
         - Applications
       responses:
@@ -2401,27 +2408,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReferenceObjectStatusResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/environment/{environmentId}/application/to-update':
-    get:
-      summary: List applications to update
-      operationId: listApplicationToUpdate
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-      tags:
-        - Applications
-      responses:
-        '200':
-          description: List applications
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApplicationResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
