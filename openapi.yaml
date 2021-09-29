@@ -6238,6 +6238,8 @@ components:
           type: boolean
         enable_historical_log:
           type: boolean
+        enable_static_ip:
+          type: boolean
         cpu:
           type: number
           description: unit is millicores (m). 1000m = 1 cpu
