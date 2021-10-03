@@ -13,6 +13,9 @@ properties:
     type: boolean
   version:
     type: string
+  type: array
+  features:
+    $ref: './ClusterFeatureResponse.yaml'
 allOf:
   - $ref: './BaseResponse.yaml'
-  - $ref: './ClusterRequest.yaml'
+  - $ref: './Cluster.yaml'

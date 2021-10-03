@@ -1,0 +1,9 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    nullable: false
+  value:
+    type: string
+    nullable: true

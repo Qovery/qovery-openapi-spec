@@ -1,0 +1,20 @@
+get:
+  summary: 'List Scaleway features available'
+  operationId: listScalewayFeatures
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Cloud Provider
+  responses:
+    '200':
+      description: 'list features available for Scaleway cloud provider'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterFeatureResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

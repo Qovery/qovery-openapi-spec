@@ -4,40 +4,9 @@ required:
   - cloud_provider
   - region
 properties:
-  name:
-    type: string
-    description: name is case insensitive
-  description:
-    type: string
-  cloud_provider:
-    type: string
-    enum:
-      - AWS
-      - DIGITAL_OCEAN
-      - SCALEWAY
-  region:
-    type: string
-  auto_update:
-    type: boolean
-  enable_historical_metric:
-    type: boolean
-  enable_historical_log:
-    type: boolean
-  enable_static_ip:
-    type: boolean
-  cpu:
-    type: number
-    description: unit is millicores (m). 1000m = 1 cpu
-    default: 250
-    example: 1250
-  memory:
-    type: number
-    description: unit is MB. 1024 MB = 1GB
-    default: 256
-    example: 1024
-  min_running_nodes:
-    type: integer
-    default: 1
-  max_running_nodes:
-    type: integer
-    default: 1
+  type: array
+  features:
+    $ref: './ClusterFeatureRequest.yaml'
+allOf:
+  - $ref: './Cluster.yaml'
+
