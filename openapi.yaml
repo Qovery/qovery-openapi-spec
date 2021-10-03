@@ -1296,6 +1296,32 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /aws/clusterFeature:
+    get:
+      summary: List AWS features available
+      operationId: listAWSFeatures
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list features available for AWS cloud provider
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ClusterResponse/properties/features'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /digitalOcean/region:
     get:
       summary: List DO regions
@@ -1315,6 +1341,27 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /digitalOcean/clusterFeature:
+    get:
+      summary: List DO features available
+      operationId: listDOFeatures
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list features available for Digital Ocean cloud provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1aws~1clusterFeature/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /scaleway/region:
     get:
       summary: List Scaleway regions
@@ -1328,6 +1375,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClusterRegionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /scaleway/clusterFeature:
+    get:
+      summary: List Scaleway features available
+      operationId: listScalewayFeatures
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list features available for Scaleway cloud provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1aws~1clusterFeature/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -6219,43 +6287,55 @@ components:
         - cloud_provider
         - region
       properties:
-        name:
-          type: string
-          description: name is case insensitive
-        description:
-          type: string
-        cloud_provider:
-          type: string
-          enum:
-            - AWS
-            - DIGITAL_OCEAN
-            - SCALEWAY
-        region:
-          type: string
-        auto_update:
-          type: boolean
-        enable_historical_metric:
-          type: boolean
-        enable_historical_log:
-          type: boolean
-        enable_static_ip:
-          type: boolean
-        cpu:
-          type: number
-          description: unit is millicores (m). 1000m = 1 cpu
-          default: 250
-          example: 1250
-        memory:
-          type: number
-          description: unit is MB. 1024 MB = 1GB
-          default: 256
-          example: 1024
-        min_running_nodes:
-          type: integer
-          default: 1
-        max_running_nodes:
-          type: integer
-          default: 1
+        type: array
+        features:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              nullable: false
+            value:
+              type: string
+              nullable: true
+      allOf:
+        - type: object
+          required:
+            - name
+            - cloud_provider
+            - region
+          properties:
+            name:
+              type: string
+              description: name is case-insensitive
+            description:
+              type: string
+            cloud_provider:
+              type: string
+              enum:
+                - AWS
+                - DIGITAL_OCEAN
+                - SCALEWAY
+            region:
+              type: string
+            auto_update:
+              type: boolean
+            cpu:
+              type: number
+              description: unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            memory:
+              type: number
+              description: unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
+            min_running_nodes:
+              type: integer
+              default: 1
+            max_running_nodes:
+              type: integer
+              default: 1
     ClusterCloudProviderInfoResponse:
       type: object
       properties:
@@ -6872,9 +6952,45 @@ components:
           type: boolean
         version:
           type: string
+        type: array
+        features:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+              nullable: false
+            description:
+              type: string
+              nullable: true
+            cost_per_month_in_cents:
+              type: integer
+              nullable: true
+              example: 9900
+            cost_per_month:
+              type: number
+              nullable: true
+              example: 99
+            currency_code:
+              type: string
+              nullable: true
+              example: USD
+            value_type:
+              type: string
+              nullable: false
+              enum:
+                - BOOLEAN
+            value:
+              type: string
+              nullable: true
+            is_value_updatable:
+              type: boolean
+              default: false
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
-        - $ref: '#/components/schemas/ClusterRequest'
+        - $ref: '#/components/schemas/ClusterRequest/allOf/0'
     BackupPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationDataResponse'
