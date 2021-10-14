@@ -8,6 +8,7 @@ properties:
     enum:
       - QUEUED
       - READY
+      - STOPPED
       - DEPLOYING
       - DEPLOYMENT_ERROR
       - RUNNING
