@@ -2571,6 +2571,28 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/application/supportedLanguage':
+    get:
+      summary: List supported languages
+      description: Returns list of languages supported by Buildpacks.
+      operationId: getEnvironmentApplicationSupportedLanguages
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Applications
+      responses:
+        '200':
+          description: Supported languages list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentApplicationsSupportedLanguageList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/log':
     get:
       summary: List environment deployment logs
@@ -7970,6 +7992,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentApplicationsStorageResponse'
+    EnvironmentApplicationsSupportedLanguageList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentApplicationsSupportedLanguage'
+    EnvironmentApplicationsSupportedLanguage:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Ruby
     DatabaseConfigurationResponse:
       type: object
       properties:
