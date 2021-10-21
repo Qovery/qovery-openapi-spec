@@ -4032,6 +4032,28 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/customDomain/{customDomainId}/status':
+    get:
+      summary: Get Custom Domain status
+      operationId: getCustomDomainStatus
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/customDomainId'
+      tags:
+        - Custom Domain
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomDomainResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/log':
     get:
       summary: List logs
@@ -6536,8 +6558,9 @@ components:
         status:
           type: string
           enum:
-            - validation_pending
-            - live
+            - deploying
+            - checking
+            - ready
             - error
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
