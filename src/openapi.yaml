@@ -209,6 +209,8 @@ paths:
     $ref: './resources/EnvironmentApplicationsCurrentStorage.yaml'
   /environment/{environmentId}/application/currentScale:
     $ref: './resources/EnvironmentApplicationCurrentScale.yaml'
+  /environment/{environmentId}/application/supportedLanguage:
+    $ref: './resources/EnvironmentApplicationSupportedLanguage.yaml'
   /environment/{environmentId}/log:
     $ref: './resources/EnvironmentLog.yaml'
   /environment/{environmentId}/deploymentHistory:

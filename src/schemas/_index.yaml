@@ -350,6 +350,10 @@ TagResponse:
   $ref: ./TagResponse.yaml
 EnvironmentApplicationsStorageResponseList:
   $ref: ./EnvironmentApplicationsStorageResponseList.yaml
+EnvironmentApplicationsSupportedLanguageList:
+  $ref: ./EnvironmentApplicationsSupportedLanguageResponseList.yaml
+EnvironmentApplicationsSupportedLanguage:
+  $ref: ./EnvironmentApplicationsSupportedLanguageResponse.yaml
 DatabaseConfigurationResponse:
   $ref: ./DatabaseConfigurationResponse.yaml
 DatabaseCurrentMetricResponse:
