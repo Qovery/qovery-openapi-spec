@@ -6,8 +6,9 @@ properties:
   status:
     type: string
     enum:
-      - validation_pending
-      - live
+      - deploying
+      - checking
+      - ready
       - error
 allOf:
   - $ref: './BaseResponse.yaml'

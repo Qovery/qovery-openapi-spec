@@ -293,6 +293,8 @@ paths:
     $ref: './resources/ApplicationCustomDomain.yaml'
   /application/{applicationId}/customDomain/{customDomainId}:
     $ref: './resources/ApplicationCustomDomainRef.yaml'
+  /application/{applicationId}/customDomain/{customDomainId}/status:
+    $ref: './resources/ApplicationCustomDomainStatus.yaml'
   /application/{applicationId}/log:
     $ref: './resources/ApplicationLog.yaml'
   /application/{applicationId}/database:
