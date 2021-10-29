@@ -6,11 +6,19 @@ properties:
   status:
     type: string
     enum:
-      - QUEUED
-      - READY
-      - STOPPED
-      - DEPLOYING
-      - DEPLOYMENT_ERROR
-      - RUNNING
-      - WARNING
-      - ERROR
+        - READY
+        - QUEUED
+        - BUILDING
+        - BUILD_ERROR
+        - BUILT
+        - DEPLOYING
+        - DEPLOYMENT_ERROR
+        - DEPLOYED
+        - STOPPING
+        - STOP_ERROR
+        - STOPPED
+        - DELETING
+        - DELETE_ERROR
+        - DELETED
+        - RUNNING
+        - RUNNING_ERROR
