@@ -5901,14 +5901,22 @@ components:
         status:
           type: string
           enum:
-            - QUEUED
             - READY
-            - STOPPED
+            - QUEUED
+            - BUILDING
+            - BUILD_ERROR
+            - BUILT
             - DEPLOYING
             - DEPLOYMENT_ERROR
+            - DEPLOYED
+            - STOPPING
+            - STOP_ERROR
+            - STOPPED
+            - DELETING
+            - DELETE_ERROR
+            - DELETED
             - RUNNING
-            - WARNING
-            - ERROR
+            - RUNNING_ERROR
     InvoiceResponseList:
       type: object
       properties:
