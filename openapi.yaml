@@ -2298,7 +2298,7 @@ paths:
   '/environment/{environmentId}/deploymentRule/{deploymentRuleId}':
     put:
       summary: Edit an environment deployment rule
-      operationId: editEnvironmentDeployemtnRule
+      operationId: editEnvironmentDeploymentRule
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/deploymentRuleId'
@@ -7718,6 +7718,9 @@ components:
         auto_deploy:
           type: boolean
           default: true
+        auto_delete:
+          type: boolean
+          default: false
         always_up:
           type: boolean
           default: false
