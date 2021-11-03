@@ -1,6 +1,6 @@
 put:
   summary: 'Edit an environment deployment rule'
-  operationId: editEnvironmentDeployemtnRule
+  operationId: editEnvironmentDeploymentRule
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
     - $ref: '../parameters/path/deploymentRuleId.yaml'
