@@ -1,9 +1,14 @@
 type: object
 properties:
-  id:
-    type: string
-    format: uuid
-    nullable: false
-  value:
-    type: string
-    nullable: true
+  features:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: false
+        value:
+          type: string
+          nullable: true

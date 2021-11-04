@@ -364,3 +364,37 @@ LogPaginatedResponseList:
   $ref: ./LogPaginatedResponseList.yaml
 StorageDiskResponseList:
   $ref: ./StorageDiskResponseList.yaml
+CostRangeResponse:
+  $ref: ./CostRangeResponse.yaml
+CloudProviderResponse:
+  $ref: ./CloudProviderResponse.yaml
+InviteMemberResponse:
+  $ref: ./InviteMemberResponse.yaml
+TransferOwnershipRequest:
+  $ref: ./TransferOwnershipRequest.yaml
+CluserCredentialsResponse:
+  $ref: ./ClusterCredentialsRequest.yaml
+AwsCredentialsRequest:
+  $ref: ./AwsCredentialsRequest.yaml
+DoCredentialsRequest:
+  $ref: ./DoCredentialsRequest.yaml
+ScalewayCredentialsRequest:
+  $ref: ./ScalewayCredentialsRequest.yaml
+InviteMemberRequest:
+  $ref: ./InviteMemberRequest.yaml
+ClusterFeatureRequest:
+  $ref: ./ClusterFeatureRequest.yaml
+EnvironmentApplicationsSupportedLanguageResponse:
+  $ref: ./EnvironmentApplicationsSupportedLanguageResponse.yaml
+EnvironmentApplicationsSupportedLanguageResponseList:
+  $ref: ./EnvironmentApplicationsSupportedLanguageResponseList.yaml
+Cluster:
+  $ref: ./Cluster.yaml
+ClusterFeatureResponse:
+  $ref: ./ClusterFeatureResponse.yaml
+ClusterFeatureResponseList:
+  $ref: ./ClusterFeatureResponseList.yaml
+InviteMemberResponseList:
+  $ref: ./InviteMemberResponseList.yaml
+CloudProviderResponseList:
+  $ref: ./CloudProviderResponseList.yaml
