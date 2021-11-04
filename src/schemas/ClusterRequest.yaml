@@ -3,10 +3,6 @@ required:
   - name
   - cloud_provider
   - region
-properties:
-  type: array
-  features:
-    $ref: './ClusterFeatureRequest.yaml'
 allOf:
   - $ref: './Cluster.yaml'
-
+  - $ref: './ClusterFeatureRequest.yaml'
