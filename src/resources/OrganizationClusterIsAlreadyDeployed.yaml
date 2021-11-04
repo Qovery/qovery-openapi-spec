@@ -1,0 +1,21 @@
+get:
+  summary: 'Know if a cluster has already been deployed'
+  operationId: getClusterAlreadyDeployedStatus
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/clusterId.yaml'
+  tags:
+    - Clusters
+  responses:
+    '200':
+      description: 'Already deployed status'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterAlreadyDeployedStatus.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

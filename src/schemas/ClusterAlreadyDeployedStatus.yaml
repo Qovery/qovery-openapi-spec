@@ -1,0 +1,4 @@
+type: object
+properties:
+  is_already_deployed:
+    type: boolean
