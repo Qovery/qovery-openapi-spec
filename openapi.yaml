@@ -929,7 +929,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/cluster/{clusterId}/alreadyDeployed':
+  '/organization/{organizationId}/cluster/{clusterId}/isAlreadyDeployed':
     get:
       summary: Know if a cluster has already been deployed
       operationId: getClusterAlreadyDeployedStatus
