@@ -929,6 +929,31 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/alreadyDeployed':
+    get:
+      summary: Know if a cluster has already been deployed
+      operationId: getClusterAlreadyDeployedStatus
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: Already deployed status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  is_already_deployed:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/aws/credentials':
     get:
       summary: List AWS credentials
@@ -5902,16 +5927,15 @@ components:
           type: string
           enum:
             - READY
-            - QUEUED
-            - BUILDING
-            - BUILD_ERROR
-            - BUILT
+            - DEPLOYMENT_QUEUED
             - DEPLOYING
             - DEPLOYMENT_ERROR
             - DEPLOYED
+            - STOP_QUEUED
             - STOPPING
             - STOP_ERROR
             - STOPPED
+            - DELETE_QUEUED
             - DELETING
             - DELETE_ERROR
             - DELETED
