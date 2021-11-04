@@ -244,12 +244,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/paths/~1organization~1%7BorganizationId%7D~1inviteMember/post/responses/201/content/application~1json/schema'
+                $ref: '#/components/schemas/InviteMemberResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -267,57 +262,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - email
-                - role
-              properties:
-                email:
-                  type: string
-                role:
-                  type: string
-                  enum:
-                    - ADMIN
-                    - DEVELOPER
-                    - VIEWER
+              $ref: '#/components/schemas/InviteMemberRequest'
       responses:
         '201':
           description: User invited
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - email
-                  - role
-                  - invitation_link
-                  - invitation_status
-                  - inviter
-                properties:
-                  email:
-                    type: string
-                    format: email
-                  role:
-                    type: string
-                    enum:
-                      - ADMIN
-                      - DEVELOPER
-                      - VIEWER
-                  invitation_link:
-                    type: string
-                    format: uri
-                  invitation_status:
-                    type: string
-                    enum:
-                      - PENDING
-                      - EXPIRED
-                  inviter:
-                    type: string
-                  logo_url:
-                    type: string
-                    format: uri
-                allOf:
-                  - $ref: '#/components/schemas/BaseResponse'
+                $ref: '#/components/schemas/InviteMemberResponse'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -349,7 +301,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1inviteMember/post/responses/201/content/application~1json/schema'
+                $ref: '#/components/schemas/InviteMemberResponse'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -389,13 +341,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - user_id
-              properties:
-                user_id:
-                  type: string
-                  format: uuid
+              $ref: '#/components/schemas/TransferOwnershipRequest'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -470,27 +416,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - total_in_cents
-                  - total
-                  - currency_code
-                properties:
-                  min_cost_in_cents:
-                    type: integer
-                    example: 15000
-                  min_cost:
-                    type: number
-                    example: 150
-                  max_cost_in_cents:
-                    type: integer
-                    example: 30000
-                  max_cost:
-                    type: number
-                    example: 300
-                  currency_code:
-                    type: string
-                    example: USD
+                $ref: '#/components/schemas/CostRangeResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -986,16 +912,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - name
-              properties:
-                name:
-                  type: string
-                access_key_id:
-                  type: string
-                secret_access_key:
-                  type: string
+              $ref: '#/components/schemas/AwsCredentialsRequest'
       responses:
         '201':
           description: Credentials created
@@ -1024,7 +941,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1aws~1credentials/post/requestBody/content/application~1json/schema'
+              $ref: '#/components/schemas/AwsCredentialsRequest'
       responses:
         '200':
           description: Edit a CustomDomain
@@ -1089,18 +1006,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - name
-              properties:
-                name:
-                  type: string
-                token:
-                  type: string
-                spaces_access_id:
-                  type: string
-                spaces_secret_key:
-                  type: string
+              $ref: '#/components/schemas/DoCredentialsRequest'
       responses:
         '201':
           description: Credentials created
@@ -1129,7 +1035,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1digitalOcean~1credentials/post/requestBody/content/application~1json/schema'
+              $ref: '#/components/schemas/DoCredentialsRequest'
       responses:
         '200':
           description: Edit a CustomDomain
@@ -1194,18 +1100,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - name
-              properties:
-                name:
-                  type: string
-                scaleway_access_key:
-                  type: string
-                scaleway_secret_key:
-                  type: string
-                scaleway_project_id:
-                  type: string
+              $ref: '#/components/schemas/ScalewayCredentialsRequest'
       responses:
         '201':
           description: Credentials created
@@ -1234,7 +1129,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1scaleway~1credentials/post/requestBody/content/application~1json/schema'
+              $ref: '#/components/schemas/ScalewayCredentialsRequest'
       responses:
         '200':
           description: Edit a CustomDomain
@@ -1279,23 +1174,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        short_name:
-                          type: string
-                        name:
-                          type: string
-                        logo_url:
-                          type: string
-                        regions:
-                          type: array
-                          items:
-                            $ref: '#/components/schemas/ClusterRegionResponse'
+                $ref: '#/components/schemas/CloudProviderResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1325,8 +1204,6 @@ paths:
     get:
       summary: List AWS features available
       operationId: listAWSFeatures
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
       tags:
         - Cloud Provider
       responses:
@@ -1335,12 +1212,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ClusterResponse/properties/features'
+                $ref: '#/components/schemas/ClusterFeatureResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1370,8 +1242,6 @@ paths:
     get:
       summary: List DO features available
       operationId: listDOFeatures
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
       tags:
         - Cloud Provider
       responses:
@@ -1380,7 +1250,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1aws~1clusterFeature/get/responses/200/content/application~1json/schema'
+                $ref: '#/components/schemas/ClusterFeatureResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1410,8 +1280,6 @@ paths:
     get:
       summary: List Scaleway features available
       operationId: listScalewayFeatures
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
       tags:
         - Cloud Provider
       responses:
@@ -1420,7 +1288,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1aws~1clusterFeature/get/responses/200/content/application~1json/schema'
+                $ref: '#/components/schemas/ClusterFeatureResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -6388,56 +6256,9 @@ components:
         - name
         - cloud_provider
         - region
-      properties:
-        type: array
-        features:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-              nullable: false
-            value:
-              type: string
-              nullable: true
       allOf:
-        - type: object
-          required:
-            - name
-            - cloud_provider
-            - region
-          properties:
-            name:
-              type: string
-              description: name is case-insensitive
-            description:
-              type: string
-            cloud_provider:
-              type: string
-              enum:
-                - AWS
-                - DIGITAL_OCEAN
-                - SCALEWAY
-            region:
-              type: string
-            auto_update:
-              type: boolean
-            cpu:
-              type: number
-              description: unit is millicores (m). 1000m = 1 cpu
-              default: 250
-              example: 1250
-            memory:
-              type: number
-              description: unit is MB. 1024 MB = 1GB
-              default: 256
-              example: 1024
-            min_running_nodes:
-              type: integer
-              default: 1
-            max_running_nodes:
-              type: integer
-              default: 1
+        - $ref: '#/components/schemas/Cluster'
+        - $ref: '#/components/schemas/ClusterFeatureRequest'
     ClusterCloudProviderInfoResponse:
       type: object
       properties:
@@ -7055,45 +6876,10 @@ components:
           type: boolean
         version:
           type: string
-        type: array
-        features:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-            title:
-              type: string
-              nullable: false
-            description:
-              type: string
-              nullable: true
-            cost_per_month_in_cents:
-              type: integer
-              nullable: true
-              example: 9900
-            cost_per_month:
-              type: number
-              nullable: true
-              example: 99
-            currency_code:
-              type: string
-              nullable: true
-              example: USD
-            value_type:
-              type: string
-              nullable: false
-              enum:
-                - BOOLEAN
-            value:
-              type: string
-              nullable: true
-            is_value_updatable:
-              type: boolean
-              default: false
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
-        - $ref: '#/components/schemas/ClusterRequest/allOf/0'
+        - $ref: '#/components/schemas/Cluster'
+        - $ref: '#/components/schemas/ClusterFeatureResponse'
     BackupPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationDataResponse'
@@ -8176,6 +7962,248 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StorageDiskResponse'
+    CostRangeResponse:
+      type: object
+      required:
+        - total_in_cents
+        - total
+        - currency_code
+      properties:
+        min_cost_in_cents:
+          type: integer
+          example: 15000
+        min_cost:
+          type: number
+          example: 150
+        max_cost_in_cents:
+          type: integer
+          example: 30000
+        max_cost:
+          type: number
+          example: 300
+        currency_code:
+          type: string
+          example: USD
+    CloudProviderResponse:
+      type: object
+      properties:
+        short_name:
+          type: string
+        name:
+          type: string
+        logo_url:
+          type: string
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterRegionResponse'
+    InviteMemberResponse:
+      type: object
+      required:
+        - email
+        - role
+        - invitation_link
+        - invitation_status
+        - inviter
+      properties:
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum:
+            - ADMIN
+            - DEVELOPER
+            - VIEWER
+        invitation_link:
+          type: string
+          format: uri
+        invitation_status:
+          type: string
+          enum:
+            - PENDING
+            - EXPIRED
+        inviter:
+          type: string
+        logo_url:
+          type: string
+          format: uri
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+    TransferOwnershipRequest:
+      type: object
+      required:
+        - user_id
+      properties:
+        user_id:
+          type: string
+          format: uuid
+    CluserCredentialsResponse:
+      $ref: '#/components/schemas/ClusterCredentialsRequest'
+    AwsCredentialsRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        access_key_id:
+          type: string
+        secret_access_key:
+          type: string
+    DoCredentialsRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        token:
+          type: string
+        spaces_access_id:
+          type: string
+        spaces_secret_key:
+          type: string
+    ScalewayCredentialsRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        scaleway_access_key:
+          type: string
+        scaleway_secret_key:
+          type: string
+        scaleway_project_id:
+          type: string
+    InviteMemberRequest:
+      type: object
+      required:
+        - email
+        - role
+      properties:
+        email:
+          type: string
+        role:
+          type: string
+          enum:
+            - ADMIN
+            - DEVELOPER
+            - VIEWER
+    ClusterFeatureRequest:
+      type: object
+      properties:
+        features:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                nullable: false
+              value:
+                type: string
+                nullable: true
+    EnvironmentApplicationsSupportedLanguageResponse:
+      $ref: '#/components/schemas/EnvironmentApplicationsSupportedLanguage'
+    EnvironmentApplicationsSupportedLanguageResponseList:
+      $ref: '#/components/schemas/EnvironmentApplicationsSupportedLanguageList'
+    Cluster:
+      type: object
+      required:
+        - name
+        - cloud_provider
+        - region
+      properties:
+        name:
+          type: string
+          description: name is case-insensitive
+        description:
+          type: string
+        cloud_provider:
+          type: string
+          enum:
+            - AWS
+            - DIGITAL_OCEAN
+            - SCALEWAY
+        region:
+          type: string
+        auto_update:
+          type: boolean
+        cpu:
+          type: number
+          description: unit is millicores (m). 1000m = 1 cpu
+          default: 250
+          example: 1250
+        memory:
+          type: number
+          description: unit is MB. 1024 MB = 1GB
+          default: 256
+          example: 1024
+        min_running_nodes:
+          type: integer
+          default: 1
+        max_running_nodes:
+          type: integer
+          default: 1
+    ClusterFeatureResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          nullable: false
+        description:
+          type: string
+          nullable: true
+        cost_per_month_in_cents:
+          type: integer
+          nullable: true
+          example: 9900
+        cost_per_month:
+          type: number
+          nullable: true
+          example: 99
+        currency_code:
+          type: string
+          nullable: true
+          example: USD
+        value_type:
+          type: string
+          nullable: false
+          enum:
+            - BOOLEAN
+        value:
+          type: string
+          nullable: true
+        is_value_updatable:
+          type: boolean
+          default: false
+    ClusterFeatureResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterFeatureResponse'
+    InviteMemberResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/InviteMemberResponse'
+    CloudProviderResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudProviderResponse'
   responses:
     '204':
       description: no content
