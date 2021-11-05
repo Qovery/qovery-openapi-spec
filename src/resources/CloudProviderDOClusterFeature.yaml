@@ -1,8 +1,6 @@
 get:
   summary: 'List DO features available'
   operationId: listDOFeatures
-  parameters:
-    - $ref: '../parameters/path/organizationId.yaml'
   tags:
     - Cloud Provider
   responses:
