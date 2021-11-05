@@ -6142,6 +6142,12 @@ components:
           default: 1
         healthcheck:
           $ref: '#/components/schemas/Healthcheck'
+        env_preview:
+          type: boolean
+          description: |
+            Specify if the environment preview option is activated or not for this application.
+            If activated, a preview environment will be automatically cloned at each pull request. 
+          default: true
       allOf:
         - $ref: '#/components/schemas/ApplicationStorageRequest'
         - $ref: '#/components/schemas/ApplicationPortRequest'
@@ -6211,6 +6217,12 @@ components:
           default: 1
         healthcheck:
           $ref: '#/components/schemas/Healthcheck'
+        env_preview:
+          type: boolean
+          description: |
+            Specify if the environment preview option is activated or not for this application.
+            If activated, a preview environment will be automatically cloned at each pull request. 
+          default: true
       allOf:
         - $ref: '#/components/schemas/ApplicationStorageResponse'
         - $ref: '#/components/schemas/ApplicationPortResponse'
@@ -6339,6 +6351,12 @@ components:
           default: 1
         healthcheck:
           $ref: '#/components/schemas/Healthcheck'
+        env_preview:
+          type: boolean
+          description: |
+            Specify if the environment preview option is activated or not for this application.
+            If activated, a preview environment will be automatically cloned at each pull request. 
+          default: true
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/ApplicationStorageResponse'
