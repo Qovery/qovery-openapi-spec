@@ -115,6 +115,8 @@ paths:
     $ref: './resources/OrganizationCluster.yaml'
   /organization/{organizationId}/cluster/status:
     $ref: './resources/OrganizationClusterStatusList.yaml'
+  /organization/{organizationId}/cluster/isAlreadyDeployed:
+    $ref: './resources/OrganizationClusterIsAlreadyDeployedList.yaml'
   /organization/{organizationId}/cluster/{clusterId}:
     $ref: './resources/OrganizationClusterRef.yaml'
   /organization/{organizationId}/cluster/{clusterId}/status:

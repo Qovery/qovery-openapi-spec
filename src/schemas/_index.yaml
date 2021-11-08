@@ -8,6 +8,8 @@ ApplicationStorageRequest:
   $ref: ./ApplicationStorageRequest.yaml
 ClusterStatusResponseList:
   $ref: ./ClusterStatusResponseList.yaml
+ClusterIsAlreadyDeployedResponseList:
+  $ref: ./ClusterIsAlreadyDeployedResponseList.yaml
 MetricGenericResponse:
   $ref: ./MetricGenericResponse.yaml
 ApplicationStorageResponse:
@@ -74,6 +76,8 @@ MemberResponse:
   $ref: ./MemberResponse.yaml
 ClusterStatusResponse:
   $ref: ./ClusterStatusResponse.yaml
+ClusterIsAlreadyDeployedResponse:
+  $ref: ./ClusterIsAlreadyDeployedResponse.yaml
 InvoiceResponseList:
   $ref: ./InvoiceResponseList.yaml
 EnvironmentApplicationsInstanceResponseList:

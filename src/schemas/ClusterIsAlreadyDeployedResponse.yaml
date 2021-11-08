@@ -1,4 +1,7 @@
 type: object
 properties:
+  cluster_id:
+    type: string
+    format: uuid
   is_already_deployed:
     type: boolean

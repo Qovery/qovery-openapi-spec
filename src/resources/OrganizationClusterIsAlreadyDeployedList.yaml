@@ -1,0 +1,21 @@
+get:
+  summary: 'Know if organization clusters have already been deployed'
+  description: Returns a list of clusters with only their id and the isAlreadyDeployed status.
+  operationId: getOrganizationClusterIsAlreadyDeployedStatus
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Clusters
+  responses:
+    '200':
+      description: 'Get isAlreadyDeployed statuses'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterIsAlreadyDeployedResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
