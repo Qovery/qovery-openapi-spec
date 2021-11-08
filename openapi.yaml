@@ -787,6 +787,28 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/isAlreadyDeployed':
+    get:
+      summary: Know if organization clusters have already been deployed
+      description: Returns a list of clusters with only their id and the isAlreadyDeployed status.
+      operationId: getOrganizationClusterIsAlreadyDeployedStatus
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: Get isAlreadyDeployed statuses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterIsAlreadyDeployedResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/cluster/{clusterId}':
     delete:
       summary: Delete a cluster
@@ -870,10 +892,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  is_already_deployed:
-                    type: boolean
+                $ref: '#/components/schemas/ClusterIsAlreadyDeployedResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5327,6 +5346,13 @@ components:
     ClusterStatusResponseList:
       allOf:
         - $ref: '#/components/schemas/ClusterStatusResponse'
+    ClusterIsAlreadyDeployedResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterIsAlreadyDeployedResponse'
     MetricGenericResponse:
       type: object
       required:
@@ -5809,6 +5835,14 @@ components:
             - DELETED
             - RUNNING
             - RUNNING_ERROR
+    ClusterIsAlreadyDeployedResponse:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+          format: uuid
+        is_already_deployed:
+          type: boolean
     InvoiceResponseList:
       type: object
       properties:
