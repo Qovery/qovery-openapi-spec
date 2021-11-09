@@ -7342,7 +7342,7 @@ components:
           type: string
           nullable: false
           default: Europe/London
-          description: specify value only if always_up = false
+          description: specify value only if auto_stop = false
         start_time:
           type: string
           format: date-time
@@ -7352,11 +7352,11 @@ components:
           type: string
           format: date-time
           nullable: true
-          description: specify value only if always_up = false
+          description: specify value only if auto_stop = false
         weekdays:
           type: array
           nullable: true
-          description: specify value only if always_up = false
+          description: specify value only if auto_stop = false
           items:
             type: string
             enum:
