@@ -1,2 +1,6 @@
-allOf:
-- $ref: '../schemas/ClusterStatusResponse.yaml'
+type: object
+properties:
+  results:
+    type: array
+    items:
+      $ref: './ClusterStatusResponse.yaml'

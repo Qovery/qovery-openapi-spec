@@ -115,14 +115,10 @@ paths:
     $ref: './resources/OrganizationCluster.yaml'
   /organization/{organizationId}/cluster/status:
     $ref: './resources/OrganizationClusterStatusList.yaml'
-  /organization/{organizationId}/cluster/isAlreadyDeployed:
-    $ref: './resources/OrganizationClusterIsAlreadyDeployedList.yaml'
   /organization/{organizationId}/cluster/{clusterId}:
     $ref: './resources/OrganizationClusterRef.yaml'
   /organization/{organizationId}/cluster/{clusterId}/status:
     $ref: './resources/OrganizationClusterStatus.yaml'
-  /organization/{organizationId}/cluster/{clusterId}/isAlreadyDeployed:
-    $ref: './resources/OrganizationClusterIsAlreadyDeployed.yaml'
   /organization/{organizationId}/aws/credentials:
     $ref: './resources/CloudProviderAWSCredentials.yaml'
   /organization/{organizationId}/aws/credentials/{credentialsId}:

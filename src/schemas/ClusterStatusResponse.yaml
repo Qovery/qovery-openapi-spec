@@ -21,3 +21,6 @@ properties:
         - DELETED
         - RUNNING
         - RUNNING_ERROR
+  is_deployed:
+    type: boolean
+
