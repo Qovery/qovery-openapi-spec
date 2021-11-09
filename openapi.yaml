@@ -787,28 +787,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/cluster/isAlreadyDeployed':
-    get:
-      summary: Know if organization clusters have already been deployed
-      description: Returns a list of clusters with only their id and the isAlreadyDeployed status.
-      operationId: getOrganizationClusterIsAlreadyDeployedStatus
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-      tags:
-        - Clusters
-      responses:
-        '200':
-          description: Get isAlreadyDeployed statuses
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClusterIsAlreadyDeployedResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/organization/{organizationId}/cluster/{clusterId}':
     delete:
       summary: Delete a cluster
@@ -871,28 +849,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClusterStatusResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/organization/{organizationId}/cluster/{clusterId}/isAlreadyDeployed':
-    get:
-      summary: Know if a cluster has already been deployed
-      operationId: getClusterAlreadyDeployedStatus
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/clusterId'
-      tags:
-        - Clusters
-      responses:
-        '200':
-          description: Already deployed status
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClusterIsAlreadyDeployedResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5344,15 +5300,12 @@ components:
                 type: string
                 example: /mnt/images
     ClusterStatusResponseList:
-      allOf:
-        - $ref: '#/components/schemas/ClusterStatusResponse'
-    ClusterIsAlreadyDeployedResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterIsAlreadyDeployedResponse'
+            $ref: '#/components/schemas/ClusterStatusResponse'
     MetricGenericResponse:
       type: object
       required:
@@ -5835,13 +5788,7 @@ components:
             - DELETED
             - RUNNING
             - RUNNING_ERROR
-    ClusterIsAlreadyDeployedResponse:
-      type: object
-      properties:
-        cluster_id:
-          type: string
-          format: uuid
-        is_already_deployed:
+        is_deployed:
           type: boolean
     InvoiceResponseList:
       type: object
