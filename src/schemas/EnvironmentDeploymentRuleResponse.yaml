@@ -3,28 +3,28 @@ properties:
   auto_deploy:
     type: boolean
     default: true
-  always_up:
+  auto_stop:
     type: boolean
     default: false
   timezone:
     type: string
     nullable: false
     default: Europe/London
-    description: specify value only if always_up = false
+    description: specify value only if auto_stop = false
   start_time:
     type: string
     format: date-time
     nullable: true
-    description: specify value only if always_up = false
+    description: specify value only if auto_stop = false
   stop_time:
     type: string
     format: date-time
     nullable: true
-    description: specify value only if always_up = false
+    description: specify value only if auto_stop = false
   weekdays:
     type: array
     nullable: true
-    description: specify value only if always_up = false
+    description: specify value only if auto_stop = false
     items:
       type: string
       enum: [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY]
