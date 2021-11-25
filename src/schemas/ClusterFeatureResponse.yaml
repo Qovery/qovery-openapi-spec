@@ -32,3 +32,6 @@ properties:
   is_value_updatable:
     type: boolean
     default: false
+  accepted_values:
+    type: array
+    nullable: true

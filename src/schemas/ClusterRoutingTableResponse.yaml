@@ -1,0 +1,16 @@
+type: object
+properties:
+  results:
+    type: array
+    items:
+      type: object
+      properties:
+        destination:
+          type: string
+          nullable: false
+        target:
+          type: string
+          nullable: false
+        description:
+          type: string
+          nullable: true
