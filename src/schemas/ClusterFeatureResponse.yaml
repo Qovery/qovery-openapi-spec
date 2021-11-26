@@ -33,5 +33,5 @@ properties:
     type: boolean
     default: false
   accepted_values:
+    nullable: false
     type: array
-    nullable: true

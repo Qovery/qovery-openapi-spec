@@ -21,7 +21,7 @@ get:
     '404':
       $ref: '../responses/NotFound.yaml'
 
-post:
+put:
   summary: 'Edit routing table'
   description: Edit routing table by returning updated table.
   operationId: editRoutingTable

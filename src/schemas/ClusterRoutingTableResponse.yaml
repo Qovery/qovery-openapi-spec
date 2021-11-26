@@ -7,10 +7,7 @@ properties:
       properties:
         destination:
           type: string
-          nullable: false
         target:
           type: string
-          nullable: false
         description:
           type: string
-          nullable: true
