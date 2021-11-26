@@ -855,6 +855,58 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/routingTable':
+    get:
+      summary: Get routing table
+      description: Retrieve network routing table where each line corresponds to a route between a destination and a target.
+      operationId: getRoutingTable
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: Routing table
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterRoutingTableResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit routing table
+      description: Edit routing table by returning updated table.
+      operationId: editRoutingTable
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterRoutingTableRequest'
+      responses:
+        '201':
+          description: Updated routing table
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterRoutingTableResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/aws/credentials':
     get:
       summary: List AWS credentials
@@ -8182,6 +8234,42 @@ components:
         is_value_updatable:
           type: boolean
           default: false
+        accepted_values:
+          nullable: false
+          type: array
+    ClusterRoutingTableResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              destination:
+                type: string
+              target:
+                type: string
+              description:
+                type: string
+    ClusterRoutingTableRequest:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            required:
+              - destination
+              - target
+            properties:
+              destination:
+                type: string
+              target:
+                type: string
+              description:
+                type: string
     ClusterFeatureResponseList:
       type: object
       properties:
