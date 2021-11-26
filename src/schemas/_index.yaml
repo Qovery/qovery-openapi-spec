@@ -392,6 +392,10 @@ Cluster:
   $ref: ./Cluster.yaml
 ClusterFeatureResponse:
   $ref: ./ClusterFeatureResponse.yaml
+ClusterRoutingTableResponse:
+  $ref: ./ClusterRoutingTableResponse.yaml
+ClusterRoutingTableRequest:
+  $ref: ./ClusterRoutingTableRequest.yaml
 ClusterFeatureResponseList:
   $ref: ./ClusterFeatureResponseList.yaml
 InviteMemberResponseList:

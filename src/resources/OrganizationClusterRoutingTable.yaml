@@ -1,0 +1,52 @@
+get:
+  summary: 'Get routing table'
+  description: Retrieve network routing table where each line corresponds to a route between a destination and a target.
+  operationId: getRoutingTable
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/clusterId.yaml'
+  tags:
+    - Clusters
+  responses:
+    '200':
+      description: 'Routing table'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterRoutingTableResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+
+put:
+  summary: 'Edit routing table'
+  description: Edit routing table by returning updated table.
+  operationId: editRoutingTable
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/clusterId.yaml'
+  tags:
+    - Clusters
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/ClusterRoutingTableRequest.yaml'
+  responses:
+    '201':
+      description: 'Updated routing table'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterRoutingTableResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

@@ -1,0 +1,18 @@
+type: object
+required:
+  - results
+properties:
+  results:
+    type: array
+    items:
+      type: object
+      required:
+        - destination
+        - target
+      properties:
+        destination:
+          type: string
+        target:
+          type: string
+        description:
+          type: string

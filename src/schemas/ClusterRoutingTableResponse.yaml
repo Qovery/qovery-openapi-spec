@@ -1,0 +1,13 @@
+type: object
+properties:
+  results:
+    type: array
+    items:
+      type: object
+      properties:
+        destination:
+          type: string
+        target:
+          type: string
+        description:
+          type: string
