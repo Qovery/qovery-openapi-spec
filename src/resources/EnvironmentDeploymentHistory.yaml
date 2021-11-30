@@ -1,6 +1,6 @@
 get:
-  summary: 'List environment deploys'
-  description: By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
+  summary: 'List environment deployments'
+  description: List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
   operationId: listEnvironmentDeploymentHistory
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'

@@ -1,17 +1,17 @@
 type: object
 properties:
-  service:
-    type: object
-    properties:
-      type:
-        type: string
-        enum:
-          - APPLICATION
-          - DATABASE
-      name:
-        type: string
-      id:
-        type: string
-        format: uuid
+  status:
+    type: string
+    enum:
+      - SUCCESS
+      - FAILED
+  applications:
+    type: array
+    items:
+      - $ref: './DeploymentHistoryApplicationResponse.yaml'
+  databases:
+      type: array
+      items:
+        - $ref: './DeploymentHistoryDatabaseResponse.yaml'
 allOf:
-  - $ref: './DeploymentHistoryResponse.yaml'
+  - $ref: './BaseResponse.yaml'

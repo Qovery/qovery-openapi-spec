@@ -1,0 +1,11 @@
+type: object
+properties:
+  name:
+    type: string
+  status:
+    type: string
+    enum:
+      - SUCCESS
+      - FAILED
+allOf:
+- $ref: './BaseResponse.yaml'
