@@ -2537,8 +2537,8 @@ paths:
           $ref: '#/components/responses/404'
   '/environment/{environmentId}/deploymentHistory':
     get:
-      summary: List environment deploys
-      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
+      summary: List environment deployments
+      description: 'List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
       operationId: listEnvironmentDeploymentHistory
       parameters:
         - $ref: '#/components/parameters/environmentId'
@@ -5651,21 +5651,37 @@ components:
     DeploymentHistoryEnvironmentResponse:
       type: object
       properties:
-        service:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - APPLICATION
-                - DATABASE
-            name:
-              type: string
-            id:
-              type: string
-              format: uuid
+        status:
+          type: string
+          enum:
+            - READY
+            - BUILDING
+            - BUILD_ERROR
+            - BUILT
+            - DEPLOYMENT_QUEUED
+            - DEPLOYING
+            - DEPLOYMENT_ERROR
+            - DEPLOYED
+            - STOP_QUEUED
+            - STOPPING
+            - STOP_ERROR
+            - STOPPED
+            - DELETE_QUEUED
+            - DELETING
+            - DELETE_ERROR
+            - DELETED
+            - RUNNING
+            - RUNNING_ERROR
+        applications:
+          type: array
+          items:
+            - $ref: '#/components/schemas/DeploymentHistoryApplicationResponse'
+        databases:
+          type: array
+          items:
+            - $ref: '#/components/schemas/DeploymentHistoryDatabaseResponse'
       allOf:
-        - $ref: '#/components/schemas/DeploymentHistoryResponse'
+        - $ref: '#/components/schemas/BaseResponse'
     LogResponse:
       type: object
       required:
@@ -6286,6 +6302,64 @@ components:
           enum:
             - SUCCESS
             - FAILED
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+    DeploymentHistoryApplicationResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        commit:
+          $ref: '#/components/schemas/CommitResponse'
+        status:
+          type: string
+          enum:
+            - READY
+            - BUILDING
+            - BUILD_ERROR
+            - BUILT
+            - DEPLOYMENT_QUEUED
+            - DEPLOYING
+            - DEPLOYMENT_ERROR
+            - DEPLOYED
+            - STOP_QUEUED
+            - STOPPING
+            - STOP_ERROR
+            - STOPPED
+            - DELETE_QUEUED
+            - DELETING
+            - DELETE_ERROR
+            - DELETED
+            - RUNNING
+            - RUNNING_ERROR
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+    DeploymentHistoryDatabaseResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+            - READY
+            - BUILDING
+            - BUILD_ERROR
+            - BUILT
+            - DEPLOYMENT_QUEUED
+            - DEPLOYING
+            - DEPLOYMENT_ERROR
+            - DEPLOYED
+            - STOP_QUEUED
+            - STOPPING
+            - STOP_ERROR
+            - STOPPED
+            - DELETE_QUEUED
+            - DELETING
+            - DELETE_ERROR
+            - DELETED
+            - RUNNING
+            - RUNNING_ERROR
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
     OrganizationResponseList:
