@@ -122,6 +122,10 @@ EventResponseList:
   $ref: ./EventResponseList.yaml
 DeploymentHistoryResponse:
   $ref: ./DeploymentHistoryResponse.yaml
+DeploymentHistoryApplicationResponse:
+  $ref: ./DeploymentHistoryApplicationResponse.yaml
+DeploymentHistoryDatabaseResponse:
+  $ref: ./DeploymentHistoryDatabaseResponse.yaml
 OrganizationResponseList:
   $ref: ./OrganizationResponseList.yaml
 ClusterRequest:

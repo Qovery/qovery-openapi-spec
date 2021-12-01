@@ -1,5 +1,9 @@
 type: object
 properties:
+  name:
+    type: string
+  commit:
+    $ref: './CommitResponse.yaml'
   status:
     type: string
     enum:
@@ -21,13 +25,5 @@ properties:
       - DELETED
       - RUNNING
       - RUNNING_ERROR
-  applications:
-    type: array
-    items:
-      - $ref: './DeploymentHistoryApplicationResponse.yaml'
-  databases:
-      type: array
-      items:
-        - $ref: './DeploymentHistoryDatabaseResponse.yaml'
 allOf:
-  - $ref: './BaseResponse.yaml'
+- $ref: './BaseResponse.yaml'
