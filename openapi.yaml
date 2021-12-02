@@ -8328,9 +8328,9 @@ components:
     ClusterRoutingTableRequest:
       type: object
       required:
-        - results
+        - routes
       properties:
-        results:
+        routes:
           type: array
           items:
             type: object
