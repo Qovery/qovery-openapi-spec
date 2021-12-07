@@ -1,0 +1,20 @@
+get:
+  summary: 'Get bitbucket branches of the specified repository'
+  operationId: getBitbucketRepositoryBranches
+  tags:
+    - Git repositories
+  parameters:
+  - in: query
+    name: name
+    schema:
+      type: string
+    description: The name of the repository where to retrieve the branches
+  responses:
+    '200':
+      description: 'Get bitbucket repository branches'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/GitRepositoryBranchResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
