@@ -6157,6 +6157,8 @@ components:
           type: string
         author_avatar_url:
           type: string
+        commit_page_url:
+          type: string
     GenericObjectCurrentCostResponse:
       type: object
       required:
