@@ -371,6 +371,10 @@ paths:
     $ref: './resources/AccountGitRepositoryGitlab.yaml'
   /account/gitlab/repository/branch:
     $ref: './resources/AccountGitRepositoryGitlabBranch.yaml'
+  /account/bitbucket/repository:
+    $ref: './resources/AccountGitRepositoryBitbucket.yaml'
+  /account/bitbucket/repository/branch:
+    $ref: './resources/AccountGitRepositoryBitbucketBranch.yaml'
   /account/referral:
     $ref: './resources/AccountReferral.yaml'
   /account/rewardClaim:
