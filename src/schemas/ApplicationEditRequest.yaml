@@ -21,7 +21,7 @@ properties:
     description: The path of the associated Dockerfile
   buildpack_language:
     type: string
-    description: Development langage of the application
+    description: Development language of the application
     enum:
       - GO
       - NODE_JS
