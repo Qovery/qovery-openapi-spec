@@ -6203,6 +6203,22 @@ components:
         dockerfile_path:
           type: string
           description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+        buildpack_language:
+          type: string
+          description: Development language of the application
+          enum:
+            - GO
+            - NODE_JS
+            - CLOJURE
+            - PYTHON
+            - JAVA
+            - GRADLE
+            - JVM
+            - GRAILS
+            - SCALA
+            - PLAY
+            - PHP
+            - GO
         cpu:
           type: number
           description: unit is millicores (m). 1000m = 1 cpu
@@ -6278,6 +6294,22 @@ components:
         dockerfile_path:
           type: string
           description: The path of the associated Dockerfile
+        buildpack_language:
+          type: string
+          description: Development language of the application
+          enum:
+            - GO
+            - NODE_JS
+            - CLOJURE
+            - PYTHON
+            - JAVA
+            - GRADLE
+            - JVM
+            - GRAILS
+            - SCALA
+            - PLAY
+            - PHP
+            - GO
         cpu:
           type: number
           description: unit is millicores (m). 1000m = 1 cpu
@@ -6470,6 +6502,22 @@ components:
         dockerfile_path:
           type: string
           description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+        buildpack_language:
+          type: string
+          description: Development language of the application
+          enum:
+            - GO
+            - NODE_JS
+            - CLOJURE
+            - PYTHON
+            - JAVA
+            - GRADLE
+            - JVM
+            - GRAILS
+            - SCALA
+            - PLAY
+            - PHP
+            - GO
         cpu:
           type: number
           description: unit is millicores (m). 1000m = 1 cpu
