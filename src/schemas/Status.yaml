@@ -11,21 +11,28 @@ properties:
       Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state.
     enum:
       - INITIALIZED
-      - QUEUED
+      - BUILDING_QUEUED
       - BUILDING
       - BUILD_ERROR
       - BUILT
+      - DEPLOYMENT_QUEUED
       - DEPLOYING
       - DEPLOYMENT_ERROR
       - DEPLOYED
+      - STOP_QUEUED
       - STOPPING
       - STOP_ERROR
       - STOPPED
+      - DELETE_QUEUED
       - DELETING
       - DELETE_ERROR
       - DELETED
       - RUNNING
       - RUNNING_ERROR
+      - CANCEL_QUEUED
+      - CANCELLING
+      - CANCEL_ERROR
+      - CANCELLED 
   message:
     type: string
     nullable: true
