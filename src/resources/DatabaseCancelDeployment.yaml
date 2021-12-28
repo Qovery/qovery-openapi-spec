@@ -1,0 +1,23 @@
+post:
+  summary: 'Cancel database deployment'
+  description: Cancel the current deployment of your database.
+  operationId: cancelDatabaseDeployment
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+  tags:
+    - Database Actions
+  responses:
+    '202':
+      description: 'Database deployment cancelling has been requested'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Status.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+    '409':
+      description: 'Databse deployment is already cancelled or operation is in progress'
