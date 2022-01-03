@@ -80,6 +80,12 @@ properties:
       Specify if the environment preview option is activated or not for this application.
       If activated, a preview environment will be automatically cloned at each pull request. 
     default: true
+  sticky-session:
+    type: boolean
+    description: |
+      Specify if the sticky session option (also called persistant session) is activated or not for this application.
+      If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
+    default: false
 allOf:
   - $ref: './BaseResponse.yaml'
   - $ref: './ApplicationStorageResponse.yaml'
