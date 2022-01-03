@@ -8427,6 +8427,7 @@ components:
             required:
               - destination
               - target
+              - description
             properties:
               destination:
                 type: string
