@@ -273,8 +273,6 @@ paths:
     $ref: './resources/ApplicationDeploy.yaml'
   /application/{applicationId}/stop:
     $ref: './resources/ApplicationStop.yaml'
-  /application/{applicationId}/cancelDeployment:
-    $ref: './resources/ApplicationCancelDeployment.yaml'
   /application/{applicationId}/restart:
     $ref: './resources/ApplicationRestart.yaml'
   /application/{applicationId}/deploymentHistory:
@@ -339,8 +337,6 @@ paths:
     $ref: './resources/DatabaseRestart.yaml'
   /database/{databaseId}/stop:
     $ref: './resources/DatabaseStop.yaml'
-  /database/{databaseId}/cancelDeployment:
-    $ref: './resources/DatabaseCancelDeployment.yaml'
   /database/{databaseId}/deploy:
     $ref: './resources/DatabaseDeploy.yaml'
   /database/{databaseId}/currentMetric:
