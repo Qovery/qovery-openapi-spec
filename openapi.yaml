@@ -2332,7 +2332,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Name'
+              $ref: '#/components/schemas/CloneRequest'
       responses:
         '202':
           description: Environment clone has been requested
@@ -7086,6 +7086,18 @@ components:
           enum:
             - PRODUCTION
             - DEVELOPMENT
+    CloneRequest:
+      type: object
+      required:
+        - name
+        - cluster
+      properties:
+        name:
+          type: string
+          description: name is case insensitive
+        cluster:
+          type: string
+          format: uuid
     MetricMemoryDatapointResponseList:
       type: object
       properties:
