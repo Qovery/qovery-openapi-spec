@@ -1,0 +1,11 @@
+type: object
+required:
+  - name
+  - cluster
+properties:
+  name:
+    type: string
+    description: name is case insensitive
+  cluster:
+    type: string
+    format: uuid
