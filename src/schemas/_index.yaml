@@ -226,6 +226,8 @@ MetricGenericResponseList:
   $ref: ./MetricGenericResponseList.yaml
 EnvironmentRequest:
   $ref: ./EnvironmentRequest.yaml
+CloneRequest:
+  $ref: ./CloneRequest.yaml
 MetricMemoryDatapointResponseList:
   $ref: ./MetricMemoryDatapointResponseList.yaml
 ClusterResponse:
