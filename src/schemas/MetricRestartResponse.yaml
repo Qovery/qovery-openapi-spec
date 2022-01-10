@@ -1,0 +1,15 @@
+type: object
+properties:
+  results:
+    type: array
+    items:
+      type: object
+      required:
+        - datetime
+        - message
+      properties:
+        datetime:
+          type: string
+          format: date-time
+        message:
+          type: string

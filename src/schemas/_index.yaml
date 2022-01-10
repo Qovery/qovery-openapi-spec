@@ -340,6 +340,8 @@ InstanceResponse:
   $ref: ./InstanceResponse.yaml
 MetricStorageResponseList:
   $ref: ./MetricStorageResponseList.yaml
+MetricRestartResponse:
+  $ref: ./MetricRestartResponse.yaml
 EventResponse:
   $ref: ./EventResponse.yaml
 EnvironmentDatabasesCurrentMetricResponseList:
