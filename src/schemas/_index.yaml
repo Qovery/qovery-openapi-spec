@@ -160,6 +160,10 @@ ServiceResponse:
   $ref: ./ServiceResponse.yaml
 ApplicationResponseList:
   $ref: ./ApplicationResponseList.yaml
+ApplicationNetworkResponse:
+  $ref: ./ApplicationNetworkResponse.yaml
+ApplicationNetworkRequest:
+  $ref: ./ApplicationNetworkRequest.yaml
 RemainingCredits:
   $ref: ./RemainingCredits.yaml
 BillingStatus:

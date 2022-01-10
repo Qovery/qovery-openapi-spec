@@ -44,6 +44,7 @@ x-tagGroups:
     tags:
       - Application Main Calls
       - Application Actions
+      - Application Configuration
       - Custom Domain
       - Dependency
       - Application Metrics
@@ -301,6 +302,8 @@ paths:
     $ref: './resources/ApplicationCustomDomainStatus.yaml'
   /application/{applicationId}/log:
     $ref: './resources/ApplicationLog.yaml'
+  /application/{applicationId}/network:
+    $ref: './resources/ApplicationNetwork.yaml'
   /application/{applicationId}/database:
     $ref: './resources/ApplicationDatabase.yaml'
   /application/{applicationId}/database/{targetDatabaseId}:
