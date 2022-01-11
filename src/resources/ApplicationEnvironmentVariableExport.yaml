@@ -1,0 +1,25 @@
+get:
+  summary: 'Export environment variable'
+  description: This will return 
+  operationId: getOrganizationInvoicePDF
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/invoiceId.yaml'
+  tags:
+    -  Billing
+  responses:
+    '200':
+      description: 'Get invoice PDF'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              url:
+                type: string
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

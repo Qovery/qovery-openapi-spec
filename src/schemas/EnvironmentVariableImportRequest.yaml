@@ -1,0 +1,19 @@
+type: object
+required:
+  - vars 
+properties:
+  vars:
+    type: array
+    items:
+      type: object
+      required:
+        - name
+        - value
+        - scope
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        scope:
+          type: string
