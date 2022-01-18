@@ -1,0 +1,50 @@
+get:
+  summary: 'Get Application Network information'
+  description: Get status of the application network settings.
+  operationId: getApplicationNetwork
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - Application Configuration
+  responses:
+    '200':
+      description: 'Network information'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ApplicationNetworkResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+
+put:
+  summary: 'Edit Application Network'
+  description: Edit the Network settings of the application.
+  operationId: editApplicationNetwork
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - Application Configuration
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/ApplicationNetworkRequest.yaml'
+  responses:
+    '201':
+      description: 'Updated application network setting'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ApplicationNetworkResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
