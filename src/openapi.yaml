@@ -293,6 +293,8 @@ paths:
     $ref: './resources/ApplicationEnvironmentVariableAlias.yaml'
   /application/{applicationId}/secret:
     $ref: './resources/ApplicationSecret.yaml'
+  /application/{applicationId}/secret/import:
+    $ref: './resources/ApplicationSecretImport.yaml'
   /application/{applicationId}/secret/{secretId}:
     $ref: './resources/ApplicationSecretRef.yaml'
   /application/{applicationId}/secret/{secretId}/override:

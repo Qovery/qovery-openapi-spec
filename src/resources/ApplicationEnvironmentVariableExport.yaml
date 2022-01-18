@@ -1,21 +1,20 @@
 get:
   summary: 'Export environment variable'
-  description: This will return 
-  operationId: getOrganizationInvoicePDF
+  description: Return environment variables values in .env format
+  operationId: exportEnvironmentVariable
   parameters:
-    - $ref: '../parameters/path/organizationId.yaml'
-    - $ref: '../parameters/path/invoiceId.yaml'
+    - $ref: '../parameters/path/applicationId.yaml'
   tags:
-    -  Billing
+    -  Application Environment Variable 
   responses:
     '200':
-      description: 'Get invoice PDF'
+      description: 'Get environment variable data'
       content:
         application/json:
           schema:
             type: object
             properties:
-              url:
+              values:
                 type: string
     '401':
       $ref: '../responses/NotAuthorized.yaml'
