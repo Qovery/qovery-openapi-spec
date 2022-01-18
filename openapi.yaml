@@ -44,6 +44,7 @@ x-tagGroups:
     tags:
       - Application Main Calls
       - Application Actions
+      - Application Configuration
       - Custom Domain
       - Dependency
       - Application Metrics
@@ -4019,6 +4020,56 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/network':
+    get:
+      summary: Get Application Network information
+      description: Get status of the application network settings.
+      operationId: getApplicationNetwork
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Application Configuration
+      responses:
+        '200':
+          description: Network information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationNetworkResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit Application Network
+      description: Edit the Network settings of the application.
+      operationId: editApplicationNetwork
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Application Configuration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationNetworkRequest'
+      responses:
+        '201':
+          description: Updated application network setting
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationNetworkResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/database':
     get:
       summary: List linked databases
@@ -6300,12 +6351,6 @@ components:
             Specify if the environment preview option is activated or not for this application.
             If activated, a preview environment will be automatically cloned at each pull request. 
           default: true
-        sticky-session:
-          type: boolean
-          description: |
-            Specify if the sticky session option (also called persistant session) is activated or not for this application.
-            If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
-          default: false
       allOf:
         - $ref: '#/components/schemas/ApplicationStorageRequest'
         - $ref: '#/components/schemas/ApplicationPortRequest'
@@ -6611,12 +6656,6 @@ components:
             Specify if the environment preview option is activated or not for this application.
             If activated, a preview environment will be automatically cloned at each pull request. 
           default: true
-        sticky-session:
-          type: boolean
-          description: |
-            Specify if the sticky session option (also called persistant session) is activated or not for this application.
-            If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
-          default: false
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/ApplicationStorageResponse'
@@ -6770,6 +6809,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationResponse'
+    ApplicationNetworkResponse:
+      type: object
+      properties:
+        sticky-session:
+          type: boolean
+          description: |
+            Specify if the sticky session option (also called persistant session) is activated or not for this application.
+            If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
+          default: false
+    ApplicationNetworkRequest:
+      type: object
+      properties:
+        sticky-session:
+          type: boolean
+          description: |
+            Specify if the sticky session option (also called persistant session) is activated or not for this application.
+            If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
+          default: false
     RemainingCredits:
       type: object
       allOf:
