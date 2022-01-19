@@ -278,8 +278,6 @@ paths:
     $ref: './resources/ApplicationStop.yaml'
   /application/{applicationId}/restart:
     $ref: './resources/ApplicationRestart.yaml'
-  /application/{applicationId}/deploymentHistory:
-    $ref: './resources/ApplicationDeploymentHistory.yaml'
   /application/{applicationId}/event:
     $ref: './resources/ApplicationEvent.yaml'
   /application/{applicationId}/environmentVariable:

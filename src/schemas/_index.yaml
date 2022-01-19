@@ -6,8 +6,6 @@ MetricCPUResponse:
   $ref: ./MetricCPUResponse.yaml
 ApplicationStorageRequest:
   $ref: ./ApplicationStorageRequest.yaml
-ClusterStatusResponseList:
-  $ref: ./ClusterStatusResponseList.yaml
 MetricGenericResponse:
   $ref: ./MetricGenericResponse.yaml
 ApplicationStorageResponse:

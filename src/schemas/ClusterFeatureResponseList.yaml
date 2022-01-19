@@ -1,6 +1,6 @@
 type: object
 properties:
-  results:
+  items:
     type: array
     items:
       $ref: './ClusterFeatureResponse.yaml'
