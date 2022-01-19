@@ -3,7 +3,7 @@ get:
   description: 'Get database restart message and timestamp.'
   operationId: getDatabaseMetricRestart
   parameters:
-    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/databaseId.yaml'
     - $ref: '../parameters/query/lastSeconds.yaml'
   tags:
     - Database Metrics

@@ -24,10 +24,10 @@ properties:
   applications:
     type: array
     items:
-      - $ref: './DeploymentHistoryApplicationResponse.yaml'
+      $ref: './DeploymentHistoryApplicationResponse.yaml'
   databases:
       type: array
       items:
-        - $ref: './DeploymentHistoryDatabaseResponse.yaml'
+        $ref: './DeploymentHistoryDatabaseResponse.yaml'
 allOf:
   - $ref: './BaseResponse.yaml'
