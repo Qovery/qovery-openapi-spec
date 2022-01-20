@@ -7536,6 +7536,13 @@ components:
           type: string
           nullable: true
           description: message related to the state
+        serviceDeploymentStatus:
+          type: string
+          nullable: true
+          enum:
+            - NEVER_DEPLOYED
+            - UP_TO_DATE
+            - OUT_OF_DATE
     EnvironmentDatabasesCurrentMetricResponse:
       type: object
       properties:
