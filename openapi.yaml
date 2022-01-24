@@ -7727,6 +7727,8 @@ components:
             - ENVIRONMENT
             - PROJECT
             - APPLICATION
+        service_name:
+          type: string
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/EnvironmentVariableRequest'
