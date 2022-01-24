@@ -44,6 +44,8 @@ properties:
       - ENVIRONMENT
       - PROJECT
       - APPLICATION
+  service_name:
+    type: string
 allOf:
   - $ref: './BaseResponse.yaml'
   - $ref: './EnvironmentVariableRequest.yaml'
