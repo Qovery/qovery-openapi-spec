@@ -3,6 +3,7 @@ required:
   - name
   - cloud_provider
   - mode
+  - cluster_id
 properties:
   name:
     type: string
@@ -27,5 +28,8 @@ properties:
     enum:
       - PRODUCTION
       - DEVELOPMENT
+  cluster_id:
+    type: string
+    format: uuid
 allOf:
   - $ref: './BaseResponse.yaml'
