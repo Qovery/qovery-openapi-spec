@@ -7344,6 +7344,7 @@ components:
         - name
         - cloud_provider
         - mode
+        - cluster_id
       properties:
         name:
           type: string
@@ -7368,6 +7369,9 @@ components:
           enum:
             - PRODUCTION
             - DEVELOPMENT
+        cluster_id:
+          type: string
+          format: uuid
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
     CostResponse:
