@@ -414,3 +414,7 @@ InviteMemberResponseList:
   $ref: ./InviteMemberResponseList.yaml
 CloudProviderResponseList:
   $ref: ./CloudProviderResponseList.yaml
+GitRepositoryBranchResponseList:
+  $ref: ./GitRepositoryBranchResponseList.yaml
+GitRepositoryBranchResponse:
+  $ref: ./GitRepositoryBranchResponse.yaml

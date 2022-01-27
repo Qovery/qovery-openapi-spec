@@ -1,4 +1,4 @@
 allOf:
-- $ref: './CurrentCost.yaml'
-- $ref: './PaidUsage.yaml'
-- $ref: './CommunityUsage.yaml'
+  - $ref: './CurrentCost.yaml'
+  - $ref: './PaidUsage.yaml'
+  - $ref: './CommunityUsage.yaml'

@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: "[BETA] Qovery API"
+  title: '[BETA] Qovery API'
   description: |
     - Qovery is the fastest way to deploy your full-stack apps on any Cloud provider.
     - ℹ️ The API is in Beta and still in progress. Some endpoints are not available yet.
@@ -69,6 +69,9 @@ x-tagGroups:
       - Account Info
       - Git repositories
       - Referral & Rewards
+  - name: Git
+    tags:
+      - Git repositories
 servers:
   - url: 'https://api.qovery.com'
 paths:
@@ -401,4 +404,4 @@ components:
       scheme: bearer
       bearerFormat: JWT
 security:
-  - bearerAuth: [ ]
+  - bearerAuth: []
