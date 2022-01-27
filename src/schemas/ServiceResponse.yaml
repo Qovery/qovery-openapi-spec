@@ -1,4 +1,6 @@
 type: object
+required:
+  - id
 properties:
   type:
     type: string
