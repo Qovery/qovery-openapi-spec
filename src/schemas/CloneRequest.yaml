@@ -6,6 +6,6 @@ properties:
   name:
     type: string
     description: name is case insensitive
-  cluster:
+  cluster_id:
     type: string
     format: uuid
