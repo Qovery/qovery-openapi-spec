@@ -1,0 +1,31 @@
+type: object
+required:
+  - vars 
+  - overwrite
+properties:
+  overwrite: 
+    type: boolean
+    default: false
+  vars:
+    type: array
+    items:
+      type: object
+      required:
+        - name
+        - value
+        - scope
+        - is_secret
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        scope:
+          type: string
+          enum:
+            - ORGANIZATION
+            - PROJECT
+            - ENVIRONMENT
+            - APPLICATION
+        is_secret:
+          type: boolean
