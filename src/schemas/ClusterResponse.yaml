@@ -13,6 +13,8 @@ properties:
     type: boolean
   version:
     type: string
+  default_cluster:
+    type: boolean
 allOf:
   - $ref: './BaseResponse.yaml'
   - $ref: './Cluster.yaml'
