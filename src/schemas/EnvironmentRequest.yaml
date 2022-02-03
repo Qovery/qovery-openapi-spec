@@ -13,3 +13,5 @@ properties:
     enum:
       - PRODUCTION
       - DEVELOPMENT
+      - STAGING
+      - PREVIEW
