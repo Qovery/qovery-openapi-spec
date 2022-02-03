@@ -26,6 +26,8 @@ properties:
     type: string
     enum:
       - PRODUCTION
+      - STAGING
       - DEVELOPMENT
+      - PREVIEW
 allOf:
   - $ref: './BaseResponse.yaml'
