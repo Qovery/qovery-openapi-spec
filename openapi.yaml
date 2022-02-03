@@ -2320,6 +2320,30 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/environment/{environmentId}/cancelDeployment':
+    post:
+      summary: Cancel environment deployment
+      description: Cancel the current deployment of your environment.
+      operationId: cancelEnvironmentDeployment
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Actions
+      responses:
+        '202':
+          description: environment deployment cancelling has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Environment deployment is already cancelled or an operation is in progress
   '/environment/{environmentId}/clone':
     post:
       summary: Clone environment
@@ -7523,21 +7547,28 @@ components:
             Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state.
           enum:
             - INITIALIZED
-            - QUEUED
+            - BUILDING_QUEUED
             - BUILDING
             - BUILD_ERROR
             - BUILT
+            - DEPLOYMENT_QUEUED
             - DEPLOYING
             - DEPLOYMENT_ERROR
             - DEPLOYED
+            - STOP_QUEUED
             - STOPPING
             - STOP_ERROR
             - STOPPED
+            - DELETE_QUEUED
             - DELETING
             - DELETE_ERROR
             - DELETED
             - RUNNING
             - RUNNING_ERROR
+            - CANCEL_QUEUED
+            - CANCELLING
+            - CANCEL_ERROR
+            - CANCELLED
         message:
           type: string
           nullable: true
