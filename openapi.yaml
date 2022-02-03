@@ -7213,11 +7213,12 @@ components:
           enum:
             - PRODUCTION
             - DEVELOPMENT
+            - STAGING
+            - PREVIEW
     CloneRequest:
       type: object
       required:
         - name
-        - cluster
       properties:
         name:
           type: string
@@ -7225,6 +7226,13 @@ components:
         cluster_id:
           type: string
           format: uuid
+        mode:
+          type: string
+          enum:
+            - PRODUCTION
+            - DEVELOPMENT
+            - STAGING
+            - PREVIEW
     MetricMemoryDatapointResponseList:
       type: object
       properties:
