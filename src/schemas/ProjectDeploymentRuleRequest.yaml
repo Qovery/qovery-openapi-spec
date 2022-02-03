@@ -4,7 +4,7 @@ required:
 properties:
   environment_target:
     type: string
-    description: specify here a regex based on environment name that will target new environments after their creation
+    description: specify here a wildcard based on environment name that will target new environments after their creation
     example: ^feat
 allOf:
   - $ref: './DeploymentRuleRequest.yaml'
