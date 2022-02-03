@@ -1,7 +1,6 @@
 type: object
 required:
   - name
-  - cluster
 properties:
   name:
     type: string
@@ -9,3 +8,10 @@ properties:
   cluster_id:
     type: string
     format: uuid
+  mode:
+    type: string
+    enum:
+      - PRODUCTION
+      - DEVELOPMENT
+      - STAGING
+      - PREVIEW
