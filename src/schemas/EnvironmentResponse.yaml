@@ -28,6 +28,8 @@ properties:
     enum:
       - PRODUCTION
       - DEVELOPMENT
+      - STAGING
+      - PREVIEW
   cluster_id:
     type: string
     format: uuid
