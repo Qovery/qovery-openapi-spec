@@ -200,6 +200,8 @@ paths:
     $ref: './resources/EnvironmentStop.yaml'
   /environment/{environmentId}/restart:
     $ref: './resources/EnvironmentRestart.yaml'
+  /environment/{environmentId}/cancelDeployment:
+    $ref: './resources/EnvironmentCancelDeployment.yaml'
   /environment/{environmentId}/clone:
     $ref: './resources/EnvironmentClone.yaml'
   /environment/{environmentId}/application:
