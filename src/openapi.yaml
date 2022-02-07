@@ -284,6 +284,8 @@ paths:
     $ref: './resources/ApplicationEvent.yaml'
   /application/{applicationId}/environmentVariable:
     $ref: './resources/ApplicationEnvironmentVariable.yaml'
+  /application/{applicationId}/environmentVariable/import:
+    $ref: './resources/VariableImport.yaml'
   /application/{applicationId}/environmentVariable/{environmentVariableId}:
     $ref: './resources/ApplicationEnvironmentVariableRef.yaml'
   /application/{applicationId}/environmentVariable/{environmentVariableId}/override:

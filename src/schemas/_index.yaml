@@ -220,6 +220,10 @@ AliasedSecret:
   $ref: ./AliasedSecret.yaml
 EnvironmentVariableResponseList:
   $ref: ./EnvironmentVariableResponseList.yaml
+VariableImportRequest:
+  $ref: ./VariableImportRequest.yaml
+VariableImportResponse:
+  $ref: ./VariableImportResponse.yaml
 ReferenceObject:
   $ref: ./ReferenceObject.yaml
 LogResponseList:
