@@ -14,10 +14,10 @@ post:
   responses:
     '201':
       description: 'Import environment variables'
-        content:
-          application/json:
-            schema:
-              $ref: '../schemas/VariableImportResponse.yaml'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/VariableImportResponse.yaml'
     '400':
       $ref: '../responses/BadRequest.yaml'
     '401':
