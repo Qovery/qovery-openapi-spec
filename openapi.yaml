@@ -7673,7 +7673,7 @@ components:
           type: string
           nullable: true
           description: message related to the state
-        serviceDeploymentStatus:
+        service_deployment_status:
           type: string
           nullable: true
           enum:
