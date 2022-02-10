@@ -7348,6 +7348,8 @@ components:
           type: boolean
         version:
           type: string
+        is_default:
+          type: boolean
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/Cluster'
