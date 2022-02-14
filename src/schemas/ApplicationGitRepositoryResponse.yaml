@@ -10,10 +10,17 @@ properties:
   owner:
     type: string
     example: John Doe
+  url:
+    type: string
+    format: uri
   name:
     type: string
     description: repository name
     example: simple-node-app
+  branch:
+    type: string
+  root_path:
+    type: string
   deployed_commit_id:
     type: string
     description: Git commit ID corresponding to the deployed version of the app
