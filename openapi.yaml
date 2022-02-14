@@ -69,6 +69,9 @@ x-tagGroups:
       - Account Info
       - Git repositories
       - Referral & Rewards
+  - name: Git
+    tags:
+      - Git repositories
 servers:
   - url: 'https://api.qovery.com'
 paths:
@@ -2385,7 +2388,7 @@ paths:
           required: false
           schema:
             type: boolean
-            default: null
+            default: false
       tags:
         - Applications
       responses:
@@ -4800,7 +4803,7 @@ paths:
       description: Get database restart message and timestamp.
       operationId: getDatabaseMetricRestart
       parameters:
-        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/lastSeconds'
       tags:
         - Database Metrics
@@ -5106,18 +5109,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      type: object
-                      required:
-                        - name
-                      properties:
-                        name:
-                          type: string
-                          example: main
+                $ref: '#/components/schemas/GitRepositoryBranchResponseList'
         '401':
           $ref: '#/components/responses/401'
   /account/gitlab/repository:
@@ -5153,7 +5145,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1account~1github~1repository~1branch/get/responses/200/content/application~1json/schema'
+                $ref: '#/components/schemas/GitRepositoryBranchResponseList'
         '401':
           $ref: '#/components/responses/401'
   /account/bitbucket/repository:
@@ -5189,7 +5181,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1account~1github~1repository~1branch/get/responses/200/content/application~1json/schema'
+                $ref: '#/components/schemas/GitRepositoryBranchResponseList'
         '401':
           $ref: '#/components/responses/401'
   /account/referral:
@@ -5864,11 +5856,11 @@ components:
         applications:
           type: array
           items:
-            - $ref: '#/components/schemas/DeploymentHistoryApplicationResponse'
+            $ref: '#/components/schemas/DeploymentHistoryApplicationResponse'
         databases:
           type: array
           items:
-            - $ref: '#/components/schemas/DeploymentHistoryDatabaseResponse'
+            $ref: '#/components/schemas/DeploymentHistoryDatabaseResponse'
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
     LogResponse:
@@ -6391,7 +6383,6 @@ components:
           default: 1
         max_running_instances:
           type: integer
-          maximum: -1
           description: |
             Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
             Note: -1 means that there is no limit.
@@ -6402,7 +6393,7 @@ components:
           type: boolean
           description: |
             Specify if the environment preview option is activated or not for this application.
-            If activated, a preview environment will be automatically cloned at each pull request. 
+            If activated, a preview environment will be automatically cloned at each pull request.
           default: true
       allOf:
         - $ref: '#/components/schemas/ApplicationStorageRequest'
@@ -6482,7 +6473,6 @@ components:
           default: 1
         max_running_instances:
           type: integer
-          maximum: -1
           description: |
             Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
             Note: -1 means that there is no limit.
@@ -6493,13 +6483,13 @@ components:
           type: boolean
           description: |
             Specify if the environment preview option is activated or not for this application.
-            If activated, a preview environment will be automatically cloned at each pull request. 
+            If activated, a preview environment will be automatically cloned at each pull request.
           default: true
         sticky-session:
           type: boolean
           description: |
             Specify if the sticky session option (also called persistant session) is activated or not for this application.
-            If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
+            If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
           default: false
       allOf:
         - $ref: '#/components/schemas/ApplicationStorageResponse'
@@ -6696,7 +6686,6 @@ components:
           default: 1
         max_running_instances:
           type: integer
-          maximum: -1
           description: |
             Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
             Note: -1 means that there is no limit.
@@ -6707,7 +6696,7 @@ components:
           type: boolean
           description: |
             Specify if the environment preview option is activated or not for this application.
-            If activated, a preview environment will be automatically cloned at each pull request. 
+            If activated, a preview environment will be automatically cloned at each pull request.
           default: true
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
@@ -6819,6 +6808,8 @@ components:
           type: string
     ServiceResponse:
       type: object
+      required:
+        - id
       properties:
         type:
           type: string
@@ -7016,7 +7007,6 @@ components:
           type: string
           readOnly: true
           format: date-time
-          required: false
     CommunityUsage:
       type: object
       properties:
@@ -8698,6 +8688,10 @@ components:
         accepted_values:
           nullable: false
           type: array
+          items:
+            anyOf:
+              - type: string
+              - type: boolean
     ClusterRoutingTableResponse:
       type: object
       properties:
@@ -8753,6 +8747,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CloudProviderResponse'
+    GitRepositoryBranchResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitRepositoryBranchResponse'
+    GitRepositoryBranchResponse:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: main
   responses:
     '204':
       description: no content
