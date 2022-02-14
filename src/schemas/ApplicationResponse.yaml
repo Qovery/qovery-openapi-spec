@@ -45,8 +45,8 @@ properties:
       - JVM
       - GRAILS
       - SCALA
-      - PLAY 
-      - PHP 
+      - PLAY
+      - PHP
       - GO
   cpu:
     type: number
@@ -67,7 +67,6 @@ properties:
     default: 1
   max_running_instances:
     type: integer
-    maximum: -1
     description: |
       Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
       Note: -1 means that there is no limit.
@@ -78,7 +77,7 @@ properties:
     type: boolean
     description: |
       Specify if the environment preview option is activated or not for this application.
-      If activated, a preview environment will be automatically cloned at each pull request. 
+      If activated, a preview environment will be automatically cloned at each pull request.
     default: true
 allOf:
   - $ref: './BaseResponse.yaml'

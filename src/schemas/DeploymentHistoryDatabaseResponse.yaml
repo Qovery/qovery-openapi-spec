@@ -24,4 +24,4 @@ properties:
       - RUNNING
       - RUNNING_ERROR
 allOf:
-- $ref: './BaseResponse.yaml'
+  - $ref: './BaseResponse.yaml'

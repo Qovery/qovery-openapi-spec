@@ -24,21 +24,21 @@ properties:
     type: string
     description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
   buildpack_language:
-      type: string
-      description: Development language of the application
-      enum:
-        - GO
-        - NODE_JS
-        - CLOJURE
-        - PYTHON
-        - JAVA
-        - GRADLE
-        - JVM
-        - GRAILS
-        - SCALA
-        - PLAY 
-        - PHP 
-        - GO
+    type: string
+    description: Development language of the application
+    enum:
+      - GO
+      - NODE_JS
+      - CLOJURE
+      - PYTHON
+      - JAVA
+      - GRADLE
+      - JVM
+      - GRAILS
+      - SCALA
+      - PLAY
+      - PHP
+      - GO
   cpu:
     type: number
     description: unit is millicores (m). 1000m = 1 cpu
@@ -58,7 +58,6 @@ properties:
     default: 1
   max_running_instances:
     type: integer
-    maximum: -1
     description: |
       Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
       Note: -1 means that there is no limit.
@@ -69,7 +68,7 @@ properties:
     type: boolean
     description: |
       Specify if the environment preview option is activated or not for this application.
-      If activated, a preview environment will be automatically cloned at each pull request. 
+      If activated, a preview environment will be automatically cloned at each pull request.
     default: true
 allOf:
   - $ref: './ApplicationStorageRequest.yaml'

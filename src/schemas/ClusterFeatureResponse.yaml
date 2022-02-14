@@ -35,3 +35,7 @@ properties:
   accepted_values:
     nullable: false
     type: array
+    items:
+      anyOf:
+        - type: string
+        - type: boolean

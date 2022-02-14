@@ -1,2 +1,2 @@
 allOf:
-- $ref: './ProjectCurrentCostResponseList.yaml'
+  - $ref: './ProjectCurrentCostResponseList.yaml'
