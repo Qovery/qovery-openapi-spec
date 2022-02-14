@@ -4,11 +4,11 @@ get:
   tags:
     - Git repositories
   parameters:
-  - in: query
-    name: name
-    schema:
-      type: string
-    description: The name of the repository where to retrieve the branches
+    - in: query
+      name: name
+      schema:
+        type: string
+      description: The name of the repository where to retrieve the branches
   responses:
     '200':
       description: 'Get github repository branches'
