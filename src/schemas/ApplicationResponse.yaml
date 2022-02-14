@@ -73,7 +73,7 @@ properties:
     default: 1
   healthcheck:
     $ref: './Healthcheck.yaml'
-  env_preview:
+  auto_preview:
     type: boolean
     description: |
       Specify if the environment preview option is activated or not for this application.
