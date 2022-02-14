@@ -6389,7 +6389,7 @@ components:
           default: 1
         healthcheck:
           $ref: '#/components/schemas/Healthcheck'
-        env_preview:
+        auto_preview:
           type: boolean
           description: |
             Specify if the environment preview option is activated or not for this application.
@@ -6479,7 +6479,7 @@ components:
           default: 1
         healthcheck:
           $ref: '#/components/schemas/Healthcheck'
-        env_preview:
+        auto_preview:
           type: boolean
           description: |
             Specify if the environment preview option is activated or not for this application.
@@ -6692,7 +6692,7 @@ components:
           default: 1
         healthcheck:
           $ref: '#/components/schemas/Healthcheck'
-        env_preview:
+        auto_preview:
           type: boolean
           description: |
             Specify if the environment preview option is activated or not for this application.
