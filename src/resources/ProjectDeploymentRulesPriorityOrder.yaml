@@ -1,0 +1,24 @@
+put:
+  summary: 'Update deployment rules priority order'
+  description: 'Update deployment rules priority order'
+  operationId: updateDeploymentRulesPriorityOrder
+  parameters:
+    - $ref: '../parameters/path/projectId.yaml'
+  tags:
+    - Project Deployment Rule
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/ProjectDeploymentRulesPriorityOrderRequest.yaml'
+  responses:
+    '200':
+      description: 'Update deployment rules priority order'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
