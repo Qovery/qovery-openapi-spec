@@ -1,12 +1,12 @@
 type: object
-properties: 
+properties:
   ports:
     type: array
     items:
       type: object
       required:
         - internal_port
-        - protocol
+        - publicly_accessible
       properties:
         id:
           type: string
