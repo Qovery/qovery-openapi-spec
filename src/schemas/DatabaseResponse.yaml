@@ -8,12 +8,12 @@ properties:
     type: integer
     example: 5432
   maximum_cpu:
-    type: number
+    type: integer
     description: Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
     default: 250
     example: 1250
   maximum_memory:
-    type: number
+    type: integer
     description: Maximum memory that can be allocated to the database based on organization cluster configuration. unit is MB. 1024 MB = 1GB
     default: 256
     example: 1024
