@@ -218,6 +218,8 @@ paths:
     $ref: './resources/ProjectDeploymentRule.yaml'
   /project/{projectId}/deploymentRule/{deploymentRuleId}:
     $ref: './resources/ProjectDeploymentRuleRef.yaml'
+  /project/{projectId}/deploymentRule/order:
+    $ref: './resources/ProjectDeploymentRulesPriorityOrder.yaml'
   /project/{projectId}/environment:
     $ref: './resources/ProjectEnvironment.yaml'
   /project/{projectId}/environmentVariable:
