@@ -6,6 +6,7 @@ properties:
       type: object
       required:
         - internal_port
+        - publicly_accessible
       properties:
         name:
           type: string
