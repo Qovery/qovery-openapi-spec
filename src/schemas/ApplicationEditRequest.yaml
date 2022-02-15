@@ -36,12 +36,12 @@ properties:
       - PHP
       - GO
   cpu:
-    type: number
+    type: integer
     description: unit is millicores (m). 1000m = 1 cpu
     default: 250
     example: 1250
   memory:
-    type: number
+    type: integer
     description: unit is MB. 1024 MB = 1GB
     default: 256
     example: 1024
