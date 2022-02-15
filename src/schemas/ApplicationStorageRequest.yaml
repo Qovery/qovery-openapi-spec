@@ -1,5 +1,5 @@
 type: object
-properties: 
+properties:
   storage:
     type: array
     items:
@@ -17,7 +17,7 @@ properties:
             - SSD
             - FAST_SSD
         size:
-          type: number
+          type: integer
           description: unit is GB
           example: 16
         mount_point:

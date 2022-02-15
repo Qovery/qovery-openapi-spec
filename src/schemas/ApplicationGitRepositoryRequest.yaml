@@ -1,10 +1,9 @@
 type: object
 required:
- - provider
- - owner
- - name
- - url
- - root_path
+  - provider
+  - owner
+  - name
+  - url
 properties:
   url:
     type: string
