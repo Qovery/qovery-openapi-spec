@@ -1,6 +1,6 @@
 type: object
 properties:
-  sticky-session:
+  sticky_session:
     type: boolean
     description: |
       Specify if the sticky session option (also called persistant session) is activated or not for this application.
