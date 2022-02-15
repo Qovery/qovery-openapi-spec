@@ -1,0 +1,15 @@
+type: array
+items:
+  type: object
+  required:
+    - id
+    - priority_index
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: deployment rule id
+      readOnly: true
+    priority_index:
+      type: number
+      description: deployment rule priority (starts with 1)
