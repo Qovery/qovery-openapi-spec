@@ -1,12 +1,11 @@
 type: object
-properties: 
+properties:
   ports:
     type: array
     items:
       type: object
       required:
         - internal_port
-        - protocol
       properties:
         name:
           type: string
