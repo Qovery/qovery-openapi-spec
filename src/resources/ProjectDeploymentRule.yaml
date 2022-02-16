@@ -1,13 +1,14 @@
 get:
   summary: 'List project deployment rules'
-  operationId: listProjectDeploymentRule
+  description: 'List project deployment rules'
+  operationId: listProjectDeploymentRules
   parameters:
     - $ref: '../parameters/path/projectId.yaml'
   tags:
     - Project Deployment Rule
   responses:
     '200':
-      description: 'Get deployment rules'
+      description: 'Get project deployment rules'
       content:
         application/json:
           schema:
@@ -21,6 +22,7 @@ get:
 
 post:
   summary: 'Create a deployment rule'
+  description: 'Create a deployment rule'
   operationId: createDeploymentRule
   parameters:
     - $ref: '../parameters/path/projectId.yaml'
