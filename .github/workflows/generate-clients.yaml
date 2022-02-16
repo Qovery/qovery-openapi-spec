@@ -18,12 +18,10 @@ jobs:
           QOVERY_CLIENT_LANGUAGE=go npm run generate
       - name: Push to repository
         run: |
-          cd out/client
           git config --global user.email "github@qovery.com"
           git config --global user.name "Qovery OpenAPI Spec GithubActions"
           git config pull.rebase false
-          git pull origin master --allow-unrelated-histories
-          sh git_push.sh
+          cd out/client && git pull origin master --allow-unrelated-histories && sh git_push.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,12 +38,11 @@ jobs:
           QOVERY_CLIENT_LANGUAGE=python npm run generate
       - name: Push to repository
         run: |
-          cd out/client
+          
           git config --global user.email "github@qovery.com"
           git config --global user.name "Qovery OpenAPI Spec GithubActions"
           git config pull.rebase false
-          git pull origin master --allow-unrelated-histories
-          sh git_push.sh
+          cd out/client && git pull origin master --allow-unrelated-histories && sh git_push.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
