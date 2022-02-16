@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  generate-python-client:
+  python-client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.4.0
@@ -17,6 +17,9 @@ jobs:
           npm ci
           QOVERY_CLIENT_LANGUAGE=python npm run generate
       - name: Push to repository
-        run: sh out/client/git_push.sh
+        run: |
+          git config --global user.email "github@qovery.com"
+          git config --global user.name "Qovery OpenAPI Spec GithubActions"
+          sh out/client/git_push.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
