@@ -20,6 +20,8 @@ jobs:
         run: |
           git config --global user.email "github@qovery.com"
           git config --global user.name "Qovery OpenAPI Spec GithubActions"
+          git config pull.rebase false
+          git pull origin master --allow-unrelated-histories
           cd out/client && sh git_push.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -39,6 +41,8 @@ jobs:
         run: |
           git config --global user.email "github@qovery.com"
           git config --global user.name "Qovery OpenAPI Spec GithubActions"
+          git config pull.rebase false
+          git pull origin master --allow-unrelated-histories
           cd out/client && sh git_push.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
