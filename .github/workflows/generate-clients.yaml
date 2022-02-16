@@ -18,10 +18,10 @@ jobs:
           QOVERY_CLIENT_LANGUAGE=go npm run generate
       - name: Push to repository
         run: |
+          cd out/client
           git config --global user.email "github@qovery.com"
           git config --global user.name "Qovery OpenAPI Spec GithubActions"
-          git config pull.rebase false
-          cd out/client
+          git config --global pull.rebase false
           git init
           git add .
           git commit -m "auto update client"
@@ -43,10 +43,10 @@ jobs:
           QOVERY_CLIENT_LANGUAGE=python npm run generate
       - name: Push to repository
         run: |
+          cd out/client
           git config --global user.email "github@qovery.com"
           git config --global user.name "Qovery OpenAPI Spec GithubActions"
-          git config pull.rebase false
-          cd out/client
+          git config --global pull.rebase false
           git init
           git add .
           git commit -m "auto update client"
