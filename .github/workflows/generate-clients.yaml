@@ -1,18 +1,18 @@
-name: generate-python-client
+name: generate-clients
 
 on:
   push:
     branches: [main]
 
 jobs:
-  gh-release:
+  generate-python-client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.4.0
       - uses: actions/setup-node@v2.5.1
         with:
           node-version: '16.x'
-      - name: Generate client
+      - name: Generate Python Client
         run: |
           npm ci
           QOVERY_CLIENT_LANGUAGE=python npm run generate
