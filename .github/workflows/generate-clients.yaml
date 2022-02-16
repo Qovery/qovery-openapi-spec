@@ -20,6 +20,7 @@ jobs:
         run: |
           git config --global user.email "github@qovery.com"
           git config --global user.name "Qovery OpenAPI Spec GithubActions"
-          sh out/client/git_push.sh
+          cd out/client && sh git_push.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
