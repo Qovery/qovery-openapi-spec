@@ -1,10 +1,54 @@
 type: object
 required:
-  - environment_target
+  - name
+  - mode
+  - cluster_id
+  - auto_deploy
+  - auto_stop
+  - timezone
+  - start_time
+  - stop_time
+  - weekdays
+  - wildcard
 properties:
-  environment_target:
+  name:
     type: string
-    description: specify here a wildcard based on environment name that will target new environments after their creation
-    example: ^feat
-allOf:
-  - $ref: './DeploymentRuleRequest.yaml'
+    description: name is case insensitive
+  description:
+    type: string
+    nullable: true
+  mode:
+    type: string
+    enum:
+      - PRODUCTION
+      - DEVELOPMENT
+  cluster_id:
+    type: string
+    format: uuid
+  auto_deploy:
+    type: boolean
+  auto_stop:
+    type: boolean
+  timezone:
+    type: string
+    default: Europe/London
+    description: specify value only if auto_stop = false
+  start_time:
+    type: string
+    format: date-time
+    description: specify value only if auto_stop = false
+  stop_time:
+    type: string
+    format: date-time
+    description: specify value only if auto_stop = false
+  weekdays:
+    type: array
+    description: specify value only if auto_stop = false
+    items:
+      type: string
+      enum: [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY]
+      example: MONDAY
+  wildcard:
+    type: string
+    description: wildcard pattern composed of '?' and/or '*' used to target new created environments
+    nullable: true

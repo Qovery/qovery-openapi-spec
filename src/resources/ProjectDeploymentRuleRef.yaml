@@ -1,5 +1,6 @@
 get:
-  summary: 'Get project deployment rule'
+  summary: 'Get a project deployment rule'
+  description: 'Get a project deployment rule'
   operationId: getProjectDeploymentRule
   parameters:
     - $ref: '../parameters/path/projectId.yaml'
@@ -8,7 +9,7 @@ get:
     - Project Deployment Rule
   responses:
     '200':
-      description: 'Get deployment rule'
+      description: 'Get project deployment rule'
       content:
         application/json:
           schema:
@@ -22,6 +23,7 @@ get:
 
 put:
   summary: 'Edit a project deployment rule'
+  description: 'Edit a project deployment rule'
   operationId: editProjectDeployemtnRule
   parameters:
     - $ref: '../parameters/path/projectId.yaml'
@@ -49,10 +51,9 @@ put:
       $ref: '../responses/Forbidden.yaml'
     '404':
       $ref: '../responses/NotFound.yaml'
-    '409':
-      description: Project name within the organization is already taken
 delete:
   summary: 'Delete a project deployment rule'
+  description: 'Delete a project deployment rule'
   operationId: deleteProjectDeploymentRule
   parameters:
     - $ref: '../parameters/path/projectId.yaml'
