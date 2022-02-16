@@ -65,3 +65,23 @@ jobs:
           user-email: github@qovery.com
           commit-message: See ORIGIN_COMMIT from $GITHUB_REF
           target-branch: main
+  javascript-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate Javascript Client
+        run: |
+          npm ci
+          QOVERY_CLIENT_LANGUAGE=javascript npm run generate
+      - name: Pushes to another repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: out/client/
+          destination-github-username: 'qovery'
+          destination-repository-name: 'qovery-client-javascript'
+          user-email: github@qovery.com
+          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+          target-branch: main
