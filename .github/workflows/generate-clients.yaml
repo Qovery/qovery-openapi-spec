@@ -5,6 +5,26 @@ on:
     branches: [main]
 
 jobs:
+  go-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate Go Client
+        run: |
+          npm ci
+          QOVERY_CLIENT_LANGUAGE=go npm run generate
+      - name: Pushes to another repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: out/client/
+          destination-github-username: 'qovery'
+          destination-repository-name: 'qovery-client-go'
+          user-email: github@qovery.com
+          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+          target-branch: master
   python-client:
     runs-on: ubuntu-latest
     steps:
@@ -25,3 +45,23 @@ jobs:
           user-email: github@qovery.com
           commit-message: See ORIGIN_COMMIT from $GITHUB_REF
           target-branch: master
+  typescript-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate Typescript Client
+        run: |
+          npm ci
+          QOVERY_CLIENT_LANGUAGE=typescript npm run generate
+      - name: Pushes to another repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: out/client/
+          destination-github-username: 'qovery'
+          destination-repository-name: 'qovery-client-typescript'
+          user-email: github@qovery.com
+          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+          target-branch: main
