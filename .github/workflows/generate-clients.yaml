@@ -5,57 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  go-client:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.4.0
-      - uses: actions/setup-node@v2.5.1
-        with:
-          node-version: '16.x'
-      - name: Generate Go Client
-        run: |
-          npm ci
-          QOVERY_CLIENT_LANGUAGE=go npm run generate
-      - name: Push to repository
-        run: |
-          cd out/client
-          git config --global user.email "github@qovery.com"
-          git config --global user.name "Qovery OpenAPI Spec GithubActions"
-          git config --global pull.rebase false
-          git init
-          git add .
-          git commit -m "auto update client"
-          git remote add origin "https://$GITHUB_TOKEN@github.com/qovery/qovery-client-go.git"
-          git pull origin master --allow-unrelated-histories
-          git push origin master 2>&1 | grep -v 'To https'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   python-client:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.4.0
-      - uses: actions/setup-node@v2.5.1
-        with:
-          node-version: '16.x'
-      - name: Generate Python Client
-        run: |
-          npm ci
-          QOVERY_CLIENT_LANGUAGE=python npm run generate
-      - name: Push to repository
-        run: |
-          cd out/client
-          git config --global user.email "github@qovery.com"
-          git config --global user.name "Qovery OpenAPI Spec GithubActions"
-          git config --global pull.rebase false
-          git init
-          git add .
-          git commit -m "auto update client"
-          git remote add origin "https://$GITHUB_TOKEN@github.com/qovery/qovery-client-python.git"
-          git pull origin master --allow-unrelated-histories
-          git push origin master 2>&1 | grep -v 'To https'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  python-client-2:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -69,7 +19,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: output/
+          source-directory: out/client/
           destination-github-username: 'qovery'
           destination-repository-name: 'qovery-client-python'
           user-email: github@qovery.com
