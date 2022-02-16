@@ -1,0 +1,22 @@
+name: generate-python-client
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  gh-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: actions/setup-node@v2.5.1
+        with:
+          node-version: '16.x'
+      - name: Generate client
+        run: |
+          npm ci
+          QOVERY_CLIENT_LANGUAGE=python npm run generate
+      - name: Push to repository
+        run: sh out/client/git_push.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
