@@ -25,7 +25,7 @@ jobs:
           git init
           git add .
           git commit -m "auto update client"
-          url=$("https://$GITHUB_TOKEN@/qovery/qovery-client-go.git")
+          url="https://$(echo $GITHUB_TOKEN)@/qovery/qovery-client-go.git"
           git remote add origin $url
           git pull origin master --allow-unrelated-histories
           git push origin master 2>&1 | grep -v 'To https'
@@ -51,7 +51,7 @@ jobs:
           git init
           git add .
           git commit -m "auto update client"
-          url=$("https://$GITHUB_TOKEN@/qovery/qovery-client-python.git")
+          url="https://$(echo $GITHUB_TOKEN)@/qovery/qovery-client-python.git"
           git remote add origin $url
           git pull origin master --allow-unrelated-histories
           git push origin master 2>&1 | grep -v 'To https'
