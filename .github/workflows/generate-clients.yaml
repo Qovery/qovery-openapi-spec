@@ -21,10 +21,15 @@ jobs:
           git config --global user.email "github@qovery.com"
           git config --global user.name "Qovery OpenAPI Spec GithubActions"
           git config pull.rebase false
-          cd out/client && git pull origin master --allow-unrelated-histories && sh git_push.sh
+          cd out/client
+          git init
+          git add .
+          git commit -m "auto update client"
+          git remote add origin https://${GITHUB_TOKEN}@/qovery/qovery-client-go.git
+          git pull origin master --allow-unrelated-histories
+          git push origin master 2>&1 | grep -v 'To https'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   python-client:
     runs-on: ubuntu-latest
     steps:
@@ -38,11 +43,15 @@ jobs:
           QOVERY_CLIENT_LANGUAGE=python npm run generate
       - name: Push to repository
         run: |
-          
           git config --global user.email "github@qovery.com"
           git config --global user.name "Qovery OpenAPI Spec GithubActions"
           git config pull.rebase false
-          cd out/client && git pull origin master --allow-unrelated-histories && sh git_push.sh
+          cd out/client
+          git init
+          git add .
+          git commit -m "auto update client"
+          git remote add origin https://${GITHUB_TOKEN}@/qovery/qovery-client-python.git
+          git pull origin master --allow-unrelated-histories
+          git push origin master 2>&1 | grep -v 'To https'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
