@@ -5,6 +5,25 @@ on:
     branches: [main]
 
 jobs:
+  go-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: actions/setup-node@v2.5.1
+        with:
+          node-version: '16.x'
+      - name: Generate Go Client
+        run: |
+          npm ci
+          QOVERY_CLIENT_LANGUAGE=go npm run generate
+      - name: Push to repository
+        run: |
+          git config --global user.email "github@qovery.com"
+          git config --global user.name "Qovery OpenAPI Spec GithubActions"
+          cd out/client && sh git_push.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   python-client:
     runs-on: ubuntu-latest
     steps:
