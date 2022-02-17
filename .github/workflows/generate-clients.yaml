@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
         with:
-          python-version: '1.17'
+          go-version: '1.17'
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
@@ -41,9 +41,13 @@ jobs:
             --git-user-id qovery \
             --git-repo-id qovery-client-${{ matrix.language }} \
             --package-name qovery
+      - id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: 'generator/post_generation_scripts/${{ matrix.language }}.sh'
       - name: Run ${{ matrix.language }} post generation script
-        run: |
-          [ -x generator/post_generation_scripts/${{ matrix.language }}.sh ] && generator/post_generation_scripts/${{ matrix.language }}.sh
+        if: steps.check_files.outputs.files_exists == 'true'
+        run: generator/post_generation_scripts/${{ matrix.language }}.sh
       - name: Publish ${{ matrix.language }} client
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
