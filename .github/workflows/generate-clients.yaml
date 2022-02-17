@@ -2,18 +2,38 @@ name: generate-clients
 
 on:
   push:
-    branches: [main]
+    branches: [main, chore-test-generator]
+
+env:
+  DEFAULT_COMMAND_ARGS: -o out/client -a bearer --git-user-id qovery
 
 jobs:
   go-client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Generate Go Client
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.17'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Build OpenApi file
         run: |
           npm ci
-          QOVERY_CLIENT_LANGUAGE=go npm run generate
+          npm run build
+      - name: Generate Go Client
+        uses: openapi-generators/openapitools-generator-action@v1
+        with:
+          generator: go
+          generator-tag: v5.4.0
+          config-file: generator-config/go.yml
+          openapi-file: _build/openapi.yaml
+          command-args: $DEFAULT_COMMAND_ARGS --git-repo-id qovery-client-go
+      - name: Fix generated code
+        run: |
           sed -i 's/AnyOfstringboolean/interface{}/g' $(find out/client/ -type f)
+          gofmt -s -w -l out/client/
       - name: Pushes to another repository
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
