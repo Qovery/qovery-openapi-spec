@@ -12,11 +12,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - language: go
-            config-file: generator/configs/go.yml
-          - language: python
-          - language: typescript
-          - language: javascript
+          - language: 'go'
+            config-file: 'generator/configs/go.yml'
+          - language: 'python'
+          - language: 'typescript'
+          - language: 'javascript'
 
     steps:
       - uses: actions/checkout@v2
