@@ -13,7 +13,7 @@ jobs:
         run: |
           npm ci
           QOVERY_CLIENT_LANGUAGE=go npm run generate
-          sed -i 's/AnyOfstringboolean/interface{}/g' out/client/*(.)
+          sed -i 's/AnyOfstringboolean/interface{}/g' $(find out/client/ -type f)
       - name: Pushes to another repository
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
