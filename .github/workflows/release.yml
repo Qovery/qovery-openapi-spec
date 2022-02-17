@@ -1,0 +1,17 @@
+name: Generate Release Notes
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: lakto/gren-action@v2.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          options: '--generate --override --changelog-filename=CHANGELOG.md'
