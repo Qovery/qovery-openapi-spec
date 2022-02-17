@@ -11,7 +11,15 @@ jobs:
 
     strategy:
       matrix:
-        language: [go, javascript, python, typescript]
+        include:
+          - language: go
+            target-branch: master
+          - language: javascript
+            target-branch: main
+          - language: python
+            target-branch: master
+          - language: typescript
+            target-branch: main
 
     steps:
       - uses: actions/checkout@v2
@@ -56,4 +64,4 @@ jobs:
           destination-repository-name: 'qovery-client-${{ matrix.language }}'
           user-email: github@qovery.com
           commit-message: See ORIGIN_COMMIT from $GITHUB_REF
-          target-branch: master
+          target-branch: ${{ matrix.target-branch }}
