@@ -14,4 +14,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          options: '--generate --override --changelog-filename=CHANGELOG.md'
+          options: '--override --changelog-filename=CHANGELOG.md'
