@@ -2,15 +2,25 @@ name: generate-clients
 
 on:
   push:
-    branches: [main, chore-test-generator]
-
-env:
-  DEFAULT_COMMAND_ARGS: -o out/client -a bearer --git-user-id qovery
+    branches: [main]
 
 jobs:
-  go-client:
+  generate:
     runs-on: ubuntu-latest
     if: success() && github.ref == 'refs/heads/main'
+
+    strategy:
+      matrix:
+        include:
+          - language: go
+            target-branch: master
+          - language: javascript
+            target-branch: main
+          - language: python
+            target-branch: master
+          - language: typescript
+            target-branch: main
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
@@ -23,90 +33,35 @@ jobs:
         run: |
           npm ci
           npm run build
-      - name: Generate Go Client
+      - name: Generate ${{ matrix.language }} client
         uses: openapi-generators/openapitools-generator-action@v1
         with:
-          generator: go
+          generator: ${{ matrix.language }}
           generator-tag: v5.4.0
-          config-file: generator-config/go.yml
           openapi-file: _build/openapi.yaml
-          command-args: $DEFAULT_COMMAND_ARGS --git-repo-id qovery-client-go
-      - name: Fix generated code
-        run: |
-          sed -i 's/AnyOfstringboolean/interface{}/g' $(find out/client/ -type f)
-          gofmt -s -w -l out/client/
-      - name: Pushes to another repository
+          command-args: |
+            -a bearer \
+            -o out/qovery-client-${{ matrix.language }} \
+            --git-user-id qovery \
+            --git-repo-id qovery-client-${{ matrix.language }} \
+            --package-name qovery
+      - name: Check post generation script existence
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: 'generator/post_generation_scripts/${{ matrix.language }}.sh'
+      - name: Run ${{ matrix.language }} post generation script
+        if: steps.check_files.outputs.files_exists == 'true'
+        run: generator/post_generation_scripts/${{ matrix.language }}.sh
+      - name: Publish ${{ matrix.language }} client
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: out/client/
+          source-directory: out/qovery-client-${{ matrix.language }}
           destination-github-username: 'qovery'
-          destination-repository-name: 'qovery-client-go'
+          destination-repository-name: 'qovery-client-${{ matrix.language }}'
           user-email: github@qovery.com
           commit-message: See ORIGIN_COMMIT from $GITHUB_REF
-          target-branch: master
-  python-client:
-    runs-on: ubuntu-latest
-    if: success() && github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v2
-      - name: Generate Python Client
-        run: |
-          npm ci
-          QOVERY_CLIENT_LANGUAGE=python npm run generate
-      - name: Pushes to another repository
-        id: push_directory
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-directory: out/client/
-          destination-github-username: 'qovery'
-          destination-repository-name: 'qovery-client-python'
-          user-email: github@qovery.com
-          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
-          target-branch: master
-  typescript-client:
-    runs-on: ubuntu-latest
-    if: success() && github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v2
-      - name: Generate Typescript Client
-        run: |
-          npm ci
-          QOVERY_CLIENT_LANGUAGE=typescript npm run generate
-      - name: Pushes to another repository
-        id: push_directory
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-directory: out/client/
-          destination-github-username: 'qovery'
-          destination-repository-name: 'qovery-client-typescript'
-          user-email: github@qovery.com
-          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
-          target-branch: main
-  javascript-client:
-    runs-on: ubuntu-latest
-    if: success() && github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v2
-      - name: Generate Javascript Client
-        run: |
-          npm ci
-          QOVERY_CLIENT_LANGUAGE=javascript npm run generate
-      - name: Pushes to another repository
-        id: push_directory
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-directory: out/client/
-          destination-github-username: 'qovery'
-          destination-repository-name: 'qovery-client-javascript'
-          user-email: github@qovery.com
-          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
-          target-branch: main
+          target-branch: ${{ matrix.target-branch }}
