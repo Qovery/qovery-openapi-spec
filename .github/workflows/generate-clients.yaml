@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        language: [go, javascript, python]
+        language: [go, javascript, python, typescript]
 
     steps:
       - uses: actions/checkout@v2
