@@ -36,9 +36,13 @@ jobs:
         with:
           generator: ${{ matrix.language }}
           generator-tag: v5.4.0
-          config-file: ${{ matrix.config-file }}
           openapi-file: _build/openapi.yaml
-          command-args: -o out/qovery-client-${{ matrix.language }} -a bearer --git-user-id qovery --git-repo-id qovery-client-${{ matrix.language }}
+          command-args: |
+            -a bearer \
+            -o out/qovery-client-${{ matrix.language }} \
+            --git-user-id qovery \
+            --git-repo-id qovery-client-${{ matrix.language }} \
+            --package-name qovery
       - name: Run ${{ matrix.language }} post generation script
         run: |
           generator/post_generation_scripts/${{ matrix.language }}.sh 2> /dev/null
