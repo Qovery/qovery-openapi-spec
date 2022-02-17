@@ -11,11 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        language: [python]
-        # - language: 'go'
-        # - language: 'python'
-        # - language: 'typescript'
-        # - language: 'javascript'
+        language: [go, javascript, python, typescript]
 
     steps:
       - uses: actions/checkout@v2
@@ -41,7 +37,8 @@ jobs:
             --git-user-id qovery \
             --git-repo-id qovery-client-${{ matrix.language }} \
             --package-name qovery
-      - id: check_files
+      - name: Check post generation script existence
+        id: check_files
         uses: andstor/file-existence-action@v1
         with:
           files: 'generator/post_generation_scripts/${{ matrix.language }}.sh'
