@@ -12,6 +12,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: lakto/gren-action@v2.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           options: '--generate --override --changelog-filename=CHANGELOG.md'
