@@ -14,6 +14,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          python-version: '1.17'
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
@@ -26,9 +29,12 @@ jobs:
         with:
           generator: ${{ matrix.language }}
           generator-tag: v5.4.0
-          config-file: generator-config/${{ matrix.language }}.yml
+          config-file: generator/configs/${{ matrix.language }}.yml
           openapi-file: _build/openapi.yaml
           command-args: -o out/qovery-client-${{ matrix.language }} -a bearer --git-user-id qovery --git-repo-id qovery-client-${{ matrix.language }}
+      - name: Fix ${{ matrix.language }} Generated Code
+        run: |
+          generator/post_generation_scripts/${{ matrix.language }}.sh 2> /dev/null
       - name: Publish ${{ matrix.language }} Client
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
@@ -60,7 +66,7 @@ jobs:
   #       with:
   #         generator: go
   #         generator-tag: v5.4.0
-  #         config-file: generator-config/go.yml
+  #         config-file: generator/configs/go.yml
   #         openapi-file: _build/openapi.yaml
   #         command-args: $DEFAULT_COMMAND_ARGS --git-repo-id qovery-client-go
   #     - name: Fix generated code
