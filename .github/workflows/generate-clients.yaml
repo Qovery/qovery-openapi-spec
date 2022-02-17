@@ -1,4 +1,4 @@
-name: generate-clients
+name: Generate API Clients
 
 on:
   push:
