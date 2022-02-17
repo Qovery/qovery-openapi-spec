@@ -7,7 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: success() && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - name: Build OpenApi file
@@ -16,31 +15,18 @@ jobs:
           npm run build
   generate:
     runs-on: ubuntu-latest
-    if: success() && github.ref == 'refs/heads/main'
+
+    strategy:
+      matrix:
+        language: [go]
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          source-directory: out/client/
-          destination-github-username: 'qovery'
-          destination-repository-name: 'qovery-client-python'
-          user-email: github@qovery.com
-          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
-          target-branch: master
-  typescript-client:
-    runs-on: ubuntu-latest
-    if: success() && github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v2
-      - name: Generate Typescript Client
-        run: |
-          npm ci
-          QOVERY_CLIENT_LANGUAGE=typescript npm run generate
-      - name: Pushes to another repository
-        id: push_directory
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+          python-version: '3.x'
+      - name: Generate ${{ matrix.language }} Client
+        uses: openapi-generators/openapitools-generator-action@v1
         with:
           generator: ${{ matrix.language }}
           generator-tag: v5.4.0
@@ -50,7 +36,11 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    if: success() && github.ref == 'refs/heads/main'
+
+    strategy:
+      matrix:
+        language: [go]
+
     steps:
       - name: Publish ${{ matrix.language }} Client
         id: push_directory
