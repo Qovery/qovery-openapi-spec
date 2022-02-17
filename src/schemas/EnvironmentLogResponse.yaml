@@ -25,28 +25,28 @@ properties:
         type: string
       id:
         type: string
-        format: uuid 
+        format: uuid
   state:
     type: string
     description: |
       Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state.
     enum:
-      - INITIALIZED
-      - QUEUED
-      - BUILDING
       - BUILD_ERROR
+      - BUILDING
       - BUILT
-      - DEPLOYING
-      - DEPLOYMENT_ERROR
-      - DEPLOYED
-      - STOPPING
-      - STOP_ERROR
-      - STOPPED
-      - DELETING
       - DELETE_ERROR
       - DELETED
+      - DELETING
+      - DEPLOYED
+      - DEPLOYING
+      - DEPLOYMENT_ERROR
+      - INITIALIZED
+      - QUEUED
       - RUNNING
       - RUNNING_ERROR
+      - STOP_ERROR
+      - STOPPED
+      - STOPPING
   message:
     type: string
     nullable: true

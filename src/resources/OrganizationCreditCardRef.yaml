@@ -1,5 +1,6 @@
 delete:
   summary: 'Delete credit card'
+  operationId: deleteCreditCard
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
     - $ref: '../parameters/path/creditCardId.yaml'
