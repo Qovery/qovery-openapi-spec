@@ -32,7 +32,7 @@ module.exports = {
   username: 'qovery',
   repo: 'qovery-openapi-spec',
   template: {
-    issue: '- {{name}} [{{text}}]({{url}}) by [@{{user_login}}]({{user_url}})',
+    issue: '- {{name}} [{{text}}]({{url}}) by @{{user_login}}',
     release: '## {{release}} ({{date}})\n{{body}}',
     changelogTitle: '# Changelog\n\n',
     group: function (placeholders) {
