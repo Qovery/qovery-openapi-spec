@@ -15,6 +15,7 @@ jobs:
           # - language: 'go'
           #   config-file: 'generator/configs/go.yml'
           - language: 'python'
+            config-file: 'generator/configs/go.yml'
           # - language: 'typescript'
           # - language: 'javascript'
 
