@@ -1,15 +1,22 @@
-name: Generate Release Notes
+name: Create Release
 
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
-  publish:
+  create-github-release:
+    name: Create GitHub Release
     runs-on: ubuntu-latest
+    needs: publish
     steps:
-      - uses: actions/checkout@v2
-      - uses: lakto/gren-action@v2.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
+      - name: Create Release Notes
+        uses: actions/github-script@v4.0.2
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            await github.request(`POST /repos/${{ github.repository }}/releases`, {
+              tag_name: "${{ github.ref }}",
+              generate_release_notes: true
+            });
