@@ -5,17 +5,26 @@ changelog:
   categories:
     - title: 💥 Breaking Changes
       labels:
+        - semver-major
         - breaking-change
     - title: 🚀 Features
       labels:
-        - feature
+        - semver-minor
         - enhancement
-        - docs
-        - feat
-    - title: 🧰 Bug fixes
+        - new-feature
+    - title: 🐛 Bug Fixes
       labels:
+        - semver-patch
         - bug
-        - fix
+    - title: ⚙️ Technical Tasks
+      labels:
+        - chore
+    - title: 🔗 Dependencies
+      labels:
+        - dependencies
+    - title: 📚 Documentation
+      labels:
+        - documentation
     - title: Other Changes
       labels:
         - '*'

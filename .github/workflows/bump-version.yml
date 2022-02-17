@@ -48,7 +48,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         run: |
-          git config user.name 'Qovery'
+          git config user.name 'Qovery Bot'
           git config user.email 'github@qovery.com'
 
       - name: Bump Version
