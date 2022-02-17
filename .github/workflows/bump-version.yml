@@ -44,13 +44,6 @@ jobs:
       - name: Install npm packages
         run: npm ci
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.API_TOKEN_GITHUB }}
-          branch: main
-          tags: true
-
       # - name: Setup Git
       #   env:
       #     API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
@@ -58,8 +51,15 @@ jobs:
       #     git config user.name 'Qovery Bot'
       #     git config user.email 'github@qovery.com'
 
-      # - name: Bump Version
-      #   run: npm version ${{ github.event.inputs.version }}
-
       # - name: Push latest version
       #   run: git push origin main --follow-tags
+
+      - name: Bump Version
+        run: npm version ${{ github.event.inputs.version }}
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.API_TOKEN_GITHUB }}
+          branch: main
+          tags: true
