@@ -45,7 +45,7 @@ jobs:
             --package-name qovery
       - name: Run ${{ matrix.language }} post generation script
         run: |
-          [[ -e generator/post_generation_scripts/${{ matrix.language }}.sh ]] generator/post_generation_scripts/${{ matrix.language }}.sh
+          [ -e generator/post_generation_scripts/${{ matrix.language }}.sh ] generator/post_generation_scripts/${{ matrix.language }}.sh
       - name: Publish ${{ matrix.language }} client
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
