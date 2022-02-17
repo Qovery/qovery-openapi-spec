@@ -12,6 +12,57 @@ info:
   x-logo:
     url: 'https://raw.githubusercontent.com/Qovery/public-resources/master/qovery_new_logo_white.svg'
     altText: Qovery
+tags:
+  - name: Account
+  - name: Account Info
+  - name: Application
+  - name: Application Actions
+  - name: Application Configuration
+  - name: Application Database
+  - name: Application Deployment History
+  - name: Application Environment Variable
+  - name: Application Event
+  - name: Application Logs
+  - name: Application Main Calls
+  - name: Application Metrics
+  - name: Application Secret
+  - name: Applications
+  - name: Backups
+  - name: Billing
+  - name: Cloud Provider
+  - name: Cloud Provider Credentials
+  - name: Clusters
+  - name: Custom Domain
+  - name: Database
+  - name: Database Actions
+  - name: Database Application
+  - name: Database Event
+  - name: Database Main Calls
+  - name: Database Metrics
+  - name: Databases
+  - name: Dependency
+  - name: Environment
+  - name: Environment Actions
+  - name: Environment Deployment History
+  - name: Environment Deployment Rule
+  - name: Environment Logs
+  - name: Environment Main Calls
+  - name: Environment Secret
+  - name: Environment Variable
+  - name: Environments
+  - name: Git
+  - name: Git repositories
+  - name: Logical Database
+  - name: Members
+  - name: Organization
+  - name: Organization Main Calls
+  - name: Project
+  - name: Project Deployment Rule
+  - name: Project Environment Variable
+  - name: Project Main Calls
+  - name: Project Secret
+  - name: Projects
+  - name: Referral & Rewards
 x-tagGroups:
   - name: Organization
     tags:

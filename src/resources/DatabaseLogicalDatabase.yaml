@@ -27,7 +27,7 @@ post:
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'
   tags:
-    - database
+    - Logical Database
   requestBody:
     content:
       application/json:

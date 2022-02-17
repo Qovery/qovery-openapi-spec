@@ -23,18 +23,17 @@ properties:
     type: string
     description: Development language of the application
     enum:
-      - GO
-      - NODE_JS
       - CLOJURE
-      - PYTHON
-      - JAVA
-      - GRADLE
-      - JVM
-      - GRAILS
-      - SCALA
-      - PLAY
-      - PHP
       - GO
+      - GRADLE
+      - GRAILS
+      - JAVA
+      - JVM
+      - NODE_JS
+      - PHP
+      - PLAY
+      - PYTHON
+      - SCALA
   cpu:
     type: integer
     description: unit is millicores (m). 1000m = 1 cpu
