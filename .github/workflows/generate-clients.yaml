@@ -56,4 +56,4 @@ jobs:
           destination-repository-name: 'qovery-client-${{ matrix.language }}'
           user-email: github@qovery.com
           commit-message: See ORIGIN_COMMIT from $GITHUB_REF
-          target-branch: master
+          target-branch: main
