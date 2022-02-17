@@ -10,6 +10,7 @@ env:
 jobs:
   go-client:
     runs-on: ubuntu-latest
+    if: success() && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
@@ -48,6 +49,7 @@ jobs:
           target-branch: master
   python-client:
     runs-on: ubuntu-latest
+    if: success() && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - name: Generate Python Client
@@ -68,6 +70,7 @@ jobs:
           target-branch: master
   typescript-client:
     runs-on: ubuntu-latest
+    if: success() && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - name: Generate Typescript Client
@@ -88,6 +91,7 @@ jobs:
           target-branch: main
   javascript-client:
     runs-on: ubuntu-latest
+    if: success() && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - name: Generate Javascript Client
