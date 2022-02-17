@@ -12,6 +12,57 @@ info:
   x-logo:
     url: 'https://raw.githubusercontent.com/Qovery/public-resources/master/qovery_new_logo_white.svg'
     altText: Qovery
+tags:
+  - name: Account
+  - name: Account Info
+  - name: Application
+  - name: Application Actions
+  - name: Application Configuration
+  - name: Application Database
+  - name: Application Deployment History
+  - name: Application Environment Variable
+  - name: Application Event
+  - name: Application Logs
+  - name: Application Main Calls
+  - name: Application Metrics
+  - name: Application Secret
+  - name: Applications
+  - name: Backups
+  - name: Billing
+  - name: Cloud Provider
+  - name: Cloud Provider Credentials
+  - name: Clusters
+  - name: Custom Domain
+  - name: Database
+  - name: Database Actions
+  - name: Database Application
+  - name: Database Event
+  - name: Database Main Calls
+  - name: Database Metrics
+  - name: Databases
+  - name: Dependency
+  - name: Environment
+  - name: Environment Actions
+  - name: Environment Deployment History
+  - name: Environment Deployment Rule
+  - name: Environment Logs
+  - name: Environment Main Calls
+  - name: Environment Secret
+  - name: Environment Variable
+  - name: Environments
+  - name: Git
+  - name: Git repositories
+  - name: Logical Database
+  - name: Members
+  - name: Organization
+  - name: Organization Main Calls
+  - name: Project
+  - name: Project Deployment Rule
+  - name: Project Environment Variable
+  - name: Project Main Calls
+  - name: Project Secret
+  - name: Projects
+  - name: Referral & Rewards
 x-tagGroups:
   - name: Organization
     tags:
@@ -635,6 +686,7 @@ paths:
   '/organization/{organizationId}/creditCard/{creditCardId}':
     delete:
       summary: Delete credit card
+      operationId: deleteCreditCard
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/creditCardId'
@@ -1946,6 +1998,7 @@ paths:
         - To delete a secret you must have the project user permission
         - You can't delete a BUILT_IN secret
         - If you delete a secret having override or alias, the associated override/alias will be deleted as well  operationId: deleteProjectSecret
+      operationId: deleteProjectSecret
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/secretId'
@@ -2824,6 +2877,7 @@ paths:
         - To delete a secret you must have the project user permission
         - You can't delete a BUILT_IN secret
         - If you delete a secret having override or alias, the associated override/alias will be deleted as well  operationId: deleteEnvironmentSecret
+      operationId: deleteEnvironmentSecret
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/secretId'
@@ -4556,7 +4610,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
-        - database
+        - Logical Database
       requestBody:
         content:
           application/json:
@@ -5004,7 +5058,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/logicalDatabaseId'
       tags:
-        - logicalDatabase
+        - Logical Database
       requestBody:
         content:
           application/json:
@@ -6122,22 +6176,22 @@ components:
           description: |
             Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state.
           enum:
-            - INITIALIZED
-            - QUEUED
-            - BUILDING
             - BUILD_ERROR
+            - BUILDING
             - BUILT
-            - DEPLOYING
-            - DEPLOYMENT_ERROR
-            - DEPLOYED
-            - STOPPING
-            - STOP_ERROR
-            - STOPPED
-            - DELETING
             - DELETE_ERROR
             - DELETED
+            - DELETING
+            - DEPLOYED
+            - DEPLOYING
+            - DEPLOYMENT_ERROR
+            - INITIALIZED
+            - QUEUED
             - RUNNING
             - RUNNING_ERROR
+            - STOP_ERROR
+            - STOPPED
+            - STOPPING
         message:
           type: string
           nullable: true
@@ -6348,18 +6402,17 @@ components:
           type: string
           description: Development language of the application
           enum:
-            - GO
-            - NODE_JS
             - CLOJURE
-            - PYTHON
-            - JAVA
-            - GRADLE
-            - JVM
-            - GRAILS
-            - SCALA
-            - PLAY
-            - PHP
             - GO
+            - GRADLE
+            - GRAILS
+            - JAVA
+            - JVM
+            - NODE_JS
+            - PHP
+            - PLAY
+            - PYTHON
+            - SCALA
         cpu:
           type: integer
           description: unit is millicores (m). 1000m = 1 cpu
@@ -6438,18 +6491,17 @@ components:
           type: string
           description: Development language of the application
           enum:
-            - GO
-            - NODE_JS
             - CLOJURE
-            - PYTHON
-            - JAVA
-            - GRADLE
-            - JVM
-            - GRAILS
-            - SCALA
-            - PLAY
-            - PHP
             - GO
+            - GRADLE
+            - GRAILS
+            - JAVA
+            - JVM
+            - NODE_JS
+            - PHP
+            - PLAY
+            - PYTHON
+            - SCALA
         cpu:
           type: integer
           description: unit is millicores (m). 1000m = 1 cpu
@@ -6651,18 +6703,17 @@ components:
           type: string
           description: Development language of the application
           enum:
-            - GO
-            - NODE_JS
             - CLOJURE
-            - PYTHON
-            - JAVA
-            - GRADLE
-            - JVM
-            - GRAILS
-            - SCALA
-            - PLAY
-            - PHP
             - GO
+            - GRADLE
+            - GRAILS
+            - JAVA
+            - JVM
+            - NODE_JS
+            - PHP
+            - PLAY
+            - PYTHON
+            - SCALA
         cpu:
           type: integer
           description: unit is millicores (m). 1000m = 1 cpu
