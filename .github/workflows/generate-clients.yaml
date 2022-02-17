@@ -26,7 +26,7 @@ jobs:
         uses: openapi-generators/openapitools-generator-action@v1
         with:
           generator: go
-          generator-tag: 5.4.0
+          generator-tag: v5.4.0
           config-file: generator-config/go.yml
           openapi-file: _build/openapi.yaml
           command-args: $DEFAULT_COMMAND_ARGS --git-repo-id qovery-client-go
