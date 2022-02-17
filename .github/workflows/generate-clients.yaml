@@ -12,9 +12,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - language: 'go'
-            config-file: 'generator/configs/go.yml'
-          # - language: 'python'
+          # - language: 'go'
+          #   config-file: 'generator/configs/go.yml'
+          - language: 'python'
           # - language: 'typescript'
           # - language: 'javascript'
 
