@@ -13,5 +13,3 @@ jobs:
       - uses: lakto/gren-action@v2.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          options: '--override --changelog-filename=CHANGELOG.md'
