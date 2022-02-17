@@ -5517,9 +5517,6 @@ components:
               type:
                 type: string
                 enum:
-                  - SLOW_HDD
-                  - HDD
-                  - SSD
                   - FAST_SSD
               size:
                 type: integer
