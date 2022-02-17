@@ -8,11 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Build OpenApi file
-        run: |
-          npm ci
-          npm run build
+
   generate:
     runs-on: ubuntu-latest
 
@@ -25,6 +21,10 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+      - name: Build OpenApi file
+        run: |
+          npm ci
+          npm run build
       - name: Generate ${{ matrix.language }} Client
         uses: openapi-generators/openapitools-generator-action@v1
         with:
@@ -33,15 +33,6 @@ jobs:
           config-file: generator-config/${{ matrix.language }}.yml
           openapi-file: _build/openapi.yaml
           command-args: -o out/qovery-client-${{ matrix.language }} -a bearer --git-user-id qovery --git-repo-id qovery-client-${{ matrix.language }}
-
-  publish:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        language: [go]
-
-    steps:
       - name: Publish ${{ matrix.language }} Client
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
@@ -54,6 +45,7 @@ jobs:
           user-email: github@qovery.com
           commit-message: See ORIGIN_COMMIT from $GITHUB_REF
           target-branch: master
+
   # go-client:
   #   steps:
   #     - uses: actions/checkout@v2
