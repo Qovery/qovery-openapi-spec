@@ -11,13 +11,11 @@ jobs:
 
     strategy:
       matrix:
-        include:
-          # - language: 'go'
-          #   config-file: 'generator/configs/go.yml'
-          - language: 'python'
-            config-file: 'generator/configs/go.yml'
-          # - language: 'typescript'
-          # - language: 'javascript'
+        language: [python]
+        # - language: 'go'
+        # - language: 'python'
+        # - language: 'typescript'
+        # - language: 'javascript'
 
     steps:
       - uses: actions/checkout@v2
@@ -45,7 +43,7 @@ jobs:
             --package-name qovery
       - name: Run ${{ matrix.language }} post generation script
         run: |
-          [ -x generator/post_generation_scripts/${{ matrix.language }}.sh ] generator/post_generation_scripts/${{ matrix.language }}.sh
+          [ -x generator/post_generation_scripts/${{ matrix.language }}.sh ] && generator/post_generation_scripts/${{ matrix.language }}.sh
       - name: Publish ${{ matrix.language }} client
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
