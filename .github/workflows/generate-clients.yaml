@@ -2,12 +2,12 @@ name: generate-clients
 
 on:
   push:
-    branches: [main, chore-test-generator]
+    branches: [main]
 
 jobs:
   generate:
     runs-on: ubuntu-latest
-    # if: success() && github.ref == 'refs/heads/main'
+    if: success() && github.ref == 'refs/heads/main'
 
     strategy:
       matrix:
