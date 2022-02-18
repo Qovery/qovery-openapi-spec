@@ -1596,14 +1596,15 @@ paths:
   '/project/{projectId}/deploymentRule':
     get:
       summary: List project deployment rules
-      operationId: listProjectDeploymentRule
+      description: List project deployment rules
+      operationId: listProjectDeploymentRules
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
         - Project Deployment Rule
       responses:
         '200':
-          description: Get deployment rules
+          description: Get project deployment rules
           content:
             application/json:
               schema:
@@ -1616,6 +1617,7 @@ paths:
           $ref: '#/components/responses/404'
     post:
       summary: Create a deployment rule
+      description: Create a deployment rule
       operationId: createDeploymentRule
       parameters:
         - $ref: '#/components/parameters/projectId'
@@ -1643,7 +1645,8 @@ paths:
           $ref: '#/components/responses/404'
   '/project/{projectId}/deploymentRule/{deploymentRuleId}':
     get:
-      summary: Get project deployment rule
+      summary: Get a project deployment rule
+      description: Get a project deployment rule
       operationId: getProjectDeploymentRule
       parameters:
         - $ref: '#/components/parameters/projectId'
@@ -1652,7 +1655,7 @@ paths:
         - Project Deployment Rule
       responses:
         '200':
-          description: Get deployment rule
+          description: Get project deployment rule
           content:
             application/json:
               schema:
@@ -1665,6 +1668,7 @@ paths:
           $ref: '#/components/responses/404'
     put:
       summary: Edit a project deployment rule
+      description: Edit a project deployment rule
       operationId: editProjectDeployemtnRule
       parameters:
         - $ref: '#/components/parameters/projectId'
@@ -1691,10 +1695,9 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-        '409':
-          description: Project name within the organization is already taken
     delete:
       summary: Delete a project deployment rule
+      description: Delete a project deployment rule
       operationId: deleteProjectDeploymentRule
       parameters:
         - $ref: '#/components/parameters/projectId'
@@ -1704,6 +1707,43 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/project/{projectId}/deploymentRule/order':
+    put:
+      summary: Update deployment rules priority order
+      description: Update deployment rules priority order
+      operationId: updateDeploymentRulesPriorityOrder
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - Project Deployment Rule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_deployment_rule_ids_in_order:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: project deployment rule id
+      responses:
+        '200':
+          description: Update deployment rules priority order
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5719,6 +5759,12 @@ components:
         vat_number:
           type: string
     ProjectDeploymentRuleResponse:
+      type: object
+      properties:
+        priority_index:
+          type: integer
+          description: used to select the first deployment rule to match new created environments
+          nullable: false
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/ProjectDeploymentRuleRequest'
@@ -6770,14 +6816,65 @@ components:
     ProjectDeploymentRuleRequest:
       type: object
       required:
-        - environment_target
+        - name
+        - mode
+        - cluster_id
+        - auto_deploy
+        - auto_stop
+        - timezone
+        - start_time
+        - stop_time
+        - weekdays
+        - wildcard
       properties:
-        environment_target:
+        name:
           type: string
-          description: specify here a wildcard based on environment name that will target new environments after their creation
-          example: ^feat
-      allOf:
-        - $ref: '#/components/schemas/DeploymentRuleRequest'
+          description: name is case insensitive
+        description:
+          type: string
+          nullable: true
+        mode:
+          type: string
+          enum:
+            - PRODUCTION
+            - DEVELOPMENT
+        cluster_id:
+          type: string
+          format: uuid
+        auto_deploy:
+          type: boolean
+        auto_stop:
+          type: boolean
+        timezone:
+          type: string
+          default: Europe/London
+          description: specify value only if auto_stop = false
+        start_time:
+          type: string
+          format: date-time
+          description: specify value only if auto_stop = false
+        stop_time:
+          type: string
+          format: date-time
+          description: specify value only if auto_stop = false
+        weekdays:
+          type: array
+          description: specify value only if auto_stop = false
+          items:
+            type: string
+            enum:
+              - MONDAY
+              - TUESDAY
+              - WEDNESDAY
+              - THURSDAY
+              - FRIDAY
+              - SATURDAY
+              - SUNDAY
+            example: MONDAY
+        wildcard:
+          type: string
+          description: wildcard pattern composed of '?' and/or '*' used to target new created environments
+          nullable: true
     EnvironmentStatsResponse:
       allOf:
         - $ref: '#/components/schemas/ReferenceObject'
