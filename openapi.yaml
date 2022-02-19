@@ -7716,6 +7716,7 @@ components:
                 format: uuid
               name:
                 type: string
+                nullable: true
               internal_port:
                 type: integer
                 example: 8080
@@ -8050,6 +8051,7 @@ components:
             properties:
               name:
                 type: string
+                nullable: true
               internal_port:
                 type: integer
                 example: 8080
