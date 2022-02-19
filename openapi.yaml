@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 1.0.2
+  version: 1.0.3
   title: Qovery API
   description: |
     - Qovery is the fastest way to deploy your full-stack apps on any Cloud provider.
@@ -6445,9 +6445,11 @@ components:
         dockerfile_path:
           type: string
           description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+          nullable: true
         buildpack_language:
           type: string
           description: Development language of the application
+          nullable: true
           enum:
             - CLOJURE
             - GO
@@ -6747,9 +6749,11 @@ components:
         dockerfile_path:
           type: string
           description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+          nullable: true
         buildpack_language:
           type: string
           description: Development language of the application
+          nullable: true
           enum:
             - CLOJURE
             - GO
