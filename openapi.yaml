@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 1.0.1
+  version: 1.0.2
   title: Qovery API
   description: |
     - Qovery is the fastest way to deploy your full-stack apps on any Cloud provider.
@@ -6430,6 +6430,7 @@ components:
         description:
           type: string
           description: give a description to this application
+          nullable: true
         git_repository:
           $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
         build_mode:
@@ -6733,6 +6734,7 @@ components:
         description:
           type: string
           description: give a description to this application
+          nullable: true
         build_mode:
           type: string
           enum:
