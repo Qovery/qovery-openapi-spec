@@ -44,7 +44,7 @@ jobs:
             -o out/qovery-client-${{ matrix.language }} \
             --git-user-id qovery \
             --git-repo-id qovery-client-${{ matrix.language }} \
-            --package-name qovery
+            --package-name qovery \
             --additional-properties packageVersion=$(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
       - name: Check post generation script existence
         id: check_files
