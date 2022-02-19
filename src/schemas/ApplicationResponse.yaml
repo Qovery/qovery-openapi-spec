@@ -20,6 +20,7 @@ properties:
   description:
     type: string
     description: give a description to this application
+    nullable: true
   build_mode:
     type: string
     enum:
