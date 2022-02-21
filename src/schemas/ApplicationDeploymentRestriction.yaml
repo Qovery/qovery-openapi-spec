@@ -1,0 +1,15 @@
+type: object
+properties:
+  mode:
+    type: string
+    description: Match mode will rebuild app only if specified items are updated. Exclude mode will not rebuild app if specified items are updated.  
+    enum: [MATCH, EXCLUDE]
+    example: MATCH
+  type:
+    type: string
+    enum: [FILE, PATH]
+    example: PATH
+  value:
+    type: string
+allOf:
+  - $ref: './BaseResponse.yaml'

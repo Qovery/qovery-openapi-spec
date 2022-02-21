@@ -1,0 +1,8 @@
+type: object
+properties:
+  deployment_restrictions:
+    type: array
+    items:
+      $ref: './ApplicationDeploymentRestriction.yaml'
+allOf:
+  - $ref: './BaseResponse.yaml'
