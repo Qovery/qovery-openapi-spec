@@ -1,5 +1,6 @@
 get:
   summary: 'Get application deployment rule'
+  description: 'Get application deployment rule'
   operationId: getApplicationDeploymentRule
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
@@ -7,7 +8,7 @@ get:
     - Application Deployment Rule
   responses:
     '200':
-      description: 'Get deployment rule'
+      description: 'Get application deployment rule'
       content:
         application/json:
           schema:

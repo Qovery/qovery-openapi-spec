@@ -1,5 +1,6 @@
 put:
   summary: 'Edit an application deployment rule'
+  description: 'Edit an application deployment rule'
   operationId: editApplicationDeploymentRule
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
@@ -14,7 +15,7 @@ put:
           $ref: '../schemas/ApplicationDeploymentRuleEditRequest.yaml'
   responses:
     '200':
-      description: 'Edit environment deployment rule'
+      description: 'Edit application deployment rule'
       content:
         application/json:
           schema:
