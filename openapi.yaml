@@ -19,6 +19,7 @@ tags:
   - name: Application Actions
   - name: Application Configuration
   - name: Application Database
+  - name: Application Deployment rule
   - name: Application Deployment History
   - name: Application Environment Variable
   - name: Application Event
@@ -101,6 +102,7 @@ x-tagGroups:
       - Application Metrics
       - Application Database
       - Application Logs
+      - Application Deployment Rule
       - Application Deployment History
       - Application Environment Variable
       - Application Secret
@@ -3166,6 +3168,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/application/{applicationId}/deploymentRule':
+    get:
+      summary: Get application deployment rule
+      description: Get application deployment rule
+      operationId: getApplicationDeploymentRule
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Application Deployment Rule
+      responses:
+        '200':
+          description: Get application deployment rule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationDeploymentRuleResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/application/{applicationId}/deploymentRule/{deploymentRuleId}':
+    put:
+      summary: Edit an application deployment rule
+      description: Edit an application deployment rule
+      operationId: editApplicationDeploymentRule
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/deploymentRuleId'
+      tags:
+        - Application Deployment Rule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationDeploymentRuleEditRequest'
+      responses:
+        '200':
+          description: Edit application deployment rule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationDeploymentRuleResponse'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -7025,6 +7079,44 @@ components:
             Specify if the sticky session option (also called persistant session) is activated or not for this application.
             If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
           default: false
+    ApplicationDeploymentRuleResponse:
+      type: object
+      properties:
+        deployment_restrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationDeploymentRestriction'
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+    ApplicationDeploymentRuleEditRequest:
+      type: object
+      properties:
+        deployment_restrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationDeploymentRestriction'
+    ApplicationDeploymentRestriction:
+      type: object
+      required:
+        - mode
+        - type
+        - value
+      properties:
+        mode:
+          type: string
+          description: Match mode will rebuild app only if specified items are updated. Exclude mode will not rebuild app if specified items are updated.
+          enum:
+            - MATCH
+            - EXCLUDE
+          example: MATCH
+        type:
+          type: string
+          enum:
+            - FILE
+            - PATH
+          example: PATH
+        value:
+          type: string
     RemainingCredits:
       type: object
       allOf:
