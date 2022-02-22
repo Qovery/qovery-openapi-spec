@@ -20,7 +20,7 @@ properties:
       provider:
         type: string
         example: aws
-      cluster:
+      region:
         type: string
         example: us-east-2
   mode:
