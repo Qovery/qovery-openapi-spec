@@ -2,3 +2,11 @@ type: object
 properties:
   name:
     type: string
+  mode:
+    type: string
+    description: PREVIEW value is reserved for preview environments only
+    enum:
+      - DEVELOPMENT
+      - STAGING
+      - PRODUCTION
+      - PREVIEW
