@@ -430,3 +430,13 @@ GitRepositoryBranchResponse:
   $ref: ./GitRepositoryBranchResponse.yaml
 BuildPackLanguageEnum:
   $ref: ./enums/BuildPackLanguage.yaml
+OrganizationApiTokenScope:
+  $ref: ./enums/OrganizationApiTokenScope.yaml
+OrganizationApiTokenCreateRequest:
+  $ref: ./OrganizationApiTokenCreateRequest.yaml
+OrganizationApiTokenResponseList:
+  $ref: ./OrganizationApiTokenResponseList.yaml
+OrganizationApiTokenResponse:
+  $ref: ./OrganizationApiTokenResponse.yaml
+OrganizationApiTokenCreateResponse:
+  $ref: ./OrganizationApiTokenCreateResponse.yaml

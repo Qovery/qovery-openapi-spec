@@ -1,0 +1,11 @@
+type: object
+required:
+  - name
+  - scope
+properties:
+  name:
+    type: string
+  description:
+    type: string
+  scope:
+    $ref: './enums/OrganizationApiTokenScope.yaml'
