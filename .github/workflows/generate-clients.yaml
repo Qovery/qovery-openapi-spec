@@ -26,7 +26,7 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '1.17'
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: '3.x'
       - name: Build OpenApi file
