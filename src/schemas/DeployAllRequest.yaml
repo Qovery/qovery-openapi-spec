@@ -1,12 +1,12 @@
 type: object
-required:
-  - application_id 
-  - git_commit_id
 properties:
-  results:
+  applications:
     type: array
     items:
       type: object
+      required:
+        - application_id 
+        - git_commit_id
       properties: 
         application_id:
           type: string
