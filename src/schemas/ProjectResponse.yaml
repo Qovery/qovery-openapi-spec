@@ -1,12 +1,12 @@
-type: object
-required:
-  - name
-properties:
-  name:
-    type: string
-  description:
-    type: string
-  organization:
-    $ref: './ReferenceObject.yaml'
 allOf:
   - $ref: './BaseResponse.yaml'
+  - type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      organization:
+        $ref: './ReferenceObject.yaml'

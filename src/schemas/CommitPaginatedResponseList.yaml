@@ -1,8 +1,8 @@
-type: object
-properties:
-  results:
-    type: array
-    items:
-      $ref: './CommitResponse.yaml'
 allOf:
+  - type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: './CommitResponse.yaml'
   - $ref: './PaginationDataResponse.yaml'

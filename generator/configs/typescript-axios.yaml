@@ -1,0 +1,4 @@
+additionalProperties:
+  supportsES6: true
+  enumPropertyNaming: UPPERCASE
+  packageVersion: $(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
