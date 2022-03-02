@@ -1,27 +1,27 @@
-type: object
-properties:
-  name:
-    type: string
-  status:
-    type: string
-    enum:
-      - READY
-      - BUILDING
-      - BUILD_ERROR
-      - BUILT
-      - DEPLOYMENT_QUEUED
-      - DEPLOYING
-      - DEPLOYMENT_ERROR
-      - DEPLOYED
-      - STOP_QUEUED
-      - STOPPING
-      - STOP_ERROR
-      - STOPPED
-      - DELETE_QUEUED
-      - DELETING
-      - DELETE_ERROR
-      - DELETED
-      - RUNNING
-      - RUNNING_ERROR
 allOf:
   - $ref: './BaseResponse.yaml'
+  - type: object
+    properties:
+      name:
+        type: string
+      status:
+        type: string
+        enum:
+          - READY
+          - BUILDING
+          - BUILD_ERROR
+          - BUILT
+          - DEPLOYMENT_QUEUED
+          - DEPLOYING
+          - DEPLOYMENT_ERROR
+          - DEPLOYED
+          - STOP_QUEUED
+          - STOPPING
+          - STOP_ERROR
+          - STOPPED
+          - DELETE_QUEUED
+          - DELETING
+          - DELETE_ERROR
+          - DELETED
+          - RUNNING
+          - RUNNING_ERROR

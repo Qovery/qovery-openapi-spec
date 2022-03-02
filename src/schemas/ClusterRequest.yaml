@@ -1,8 +1,8 @@
-type: object
-required:
-  - name
-  - cloud_provider
-  - region
 allOf:
   - $ref: './Cluster.yaml'
   - $ref: './ClusterFeatureRequest.yaml'
+  - type: object
+    required:
+      - name
+      - cloud_provider
+      - region
