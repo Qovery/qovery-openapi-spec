@@ -41,7 +41,7 @@ jobs:
         uses: openapi-generators/openapitools-generator-action@v1
         with:
           generator: ${{ matrix.language }}
-          generator-tag: ${{ matrix.version }}
+          generator-tag: v${{ matrix.version }}
           openapi-file: _build/openapi.yaml
           config-file: 'generator/configs/${{ matrix.language }}.yaml'
           command-args: |
