@@ -272,6 +272,8 @@ paths:
     $ref: './resources/EnvironmentApplicationCurrentScale.yaml'
   /environment/{environmentId}/application/supportedLanguage:
     $ref: './resources/EnvironmentApplicationSupportedLanguage.yaml'
+  /environment/{environmentId}/application/deploy:
+    $ref: './resources/EnvironmentApplicationDeploy.yaml'
   /environment/{environmentId}/log:
     $ref: './resources/EnvironmentLog.yaml'
   /environment/{environmentId}/deploymentHistory:

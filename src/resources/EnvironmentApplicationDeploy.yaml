@@ -1,0 +1,30 @@
+post:
+  summary: 'Deploy applications'
+  description: Deploy to the last commit the applications you specified. 
+  operationId: deployAllApplications
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+  tags:
+    - Applications
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/DeployAllRequest.yaml'
+  responses:
+    '202':
+      description: 'Deployed applications'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Status.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+    '409':
+      description: 'Operation is in progress'
