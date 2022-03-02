@@ -4,3 +4,4 @@ sed -i 's/^3.6.4/~4.5.2/g' $(find out/qovery-client-typescript-axios/package.jso
 cp -r generator/files/typescript-axios/.github out/qovery-client-typescript-axios/
 cd out/qovery-client-typescript-axios
 npm install
+npm run build
