@@ -26,14 +26,7 @@ allOf:
         description: give a description to this application
         nullable: true
       build_mode:
-        type: string
-        enum:
-          - DOCKER
-          - BUILDPACKS
-        default: BUILDPACKS
-        description: |
-          `DOCKER` requires `dockerfile_path`
-          `BUILDPACKS` does not require any `dockerfile_path`
+        $ref: './enums/BuildMode.yaml'
       dockerfile_path:
         type: string
         description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER

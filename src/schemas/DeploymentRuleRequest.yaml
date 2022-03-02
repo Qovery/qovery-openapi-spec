@@ -44,7 +44,5 @@ properties:
     nullable: true
     description: specify value only if auto_stop = false
     items:
-      type: string
-      enum: [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY]
-      example: MONDAY
+      $ref: './enums/Weekday.yaml'
 

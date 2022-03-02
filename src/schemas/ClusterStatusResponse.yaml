@@ -4,23 +4,7 @@ properties:
     type: string
     format: uuid
   status:
-    type: string
-    enum:
-        - READY
-        - DEPLOYMENT_QUEUED
-        - DEPLOYING
-        - DEPLOYMENT_ERROR
-        - DEPLOYED
-        - STOP_QUEUED
-        - STOPPING
-        - STOP_ERROR
-        - STOPPED
-        - DELETE_QUEUED
-        - DELETING
-        - DELETE_ERROR
-        - DELETED
-        - RUNNING
-        - RUNNING_ERROR
+    $ref: './enums/GlobalStatus.yaml'
   is_deployed:
     type: boolean
 

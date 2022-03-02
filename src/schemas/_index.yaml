@@ -440,3 +440,19 @@ OrganizationApiTokenResponse:
   $ref: ./OrganizationApiTokenResponse.yaml
 OrganizationApiTokenCreateResponse:
   $ref: ./OrganizationApiTokenCreateResponse.yaml
+BuildModeEnum:
+  $ref: ./enums/BuildMode.yaml
+EnvironmentVariableScopeEnum:
+  $ref: ./enums/EnvironmentVariableScope.yaml
+GitProviderEnum:
+  $ref: ./enums/GitProvider.yaml
+ThresholdMetricStatusEnum:
+  $ref: ./enums/ThresholdMetricStatus.yaml
+PortProtocolEnum:
+  $ref: ./enums/PortProtocol.yaml
+WeekdayEnum:
+  $ref: ./enums/Weekday.yaml
+GlobalStatusEnum:
+  $ref: ./enums/GlobalStatus.yaml
+ServiceDeploymentStatusEnum:
+  $ref: ./enums/ServiceDeploymentStatus.yaml
