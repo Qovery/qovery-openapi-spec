@@ -57,6 +57,7 @@ tags:
   - name: Members
   - name: Organization
   - name: Organization Main Calls
+  - name: Organization Api Token
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
@@ -68,6 +69,7 @@ x-tagGroups:
   - name: Organization
     tags:
       - Organization Main Calls
+      - Organization Api Token
       - Projects
       - Members
       - Billing
@@ -236,6 +238,83 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/apiToken':
+    get:
+      summary: List organization api tokens
+      description: List organization api tokens
+      operationId: listOrganizationApiTokens
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Api Token
+      responses:
+        '200':
+          description: List organization api tokens
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationApiTokenResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create an organization api token
+      description: Create an organization api token
+      operationId: createOrganizationApiToken
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Api Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationApiTokenCreateRequest'
+      responses:
+        '201':
+          description: Organization api token created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationApiTokenCreateResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Organization Api Token name is already taken
+  '/organization/{organizationId}/apiToken/{apiTokenId}':
+    delete:
+      summary: Delete organization api token
+      description: Delete organization api token
+      operationId: deleteOrganizationApiToken
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: apiTokenId
+          in: path
+          description: Organization Api Token ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Organization Api Token
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -9050,6 +9129,54 @@ components:
         - PLAY
         - PYTHON
         - SCALA
+    OrganizationApiTokenScope:
+      type: string
+      enum:
+        - ADMIN
+    OrganizationApiTokenCreateRequest:
+      type: object
+      required:
+        - name
+        - scope
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        scope:
+          $ref: '#/components/schemas/OrganizationApiTokenScope'
+    OrganizationApiTokenResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationApiTokenResponse'
+    OrganizationApiTokenResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            scope:
+              $ref: '#/components/schemas/OrganizationApiTokenScope'
+    OrganizationApiTokenCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            token:
+              type: string
+              description: the generated token to send in 'Authorization' header prefixed by 'Token '
+            scope:
+              $ref: '#/components/schemas/OrganizationApiTokenScope'
   responses:
     '204':
       description: no content
