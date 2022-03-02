@@ -1,0 +1,13 @@
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      token:
+        type: string
+        description: the generated token to send in 'Authorization' header prefixed by 'Token '
+      scope:
+        $ref: './enums/OrganizationApiTokenScope.yaml'
