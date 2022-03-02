@@ -1,0 +1,17 @@
+type: object
+properties:
+  applications:
+    type: array
+    items:
+      type: object
+      required:
+        - application_id 
+        - git_commit_id
+      properties: 
+        application_id:
+          type: string
+          format: uuid
+          description: id of the application to be deployed. 
+        git_commit_id:
+          type: string
+          description: Commit ID to deploy.
