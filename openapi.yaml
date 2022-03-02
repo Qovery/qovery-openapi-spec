@@ -2636,6 +2636,53 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/application/deploy':
+    post:
+      summary: Deploy applications
+      description: Deploy to the last commit the applications you specified.
+      operationId: deployAllApplications
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Applications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applications:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - application_id
+                      - git_commit_id
+                    properties:
+                      application_id:
+                        type: string
+                        format: uuid
+                        description: id of the application to be deployed.
+                      git_commit_id:
+                        type: string
+                        description: Commit ID to deploy.
+      responses:
+        '202':
+          description: Deployed applications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   '/environment/{environmentId}/log':
     get:
       summary: List environment deployment logs
