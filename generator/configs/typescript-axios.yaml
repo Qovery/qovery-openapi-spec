@@ -1,4 +1,6 @@
 additionalProperties:
   supportsES6: true
   enumPropertyNaming: UPPERCASE
+  npmName: qovery-typescript-axiox
+  npmVersion: $(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
   packageVersion: $(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
