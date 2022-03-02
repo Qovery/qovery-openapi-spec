@@ -5732,15 +5732,15 @@ components:
           description: Set application ID
           format: uuid
     OrganizationResponse:
-      type: object
-      properties:
-        owner:
-          type: string
-          format: uuid
-          description: uuid of the user owning the organization
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/OrganizationRequest'
+        - type: object
+          properties:
+            owner:
+              type: string
+              format: uuid
+              description: uuid of the user owning the organization
     MetricStorageDatapointResponse:
       type: object
       required:
@@ -5813,15 +5813,15 @@ components:
         vat_number:
           type: string
     ProjectDeploymentRuleResponse:
-      type: object
-      properties:
-        priority_index:
-          type: integer
-          description: used to select the first deployment rule to match new created environments
-          nullable: false
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/ProjectDeploymentRuleRequest'
+        - type: object
+          properties:
+            priority_index:
+              type: integer
+              description: used to select the first deployment rule to match new created environments
+              nullable: false
     ProjectResponseList:
       type: object
       properties:
@@ -5844,31 +5844,31 @@ components:
         value:
           type: string
     DatabaseResponse:
-      type: object
-      properties:
-        environment:
-          $ref: '#/components/schemas/ReferenceObject'
-        host:
-          type: string
-        port:
-          type: integer
-          example: 5432
-        maximum_cpu:
-          type: integer
-          description: Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-          default: 250
-          example: 1250
-        maximum_memory:
-          type: integer
-          description: Maximum memory that can be allocated to the database based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-          default: 256
-          example: 1024
-        disk_encrypted:
-          type: boolean
-          description: indicates if the database disk is encrypted or not
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/DatabaseRequest'
+        - type: object
+          properties:
+            environment:
+              $ref: '#/components/schemas/ReferenceObject'
+            host:
+              type: string
+            port:
+              type: integer
+              example: 5432
+            maximum_cpu:
+              type: integer
+              description: Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            maximum_memory:
+              type: integer
+              description: Maximum memory that can be allocated to the database based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
+            disk_encrypted:
+              type: boolean
+              description: indicates if the database disk is encrypted or not
     SecretRequest:
       type: object
       required:
@@ -5980,39 +5980,39 @@ components:
           items:
             $ref: '#/components/schemas/MetricStorageDatapointResponse'
     DeploymentHistoryEnvironmentResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-            - READY
-            - BUILDING
-            - BUILD_ERROR
-            - BUILT
-            - DEPLOYMENT_QUEUED
-            - DEPLOYING
-            - DEPLOYMENT_ERROR
-            - DEPLOYED
-            - STOP_QUEUED
-            - STOPPING
-            - STOP_ERROR
-            - STOPPED
-            - DELETE_QUEUED
-            - DELETING
-            - DELETE_ERROR
-            - DELETED
-            - RUNNING
-            - RUNNING_ERROR
-        applications:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentHistoryApplicationResponse'
-        databases:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentHistoryDatabaseResponse'
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            status:
+              type: string
+              enum:
+                - READY
+                - BUILDING
+                - BUILD_ERROR
+                - BUILT
+                - DEPLOYMENT_QUEUED
+                - DEPLOYING
+                - DEPLOYMENT_ERROR
+                - DEPLOYED
+                - STOP_QUEUED
+                - STOPPING
+                - STOP_ERROR
+                - STOPPED
+                - DELETE_QUEUED
+                - DELETING
+                - DELETE_ERROR
+                - DELETED
+                - RUNNING
+                - RUNNING_ERROR
+            applications:
+              type: array
+              items:
+                $ref: '#/components/schemas/DeploymentHistoryApplicationResponse'
+            databases:
+              type: array
+              items:
+                $ref: '#/components/schemas/DeploymentHistoryDatabaseResponse'
     LogResponse:
       type: object
       required:
@@ -6116,14 +6116,14 @@ components:
           description: unit is GB
           example: 4
     DeploymentHistoryPaginatedResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentHistoryResponse'
       allOf:
         - $ref: '#/components/schemas/PaginationDataResponse'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/DeploymentHistoryResponse'
     ClusterCredentialsRequest:
       type: object
       required:
@@ -6136,33 +6136,33 @@ components:
         secret_access_key:
           type: string
     MemberResponse:
-      type: object
-      required:
-        - email
-      properties:
-        name:
-          type: string
-        nickname:
-          type: string
-        email:
-          type: string
-          format: email
-        profile_picture_url:
-          type: string
-          format: uri
-        last_activity_at:
-          type: string
-          format: date-time
-          description: last time the user was connected
-        role:
-          type: string
-          enum:
-            - OWNER
-            - ADMIN
-            - DEVELOPER
-            - VIEWER
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - email
+          properties:
+            name:
+              type: string
+            nickname:
+              type: string
+            email:
+              type: string
+              format: email
+            profile_picture_url:
+              type: string
+              format: uri
+            last_activity_at:
+              type: string
+              format: date-time
+              description: last time the user was connected
+            role:
+              type: string
+              enum:
+                - OWNER
+                - ADMIN
+                - DEVELOPER
+                - VIEWER
     ClusterStatusResponse:
       type: object
       properties:
@@ -6215,33 +6215,33 @@ components:
                 items:
                   $ref: '#/components/schemas/InstanceResponse'
     InvoiceResponse:
-      type: object
-      required:
-        - id
-        - created_at
-        - status
-        - total_in_cents
-        - total
-        - currency_code
-      properties:
-        id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-        status:
-          type: string
-          enum:
-            - PAID
-            - POSTED
-            - PAYMENT_DUE
-            - NOT_PAID
-            - VOIDED
-            - PENDING
-            - UNKNOWN
       allOf:
         - $ref: '#/components/schemas/CostResponse'
+        - type: object
+          required:
+            - id
+            - created_at
+            - status
+            - total_in_cents
+            - total
+            - currency_code
+          properties:
+            id:
+              type: string
+              format: uuid
+            created_at:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - PAID
+                - POSTED
+                - PAYMENT_DUE
+                - NOT_PAID
+                - VOIDED
+                - PENDING
+                - UNKNOWN
     EnvironmentLogResponse:
       type: object
       required:
@@ -6473,83 +6473,69 @@ components:
         cost:
           $ref: '#/components/schemas/CostResponse'
     ApplicationRequest:
-      type: object
-      required:
-        - name
-        - git_repository
-      properties:
-        name:
-          type: string
-          description: name is case insensitive
-        description:
-          type: string
-          description: give a description to this application
-          nullable: true
-        git_repository:
-          $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
-        build_mode:
-          type: string
-          enum:
-            - DOCKER
-            - BUILDPACKS
-          default: BUILDPACKS
-          description: |
-            `DOCKER` requires `dockerfile_path`
-            `BUILDPACKS` does not require any `dockerfile_path`
-        dockerfile_path:
-          type: string
-          description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-          nullable: true
-        buildpack_language:
-          type: string
-          description: Development language of the application
-          nullable: true
-          enum:
-            - CLOJURE
-            - GO
-            - GRADLE
-            - GRAILS
-            - JAVA
-            - JVM
-            - NODE_JS
-            - PHP
-            - PLAY
-            - PYTHON
-            - SCALA
-        cpu:
-          type: integer
-          description: unit is millicores (m). 1000m = 1 cpu
-          default: 250
-          example: 1250
-        memory:
-          type: integer
-          description: unit is MB. 1024 MB = 1GB
-          default: 256
-          example: 1024
-        min_running_instances:
-          type: integer
-          minimum: 0
-          description: |
-            Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-            Note: 0 means that there is no application running.
-          default: 1
-        max_running_instances:
-          type: integer
-          description: |
-            Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-            Note: -1 means that there is no limit.
-          default: 1
-        healthcheck:
-          $ref: '#/components/schemas/Healthcheck'
-        auto_preview:
-          type: boolean
-          description: |
-            Specify if the environment preview option is activated or not for this application.
-            If activated, a preview environment will be automatically cloned at each pull request.
-          default: true
       allOf:
         - $ref: '#/components/schemas/ApplicationStorageRequest'
         - $ref: '#/components/schemas/ApplicationPortRequest'
+        - type: object
+          required:
+            - name
+            - git_repository
+          properties:
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+              description: give a description to this application
+              nullable: true
+            git_repository:
+              $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+            build_mode:
+              type: string
+              enum:
+                - DOCKER
+                - BUILDPACKS
+              default: BUILDPACKS
+              description: |
+                `DOCKER` requires `dockerfile_path`
+                `BUILDPACKS` does not require any `dockerfile_path`
+            dockerfile_path:
+              type: string
+              description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+              nullable: true
+            buildpack_language:
+              $ref: '#/components/schemas/BuildPackLanguageEnum'
+            cpu:
+              type: integer
+              description: unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            memory:
+              type: integer
+              description: unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
+            min_running_instances:
+              type: integer
+              minimum: 0
+              description: |
+                Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: 0 means that there is no application running.
+              default: 1
+            max_running_instances:
+              type: integer
+              description: |
+                Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: -1 means that there is no limit.
+              default: 1
+            healthcheck:
+              $ref: '#/components/schemas/Healthcheck'
+            auto_preview:
+              type: boolean
+              description: |
+                Specify if the environment preview option is activated or not for this application.
+                If activated, a preview environment will be automatically cloned at each pull request.
+              default: true
     BaseResponse:
       type: object
       required:
@@ -6569,82 +6555,69 @@ components:
           readOnly: true
           format: date-time
     ApplicationEditRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: name is case insensitive
-        description:
-          type: string
-          description: give a description to this application
-        git_repository:
-          $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
-        build_mode:
-          type: string
-          enum:
-            - DOCKER
-            - BUILDPACKS
-          description: |
-            `DOCKER` requires `dockerfile_path`
-            `BUILDPACKS` does not require any `dockerfile_path`
-        dockerfile_path:
-          type: string
-          description: The path of the associated Dockerfile
-        buildpack_language:
-          type: string
-          description: Development language of the application
-          enum:
-            - CLOJURE
-            - GO
-            - GRADLE
-            - GRAILS
-            - JAVA
-            - JVM
-            - NODE_JS
-            - PHP
-            - PLAY
-            - PYTHON
-            - SCALA
-        cpu:
-          type: integer
-          description: unit is millicores (m). 1000m = 1 cpu
-          default: 250
-          example: 1250
-        memory:
-          type: integer
-          description: unit is MB. 1024 MB = 1GB
-          default: 256
-          example: 1024
-        min_running_instances:
-          type: integer
-          minimum: 0
-          description: |
-            Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-            Note: 0 means that there is no application running.
-          default: 1
-        max_running_instances:
-          type: integer
-          description: |
-            Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-            Note: -1 means that there is no limit.
-          default: 1
-        healthcheck:
-          $ref: '#/components/schemas/Healthcheck'
-        auto_preview:
-          type: boolean
-          description: |
-            Specify if the environment preview option is activated or not for this application.
-            If activated, a preview environment will be automatically cloned at each pull request.
-          default: true
-        sticky_session:
-          type: boolean
-          description: |
-            Specify if the sticky session option (also called persistant session) is activated or not for this application.
-            If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
-          default: false
       allOf:
         - $ref: '#/components/schemas/ApplicationStorageResponse'
         - $ref: '#/components/schemas/ApplicationPortResponse'
+        - type: object
+          properties:
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+              description: give a description to this application
+            git_repository:
+              $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+            build_mode:
+              type: string
+              enum:
+                - DOCKER
+                - BUILDPACKS
+              description: |
+                `DOCKER` requires `dockerfile_path`
+                `BUILDPACKS` does not require any `dockerfile_path`
+            dockerfile_path:
+              type: string
+              description: The path of the associated Dockerfile
+            buildpack_language:
+              $ref: '#/components/schemas/BuildPackLanguageEnum'
+            cpu:
+              type: integer
+              description: unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            memory:
+              type: integer
+              description: unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
+            min_running_instances:
+              type: integer
+              minimum: 0
+              description: |
+                Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: 0 means that there is no application running.
+              default: 1
+            max_running_instances:
+              type: integer
+              description: |
+                Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: -1 means that there is no limit.
+              default: 1
+            healthcheck:
+              $ref: '#/components/schemas/Healthcheck'
+            auto_preview:
+              type: boolean
+              description: |
+                Specify if the environment preview option is activated or not for this application.
+                If activated, a preview environment will be automatically cloned at each pull request.
+              default: true
+            sticky_session:
+              type: boolean
+              description: |
+                Specify if the sticky session option (also called persistant session) is activated or not for this application.
+                If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
+              default: false
     DeploymentHistoryResponseList:
       type: object
       properties:
@@ -6663,75 +6636,75 @@ components:
           items:
             $ref: '#/components/schemas/EventResponse'
     DeploymentHistoryResponse:
-      type: object
-      properties:
-        commit:
-          $ref: '#/components/schemas/CommitResponse'
-        status:
-          type: string
-          enum:
-            - SUCCESS
-            - FAILED
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            commit:
+              $ref: '#/components/schemas/CommitResponse'
+            status:
+              type: string
+              enum:
+                - SUCCESS
+                - FAILED
     DeploymentHistoryApplicationResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        commit:
-          $ref: '#/components/schemas/CommitResponse'
-        status:
-          type: string
-          enum:
-            - READY
-            - BUILDING
-            - BUILD_ERROR
-            - BUILT
-            - DEPLOYMENT_QUEUED
-            - DEPLOYING
-            - DEPLOYMENT_ERROR
-            - DEPLOYED
-            - STOP_QUEUED
-            - STOPPING
-            - STOP_ERROR
-            - STOPPED
-            - DELETE_QUEUED
-            - DELETING
-            - DELETE_ERROR
-            - DELETED
-            - RUNNING
-            - RUNNING_ERROR
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            name:
+              type: string
+            commit:
+              $ref: '#/components/schemas/CommitResponse'
+            status:
+              type: string
+              enum:
+                - READY
+                - BUILDING
+                - BUILD_ERROR
+                - BUILT
+                - DEPLOYMENT_QUEUED
+                - DEPLOYING
+                - DEPLOYMENT_ERROR
+                - DEPLOYED
+                - STOP_QUEUED
+                - STOPPING
+                - STOP_ERROR
+                - STOPPED
+                - DELETE_QUEUED
+                - DELETING
+                - DELETE_ERROR
+                - DELETED
+                - RUNNING
+                - RUNNING_ERROR
     DeploymentHistoryDatabaseResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        status:
-          type: string
-          enum:
-            - READY
-            - BUILDING
-            - BUILD_ERROR
-            - BUILT
-            - DEPLOYMENT_QUEUED
-            - DEPLOYING
-            - DEPLOYMENT_ERROR
-            - DEPLOYED
-            - STOP_QUEUED
-            - STOPPING
-            - STOP_ERROR
-            - STOPPED
-            - DELETE_QUEUED
-            - DELETING
-            - DELETE_ERROR
-            - DELETED
-            - RUNNING
-            - RUNNING_ERROR
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            name:
+              type: string
+            status:
+              type: string
+              enum:
+                - READY
+                - BUILDING
+                - BUILD_ERROR
+                - BUILT
+                - DEPLOYMENT_QUEUED
+                - DEPLOYING
+                - DEPLOYMENT_ERROR
+                - DEPLOYED
+                - STOP_QUEUED
+                - STOPPING
+                - STOP_ERROR
+                - STOPPED
+                - DELETE_QUEUED
+                - DELETING
+                - DELETE_ERROR
+                - DELETED
+                - RUNNING
+                - RUNNING_ERROR
     OrganizationResponseList:
       type: object
       properties:
@@ -6740,14 +6713,14 @@ components:
           items:
             $ref: '#/components/schemas/OrganizationResponse'
     ClusterRequest:
-      type: object
-      required:
-        - name
-        - cloud_provider
-        - region
       allOf:
         - $ref: '#/components/schemas/Cluster'
         - $ref: '#/components/schemas/ClusterFeatureRequest'
+        - type: object
+          required:
+            - name
+            - cloud_provider
+            - region
     ClusterCloudProviderInfoResponse:
       type: object
       properties:
@@ -6768,93 +6741,79 @@ components:
         region:
           type: string
     ApplicationResponse:
-      type: object
-      properties:
-        environment:
-          $ref: '#/components/schemas/ReferenceObject'
-        git_repository:
-          $ref: '#/components/schemas/ApplicationGitRepositoryResponse'
-        maximum_cpu:
-          type: integer
-          description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-          default: 250
-          example: 1250
-        maximum_memory:
-          type: integer
-          description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-          default: 256
-          example: 1024
-        name:
-          type: string
-          description: name is case insensitive
-        description:
-          type: string
-          description: give a description to this application
-          nullable: true
-        build_mode:
-          type: string
-          enum:
-            - DOCKER
-            - BUILDPACKS
-          default: BUILDPACKS
-          description: |
-            `DOCKER` requires `dockerfile_path`
-            `BUILDPACKS` does not require any `dockerfile_path`
-        dockerfile_path:
-          type: string
-          description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-          nullable: true
-        buildpack_language:
-          type: string
-          description: Development language of the application
-          nullable: true
-          enum:
-            - CLOJURE
-            - GO
-            - GRADLE
-            - GRAILS
-            - JAVA
-            - JVM
-            - NODE_JS
-            - PHP
-            - PLAY
-            - PYTHON
-            - SCALA
-        cpu:
-          type: integer
-          description: unit is millicores (m). 1000m = 1 cpu
-          default: 250
-          example: 1250
-        memory:
-          type: integer
-          description: unit is MB. 1024 MB = 1GB
-          default: 256
-          example: 1024
-        min_running_instances:
-          type: integer
-          minimum: 0
-          description: |
-            Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-            Note: 0 means that there is no application running.
-          default: 1
-        max_running_instances:
-          type: integer
-          description: |
-            Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-            Note: -1 means that there is no limit.
-          default: 1
-        healthcheck:
-          $ref: '#/components/schemas/Healthcheck'
-        auto_preview:
-          type: boolean
-          description: |
-            Specify if the environment preview option is activated or not for this application.
-            If activated, a preview environment will be automatically cloned at each pull request.
-          default: true
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/ApplicationStorageResponse'
         - $ref: '#/components/schemas/ApplicationPortResponse'
+        - type: object
+          properties:
+            environment:
+              $ref: '#/components/schemas/ReferenceObject'
+            git_repository:
+              $ref: '#/components/schemas/ApplicationGitRepositoryResponse'
+            maximum_cpu:
+              type: integer
+              description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            maximum_memory:
+              type: integer
+              description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+              description: give a description to this application
+              nullable: true
+            build_mode:
+              type: string
+              enum:
+                - DOCKER
+                - BUILDPACKS
+              default: BUILDPACKS
+              description: |
+                `DOCKER` requires `dockerfile_path`
+                `BUILDPACKS` does not require any `dockerfile_path`
+            dockerfile_path:
+              type: string
+              description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+              nullable: true
+            buildpack_language:
+              $ref: '#/components/schemas/BuildPackLanguageEnum'
+            cpu:
+              type: integer
+              description: unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            memory:
+              type: integer
+              description: unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
+            min_running_instances:
+              type: integer
+              minimum: 0
+              description: |
+                Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: 0 means that there is no application running.
+              default: 1
+            max_running_instances:
+              type: integer
+              description: |
+                Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: -1 means that there is no limit.
+              default: 1
+            healthcheck:
+              $ref: '#/components/schemas/Healthcheck'
+            auto_preview:
+              type: boolean
+              description: |
+                Specify if the environment preview option is activated or not for this application.
+                If activated, a preview environment will be automatically cloned at each pull request.
+              default: true
     CustomDomainRequest:
       type: object
       required:
@@ -6865,14 +6824,14 @@ components:
           description: your custom domain
           example: my.domain.tld
     EnvironmentLogPaginatedResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentLogResponse'
       allOf:
         - $ref: '#/components/schemas/PaginationDataResponse'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnvironmentLogResponse'
     ProjectDeploymentRuleRequest:
       type: object
       required:
@@ -6970,21 +6929,21 @@ components:
         is_ready:
           type: boolean
     CustomDomainResponse:
-      type: object
-      properties:
-        validation_domain:
-          type: string
-          description: URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
-        status:
-          type: string
-          enum:
-            - deploying
-            - checking
-            - ready
-            - error
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/CustomDomainRequest'
+        - type: object
+          properties:
+            validation_domain:
+              type: string
+              description: URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
+            status:
+              type: string
+              enum:
+                - deploying
+                - checking
+                - ready
+                - error
     AccountInfoResponse:
       type: object
       required:
@@ -7015,45 +6974,45 @@ components:
         description:
           type: string
     ServiceResponse:
-      type: object
-      required:
-        - id
-      properties:
-        type:
-          type: string
-          description: 'type of the service (application, database, job, gateway...)'
-          enum:
-            - APPLICATION
-            - DATABASE
-        name:
-          type: string
-          description: name of the service
-        id:
-          type: string
-          description: 'uuid of the associated service (application, database, job, gateway...)'
-          format: uuid
-        deployed_commit_id:
-          type: string
-          description: Git commit ID corresponding to the deployed version of the application
-        last_updated_by:
-          type: string
-          format: uuid
-          description: uuid of the user that made the last update
-        consumed_resources_in_percent:
-          type: number
-          description: global overview of resources consumption of the service
-        service_typology:
-          type: string
-          example: container
-          description: 'describes the typology of service (container, postgresl, redis...)'
-        service_version:
-          type: string
-          description: for databases this field exposes the database version
-          example: v12
-        to_update:
-          type: boolean
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - id
+          properties:
+            type:
+              type: string
+              description: 'type of the service (application, database, job, gateway...)'
+              enum:
+                - APPLICATION
+                - DATABASE
+            name:
+              type: string
+              description: name of the service
+            id:
+              type: string
+              description: 'uuid of the associated service (application, database, job, gateway...)'
+              format: uuid
+            deployed_commit_id:
+              type: string
+              description: Git commit ID corresponding to the deployed version of the application
+            last_updated_by:
+              type: string
+              format: uuid
+              description: uuid of the user that made the last update
+            consumed_resources_in_percent:
+              type: number
+              description: global overview of resources consumption of the service
+            service_typology:
+              type: string
+              example: container
+              description: 'describes the typology of service (container, postgresl, redis...)'
+            service_version:
+              type: string
+              description: for databases this field exposes the database version
+              example: v12
+            to_update:
+              type: boolean
     ApplicationResponseList:
       type: object
       properties:
@@ -7118,9 +7077,9 @@ components:
         value:
           type: string
     RemainingCredits:
-      type: object
       allOf:
         - $ref: '#/components/schemas/CostResponse'
+        - type: object
     BillingStatus:
       type: object
       properties:
@@ -7129,9 +7088,9 @@ components:
         message:
           type: string
     Cost:
-      type: object
       allOf:
         - $ref: '#/components/schemas/CostResponse'
+        - type: object
     ServiceResponseList:
       type: object
       properties:
@@ -7140,51 +7099,51 @@ components:
           items:
             $ref: '#/components/schemas/ServiceResponse'
     EnvironmentDeploymentRuleResponse:
-      type: object
-      required:
-        - timezone
-        - start_time
-        - stop_time
-        - weekdays
-      properties:
-        auto_deploy:
-          type: boolean
-          default: true
-        auto_stop:
-          type: boolean
-          default: false
-        auto_delete:
-          type: boolean
-          default: false
-        auto_preview:
-          type: boolean
-          default: false
-        timezone:
-          type: string
-          example: UTC
-        start_time:
-          type: string
-          format: date-time
-          example: 1970-01-01T08:00:00.000Z
-        stop_time:
-          type: string
-          format: date-time
-          example: 1970-01-01T19:00:00.000Z
-        weekdays:
-          type: array
-          items:
-            type: string
-            enum:
-              - MONDAY
-              - TUESDAY
-              - WEDNESDAY
-              - THURSDAY
-              - FRIDAY
-              - SATURDAY
-              - SUNDAY
-            example: MONDAY
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - timezone
+            - start_time
+            - stop_time
+            - weekdays
+          properties:
+            auto_deploy:
+              type: boolean
+              default: true
+            auto_stop:
+              type: boolean
+              default: false
+            auto_delete:
+              type: boolean
+              default: false
+            auto_preview:
+              type: boolean
+              default: false
+            timezone:
+              type: string
+              example: UTC
+            start_time:
+              type: string
+              format: date-time
+              example: 1970-01-01T08:00:00.000Z
+            stop_time:
+              type: string
+              format: date-time
+              example: 1970-01-01T19:00:00.000Z
+            weekdays:
+              type: array
+              items:
+                type: string
+                enum:
+                  - MONDAY
+                  - TUESDAY
+                  - WEDNESDAY
+                  - THURSDAY
+                  - FRIDAY
+                  - SATURDAY
+                  - SUNDAY
+                example: MONDAY
     MetricMemoryDatapointResponse:
       type: object
       required:
@@ -7210,13 +7169,13 @@ components:
           items:
             $ref: '#/components/schemas/EnvironmentResponse'
     LogicalDatabaseResponse:
-      type: object
-      properties:
-        database:
-          $ref: '#/components/schemas/ReferenceObject'
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/LogicalDatabaseRequest'
+        - type: object
+          properties:
+            database:
+              $ref: '#/components/schemas/ReferenceObject'
     CurrentCost:
       type: object
       properties:
@@ -7279,18 +7238,18 @@ components:
             - MANAGED
           example: CONTAINER
     ProjectResponse:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        organization:
-          $ref: '#/components/schemas/ReferenceObject'
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            organization:
+              $ref: '#/components/schemas/ReferenceObject'
     GitAuthProviderResponseList:
       type: object
       properties:
@@ -7406,14 +7365,14 @@ components:
           items:
             $ref: '#/components/schemas/EnvironmentLogResponse'
     DeploymentHistoryEnvironmentPaginatedResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentHistoryEnvironmentResponse'
       allOf:
         - $ref: '#/components/schemas/PaginationDataResponse'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/DeploymentHistoryEnvironmentResponse'
     AliasedSecret:
       type: object
       properties:
@@ -7574,27 +7533,27 @@ components:
           items:
             $ref: '#/components/schemas/MetricMemoryDatapointResponse'
     ClusterResponse:
-      type: object
-      properties:
-        estimated_cloud_provider_cost:
-          type: integer
-          description: 'This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration'
-        status:
-          type: string
-          enum:
-            - READY
-            - RUNNING
-            - WARNING
-        has_access:
-          type: boolean
-        version:
-          type: string
-        is_default:
-          type: boolean
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/Cluster'
         - $ref: '#/components/schemas/ClusterFeatureResponse'
+        - type: object
+          properties:
+            estimated_cloud_provider_cost:
+              type: integer
+              description: 'This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration'
+            status:
+              type: string
+              enum:
+                - READY
+                - RUNNING
+                - WARNING
+            has_access:
+              type: boolean
+            version:
+              type: string
+            is_default:
+              type: boolean
     BackupPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationDataResponse'
@@ -7706,43 +7665,43 @@ components:
           items:
             $ref: '#/components/schemas/SecretResponse'
     EnvironmentResponse:
-      type: object
-      required:
-        - name
-        - cloud_provider
-        - mode
-        - cluster_id
-      properties:
-        name:
-          type: string
-          description: name is case insensitive
-        project:
-          $ref: '#/components/schemas/ReferenceObject'
-        last_updated_by:
-          type: string
-          format: uuid
-          description: uuid of the user that made the last update
-        cloud_provider:
-          type: object
-          properties:
-            provider:
-              type: string
-              example: aws
-            cluster:
-              type: string
-              example: us-east-2
-        mode:
-          type: string
-          enum:
-            - PRODUCTION
-            - DEVELOPMENT
-            - STAGING
-            - PREVIEW
-        cluster_id:
-          type: string
-          format: uuid
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - name
+            - cloud_provider
+            - mode
+            - cluster_id
+          properties:
+            name:
+              type: string
+              description: name is case insensitive
+            project:
+              $ref: '#/components/schemas/ReferenceObject'
+            last_updated_by:
+              type: string
+              format: uuid
+              description: uuid of the user that made the last update
+            cloud_provider:
+              type: object
+              properties:
+                provider:
+                  type: string
+                  example: aws
+                cluster:
+                  type: string
+                  example: us-east-2
+            mode:
+              type: string
+              enum:
+                - PRODUCTION
+                - DEVELOPMENT
+                - STAGING
+                - PREVIEW
+            cluster_id:
+              type: string
+              format: uuid
     CostResponse:
       type: object
       required:
@@ -7865,26 +7824,26 @@ components:
           items:
             $ref: '#/components/schemas/EnvironmentStatsResponse'
     SecretResponse:
-      type: object
-      required:
-        - scope
-      properties:
-        key:
-          type: string
-          description: key is case sensitive
-        overridden_secret:
-          $ref: '#/components/schemas/OverriddenSecret'
-        aliased_secret:
-          $ref: '#/components/schemas/AliasedSecret'
-        scope:
-          type: string
-          enum:
-            - BUILT_IN
-            - ENVIRONMENT
-            - PROJECT
-            - APPLICATION
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - scope
+          properties:
+            key:
+              type: string
+              description: key is case sensitive
+            overridden_secret:
+              $ref: '#/components/schemas/OverriddenSecret'
+            aliased_secret:
+              $ref: '#/components/schemas/AliasedSecret'
+            scope:
+              type: string
+              enum:
+                - BUILT_IN
+                - ENVIRONMENT
+                - PROJECT
+                - APPLICATION
     Status:
       type: object
       required:
@@ -7996,13 +7955,13 @@ components:
                 - Warning
                 - Alert
     BackupResponse:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/BackupRequest'
+        - type: object
+          properties:
+            status:
+              $ref: '#/components/schemas/Status'
     DeploymentRuleRequest:
       type: object
       required:
@@ -8061,66 +8020,66 @@ components:
               - SUNDAY
             example: MONDAY
     ProjectCurrentCostResponse:
-      type: object
-      properties:
-        environments:
-          type: array
-          items:
-            $ref: '#/components/schemas/GenericObjectCurrentCostResponse'
       allOf:
         - $ref: '#/components/schemas/GenericObjectCurrentCostResponse'
+        - type: object
+          properties:
+            environments:
+              type: array
+              items:
+                $ref: '#/components/schemas/GenericObjectCurrentCostResponse'
     EnvironmentVariableResponse:
-      type: object
-      required:
-        - scope
-      properties:
-        overridden_variable:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-            key:
-              type: string
-            value:
-              type: string
-            scope:
-              type: string
-              enum:
-                - BUILT_IN
-                - ENVIRONMENT
-                - PROJECT
-                - APPLICATION
-        aliased_variable:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-            key:
-              type: string
-              example: QOVERY_DATABASE_PSQL_NAME
-            value:
-              type: string
-            scope:
-              type: string
-              enum:
-                - BUILT_IN
-                - ENVIRONMENT
-                - PROJECT
-                - APPLICATION
-        scope:
-          type: string
-          enum:
-            - BUILT_IN
-            - ENVIRONMENT
-            - PROJECT
-            - APPLICATION
-        service_name:
-          type: string
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
         - $ref: '#/components/schemas/EnvironmentVariableRequest'
+        - type: object
+          required:
+            - scope
+          properties:
+            overridden_variable:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                key:
+                  type: string
+                value:
+                  type: string
+                scope:
+                  type: string
+                  enum:
+                    - BUILT_IN
+                    - ENVIRONMENT
+                    - PROJECT
+                    - APPLICATION
+            aliased_variable:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                key:
+                  type: string
+                  example: QOVERY_DATABASE_PSQL_NAME
+                value:
+                  type: string
+                scope:
+                  type: string
+                  enum:
+                    - BUILT_IN
+                    - ENVIRONMENT
+                    - PROJECT
+                    - APPLICATION
+            scope:
+              type: string
+              enum:
+                - BUILT_IN
+                - ENVIRONMENT
+                - PROJECT
+                - APPLICATION
+            service_name:
+              type: string
     ReferralResponse:
       type: object
       properties:
@@ -8195,13 +8154,13 @@ components:
           items:
             $ref: '#/components/schemas/ClusterCredentialsResponse'
     CommitPaginatedResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/CommitResponse'
       allOf:
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/CommitResponse'
         - $ref: '#/components/schemas/PaginationDataResponse'
     ClusterResponseList:
       type: object
@@ -8420,14 +8379,14 @@ components:
         key:
           type: string
     EventPaginatedResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventResponse'
       allOf:
         - $ref: '#/components/schemas/PaginationDataResponse'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/EventResponse'
     InstanceResponse:
       type: object
       properties:
@@ -8499,21 +8458,21 @@ components:
               message:
                 type: string
     EventResponse:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/UserResponse'
-        commit:
-          $ref: '#/components/schemas/CommitResponse'
-        status:
-          $ref: '#/components/schemas/Status'
-        type:
-          type: string
-          description: DRAFT - we have to specify here all the possible events
-        log:
-          $ref: '#/components/schemas/ReferenceObject'
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            user:
+              $ref: '#/components/schemas/UserResponse'
+            commit:
+              $ref: '#/components/schemas/CommitResponse'
+            status:
+              $ref: '#/components/schemas/Status'
+            type:
+              type: string
+              description: DRAFT - we have to specify here all the possible events
+            log:
+              $ref: '#/components/schemas/ReferenceObject'
     EnvironmentDatabasesCurrentMetricResponseList:
       type: object
       properties:
@@ -8716,14 +8675,14 @@ components:
         is_private:
           type: boolean
     LogPaginatedResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/LogResponse'
       allOf:
         - $ref: '#/components/schemas/PaginationDataResponse'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/LogResponse'
     StorageDiskResponseList:
       type: object
       properties:
@@ -8767,38 +8726,38 @@ components:
           items:
             $ref: '#/components/schemas/ClusterRegionResponse'
     InviteMemberResponse:
-      type: object
-      required:
-        - email
-        - role
-        - invitation_link
-        - invitation_status
-        - inviter
-      properties:
-        email:
-          type: string
-          format: email
-        role:
-          type: string
-          enum:
-            - ADMIN
-            - DEVELOPER
-            - VIEWER
-        invitation_link:
-          type: string
-          format: uri
-        invitation_status:
-          type: string
-          enum:
-            - PENDING
-            - EXPIRED
-        inviter:
-          type: string
-        logo_url:
-          type: string
-          format: uri
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - email
+            - role
+            - invitation_link
+            - invitation_status
+            - inviter
+          properties:
+            email:
+              type: string
+              format: email
+            role:
+              type: string
+              enum:
+                - ADMIN
+                - DEVELOPER
+                - VIEWER
+            invitation_link:
+              type: string
+              format: uri
+            invitation_status:
+              type: string
+              enum:
+                - PENDING
+                - EXPIRED
+            inviter:
+              type: string
+            logo_url:
+              type: string
+              format: uri
     TransferOwnershipRequest:
       type: object
       required:
@@ -8953,10 +8912,9 @@ components:
           type: boolean
           default: false
         accepted_values:
-          nullable: false
           type: array
           items:
-            anyOf:
+            oneOf:
               - type: string
               - type: boolean
     ClusterRoutingTableResponse:
@@ -9029,6 +8987,22 @@ components:
         name:
           type: string
           example: main
+    BuildPackLanguageEnum:
+      type: string
+      description: Development language of the application
+      nullable: true
+      enum:
+        - CLOJURE
+        - GO
+        - GRADLE
+        - GRAILS
+        - JAVA
+        - JVM
+        - NODE_JS
+        - PHP
+        - PLAY
+        - PYTHON
+        - SCALA
   responses:
     '204':
       description: no content
