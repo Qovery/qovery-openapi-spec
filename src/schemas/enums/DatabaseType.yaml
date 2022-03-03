@@ -1,0 +1,6 @@
+type: string
+enum:
+  - POSTGRESQL
+  - MYSQL
+  - MONGODB
+  - REDIS

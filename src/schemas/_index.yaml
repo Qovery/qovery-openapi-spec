@@ -456,3 +456,33 @@ GlobalStatusEnum:
   $ref: ./enums/GlobalStatus.yaml
 ServiceDeploymentStatusEnum:
   $ref: ./enums/ServiceDeploymentStatus.yaml
+DeploymentHistoryStatusEnum:
+  $ref: ./enums/DeploymentHistoryStatus.yaml
+DeploymentRestrictionModeEnum:
+  $ref: ./enums/DeploymentRestrictionMode.yaml
+DeploymentRestrictionTypeEnum:
+  $ref: ./enums/DeploymentRestrictionType.yaml
+DatabaseTypeEnum:
+  $ref: ./enums/DatabaseType.yaml
+DatabaseModeEnum:
+  $ref: ./enums/DatabaseMode.yaml
+DatabaseAccessibilityEnum:
+  $ref: ./enums/DatabaseAccessibility.yaml
+StageModeEnum:
+  $ref: ./enums/StageMode.yaml
+CloudProviderEnum:
+  $ref: ./enums/CloudProvider.yaml
+InviteMemberRoleEnum:
+  $ref: ./enums/InviteMemberRole.yaml
+EnvironmentLogTypeEnum:
+  $ref: ./enums/EnvironmentLogType.yaml
+InviteStatusEnum:
+  $ref: ./enums/InviteStatus.yaml
+PlanEnum:
+  $ref: ./enums/Plan.yaml
+InvoiceStatusEnum:
+  $ref: ./enums/InvoiceStatus.yaml
+ServiceTypeEnum:
+  $ref: ./enums/ServiceType.yaml
+StorageTypeEnum:
+  $ref: ./enums/StorageType.yaml

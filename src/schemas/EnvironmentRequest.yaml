@@ -9,9 +9,4 @@ properties:
     type: string
     format: uuid
   mode:
-    type: string
-    enum:
-      - PRODUCTION
-      - DEVELOPMENT
-      - STAGING
-      - PREVIEW
+    $ref: './enums/StageMode.yaml'

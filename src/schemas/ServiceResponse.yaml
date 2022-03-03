@@ -5,11 +5,7 @@ allOf:
       - id
     properties:
       type:
-        type: string
-        description: type of the service (application, database, job, gateway...)
-        enum:
-          - APPLICATION
-          - DATABASE
+        $ref: './enums/ServiceType.yaml'
       name:
         type: string
         description: name of the service

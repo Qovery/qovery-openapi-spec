@@ -5,7 +5,4 @@ allOf:
       commit:
         $ref: './CommitResponse.yaml'
       status:
-        type: string
-        enum:
-          - SUCCESS
-          - FAILED
+        $ref: './enums/DeploymentHistoryStatus.yaml'

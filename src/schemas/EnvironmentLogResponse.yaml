@@ -16,11 +16,7 @@ properties:
     type: object
     properties:
       type:
-        type: string
-        enum:
-          - APPLICATION
-          - DATABASE
-          - ENVIRONMENT
+        $ref: './enums/EnvironmentLogType.yaml'
       name:
         type: string
       id:

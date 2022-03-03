@@ -19,9 +19,4 @@ allOf:
         format: date-time
         description: last time the user was connected
       role:
-        type: string
-        enum:
-          - OWNER
-          - ADMIN
-          - DEVELOPER
-          - VIEWER
+        $ref: './enums/InviteMemberRole.yaml'

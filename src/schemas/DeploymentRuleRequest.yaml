@@ -11,10 +11,7 @@ properties:
   description:
     type: string
   mode:
-    type: string
-    enum:
-      - PRODUCTION
-      - DEVELOPMENT
+    $ref: './enums/StageMode.yaml'
   cluster:
     type: string
     format: uuid

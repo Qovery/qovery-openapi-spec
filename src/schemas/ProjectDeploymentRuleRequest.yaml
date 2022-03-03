@@ -18,11 +18,7 @@ properties:
     nullable: true
     example: description project rule
   mode:
-    type: string
-    enum:
-      - DEVELOPMENT
-      - STAGING
-      - PRODUCTION
+    $ref: './enums/StageMode.yaml'
   cluster_id:
     type: string
     format: uuid

@@ -13,12 +13,7 @@ properties:
           type: string
           format: uuid
         type:
-          type: string
-          enum:
-            - SLOW_HDD
-            - HDD
-            - SSD
-            - FAST_SSD
+          $ref: './enums/StorageType.yaml'
         size:
           type: integer
           description: unit is GB
