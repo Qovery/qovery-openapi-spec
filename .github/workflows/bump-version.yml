@@ -49,8 +49,8 @@ jobs:
           git config user.name 'Qovery Bot'
           git config user.email 'github@qovery.com'
 
-      # - name: Push latest version
-      #   run: git push origin main --follow-tags
+      - name: Push latest version
+        run: git push origin main --follow-tags
 
       - name: Bump Version
         run: npm version ${{ github.event.inputs.version }}
