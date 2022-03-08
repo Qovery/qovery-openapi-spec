@@ -5745,12 +5745,7 @@ components:
         description:
           type: string
         plan:
-          type: string
-          enum:
-            - COMMUNITY
-            - FREE
-            - PROFESSIONAL
-            - BUSINESS
+          $ref: '#/components/schemas/PlanEnum'
         website_url:
           type: string
           nullable: true
@@ -5835,12 +5830,7 @@ components:
                 type: string
                 format: uuid
               type:
-                type: string
-                enum:
-                  - SLOW_HDD
-                  - HDD
-                  - SSD
-                  - FAST_SSD
+                $ref: '#/components/schemas/StorageTypeEnum'
               size:
                 type: integer
                 description: unit is GB
@@ -6040,26 +6030,14 @@ components:
           type: string
           description: name is case insensitive
         type:
-          type: string
-          enum:
-            - POSTGRESQL
-            - MYSQL
-            - MONGODB
-            - REDIS
+          $ref: '#/components/schemas/DatabaseTypeEnum'
         version:
           type: string
           example: '10.1'
         mode:
-          type: string
-          enum:
-            - MANAGED
-            - CONTAINER
+          $ref: '#/components/schemas/DatabaseModeEnum'
         accessibility:
-          type: string
-          default: PRIVATE
-          enum:
-            - PUBLIC
-            - PRIVATE
+          $ref: '#/components/schemas/DatabaseAccessibilityEnum'
         cpu:
           type: integer
           description: unit is millicores (m). 1000m = 1 cpu
@@ -6111,26 +6089,7 @@ components:
         - type: object
           properties:
             status:
-              type: string
-              enum:
-                - READY
-                - BUILDING
-                - BUILD_ERROR
-                - BUILT
-                - DEPLOYMENT_QUEUED
-                - DEPLOYING
-                - DEPLOYMENT_ERROR
-                - DEPLOYED
-                - STOP_QUEUED
-                - STOPPING
-                - STOP_ERROR
-                - STOPPED
-                - DELETE_QUEUED
-                - DELETING
-                - DELETE_ERROR
-                - DELETED
-                - RUNNING
-                - RUNNING_ERROR
+              $ref: '#/components/schemas/GlobalDeploymentStatus'
             applications:
               type: array
               items:
@@ -6223,10 +6182,7 @@ components:
           type: string
           example: '10.1'
         accessibility:
-          type: string
-          enum:
-            - PUBLIC
-            - PRIVATE
+          $ref: '#/components/schemas/DatabaseAccessibilityEnum'
         cpu:
           type: integer
           description: unit is millicores (m). 1000m = 1 cpu
@@ -6283,12 +6239,7 @@ components:
               format: date-time
               description: last time the user was connected
             role:
-              type: string
-              enum:
-                - OWNER
-                - ADMIN
-                - DEVELOPER
-                - VIEWER
+              $ref: '#/components/schemas/InviteMemberRoleEnum'
     ClusterStatusResponse:
       type: object
       properties:
@@ -6296,23 +6247,7 @@ components:
           type: string
           format: uuid
         status:
-          type: string
-          enum:
-            - READY
-            - DEPLOYMENT_QUEUED
-            - DEPLOYING
-            - DEPLOYMENT_ERROR
-            - DEPLOYED
-            - STOP_QUEUED
-            - STOPPING
-            - STOP_ERROR
-            - STOPPED
-            - DELETE_QUEUED
-            - DELETING
-            - DELETE_ERROR
-            - DELETED
-            - RUNNING
-            - RUNNING_ERROR
+          $ref: '#/components/schemas/ClusterDeploymentStatusEnum'
         is_deployed:
           type: boolean
     InvoiceResponseList:
@@ -6359,15 +6294,7 @@ components:
               type: string
               format: date-time
             status:
-              type: string
-              enum:
-                - PAID
-                - POSTED
-                - PAYMENT_DUE
-                - NOT_PAID
-                - VOIDED
-                - PENDING
-                - UNKNOWN
+              $ref: '#/components/schemas/InvoiceStatusEnum'
     EnvironmentLogResponse:
       type: object
       required:
@@ -6387,37 +6314,14 @@ components:
           type: object
           properties:
             type:
-              type: string
-              enum:
-                - APPLICATION
-                - DATABASE
-                - ENVIRONMENT
+              $ref: '#/components/schemas/EnvironmentLogTypeEnum'
             name:
               type: string
             id:
               type: string
               format: uuid
         state:
-          type: string
-          description: |
-            Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state.
-          enum:
-            - BUILD_ERROR
-            - BUILDING
-            - BUILT
-            - DELETE_ERROR
-            - DELETED
-            - DELETING
-            - DEPLOYED
-            - DEPLOYING
-            - DEPLOYMENT_ERROR
-            - INITIALIZED
-            - QUEUED
-            - RUNNING
-            - RUNNING_ERROR
-            - STOP_ERROR
-            - STOPPED
-            - STOPPING
+          $ref: '#/components/schemas/GlobalDeploymentStatus'
         message:
           type: string
           nullable: true
@@ -6469,11 +6373,7 @@ components:
       type: object
       properties:
         cloud_provider:
-          type: string
-          enum:
-            - AWS
-            - DIGITAL_OCEAN
-            - SCALEWAY
+          $ref: '#/components/schemas/CloudProviderEnum'
         credentials:
           type: object
           properties:
@@ -6617,14 +6517,7 @@ components:
             git_repository:
               $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
             build_mode:
-              type: string
-              enum:
-                - DOCKER
-                - BUILDPACKS
-              default: BUILDPACKS
-              description: |
-                `DOCKER` requires `dockerfile_path`
-                `BUILDPACKS` does not require any `dockerfile_path`
+              $ref: '#/components/schemas/BuildModeEnum'
             dockerfile_path:
               type: string
               description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
@@ -6695,13 +6588,7 @@ components:
             git_repository:
               $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
             build_mode:
-              type: string
-              enum:
-                - DOCKER
-                - BUILDPACKS
-              description: |
-                `DOCKER` requires `dockerfile_path`
-                `BUILDPACKS` does not require any `dockerfile_path`
+              $ref: '#/components/schemas/BuildModeEnum'
             dockerfile_path:
               type: string
               description: The path of the associated Dockerfile
@@ -6769,10 +6656,7 @@ components:
             commit:
               $ref: '#/components/schemas/CommitResponse'
             status:
-              type: string
-              enum:
-                - SUCCESS
-                - FAILED
+              $ref: '#/components/schemas/DeploymentHistoryStatusEnum'
     DeploymentHistoryApplicationResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
@@ -6783,26 +6667,7 @@ components:
             commit:
               $ref: '#/components/schemas/CommitResponse'
             status:
-              type: string
-              enum:
-                - READY
-                - BUILDING
-                - BUILD_ERROR
-                - BUILT
-                - DEPLOYMENT_QUEUED
-                - DEPLOYING
-                - DEPLOYMENT_ERROR
-                - DEPLOYED
-                - STOP_QUEUED
-                - STOPPING
-                - STOP_ERROR
-                - STOPPED
-                - DELETE_QUEUED
-                - DELETING
-                - DELETE_ERROR
-                - DELETED
-                - RUNNING
-                - RUNNING_ERROR
+              $ref: '#/components/schemas/GlobalDeploymentStatus'
     DeploymentHistoryDatabaseResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
@@ -6811,26 +6676,7 @@ components:
             name:
               type: string
             status:
-              type: string
-              enum:
-                - READY
-                - BUILDING
-                - BUILD_ERROR
-                - BUILT
-                - DEPLOYMENT_QUEUED
-                - DEPLOYING
-                - DEPLOYMENT_ERROR
-                - DEPLOYED
-                - STOP_QUEUED
-                - STOPPING
-                - STOP_ERROR
-                - STOPPED
-                - DELETE_QUEUED
-                - DELETING
-                - DELETE_ERROR
-                - DELETED
-                - RUNNING
-                - RUNNING_ERROR
+              $ref: '#/components/schemas/GlobalDeploymentStatus'
     OrganizationResponseList:
       type: object
       properties:
@@ -6851,11 +6697,7 @@ components:
       type: object
       properties:
         cloud_provider:
-          type: string
-          enum:
-            - AWS
-            - DIGITAL_OCEAN
-            - SCALEWAY
+          $ref: '#/components/schemas/CloudProviderEnum'
         credentials:
           type: object
           properties:
@@ -6895,14 +6737,7 @@ components:
               description: give a description to this application
               nullable: true
             build_mode:
-              type: string
-              enum:
-                - DOCKER
-                - BUILDPACKS
-              default: BUILDPACKS
-              description: |
-                `DOCKER` requires `dockerfile_path`
-                `BUILDPACKS` does not require any `dockerfile_path`
+              $ref: '#/components/schemas/BuildModeEnum'
             dockerfile_path:
               type: string
               description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
@@ -6979,11 +6814,7 @@ components:
           nullable: true
           example: description project rule
         mode:
-          type: string
-          enum:
-            - DEVELOPMENT
-            - STAGING
-            - PRODUCTION
+          $ref: '#/components/schemas/EnvironmentModeEnum'
         cluster_id:
           type: string
           format: uuid
@@ -7010,16 +6841,7 @@ components:
         weekdays:
           type: array
           items:
-            type: string
-            enum:
-              - MONDAY
-              - TUESDAY
-              - WEDNESDAY
-              - THURSDAY
-              - FRIDAY
-              - SATURDAY
-              - SUNDAY
-            example: MONDAY
+            $ref: '#/components/schemas/WeekdayEnum'
         wildcard:
           type: string
           default: ''
@@ -7107,11 +6929,7 @@ components:
             - id
           properties:
             type:
-              type: string
-              description: 'type of the service (application, database, job, gateway...)'
-              enum:
-                - APPLICATION
-                - DATABASE
+              $ref: '#/components/schemas/ServiceTypeEnum'
             name:
               type: string
               description: name of the service
@@ -7188,18 +7006,9 @@ components:
         - value
       properties:
         mode:
-          type: string
-          description: Match mode will rebuild app only if specified items are updated. Exclude mode will not rebuild app if specified items are updated.
-          enum:
-            - MATCH
-            - EXCLUDE
-          example: MATCH
+          $ref: '#/components/schemas/DeploymentRestrictionModeEnum'
         type:
-          type: string
-          enum:
-            - FILE
-            - PATH
-          example: PATH
+          $ref: '#/components/schemas/DeploymentRestrictionTypeEnum'
         value:
           type: string
     RemainingCredits:
@@ -7260,16 +7069,7 @@ components:
             weekdays:
               type: array
               items:
-                type: string
-                enum:
-                  - MONDAY
-                  - TUESDAY
-                  - WEDNESDAY
-                  - THURSDAY
-                  - FRIDAY
-                  - SATURDAY
-                  - SUNDAY
-                example: MONDAY
+                $ref: '#/components/schemas/WeekdayEnum'
     MetricMemoryDatapointResponse:
       type: object
       required:
@@ -7306,12 +7106,7 @@ components:
       type: object
       properties:
         plan:
-          type: string
-          enum:
-            - COMMUNITY
-            - FREE
-            - PROFESSIONAL
-            - BUSINESS
+          $ref: '#/components/schemas/PlanEnum'
         remaining_trial_day:
           type: integer
           description: number of days remaining before the end of the trial period
@@ -7358,11 +7153,7 @@ components:
           type: string
           example: '10.1'
         supported_mode:
-          type: string
-          enum:
-            - CONTAINER
-            - MANAGED
-          example: CONTAINER
+          $ref: '#/components/schemas/DatabaseModeEnum'
     ProjectResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
@@ -7509,12 +7300,7 @@ components:
           type: string
           example: QOVERY_DATABASE_PSQL_NAME
         scope:
-          type: string
-          enum:
-            - BUILT_IN
-            - ENVIRONMENT
-            - PROJECT
-            - APPLICATION
+          $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
     EnvironmentVariableResponseList:
       type: object
       properties:
@@ -7546,12 +7332,7 @@ components:
               value:
                 type: string
               scope:
-                type: string
-                enum:
-                  - ORGANIZATION
-                  - PROJECT
-                  - ENVIRONMENT
-                  - APPLICATION
+                $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
               is_secret:
                 type: boolean
     VariableImportResponse:
@@ -7577,12 +7358,7 @@ components:
                 type: string
                 description: Optional if the variable is secret
               scope:
-                type: string
-                enum:
-                  - ORGANIZATION
-                  - PROJECT
-                  - ENVIRONMENT
-                  - APPLICATION
+                $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
               is_secret:
                 type: boolean
     ReferenceObject:
@@ -7627,12 +7403,7 @@ components:
           type: string
           format: uuid
         mode:
-          type: string
-          enum:
-            - PRODUCTION
-            - DEVELOPMENT
-            - STAGING
-            - PREVIEW
+          $ref: '#/components/schemas/EnvironmentModeEnum'
     CloneRequest:
       type: object
       required:
@@ -7645,12 +7416,7 @@ components:
           type: string
           format: uuid
         mode:
-          type: string
-          enum:
-            - PRODUCTION
-            - DEVELOPMENT
-            - STAGING
-            - PREVIEW
+          $ref: '#/components/schemas/EnvironmentModeEnum'
     MetricMemoryDatapointResponseList:
       type: object
       properties:
@@ -7669,11 +7435,7 @@ components:
               type: integer
               description: 'This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration'
             status:
-              type: string
-              enum:
-                - READY
-                - RUNNING
-                - WARNING
+              $ref: '#/components/schemas/ClusterStatusEnum'
             has_access:
               type: boolean
             version:
@@ -7819,12 +7581,7 @@ components:
                   type: string
                   example: us-east-2
             mode:
-              type: string
-              enum:
-                - PRODUCTION
-                - DEVELOPMENT
-                - STAGING
-                - PREVIEW
+              $ref: '#/components/schemas/EnvironmentModeEnum'
             cluster_id:
               type: string
               format: uuid
@@ -7882,13 +7639,7 @@ components:
         name:
           type: string
         mode:
-          type: string
-          description: PREVIEW value is reserved for preview environments only
-          enum:
-            - DEVELOPMENT
-            - STAGING
-            - PRODUCTION
-            - PREVIEW
+          $ref: '#/components/schemas/EnvironmentModeEnum'
     OrganizationCurrentCostResponse:
       allOf:
         - $ref: '#/components/schemas/CurrentCost'
@@ -7930,13 +7681,7 @@ components:
                 type: boolean
                 description: Expose the port to the world
               protocol:
-                type: string
-                default: HTTP
-                enum:
-                  - HTTPS
-                  - HTTP
-                  - TCP
-                  - UDP
+                $ref: '#/components/schemas/PortProtocolEnum'
     OrganizationCreditCodeRequest:
       type: object
       properties:
@@ -7964,12 +7709,7 @@ components:
             aliased_secret:
               $ref: '#/components/schemas/AliasedSecret'
             scope:
-              type: string
-              enum:
-                - BUILT_IN
-                - ENVIRONMENT
-                - PROJECT
-                - APPLICATION
+              $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
     Status:
       type: object
       required:
@@ -7979,44 +7719,13 @@ components:
           type: string
           format: uuid
         state:
-          type: string
-          description: |
-            Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state.
-          enum:
-            - INITIALIZED
-            - BUILDING_QUEUED
-            - BUILDING
-            - BUILD_ERROR
-            - BUILT
-            - DEPLOYMENT_QUEUED
-            - DEPLOYING
-            - DEPLOYMENT_ERROR
-            - DEPLOYED
-            - STOP_QUEUED
-            - STOPPING
-            - STOP_ERROR
-            - STOPPED
-            - DELETE_QUEUED
-            - DELETING
-            - DELETE_ERROR
-            - DELETED
-            - RUNNING
-            - RUNNING_ERROR
-            - CANCEL_QUEUED
-            - CANCELLING
-            - CANCEL_ERROR
-            - CANCELLED
+          $ref: '#/components/schemas/GlobalDeploymentStatus'
         message:
           type: string
           nullable: true
           description: message related to the state
         service_deployment_status:
-          type: string
-          nullable: true
-          enum:
-            - NEVER_DEPLOYED
-            - UP_TO_DATE
-            - OUT_OF_DATE
+          $ref: '#/components/schemas/ServiceDeploymentStatusEnum'
     EnvironmentDatabasesCurrentMetricResponse:
       type: object
       properties:
@@ -8037,11 +7746,7 @@ components:
             alert_threshold_in_percent:
               type: number
             status:
-              type: string
-              enum:
-                - OK
-                - Warning
-                - Alert
+              $ref: '#/components/schemas/ThresholdMetricStatusEnum'
         memory:
           type: object
           properties:
@@ -8056,11 +7761,7 @@ components:
             alert_threshold_in_percent:
               type: number
             status:
-              type: string
-              enum:
-                - OK
-                - Warning
-                - Alert
+              $ref: '#/components/schemas/ThresholdMetricStatusEnum'
         storage:
           type: object
           properties:
@@ -8075,11 +7776,7 @@ components:
             alert_threshold_in_percent:
               type: number
             status:
-              type: string
-              enum:
-                - OK
-                - Warning
-                - Alert
+              $ref: '#/components/schemas/ThresholdMetricStatusEnum'
     BackupResponse:
       allOf:
         - $ref: '#/components/schemas/BaseResponse'
@@ -8102,10 +7799,7 @@ components:
         description:
           type: string
         mode:
-          type: string
-          enum:
-            - PRODUCTION
-            - DEVELOPMENT
+          $ref: '#/components/schemas/EnvironmentModeEnum'
         cluster:
           type: string
           format: uuid
@@ -8135,16 +7829,7 @@ components:
           nullable: true
           description: specify value only if auto_stop = false
           items:
-            type: string
-            enum:
-              - MONDAY
-              - TUESDAY
-              - WEDNESDAY
-              - THURSDAY
-              - FRIDAY
-              - SATURDAY
-              - SUNDAY
-            example: MONDAY
+            $ref: '#/components/schemas/WeekdayEnum'
     ProjectCurrentCostResponse:
       allOf:
         - $ref: '#/components/schemas/GenericObjectCurrentCostResponse'
@@ -8173,12 +7858,7 @@ components:
                 value:
                   type: string
                 scope:
-                  type: string
-                  enum:
-                    - BUILT_IN
-                    - ENVIRONMENT
-                    - PROJECT
-                    - APPLICATION
+                  $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
             aliased_variable:
               type: object
               properties:
@@ -8191,19 +7871,9 @@ components:
                 value:
                   type: string
                 scope:
-                  type: string
-                  enum:
-                    - BUILT_IN
-                    - ENVIRONMENT
-                    - PROJECT
-                    - APPLICATION
+                  $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
             scope:
-              type: string
-              enum:
-                - BUILT_IN
-                - ENVIRONMENT
-                - PROJECT
-                - APPLICATION
+              $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
             service_name:
               type: string
     ReferralResponse:
@@ -8265,13 +7935,7 @@ components:
                 type: boolean
                 description: Expose the port to the world
               protocol:
-                type: string
-                default: HTTP
-                enum:
-                  - HTTPS
-                  - HTTP
-                  - TCP
-                  - UDP
+                $ref: '#/components/schemas/PortProtocolEnum'
     ClusterCredentialsResponseList:
       type: object
       properties:
@@ -8304,12 +7968,7 @@ components:
         key:
           type: string
         scope:
-          type: string
-          enum:
-            - BUILT_IN
-            - ENVIRONMENT
-            - PROJECT
-            - APPLICATION
+          $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
     BillingInfoResponse:
       type: object
       required:
@@ -8385,16 +8044,7 @@ components:
         weekdays:
           type: array
           items:
-            type: string
-            enum:
-              - MONDAY
-              - TUESDAY
-              - WEDNESDAY
-              - THURSDAY
-              - FRIDAY
-              - SATURDAY
-              - SUNDAY
-            example: MONDAY
+            $ref: '#/components/schemas/WeekdayEnum'
     ReferenceObjectStatusResponseList:
       type: object
       properties:
@@ -8446,21 +8096,14 @@ components:
         alert_threshold_in_percent:
           type: number
         status:
-          type: string
-          enum:
-            - OK
-            - Warning
-            - Alert
+          $ref: '#/components/schemas/ThresholdMetricStatusEnum'
     ApplicationGitRepositoryResponse:
       type: object
       properties:
         has_access:
           type: boolean
         provider:
-          type: string
-          enum:
-            - GITHUB
-            - GITLAB
+          $ref: '#/components/schemas/GitProviderEnum'
         owner:
           type: string
           example: John Doe
@@ -8536,11 +8179,7 @@ components:
             alert_threshold_in_percent:
               type: number
             status:
-              type: string
-              enum:
-                - OK
-                - Warning
-                - Alert
+              $ref: '#/components/schemas/ThresholdMetricStatusEnum'
         memory:
           type: object
           properties:
@@ -8555,11 +8194,7 @@ components:
             alert_threshold_in_percent:
               type: number
             status:
-              type: string
-              enum:
-                - OK
-                - Warning
-                - Alert
+              $ref: '#/components/schemas/ThresholdMetricStatusEnum'
     MetricStorageResponseList:
       type: object
       properties:
@@ -8622,11 +8257,7 @@ components:
         alert_threshold_in_percent:
           type: number
         status:
-          type: string
-          enum:
-            - OK
-            - Warning
-            - Alert
+          $ref: '#/components/schemas/ThresholdMetricStatusEnum'
         updated_at:
           type: string
           readOnly: true
@@ -8664,11 +8295,7 @@ components:
         alert_threshold_in_percent:
           type: number
         status:
-          type: string
-          enum:
-            - OK
-            - Warning
-            - Alert
+          $ref: '#/components/schemas/ThresholdMetricStatusEnum'
         updated_at:
           type: string
           readOnly: true
@@ -8709,13 +8336,7 @@ components:
       type: object
       properties:
         database_type:
-          type: string
-          example: REDIS
-          enum:
-            - POSTGRESQL
-            - MYSQL
-            - MONGODB
-            - REDIS
+          $ref: '#/components/schemas/DatabaseTypeEnum'
         version:
           type: array
           items:
@@ -8737,11 +8358,7 @@ components:
             alert_threshold_in_percent:
               type: number
             status:
-              type: string
-              enum:
-                - OK
-                - Warning
-                - Alert
+              $ref: '#/components/schemas/ThresholdMetricStatusEnum'
         memory:
           type: object
           properties:
@@ -8756,11 +8373,7 @@ components:
             alert_threshold_in_percent:
               type: number
             status:
-              type: string
-              enum:
-                - OK
-                - Warning
-                - Alert
+              $ref: '#/components/schemas/ThresholdMetricStatusEnum'
         storage:
           type: object
           properties:
@@ -8775,11 +8388,7 @@ components:
             alert_threshold_in_percent:
               type: number
             status:
-              type: string
-              enum:
-                - OK
-                - Warning
-                - Alert
+              $ref: '#/components/schemas/ThresholdMetricStatusEnum'
     GitRepositoryResponse:
       type: object
       required:
@@ -8866,19 +8475,12 @@ components:
               type: string
               format: email
             role:
-              type: string
-              enum:
-                - ADMIN
-                - DEVELOPER
-                - VIEWER
+              $ref: '#/components/schemas/InviteMemberRoleEnum'
             invitation_link:
               type: string
               format: uri
             invitation_status:
-              type: string
-              enum:
-                - PENDING
-                - EXPIRED
+              $ref: '#/components/schemas/InviteStatusEnum'
             inviter:
               type: string
             logo_url:
@@ -8940,11 +8542,7 @@ components:
         email:
           type: string
         role:
-          type: string
-          enum:
-            - ADMIN
-            - DEVELOPER
-            - VIEWER
+          $ref: '#/components/schemas/InviteMemberRoleEnum'
     ClusterFeatureRequest:
       type: object
       properties:
@@ -8977,11 +8575,7 @@ components:
         description:
           type: string
         cloud_provider:
-          type: string
-          enum:
-            - AWS
-            - DIGITAL_OCEAN
-            - SCALEWAY
+          $ref: '#/components/schemas/CloudProviderEnum'
         region:
           type: string
         auto_update:
@@ -9177,6 +8771,218 @@ components:
               description: the generated token to send in 'Authorization' header prefixed by 'Token '
             scope:
               $ref: '#/components/schemas/OrganizationApiTokenScope'
+    BuildModeEnum:
+      type: string
+      enum:
+        - DOCKER
+        - BUILDPACKS
+      description: |
+        `DOCKER` requires `dockerfile_path`
+        `BUILDPACKS` does not require any `dockerfile_path`
+      default: BUILDPACKS
+    EnvironmentVariableScopeEnum:
+      type: string
+      enum:
+        - BUILT_IN
+        - ENVIRONMENT
+        - PROJECT
+        - APPLICATION
+    GitProviderEnum:
+      type: string
+      enum:
+        - GITHUB
+        - GITLAB
+    ThresholdMetricStatusEnum:
+      type: string
+      enum:
+        - OK
+        - Warning
+        - Alert
+    PortProtocolEnum:
+      type: string
+      default: HTTP
+      enum:
+        - HTTPS
+        - HTTP
+        - TCP
+        - UDP
+    WeekdayEnum:
+      type: string
+      enum:
+        - MONDAY
+        - TUESDAY
+        - WEDNESDAY
+        - THURSDAY
+        - FRIDAY
+        - SATURDAY
+        - SUNDAY
+      example: MONDAY
+    GlobalDeploymentStatus:
+      type: string
+      enum:
+        - READY
+        - QUEUED
+        - STOP_QUEUED
+        - DELETE_QUEUED
+        - BUILDING
+        - BUILD_ERROR
+        - BUILT
+        - DEPLOYING
+        - DEPLOYMENT_ERROR
+        - DEPLOYED
+        - STOPPING
+        - STOP_ERROR
+        - STOPPED
+        - DELETING
+        - DELETE_ERROR
+        - DELETED
+        - RUNNING
+        - RUNNING_ERROR
+    ClusterStatusEnum:
+      type: string
+      enum:
+        - READY
+        - QUEUED
+        - STOP_QUEUED
+        - DELETE_QUEUED
+        - BUILDING
+        - BUILD_ERROR
+        - BUILT
+        - DEPLOYING
+        - DEPLOYMENT_ERROR
+        - DEPLOYED
+        - STOPPING
+        - STOP_ERROR
+        - STOPPED
+        - DELETING
+        - DELETE_ERROR
+        - DELETED
+        - RUNNING
+        - RUNNING_ERROR
+    ClusterDeploymentStatusEnum:
+      type: string
+      enum:
+        - READY
+        - QUEUED
+        - STOP_QUEUED
+        - DELETE_QUEUED
+        - BUILDING
+        - BUILD_ERROR
+        - BUILT
+        - DEPLOYING
+        - DEPLOYMENT_ERROR
+        - DEPLOYED
+        - STOPPING
+        - STOP_ERROR
+        - STOPPED
+        - DELETING
+        - DELETE_ERROR
+        - DELETED
+        - RUNNING
+        - RUNNING_ERROR
+    ServiceDeploymentStatusEnum:
+      type: string
+      nullable: true
+      enum:
+        - NEVER_DEPLOYED
+        - UP_TO_DATE
+        - OUT_OF_DATE
+    DeploymentHistoryStatusEnum:
+      type: string
+      enum:
+        - SUCCESS
+        - FAILED
+    DeploymentRestrictionModeEnum:
+      type: string
+      description: Match mode will rebuild app only if specified items are updated. Exclude mode will not rebuild app if specified items are updated.
+      enum:
+        - MATCH
+        - EXCLUDE
+      example: MATCH
+    DeploymentRestrictionTypeEnum:
+      type: string
+      enum:
+        - FILE
+        - PATH
+      example: PATH
+    DatabaseTypeEnum:
+      type: string
+      enum:
+        - POSTGRESQL
+        - MYSQL
+        - MONGODB
+        - REDIS
+    DatabaseModeEnum:
+      type: string
+      enum:
+        - MANAGED
+        - CONTAINER
+    DatabaseAccessibilityEnum:
+      type: string
+      default: PRIVATE
+      enum:
+        - PUBLIC
+        - PRIVATE
+    EnvironmentModeEnum:
+      type: string
+      enum:
+        - PRODUCTION
+        - DEVELOPMENT
+        - STAGING
+        - PREVIEW
+    CloudProviderEnum:
+      type: string
+      enum:
+        - AWS
+        - DIGITAL_OCEAN
+        - SCALEWAY
+    InviteMemberRoleEnum:
+      type: string
+      enum:
+        - OWNER
+        - ADMIN
+        - DEVELOPER
+        - VIEWER
+    EnvironmentLogTypeEnum:
+      type: string
+      enum:
+        - APPLICATION
+        - DATABASE
+        - ENVIRONMENT
+    InviteStatusEnum:
+      type: string
+      enum:
+        - PENDING
+        - EXPIRED
+    PlanEnum:
+      type: string
+      enum:
+        - COMMUNITY
+        - FREE
+        - PROFESSIONAL
+        - BUSINESS
+    InvoiceStatusEnum:
+      type: string
+      enum:
+        - PAID
+        - POSTED
+        - PAYMENT_DUE
+        - NOT_PAID
+        - VOIDED
+        - PENDING
+        - UNKNOWN
+    ServiceTypeEnum:
+      type: string
+      description: 'type of the service (application, database, job, gateway...)'
+      enum:
+        - APPLICATION
+        - DATABASE
+    StorageTypeEnum:
+      type: string
+      enum:
+        - AWS
+        - DIGITAL_OCEAN
+        - SCALEWAY
   responses:
     '204':
       description: no content
