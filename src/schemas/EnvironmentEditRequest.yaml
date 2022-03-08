@@ -3,4 +3,4 @@ properties:
   name:
     type: string
   mode:
-    $ref: './enums/StageMode.yaml'
+    $ref: './enums/EnvironmentMode.yaml'

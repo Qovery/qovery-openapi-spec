@@ -6,7 +6,7 @@ properties:
     type: string
     format: uuid
   state:
-    $ref: './enums/GlobalStatus.yaml'
+    $ref: './enums/GlobalDeploymentStatus.yaml'
   message:
     type: string
     nullable: true

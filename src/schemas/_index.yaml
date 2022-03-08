@@ -452,8 +452,12 @@ PortProtocolEnum:
   $ref: ./enums/PortProtocol.yaml
 WeekdayEnum:
   $ref: ./enums/Weekday.yaml
-GlobalStatusEnum:
-  $ref: ./enums/GlobalStatus.yaml
+GlobalDeploymentStatus:
+  $ref: ./enums/GlobalDeploymentStatus.yaml
+ClusterStatusEnum:
+  $ref: ./enums/ClusterStatus.yaml
+ClusterDeploymentStatusEnum:
+  $ref: ./enums/ClusterDeploymentStatus.yaml
 ServiceDeploymentStatusEnum:
   $ref: ./enums/ServiceDeploymentStatus.yaml
 DeploymentHistoryStatusEnum:
@@ -468,8 +472,8 @@ DatabaseModeEnum:
   $ref: ./enums/DatabaseMode.yaml
 DatabaseAccessibilityEnum:
   $ref: ./enums/DatabaseAccessibility.yaml
-StageModeEnum:
-  $ref: ./enums/StageMode.yaml
+EnvironmentModeEnum:
+  $ref: ./enums/EnvironmentMode.yaml
 CloudProviderEnum:
   $ref: ./enums/CloudProvider.yaml
 InviteMemberRoleEnum:

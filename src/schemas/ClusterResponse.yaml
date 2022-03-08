@@ -8,7 +8,7 @@ allOf:
         type: integer
         description: This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
       status:
-        $ref: './enums/GlobalStatus.yaml'
+        $ref: './enums/ClusterStatus.yaml'
       has_access:
         type: boolean
       version:
