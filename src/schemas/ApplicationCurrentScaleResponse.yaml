@@ -13,11 +13,7 @@ properties:
   alert_threshold_in_percent:
     type: number
   status:
-    type: string
-    enum:
-      - OK
-      - Warning
-      - Alert
+    $ref: './enums/ThresholdMetricStatus.yaml'
   updated_at:
     type: string
     readOnly: true

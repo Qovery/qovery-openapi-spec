@@ -1,0 +1,6 @@
+type: string
+enum:
+  - PRODUCTION
+  - DEVELOPMENT
+  - STAGING
+  - PREVIEW

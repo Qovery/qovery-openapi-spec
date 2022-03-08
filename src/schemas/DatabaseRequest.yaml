@@ -9,26 +9,14 @@ properties:
     type: string
     description: name is case insensitive
   type:
-    type: string
-    enum:
-      - POSTGRESQL
-      - MYSQL
-      - MONGODB
-      - REDIS
+    $ref: './enums/DatabaseType.yaml'
   version:
     type: string
     example: '10.1'
   mode:
-    type: string
-    enum:
-      - MANAGED
-      - CONTAINER
+    $ref: './enums/DatabaseMode.yaml'
   accessibility:
-    type: string
-    default: PRIVATE
-    enum:
-      - PUBLIC
-      - PRIVATE
+    $ref: './enums/DatabaseAccessibility.yaml'
   cpu:
     type: integer
     description: unit is millicores (m). 1000m = 1 cpu

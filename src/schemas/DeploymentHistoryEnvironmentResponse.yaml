@@ -3,26 +3,7 @@ allOf:
   - type: object
     properties:
       status:
-        type: string
-        enum:
-          - READY
-          - BUILDING
-          - BUILD_ERROR
-          - BUILT
-          - DEPLOYMENT_QUEUED
-          - DEPLOYING
-          - DEPLOYMENT_ERROR
-          - DEPLOYED
-          - STOP_QUEUED
-          - STOPPING
-          - STOP_ERROR
-          - STOPPED
-          - DELETE_QUEUED
-          - DELETING
-          - DELETE_ERROR
-          - DELETED
-          - RUNNING
-          - RUNNING_ERROR
+        $ref: './enums/GlobalDeploymentStatus.yaml'
       applications:
         type: array
         items:

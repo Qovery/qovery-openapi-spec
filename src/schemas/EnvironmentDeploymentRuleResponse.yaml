@@ -33,6 +33,4 @@ allOf:
       weekdays:
         type: array
         items:
-          type: string
-          enum: [ MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY ]
-          example: MONDAY
+          $ref: './enums/Weekday.yaml'

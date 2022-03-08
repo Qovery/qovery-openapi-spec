@@ -26,12 +26,7 @@ allOf:
             type: string
             example: us-east-2
       mode:
-        type: string
-        enum:
-          - PRODUCTION
-          - DEVELOPMENT
-          - STAGING
-          - PREVIEW
+        $ref: './enums/EnvironmentMode.yaml'
       cluster_id:
         type: string
         format: uuid

@@ -17,11 +17,7 @@ properties:
       alert_threshold_in_percent:
         type: number
       status:
-        type: string
-        enum:
-          - OK
-          - Warning
-          - Alert
+        $ref: './enums/ThresholdMetricStatus.yaml'
   memory:
     type: object
     properties:
@@ -36,11 +32,7 @@ properties:
       alert_threshold_in_percent:
         type: number
       status:
-        type: string
-        enum:
-          - OK
-          - Warning
-          - Alert
+        $ref: './enums/ThresholdMetricStatus.yaml'
   storage:
     type: object
     properties:
@@ -55,8 +47,4 @@ properties:
       alert_threshold_in_percent:
         type: number
       status:
-        type: string
-        enum:
-          - OK
-          - Warning
-          - Alert
+        $ref: './enums/ThresholdMetricStatus.yaml'

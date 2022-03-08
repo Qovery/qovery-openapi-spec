@@ -1,12 +1,7 @@
 type: object
 properties:
   plan:
-    type: string
-    enum:
-      - COMMUNITY
-      - FREE
-      - PROFESSIONAL
-      - BUSINESS
+    $ref: './enums/Plan.yaml'
   remaining_trial_day:
     type: integer
     description: number of days remaining before the end of the trial period

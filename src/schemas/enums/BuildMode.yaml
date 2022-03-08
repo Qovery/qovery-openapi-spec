@@ -1,0 +1,8 @@
+type: string
+enum:
+  - DOCKER
+  - BUILDPACKS
+description: |
+  `DOCKER` requires `dockerfile_path`
+  `BUILDPACKS` does not require any `dockerfile_path`
+default: BUILDPACKS

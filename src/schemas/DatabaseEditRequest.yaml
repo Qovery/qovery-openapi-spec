@@ -7,10 +7,7 @@ properties:
     type: string
     example: '10.1'
   accessibility:
-    type: string
-    enum:
-      - PUBLIC
-      - PRIVATE
+    $ref: './enums/DatabaseAccessibility.yaml'
   cpu:
     type: integer
     description: unit is millicores (m). 1000m = 1 cpu

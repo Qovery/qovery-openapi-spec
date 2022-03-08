@@ -12,19 +12,12 @@
          type: string
          format: email
        role:
-         type: string
-         enum:
-           - ADMIN
-           - DEVELOPER
-           - VIEWER
+         $ref: './enums/InviteMemberRole.yaml'
        invitation_link:
          type: string
          format: uri
        invitation_status:
-         type: string
-         enum:
-           - PENDING
-           - EXPIRED
+         $ref: './enums/InviteStatus.yaml'
        inviter:
          type: string
        logo_url:
