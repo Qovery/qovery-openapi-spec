@@ -19,6 +19,7 @@ tags:
   - name: Application Actions
   - name: Application Configuration
   - name: Application Database
+  - name: Application Deployment rule
   - name: Application Deployment History
   - name: Application Environment Variable
   - name: Application Event
@@ -56,6 +57,7 @@ tags:
   - name: Members
   - name: Organization
   - name: Organization Main Calls
+  - name: Organization Api Token
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
@@ -67,6 +69,7 @@ x-tagGroups:
   - name: Organization
     tags:
       - Organization Main Calls
+      - Organization Api Token
       - Projects
       - Members
       - Billing
@@ -101,6 +104,7 @@ x-tagGroups:
       - Application Metrics
       - Application Database
       - Application Logs
+      - Application Deployment Rule
       - Application Deployment History
       - Application Environment Variable
       - Application Secret
@@ -130,6 +134,10 @@ paths:
     $ref: './resources/Organizations.yaml'
   /organization/{organizationId}:
     $ref: './resources/Organization.yaml'
+  /organization/{organizationId}/apiToken:
+    $ref: './resources/OrganizationApiToken.yaml'
+  /organization/{organizationId}/apiToken/{apiTokenId}:
+    $ref: './resources/OrganizationApiTokenRef.yaml'
   /organization/{organizationId}/member:
     $ref: './resources/OrganizationMember.yaml'
   /organization/{organizationId}/member/{userId}:
@@ -272,6 +280,8 @@ paths:
     $ref: './resources/EnvironmentApplicationCurrentScale.yaml'
   /environment/{environmentId}/application/supportedLanguage:
     $ref: './resources/EnvironmentApplicationSupportedLanguage.yaml'
+  /environment/{environmentId}/application/deploy:
+    $ref: './resources/EnvironmentApplicationDeploy.yaml'
   /environment/{environmentId}/log:
     $ref: './resources/EnvironmentLog.yaml'
   /environment/{environmentId}/deploymentHistory:
@@ -300,6 +310,10 @@ paths:
     $ref: './resources/Application.yaml'
   /application/{applicationId}/status:
     $ref: './resources/ApplicationStatus.yaml'
+  /application/{applicationId}/deploymentRule:
+    $ref: './resources/ApplicationDeploymentRule.yaml'
+  /application/{applicationId}/deploymentRule/{deploymentRuleId}:
+    $ref: './resources/ApplicationDeploymentRuleRef.yaml'
   /application/{applicationId}/contributor:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:

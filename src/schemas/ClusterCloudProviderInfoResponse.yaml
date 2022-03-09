@@ -1,11 +1,7 @@
 type: object
 properties:
   cloud_provider:
-    type: string
-    enum:
-      - AWS
-      - DIGITAL_OCEAN
-      - SCALEWAY
+    $ref: './enums/CloudProvider.yaml'
   credentials:
     type: object
     properties:

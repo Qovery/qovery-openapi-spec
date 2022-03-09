@@ -3,11 +3,6 @@ properties:
   project_deployment_rule_ids_in_order:
     type: array
     items:
-      type: object
-      required:
-        - id
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: project deployment rule id
+      type: string
+      format: uuid
+      description: project deployment rule id

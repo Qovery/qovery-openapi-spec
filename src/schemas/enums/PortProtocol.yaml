@@ -1,0 +1,7 @@
+type: string
+default: HTTP
+enum:
+  - HTTPS
+  - HTTP
+  - TCP
+  - UDP

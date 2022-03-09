@@ -13,20 +13,24 @@ jobs:
       matrix:
         include:
           - language: go
+            version: 5.4.0
             target-branch: master
           - language: javascript
+            version: 5.4.0
             target-branch: main
           - language: python
+            version: 5.4.0
             target-branch: master
-          - language: typescript
+          - language: typescript-axios
+            version: 5.3.1
             target-branch: main
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-go@v2
         with:
           go-version: '1.17'
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: '3.x'
       - name: Build OpenApi file
@@ -37,15 +41,18 @@ jobs:
         uses: openapi-generators/openapitools-generator-action@v1
         with:
           generator: ${{ matrix.language }}
-          generator-tag: v5.4.0
+          generator-tag: v${{ matrix.version }}
           openapi-file: _build/openapi.yaml
+          config-file: 'generator/configs/${{ matrix.language }}.yaml'
           command-args: |
             -a bearer \
             -o out/qovery-client-${{ matrix.language }} \
             --git-user-id qovery \
             --git-repo-id qovery-client-${{ matrix.language }} \
             --package-name qovery \
-            --additional-properties packageVersion=$(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
+            --additional-properties packageVersion=$(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
+            --additional-properties npmVersion=$(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
+
       - name: Check post generation script existence
         id: check_files
         uses: andstor/file-existence-action@v1

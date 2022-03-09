@@ -1,0 +1,15 @@
+type: string
+description: Development language of the application
+nullable: true
+enum:
+  - CLOJURE
+  - GO
+  - GRADLE
+  - GRAILS
+  - JAVA
+  - JVM
+  - NODE_JS
+  - PHP
+  - PLAY
+  - PYTHON
+  - SCALA

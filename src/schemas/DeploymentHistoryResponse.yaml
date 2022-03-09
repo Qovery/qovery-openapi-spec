@@ -1,11 +1,8 @@
-type: object
-properties:
-  commit:
-    $ref: './CommitResponse.yaml'
-  status:
-    type: string
-    enum:
-      - SUCCESS
-      - FAILED
 allOf:
   - $ref: './BaseResponse.yaml'
+  - type: object
+    properties:
+      commit:
+        $ref: './CommitResponse.yaml'
+      status:
+        $ref: './enums/DeploymentHistoryStatus.yaml'

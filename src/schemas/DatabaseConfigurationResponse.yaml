@@ -1,13 +1,7 @@
 type: object
 properties:
   database_type:
-    type: string
-    example: REDIS
-    enum:
-      - POSTGRESQL
-      - MYSQL
-      - MONGODB
-      - REDIS
+    $ref: './enums/DatabaseType.yaml'
   version:
     type: array
     items:

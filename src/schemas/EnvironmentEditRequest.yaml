@@ -2,3 +2,5 @@ type: object
 properties:
   name:
     type: string
+  mode:
+    $ref: './enums/EnvironmentMode.yaml'

@@ -20,11 +20,6 @@ properties:
           type: string
           description: Optional if the variable is secret
         scope:
-          type: string
-          enum:
-            - ORGANIZATION
-            - PROJECT
-            - ENVIRONMENT
-            - APPLICATION
+          $ref: './enums/EnvironmentVariableScope.yaml'
         is_secret:
           type: boolean

@@ -164,6 +164,12 @@ ApplicationNetworkResponse:
   $ref: ./ApplicationNetworkResponse.yaml
 ApplicationNetworkRequest:
   $ref: ./ApplicationNetworkRequest.yaml
+ApplicationDeploymentRuleResponse:
+  $ref: ./ApplicationDeploymentRuleResponse.yaml
+ApplicationDeploymentRuleEditRequest:
+  $ref: ./ApplicationDeploymentRuleEditRequest.yaml
+ApplicationDeploymentRestriction:
+  $ref: ./ApplicationDeploymentRestriction.yaml
 RemainingCredits:
   $ref: ./RemainingCredits.yaml
 BillingStatus:
@@ -426,3 +432,65 @@ ApplicationAdvancedSettingsResponse:
   $ref: ./ApplicationAdvancedSettingsResponse.yaml
 ApplicationAdvancedSettingsRequest:
   $ref: ./ApplicationAdvancedSettingsRequest.yaml
+BuildPackLanguageEnum:
+  $ref: ./enums/BuildPackLanguage.yaml
+OrganizationApiTokenScope:
+  $ref: ./enums/OrganizationApiTokenScope.yaml
+OrganizationApiTokenCreateRequest:
+  $ref: ./OrganizationApiTokenCreateRequest.yaml
+OrganizationApiTokenResponseList:
+  $ref: ./OrganizationApiTokenResponseList.yaml
+OrganizationApiTokenResponse:
+  $ref: ./OrganizationApiTokenResponse.yaml
+OrganizationApiTokenCreateResponse:
+  $ref: ./OrganizationApiTokenCreateResponse.yaml
+BuildModeEnum:
+  $ref: ./enums/BuildMode.yaml
+EnvironmentVariableScopeEnum:
+  $ref: ./enums/EnvironmentVariableScope.yaml
+GitProviderEnum:
+  $ref: ./enums/GitProvider.yaml
+ThresholdMetricStatusEnum:
+  $ref: ./enums/ThresholdMetricStatus.yaml
+PortProtocolEnum:
+  $ref: ./enums/PortProtocol.yaml
+WeekdayEnum:
+  $ref: ./enums/Weekday.yaml
+GlobalDeploymentStatus:
+  $ref: ./enums/GlobalDeploymentStatus.yaml
+ClusterStatusEnum:
+  $ref: ./enums/ClusterStatus.yaml
+ClusterDeploymentStatusEnum:
+  $ref: ./enums/ClusterDeploymentStatus.yaml
+ServiceDeploymentStatusEnum:
+  $ref: ./enums/ServiceDeploymentStatus.yaml
+DeploymentHistoryStatusEnum:
+  $ref: ./enums/DeploymentHistoryStatus.yaml
+DeploymentRestrictionModeEnum:
+  $ref: ./enums/DeploymentRestrictionMode.yaml
+DeploymentRestrictionTypeEnum:
+  $ref: ./enums/DeploymentRestrictionType.yaml
+DatabaseTypeEnum:
+  $ref: ./enums/DatabaseType.yaml
+DatabaseModeEnum:
+  $ref: ./enums/DatabaseMode.yaml
+DatabaseAccessibilityEnum:
+  $ref: ./enums/DatabaseAccessibility.yaml
+EnvironmentModeEnum:
+  $ref: ./enums/EnvironmentMode.yaml
+CloudProviderEnum:
+  $ref: ./enums/CloudProvider.yaml
+InviteMemberRoleEnum:
+  $ref: ./enums/InviteMemberRole.yaml
+EnvironmentLogTypeEnum:
+  $ref: ./enums/EnvironmentLogType.yaml
+InviteStatusEnum:
+  $ref: ./enums/InviteStatus.yaml
+PlanEnum:
+  $ref: ./enums/Plan.yaml
+InvoiceStatusEnum:
+  $ref: ./enums/InvoiceStatus.yaml
+ServiceTypeEnum:
+  $ref: ./enums/ServiceType.yaml
+StorageTypeEnum:
+  $ref: ./enums/StorageType.yaml

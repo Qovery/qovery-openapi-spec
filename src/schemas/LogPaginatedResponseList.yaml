@@ -1,8 +1,8 @@
-type: object
-properties:
-  results:
-    type: array
-    items:
-      $ref: './LogResponse.yaml'
 allOf:
   - $ref: './PaginationDataResponse.yaml'
+  - type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: './LogResponse.yaml'

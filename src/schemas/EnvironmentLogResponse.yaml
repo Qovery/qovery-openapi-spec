@@ -16,37 +16,14 @@ properties:
     type: object
     properties:
       type:
-        type: string
-        enum:
-          - APPLICATION
-          - DATABASE
-          - ENVIRONMENT
+        $ref: './enums/EnvironmentLogType.yaml'
       name:
         type: string
       id:
         type: string
         format: uuid
   state:
-    type: string
-    description: |
-      Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state.
-    enum:
-      - BUILD_ERROR
-      - BUILDING
-      - BUILT
-      - DELETE_ERROR
-      - DELETED
-      - DELETING
-      - DEPLOYED
-      - DEPLOYING
-      - DEPLOYMENT_ERROR
-      - INITIALIZED
-      - QUEUED
-      - RUNNING
-      - RUNNING_ERROR
-      - STOP_ERROR
-      - STOPPED
-      - STOPPING
+    $ref: './enums/GlobalDeploymentStatus.yaml'
   message:
     type: string
     nullable: true

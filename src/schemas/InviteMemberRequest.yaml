@@ -6,8 +6,4 @@ properties:
   email:
     type: string
   role:
-    type: string
-    enum:
-      - ADMIN
-      - DEVELOPER
-      - VIEWER
+    $ref: './enums/InviteMemberRole.yaml'

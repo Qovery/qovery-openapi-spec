@@ -1,32 +1,25 @@
-type: object
-required:
-  - email
-  - role
-  - invitation_link
-  - invitation_status
-  - inviter
-properties:
-  email:
-    type: string
-    format: email
-  role:
-    type: string
-    enum:
-      - ADMIN
-      - DEVELOPER
-      - VIEWER
-  invitation_link:
-    type: string
-    format: uri
-  invitation_status:
-    type: string
-    enum:
-      - PENDING
-      - EXPIRED
-  inviter:
-    type: string
-  logo_url:
-    type: string
-    format: uri   
-allOf:
-  - $ref: './BaseResponse.yaml'
+ allOf:
+   - $ref: './BaseResponse.yaml'
+   - type: object
+     required:
+       - email
+       - role
+       - invitation_link
+       - invitation_status
+       - inviter
+     properties:
+       email:
+         type: string
+         format: email
+       role:
+         $ref: './enums/InviteMemberRole.yaml'
+       invitation_link:
+         type: string
+         format: uri
+       invitation_status:
+         $ref: './enums/InviteStatus.yaml'
+       inviter:
+         type: string
+       logo_url:
+         type: string
+         format: uri

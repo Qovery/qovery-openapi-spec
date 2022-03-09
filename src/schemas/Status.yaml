@@ -6,41 +6,10 @@ properties:
     type: string
     format: uuid
   state:
-    type: string
-    description: |
-      Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state.
-    enum:
-      - INITIALIZED
-      - BUILDING_QUEUED
-      - BUILDING
-      - BUILD_ERROR
-      - BUILT
-      - DEPLOYMENT_QUEUED
-      - DEPLOYING
-      - DEPLOYMENT_ERROR
-      - DEPLOYED
-      - STOP_QUEUED
-      - STOPPING
-      - STOP_ERROR
-      - STOPPED
-      - DELETE_QUEUED
-      - DELETING
-      - DELETE_ERROR
-      - DELETED
-      - RUNNING
-      - RUNNING_ERROR
-      - CANCEL_QUEUED
-      - CANCELLING
-      - CANCEL_ERROR
-      - CANCELLED 
+    $ref: './enums/GlobalDeploymentStatus.yaml'
   message:
     type: string
     nullable: true
     description: message related to the state
   service_deployment_status:
-    type: string
-    nullable: true
-    enum:
-      - NEVER_DEPLOYED
-      - UP_TO_DATE
-      - OUT_OF_DATE
+    $ref: './enums/ServiceDeploymentStatus.yaml'

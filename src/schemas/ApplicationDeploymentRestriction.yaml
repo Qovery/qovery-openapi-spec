@@ -1,0 +1,12 @@
+type: object
+required:
+  - mode
+  - type
+  - value
+properties:
+  mode:
+    $ref: './enums/DeploymentRestrictionMode.yaml'
+  type:
+    $ref: './enums/DeploymentRestrictionType.yaml'
+  value:
+    type: string

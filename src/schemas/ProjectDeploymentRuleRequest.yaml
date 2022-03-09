@@ -3,8 +3,6 @@ required:
   - name
   - mode
   - cluster_id
-  - auto_deploy
-  - auto_stop
   - timezone
   - start_time
   - stop_time
@@ -14,41 +12,41 @@ properties:
   name:
     type: string
     description: name is case insensitive
+    example: project-rule
   description:
     type: string
     nullable: true
+    example: description project rule
   mode:
-    type: string
-    enum:
-      - PRODUCTION
-      - DEVELOPMENT
+    $ref: './enums/EnvironmentMode.yaml'
   cluster_id:
     type: string
     format: uuid
   auto_deploy:
     type: boolean
+    default: false
   auto_stop:
     type: boolean
+    default: false
+  auto_delete:
+    type: boolean
+    default: false
   timezone:
     type: string
-    default: Europe/London
-    description: specify value only if auto_stop = false
+    example: UTC
   start_time:
     type: string
     format: date-time
-    description: specify value only if auto_stop = false
+    example: 1970-01-01T08:00:00Z
   stop_time:
     type: string
     format: date-time
-    description: specify value only if auto_stop = false
+    example: 1970-01-01T19:00:00Z
   weekdays:
     type: array
-    description: specify value only if auto_stop = false
     items:
-      type: string
-      enum: [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY]
-      example: MONDAY
+      $ref: './enums/Weekday.yaml'
   wildcard:
     type: string
+    default: ""
     description: wildcard pattern composed of '?' and/or '*' used to target new created environments
-    nullable: true

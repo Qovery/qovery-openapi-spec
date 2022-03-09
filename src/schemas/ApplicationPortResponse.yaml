@@ -26,10 +26,4 @@ properties:
           type: boolean
           description: Expose the port to the world
         protocol:
-          type: string
-          default: HTTP
-          enum:
-            - HTTPS
-            - HTTP
-            - TCP
-            - UDP
+          $ref: './enums/PortProtocol.yaml'

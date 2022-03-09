@@ -21,11 +21,6 @@ properties:
         value:
           type: string
         scope:
-          type: string
-          enum:
-            - ORGANIZATION
-            - PROJECT
-            - ENVIRONMENT
-            - APPLICATION
+          $ref: './enums/EnvironmentVariableScope.yaml'
         is_secret:
           type: boolean

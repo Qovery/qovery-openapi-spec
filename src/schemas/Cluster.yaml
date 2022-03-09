@@ -10,11 +10,7 @@ properties:
   description:
     type: string
   cloud_provider:
-    type: string
-    enum:
-      - AWS
-      - DIGITAL_OCEAN
-      - SCALEWAY
+    $ref: './enums/CloudProvider.yaml'
   region:
     type: string
   auto_update:
