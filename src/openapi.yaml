@@ -376,6 +376,8 @@ paths:
     $ref: './resources/ApplicationLogicalDatabaseRef.yaml'
   /application/{applicationId}/link:
     $ref: './resources/ApplicationLink.yaml'
+  /application/{applicationId}/advancedSettings:
+    $ref: './resources/ApplicationAdvancedSettings.yaml'
   /environment/{environmentId}/database:
     $ref: './resources/EnvironmentDatabase.yaml'
   /environment/{environmentId}/database/status:

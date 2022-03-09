@@ -422,3 +422,7 @@ GitRepositoryBranchResponseList:
   $ref: ./GitRepositoryBranchResponseList.yaml
 GitRepositoryBranchResponse:
   $ref: ./GitRepositoryBranchResponse.yaml
+ApplicationAdvancedSettingsResponse:
+  $ref: ./ApplicationAdvancedSettingsResponse.yaml
+ApplicationAdvancedSettingsRequest:
+  $ref: ./ApplicationAdvancedSettingsRequest.yaml
