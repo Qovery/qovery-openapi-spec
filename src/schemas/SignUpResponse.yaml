@@ -1,0 +1,7 @@
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - $ref: './SignUpRequest.yaml'
+  - type: object
+    properties:
+      dx_auth:
+        type: boolean

@@ -15,6 +15,7 @@ info:
 tags:
   - name: Account
   - name: Account Info
+  - name: Admin
   - name: Application
   - name: Application Actions
   - name: Application Configuration
@@ -65,6 +66,7 @@ tags:
   - name: Project Secret
   - name: Projects
   - name: Referral & Rewards
+  - name: User Sign Up
 x-tagGroups:
   - name: Organization
     tags:
@@ -127,6 +129,9 @@ x-tagGroups:
   - name: Git
     tags:
       - Git repositories
+  - name: Admin
+    tags:
+      - User Sign Up
 servers:
   - url: 'https://api.qovery.com'
 paths:
@@ -460,6 +465,8 @@ paths:
     $ref: './resources/AccountReferral.yaml'
   /account/rewardClaim:
     $ref: './resources/AccountRewardClaim.yaml'
+  /admin/userSignUp:
+    $ref: './resources/UserSignUp.yaml'
 components:
   parameters:
     $ref: './parameters/_index.yaml'
