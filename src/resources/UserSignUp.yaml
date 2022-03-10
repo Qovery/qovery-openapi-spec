@@ -1,0 +1,39 @@
+get:
+  summary: 'Get Sign up information'
+  description: 'Retrieve the Sign Up information of the user'
+  operationId: getUserSignUp
+  tags:
+    - User Sign Up
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/SignUpResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+post:
+  summary: 'Send Sign Up request'
+  operationId: createUserSignUp
+  tags:
+    - User Sign Up
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/SignUpRequest.yaml'
+  responses:
+    '200':
+      description: 'Sign up sent'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
