@@ -2,7 +2,7 @@ type: object
 required:
   - first_name
   - last_name
-  - contact_email
+  - user_email
   - type_of_use
   - qovery_usage
 properties:
@@ -14,6 +14,8 @@ properties:
     type: string
   type_of_use:
     $ref: './enums/TypeOfUse.yaml'
+  qovery_usage:
+    type: string
   company_name:
     type: string
     nullable: true
@@ -22,7 +24,7 @@ properties:
   user_role:
     type: string
     nullable: true
-  qovery_usage:
+  qovery_usage_other:
     type: string
     nullable: true
   user_questions:
@@ -30,4 +32,7 @@ properties:
     nullable: true
   current_step:
     type: string
+    nullable: true
+  dx_auth:
+    type: boolean
     nullable: true
