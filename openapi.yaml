@@ -19,7 +19,7 @@ tags:
   - name: Application Actions
   - name: Application Configuration
   - name: Application Database
-  - name: Application Deployment rule
+  - name: Application Deployment Restriction
   - name: Application Deployment History
   - name: Application Environment Variable
   - name: Application Event
@@ -104,7 +104,7 @@ x-tagGroups:
       - Application Metrics
       - Application Database
       - Application Logs
-      - Application Deployment Rule
+      - Application Deployment Restriction
       - Application Deployment History
       - Application Environment Variable
       - Application Secret
@@ -3295,52 +3295,106 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/application/{applicationId}/deploymentRule':
+  '/application/{applicationId}/deploymentRestriction':
     get:
-      summary: Get application deployment rule
-      description: Get application deployment rule
-      operationId: getApplicationDeploymentRule
+      summary: Get application deployment restrictions
+      description: Get application deployment restrictions
+      operationId: getApplicationDeploymentRestrictions
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - Application Deployment Rule
+        - Application Deployment Restriction
       responses:
         '200':
-          description: Get application deployment rule
+          description: Get application deployment restrictions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationDeploymentRuleResponse'
+                $ref: '#/components/schemas/ApplicationDeploymentRestrictionResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/application/{applicationId}/deploymentRule/{deploymentRuleId}':
-    put:
-      summary: Edit an application deployment rule
-      description: Edit an application deployment rule
-      operationId: editApplicationDeploymentRule
+    post:
+      summary: Create an application deployment restriction
+      description: Create an application deployment restriction
+      operationId: createApplicationDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/deploymentRuleId'
       tags:
-        - Application Deployment Rule
+        - Application Deployment Restriction
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ApplicationDeploymentRuleEditRequest'
+              $ref: '#/components/schemas/ApplicationDeploymentRestrictionRequest'
       responses:
-        '200':
-          description: Edit application deployment rule
+        '201':
+          description: Added an environment variable
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationDeploymentRuleResponse'
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - $ref: '#/components/schemas/ApplicationDeploymentRestrictionRequest'
         '400':
           $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '409':
+          description: An application deployment restriction with same properties already exists for this application
+  '/application/{applicationId}/deploymentRestriction/{deploymentRestrictionId}':
+    put:
+      summary: Edit an application deployment restriction
+      description: Edit an application deployment restriction
+      operationId: editApplicationDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - name: deploymentRestrictionId
+          in: path
+          description: Deployment Restriction ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Application Deployment Restriction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationDeploymentRestrictionRequest'
+      responses:
+        '200':
+          description: Edit an application deployment restriction
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1application~1%7BapplicationId%7D~1deploymentRestriction/post/responses/201/content/application~1json/schema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete an application deployment restriction
+      description: Delete an application deployment restriction
+      operationId: deleteApplicationDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1deploymentRestriction~1%7BdeploymentRestrictionId%7D/put/parameters/1'
+      tags:
+        - Application Deployment Restriction
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -6977,23 +7031,7 @@ components:
             Specify if the sticky session option (also called persistant session) is activated or not for this application.
             If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
           default: false
-    ApplicationDeploymentRuleResponse:
-      type: object
-      properties:
-        deployment_restrictions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationDeploymentRestriction'
-      allOf:
-        - $ref: '#/components/schemas/BaseResponse'
-    ApplicationDeploymentRuleEditRequest:
-      type: object
-      properties:
-        deployment_restrictions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationDeploymentRestriction'
-    ApplicationDeploymentRestriction:
+    ApplicationDeploymentRestrictionRequest:
       type: object
       required:
         - mode
@@ -7006,6 +7044,17 @@ components:
           $ref: '#/components/schemas/DeploymentRestrictionTypeEnum'
         value:
           type: string
+          description: 'For `PATH` restrictions, the value must not start with `/`'
+          example: application1/src/
+    ApplicationDeploymentRestrictionResponse:
+      type: object
+      properties:
+        deployment_restrictions:
+          type: array
+          items:
+            $ref: '#/paths/~1application~1%7BapplicationId%7D~1deploymentRestriction/post/responses/201/content/application~1json/schema'
+    ApplicationDeploymentRestrictionResponseList:
+      $ref: '#/components/schemas/ApplicationDeploymentRestrictionResponse'
     RemainingCredits:
       allOf:
         - $ref: '#/components/schemas/CostResponse'
@@ -8897,7 +8946,6 @@ components:
     DeploymentRestrictionTypeEnum:
       type: string
       enum:
-        - FILE
         - PATH
       example: PATH
     DatabaseTypeEnum:
