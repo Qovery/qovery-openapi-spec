@@ -1,6 +1,6 @@
 type: string
 enum:
+  - BUSINESS
   - COMMUNITY
   - FREE
   - PROFESSIONAL
-  - BUSINESS

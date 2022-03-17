@@ -1,6 +1,6 @@
 type: string
 enum:
+  - APPLICATION
   - BUILT_IN
   - ENVIRONMENT
   - PROJECT
-  - APPLICATION
