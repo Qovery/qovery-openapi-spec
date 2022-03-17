@@ -164,12 +164,12 @@ ApplicationNetworkResponse:
   $ref: ./ApplicationNetworkResponse.yaml
 ApplicationNetworkRequest:
   $ref: ./ApplicationNetworkRequest.yaml
-ApplicationDeploymentRuleResponse:
-  $ref: ./ApplicationDeploymentRuleResponse.yaml
-ApplicationDeploymentRuleEditRequest:
-  $ref: ./ApplicationDeploymentRuleEditRequest.yaml
-ApplicationDeploymentRestriction:
-  $ref: ./ApplicationDeploymentRestriction.yaml
+ApplicationDeploymentRestrictionRequest:
+  $ref: ./ApplicationDeploymentRestrictionRequest.yaml
+ApplicationDeploymentRestrictionResponse:
+  $ref: ./ApplicationDeploymentRestrictionResponseList.yaml
+ApplicationDeploymentRestrictionResponseList:
+  $ref: ./ApplicationDeploymentRestrictionResponseList.yaml
 RemainingCredits:
   $ref: ./RemainingCredits.yaml
 BillingStatus:

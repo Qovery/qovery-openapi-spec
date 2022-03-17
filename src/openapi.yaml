@@ -19,7 +19,7 @@ tags:
   - name: Application Actions
   - name: Application Configuration
   - name: Application Database
-  - name: Application Deployment rule
+  - name: Application Deployment Restriction
   - name: Application Deployment History
   - name: Application Environment Variable
   - name: Application Event
@@ -104,7 +104,7 @@ x-tagGroups:
       - Application Metrics
       - Application Database
       - Application Logs
-      - Application Deployment Rule
+      - Application Deployment Restriction
       - Application Deployment History
       - Application Environment Variable
       - Application Secret
@@ -310,10 +310,10 @@ paths:
     $ref: './resources/Application.yaml'
   /application/{applicationId}/status:
     $ref: './resources/ApplicationStatus.yaml'
-  /application/{applicationId}/deploymentRule:
-    $ref: './resources/ApplicationDeploymentRule.yaml'
-  /application/{applicationId}/deploymentRule/{deploymentRuleId}:
-    $ref: './resources/ApplicationDeploymentRuleRef.yaml'
+  /application/{applicationId}/deploymentRestriction:
+    $ref: './resources/ApplicationDeploymentRestriction.yaml'
+  /application/{applicationId}/deploymentRestriction/{deploymentRestrictionId}:
+    $ref: './resources/ApplicationDeploymentRestrictionRef.yaml'
   /application/{applicationId}/contributor:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:
