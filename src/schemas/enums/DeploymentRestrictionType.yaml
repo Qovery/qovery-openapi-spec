@@ -1,5 +1,4 @@
 type: string
 enum:
-  - FILE
   - PATH
 example: PATH
