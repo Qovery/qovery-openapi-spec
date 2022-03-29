@@ -1,0 +1,38 @@
+type: object
+required:
+  - first_name
+  - last_name
+  - user_email
+  - type_of_use
+  - qovery_usage
+properties:
+  first_name:
+    type: string
+  last_name:
+    type: string
+  user_email:
+    type: string
+  type_of_use:
+    $ref: './enums/TypeOfUse.yaml'
+  qovery_usage:
+    type: string
+  company_name:
+    type: string
+    nullable: true
+  company_size:
+    $ref: './enums/CompanySize.yaml'
+  user_role:
+    type: string
+    nullable: true
+  qovery_usage_other:
+    type: string
+    nullable: true
+  user_questions:
+    type: string
+    nullable: true
+  current_step:
+    type: string
+    nullable: true
+  dx_auth:
+    type: boolean
+    nullable: true
