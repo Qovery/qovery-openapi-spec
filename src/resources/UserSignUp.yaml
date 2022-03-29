@@ -6,7 +6,7 @@ get:
     - User Sign Up
   responses:
     '200':
-      description: 'If the previous sign up has been found, the information is returned in the payload'
+      description: 'If a previous sign up request for the same user has been found, the information is returned in the payload'
       content:
         application/json:
           schema:
@@ -19,7 +19,7 @@ get:
       $ref: '../responses/NotFound.yaml'
 post:
   summary: 'Send Sign Up request'
-  description: 'Send a Sign Up request with all the user information'
+  description: 'Send a Sign Up request containing the user information'
   operationId: createUserSignUp
   tags:
     - User Sign Up
@@ -30,7 +30,7 @@ post:
           $ref: '../schemas/SignUpRequest.yaml'
   responses:
     '200':
-      description: 'Sign up sent'
+      description: 'Sign up request stored'
     '400':
       $ref: '../responses/BadRequest.yaml'
     '401':
