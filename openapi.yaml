@@ -15,6 +15,7 @@ info:
 tags:
   - name: Account
   - name: Account Info
+  - name: Admin
   - name: Application
   - name: Application Actions
   - name: Application Configuration
@@ -65,6 +66,7 @@ tags:
   - name: Project Secret
   - name: Projects
   - name: Referral & Rewards
+  - name: User Sign Up
 x-tagGroups:
   - name: Organization
     tags:
@@ -127,6 +129,9 @@ x-tagGroups:
   - name: Git
     tags:
       - Git repositories
+  - name: Admin
+    tags:
+      - User Sign Up
 servers:
   - url: 'https://api.qovery.com'
 paths:
@@ -5537,6 +5542,97 @@ paths:
       responses:
         '200':
           description: Claim reward
+  /admin/userSignUp:
+    get:
+      summary: Get Sign up information
+      description: Retrieve the Sign Up information of the user
+      operationId: getUserSignUp
+      tags:
+        - User Sign Up
+      responses:
+        '200':
+          description: 'If a previous sign up request for the same user has been found, the information is returned in the payload'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - $ref: '#/paths/~1admin~1userSignUp/post/requestBody/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Send Sign Up request
+      description: Send a Sign Up request containing the user information
+      operationId: createUserSignUp
+      tags:
+        - User Sign Up
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - first_name
+                - last_name
+                - user_email
+                - type_of_use
+                - qovery_usage
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                user_email:
+                  type: string
+                type_of_use:
+                  type: string
+                  enum:
+                    - PERSONAL
+                    - WORK
+                    - SCHOOL
+                qovery_usage:
+                  type: string
+                company_name:
+                  type: string
+                  nullable: true
+                company_size:
+                  type: string
+                  enum:
+                    - 1-10
+                    - 11-50
+                    - 51-200
+                    - 201-500
+                    - 500+
+                user_role:
+                  type: string
+                  nullable: true
+                qovery_usage_other:
+                  type: string
+                  nullable: true
+                user_questions:
+                  type: string
+                  nullable: true
+                current_step:
+                  type: string
+                  nullable: true
+                dx_auth:
+                  type: boolean
+                  nullable: true
+      responses:
+        '200':
+          description: Sign up request stored
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   parameters:
     targetLogicalDatabaseId:
