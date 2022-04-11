@@ -1,4 +1,10 @@
 allOf:
   - $ref: './CurrentCost.yaml'
-  - $ref: './PaidUsage.yaml'
-  - $ref: './CommunityUsage.yaml'
+  - type: object
+    properties:
+      paid_usage:
+        $ref: './PaidUsageResponse.yaml'
+      community_usage:
+        $ref: './CommunityUsageResponse.yaml'
+
+
