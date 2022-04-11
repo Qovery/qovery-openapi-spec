@@ -170,7 +170,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrganizationResponse'
+                $ref: '#/components/schemas/Organization'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -195,7 +195,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrganizationResponse'
+                $ref: '#/components/schemas/Organization'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -221,7 +221,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrganizationResponse'
+                $ref: '#/components/schemas/Organization'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -290,7 +290,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrganizationApiTokenCreateResponse'
+                $ref: '#/components/schemas/OrganizationApiTokenCreate'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -410,7 +410,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InviteMemberResponse'
+                $ref: '#/components/schemas/InviteMember'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -442,7 +442,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InviteMemberResponse'
+                $ref: '#/components/schemas/InviteMember'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -508,7 +508,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrganizationCurrentCostResponse'
+                $ref: '#/components/schemas/OrganizationCurrentCost'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -557,7 +557,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CostRangeResponse'
+                $ref: '#/components/schemas/CostRange'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -578,7 +578,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BillingInfoResponse'
+                $ref: '#/components/schemas/BillingInfo'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -603,7 +603,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BillingInfoResponse'
+                $ref: '#/components/schemas/BillingInfo'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -674,7 +674,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InvoiceResponse'
+                $ref: '#/components/schemas/Invoice'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -697,7 +697,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LinkResponse'
+                $ref: '#/components/schemas/Link'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -760,7 +760,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreditCardResponse'
+                $ref: '#/components/schemas/CreditCard'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -826,7 +826,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectResponse'
+                $ref: '#/components/schemas/Project'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -898,7 +898,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterResponse'
+                $ref: '#/components/schemas/Cluster'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -966,7 +966,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterResponse'
+                $ref: '#/components/schemas/Cluster'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -990,7 +990,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterStatusResponse'
+                $ref: '#/components/schemas/ClusterStatus'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1013,7 +1013,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterRoutingTableResponse'
+                $ref: '#/components/schemas/ClusterRoutingTable'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1040,7 +1040,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterRoutingTableResponse'
+                $ref: '#/components/schemas/ClusterRoutingTable'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1088,7 +1088,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterCredentialsResponse'
+                $ref: '#/components/schemas/ClusterCredentials'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1117,7 +1117,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterCredentialsResponse'
+                $ref: '#/components/schemas/ClusterCredentials'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1182,7 +1182,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterCredentialsResponse'
+                $ref: '#/components/schemas/ClusterCredentials'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1211,7 +1211,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterCredentialsResponse'
+                $ref: '#/components/schemas/ClusterCredentials'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1276,7 +1276,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterCredentialsResponse'
+                $ref: '#/components/schemas/ClusterCredentials'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1305,7 +1305,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterCredentialsResponse'
+                $ref: '#/components/schemas/ClusterCredentials'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1479,7 +1479,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterCloudProviderInfoResponse'
+                $ref: '#/components/schemas/ClusterCloudProviderInfo'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1505,7 +1505,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterCloudProviderInfoResponse'
+                $ref: '#/components/schemas/ClusterCloudProviderInfo'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1552,7 +1552,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterStatusResponse'
+                $ref: '#/components/schemas/ClusterStatus'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1577,7 +1577,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterStatusResponse'
+                $ref: '#/components/schemas/ClusterStatus'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1602,7 +1602,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterStatusResponse'
+                $ref: '#/components/schemas/ClusterStatus'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1625,7 +1625,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectResponse'
+                $ref: '#/components/schemas/Project'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1651,7 +1651,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectResponse'
+                $ref: '#/components/schemas/Project'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1720,7 +1720,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectDeploymentRuleResponse'
+                $ref: '#/components/schemas/ProjectDeploymentRule'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1745,7 +1745,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectDeploymentRuleResponse'
+                $ref: '#/components/schemas/ProjectDeploymentRule'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1772,7 +1772,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectDeploymentRuleResponse'
+                $ref: '#/components/schemas/ProjectDeploymentRule'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1870,7 +1870,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentResponse'
+                $ref: '#/components/schemas/Environment'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1924,7 +1924,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1980,7 +1980,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2015,7 +2015,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -2051,7 +2051,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -2103,7 +2103,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2159,7 +2159,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2194,7 +2194,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -2230,7 +2230,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -2297,7 +2297,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentResponse'
+                $ref: '#/components/schemas/Environment'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2323,7 +2323,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentResponse'
+                $ref: '#/components/schemas/Environment'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2386,7 +2386,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentDeploymentRuleResponse'
+                $ref: '#/components/schemas/EnvironmentDeploymentRule'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2413,7 +2413,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentDeploymentRuleResponse'
+                $ref: '#/components/schemas/EnvironmentDeploymentRule'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2541,7 +2541,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentResponse'
+                $ref: '#/components/schemas/Environment'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2596,7 +2596,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponse'
+                $ref: '#/components/schemas/Application'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2850,7 +2850,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2906,7 +2906,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2941,7 +2941,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -2977,7 +2977,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -3029,7 +3029,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -3085,7 +3085,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -3120,7 +3120,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -3156,7 +3156,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -3222,7 +3222,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponse'
+                $ref: '#/components/schemas/Application'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3251,7 +3251,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponse'
+                $ref: '#/components/schemas/Application'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -3315,7 +3315,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationDeploymentRestrictionResponse'
+                $ref: '#/components/schemas/ApplicationDeploymentRestriction'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3342,7 +3342,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/BaseResponse'
+                  - $ref: '#/components/schemas/Base'
                   - $ref: '#/components/schemas/ApplicationDeploymentRestrictionRequest'
         '400':
           $ref: '#/components/responses/400'
@@ -3550,7 +3550,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationCurrentScaleResponse'
+                $ref: '#/components/schemas/ApplicationCurrentScale'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3662,7 +3662,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MetricRestartResponse'
+                $ref: '#/components/schemas/MetricRestart'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3706,7 +3706,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponse'
+                $ref: '#/components/schemas/Application'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -3920,7 +3920,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -3949,7 +3949,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VariableImportResponse'
+                $ref: '#/components/schemas/VariableImport'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4005,7 +4005,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4040,7 +4040,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -4076,7 +4076,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponse'
+                $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -4127,7 +4127,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4183,7 +4183,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4218,7 +4218,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -4254,7 +4254,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecretResponse'
+                $ref: '#/components/schemas/Secret'
         '400':
           description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
         '401':
@@ -4303,7 +4303,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomDomainResponse'
+                $ref: '#/components/schemas/CustomDomain'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4333,7 +4333,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomDomainResponse'
+                $ref: '#/components/schemas/CustomDomain'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4375,7 +4375,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomDomainResponse'
+                $ref: '#/components/schemas/CustomDomain'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -4419,7 +4419,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationNetworkResponse'
+                $ref: '#/components/schemas/ApplicationNetwork'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -4445,7 +4445,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationNetworkResponse'
+                $ref: '#/components/schemas/ApplicationNetwork'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4490,7 +4490,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseResponse'
+                $ref: '#/components/schemas/Database'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4554,7 +4554,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LogicalDatabaseResponse'
+                $ref: '#/components/schemas/LogicalDatabase'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4643,7 +4643,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseResponse'
+                $ref: '#/components/schemas/Database'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4711,7 +4711,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseResponse'
+                $ref: '#/components/schemas/Database'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -4737,7 +4737,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseResponse'
+                $ref: '#/components/schemas/Database'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4821,7 +4821,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CredentialsResponse'
+                $ref: '#/components/schemas/Credentials'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -4846,7 +4846,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CredentialsResponse'
+                $ref: '#/components/schemas/Credentials'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -4896,7 +4896,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LogicalDatabaseResponse'
+                $ref: '#/components/schemas/LogicalDatabase'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -5029,7 +5029,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseCurrentMetricResponse'
+                $ref: '#/components/schemas/DatabaseCurrentMetric'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5141,7 +5141,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MetricRestartResponse'
+                $ref: '#/components/schemas/MetricRestart'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5189,7 +5189,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BackupResponse'
+                $ref: '#/components/schemas/Backup'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -5254,7 +5254,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LogicalDatabaseResponse'
+                $ref: '#/components/schemas/LogicalDatabase'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5279,7 +5279,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LogicalDatabaseResponse'
+                $ref: '#/components/schemas/LogicalDatabase'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -5319,7 +5319,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CredentialsResponse'
+                $ref: '#/components/schemas/Credentials'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5344,7 +5344,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CredentialsResponse'
+                $ref: '#/components/schemas/Credentials'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -5386,7 +5386,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountInfoResponse'
+                $ref: '#/components/schemas/AccountInfo'
         '401':
           $ref: '#/components/responses/401'
   /account/gitAuthProvider:
@@ -5524,7 +5524,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReferralResponse'
+                $ref: '#/components/schemas/Referral'
         '401':
           $ref: '#/components/responses/401'
   /account/rewardClaim:
@@ -5538,7 +5538,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RewardClaimResponse'
+              $ref: '#/components/schemas/RewardClaim'
       responses:
         '200':
           description: Claim reward
@@ -5556,7 +5556,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/BaseResponse'
+                  - $ref: '#/components/schemas/Base'
                   - $ref: '#/paths/~1admin~1userSignUp/post/requestBody/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
@@ -5903,7 +5903,7 @@ components:
         icon_url:
           type: string
           nullable: true
-    MetricCPUResponse:
+    MetricCPU:
       type: object
       required:
         - instance_name
@@ -5915,7 +5915,7 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/MetricCPUDatapointResponse'
+            $ref: '#/components/schemas/MetricCPUDatapoint'
     ApplicationStorageRequest:
       type: object
       properties:
@@ -5945,8 +5945,8 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterStatusResponse'
-    MetricGenericResponse:
+            $ref: '#/components/schemas/ClusterStatus'
+    MetricGeneric:
       type: object
       required:
         - instance_name
@@ -5958,8 +5958,8 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/MetricGenericDatapointResponse'
-    ApplicationStorageResponse:
+            $ref: '#/components/schemas/MetricGenericDatapoint'
+    ApplicationStorage:
       type: object
       properties:
         storage:
@@ -5992,9 +5992,9 @@ components:
           type: string
           description: Set application ID
           format: uuid
-    OrganizationResponse:
+    Organization:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/OrganizationRequest'
         - type: object
           properties:
@@ -6002,7 +6002,7 @@ components:
               type: string
               format: uuid
               description: uuid of the user owning the organization
-    MetricStorageDatapointResponse:
+    MetricStorageDatapoint:
       type: object
       required:
         - created_at
@@ -6073,9 +6073,9 @@ components:
           description: name of the company to bill
         vat_number:
           type: string
-    ProjectDeploymentRuleResponse:
+    ProjectDeploymentRule:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ProjectDeploymentRuleRequest'
         - type: object
           properties:
@@ -6089,14 +6089,14 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ProjectResponse'
+            $ref: '#/components/schemas/Project'
     ProjectStatsResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ProjectStatsResponse'
+            $ref: '#/components/schemas/ProjectStats'
     Value:
       type: object
       required:
@@ -6104,9 +6104,9 @@ components:
       properties:
         value:
           type: string
-    DatabaseResponse:
+    Database:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/DatabaseRequest'
         - type: object
           properties:
@@ -6155,14 +6155,14 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/EnvironmentApplicationsCurrentScaleResponse'
+            $ref: '#/components/schemas/EnvironmentApplicationsCurrentScale'
     MemberResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/MemberResponse'
+            $ref: '#/components/schemas/Member'
     DatabaseRequest:
       type: object
       required:
@@ -6197,7 +6197,7 @@ components:
           type: integer
           description: unit is MB
           default: 10240
-    PaginationDataResponse:
+    PaginationData:
       type: object
       required:
         - page
@@ -6215,8 +6215,8 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/DatabaseResponse'
-    LinkResponse:
+            $ref: '#/components/schemas/Database'
+    Link:
       type: object
       properties:
         url:
@@ -6227,10 +6227,10 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/MetricStorageDatapointResponse'
-    DeploymentHistoryEnvironmentResponse:
+            $ref: '#/components/schemas/MetricStorageDatapoint'
+    DeploymentHistoryEnvironment:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           properties:
             status:
@@ -6238,12 +6238,12 @@ components:
             applications:
               type: array
               items:
-                $ref: '#/components/schemas/DeploymentHistoryApplicationResponse'
+                $ref: '#/components/schemas/DeploymentHistoryApplication'
             databases:
               type: array
               items:
-                $ref: '#/components/schemas/DeploymentHistoryDatabaseResponse'
-    LogResponse:
+                $ref: '#/components/schemas/DeploymentHistoryDatabase'
+    Log:
       type: object
       required:
         - id
@@ -6259,7 +6259,7 @@ components:
           format: date-time
         message:
           type: string
-    MetricMemoryResponse:
+    MetricMemory:
       type: object
       required:
         - instance_name
@@ -6271,7 +6271,7 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/MetricMemoryDatapointResponse'
+            $ref: '#/components/schemas/MetricMemoryDatapoint'
     EnvironmentTotalNumber:
       type: object
       required:
@@ -6279,7 +6279,7 @@ components:
       properties:
         environment_total_number:
           type: number
-    EnvironmentApplicationsStorageResponse:
+    EnvironmentApplicationsStorage:
       type: object
       required:
         - application
@@ -6291,8 +6291,8 @@ components:
         disks:
           type: array
           items:
-            $ref: '#/components/schemas/StorageDiskResponse'
-    MetricCPUDatapointResponse:
+            $ref: '#/components/schemas/StorageDisk'
+    MetricCPUDatapoint:
       type: object
       required:
         - created_at
@@ -6309,7 +6309,7 @@ components:
           type: number
         consumed_in_percent:
           type: number
-    VersionResponse:
+    Version:
       type: object
       required:
         - name
@@ -6344,27 +6344,18 @@ components:
           example: 4
     DeploymentHistoryPaginatedResponseList:
       allOf:
-        - $ref: '#/components/schemas/PaginationDataResponse'
+        - $ref: '#/components/schemas/PaginationData'
         - type: object
           properties:
             results:
               type: array
               items:
-                $ref: '#/components/schemas/DeploymentHistoryResponse'
+                $ref: '#/components/schemas/DeploymentHistory'
     ClusterCredentialsRequest:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-        access_key_id:
-          type: string
-        secret_access_key:
-          type: string
-    MemberResponse:
+      $ref: '#/components/schemas/CluserCredentials'
+    Member:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           required:
             - email
@@ -6385,7 +6376,7 @@ components:
               description: last time the user was connected
             role:
               $ref: '#/components/schemas/InviteMemberRoleEnum'
-    ClusterStatusResponse:
+    ClusterStatus:
       type: object
       properties:
         cluster_id:
@@ -6401,7 +6392,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/InvoiceResponse'
+            $ref: '#/components/schemas/Invoice'
     EnvironmentApplicationsInstanceResponseList:
       type: object
       properties:
@@ -6419,10 +6410,10 @@ components:
               instances:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InstanceResponse'
-    InvoiceResponse:
+                  $ref: '#/components/schemas/Instance'
+    Invoice:
       allOf:
-        - $ref: '#/components/schemas/CostResponse'
+        - $ref: '#/components/schemas/Cost'
         - type: object
           required:
             - id
@@ -6440,7 +6431,7 @@ components:
               format: date-time
             status:
               $ref: '#/components/schemas/InvoiceStatusEnum'
-    EnvironmentLogResponse:
+    EnvironmentLog:
       type: object
       required:
         - id
@@ -6477,7 +6468,7 @@ components:
         hint:
           type: string
           example: only for errors. it gives a possible action to the user -- Markdown can be injected
-    GitAuthProviderResponse:
+    GitAuthProvider:
       type: object
       required:
         - name
@@ -6529,7 +6520,7 @@ components:
               type: string
         region:
           type: string
-    MetricGenericDatapointResponse:
+    MetricGenericDatapoint:
       type: object
       required:
         - created_at
@@ -6581,14 +6572,14 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/BackupResponse'
+            $ref: '#/components/schemas/Backup'
     ProjectCurrentCostResponseList:
       type: object
       properties:
         projects:
           type: array
           items:
-            $ref: '#/components/schemas/ProjectCurrentCostResponse'
+            $ref: '#/components/schemas/ProjectCurrentCost'
     Healthcheck:
       type: object
       properties:
@@ -6600,7 +6591,7 @@ components:
             - None
         value:
           type: string
-    CommitResponse:
+    Commit:
       type: object
       required:
         - git_commit_id
@@ -6625,7 +6616,7 @@ components:
           type: string
         commit_page_url:
           type: string
-    GenericObjectCurrentCostResponse:
+    GenericObjectCurrentCost:
       type: object
       required:
         - id
@@ -6642,7 +6633,7 @@ components:
           type: integer
           example: 3600
         cost:
-          $ref: '#/components/schemas/CostResponse'
+          $ref: '#/components/schemas/Cost'
     ApplicationRequest:
       allOf:
         - $ref: '#/components/schemas/ApplicationStorageRequest'
@@ -6700,7 +6691,7 @@ components:
                 Specify if the environment preview option is activated or not for this application.
                 If activated, a preview environment will be automatically cloned at each pull request.
               default: true
-    BaseResponse:
+    Base:
       type: object
       required:
         - id
@@ -6720,8 +6711,8 @@ components:
           format: date-time
     ApplicationEditRequest:
       allOf:
-        - $ref: '#/components/schemas/ApplicationStorageResponse'
-        - $ref: '#/components/schemas/ApplicationPortResponse'
+        - $ref: '#/components/schemas/ApplicationStorage'
+        - $ref: '#/components/schemas/ApplicationPort'
         - type: object
           properties:
             name:
@@ -6782,40 +6773,40 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/DeploymentHistoryResponse'
+            $ref: '#/components/schemas/DeploymentHistory'
     BudgetThreshold:
       allOf:
-        - $ref: '#/components/schemas/BudgetResponse'
+        - $ref: '#/components/schemas/Budget'
     EventResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/EventResponse'
-    DeploymentHistoryResponse:
+            $ref: '#/components/schemas/Event'
+    DeploymentHistory:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           properties:
             commit:
-              $ref: '#/components/schemas/CommitResponse'
+              $ref: '#/components/schemas/Commit'
             status:
               $ref: '#/components/schemas/DeploymentHistoryStatusEnum'
-    DeploymentHistoryApplicationResponse:
+    DeploymentHistoryApplication:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           properties:
             name:
               type: string
             commit:
-              $ref: '#/components/schemas/CommitResponse'
+              $ref: '#/components/schemas/Commit'
             status:
               $ref: '#/components/schemas/GlobalDeploymentStatus'
-    DeploymentHistoryDatabaseResponse:
+    DeploymentHistoryDatabase:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           properties:
             name:
@@ -6828,17 +6819,17 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/OrganizationResponse'
+            $ref: '#/components/schemas/Organization'
     ClusterRequest:
       allOf:
-        - $ref: '#/components/schemas/Cluster'
+        - $ref: '#/components/schemas/Cluster/allOf/1'
         - $ref: '#/components/schemas/ClusterFeatureRequest'
         - type: object
           required:
             - name
             - cloud_provider
             - region
-    ClusterCloudProviderInfoResponse:
+    ClusterCloudProviderInfo:
       type: object
       properties:
         cloud_provider:
@@ -6853,17 +6844,17 @@ components:
               type: string
         region:
           type: string
-    ApplicationResponse:
+    Application:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
-        - $ref: '#/components/schemas/ApplicationStorageResponse'
-        - $ref: '#/components/schemas/ApplicationPortResponse'
+        - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/ApplicationStorage'
+        - $ref: '#/components/schemas/ApplicationPort'
         - type: object
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
             git_repository:
-              $ref: '#/components/schemas/ApplicationGitRepositoryResponse'
+              $ref: '#/components/schemas/ApplicationGitRepository'
             maximum_cpu:
               type: integer
               description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
@@ -6931,13 +6922,13 @@ components:
           example: my.domain.tld
     EnvironmentLogPaginatedResponseList:
       allOf:
-        - $ref: '#/components/schemas/PaginationDataResponse'
+        - $ref: '#/components/schemas/PaginationData'
         - type: object
           properties:
             results:
               type: array
               items:
-                $ref: '#/components/schemas/EnvironmentLogResponse'
+                $ref: '#/components/schemas/EnvironmentLog'
     ProjectDeploymentRuleRequest:
       type: object
       required:
@@ -6991,7 +6982,7 @@ components:
           type: string
           default: ''
           description: wildcard pattern composed of '?' and/or '*' used to target new created environments
-    EnvironmentStatsResponse:
+    EnvironmentStats:
       allOf:
         - $ref: '#/components/schemas/ReferenceObject'
         - $ref: '#/components/schemas/ServiceTotalNumber'
@@ -7015,15 +7006,15 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/InstanceResponse'
+            $ref: '#/components/schemas/Instance'
     ClusterReadinessStatus:
       type: object
       properties:
         is_ready:
           type: boolean
-    CustomDomainResponse:
+    CustomDomain:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/CustomDomainRequest'
         - type: object
           properties:
@@ -7037,7 +7028,7 @@ components:
                 - checking
                 - ready
                 - error
-    AccountInfoResponse:
+    AccountInfo:
       type: object
       required:
         - username
@@ -7066,9 +7057,9 @@ components:
           description: name is case insensitive
         description:
           type: string
-    ServiceResponse:
+    Service:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           required:
             - id
@@ -7108,8 +7099,8 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ApplicationResponse'
-    ApplicationNetworkResponse:
+            $ref: '#/components/schemas/Application'
+    ApplicationNetwork:
       type: object
       properties:
         sticky_session:
@@ -7142,7 +7133,7 @@ components:
           type: string
           description: 'For `PATH` restrictions, the value must not start with `/`'
           example: application1/src/
-    ApplicationDeploymentRestrictionResponse:
+    ApplicationDeploymentRestriction:
       type: object
       properties:
         deployment_restrictions:
@@ -7150,10 +7141,10 @@ components:
           items:
             $ref: '#/paths/~1application~1%7BapplicationId%7D~1deploymentRestriction/post/responses/201/content/application~1json/schema'
     ApplicationDeploymentRestrictionResponseList:
-      $ref: '#/components/schemas/ApplicationDeploymentRestrictionResponse'
+      $ref: '#/components/schemas/ApplicationDeploymentRestriction'
     RemainingCredits:
       allOf:
-        - $ref: '#/components/schemas/CostResponse'
+        - $ref: '#/components/schemas/Cost'
         - type: object
     BillingStatus:
       type: object
@@ -7162,20 +7153,16 @@ components:
           type: boolean
         message:
           type: string
-    Cost:
-      allOf:
-        - $ref: '#/components/schemas/CostResponse'
-        - type: object
     ServiceResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceResponse'
-    EnvironmentDeploymentRuleResponse:
+            $ref: '#/components/schemas/Service'
+    EnvironmentDeploymentRule:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           required:
             - timezone
@@ -7210,7 +7197,7 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/WeekdayEnum'
-    MetricMemoryDatapointResponse:
+    MetricMemoryDatapoint:
       type: object
       required:
         - created_at
@@ -7233,10 +7220,10 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/EnvironmentResponse'
-    LogicalDatabaseResponse:
+            $ref: '#/components/schemas/Environment'
+    LogicalDatabase:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/LogicalDatabaseRequest'
         - type: object
           properties:
@@ -7257,11 +7244,6 @@ components:
     PaidUsage:
       type: object
       properties:
-        paid_usage:
-          $ref: '#/components/schemas/PaidUsageResponse'
-    PaidUsageResponse:
-      type: object
-      properties:
         max_deployments_per_month:
           type: integer
         consumed_deployments:
@@ -7279,11 +7261,6 @@ components:
           readOnly: true
           format: date-time
     CommunityUsage:
-      type: object
-      properties:
-        community_usage:
-          $ref: '#/components/schemas/CommunityUsageResponse'
-    CommunityUsageResponse:
       allOf:
         - $ref: '#/components/schemas/ProjectCurrentCostResponseList'
     DatabaseVersionMode:
@@ -7294,9 +7271,9 @@ components:
           example: '10.1'
         supported_mode:
           $ref: '#/components/schemas/DatabaseModeEnum'
-    ProjectResponse:
+    Project:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           required:
             - name
@@ -7313,15 +7290,15 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/GitAuthProviderResponse'
+            $ref: '#/components/schemas/GitAuthProvider'
     LinkResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/LinkResponse'
-    ClusterRegionResponse:
+            $ref: '#/components/schemas/Link'
+    ClusterRegion:
       type: object
       required:
         - name
@@ -7347,7 +7324,7 @@ components:
           type: string
         password:
           type: string
-    BudgetResponse:
+    Budget:
       type: object
       properties:
         total_in_cents:
@@ -7359,7 +7336,7 @@ components:
         currency_code:
           type: string
           example: USD
-    CreditCardResponse:
+    CreditCard:
       type: object
       required:
         - id
@@ -7390,7 +7367,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/BillingStart'
         - $ref: '#/components/schemas/BillingEnd'
-    MetricStorageResponse:
+    MetricStorage:
       type: object
       required:
         - instance_name
@@ -7401,7 +7378,7 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/MetricStorageDatapointResponse'
+            $ref: '#/components/schemas/MetricStorageDatapoint'
     EnvironmentVariableEditRequest:
       type: object
       required:
@@ -7420,16 +7397,16 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/EnvironmentLogResponse'
+            $ref: '#/components/schemas/EnvironmentLog'
     DeploymentHistoryEnvironmentPaginatedResponseList:
       allOf:
-        - $ref: '#/components/schemas/PaginationDataResponse'
+        - $ref: '#/components/schemas/PaginationData'
         - type: object
           properties:
             results:
               type: array
               items:
-                $ref: '#/components/schemas/DeploymentHistoryEnvironmentResponse'
+                $ref: '#/components/schemas/DeploymentHistoryEnvironment'
     AliasedSecret:
       type: object
       properties:
@@ -7447,7 +7424,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/EnvironmentVariableResponse'
+            $ref: '#/components/schemas/EnvironmentVariable'
     VariableImportRequest:
       type: object
       required:
@@ -7475,7 +7452,7 @@ components:
                 $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
               is_secret:
                 type: boolean
-    VariableImportResponse:
+    VariableImport:
       type: object
       required:
         - total_variables_to_import
@@ -7516,21 +7493,21 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/LogResponse'
+            $ref: '#/components/schemas/Log'
     MetricCPUDatapointResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/MetricCPUDatapointResponse'
+            $ref: '#/components/schemas/MetricCPUDatapoint'
     MetricGenericResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/MetricGenericResponse'
+            $ref: '#/components/schemas/MetricGeneric'
     EnvironmentRequest:
       type: object
       required:
@@ -7563,12 +7540,44 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/MetricMemoryDatapointResponse'
-    ClusterResponse:
+            $ref: '#/components/schemas/MetricMemoryDatapoint'
+    Cluster:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
-        - $ref: '#/components/schemas/Cluster'
-        - $ref: '#/components/schemas/ClusterFeatureResponse'
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+            - cloud_provider
+            - region
+          properties:
+            name:
+              type: string
+              description: name is case-insensitive
+            description:
+              type: string
+            cloud_provider:
+              $ref: '#/components/schemas/CloudProviderEnum'
+            region:
+              type: string
+            auto_update:
+              type: boolean
+            cpu:
+              type: integer
+              description: unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            memory:
+              type: integer
+              description: unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
+            min_running_nodes:
+              type: integer
+              default: 1
+            max_running_nodes:
+              type: integer
+              default: 1
+        - $ref: '#/components/schemas/ClusterFeature'
         - type: object
           properties:
             estimated_cloud_provider_cost:
@@ -7584,7 +7593,7 @@ components:
               type: boolean
     BackupPaginatedResponseList:
       allOf:
-        - $ref: '#/components/schemas/PaginationDataResponse'
+        - $ref: '#/components/schemas/PaginationData'
         - $ref: '#/components/schemas/BackupResponseList'
     TagRequest:
       type: object
@@ -7593,7 +7602,7 @@ components:
       properties:
         name:
           type: string
-    RewardClaimResponse:
+    RewardClaim:
       type: object
       properties:
         type:
@@ -7609,8 +7618,8 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterRegionResponse'
-    CredentialsResponse:
+            $ref: '#/components/schemas/ClusterRegion'
+    Credentials:
       type: object
       required:
         - login
@@ -7626,7 +7635,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/LogicalDatabaseResponse'
+            $ref: '#/components/schemas/LogicalDatabase'
     EnvironmentVariableRequest:
       type: object
       required:
@@ -7639,7 +7648,7 @@ components:
         value:
           type: string
           description: value of the env variable.
-    ClusterCredentialsResponse:
+    ClusterCredentials:
       type: object
       properties:
         id:
@@ -7653,22 +7662,22 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ProjectDeploymentRuleResponse'
+            $ref: '#/components/schemas/ProjectDeploymentRule'
     MetricCPUResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/MetricCPUResponse'
+            $ref: '#/components/schemas/MetricCPU'
     DatabaseConfigurationResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/DatabaseConfigurationResponse'
-    ProjectStatsResponse:
+            $ref: '#/components/schemas/DatabaseConfiguration'
+    ProjectStats:
       allOf:
         - $ref: '#/components/schemas/ReferenceObject'
         - $ref: '#/components/schemas/ServiceTotalNumber'
@@ -7691,10 +7700,10 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/SecretResponse'
-    EnvironmentResponse:
+            $ref: '#/components/schemas/Secret'
+    Environment:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           required:
             - name
@@ -7725,7 +7734,7 @@ components:
             cluster_id:
               type: string
               format: uuid
-    CostResponse:
+    Cost:
       type: object
       required:
         - total_in_cents
@@ -7747,7 +7756,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/MetricMemoryResponse'
+            $ref: '#/components/schemas/MetricMemory'
     CreditCardRequest:
       type: object
       required:
@@ -7772,7 +7781,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/CustomDomainResponse'
+            $ref: '#/components/schemas/CustomDomain'
     EnvironmentEditRequest:
       type: object
       properties:
@@ -7780,19 +7789,23 @@ components:
           type: string
         mode:
           $ref: '#/components/schemas/EnvironmentModeEnum'
-    OrganizationCurrentCostResponse:
+    OrganizationCurrentCost:
       allOf:
         - $ref: '#/components/schemas/CurrentCost'
-        - $ref: '#/components/schemas/PaidUsage'
-        - $ref: '#/components/schemas/CommunityUsage'
+        - type: object
+          properties:
+            paid_usage:
+              $ref: '#/components/schemas/PaidUsage'
+            community_usage:
+              $ref: '#/components/schemas/CommunityUsage'
     GitRepositoryResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/GitRepositoryResponse'
-    ApplicationPortResponse:
+            $ref: '#/components/schemas/GitRepository'
+    ApplicationPort:
       type: object
       properties:
         ports:
@@ -7833,10 +7846,10 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/EnvironmentStatsResponse'
-    SecretResponse:
+            $ref: '#/components/schemas/EnvironmentStats'
+    Secret:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           required:
             - scope
@@ -7866,7 +7879,7 @@ components:
           description: message related to the state
         service_deployment_status:
           $ref: '#/components/schemas/ServiceDeploymentStatusEnum'
-    EnvironmentDatabasesCurrentMetricResponse:
+    EnvironmentDatabasesCurrentMetric:
       type: object
       properties:
         database:
@@ -7917,9 +7930,9 @@ components:
               type: number
             status:
               $ref: '#/components/schemas/ThresholdMetricStatusEnum'
-    BackupResponse:
+    Backup:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/BackupRequest'
         - type: object
           properties:
@@ -7970,18 +7983,18 @@ components:
           description: specify value only if auto_stop = false
           items:
             $ref: '#/components/schemas/WeekdayEnum'
-    ProjectCurrentCostResponse:
+    ProjectCurrentCost:
       allOf:
-        - $ref: '#/components/schemas/GenericObjectCurrentCostResponse'
+        - $ref: '#/components/schemas/GenericObjectCurrentCost'
         - type: object
           properties:
             environments:
               type: array
               items:
-                $ref: '#/components/schemas/GenericObjectCurrentCostResponse'
-    EnvironmentVariableResponse:
+                $ref: '#/components/schemas/GenericObjectCurrentCost'
+    EnvironmentVariable:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/EnvironmentVariableRequest'
         - type: object
           required:
@@ -8016,7 +8029,7 @@ components:
               $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
             service_name:
               type: string
-    ReferralResponse:
+    Referral:
       type: object
       properties:
         total_invited:
@@ -8037,15 +8050,15 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/UserResponse'
+            $ref: '#/components/schemas/User'
     CreditCardResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/CreditCardResponse'
-    ReferenceObjectStatusResponse:
+            $ref: '#/components/schemas/CreditCard'
+    ReferenceObjectStatus:
       allOf:
         - $ref: '#/components/schemas/ReferenceObject'
         - $ref: '#/components/schemas/Status'
@@ -8082,7 +8095,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterCredentialsResponse'
+            $ref: '#/components/schemas/ClusterCredentials'
     CommitPaginatedResponseList:
       allOf:
         - type: object
@@ -8090,15 +8103,15 @@ components:
             results:
               type: array
               items:
-                $ref: '#/components/schemas/CommitResponse'
-        - $ref: '#/components/schemas/PaginationDataResponse'
+                $ref: '#/components/schemas/Commit'
+        - $ref: '#/components/schemas/PaginationData'
     ClusterResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterResponse'
+            $ref: '#/components/schemas/Cluster'
     OverriddenSecret:
       type: object
       properties:
@@ -8109,7 +8122,7 @@ components:
           type: string
         scope:
           $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
-    BillingInfoResponse:
+    BillingInfo:
       type: object
       required:
         - first_name
@@ -8191,8 +8204,8 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ReferenceObjectStatusResponse'
-    UserResponse:
+            $ref: '#/components/schemas/ReferenceObjectStatus'
+    User:
       type: object
       properties:
         id:
@@ -8217,7 +8230,7 @@ components:
         profile_picture_url:
           type: string
           format: uri
-    StorageDiskResponse:
+    StorageDisk:
       type: object
       properties:
         created_at:
@@ -8237,7 +8250,7 @@ components:
           type: number
         status:
           $ref: '#/components/schemas/ThresholdMetricStatusEnum'
-    ApplicationGitRepositoryResponse:
+    ApplicationGitRepository:
       type: object
       properties:
         has_access:
@@ -8279,7 +8292,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/TagResponse'
+            $ref: '#/components/schemas/Tag'
     SecretEditRequest:
       type: object
       properties:
@@ -8289,14 +8302,14 @@ components:
           type: string
     EventPaginatedResponseList:
       allOf:
-        - $ref: '#/components/schemas/PaginationDataResponse'
+        - $ref: '#/components/schemas/PaginationData'
         - type: object
           properties:
             results:
               type: array
               items:
-                $ref: '#/components/schemas/EventResponse'
-    InstanceResponse:
+                $ref: '#/components/schemas/Event'
+    Instance:
       type: object
       properties:
         created_at:
@@ -8341,8 +8354,8 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/MetricStorageResponse'
-    MetricRestartResponse:
+            $ref: '#/components/schemas/MetricStorage'
+    MetricRestart:
       type: object
       properties:
         results:
@@ -8358,15 +8371,15 @@ components:
                 format: date-time
               message:
                 type: string
-    EventResponse:
+    Event:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           properties:
             user:
-              $ref: '#/components/schemas/UserResponse'
+              $ref: '#/components/schemas/User'
             commit:
-              $ref: '#/components/schemas/CommitResponse'
+              $ref: '#/components/schemas/Commit'
             status:
               $ref: '#/components/schemas/Status'
             type:
@@ -8380,8 +8393,8 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/EnvironmentDatabasesCurrentMetricResponse'
-    ApplicationCurrentScaleResponse:
+            $ref: '#/components/schemas/EnvironmentDatabasesCurrentMetric'
+    ApplicationCurrentScale:
       type: object
       properties:
         min:
@@ -8408,15 +8421,15 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/VersionResponse'
+            $ref: '#/components/schemas/Version'
     CommitResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/CommitResponse'
-    EnvironmentApplicationsCurrentScaleResponse:
+            $ref: '#/components/schemas/Commit'
+    EnvironmentApplicationsCurrentScale:
       type: object
       properties:
         application:
@@ -8440,7 +8453,7 @@ components:
           type: string
           readOnly: true
           format: date-time
-    TagResponse:
+    Tag:
       type: object
       required:
         - name
@@ -8456,7 +8469,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/EnvironmentApplicationsStorageResponse'
+            $ref: '#/components/schemas/EnvironmentApplicationsStorage'
     EnvironmentApplicationsSupportedLanguageList:
       type: object
       properties:
@@ -8472,7 +8485,7 @@ components:
         name:
           type: string
           example: Ruby
-    DatabaseConfigurationResponse:
+    DatabaseConfiguration:
       type: object
       properties:
         database_type:
@@ -8481,7 +8494,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DatabaseVersionMode'
-    DatabaseCurrentMetricResponse:
+    DatabaseCurrentMetric:
       type: object
       properties:
         cpu:
@@ -8529,7 +8542,7 @@ components:
               type: number
             status:
               $ref: '#/components/schemas/ThresholdMetricStatusEnum'
-    GitRepositoryResponse:
+    GitRepository:
       type: object
       required:
         - name
@@ -8551,21 +8564,21 @@ components:
           type: boolean
     LogPaginatedResponseList:
       allOf:
-        - $ref: '#/components/schemas/PaginationDataResponse'
+        - $ref: '#/components/schemas/PaginationData'
         - type: object
           properties:
             results:
               type: array
               items:
-                $ref: '#/components/schemas/LogResponse'
+                $ref: '#/components/schemas/Log'
     StorageDiskResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/StorageDiskResponse'
-    CostRangeResponse:
+            $ref: '#/components/schemas/StorageDisk'
+    CostRange:
       type: object
       required:
         - total_in_cents
@@ -8587,7 +8600,7 @@ components:
         currency_code:
           type: string
           example: USD
-    CloudProviderResponse:
+    CloudProvider:
       type: object
       properties:
         short_name:
@@ -8599,10 +8612,10 @@ components:
         regions:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterRegionResponse'
-    InviteMemberResponse:
+            $ref: '#/components/schemas/ClusterRegion'
+    InviteMember:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           required:
             - email
@@ -8634,8 +8647,17 @@ components:
         user_id:
           type: string
           format: uuid
-    CluserCredentialsResponse:
-      $ref: '#/components/schemas/ClusterCredentialsRequest'
+    CluserCredentials:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        access_key_id:
+          type: string
+        secret_access_key:
+          type: string
     AwsCredentialsRequest:
       type: object
       required:
@@ -8698,45 +8720,7 @@ components:
               value:
                 type: string
                 nullable: true
-    EnvironmentApplicationsSupportedLanguageResponse:
-      $ref: '#/components/schemas/EnvironmentApplicationsSupportedLanguage'
-    EnvironmentApplicationsSupportedLanguageResponseList:
-      $ref: '#/components/schemas/EnvironmentApplicationsSupportedLanguageList'
-    Cluster:
-      type: object
-      required:
-        - name
-        - cloud_provider
-        - region
-      properties:
-        name:
-          type: string
-          description: name is case-insensitive
-        description:
-          type: string
-        cloud_provider:
-          $ref: '#/components/schemas/CloudProviderEnum'
-        region:
-          type: string
-        auto_update:
-          type: boolean
-        cpu:
-          type: integer
-          description: unit is millicores (m). 1000m = 1 cpu
-          default: 250
-          example: 1250
-        memory:
-          type: integer
-          description: unit is MB. 1024 MB = 1GB
-          default: 256
-          example: 1024
-        min_running_nodes:
-          type: integer
-          default: 1
-        max_running_nodes:
-          type: integer
-          default: 1
-    ClusterFeatureResponse:
+    ClusterFeature:
       type: object
       properties:
         id:
@@ -8777,7 +8761,7 @@ components:
             oneOf:
               - type: string
               - type: boolean
-    ClusterRoutingTableResponse:
+    ClusterRoutingTable:
       type: object
       properties:
         results:
@@ -8817,29 +8801,29 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterFeatureResponse'
+            $ref: '#/components/schemas/ClusterFeature'
     InviteMemberResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/InviteMemberResponse'
+            $ref: '#/components/schemas/InviteMember'
     CloudProviderResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/CloudProviderResponse'
+            $ref: '#/components/schemas/CloudProvider'
     GitRepositoryBranchResponseList:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/GitRepositoryBranchResponse'
-    GitRepositoryBranchResponse:
+            $ref: '#/components/schemas/GitRepositoryBranch'
+    GitRepositoryBranch:
       type: object
       required:
         - name
@@ -8885,10 +8869,10 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/OrganizationApiTokenResponse'
-    OrganizationApiTokenResponse:
+            $ref: '#/components/schemas/OrganizationApiToken'
+    OrganizationApiToken:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           properties:
             name:
@@ -8897,9 +8881,9 @@ components:
               type: string
             scope:
               $ref: '#/components/schemas/OrganizationApiTokenScope'
-    OrganizationApiTokenCreateResponse:
+    OrganizationApiTokenCreate:
       allOf:
-        - $ref: '#/components/schemas/BaseResponse'
+        - $ref: '#/components/schemas/Base'
         - type: object
           properties:
             name:
