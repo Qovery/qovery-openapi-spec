@@ -8,4 +8,4 @@ properties:
   remaining_credits:
     $ref: './RemainingCredits.yaml'
   cost:
-    $ref: './Cost.yaml'
+    $ref: './CostResponse.yaml'
