@@ -24,6 +24,10 @@ BillingInfoRequest:
   $ref: ./BillingInfoRequest.yaml
 ProjectDeploymentRule:
   $ref: ./ProjectDeploymentRuleResponse.yaml
+ProjectDeploymentRulesPriorityOrderRequest:
+  $ref: ./ProjectDeploymentRulesPriorityOrderRequest.yaml
+DeployAllRequest:
+  $ref: ./DeployAllRequest.yaml
 ProjectResponseList:
   $ref: ./ProjectResponseList.yaml
 ProjectStatsResponseList:
@@ -429,6 +433,14 @@ OrganizationApiToken:
   $ref: ./OrganizationApiTokenResponse.yaml
 OrganizationApiTokenCreate:
   $ref: ./OrganizationApiTokenCreateResponse.yaml
+SignUp:
+  $ref: ./SignUpResponse.yaml
+SignUpRequest:
+  $ref: ./SignUpRequest.yaml
+TypeOfUseEnum:
+  $ref: ./enums/TypeOfUse.yaml
+CompanySizeEnum:
+  $ref: ./enums/CompanySize.yaml
 BuildModeEnum:
   $ref: ./enums/BuildMode.yaml
 EnvironmentVariableScopeEnum:
