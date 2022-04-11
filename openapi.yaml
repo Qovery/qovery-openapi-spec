@@ -1812,14 +1812,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                project_deployment_rule_ids_in_order:
-                  type: array
-                  items:
-                    type: string
-                    format: uuid
-                    description: project deployment rule id
+              $ref: '#/components/schemas/ProjectDeploymentRulesPriorityOrderRequest'
       responses:
         '200':
           description: Update deployment rules priority order
@@ -2728,23 +2721,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                applications:
-                  type: array
-                  items:
-                    type: object
-                    required:
-                      - application_id
-                      - git_commit_id
-                    properties:
-                      application_id:
-                        type: string
-                        format: uuid
-                        description: id of the application to be deployed.
-                      git_commit_id:
-                        type: string
-                        description: Commit ID to deploy.
+              $ref: '#/components/schemas/DeployAllRequest'
       responses:
         '202':
           description: Deployed applications
@@ -5555,9 +5532,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Base'
-                  - $ref: '#/paths/~1admin~1userSignUp/post/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/SignUp'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5574,54 +5549,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - first_name
-                - last_name
-                - user_email
-                - type_of_use
-                - qovery_usage
-              properties:
-                first_name:
-                  type: string
-                last_name:
-                  type: string
-                user_email:
-                  type: string
-                type_of_use:
-                  type: string
-                  enum:
-                    - PERSONAL
-                    - WORK
-                    - SCHOOL
-                qovery_usage:
-                  type: string
-                company_name:
-                  type: string
-                  nullable: true
-                company_size:
-                  type: string
-                  enum:
-                    - 1-10
-                    - 11-50
-                    - 51-200
-                    - 201-500
-                    - 500+
-                user_role:
-                  type: string
-                  nullable: true
-                qovery_usage_other:
-                  type: string
-                  nullable: true
-                user_questions:
-                  type: string
-                  nullable: true
-                current_step:
-                  type: string
-                  nullable: true
-                dx_auth:
-                  type: boolean
-                  nullable: true
+              $ref: '#/components/schemas/SignUpRequest'
       responses:
         '200':
           description: Sign up request stored
@@ -6083,6 +6011,33 @@ components:
               type: integer
               description: used to select the first deployment rule to match new created environments
               nullable: false
+    ProjectDeploymentRulesPriorityOrderRequest:
+      type: object
+      properties:
+        project_deployment_rule_ids_in_order:
+          type: array
+          items:
+            type: string
+            format: uuid
+            description: project deployment rule id
+    DeployAllRequest:
+      type: object
+      properties:
+        applications:
+          type: array
+          items:
+            type: object
+            required:
+              - application_id
+              - git_commit_id
+            properties:
+              application_id:
+                type: string
+                format: uuid
+                description: id of the application to be deployed.
+              git_commit_id:
+                type: string
+                description: Commit ID to deploy.
     ProjectResponseList:
       type: object
       properties:
@@ -8895,6 +8850,63 @@ components:
               description: the generated token to send in 'Authorization' header prefixed by 'Token '
             scope:
               $ref: '#/components/schemas/OrganizationApiTokenScope'
+    SignUp:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/SignUpRequest'
+    SignUpRequest:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - user_email
+        - type_of_use
+        - qovery_usage
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        user_email:
+          type: string
+        type_of_use:
+          $ref: '#/components/schemas/TypeOfUseEnum'
+        qovery_usage:
+          type: string
+        company_name:
+          type: string
+          nullable: true
+        company_size:
+          $ref: '#/components/schemas/CompanySizeEnum'
+        user_role:
+          type: string
+          nullable: true
+        qovery_usage_other:
+          type: string
+          nullable: true
+        user_questions:
+          type: string
+          nullable: true
+        current_step:
+          type: string
+          nullable: true
+        dx_auth:
+          type: boolean
+          nullable: true
+    TypeOfUseEnum:
+      type: string
+      enum:
+        - PERSONAL
+        - WORK
+        - SCHOOL
+    CompanySizeEnum:
+      type: string
+      enum:
+        - 1-10
+        - 11-50
+        - 51-200
+        - 201-500
+        - 500+
     BuildModeEnum:
       type: string
       enum:
