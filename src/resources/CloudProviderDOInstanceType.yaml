@@ -1,0 +1,18 @@
+get:
+  summary: 'List DO available instance types'
+  operationId: listDOInstanceType
+  tags:
+    - Cloud Provider
+  responses:
+    '200':
+      description: 'list the instance types available for Digital Ocean cloud provider'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterInstanceTypeResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
