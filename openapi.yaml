@@ -1388,6 +1388,48 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /aws/instanceType:
+    get:
+      summary: List AWS available instance types
+      operationId: listAWSInstanceType
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list the instance types available for AWS cloud provider
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - type
+                        - name
+                        - cpu
+                        - ram_in_gb
+                      properties:
+                        type:
+                          type: string
+                          example: T3A_XLARGE
+                        name:
+                          type: string
+                          example: t3a.xlarge
+                        cpu:
+                          type: integer
+                          example: 2
+                        ram_in_gb:
+                          type: integer
+                          example: 8
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /digitalOcean/region:
     get:
       summary: List DO regions
@@ -1426,6 +1468,25 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /digitalOcean/instanceType:
+    get:
+      summary: List DO available instance types
+      operationId: listDOInstanceType
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list the instance types available for Digital Ocean cloud provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1aws~1instanceType/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /scaleway/region:
     get:
       summary: List Scaleway regions
@@ -1458,6 +1519,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClusterFeatureResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /scaleway/instanceType:
+    get:
+      summary: List Scaleway available instance types
+      operationId: listScalewayInstanceType
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list the instance types available for Scaleway cloud provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1aws~1instanceType/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
