@@ -207,14 +207,20 @@ paths:
     $ref: './resources/CloudProviderAWSRegion.yaml'
   /aws/clusterFeature:
     $ref: './resources/CloudProviderAWSClusterFeature.yaml'
+  /aws/instanceType:
+    $ref: './resources/CloudProviderAWSInstanceType.yaml'
   /digitalOcean/region:
     $ref: './resources/CloudProviderDORegion.yaml'
   /digitalOcean/clusterFeature:
     $ref: './resources/CloudProviderDOClusterFeature.yaml'
+  /digitalOcean/instanceType:
+    $ref: './resources/CloudProviderDOInstanceType.yaml'
   /scaleway/region:
     $ref: './resources/CloudProviderScalewayRegion.yaml'
   /scaleway/clusterFeature:
     $ref: './resources/CloudProviderScalewayClusterFeature.yaml'
+  /scaleway/instanceType:
+    $ref: './resources/CloudProviderScalewayInstanceType.yaml'
   /organization/{organizationId}/cluster/{clusterId}/cloudProviderInfo:
     $ref: './resources/OrganizationClusterCloudProviderInfo.yaml'
   /organization/{organizationId}/cluster/{clusterId}/isReady:

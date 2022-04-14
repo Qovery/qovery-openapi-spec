@@ -1,0 +1,19 @@
+type: object
+required:
+  - type
+  - name
+  - cpu
+  - ram_in_gb
+properties:
+  type:
+    type: string
+    example: "T3A_XLARGE"
+  name:
+    type: string
+    example: "t3a.xlarge"
+  cpu:
+    type: integer
+    example: 2
+  ram_in_gb:
+    type: integer
+    example: 8
