@@ -31,3 +31,6 @@ properties:
   max_running_nodes:
     type: integer
     default: 1
+  instance_type:
+    type: string
+    example: "T3A_LARGE"
