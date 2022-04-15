@@ -1,0 +1,21 @@
+get:
+  summary: 'Get github branches of the specified repository'
+  operationId: getOrganizationGithubRepositoryBranches
+  tags:
+    - Organization Account Git Repositories
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - in: query
+      name: name
+      schema:
+        type: string
+      description: The name of the repository where to retrieve the branches
+  responses:
+    '200':
+      description: 'Get github repository branches'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/GitRepositoryBranchResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
