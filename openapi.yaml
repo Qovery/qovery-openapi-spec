@@ -72,6 +72,7 @@ x-tagGroups:
     tags:
       - Organization Main Calls
       - Organization Api Token
+      - Organization Account Git Repositories
       - Projects
       - Members
       - Billing
@@ -1331,6 +1332,140 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/account/gitAuthProvider':
+    get:
+      summary: Get git provider accounts
+      operationId: getOrganizationGitProviderAccount
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Account Git Repositories
+      responses:
+        '200':
+          description: Get account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitAuthProviderResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/organization/{organizationId}/account/github/repository':
+    get:
+      summary: Get github repositories of the connected user
+      operationId: getOrganizationGithubRepositories
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Account Git Repositories
+      responses:
+        '200':
+          description: Get github repositories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/organization/{organizationId}/account/github/repository/branch':
+    get:
+      summary: Get github branches of the specified repository
+      operationId: getOrganizationGithubRepositoryBranches
+      tags:
+        - Organization Account Git Repositories
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: The name of the repository where to retrieve the branches
+      responses:
+        '200':
+          description: Get github repository branches
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryBranchResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/organization/{organizationId}/account/gitlab/repository':
+    get:
+      summary: Get gitlab repositories of the connected user
+      operationId: getOrganizationGitlabRepositories
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Account Git Repositories
+      responses:
+        '200':
+          description: Get gitlab repositories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/organization/{organizationId}/account/gitlab/repository/branch':
+    get:
+      summary: Get gitlab branches of the specified repository
+      operationId: getOrganizationGitlabRepositoryBranches
+      tags:
+        - Organization Account Git Repositories
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: The name of the repository to retrieve the branches
+      responses:
+        '200':
+          description: Get gitlab repository branches
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryBranchResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/organization/{organizationId}/account/bitbucket/repository':
+    get:
+      summary: Get bitbucket repositories of the connected user
+      operationId: getOrganizationBitbucketRepositories
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Account Git Repositories
+      responses:
+        '200':
+          description: Get bitbucket repositories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/organization/{organizationId}/account/bitbucket/repository/branch':
+    get:
+      summary: Get bitbucket branches of the specified repository
+      operationId: getOrganizationBitbucketRepositoryBranches
+      tags:
+        - Organization Account Git Repositories
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: The name of the repository where to retrieve the branches
+      responses:
+        '200':
+          description: Get bitbucket repository branches
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryBranchResponseList'
+        '401':
+          $ref: '#/components/responses/401'
   /cloudProvider:
     get:
       summary: List Cloud providers available
@@ -5448,6 +5583,7 @@ paths:
           $ref: '#/components/responses/401'
   /account/gitAuthProvider:
     get:
+      deprecated: true
       summary: Get git provider accounts
       operationId: getGitProviderAccount
       tags:
@@ -5463,6 +5599,7 @@ paths:
           $ref: '#/components/responses/401'
   /account/github/repository:
     get:
+      deprecated: true
       summary: Get github repositories of the connected user
       operationId: getGithubRepositories
       tags:
@@ -5478,6 +5615,7 @@ paths:
           $ref: '#/components/responses/401'
   /account/github/repository/branch:
     get:
+      deprecated: true
       summary: Get github branches of the specified repository
       operationId: getGithubRepositoryBranches
       tags:
@@ -5499,6 +5637,7 @@ paths:
           $ref: '#/components/responses/401'
   /account/gitlab/repository:
     get:
+      deprecated: true
       summary: Get gitlab repositories of the connected user
       operationId: getGitlabRepositories
       tags:
@@ -5514,6 +5653,7 @@ paths:
           $ref: '#/components/responses/401'
   /account/gitlab/repository/branch:
     get:
+      deprecated: true
       summary: Get gitlab branches of the specified repository
       operationId: getGitlabRepositoryBranches
       tags:
@@ -5535,6 +5675,7 @@ paths:
           $ref: '#/components/responses/401'
   /account/bitbucket/repository:
     get:
+      deprecated: true
       summary: Get bitbucket repositories of the connected user
       operationId: getBitbucketRepositories
       tags:
@@ -5550,6 +5691,7 @@ paths:
           $ref: '#/components/responses/401'
   /account/bitbucket/repository/branch:
     get:
+      deprecated: true
       summary: Get bitbucket branches of the specified repository
       operationId: getBitbucketRepositoryBranches
       tags:
@@ -6517,6 +6659,8 @@ components:
         owner:
           type: string
           example: John Doe
+        use_bot:
+          type: boolean
     OrganizationEditRequest:
       type: object
       required:
