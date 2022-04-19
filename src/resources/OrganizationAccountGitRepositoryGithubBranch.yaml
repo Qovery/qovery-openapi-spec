@@ -1,10 +1,10 @@
 get:
-  deprecated: true
   summary: 'Get github branches of the specified repository'
-  operationId: getGithubRepositoryBranches
+  operationId: getOrganizationGithubRepositoryBranches
   tags:
-    - Git repositories
+    - Organization Account Git Repositories
   parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
     - in: query
       name: name
       schema:

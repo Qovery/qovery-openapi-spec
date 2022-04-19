@@ -1,10 +1,10 @@
 get:
-  deprecated: true
-  summary: 'Get github branches of the specified repository'
-  operationId: getGithubRepositoryBranches
+  summary: 'Get bitbucket branches of the specified repository'
+  operationId: getOrganizationBitbucketRepositoryBranches
   tags:
-    - Git repositories
+    - Organization Account Git Repositories
   parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
     - in: query
       name: name
       schema:
@@ -12,7 +12,7 @@ get:
       description: The name of the repository where to retrieve the branches
   responses:
     '200':
-      description: 'Get github repository branches'
+      description: 'Get bitbucket repository branches'
       content:
         application/json:
           schema:

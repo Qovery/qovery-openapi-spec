@@ -1,9 +1,10 @@
 get:
-  deprecated: true
   summary: 'Get git provider accounts'
-  operationId: getGitProviderAccount
+  operationId: getOrganizationGitProviderAccount
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
   tags:
-    - Git repositories
+    - Organization Account Git Repositories
   responses:
     '200':
       description: 'Get account'

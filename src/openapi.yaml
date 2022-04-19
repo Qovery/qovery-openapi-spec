@@ -72,6 +72,7 @@ x-tagGroups:
     tags:
       - Organization Main Calls
       - Organization Api Token
+      - Organization Account Git Repositories
       - Projects
       - Members
       - Billing
@@ -201,6 +202,20 @@ paths:
     $ref: './resources/CloudProviderScalewayCredentials.yaml'
   /organization/{organizationId}/scaleway/credentials/{credentialsId}:
     $ref: './resources/CloudProviderScalewayCredentialsRef.yaml'
+  /organization/{organizationId}/account/gitAuthProvider:
+    $ref: './resources/OrganizationAccountGitAuthProvider.yaml'
+  /organization/{organizationId}/account/github/repository:
+    $ref: './resources/OrganizationAccountGitRepositoryGithub.yaml'
+  /organization/{organizationId}/account/github/repository/branch:
+    $ref: './resources/OrganizationAccountGitRepositoryGithubBranch.yaml'
+  /organization/{organizationId}/account/gitlab/repository:
+    $ref: './resources/OrganizationAccountGitRepositoryGitlab.yaml'
+  /organization/{organizationId}/account/gitlab/repository/branch:
+    $ref: './resources/OrganizationAccountGitRepositoryGitlabBranch.yaml'
+  /organization/{organizationId}/account/bitbucket/repository:
+    $ref: './resources/OrganizationAccountGitRepositoryBitbucket.yaml'
+  /organization/{organizationId}/account/bitbucket/repository/branch:
+    $ref: './resources/OrganizationAccountGitRepositoryBitbucketBranch.yaml'
   /cloudProvider:
     $ref: './resources/CloudProvider.yaml'
   /aws/region:

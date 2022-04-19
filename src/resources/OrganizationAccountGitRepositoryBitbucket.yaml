@@ -1,9 +1,10 @@
 get:
-  deprecated: true
   summary: 'Get bitbucket repositories of the connected user'
-  operationId: getBitbucketRepositories
+  operationId: getOrganizationBitbucketRepositories
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
   tags:
-    - Git repositories
+    - Organization Account Git Repositories
   responses:
     '200':
       description: 'Get bitbucket repositories'
