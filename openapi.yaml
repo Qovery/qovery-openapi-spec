@@ -6425,17 +6425,24 @@ components:
       required:
         - id
         - created_at
-        - status
         - message
       properties:
         id:
           type: string
           format: uuid
+          example: 4aa76065-68b3-41ef-aa1d-46be67012bef
         created_at:
           type: string
           format: date-time
+          example: '2022-04-19T15:36:12.024Z'
         message:
           type: string
+        pod_name:
+          type: string
+          example: app-z4aa76065-57d84cbbdb-xcg8v
+        application_commit_id:
+          type: string
+          example: 2bfd61fe45946c74f318050b26210be486c43a39
     MetricMemory:
       type: object
       required:
