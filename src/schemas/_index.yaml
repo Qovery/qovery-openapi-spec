@@ -296,6 +296,8 @@ OrganizationCreditCodeRequest:
   $ref: ./OrganizationCreditCodeRequest.yaml
 EnvironmentStatsResponseList:
   $ref: ./EnvironmentStatsResponseList.yaml
+EnvironmentStatusList:
+  $ref: ./EnvironmentStatusList.yaml
 Secret:
   $ref: ./SecretResponse.yaml
 Status:
