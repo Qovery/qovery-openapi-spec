@@ -1,6 +1,6 @@
 {
   "name": "openapi-boilerplate",
-  "version": "0.0.7",
+  "version": "0.0.6",
   "description": "Multi-file boilerplate for Open API Specification.",
   "main": "index.js",
   "scripts": {
