@@ -2451,7 +2451,7 @@ paths:
     get:
       summary: List environments statuses
       description: Returns a list of environments with only their id and status.
-      operationId: getProjectEnvironmentStatus
+      operationId: getProjectEnvironmentsStatus
       parameters:
         - $ref: '#/components/parameters/projectId'
       tags:
@@ -2462,7 +2462,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Status'
+                $ref: '#/components/schemas/EnvironmentStatusList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -8037,6 +8037,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentStats'
+    EnvironmentStatusList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
     Secret:
       allOf:
         - $ref: '#/components/schemas/Base'
