@@ -1535,30 +1535,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      type: object
-                      required:
-                        - type
-                        - name
-                        - cpu
-                        - ram_in_gb
-                      properties:
-                        type:
-                          type: string
-                          example: T3A_XLARGE
-                        name:
-                          type: string
-                          example: t3a.xlarge
-                        cpu:
-                          type: integer
-                          example: 2
-                        ram_in_gb:
-                          type: integer
-                          example: 8
+                $ref: '#/components/schemas/ClusterInstanceTypeResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1615,7 +1592,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1aws~1instanceType/get/responses/200/content/application~1json/schema'
+                $ref: '#/components/schemas/ClusterInstanceTypeResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1672,7 +1649,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1aws~1instanceType/get/responses/200/content/application~1json/schema'
+                $ref: '#/components/schemas/ClusterInstanceTypeResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3507,7 +3484,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationDeploymentRestriction'
+                $ref: '#/components/schemas/ApplicationDeploymentRestrictionResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3533,9 +3510,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Base'
-                  - $ref: '#/components/schemas/ApplicationDeploymentRestrictionRequest'
+                $ref: '#/components/schemas/ApplicationDeploymentRestriction'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -3571,7 +3546,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1application~1%7BapplicationId%7D~1deploymentRestriction/post/responses/201/content/application~1json/schema'
+                $ref: '#/components/schemas/ApplicationDeploymentRestriction'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -6096,6 +6071,31 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClusterStatus'
+    ClusterInstanceTypeResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            required:
+              - type
+              - name
+              - cpu
+              - ram_in_gb
+            properties:
+              type:
+                type: string
+                example: T3A_XLARGE
+              name:
+                type: string
+                example: t3a.xlarge
+              cpu:
+                type: integer
+                example: 2
+              ram_in_gb:
+                type: integer
+                example: 8
     MetricGeneric:
       type: object
       required:
@@ -7320,14 +7320,16 @@ components:
           description: 'For `PATH` restrictions, the value must not start with `/`'
           example: application1/src/
     ApplicationDeploymentRestriction:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/ApplicationDeploymentRestrictionRequest'
+    ApplicationDeploymentRestrictionResponseList:
       type: object
       properties:
         deployment_restrictions:
           type: array
           items:
-            $ref: '#/paths/~1application~1%7BapplicationId%7D~1deploymentRestriction/post/responses/201/content/application~1json/schema'
-    ApplicationDeploymentRestrictionResponseList:
-      $ref: '#/components/schemas/ApplicationDeploymentRestriction'
+            $ref: '#/components/schemas/ApplicationDeploymentRestriction'
     RemainingCredits:
       allOf:
         - $ref: '#/components/schemas/Cost'
