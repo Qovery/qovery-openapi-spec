@@ -6054,9 +6054,7 @@ components:
               - mount_point
             properties:
               type:
-                type: string
-                enum:
-                  - FAST_SSD
+                $ref: '#/components/schemas/StorageTypeEnum'
               size:
                 type: integer
                 description: unit is GB
@@ -9360,9 +9358,7 @@ components:
     StorageTypeEnum:
       type: string
       enum:
-        - AWS
-        - DIGITAL_OCEAN
-        - SCALEWAY
+        - FAST_SSD
   responses:
     '204':
       description: no content
