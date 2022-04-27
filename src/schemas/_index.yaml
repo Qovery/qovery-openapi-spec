@@ -8,6 +8,8 @@ ApplicationStorageRequest:
   $ref: ./ApplicationStorageRequest.yaml
 ClusterStatusResponseList:
   $ref: ./ClusterStatusResponseList.yaml
+ClusterInstanceTypeResponseList:
+  $ref: ./ClusterInstanceTypeResponseList.yaml
 MetricGeneric:
   $ref: ./MetricGenericResponse.yaml
 ApplicationStorage:
@@ -171,7 +173,7 @@ ApplicationNetworkRequest:
 ApplicationDeploymentRestrictionRequest:
   $ref: ./ApplicationDeploymentRestrictionRequest.yaml
 ApplicationDeploymentRestriction:
-  $ref: ./ApplicationDeploymentRestrictionResponseList.yaml
+  $ref: ./ApplicationDeploymentRestrictionResponse.yaml
 ApplicationDeploymentRestrictionResponseList:
   $ref: ./ApplicationDeploymentRestrictionResponseList.yaml
 RemainingCredits:
@@ -406,7 +408,6 @@ InviteMemberRequest:
   $ref: ./InviteMemberRequest.yaml
 ClusterFeatureRequest:
   $ref: ./ClusterFeatureRequest.yaml
-
 ClusterFeature:
   $ref: ./ClusterFeatureResponse.yaml
 ClusterRoutingTable:
