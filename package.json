@@ -26,6 +26,6 @@
     "@openapitools/openapi-generator-cli": "^2.5.1",
     "@stoplight/spectral-cli": "^6.3.0",
     "redoc-cli": "^0.13.10",
-    "react-is": "^18.0.0"
+    "react-is": "^18.1.0"
   }
 }
