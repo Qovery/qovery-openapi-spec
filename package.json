@@ -23,7 +23,7 @@
   "homepage": "https://github.com/dgarcia360/openapi-boilerplate#readme",
   "dependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
-    "@openapitools/openapi-generator-cli": "^2.4.26",
+    "@openapitools/openapi-generator-cli": "^2.5.1",
     "@stoplight/spectral-cli": "^6.3.0",
     "redoc-cli": "^0.13.10",
     "react-is": "^18.0.0"
