@@ -6409,7 +6409,7 @@ components:
         - type: object
           properties:
             status:
-              $ref: '#/components/schemas/GlobalDeploymentStatus'
+              $ref: '#/components/schemas/StateEnum'
             applications:
               type: array
               items:
@@ -6565,7 +6565,7 @@ components:
           type: string
           format: uuid
         status:
-          $ref: '#/components/schemas/ClusterDeploymentStatusEnum'
+          $ref: '#/components/schemas/StateEnum'
         is_deployed:
           type: boolean
     InvoiceResponseList:
@@ -6639,7 +6639,7 @@ components:
               type: string
               format: uuid
         state:
-          $ref: '#/components/schemas/GlobalDeploymentStatus'
+          $ref: '#/components/schemas/StatusKindEnum'
         message:
           type: string
           nullable: true
@@ -6987,7 +6987,7 @@ components:
             commit:
               $ref: '#/components/schemas/Commit'
             status:
-              $ref: '#/components/schemas/GlobalDeploymentStatus'
+              $ref: '#/components/schemas/StateEnum'
     DeploymentHistoryDatabase:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -6996,7 +6996,7 @@ components:
             name:
               type: string
             status:
-              $ref: '#/components/schemas/GlobalDeploymentStatus'
+              $ref: '#/components/schemas/StateEnum'
     OrganizationResponseList:
       type: object
       properties:
@@ -7770,7 +7770,7 @@ components:
               type: integer
               description: 'This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration'
             status:
-              $ref: '#/components/schemas/ClusterStatusEnum'
+              $ref: '#/components/schemas/StateEnum'
             features:
               $ref: '#/components/schemas/ClusterFeature'
             has_access:
@@ -8067,7 +8067,7 @@ components:
           type: string
           format: uuid
         state:
-          $ref: '#/components/schemas/GlobalDeploymentStatus'
+          $ref: '#/components/schemas/StateEnum'
         message:
           type: string
           nullable: true
@@ -9137,8 +9137,8 @@ components:
       type: string
       enum:
         - PERSONAL
-        - WORK
         - SCHOOL
+        - WORK
     CompanySizeEnum:
       type: string
       enum:
@@ -9150,8 +9150,8 @@ components:
     BuildModeEnum:
       type: string
       enum:
-        - DOCKER
         - BUILDPACKS
+        - DOCKER
       description: |
         `DOCKER` requires `dockerfile_path`
         `BUILDPACKS` does not require any `dockerfile_path`
@@ -9159,27 +9159,28 @@ components:
     EnvironmentVariableScopeEnum:
       type: string
       enum:
+        - APPLICATION
         - BUILT_IN
         - ENVIRONMENT
         - PROJECT
-        - APPLICATION
     GitProviderEnum:
       type: string
       enum:
+        - BITBUCKET
         - GITHUB
         - GITLAB
     ThresholdMetricStatusEnum:
       type: string
       enum:
+        - Alert
         - OK
         - Warning
-        - Alert
     PortProtocolEnum:
       type: string
       default: HTTP
       enum:
-        - HTTPS
         - HTTP
+        - HTTPS
         - TCP
         - UDP
     WeekdayEnum:
@@ -9193,87 +9194,24 @@ components:
         - SATURDAY
         - SUNDAY
       example: MONDAY
-    GlobalDeploymentStatus:
-      type: string
-      enum:
-        - READY
-        - QUEUED
-        - STOP_QUEUED
-        - DELETE_QUEUED
-        - BUILDING
-        - BUILD_ERROR
-        - BUILT
-        - DEPLOYING
-        - DEPLOYMENT_ERROR
-        - DEPLOYED
-        - STOPPING
-        - STOP_ERROR
-        - STOPPED
-        - DELETING
-        - DELETE_ERROR
-        - DELETED
-        - RUNNING
-        - RUNNING_ERROR
-    ClusterStatusEnum:
-      type: string
-      enum:
-        - READY
-        - QUEUED
-        - STOP_QUEUED
-        - DELETE_QUEUED
-        - BUILDING
-        - BUILD_ERROR
-        - BUILT
-        - DEPLOYING
-        - DEPLOYMENT_ERROR
-        - DEPLOYED
-        - STOPPING
-        - STOP_ERROR
-        - STOPPED
-        - DELETING
-        - DELETE_ERROR
-        - DELETED
-        - RUNNING
-        - RUNNING_ERROR
-    ClusterDeploymentStatusEnum:
-      type: string
-      enum:
-        - READY
-        - QUEUED
-        - STOP_QUEUED
-        - DELETE_QUEUED
-        - BUILDING
-        - BUILD_ERROR
-        - BUILT
-        - DEPLOYING
-        - DEPLOYMENT_ERROR
-        - DEPLOYED
-        - STOPPING
-        - STOP_ERROR
-        - STOPPED
-        - DELETING
-        - DELETE_ERROR
-        - DELETED
-        - RUNNING
-        - RUNNING_ERROR
     ServiceDeploymentStatusEnum:
       type: string
       nullable: true
       enum:
         - NEVER_DEPLOYED
-        - UP_TO_DATE
         - OUT_OF_DATE
+        - UP_TO_DATE
     DeploymentHistoryStatusEnum:
       type: string
       enum:
-        - SUCCESS
         - FAILED
+        - SUCCESS
     DeploymentRestrictionModeEnum:
       type: string
       description: Match mode will rebuild app only if specified items are updated. Exclude mode will not rebuild app if specified items are updated.
       enum:
-        - MATCH
         - EXCLUDE
+        - MATCH
       example: MATCH
     DeploymentRestrictionTypeEnum:
       type: string
@@ -9283,28 +9221,28 @@ components:
     DatabaseTypeEnum:
       type: string
       enum:
-        - POSTGRESQL
-        - MYSQL
         - MONGODB
+        - MYSQL
+        - POSTGRESQL
         - REDIS
     DatabaseModeEnum:
       type: string
       enum:
-        - MANAGED
         - CONTAINER
+        - MANAGED
     DatabaseAccessibilityEnum:
       type: string
       default: PRIVATE
       enum:
-        - PUBLIC
         - PRIVATE
+        - PUBLIC
     EnvironmentModeEnum:
       type: string
       enum:
-        - PRODUCTION
         - DEVELOPMENT
-        - STAGING
         - PREVIEW
+        - PRODUCTION
+        - STAGING
     CloudProviderEnum:
       type: string
       enum:
@@ -9314,9 +9252,9 @@ components:
     InviteMemberRoleEnum:
       type: string
       enum:
-        - OWNER
         - ADMIN
         - DEVELOPER
+        - OWNER
         - VIEWER
     EnvironmentLogTypeEnum:
       type: string
@@ -9327,26 +9265,26 @@ components:
     InviteStatusEnum:
       type: string
       enum:
-        - PENDING
         - EXPIRED
+        - PENDING
     PlanEnum:
       type: string
       enum:
+        - BUSINESS
         - COMMUNITY
+        - ENTERPRISE
         - FREE
         - PROFESSIONAL
-        - BUSINESS
-        - ENTERPRISE
     InvoiceStatusEnum:
       type: string
       enum:
-        - PAID
-        - POSTED
-        - PAYMENT_DUE
         - NOT_PAID
-        - VOIDED
+        - PAID
+        - PAYMENT_DUE
         - PENDING
+        - POSTED
         - UNKNOWN
+        - VOIDED
     ServiceTypeEnum:
       type: string
       description: 'type of the service (application, database, job, gateway...)'
@@ -9357,6 +9295,43 @@ components:
       type: string
       enum:
         - FAST_SSD
+    StatusKindEnum:
+      type: string
+      enum:
+        - CANCELED
+        - CANCELING
+        - DELETED
+        - DELETE_ERROR
+        - DELETE_IN_PROGRESS
+        - DEPLOYED
+        - DEPLOYMENT_ERROR
+        - DEPLOYMENT_IN_PROGRESS
+        - ERROR
+        - PAUSED
+        - PAUSE_ERROR
+        - PAUSE_IN_PROGRESS
+        - WAITING
+    StateEnum:
+      type: string
+      enum:
+        - BUILDING
+        - BUILD_ERROR
+        - BUILT
+        - DELETED
+        - DELETE_ERROR
+        - DELETE_QUEUED
+        - DELETING
+        - DEPLOYED
+        - DEPLOYING
+        - DEPLOYMENT_ERROR
+        - QUEUED
+        - READY
+        - RUNNING
+        - RUNNING_ERROR
+        - STOPPED
+        - STOPPING
+        - STOP_ERROR
+        - STOP_QUEUED
   responses:
     '204':
       description: no content
