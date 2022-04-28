@@ -9315,8 +9315,8 @@ components:
       type: string
       enum:
         - BUILDING
-        - BUILD_ERROR
-        - BUILT
+        - CANCELED
+        - CANCELING
         - DELETED
         - DELETE_ERROR
         - DELETE_QUEUED
@@ -9324,10 +9324,10 @@ components:
         - DEPLOYED
         - DEPLOYING
         - DEPLOYMENT_ERROR
+        - DEPLOYMENT_QUEUED
         - QUEUED
         - READY
         - RUNNING
-        - RUNNING_ERROR
         - STOPPED
         - STOPPING
         - STOP_ERROR
