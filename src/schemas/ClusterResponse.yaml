@@ -9,7 +9,9 @@ allOf:
       status:
         $ref: './enums/State.yaml'
       features:
-        $ref: './ClusterFeatureResponse.yaml'
+        type: array
+        items:
+          $ref: './ClusterFeatureResponse.yaml'
       has_access:
         type: boolean
       version:
