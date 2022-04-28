@@ -1,6 +1,6 @@
 type: string
 enum:
-  - OWNER
   - ADMIN
   - DEVELOPER
+  - OWNER
   - VIEWER

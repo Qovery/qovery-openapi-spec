@@ -458,12 +458,6 @@ PortProtocolEnum:
   $ref: ./enums/PortProtocol.yaml
 WeekdayEnum:
   $ref: ./enums/Weekday.yaml
-GlobalDeploymentStatus:
-  $ref: ./enums/GlobalDeploymentStatus.yaml
-ClusterStatusEnum:
-  $ref: ./enums/ClusterStatus.yaml
-ClusterDeploymentStatusEnum:
-  $ref: ./enums/ClusterDeploymentStatus.yaml
 ServiceDeploymentStatusEnum:
   $ref: ./enums/ServiceDeploymentStatus.yaml
 DeploymentHistoryStatusEnum:
@@ -496,3 +490,7 @@ ServiceTypeEnum:
   $ref: ./enums/ServiceType.yaml
 StorageTypeEnum:
   $ref: ./enums/StorageType.yaml
+StatusKindEnum:
+  $ref: ./enums/StatusKind.yaml
+StateEnum:
+  $ref: ./enums/State.yaml
