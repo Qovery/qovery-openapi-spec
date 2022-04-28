@@ -244,6 +244,8 @@ CloneRequest:
   $ref: ./CloneRequest.yaml
 MetricMemoryDatapointResponseList:
   $ref: ./MetricMemoryDatapointResponseList.yaml
+ClusterBase:
+  $ref: ./ClusterBase.yaml
 Cluster:
   $ref: ./ClusterResponse.yaml
 BackupPaginatedResponseList:
