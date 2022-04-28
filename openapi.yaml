@@ -7006,13 +7006,8 @@ components:
             $ref: '#/components/schemas/Organization'
     ClusterRequest:
       allOf:
-        - $ref: '#/components/schemas/Cluster/allOf/1'
+        - $ref: '#/components/schemas/ClusterBase'
         - $ref: '#/components/schemas/ClusterFeatureRequest'
-        - type: object
-          required:
-            - name
-            - cloud_provider
-            - region
     ClusterCloudProviderInfo:
       type: object
       properties:
@@ -7727,47 +7722,48 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MetricMemoryDatapoint'
+    ClusterBase:
+      type: object
+      required:
+        - name
+        - cloud_provider
+        - region
+      properties:
+        name:
+          type: string
+          description: name is case-insensitive
+        description:
+          type: string
+        cloud_provider:
+          $ref: '#/components/schemas/CloudProviderEnum'
+        region:
+          type: string
+        auto_update:
+          type: boolean
+        cpu:
+          type: integer
+          description: unit is millicores (m). 1000m = 1 cpu
+          default: 250
+          example: 1250
+        memory:
+          type: integer
+          description: unit is MB. 1024 MB = 1GB
+          default: 256
+          example: 1024
+        min_running_nodes:
+          type: integer
+          default: 1
+        max_running_nodes:
+          type: integer
+          default: 1
+        instance_type:
+          type: string
+          example: T3A_LARGE
+          description: 'the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType'
     Cluster:
       allOf:
         - $ref: '#/components/schemas/Base'
-        - type: object
-          required:
-            - name
-            - cloud_provider
-            - region
-          properties:
-            name:
-              type: string
-              description: name is case-insensitive
-            description:
-              type: string
-            cloud_provider:
-              $ref: '#/components/schemas/CloudProviderEnum'
-            region:
-              type: string
-            auto_update:
-              type: boolean
-            cpu:
-              type: integer
-              description: unit is millicores (m). 1000m = 1 cpu
-              default: 250
-              example: 1250
-            memory:
-              type: integer
-              description: unit is MB. 1024 MB = 1GB
-              default: 256
-              example: 1024
-            min_running_nodes:
-              type: integer
-              default: 1
-            max_running_nodes:
-              type: integer
-              default: 1
-            instance_type:
-              type: string
-              example: T3A_LARGE
-              description: 'the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType'
-        - $ref: '#/components/schemas/ClusterFeature'
+        - $ref: '#/components/schemas/ClusterBase'
         - type: object
           properties:
             estimated_cloud_provider_cost:
@@ -7775,6 +7771,8 @@ components:
               description: 'This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration'
             status:
               $ref: '#/components/schemas/ClusterStatusEnum'
+            features:
+              $ref: '#/components/schemas/ClusterFeature'
             has_access:
               type: boolean
             version:
