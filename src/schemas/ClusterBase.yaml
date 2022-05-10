@@ -1,0 +1,42 @@
+type: object
+required:
+  - name
+  - cloud_provider
+  - region
+properties:
+  name:
+    type: string
+    description: name is case-insensitive
+  description:
+    type: string
+  cloud_provider:
+    $ref: './enums/CloudProvider.yaml'
+  region:
+    type: string
+  auto_update:
+    type: boolean
+  cpu:
+    type: integer
+    description: unit is millicores (m). 1000m = 1 cpu
+    default: 250
+    example: 1250
+  memory:
+    type: integer
+    description: unit is MB. 1024 MB = 1GB
+    default: 256
+    example: 1024
+  min_running_nodes:
+    type: integer
+    default: 1
+  max_running_nodes:
+    type: integer
+    default: 1
+  instance_type:
+    type: string
+    example: "T3A_LARGE"
+    description: the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType 
+  disk_size:
+    type: integer
+    example: 50
+    default: 20
+    description: the disk size to be used for the node configuration

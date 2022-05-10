@@ -15,11 +15,12 @@ info:
 tags:
   - name: Account
   - name: Account Info
+  - name: Admin
   - name: Application
   - name: Application Actions
   - name: Application Configuration
   - name: Application Database
-  - name: Application Deployment rule
+  - name: Application Deployment Restriction
   - name: Application Deployment History
   - name: Application Environment Variable
   - name: Application Event
@@ -66,11 +67,13 @@ tags:
   - name: Project Secret
   - name: Projects
   - name: Referral & Rewards
+  - name: User Sign Up
 x-tagGroups:
   - name: Organization
     tags:
       - Organization Main Calls
       - Organization Api Token
+      - Organization Account Git Repositories
       - Projects
       - Members
       - Billing
@@ -106,7 +109,7 @@ x-tagGroups:
       - Application Metrics
       - Application Database
       - Application Logs
-      - Application Deployment Rule
+      - Application Deployment Restriction
       - Application Deployment History
       - Application Environment Variable
       - Application Secret
@@ -129,6 +132,9 @@ x-tagGroups:
   - name: Git
     tags:
       - Git repositories
+  - name: Admin
+    tags:
+      - User Sign Up
 servers:
   - url: 'https://api.qovery.com'
 paths:
@@ -202,20 +208,40 @@ paths:
     $ref: './resources/OrganizationGithubAppConnect.yaml'
   /organization/{organizationId}/github/disconnect:
     $ref: './resources/OrganizationGithubAppDisconnect.yaml'
+  /organization/{organizationId}/account/gitAuthProvider:
+    $ref: './resources/OrganizationAccountGitAuthProvider.yaml'
+  /organization/{organizationId}/account/github/repository:
+    $ref: './resources/OrganizationAccountGitRepositoryGithub.yaml'
+  /organization/{organizationId}/account/github/repository/branch:
+    $ref: './resources/OrganizationAccountGitRepositoryGithubBranch.yaml'
+  /organization/{organizationId}/account/gitlab/repository:
+    $ref: './resources/OrganizationAccountGitRepositoryGitlab.yaml'
+  /organization/{organizationId}/account/gitlab/repository/branch:
+    $ref: './resources/OrganizationAccountGitRepositoryGitlabBranch.yaml'
+  /organization/{organizationId}/account/bitbucket/repository:
+    $ref: './resources/OrganizationAccountGitRepositoryBitbucket.yaml'
+  /organization/{organizationId}/account/bitbucket/repository/branch:
+    $ref: './resources/OrganizationAccountGitRepositoryBitbucketBranch.yaml'
   /cloudProvider:
     $ref: './resources/CloudProvider.yaml'
   /aws/region:
     $ref: './resources/CloudProviderAWSRegion.yaml'
   /aws/clusterFeature:
     $ref: './resources/CloudProviderAWSClusterFeature.yaml'
+  /aws/instanceType:
+    $ref: './resources/CloudProviderAWSInstanceType.yaml'
   /digitalOcean/region:
     $ref: './resources/CloudProviderDORegion.yaml'
   /digitalOcean/clusterFeature:
     $ref: './resources/CloudProviderDOClusterFeature.yaml'
+  /digitalOcean/instanceType:
+    $ref: './resources/CloudProviderDOInstanceType.yaml'
   /scaleway/region:
     $ref: './resources/CloudProviderScalewayRegion.yaml'
   /scaleway/clusterFeature:
     $ref: './resources/CloudProviderScalewayClusterFeature.yaml'
+  /scaleway/instanceType:
+    $ref: './resources/CloudProviderScalewayInstanceType.yaml'
   /organization/{organizationId}/cluster/{clusterId}/cloudProviderInfo:
     $ref: './resources/OrganizationClusterCloudProviderInfo.yaml'
   /organization/{organizationId}/cluster/{clusterId}/isReady:
@@ -316,10 +342,10 @@ paths:
     $ref: './resources/Application.yaml'
   /application/{applicationId}/status:
     $ref: './resources/ApplicationStatus.yaml'
-  /application/{applicationId}/deploymentRule:
-    $ref: './resources/ApplicationDeploymentRule.yaml'
-  /application/{applicationId}/deploymentRule/{deploymentRuleId}:
-    $ref: './resources/ApplicationDeploymentRuleRef.yaml'
+  /application/{applicationId}/deploymentRestriction:
+    $ref: './resources/ApplicationDeploymentRestriction.yaml'
+  /application/{applicationId}/deploymentRestriction/{deploymentRestrictionId}:
+    $ref: './resources/ApplicationDeploymentRestrictionRef.yaml'
   /application/{applicationId}/contributor:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:
@@ -466,6 +492,8 @@ paths:
     $ref: './resources/AccountReferral.yaml'
   /account/rewardClaim:
     $ref: './resources/AccountRewardClaim.yaml'
+  /admin/userSignUp:
+    $ref: './resources/UserSignUp.yaml'
 components:
   parameters:
     $ref: './parameters/_index.yaml'

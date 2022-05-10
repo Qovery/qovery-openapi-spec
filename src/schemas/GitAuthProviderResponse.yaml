@@ -11,3 +11,5 @@ properties:
   owner:
     type: string
     example: "John Doe"
+  use_bot:
+    type: boolean

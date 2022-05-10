@@ -26,19 +26,28 @@ jobs:
             target-branch: main
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v2
+      - name: Check out source code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
         with:
-          go-version: '1.17'
-      - uses: actions/setup-python@v3
+          go-version: '1.18'
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
         with:
           python-version: '3.x'
+
       - name: Build OpenApi file
         run: |
           npm ci
           npm run build
+
       - name: Generate ${{ matrix.language }} client
         uses: openapi-generators/openapitools-generator-action@v1
+        env:
+          GO_POST_PROCESS_FILE: "/usr/local/bin/gofmt -w"
         with:
           generator: ${{ matrix.language }}
           generator-tag: v${{ matrix.version }}
@@ -47,6 +56,7 @@ jobs:
           command-args: |
             -a bearer \
             -o out/qovery-client-${{ matrix.language }} \
+            --enable-post-process-file \
             --git-user-id qovery \
             --git-repo-id qovery-client-${{ matrix.language }} \
             --package-name qovery \
@@ -58,9 +68,11 @@ jobs:
         uses: andstor/file-existence-action@v1
         with:
           files: 'generator/post_generation_scripts/${{ matrix.language }}.sh'
+
       - name: Run ${{ matrix.language }} post generation script
         if: steps.check_files.outputs.files_exists == 'true'
         run: generator/post_generation_scripts/${{ matrix.language }}.sh
+
       - name: Publish ${{ matrix.language }} client
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main

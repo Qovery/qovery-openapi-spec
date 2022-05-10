@@ -1,6 +1,6 @@
 {
   "name": "openapi-boilerplate",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Multi-file boilerplate for Open API Specification.",
   "main": "index.js",
   "scripts": {
@@ -23,9 +23,9 @@
   "homepage": "https://github.com/dgarcia360/openapi-boilerplate#readme",
   "dependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
-    "@openapitools/openapi-generator-cli": "^2.4.26",
+    "@openapitools/openapi-generator-cli": "^2.5.1",
     "@stoplight/spectral-cli": "^6.3.0",
-    "redoc-cli": "^0.13.9",
-    "react-is": "^17.0.2"
+    "redoc-cli": "^0.13.11",
+    "react-is": "^18.1.0"
   }
 }

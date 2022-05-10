@@ -27,7 +27,9 @@ properties:
     enum:
       - BOOLEAN
   value:
-    type: string
+    oneOf:
+      - type: string
+      - type: boolean
     nullable: true
   is_value_updatable:
     type: boolean

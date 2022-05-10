@@ -1,0 +1,16 @@
+get:
+  summary: 'Get github repositories of the connected user'
+  operationId: getOrganizationGithubRepositories
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Organization Account Git Repositories
+  responses:
+    '200':
+      description: 'Get github repositories'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/GitRepositoryResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'

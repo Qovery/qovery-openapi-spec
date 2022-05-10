@@ -3,7 +3,7 @@ allOf:
   - type: object
     properties:
       status:
-        $ref: './enums/GlobalDeploymentStatus.yaml'
+        $ref: './enums/State.yaml'
       applications:
         type: array
         items:

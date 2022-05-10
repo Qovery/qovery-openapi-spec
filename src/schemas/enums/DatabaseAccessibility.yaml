@@ -1,5 +1,5 @@
 type: string
 default: PRIVATE
 enum:
-  - PUBLIC
   - PRIVATE
+  - PUBLIC

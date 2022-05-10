@@ -31,3 +31,12 @@ properties:
   max_running_nodes:
     type: integer
     default: 1
+  instance_type:
+    type: string
+    example: "T3A_LARGE"
+    description: the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType 
+  disk_size:
+    type: integer
+    example: 50
+    default: 20
+    description: the disk size to be used for the node configuration 

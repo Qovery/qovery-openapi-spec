@@ -2,35 +2,41 @@ ApplicationGitRepositoryRequest:
   $ref: ./ApplicationGitRepositoryRequest.yaml
 OrganizationRequest:
   $ref: ./OrganizationRequest.yaml
-MetricCPUResponse:
+MetricCPU:
   $ref: ./MetricCPUResponse.yaml
 ApplicationStorageRequest:
   $ref: ./ApplicationStorageRequest.yaml
 ClusterStatusResponseList:
   $ref: ./ClusterStatusResponseList.yaml
-MetricGenericResponse:
+ClusterInstanceTypeResponseList:
+  $ref: ./ClusterInstanceTypeResponseList.yaml
+MetricGeneric:
   $ref: ./MetricGenericResponse.yaml
-ApplicationStorageResponse:
+ApplicationStorage:
   $ref: ./ApplicationStorageResponse.yaml
 ApplicationDependencyRequest:
   $ref: ./ApplicationDependencyRequest.yaml
-OrganizationResponse:
+Organization:
   $ref: ./OrganizationResponse.yaml
-MetricStorageDatapointResponse:
+MetricStorageDatapoint:
   $ref: ./MetricStorageDatapointResponse.yaml
 ProjectRequest:
   $ref: ./ProjectRequest.yaml
 BillingInfoRequest:
   $ref: ./BillingInfoRequest.yaml
-ProjectDeploymentRuleResponse:
+ProjectDeploymentRule:
   $ref: ./ProjectDeploymentRuleResponse.yaml
+ProjectDeploymentRulesPriorityOrderRequest:
+  $ref: ./ProjectDeploymentRulesPriorityOrderRequest.yaml
+DeployAllRequest:
+  $ref: ./DeployAllRequest.yaml
 ProjectResponseList:
   $ref: ./ProjectResponseList.yaml
 ProjectStatsResponseList:
   $ref: ./ProjectStatsResponseList.yaml
 Value:
   $ref: ./Value.yaml
-DatabaseResponse:
+Database:
   $ref: ./DatabaseResponse.yaml
 SecretRequest:
   $ref: ./SecretRequest.yaml
@@ -42,27 +48,27 @@ MemberResponseList:
   $ref: ./MemberResponseList.yaml
 DatabaseRequest:
   $ref: ./DatabaseRequest.yaml
-PaginationDataResponse:
+PaginationData:
   $ref: ./PaginationDataResponse.yaml
 DatabaseResponseList:
   $ref: ./DatabaseResponseList.yaml
-LinkResponse:
+Link:
   $ref: ./LinkResponse.yaml
 MetricStorageDatapointResponseList:
   $ref: ./MetricStorageDatapointResponseList.yaml
-DeploymentHistoryEnvironmentResponse:
+DeploymentHistoryEnvironment:
   $ref: ./DeploymentHistoryEnvironmentResponse.yaml
-LogResponse:
+Log:
   $ref: ./LogResponse.yaml
-MetricMemoryResponse:
+MetricMemory:
   $ref: ./MetricMemoryResponse.yaml
 EnvironmentTotalNumber:
   $ref: ./EnvironmentTotalNumber.yaml
-EnvironmentApplicationsStorageResponse:
+EnvironmentApplicationsStorage:
   $ref: ./EnvironmentApplicationsStorageResponse.yaml
-MetricCPUDatapointResponse:
+MetricCPUDatapoint:
   $ref: ./MetricCPUDatapointResponse.yaml
-VersionResponse:
+Version:
   $ref: ./VersionResponse.yaml
 DatabaseEditRequest:
   $ref: ./DatabaseEditRequest.yaml
@@ -70,25 +76,25 @@ DeploymentHistoryPaginatedResponseList:
   $ref: ./DeploymentHistoryPaginatedResponseList.yaml
 ClusterCredentialsRequest:
   $ref: ./ClusterCredentialsRequest.yaml
-MemberResponse:
+Member:
   $ref: ./MemberResponse.yaml
-ClusterStatusResponse:
+ClusterStatus:
   $ref: ./ClusterStatusResponse.yaml
 InvoiceResponseList:
   $ref: ./InvoiceResponseList.yaml
 EnvironmentApplicationsInstanceResponseList:
   $ref: ./EnvironmentApplicationsInstanceResponseList.yaml
-InvoiceResponse:
+Invoice:
   $ref: ./InvoiceResponse.yaml
-EnvironmentLogResponse:
+EnvironmentLog:
   $ref: ./EnvironmentLogResponse.yaml
-GitAuthProviderResponse:
+GitAuthProvider:
   $ref: ./GitAuthProviderResponse.yaml
 OrganizationEditRequest:
   $ref: ./OrganizationEditRequest.yaml
 ClusterCloudProviderInfoRequest:
   $ref: ./ClusterCloudProviderInfoRequest.yaml
-MetricGenericDatapointResponse:
+MetricGenericDatapoint:
   $ref: ./MetricGenericDatapointResponse.yaml
 ServiceTotalNumber:
   $ref: ./ServiceTotalNumber.yaml
@@ -104,13 +110,13 @@ ProjectCurrentCostResponseList:
   $ref: ./ProjectCurrentCostResponseList.yaml
 Healthcheck:
   $ref: ./Healthcheck.yaml
-CommitResponse:
+Commit:
   $ref: ./CommitResponse.yaml
-GenericObjectCurrentCostResponse:
+GenericObjectCurrentCost:
   $ref: ./GenericObjectCurrentCostResponse.yaml
 ApplicationRequest:
   $ref: ./ApplicationRequest.yaml
-BaseResponse:
+Base:
   $ref: ./BaseResponse.yaml
 ApplicationEditRequest:
   $ref: ./ApplicationEditRequest.yaml
@@ -120,19 +126,19 @@ BudgetThreshold:
   $ref: ./BudgetThreshold.yaml
 EventResponseList:
   $ref: ./EventResponseList.yaml
-DeploymentHistoryResponse:
+DeploymentHistory:
   $ref: ./DeploymentHistoryResponse.yaml
-DeploymentHistoryApplicationResponse:
+DeploymentHistoryApplication:
   $ref: ./DeploymentHistoryApplicationResponse.yaml
-DeploymentHistoryDatabaseResponse:
+DeploymentHistoryDatabase:
   $ref: ./DeploymentHistoryDatabaseResponse.yaml
 OrganizationResponseList:
   $ref: ./OrganizationResponseList.yaml
 ClusterRequest:
   $ref: ./ClusterRequest.yaml
-ClusterCloudProviderInfoResponse:
+ClusterCloudProviderInfo:
   $ref: ./ClusterCloudProviderInfoResponse.yaml
-ApplicationResponse:
+Application:
   $ref: ./ApplicationResponse.yaml
 CustomDomainRequest:
   $ref: ./CustomDomainRequest.yaml
@@ -140,7 +146,7 @@ EnvironmentLogPaginatedResponseList:
   $ref: ./EnvironmentLogPaginatedResponseList.yaml
 ProjectDeploymentRuleRequest:
   $ref: ./ProjectDeploymentRuleRequest.yaml
-EnvironmentStatsResponse:
+EnvironmentStats:
   $ref: ./EnvironmentStatsResponse.yaml
 Name:
   $ref: ./Name.yaml
@@ -150,71 +156,65 @@ InstanceResponseList:
   $ref: ./InstanceResponseList.yaml
 ClusterReadinessStatus:
   $ref: ./ClusterReadinessStatus.yaml
-CustomDomainResponse:
+CustomDomain:
   $ref: ./CustomDomainResponse.yaml
-AccountInfoResponse:
+AccountInfo:
   $ref: ./AccountInfoResponse.yaml
 LogicalDatabaseRequest:
   $ref: ./LogicalDatabaseRequest.yaml
-ServiceResponse:
+Service:
   $ref: ./ServiceResponse.yaml
 ApplicationResponseList:
   $ref: ./ApplicationResponseList.yaml
-ApplicationNetworkResponse:
+ApplicationNetwork:
   $ref: ./ApplicationNetworkResponse.yaml
 ApplicationNetworkRequest:
   $ref: ./ApplicationNetworkRequest.yaml
-ApplicationDeploymentRuleResponse:
-  $ref: ./ApplicationDeploymentRuleResponse.yaml
-ApplicationDeploymentRuleEditRequest:
-  $ref: ./ApplicationDeploymentRuleEditRequest.yaml
+ApplicationDeploymentRestrictionRequest:
+  $ref: ./ApplicationDeploymentRestrictionRequest.yaml
 ApplicationDeploymentRestriction:
-  $ref: ./ApplicationDeploymentRestriction.yaml
+  $ref: ./ApplicationDeploymentRestrictionResponse.yaml
+ApplicationDeploymentRestrictionResponseList:
+  $ref: ./ApplicationDeploymentRestrictionResponseList.yaml
 RemainingCredits:
   $ref: ./RemainingCredits.yaml
 BillingStatus:
   $ref: ./BillingStatus.yaml
-Cost:
-  $ref: ./Cost.yaml
 ServiceResponseList:
   $ref: ./ServiceResponseList.yaml
-EnvironmentDeploymentRuleResponse:
+EnvironmentDeploymentRule:
   $ref: ./EnvironmentDeploymentRuleResponse.yaml
-MetricMemoryDatapointResponse:
+MetricMemoryDatapoint:
   $ref: ./MetricMemoryDatapointResponse.yaml
 EnvironmentResponseList:
   $ref: ./EnvironmentResponseList.yaml
-LogicalDatabaseResponse:
+LogicalDatabase:
   $ref: ./LogicalDatabaseResponse.yaml
 CurrentCost:
   $ref: ./CurrentCost.yaml
 PaidUsage:
-  $ref: ./PaidUsage.yaml
-PaidUsageResponse:
   $ref: ./PaidUsageResponse.yaml
 CommunityUsage:
-  $ref: ./CommunityUsage.yaml
-CommunityUsageResponse:
   $ref: ./CommunityUsageResponse.yaml
 DatabaseVersionMode:
   $ref: ./DatabaseVersionMode.yaml
-ProjectResponse:
+Project:
   $ref: ./ProjectResponse.yaml
 GitAuthProviderResponseList:
   $ref: ./GitAuthProviderResponseList.yaml
 LinkResponseList:
   $ref: ./LinkResponseList.yaml
-ClusterRegionResponse:
+ClusterRegion:
   $ref: ./ClusterRegionResponse.yaml
 CredentialsRequest:
   $ref: ./CredentialsRequest.yaml
-BudgetResponse:
+Budget:
   $ref: ./BudgetResponse.yaml
-CreditCardResponse:
+CreditCard:
   $ref: ./CreditCardResponse.yaml
 BillingPeriod:
   $ref: ./BillingPeriod.yaml
-MetricStorageResponse:
+MetricStorage:
   $ref: ./MetricStorageResponse.yaml
 EnvironmentVariableEditRequest:
   $ref: ./EnvironmentVariableEditRequest.yaml
@@ -228,7 +228,7 @@ EnvironmentVariableResponseList:
   $ref: ./EnvironmentVariableResponseList.yaml
 VariableImportRequest:
   $ref: ./VariableImportRequest.yaml
-VariableImportResponse:
+VariableImport:
   $ref: ./VariableImportResponse.yaml
 ReferenceObject:
   $ref: ./ReferenceObject.yaml
@@ -244,23 +244,25 @@ CloneRequest:
   $ref: ./CloneRequest.yaml
 MetricMemoryDatapointResponseList:
   $ref: ./MetricMemoryDatapointResponseList.yaml
-ClusterResponse:
+ClusterBase:
+  $ref: ./ClusterBase.yaml
+Cluster:
   $ref: ./ClusterResponse.yaml
 BackupPaginatedResponseList:
   $ref: ./BackupPaginatedResponseList.yaml
 TagRequest:
   $ref: ./TagRequest.yaml
-RewardClaimResponse:
+RewardClaim:
   $ref: ./RewardClaimResponse.yaml
 ClusterRegionResponseList:
   $ref: ./ClusterRegionResponseList.yaml
-CredentialsResponse:
+Credentials:
   $ref: ./CredentialsResponse.yaml
 LogicalDatabaseResponseList:
   $ref: ./LogicalDatabaseResponseList.yaml
 EnvironmentVariableRequest:
   $ref: ./EnvironmentVariableRequest.yaml
-ClusterCredentialsResponse:
+ClusterCredentials:
   $ref: ./ClusterCredentialsResponse.yaml
 ProjectDeploymentRuleResponseList:
   $ref: ./ProjectDeploymentRuleResponseList.yaml
@@ -268,7 +270,7 @@ MetricCPUResponseList:
   $ref: ./MetricCPUResponseList.yaml
 DatabaseConfigurationResponseList:
   $ref: ./DatabaseConfigurationResponseList.yaml
-ProjectStatsResponse:
+ProjectStats:
   $ref: ./ProjectStatsResponse.yaml
 EnvironmentRestartRequest:
   $ref: ./EnvironmentRestartRequest.yaml
@@ -276,9 +278,9 @@ BillingEnd:
   $ref: ./BillingEnd.yaml
 SecretResponseList:
   $ref: ./SecretResponseList.yaml
-EnvironmentResponse:
+Environment:
   $ref: ./EnvironmentResponse.yaml
-CostResponse:
+Cost:
   $ref: ./CostResponse.yaml
 MetricMemoryResponseList:
   $ref: ./MetricMemoryResponseList.yaml
@@ -288,31 +290,33 @@ CustomDomainResponseList:
   $ref: ./CustomDomainResponseList.yaml
 EnvironmentEditRequest:
   $ref: ./EnvironmentEditRequest.yaml
-OrganizationCurrentCostResponse:
+OrganizationCurrentCost:
   $ref: ./OrganizationCurrentCostResponse.yaml
 GitRepositoryResponseList:
   $ref: ./GitRepositoryResponseList.yaml
-ApplicationPortResponse:
+ApplicationPort:
   $ref: ./ApplicationPortResponse.yaml
 OrganizationCreditCodeRequest:
   $ref: ./OrganizationCreditCodeRequest.yaml
 EnvironmentStatsResponseList:
   $ref: ./EnvironmentStatsResponseList.yaml
-SecretResponse:
+EnvironmentStatusList:
+  $ref: ./EnvironmentStatusList.yaml
+Secret:
   $ref: ./SecretResponse.yaml
 Status:
   $ref: ./Status.yaml
-EnvironmentDatabasesCurrentMetricResponse:
+EnvironmentDatabasesCurrentMetric:
   $ref: ./EnvironmentDatabasesCurrentMetricResponse.yaml
-BackupResponse:
+Backup:
   $ref: ./BackupResponse.yaml
 DeploymentRuleRequest:
   $ref: ./DeploymentRuleRequest.yaml
-ProjectCurrentCostResponse:
+ProjectCurrentCost:
   $ref: ./ProjectCurrentCostResponse.yaml
-EnvironmentVariableResponse:
+EnvironmentVariable:
   $ref: ./EnvironmentVariableResponse.yaml
-ReferralResponse:
+Referral:
   $ref: ./ReferralResponse.yaml
 BillingStart:
   $ref: ./BillingStart.yaml
@@ -320,7 +324,7 @@ UserResponseList:
   $ref: ./UserResponseList.yaml
 CreditCardResponseList:
   $ref: ./CreditCardResponseList.yaml
-ReferenceObjectStatusResponse:
+ReferenceObjectStatus:
   $ref: ./ReferenceObjectStatusResponse.yaml
 ApplicationPortRequest:
   $ref: ./ApplicationPortRequest.yaml
@@ -332,17 +336,17 @@ ClusterResponseList:
   $ref: ./ClusterResponseList.yaml
 OverriddenSecret:
   $ref: ./OverriddenSecret.yaml
-BillingInfoResponse:
+BillingInfo:
   $ref: ./BillingInfoResponse.yaml
 EnvironmentDeploymentRuleEditRequest:
   $ref: ./EnvironmentDeploymentRuleEditRequest.yaml
 ReferenceObjectStatusResponseList:
   $ref: ./ReferenceObjectStatusResponseList.yaml
-UserResponse:
+User:
   $ref: ./UserResponse.yaml
-StorageDiskResponse:
+StorageDisk:
   $ref: ./StorageDiskResponse.yaml
-ApplicationGitRepositoryResponse:
+ApplicationGitRepository:
   $ref: ./ApplicationGitRepositoryResponse.yaml
 TagResponseList:
   $ref: ./TagResponseList.yaml
@@ -350,25 +354,25 @@ SecretEditRequest:
   $ref: ./SecretEditRequest.yaml
 EventPaginatedResponseList:
   $ref: ./EventPaginatedResponseList.yaml
-InstanceResponse:
+Instance:
   $ref: ./InstanceResponse.yaml
 MetricStorageResponseList:
   $ref: ./MetricStorageResponseList.yaml
-MetricRestartResponse:
+MetricRestart:
   $ref: ./MetricRestartResponse.yaml
-EventResponse:
+Event:
   $ref: ./EventResponse.yaml
 EnvironmentDatabasesCurrentMetricResponseList:
   $ref: ./EnvironmentDatabasesCurrentMetricResponseList.yaml
-ApplicationCurrentScaleResponse:
+ApplicationCurrentScale:
   $ref: ./ApplicationCurrentScaleResponse.yaml
 VersionResponseList:
   $ref: ./VersionResponseList.yaml
 CommitResponseList:
   $ref: ./CommitResponseList.yaml
-EnvironmentApplicationsCurrentScaleResponse:
+EnvironmentApplicationsCurrentScale:
   $ref: ./EnvironmentApplicationsCurrentScaleResponse.yaml
-TagResponse:
+Tag:
   $ref: ./TagResponse.yaml
 EnvironmentApplicationsStorageResponseList:
   $ref: ./EnvironmentApplicationsStorageResponseList.yaml
@@ -376,25 +380,25 @@ EnvironmentApplicationsSupportedLanguageList:
   $ref: ./EnvironmentApplicationsSupportedLanguageResponseList.yaml
 EnvironmentApplicationsSupportedLanguage:
   $ref: ./EnvironmentApplicationsSupportedLanguageResponse.yaml
-DatabaseConfigurationResponse:
+DatabaseConfiguration:
   $ref: ./DatabaseConfigurationResponse.yaml
-DatabaseCurrentMetricResponse:
+DatabaseCurrentMetric:
   $ref: ./DatabaseCurrentMetricResponse.yaml
-GitRepositoryResponse:
+GitRepository:
   $ref: ./GitRepositoryResponse.yaml
 LogPaginatedResponseList:
   $ref: ./LogPaginatedResponseList.yaml
 StorageDiskResponseList:
   $ref: ./StorageDiskResponseList.yaml
-CostRangeResponse:
+CostRange:
   $ref: ./CostRangeResponse.yaml
-CloudProviderResponse:
+CloudProvider:
   $ref: ./CloudProviderResponse.yaml
-InviteMemberResponse:
+InviteMember:
   $ref: ./InviteMemberResponse.yaml
 TransferOwnershipRequest:
   $ref: ./TransferOwnershipRequest.yaml
-CluserCredentialsResponse:
+CluserCredentials:
   $ref: ./ClusterCredentialsRequest.yaml
 AwsCredentialsRequest:
   $ref: ./AwsCredentialsRequest.yaml
@@ -406,15 +410,9 @@ InviteMemberRequest:
   $ref: ./InviteMemberRequest.yaml
 ClusterFeatureRequest:
   $ref: ./ClusterFeatureRequest.yaml
-EnvironmentApplicationsSupportedLanguageResponse:
-  $ref: ./EnvironmentApplicationsSupportedLanguageResponse.yaml
-EnvironmentApplicationsSupportedLanguageResponseList:
-  $ref: ./EnvironmentApplicationsSupportedLanguageResponseList.yaml
-Cluster:
-  $ref: ./Cluster.yaml
-ClusterFeatureResponse:
+ClusterFeature:
   $ref: ./ClusterFeatureResponse.yaml
-ClusterRoutingTableResponse:
+ClusterRoutingTable:
   $ref: ./ClusterRoutingTableResponse.yaml
 ClusterRoutingTableRequest:
   $ref: ./ClusterRoutingTableRequest.yaml
@@ -426,7 +424,7 @@ CloudProviderResponseList:
   $ref: ./CloudProviderResponseList.yaml
 GitRepositoryBranchResponseList:
   $ref: ./GitRepositoryBranchResponseList.yaml
-GitRepositoryBranchResponse:
+GitRepositoryBranch:
   $ref: ./GitRepositoryBranchResponse.yaml
 OrganizationGithubAppConnectRequest:
   $ref: ./OrganizationGithubAppConnectRequest.yaml
@@ -438,10 +436,18 @@ OrganizationApiTokenCreateRequest:
   $ref: ./OrganizationApiTokenCreateRequest.yaml
 OrganizationApiTokenResponseList:
   $ref: ./OrganizationApiTokenResponseList.yaml
-OrganizationApiTokenResponse:
+OrganizationApiToken:
   $ref: ./OrganizationApiTokenResponse.yaml
-OrganizationApiTokenCreateResponse:
+OrganizationApiTokenCreate:
   $ref: ./OrganizationApiTokenCreateResponse.yaml
+SignUp:
+  $ref: ./SignUpResponse.yaml
+SignUpRequest:
+  $ref: ./SignUpRequest.yaml
+TypeOfUseEnum:
+  $ref: ./enums/TypeOfUse.yaml
+CompanySizeEnum:
+  $ref: ./enums/CompanySize.yaml
 BuildModeEnum:
   $ref: ./enums/BuildMode.yaml
 EnvironmentVariableScopeEnum:
@@ -454,12 +460,6 @@ PortProtocolEnum:
   $ref: ./enums/PortProtocol.yaml
 WeekdayEnum:
   $ref: ./enums/Weekday.yaml
-GlobalDeploymentStatus:
-  $ref: ./enums/GlobalDeploymentStatus.yaml
-ClusterStatusEnum:
-  $ref: ./enums/ClusterStatus.yaml
-ClusterDeploymentStatusEnum:
-  $ref: ./enums/ClusterDeploymentStatus.yaml
 ServiceDeploymentStatusEnum:
   $ref: ./enums/ServiceDeploymentStatus.yaml
 DeploymentHistoryStatusEnum:
@@ -492,3 +492,7 @@ ServiceTypeEnum:
   $ref: ./enums/ServiceType.yaml
 StorageTypeEnum:
   $ref: ./enums/StorageType.yaml
+StatusKindEnum:
+  $ref: ./enums/StatusKind.yaml
+StateEnum:
+  $ref: ./enums/State.yaml

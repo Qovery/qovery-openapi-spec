@@ -3,4 +3,4 @@ properties:
   deployment_restrictions:
     type: array
     items:
-      $ref: './ApplicationDeploymentRestriction.yaml'
+      $ref: './ApplicationDeploymentRestrictionResponse.yaml'

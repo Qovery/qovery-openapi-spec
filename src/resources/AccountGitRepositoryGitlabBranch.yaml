@@ -1,4 +1,5 @@
 get:
+  deprecated: true
   summary: 'Get gitlab branches of the specified repository'
   operationId: getGitlabRepositoryBranches
   tags:

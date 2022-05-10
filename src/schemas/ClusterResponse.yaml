@@ -1,14 +1,17 @@
 allOf:
   - $ref: './BaseResponse.yaml'
-  - $ref: './Cluster.yaml'
-  - $ref: './ClusterFeatureResponse.yaml'
+  - $ref: './ClusterBase.yaml'
   - type: object
     properties:
       estimated_cloud_provider_cost:
         type: integer
         description: This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
       status:
-        $ref: './enums/ClusterStatus.yaml'
+        $ref: './enums/State.yaml'
+      features:
+        type: array
+        items:
+          $ref: './ClusterFeatureResponse.yaml'
       has_access:
         type: boolean
       version:
