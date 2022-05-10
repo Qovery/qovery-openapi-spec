@@ -5,4 +5,4 @@ allOf:
       name:
         type: string
       status:
-        $ref: './enums/GlobalDeploymentStatus.yaml'
+        $ref: './enums/State.yaml'

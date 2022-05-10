@@ -1,9 +1,9 @@
 type: string
 enum:
-  - PAID
-  - POSTED
-  - PAYMENT_DUE
   - NOT_PAID
-  - VOIDED
+  - PAID
+  - PAYMENT_DUE
   - PENDING
+  - POSTED
   - UNKNOWN
+  - VOIDED

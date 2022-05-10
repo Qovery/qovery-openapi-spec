@@ -7,4 +7,4 @@ allOf:
       commit:
         $ref: './CommitResponse.yaml'
       status:
-        $ref: './enums/GlobalDeploymentStatus.yaml'
+        $ref: './enums/State.yaml'

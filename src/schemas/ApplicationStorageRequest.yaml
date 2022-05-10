@@ -10,9 +10,7 @@ properties:
         - mount_point
       properties:
         type:
-          type: string
-          enum:
-            - FAST_SSD
+          $ref: './enums/StorageType.yaml'
         size:
           type: integer
           description: unit is GB

@@ -1,0 +1,50 @@
+get:
+  summary: 'Get application deployment restrictions'
+  description: 'Get application deployment restrictions'
+  operationId: getApplicationDeploymentRestrictions
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - Application Deployment Restriction
+  responses:
+    '200':
+      description: 'Get application deployment restrictions'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ApplicationDeploymentRestrictionResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+
+post:
+  summary: 'Create an application deployment restriction'
+  description: 'Create an application deployment restriction'
+  operationId: createApplicationDeploymentRestriction
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+  tags:
+    - Application Deployment Restriction
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/ApplicationDeploymentRestrictionRequest.yaml'
+  responses:
+    '201':
+      description: 'Added an environment variable'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ApplicationDeploymentRestrictionResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '409':
+      description: An application deployment restriction with same properties already exists for this application

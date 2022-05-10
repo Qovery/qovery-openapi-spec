@@ -10,3 +10,5 @@ properties:
     $ref: './enums/DeploymentRestrictionType.yaml'
   value:
     type: string
+    description: 'For `PATH` restrictions, the value must not start with `/`'
+    example: "application1/src/"
