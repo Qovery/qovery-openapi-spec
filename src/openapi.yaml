@@ -340,6 +340,8 @@ paths:
     $ref: './resources/ApplicationDeploymentRestriction.yaml'
   /application/{applicationId}/deploymentRestriction/{deploymentRestrictionId}:
     $ref: './resources/ApplicationDeploymentRestrictionRef.yaml'
+  /application/{applicationId}/advancedSettings:
+    $ref: './resources/ApplicationAdvancedSettings.yaml'
   /application/{applicationId}/contributor:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:
