@@ -25,7 +25,7 @@
     "@apidevtools/swagger-cli": "^4.0.4",
     "@openapitools/openapi-generator-cli": "^2.5.1",
     "@stoplight/spectral-cli": "^6.4.0",
-    "redoc-cli": "^0.13.13",
+    "redoc-cli": "^0.13.14",
     "react-is": "^18.1.0"
   }
 }
