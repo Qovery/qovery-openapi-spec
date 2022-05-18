@@ -3588,14 +3588,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    deployment.delay_start_time_sec:
-                      type: integer
-                    build.timeout_max_sec:
-                      type: integer
+                $ref: '#/components/schemas/ApplicationAdvancedSettingsResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3614,21 +3607,14 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  deployment.delay_start_time_sec:
-                    type: integer
-                  build.timeout_max_sec:
-                    type: integer
+              $ref: '#/components/schemas/ApplicationAdvancedSettingsRequest'
       responses:
         '201':
           description: Updated advanced settings
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1application~1%7BapplicationId%7D~1advancedSettings/get/responses/200/content/application~1json/schema'
+                $ref: '#/components/schemas/ApplicationAdvancedSettingsResponse'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -8660,6 +8646,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentDatabasesCurrentMetric'
+    ApplicationAdvancedSettings:
+      type: object
+      properties:
+        deployment.delay_start_time_sec:
+          type: integer
+        build.timeout_max_sec:
+          type: integer
+    ApplicationAdvancedSettingsRequest:
+      type: array
+      items:
+        $ref: '#/components/schemas/ApplicationAdvancedSettings'
+    ApplicationAdvancedSettingsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/ApplicationAdvancedSettings'
     ApplicationCurrentScale:
       type: object
       properties:
