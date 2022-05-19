@@ -1,7 +1,7 @@
 type: object
 required:
-  - git_commit_id
+  - image_tag
 properties:
-  git_commit_id:
+  image_tag:
     type: string
-    description: Commit ID to deploy
+    description: Image tag to deploy
