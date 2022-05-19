@@ -1,0 +1,20 @@
+type: object
+properties:
+  min:
+    type: integer
+  max:
+    type: integer
+  running:
+    type: integer
+  running_in_percent:
+    type: number
+  warning_threshold_in_percent:
+    type: number
+  alert_threshold_in_percent:
+    type: number
+  status:
+    $ref: './enums/ThresholdMetricStatus.yaml'
+  updated_at:
+    type: string
+    readOnly: true
+    format: date-time
