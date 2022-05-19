@@ -502,6 +502,8 @@ paths:
     $ref: './resources/ContainerDependencyRef.yaml'
   /container/{containerId}/deploy:
     $ref: './resources/ContainerDeploy.yaml'
+  /container/{containerId}/tagHistory:
+    $ref: './resources/ContainerTagHistory.yaml'
   /container/{containerId}/stop:
     $ref: './resources/ContainerStop.yaml'
   /container/{containerId}/restart:
