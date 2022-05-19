@@ -1,0 +1,21 @@
+get:
+  summary: 'List image tags'
+  description: List all image container tags already deployed in the Qovery environment.
+  operationId: getContainerTags
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+  tags:
+    - Container Main Calls
+  responses:
+    '200':
+      description: 'Get tags'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ContainerTagsResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
