@@ -1,0 +1,6 @@
+type: object
+properties:
+  deployment.delay_start_time_sec:
+    type: integer
+  build.timeout_max_sec:
+    type: integer

@@ -1,0 +1,23 @@
+get:
+  summary: 'List container events'
+  description: By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
+  operationId: listContainerEvent
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+    - $ref: '../parameters/query/startId.yaml'
+  tags:
+    - Container Event
+  responses:
+    '200':
+      description: 'List events'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EventPaginatedResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+

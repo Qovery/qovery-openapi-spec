@@ -1,0 +1,8 @@
+type: object
+properties:
+  sticky_session:
+    type: boolean
+    description: |
+      Specify if the sticky session option (also called persistant session) is activated or not for this container.
+      If activated, user will be redirected by the load balancer to the same instance each time he access to the container. 
+    default: false
