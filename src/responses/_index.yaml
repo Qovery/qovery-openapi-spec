@@ -1,14 +1,14 @@
-204-deletion:
-  $ref: ./Deleted.yaml
-409:
-  $ref: ./Conflict.yaml
-403:
-  $ref: ./Forbidden.yaml
-204:
+'204':
   $ref: ./NoContent.yaml
-401:
-  $ref: ./NotAuthorized.yaml
-404:
-  $ref: ./NotFound.yaml
-400:
+'204-deletion':
+  $ref: ./Deleted.yaml
+'400':
   $ref: ./BadRequest.yaml
+'401':
+  $ref: ./NotAuthorized.yaml
+'403':
+  $ref: ./Forbidden.yaml
+'404':
+  $ref: ./NotFound.yaml
+'409':
+  $ref: ./Conflict.yaml

@@ -2,7 +2,7 @@ get:
   summary: 'List environment variables'
   operationId: listContainerEnvironmentVariable
   parameters:
-    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/containerId.yaml'
   tags:
     - Container Environment Variable
   responses:

@@ -8,7 +8,7 @@ post:
     - Information regarding the overridden_variable will be exposed in the "overridden_variable" field of the newly created variable
   operationId: createContainerEnvironmentVariableOverride
   parameters:
-    - $ref: '../parameters/path/ContainerId.yaml'
+    - $ref: '../parameters/path/containerId.yaml'
     - $ref: '../parameters/path/environmentVariableId.yaml'
 
   tags:

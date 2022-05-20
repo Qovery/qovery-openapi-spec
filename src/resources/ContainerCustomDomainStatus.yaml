@@ -1,6 +1,6 @@
 get:
   summary: 'Get Custom Domain status'
-  operationId: getCustomDomainStatus
+  operationId: getContainerCustomDomainStatus
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
     - $ref: '../parameters/path/customDomainId.yaml'

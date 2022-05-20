@@ -1,7 +1,7 @@
 get:
   summary: 'Get current scaling of the container'
   description: Returns min, max, and running number of instances of the application
-  operationId: getApplicationCurrentScale
+  operationId: getContainerCurrentScale
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
   tags:

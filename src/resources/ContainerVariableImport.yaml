@@ -1,7 +1,7 @@
 post:
   summary: 'Import variables'
   description: Import environment variables in a defined scope, with a defined visibility.
-  operationId: importEnvironmentVariable
+  operationId: importContainerEnvironmentVariable
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
   tags:
