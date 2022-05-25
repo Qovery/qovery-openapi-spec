@@ -29,20 +29,36 @@ tags:
   - name: Application Metrics
   - name: Application Secret
   - name: Applications
+  - name: Container
+  - name: Container Actions
+  - name: Container Configuration
+  - name: Container Database
+  - name: Container Deployment Restriction
+  - name: Container Deployment History
+  - name: Container Environment Variable
+  - name: Container Event
+  - name: Container Logs
+  - name: Container Main Calls
+  - name: Container Metrics
+  - name: Container Secret
+  - name: Containers
   - name: Backups
   - name: Billing
   - name: Cloud Provider
   - name: Cloud Provider Credentials
   - name: Clusters
   - name: Custom Domain
+  - name: Container Custom Domain
   - name: Database
   - name: Database Actions
   - name: Database Application
+  - name: Database Container
   - name: Database Event
   - name: Database Main Calls
   - name: Database Metrics
   - name: Databases
   - name: Dependency
+  - name: Container Dependency
   - name: Environment
   - name: Environment Actions
   - name: Environment Deployment History
@@ -66,6 +82,7 @@ tags:
   - name: Project Secret
   - name: Projects
   - name: Referral & Rewards
+  - name: Container Registries
   - name: User Sign Up
 x-tagGroups:
   - name: Organization
@@ -79,6 +96,7 @@ x-tagGroups:
       - Clusters
       - Cloud Provider
       - Cloud Provider Credentials
+      - Container Registries
   - name: Project
     tags:
       - Project Main Calls
@@ -90,6 +108,7 @@ x-tagGroups:
     tags:
       - Environment Main Calls
       - Applications
+      - Containers
       - Databases
       - Environment Actions
       - Environment Logs
@@ -112,14 +131,31 @@ x-tagGroups:
       - Application Environment Variable
       - Application Secret
       - Application Event
+  - name: Container
+    tags:
+      - Container Main Calls
+      - Container Actions
+      - Container Configuration
+      - Container Custom Domain
+      - Container Dependency
+      - Container Metrics
+      - Container Database
+      - Container Logs
+      - Container Deployment Restriction
+      - Container Deployment History
+      - Container Environment Variable
+      - Container Secret
+      - Container Event
   - name: Database
     tags:
       - Database Main Calls
       - Database Actions
       - Database Metrics
       - Database Applications
+      - Database Containers
       - Logical Database
       - Database Application
+      - Database Container
       - Backups
       - Database Event
   - name: Account
@@ -1803,6 +1839,178 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Cluster is already stopped or an operation is in progress
+  '/organization/{organizationId}/containerRegistry/':
+    get:
+      summary: List organization container registries
+      operationId: listContainerRegistry
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Container Registries
+      responses:
+        '200':
+          description: List container registries
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1organization~1%7BorganizationId%7D~1containerRegistry~1/post/responses/201/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a container registry
+      operationId: createContainerRegistry
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Container Registries
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - kind
+                - url
+                - config
+              properties:
+                name:
+                  type: string
+                kind:
+                  type: string
+                  enum:
+                    - ECR
+                    - DOCR
+                    - SCALEWAY_CR
+                    - DOCKER_HUB
+                    - PUBLIC_ECR
+                  description: |
+                    ECR needs the following parameters - region, access_key_id, secret_access_key
+                    DOCR needs the following parameters - token 
+                    SCALEWAY_CR needs the following parameters - scaleway_access_key, scaleway_secret_key
+                    DOCKER_HUB needs the following parameters - username, password 
+                    PUBLIC_ECR needs the followinf parameters - access_key_id, secret_access_key
+                  default: ECR
+                description:
+                  type: string
+                url:
+                  type: uri
+                  description: URL of the container registry
+                config:
+                  type: object
+                  additionalProperties: true
+                  description: authentification configuration
+      responses:
+        '201':
+          description: Create a Container Registry
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  kind:
+                    $ref: '#/paths/~1organization~1%7BorganizationId%7D~1containerRegistry~1/post/requestBody/content/application~1json/schema/properties/kind'
+                  description:
+                    type: string
+                  url:
+                    type: string
+                    description: URL of the container registry
+                  config:
+                    type: string
+                    description: authentification configuration
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/containerRegistry/{containerRegistryId}':
+    delete:
+      summary: Delete a container registry
+      operationId: deleteContainerRegistry
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Registries
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a container registry
+      operationId: editContainerRegistry
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Registry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1containerRegistry~1/post/requestBody/content/application~1json/schema'
+      responses:
+        '200':
+          description: Edited the container registry
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1containerRegistry~1/post/responses/201/content/application~1json/schema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/AvailableContainerRegistry':
+    get:
+      summary: List supported container registries
+      description: List supported container registries by Qovery and get the mandatory authentification configuration.
+      operationId: listAvailableContainerRegistry
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Container Registries
+      responses:
+        '200':
+          description: supported container registries
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    $ref: '#/paths/~1organization~1%7BorganizationId%7D~1containerRegistry~1/post/requestBody/content/application~1json/schema/properties/kind'
+                  required_config:
+                    type: object
+                  additionalProperties: true
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/project/{projectId}':
     get:
       summary: Get project by ID
@@ -2741,13 +2949,7 @@ paths:
       operationId: listApplication
       parameters:
         - $ref: '#/components/parameters/environmentId'
-        - name: toUpdate
-          in: query
-          description: return (or not) results that must be updated
-          required: false
-          schema:
-            type: boolean
-            default: false
+        - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1container/get/parameters/1'
       tags:
         - Applications
       responses:
@@ -2756,7 +2958,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponseList'
+                $ref: '#/components/schemas/ContainerResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2774,7 +2976,62 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ApplicationRequest'
+              allOf:
+                - $ref: '#/components/schemas/ApplicationStorageRequest'
+                - $ref: '#/components/schemas/ApplicationPortRequest'
+                - type: object
+                  required:
+                    - name
+                    - git_repository
+                  properties:
+                    name:
+                      type: string
+                      description: name is case insensitive
+                    description:
+                      type: string
+                      description: give a description to this application
+                      nullable: true
+                    git_repository:
+                      $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+                    build_mode:
+                      $ref: '#/components/schemas/BuildModeEnum'
+                    dockerfile_path:
+                      type: string
+                      description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+                      nullable: true
+                    buildpack_language:
+                      $ref: '#/components/schemas/BuildPackLanguageEnum'
+                    cpu:
+                      type: integer
+                      description: unit is millicores (m). 1000m = 1 cpu
+                      default: 250
+                      example: 1250
+                    memory:
+                      type: integer
+                      description: unit is MB. 1024 MB = 1GB
+                      default: 256
+                      example: 1024
+                    min_running_instances:
+                      type: integer
+                      minimum: 0
+                      description: |
+                        Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                        Note: 0 means that there is no application running.
+                      default: 1
+                    max_running_instances:
+                      type: integer
+                      description: |
+                        Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                        Note: -1 means that there is no limit.
+                      default: 1
+                    healthcheck:
+                      $ref: '#/components/schemas/Healthcheck'
+                    auto_preview:
+                      type: boolean
+                      description: |
+                        Specify if the environment preview option is activated or not for this application.
+                        If activated, a preview environment will be automatically cloned at each pull request.
+                      default: true
       responses:
         '201':
           description: Create application
@@ -2917,6 +3174,196 @@ paths:
       responses:
         '202':
           description: Deployed applications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/environment/{environmentId}/container':
+    get:
+      summary: List containers
+      operationId: listContainer
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - name: toUpdate
+          in: query
+          description: return (or not) results that must be updated
+          required: false
+          schema:
+            type: boolean
+            default: false
+      tags:
+        - Containers
+      responses:
+        '200':
+          description: List containers
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1container/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a container
+      operationId: createContainer
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Containers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContainerRequest'
+      responses:
+        '201':
+          description: Create container
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1container~1%7BcontainerId%7D/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Container name within the environment is already taken
+  '/environment/{environmentId}/container/status':
+    get:
+      summary: List all environment container statuses
+      description: Returns a list of containers with only their id and status.
+      operationId: getEnvironmentContainerStatus
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Containers
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferenceObjectStatusResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/container/instance':
+    get:
+      summary: List running instances with CPU and RAM usage for each container
+      operationId: getEnvironmentContainerCurrentInstance
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Containers
+      responses:
+        '200':
+          description: Know current resource consumption for each container of the environment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - application
+                        - instances
+                      properties:
+                        application:
+                          type: string
+                          format: uuid
+                        instances:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Instance'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/container/currentStorage':
+    get:
+      summary: List current storage disk usage for each containers
+      operationId: getEnvironmentContainerCurrentStorage
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Containers
+      responses:
+        '200':
+          description: Current storage disk usage
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentContainersStorageResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/container/currentScale':
+    get:
+      summary: List current scaling information for each container
+      description: 'Returns min, max, and running number of instances for each container'
+      operationId: getEnvironmentContainerCurrentScale
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Containers
+      responses:
+        '200':
+          description: list containers with current scaling
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentContainersCurrentScaleResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/container/deploy':
+    post:
+      summary: Deploy containers
+      description: Deploy to the last commit the containers you specified.
+      operationId: deployAllContainers
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Containers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeployAllRequest'
+      responses:
+        '202':
+          description: Deployed containers
           content:
             application/json:
               schema:
@@ -3413,7 +3860,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ApplicationEditRequest'
+              $ref: '#/components/schemas/ApplicationRequest'
       responses:
         '200':
           description: Edit application
@@ -3526,13 +3973,7 @@ paths:
       operationId: editApplicationDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - name: deploymentRestrictionId
-          in: path
-          description: Deployment Restriction ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/paths/~1container~1%7BcontainerId%7D~1deploymentRestriction~1%7BdeploymentRestrictionId%7D/put/parameters/1'
       tags:
         - Application Deployment Restriction
       requestBody:
@@ -3561,7 +4002,7 @@ paths:
       operationId: deleteApplicationDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1deploymentRestriction~1%7BdeploymentRestrictionId%7D/put/parameters/1'
+        - $ref: '#/paths/~1container~1%7BcontainerId%7D~1deploymentRestriction~1%7BdeploymentRestrictionId%7D/put/parameters/1'
       tags:
         - Application Deployment Restriction
       responses:
@@ -3900,7 +4341,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponseList'
+                $ref: '#/components/schemas/ContainerResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -4821,6 +5262,1524 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/container/{containerId}':
+    get:
+      summary: Get container by ID
+      operationId: getContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Main Calls
+      responses:
+        '200':
+          description: Get container by ID
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Base'
+                  - $ref: '#/components/schemas/ContainerStorage'
+                  - $ref: '#/components/schemas/ApplicationPort'
+                  - type: object
+                    properties:
+                      environment:
+                        $ref: '#/components/schemas/ReferenceObject'
+                      maximum_cpu:
+                        type: integer
+                        description: Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+                        default: 250
+                        example: 1250
+                      maximum_memory:
+                        type: integer
+                        description: Maximum memory that can be allocated to the container based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+                        default: 256
+                        example: 1024
+                      name:
+                        type: string
+                        description: name is case insensitive
+                      description:
+                        type: string
+                        description: give a description to this container
+                        nullable: true
+                      registry_id:
+                        type: string
+                        description: id of the linked registry
+                      image_name:
+                        type: string
+                        description: name of the image container
+                      arguments:
+                        type: string
+                      cpu:
+                        type: integer
+                        description: unit is millicores (m). 1000m = 1 cpu
+                        default: 250
+                        example: 1250
+                      memory:
+                        type: integer
+                        description: unit is MB. 1024 MB = 1GB
+                        default: 256
+                        example: 1024
+                      min_running_instances:
+                        type: integer
+                        minimum: 0
+                        description: |
+                          Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                          Note: 0 means that there is no container running.
+                        default: 1
+                      max_running_instances:
+                        type: integer
+                        description: |
+                          Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                          Note: -1 means that there is no limit.
+                        default: 1
+                      healthcheck:
+                        $ref: '#/components/schemas/Healthcheck'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit container
+      description: |
+        - To edit the container you must have the admin permission.
+        - For port edition, if you provide a port id, we will update the corresponding port. If you don't we will create a new one. If you remove a port from the payload, we will delete it.
+        - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don't we will create a new one. If you remove a storage from the payload, we will delete it.
+      operationId: editContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContainerEditRequest'
+      responses:
+        '200':
+          description: Edit container
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1container~1%7BcontainerId%7D/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Container name within the environment is already taken
+    delete:
+      summary: Delete container
+      description: To delete the container you must have the admin permission
+      operationId: deleteContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Main Calls
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/status':
+    get:
+      summary: Get container status
+      operationId: getContainerStatus
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Main Calls
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/deploymentRestriction':
+    get:
+      summary: Get container deployment restrictions
+      description: Get container deployment restrictions
+      operationId: getContainerDeploymentRestrictions
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Deployment Restriction
+      responses:
+        '200':
+          description: Get container deployment restrictions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerDeploymentRestrictionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create an container deployment restriction
+      description: Create an container deployment restriction
+      operationId: createContainerDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Deployment Restriction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContainerDeploymentRestrictionRequest'
+      responses:
+        '201':
+          description: Added an environment variable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerDeploymentRestriction'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '409':
+          description: An Container deployment restriction with same properties already exists for this Container
+  '/container/{containerId}/deploymentRestriction/{deploymentRestrictionId}':
+    put:
+      summary: Edit a container deployment restriction
+      description: Edit a container deployment restriction
+      operationId: editContainerDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - name: deploymentRestrictionId
+          in: path
+          description: Deployment Restriction ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Container Deployment Restriction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContainerDeploymentRestrictionRequest'
+      responses:
+        '200':
+          description: Edit a container deployment restriction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerDeploymentRestriction'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a container deployment restriction
+      description: Delete a container deployment restriction
+      operationId: deleteContainerDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/paths/~1container~1%7BcontainerId%7D~1deploymentRestriction~1%7BdeploymentRestrictionId%7D/put/parameters/1'
+      tags:
+        - Container Deployment Restriction
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/advancedSettings':
+    get:
+      summary: Get advanced settings
+      description: Get list and values of the advanced settings of the container.
+      operationId: getContainerAdvancedSettings
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Configuration
+      responses:
+        '200':
+          description: Advanced settings list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerAdvancedSettingsResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit advanced settings
+      description: Edit advanced settings by returning table of advanced settings.
+      operationId: editContainerAdvancedSettings
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Configuration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContainerAdvancedSettingsRequest'
+      responses:
+        '201':
+          description: Updated advanced settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerAdvancedSettingsResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/contributor':
+    get:
+      summary: List contributors
+      operationId: listContainerContributor
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Main Calls
+      responses:
+        '200':
+          description: List container contributors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/tag':
+    get:
+      summary: List tags
+      operationId: listContainerTag
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Main Calls
+      responses:
+        '200':
+          description: List container tags
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Add container tag
+      operationId: createContainerTag
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagRequest'
+      responses:
+        '201':
+          description: Create container
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagResponseList'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/tag/{tagId}':
+    delete:
+      summary: Delete container tag
+      operationId: deleteContainerTag
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/tagId'
+      tags:
+        - Container Main Calls
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/instance':
+    get:
+      summary: List currently running instances of the container with their CPU and RAM metrics
+      operationId: getContainerCurrentInstance
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Metrics
+      responses:
+        '200':
+          description: Know current resource consumption of the container for each running instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstanceResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/currentStorage':
+    get:
+      summary: List current storage disk usage
+      operationId: getContainerCurrentStorageDisk
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Metrics
+      responses:
+        '200':
+          description: Know current storage disk
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageDiskResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/currentScale':
+    get:
+      summary: Get current scaling of the container
+      description: 'Returns min, max, and running number of instances of the application'
+      operationId: getContainerCurrentScale
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Metrics
+      responses:
+        '200':
+          description: Get current scaling of the container
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerCurrentScale'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/metric/cpu':
+    get:
+      summary: Get CPU consumption metric over time for the container
+      operationId: getContainerMetricCpu
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/lastSeconds'
+      tags:
+        - Container Metrics
+      responses:
+        '200':
+          description: CPU consumption
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricCPUResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/metric/memory':
+    get:
+      summary: Get Memory consumption metric over time for the container
+      operationId: getContainerMetricMemory
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/lastSeconds'
+      tags:
+        - Container Metrics
+      responses:
+        '200':
+          description: Memory consumption
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricMemoryResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/metric/healthCheck':
+    get:
+      summary: Get Health Check latency  metric over time for the container
+      description: The value returned corresponds to the 95th centile
+      operationId: getContainerMetricHealthCheck
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/lastSeconds'
+      tags:
+        - Container Metrics
+      responses:
+        '200':
+          description: Health Check Latency
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricGenericResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/metric/storage':
+    get:
+      summary: 'Get Storage consumption metric over time for the container '
+      operationId: getContainerMetricStorage
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/lastSeconds'
+      tags:
+        - Container Metrics
+      responses:
+        '200':
+          description: Storage consumption
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricStorageResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/metric/restart':
+    get:
+      summary: List container restarts
+      description: Get container restart message and timestamp.
+      operationId: getContainerMetricRestart
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/lastSeconds'
+      tags:
+        - Container Metrics
+      responses:
+        '200':
+          description: Restarts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricRestart'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/dependency':
+    get:
+      summary: List container dependencies
+      operationId: listContainerDependency
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Dependency
+      responses:
+        '200':
+          description: List dependencies
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1container/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/dependency/{targetContainerId}':
+    post:
+      summary: Add container dependency to this application.
+      description: Add container dependency to this container to prevent this container starting before the linked dependencies
+      operationId: createContainerDependency
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1container~1%7BtargetContainerId%7D/delete/parameters/1'
+      tags:
+        - Container Dependency
+      responses:
+        '200':
+          description: Add container dependencies
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1container~1%7BcontainerId%7D/get/responses/200/content/application~1json/schema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Remove container dependency to this container.
+      operationId: removeContainerDependency
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1container~1%7BtargetContainerId%7D/delete/parameters/1'
+      tags:
+        - Container Dependency
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/deploy':
+    post:
+      summary: Deploy container
+      description: You must provide a git commit id
+      operationId: deployContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - image_tag
+              properties:
+                image_tag:
+                  type: string
+                  description: Image tag to deploy
+      responses:
+        '202':
+          description: Deploy container
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/container/{containerId}/previewEnvironment':
+    post:
+      summary: Deploy a preview environment with your container application
+      description: You must provide the image tag.
+      operationId: previewEnvironmentContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1container~1%7BcontainerId%7D~1deploy/post/requestBody/content/application~1json/schema'
+      responses:
+        '202':
+          description: Deploy container
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/container/{containerId}/tagHistory':
+    get:
+      summary: List image tags
+      description: List all image container tags already deployed in the Qovery environment.
+      operationId: getContainerTags
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Main Calls
+      responses:
+        '200':
+          description: Get tags
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/stop':
+    post:
+      summary: Stop container
+      operationId: stopContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Actions
+      responses:
+        '202':
+          description: Container stop has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Container is already stopped or an operation is in progress
+  '/container/{containerId}/restart':
+    post:
+      summary: Restart container
+      operationId: restartContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Actions
+      responses:
+        '202':
+          description: Container restart has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/container/{containerId}/event':
+    get:
+      summary: List container events
+      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
+      operationId: listContainerEvent
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/startId'
+      tags:
+        - Container Event
+      responses:
+        '200':
+          description: List events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventPaginatedResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/environmentVariable':
+    get:
+      summary: List environment variables
+      operationId: listContainerEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Environment Variable
+      responses:
+        '200':
+          description: List environment variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Add an environment variable to the container
+      description: |
+        - Add an environment variable to the container.
+      operationId: createContainerEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Environment Variable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableRequest'
+      responses:
+        '201':
+          description: Added an environment variable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/environmentVariable/import':
+    post:
+      summary: Import variables
+      description: 'Import environment variables in a defined scope, with a defined visibility.'
+      operationId: importContainerEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Environment Variable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableImportRequest'
+      responses:
+        '201':
+          description: Import environment variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableImport'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/environmentVariable/{environmentVariableId}':
+    delete:
+      summary: Delete an environment variable from a container
+      description: |
+        - To delete an environment variable from an container you must have the project user permission
+        - You can't delete a BUILT_IN variable
+        - If you delete a variable having override or alias, the associated override/alias will be deleted as well
+      operationId: deleteContainerEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - Container Environment Variable
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit an environment variable belonging to the container
+      description: |
+        - You can't edit a BUILT_IN variable
+        - For an override, you can't edit the key
+        - For an alias, you can't edit the value
+        - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER)
+      operationId: editContainerEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - Container Environment Variable
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableEditRequest'
+      responses:
+        '200':
+          description: Edited the environment variable value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/environmentVariable/{environmentVariableId}/override':
+    post:
+      summary: Create an environment variable override at the container level
+      description: |
+        - Allows you to override at container level an environment variable that has a higher scope.
+        - You only have to specify a value in the request body
+        - The system will create a new environment variable at container level with the same key as the one corresponding to the variable id in the path
+        - The response body will contain the newly created variable
+        - Information regarding the overridden_variable will be exposed in the "overridden_variable" field of the newly created variable
+      operationId: createContainerEnvironmentVariableOverride
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - Container Environment Variable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Value'
+      responses:
+        '201':
+          description: Create variable override
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+        '400':
+          description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/environmentVariable/{environmentVariableId}/alias':
+    post:
+      summary: Create an environment variable alias at the container level
+      description: |
+        - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key.
+        - You only have to specify a key in the request body
+        - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path
+        - The response body will contain the newly created variable
+        - Information regarding the aliased_variable will be exposed in the "aliased_variable" field of the newly created variable
+        - Only 1 alias level is allowed. You can't create an alias on an alias
+      operationId: createContainerEnvironmentVariableAlias
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - Container Environment Variable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Key'
+      responses:
+        '201':
+          description: Create variable alias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+        '400':
+          description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/secret':
+    get:
+      summary: List container secrets
+      description: 'Secrets are like environment variables, but they are secured and can''t be revealed.'
+      operationId: listContainerSecrets
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Secret
+      responses:
+        '200':
+          description: List secrets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Add a secret to the container
+      description: |
+        - Add a secret to the container.
+      operationId: createContainerSecret
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Secret
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretRequest'
+      responses:
+        '201':
+          description: Add a secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Secret'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/secret/{secretId}':
+    delete:
+      summary: Delete a secret from an container
+      description: |
+        - To delete a secret you must have the project user permission
+        - You can't delete a BUILT_IN secret
+        - If you delete a secret having override or alias, the associated override/alias will be deleted as well
+      operationId: deleteContainerSecret
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - Container Secret
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a secret belonging to the container
+      description: |
+        - You can't edit a BUILT_IN secret
+        - For an override, you can't edit the key
+        - For an alias, you can't edit the value
+        - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER)
+      operationId: editContainerSecret
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - Container Secret
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretEditRequest'
+      responses:
+        '200':
+          description: Edited the secret value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Secret'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/secret/{secretId}/override':
+    post:
+      summary: Create a secret override at the container level
+      description: |
+        - Allows you to override at container level a secret that has a higher scope.
+        - You only have to specify a value in the request body
+        - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path
+        - The response body will contain the newly created secret
+        - Information regarding the overridden_secret will be exposed in the "overridden_secret" field of the newly created secret
+      operationId: createContainerSecretOverride
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - Application Secret
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Value'
+      responses:
+        '201':
+          description: Create secret override
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Secret'
+        '400':
+          description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/secret/{secretId}/alias':
+    post:
+      summary: Create a secret alias at the container level
+      description: |
+        - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key.
+        - You only have to specify a key in the request body
+        - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path
+        - The response body will contain the newly created secret
+        - Information regarding the aliased_secret will be exposed in the "aliased_secret" field of the newly created secret
+        - Only 1 alias level is allowed. You can't create an alias on an alias
+      operationId: createContainerSecretAlias
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - Container Secret
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Key'
+      responses:
+        '201':
+          description: Create secret alias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Secret'
+        '400':
+          description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/customDomain':
+    get:
+      summary: List container custom domains
+      operationId: listContainerCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Custom Domain
+      responses:
+        '200':
+          description: List custom domains
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomDomainResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Add custom domain to the container.
+      description: Add a custom domain to this container in order not to use qovery autogenerated domain
+      operationId: createContainerCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Custom Domain
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomDomainRequest'
+      responses:
+        '201':
+          description: Added container custom domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomDomain'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/customDomain/{customDomainId}':
+    put:
+      summary: Edit a Custom Domain
+      description: To edit a Custom Domain  you must have the project user permission
+      operationId: editContainerCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/customDomainId'
+      tags:
+        - Container Custom Domain
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomDomainRequest'
+      responses:
+        '200':
+          description: Edit a CustomDomain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomDomain'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a Custom Domain
+      description: To delete an CustomDomain you must have the project user permission
+      operationId: deleteContainerCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/customDomainId'
+      tags:
+        - Container Custom Domain
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/customDomain/{customDomainId}/status':
+    get:
+      summary: Get Custom Domain status
+      operationId: getContainerCustomDomainStatus
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/customDomainId'
+      tags:
+        - Container Custom Domain
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomDomain'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/log':
+    get:
+      summary: List logs
+      operationId: listContainerLog
+      description: This will list the last 1000 logs of the container
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Logs
+      responses:
+        '200':
+          description: List logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/network':
+    get:
+      summary: Get Container Network information
+      description: Get status of the container network settings.
+      operationId: getContainerNetwork
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Configuration
+      responses:
+        '200':
+          description: Network information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerNetwork'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit Container Network
+      description: Edit the Network settings of the container.
+      operationId: editContainerNetwork
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Configuration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContainerNetworkRequest'
+      responses:
+        '201':
+          description: Updated container network setting
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerNetwork'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/database':
+    get:
+      summary: List linked databases
+      operationId: listContainerDatabase
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Database
+      responses:
+        '200':
+          description: List linked databases
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/database/{targetDatabaseId}':
+    post:
+      summary: Link a database to the container
+      operationId: attachDatabaseToContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/targetDatabaseId'
+      tags:
+        - Container Database
+      responses:
+        '201':
+          description: Linked the database to the container
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: This database is already linked to the container
+    delete:
+      summary: Remove database link to this container.
+      operationId: removeDatabaseFromContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/targetDatabaseId'
+      tags:
+        - Container Database
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/logicalDatabase':
+    get:
+      summary: List linked logical databases
+      operationId: listContainerLogicalDatabase
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Database
+      responses:
+        '200':
+          description: List linked databases
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogicalDatabaseResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/logicalDatabase/{targetLogicalDatabaseId}':
+    post:
+      summary: Link a logical database to the container
+      operationId: attachLogicalDatabaseToContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/targetLogicalDatabaseId'
+      tags:
+        - Container Database
+      responses:
+        '201':
+          description: Linked the logical database to the container
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogicalDatabase'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: This logical database is already linked to the container
+    delete:
+      summary: Remove logical database link to this container.
+      operationId: removeLogicalDatabaseFromContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/targetLogicalDatabaseId'
+      tags:
+        - Container Database
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/link':
+    get:
+      summary: List all URLs of the container
+      description: This will return all the custom domains and Qovery autogenerated domain for the given application
+      operationId: listContainerLinks
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Main Calls
+      responses:
+        '200':
+          description: List links
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/database':
     get:
       summary: List environment databases
@@ -5138,7 +7097,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponseList'
+                $ref: '#/components/schemas/ContainerResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5154,6 +7113,56 @@ paths:
         - $ref: '#/components/parameters/targetApplicationId'
       tags:
         - Database Application
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/database/{databaseId}/container':
+    get:
+      summary: List container using the database
+      operationId: listDatabaseContainer
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - Database Container
+      responses:
+        '200':
+          description: List linked container
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1container~1%7BcontainerId%7D/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/database/{databaseId}/container/{targetContainerId}':
+    delete:
+      summary: 'Remove an container from this database '
+      operationId: removeContainerFromDatabase
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+        - name: targetContainerId
+          in: path
+          description: Target container ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Database Container
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -5584,7 +7593,28 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResponseList'
+                $ref: '#/components/schemas/ContainerResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/logicalDatabase/{logicalDatabaseId}/container':
+    get:
+      summary: List linked containers
+      operationId: listLogicalDatabaseContainer
+      parameters:
+        - $ref: '#/components/parameters/logicalDatabaseId'
+      tags:
+        - Logical Database
+      responses:
+        '200':
+          description: List linked containers
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1database~1%7BdatabaseId%7D~1container/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5810,122 +7840,10 @@ paths:
           $ref: '#/components/responses/404'
 components:
   parameters:
-    targetLogicalDatabaseId:
-      name: targetLogicalDatabaseId
-      in: path
-      description: Target database ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    targetDatabaseId:
-      name: targetDatabaseId
-      in: path
-      description: Target database ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    creditCardId:
-      name: creditCardId
-      in: path
-      description: Credit Card ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    secretId:
-      name: secretId
-      in: path
-      description: Secret ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    projectId:
-      name: projectId
-      in: path
-      description: Project ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    organizationId:
-      name: organizationId
-      in: path
-      description: Organization ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    environmentVariableId:
-      name: environmentVariableId
-      in: path
-      description: Environment Variable ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    clusterId:
-      name: clusterId
-      in: path
-      description: Cluster ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    eventId:
-      name: eventId
-      in: path
-      description: Event ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    tagId:
-      name: tagId
-      in: path
-      description: Tag ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    targetApplicationId:
-      name: targetApplicationId
-      in: path
-      description: Target application ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    invoiceId:
-      name: invoiceId
-      in: path
-      description: Invoice ID
-      required: true
-      schema:
-        type: string
-        format: uuid
     applicationId:
       name: applicationId
       in: path
       description: Application ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    deploymentRuleId:
-      name: deploymentRuleId
-      in: path
-      description: Deployment Rule ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    credentialsId:
-      name: credentialsId
-      in: path
-      description: Credentials ID
       required: true
       schema:
         type: string
@@ -5938,18 +7856,34 @@ components:
       schema:
         type: string
         format: uuid
-    logicalDatabaseId:
-      name: logicalDatabaseId
+    clusterId:
+      name: clusterId
       in: path
-      description: Logical Database ID
+      description: Cluster ID
       required: true
       schema:
         type: string
         format: uuid
-    databaseId:
-      name: databaseId
+    credentialsId:
+      name: credentialsId
       in: path
-      description: Database ID
+      description: Credentials ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    containerId:
+      name: containerId
+      in: path
+      description: Container ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    creditCardId:
+      name: creditCardId
+      in: path
+      description: Credit Card ID
       required: true
       schema:
         type: string
@@ -5962,10 +7896,18 @@ components:
       schema:
         type: string
         format: uuid
-    instanceId:
-      name: instanceId
+    databaseId:
+      name: databaseId
       in: path
-      description: Instance ID
+      description: Database ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    deploymentRuleId:
+      name: deploymentRuleId
+      in: path
+      description: Deployment Rule ID
       required: true
       schema:
         type: string
@@ -5978,10 +7920,97 @@ components:
       schema:
         type: string
         format: uuid
+    environmentVariableId:
+      name: environmentVariableId
+      in: path
+      description: Environment Variable ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    eventId:
+      name: eventId
+      in: path
+      description: Event ID
+      required: true
+      schema:
+        type: string
+        format: uuid
     gitCommitId:
       name: gitCommitId
       in: query
       description: Git Commit ID
+      schema:
+        type: string
+        format: uuid
+    instanceId:
+      name: instanceId
+      in: path
+      description: Instance ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    invoiceId:
+      name: invoiceId
+      in: path
+      description: Invoice ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    lastId:
+      name: lastId
+      in: query
+      description: ID of the last object after which to return all results
+      required: true
+      schema:
+        type: string
+        format: uuid
+    lastSeconds:
+      name: lastSeconds
+      in: query
+      description: Up to how many seconds in the past to ask analytics results
+      required: true
+      schema:
+        type: number
+    limit:
+      name: limit
+      in: query
+      description: How many items to return at one time (max 100)
+      required: false
+      schema:
+        type: integer
+        format: int32
+    logicalDatabaseId:
+      name: logicalDatabaseId
+      in: path
+      description: Logical Database ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    organizationId:
+      name: organizationId
+      in: path
+      description: Organization ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    projectId:
+      name: projectId
+      in: path
+      description: Project ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    secretId:
+      name: secretId
+      in: path
+      description: Secret ID
+      required: true
       schema:
         type: string
         format: uuid
@@ -5993,6 +8022,20 @@ components:
       schema:
         type: string
         format: uuid
+    status:
+      name: status
+      in: query
+      description: status
+      schema:
+        type: string
+    tagId:
+      name: tagId
+      in: path
+      description: Tag ID
+      required: true
+      schema:
+        type: string
+        format: uuid
     tail:
       name: tail
       in: query
@@ -6001,35 +8044,30 @@ components:
       schema:
         type: integer
         format: int32
-    limit:
-      name: limit
-      in: query
-      description: How many items to return at one time (max 100)
-      required: false
-      schema:
-        type: integer
-        format: int32
-    lastId:
-      name: lastId
-      in: query
-      description: ID of the last object after which to return all results
+    targetApplicationId:
+      name: targetApplicationId
+      in: path
+      description: Target application ID
       required: true
       schema:
         type: string
         format: uuid
-    status:
-      name: status
-      in: query
-      description: status
-      schema:
-        type: string
-    lastSeconds:
-      name: lastSeconds
-      in: query
-      description: Up to how many seconds in the past to ask analytics results
+    targetDatabaseId:
+      name: targetDatabaseId
+      in: path
+      description: Target database ID
       required: true
       schema:
-        type: number
+        type: string
+        format: uuid
+    targetLogicalDatabaseId:
+      name: targetLogicalDatabaseId
+      in: path
+      description: Target database ID
+      required: true
+      schema:
+        type: string
+        format: uuid
   schemas:
     ApplicationGitRepositoryRequest:
       type: object
@@ -6158,6 +8196,10 @@ components:
           items:
             $ref: '#/components/schemas/MetricGenericDatapoint'
     ApplicationStorage:
+      $ref: '#/components/schemas/ContainerStorage'
+    ApplicationDependencyRequest:
+      $ref: '#/components/schemas/ContainerDependencyRequest'
+    ContainerStorage:
       type: object
       properties:
         storage:
@@ -6181,7 +8223,7 @@ components:
               mount_point:
                 type: string
                 example: /mnt/images
-    ApplicationDependencyRequest:
+    ContainerDependencyRequest:
       type: object
       required:
         - id
@@ -6381,6 +8423,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentApplicationsCurrentScale'
+    EnvironmentContainersCurrentScaleResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentContainersCurrentScale'
     MemberResponseList:
       type: object
       properties:
@@ -6518,6 +8567,19 @@ components:
         - instances
       properties:
         application:
+          type: string
+          format: uuid
+        disks:
+          type: array
+          items:
+            $ref: '#/components/schemas/StorageDisk'
+    EnvironmentContainersStorage:
+      type: object
+      required:
+        - container
+        - instances
+      properties:
+        container:
           type: string
           format: uuid
         disks:
@@ -6870,82 +8932,7 @@ components:
           $ref: '#/components/schemas/Cost'
     ApplicationRequest:
       allOf:
-        - $ref: '#/components/schemas/ApplicationStorageRequest'
-        - $ref: '#/components/schemas/ApplicationPortRequest'
-        - type: object
-          required:
-            - name
-            - git_repository
-          properties:
-            name:
-              type: string
-              description: name is case insensitive
-            description:
-              type: string
-              description: give a description to this application
-              nullable: true
-            git_repository:
-              $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
-            build_mode:
-              $ref: '#/components/schemas/BuildModeEnum'
-            dockerfile_path:
-              type: string
-              description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-              nullable: true
-            buildpack_language:
-              $ref: '#/components/schemas/BuildPackLanguageEnum'
-            cpu:
-              type: integer
-              description: unit is millicores (m). 1000m = 1 cpu
-              default: 250
-              example: 1250
-            memory:
-              type: integer
-              description: unit is MB. 1024 MB = 1GB
-              default: 256
-              example: 1024
-            min_running_instances:
-              type: integer
-              minimum: 0
-              description: |
-                Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-                Note: 0 means that there is no application running.
-              default: 1
-            max_running_instances:
-              type: integer
-              description: |
-                Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-                Note: -1 means that there is no limit.
-              default: 1
-            healthcheck:
-              $ref: '#/components/schemas/Healthcheck'
-            auto_preview:
-              type: boolean
-              description: |
-                Specify if the environment preview option is activated or not for this application.
-                If activated, a preview environment will be automatically cloned at each pull request.
-              default: true
-    Base:
-      type: object
-      required:
-        - id
-        - created_at
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        created_at:
-          type: string
-          readOnly: true
-          format: date-time
-        updated_at:
-          type: string
-          readOnly: true
-          format: date-time
-    ApplicationEditRequest:
-      allOf:
-        - $ref: '#/components/schemas/ApplicationStorage'
+        - $ref: '#/components/schemas/ContainerStorage'
         - $ref: '#/components/schemas/ApplicationPort'
         - type: object
           properties:
@@ -6995,6 +8982,127 @@ components:
                 Specify if the environment preview option is activated or not for this application.
                 If activated, a preview environment will be automatically cloned at each pull request.
               default: true
+            sticky_session:
+              type: boolean
+              description: |
+                Specify if the sticky session option (also called persistant session) is activated or not for this application.
+                If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
+              default: false
+    ContainerRequest:
+      allOf:
+        - $ref: '#/components/schemas/ApplicationStorageRequest'
+        - $ref: '#/components/schemas/ApplicationPortRequest'
+        - type: object
+          required:
+            - name
+            - registry_id
+            - image_name
+          properties:
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+              description: give a description to this container
+              nullable: true
+            registry_id:
+              type: string
+              description: id of the linked registry
+            image_name:
+              type: string
+              description: name of the image container
+            arguments:
+              type: string
+            cpu:
+              type: integer
+              description: unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            memory:
+              type: integer
+              description: unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
+            min_running_instances:
+              type: integer
+              minimum: 0
+              description: |
+                Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: 0 means that there is no container running.
+              default: 1
+            max_running_instances:
+              type: integer
+              description: |
+                Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: -1 means that there is no limit.
+              default: 1
+            healthcheck:
+              $ref: '#/components/schemas/Healthcheck'
+    Base:
+      type: object
+      required:
+        - id
+        - created_at
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+          format: date-time
+        updated_at:
+          type: string
+          readOnly: true
+          format: date-time
+    ApplicationEditRequest:
+      $ref: '#/components/schemas/ApplicationRequest'
+    ContainerEditRequest:
+      allOf:
+        - $ref: '#/components/schemas/ContainerStorage'
+        - $ref: '#/components/schemas/ApplicationPort'
+        - type: object
+          properties:
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+              description: give a description to this application
+            registry_id:
+              type: string
+              description: id of the linked registry
+            image_name:
+              type: string
+              description: name of the image container
+            arguments:
+              type: string
+            cpu:
+              type: integer
+              description: unit is millicores (m). 1000m = 1 cpu
+              default: 250
+              example: 1250
+            memory:
+              type: integer
+              description: unit is MB. 1024 MB = 1GB
+              default: 256
+              example: 1024
+            min_running_instances:
+              type: integer
+              minimum: 0
+              description: |
+                Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: 0 means that there is no application running.
+              default: 1
+            max_running_instances:
+              type: integer
+              description: |
+                Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: -1 means that there is no limit.
+              default: 1
+            healthcheck:
+              $ref: '#/components/schemas/Healthcheck'
             sticky_session:
               type: boolean
               description: |
@@ -7076,7 +9184,7 @@ components:
     Application:
       allOf:
         - $ref: '#/components/schemas/Base'
-        - $ref: '#/components/schemas/ApplicationStorage'
+        - $ref: '#/components/schemas/ContainerStorage'
         - $ref: '#/components/schemas/ApplicationPort'
         - type: object
           properties:
@@ -7323,12 +9431,7 @@ components:
             to_update:
               type: boolean
     ApplicationResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Application'
+      $ref: '#/components/schemas/ContainerResponseList'
     ApplicationNetwork:
       type: object
       properties:
@@ -7373,6 +9476,57 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationDeploymentRestriction'
+    ContainerResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Application'
+    ContainerNetwork:
+      type: object
+      properties:
+        sticky_session:
+          type: boolean
+          description: |
+            Specify if the sticky session option (also called persistant session) is activated or not for this container.
+            If activated, user will be redirected by the load balancer to the same instance each time he access to the container. 
+          default: false
+    ContainerNetworkRequest:
+      type: object
+      properties:
+        sticky_session:
+          type: boolean
+          description: |
+            Specify if the sticky session option (also called persistant session) is activated or not for this container.
+            If activated, user will be redirected by the load balancer to the same instance each time he access to the container. 
+          default: false
+    ContainerDeploymentRestrictionRequest:
+      type: object
+      required:
+        - mode
+        - type
+        - value
+      properties:
+        mode:
+          $ref: '#/components/schemas/DeploymentRestrictionModeEnum'
+        type:
+          $ref: '#/components/schemas/DeploymentRestrictionTypeEnum'
+        value:
+          type: string
+          description: 'For `PATH` restrictions, the value must not start with `/`'
+          example: application1/src/
+    ContainerDeploymentRestriction:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/ContainerDeploymentRestrictionRequest'
+    ContainerDeploymentRestrictionResponseList:
+      type: object
+      properties:
+        deployment_restrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerDeploymentRestriction'
     RemainingCredits:
       allOf:
         - $ref: '#/components/schemas/Cost'
@@ -8682,6 +10836,45 @@ components:
           type: string
           readOnly: true
           format: date-time
+    ContainerAdvancedSettings:
+      type: object
+      properties:
+        deployment.delay_start_time_sec:
+          type: integer
+        build.timeout_max_sec:
+          type: integer
+    ContainerAdvancedSettingsRequest:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContainerAdvancedSettings'
+    ContainerAdvancedSettingsResponse:
+      type: object
+      properties:
+        deployment.delay_start_time_sec:
+          type: integer
+        build.timeout_max_sec:
+          type: integer
+    ContainerCurrentScale:
+      type: object
+      properties:
+        min:
+          type: integer
+        max:
+          type: integer
+        running:
+          type: integer
+        running_in_percent:
+          type: number
+        warning_threshold_in_percent:
+          type: number
+        alert_threshold_in_percent:
+          type: number
+        status:
+          $ref: '#/components/schemas/ThresholdMetricStatusEnum'
+        updated_at:
+          type: string
+          readOnly: true
+          format: date-time
     VersionResponseList:
       type: object
       properties:
@@ -8720,6 +10913,30 @@ components:
           type: string
           readOnly: true
           format: date-time
+    EnvironmentContainersCurrentScale:
+      type: object
+      properties:
+        container:
+          type: string
+          format: uuid
+        min:
+          type: integer
+        max:
+          type: integer
+        running:
+          type: integer
+        running_in_percent:
+          type: number
+        warning_threshold_in_percent:
+          type: number
+        alert_threshold_in_percent:
+          type: number
+        status:
+          $ref: '#/components/schemas/ThresholdMetricStatusEnum'
+        updated_at:
+          type: string
+          readOnly: true
+          format: date-time
     Tag:
       type: object
       required:
@@ -8737,6 +10954,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentApplicationsStorage'
+    EnvironmentContainersStorageResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentContainersStorage'
     EnvironmentApplicationsSupportedLanguageList:
       type: object
       properties:
