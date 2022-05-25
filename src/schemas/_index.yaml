@@ -468,6 +468,10 @@ GitRepositoryBranchResponseList:
   $ref: ./GitRepositoryBranchResponseList.yaml
 GitRepositoryBranch:
   $ref: ./GitRepositoryBranchResponse.yaml
+ApplicationAdvancedSettingsResponse:
+  $ref: ./ApplicationAdvancedSettingsResponse.yaml
+ApplicationAdvancedSettingsRequest:
+  $ref: ./ApplicationAdvancedSettingsRequest.yaml
 OrganizationGithubAppConnectRequest:
   $ref: ./OrganizationGithubAppConnectRequest.yaml
 BuildPackLanguageEnum:
@@ -534,7 +538,9 @@ ServiceTypeEnum:
   $ref: ./enums/ServiceType.yaml
 StorageTypeEnum:
   $ref: ./enums/StorageType.yaml
+  $ref: ./enums/StorageType.yaml
 StatusKindEnum:
   $ref: ./enums/StatusKind.yaml
 StateEnum:
   $ref: ./enums/State.yaml
+  
