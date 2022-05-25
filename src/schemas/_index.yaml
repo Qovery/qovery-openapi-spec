@@ -468,6 +468,8 @@ GitRepositoryBranchResponseList:
   $ref: ./GitRepositoryBranchResponseList.yaml
 GitRepositoryBranch:
   $ref: ./GitRepositoryBranchResponse.yaml
+OrganizationGithubAppConnectRequest:
+  $ref: ./OrganizationGithubAppConnectRequest.yaml
 BuildPackLanguageEnum:
   $ref: ./enums/BuildPackLanguage.yaml
 OrganizationApiTokenScope:

@@ -69,6 +69,7 @@ tags:
   - name: Environment Variable
   - name: Environments
   - name: Git
+  - name: Github App
   - name: Git repositories
   - name: Logical Database
   - name: Members
@@ -96,6 +97,7 @@ x-tagGroups:
       - Clusters
       - Cloud Provider
       - Cloud Provider Credentials
+      - Github App
       - Container Registries
   - name: Project
     tags:
@@ -238,6 +240,10 @@ paths:
     $ref: './resources/CloudProviderScalewayCredentials.yaml'
   /organization/{organizationId}/scaleway/credentials/{credentialsId}:
     $ref: './resources/CloudProviderScalewayCredentialsRef.yaml'
+  /organization/{organizationId}/github/connect:
+    $ref: './resources/OrganizationGithubAppConnect.yaml'
+  /organization/{organizationId}/github/disconnect:
+    $ref: './resources/OrganizationGithubAppDisconnect.yaml'
   /organization/{organizationId}/account/gitAuthProvider:
     $ref: './resources/OrganizationAccountGitAuthProvider.yaml'
   /organization/{organizationId}/account/github/repository:
