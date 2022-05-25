@@ -1,0 +1,21 @@
+get:
+  summary: 'Get Memory consumption metric over time for the container'
+  operationId: getContainerMetricMemory
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+    - $ref: '../parameters/query/lastSeconds.yaml'
+  tags:
+    - Container Metrics
+  responses:
+    '200':
+      description: 'Memory consumption'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/MetricMemoryResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

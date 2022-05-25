@@ -1,16 +1,3 @@
-type: object
-required:
-  - settings
-properties:
-  settings:
-    type: array
-    items:
-      type: object
-      required:
-        - name
-        - value
-      properties:
-        name:
-          type: string
-        value:
-          type: string
+type: array
+items:
+  $ref: './ApplicationAdvancedSettings.yaml'

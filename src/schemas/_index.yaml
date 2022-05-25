@@ -16,6 +16,10 @@ ApplicationStorage:
   $ref: ./ApplicationStorageResponse.yaml
 ApplicationDependencyRequest:
   $ref: ./ApplicationDependencyRequest.yaml
+ContainerStorage:
+  $ref: ./ApplicationStorageResponse.yaml
+ContainerDependencyRequest:
+  $ref: ./ApplicationDependencyRequest.yaml
 Organization:
   $ref: ./OrganizationResponse.yaml
 MetricStorageDatapoint:
@@ -44,6 +48,8 @@ Key:
   $ref: ./Key.yaml
 EnvironmentApplicationsCurrentScaleResponseList:
   $ref: ./EnvironmentApplicationsCurrentScaleResponseList.yaml
+EnvironmentContainersCurrentScaleResponseList:
+  $ref: ./EnvironmentContainersCurrentScaleResponseList.yaml
 MemberResponseList:
   $ref: ./MemberResponseList.yaml
 DatabaseRequest:
@@ -66,6 +72,8 @@ EnvironmentTotalNumber:
   $ref: ./EnvironmentTotalNumber.yaml
 EnvironmentApplicationsStorage:
   $ref: ./EnvironmentApplicationsStorageResponse.yaml
+EnvironmentContainersStorage:
+  $ref: ./EnvironmentContainersStorageResponse.yaml
 MetricCPUDatapoint:
   $ref: ./MetricCPUDatapointResponse.yaml
 Version:
@@ -115,11 +123,15 @@ Commit:
 GenericObjectCurrentCost:
   $ref: ./GenericObjectCurrentCostResponse.yaml
 ApplicationRequest:
-  $ref: ./ApplicationRequest.yaml
+  $ref: ./ApplicationEditRequest.yaml
+ContainerRequest:
+  $ref: ./ContainerRequest.yaml
 Base:
   $ref: ./BaseResponse.yaml
 ApplicationEditRequest:
   $ref: ./ApplicationEditRequest.yaml
+ContainerEditRequest:
+  $ref: ./ContainerEditRequest.yaml
 DeploymentHistoryResponseList:
   $ref: ./DeploymentHistoryResponseList.yaml
 BudgetThreshold:
@@ -176,6 +188,18 @@ ApplicationDeploymentRestriction:
   $ref: ./ApplicationDeploymentRestrictionResponse.yaml
 ApplicationDeploymentRestrictionResponseList:
   $ref: ./ApplicationDeploymentRestrictionResponseList.yaml
+ContainerResponseList:
+  $ref: ./ApplicationResponseList.yaml
+ContainerNetwork:
+  $ref: ./ContainerNetworkResponse.yaml
+ContainerNetworkRequest:
+  $ref: ./ContainerNetworkRequest.yaml
+ContainerDeploymentRestrictionRequest:
+  $ref: ./ContainerDeploymentRestrictionRequest.yaml
+ContainerDeploymentRestriction:
+  $ref: ./ContainerDeploymentRestrictionResponse.yaml
+ContainerDeploymentRestrictionResponseList:
+  $ref: ./ContainerDeploymentRestrictionResponseList.yaml
 RemainingCredits:
   $ref: ./RemainingCredits.yaml
 BillingStatus:
@@ -364,18 +388,36 @@ Event:
   $ref: ./EventResponse.yaml
 EnvironmentDatabasesCurrentMetricResponseList:
   $ref: ./EnvironmentDatabasesCurrentMetricResponseList.yaml
+ApplicationAdvancedSettings:
+  $ref: ./ApplicationAdvancedSettings.yaml
+ApplicationAdvancedSettingsRequest:
+  $ref: ./ApplicationAdvancedSettingsRequest.yaml
+ApplicationAdvancedSettingsResponse:
+  $ref: ./ApplicationAdvancedSettingsResponse.yaml
 ApplicationCurrentScale:
   $ref: ./ApplicationCurrentScaleResponse.yaml
+ContainerAdvancedSettings:
+  $ref: ./ContainerAdvancedSettings.yaml
+ContainerAdvancedSettingsRequest:
+  $ref: ./ContainerAdvancedSettingsRequest.yaml
+ContainerAdvancedSettingsResponse:
+  $ref: ./ContainerAdvancedSettingsResponse.yaml
+ContainerCurrentScale:
+  $ref: ./ContainerCurrentScaleResponse.yaml
 VersionResponseList:
   $ref: ./VersionResponseList.yaml
 CommitResponseList:
   $ref: ./CommitResponseList.yaml
 EnvironmentApplicationsCurrentScale:
   $ref: ./EnvironmentApplicationsCurrentScaleResponse.yaml
+EnvironmentContainersCurrentScale:
+  $ref: ./EnvironmentContainersCurrentScaleResponse.yaml
 Tag:
   $ref: ./TagResponse.yaml
 EnvironmentApplicationsStorageResponseList:
   $ref: ./EnvironmentApplicationsStorageResponseList.yaml
+EnvironmentContainersStorageResponseList:
+  $ref: ./EnvironmentContainersStorageResponseList.yaml
 EnvironmentApplicationsSupportedLanguageList:
   $ref: ./EnvironmentApplicationsSupportedLanguageResponseList.yaml
 EnvironmentApplicationsSupportedLanguage:
@@ -430,6 +472,8 @@ ApplicationAdvancedSettingsResponse:
   $ref: ./ApplicationAdvancedSettingsResponse.yaml
 ApplicationAdvancedSettingsRequest:
   $ref: ./ApplicationAdvancedSettingsRequest.yaml
+OrganizationGithubAppConnectRequest:
+  $ref: ./OrganizationGithubAppConnectRequest.yaml
 BuildPackLanguageEnum:
   $ref: ./enums/BuildPackLanguage.yaml
 OrganizationApiTokenScope:

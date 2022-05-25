@@ -1,0 +1,20 @@
+type: object
+required:
+  - name
+  - kind
+  - url
+  - config
+properties:
+  name:
+    type: string
+  kind:
+    $ref: ../schemas/enums/ContainerRegistryKind.yaml
+  description:
+    type: string
+  url:
+    type: uri
+    description: URL of the container registry
+  config:
+    type: object
+    additionalProperties: true
+    description: authentification configuration

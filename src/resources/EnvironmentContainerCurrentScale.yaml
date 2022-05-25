@@ -1,0 +1,21 @@
+get:
+  summary: 'List current scaling information for each container'
+  description: Returns min, max, and running number of instances for each container 
+  operationId: getEnvironmentContainerCurrentScale
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+  tags:
+    - Containers
+  responses:
+    '200':
+      description: 'list containers with current scaling'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentContainersCurrentScaleResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

@@ -1,0 +1,22 @@
+get:
+  summary: 'Get CPU consumption metric over time for the container'
+  operationId: getContainerMetricCpu
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+    - $ref: '../parameters/query/lastSeconds.yaml'
+
+  tags:
+    - Container Metrics
+  responses:
+    '200':
+      description: 'CPU consumption'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/MetricCPUResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
