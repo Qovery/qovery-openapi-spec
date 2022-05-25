@@ -82,6 +82,7 @@ tags:
   - name: Project Secret
   - name: Projects
   - name: Referral & Rewards
+  - name: Container Registries
   - name: User Sign Up
 x-tagGroups:
   - name: Organization
@@ -95,6 +96,7 @@ x-tagGroups:
       - Clusters
       - Cloud Provider
       - Cloud Provider Credentials
+      - Container Registries
   - name: Project
     tags:
       - Project Main Calls
@@ -280,6 +282,12 @@ paths:
     $ref: './resources/OrganizationClusterUpdate.yaml'
   /organization/{organizationId}/cluster/{clusterId}/stop:
     $ref: './resources/OrganizationClusterStop.yaml'
+  /organization/{organizationId}/containerRegistry/:
+    $ref: './resources/OrganizationContainerRegistry.yaml'
+  /organization/{organizationId}/containerRegistry/{containerRegistryId}:
+    $ref: './resources/OrganizationContainerRegistryRef.yaml'
+  /organization/{organizationId}/AvailableContainerRegistry:
+    $ref: './resources/OrganizationAvailableContainerRegistry.yaml'
   /project/{projectId}:
     $ref: './resources/Project.yaml'
   /project/{projectId}/deploymentRule:

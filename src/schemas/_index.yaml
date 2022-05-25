@@ -536,3 +536,5 @@ StatusKindEnum:
   $ref: ./enums/StatusKind.yaml
 StateEnum:
   $ref: ./enums/State.yaml
+ContainerRegistryKInd:
+  $ref: ./enums/ContainerRegistryKInd.yaml
