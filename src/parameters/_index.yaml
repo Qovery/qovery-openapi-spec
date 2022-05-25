@@ -5,10 +5,10 @@ backupId:
   $ref: ./path/backupId.yaml
 clusterId:
   $ref: ./path/clusterId.yaml
-credentialsId:
-  $ref: ./path/credentialsId.yaml
 containerId:
   $ref: ./path/containerId.yaml
+credentialsId:
+  $ref: ./path/credentialsId.yaml
 creditCardId:
   $ref: ./path/creditCardId.yaml
 customDomainId:
