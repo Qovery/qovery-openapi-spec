@@ -1,7 +1,7 @@
 type: object
 properties:
   kind: 
-    $ref: ../schemas/enums/ContainerRegistryKind.yaml
+    $ref: ./enums/ContainerRegistryKind.yaml
   required_config:
     type: object
-  additionalProperties: true
+    additionalProperties: true

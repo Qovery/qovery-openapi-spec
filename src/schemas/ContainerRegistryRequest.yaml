@@ -12,7 +12,8 @@ properties:
   description:
     type: string
   url:
-    type: uri
+    type: string
+    format: uri
     description: URL of the container registry
   config:
     type: object

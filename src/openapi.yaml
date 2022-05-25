@@ -288,11 +288,11 @@ paths:
     $ref: './resources/OrganizationClusterUpdate.yaml'
   /organization/{organizationId}/cluster/{clusterId}/stop:
     $ref: './resources/OrganizationClusterStop.yaml'
-  /organization/{organizationId}/containerRegistry/:
+  /organization/{organizationId}/containerRegistry:
     $ref: './resources/OrganizationContainerRegistry.yaml'
   /organization/{organizationId}/containerRegistry/{containerRegistryId}:
     $ref: './resources/OrganizationContainerRegistryRef.yaml'
-  /organization/{organizationId}/AvailableContainerRegistry:
+  /organization/{organizationId}/availableContainerRegistry:
     $ref: './resources/OrganizationAvailableContainerRegistry.yaml'
   /project/{projectId}:
     $ref: './resources/Project.yaml'
@@ -400,8 +400,6 @@ paths:
     $ref: './resources/ApplicationDeploymentRestriction.yaml'
   /application/{applicationId}/deploymentRestriction/{deploymentRestrictionId}:
     $ref: './resources/ApplicationDeploymentRestrictionRef.yaml'
-  /application/{applicationId}/advancedSettings:
-    $ref: './resources/ApplicationAdvancedSettings.yaml'
   /application/{applicationId}/contributor:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:

@@ -10,10 +10,6 @@ ApplicationAdvancedSettings:
   $ref: ./ApplicationAdvancedSettings.yaml
 ApplicationAdvancedSettingsRequest:
   $ref: ./ApplicationAdvancedSettingsRequest.yaml
-ApplicationAdvancedSettingsRequest:
-  $ref: ./ApplicationAdvancedSettingsRequest.yaml
-ApplicationAdvancedSettingsResponse:
-  $ref: ./ApplicationAdvancedSettingsResponse.yaml
 ApplicationAdvancedSettingsResponse:
   $ref: ./ApplicationAdvancedSettingsResponse.yaml
 ApplicationCurrentScale:
@@ -41,13 +37,15 @@ ApplicationPort:
 ApplicationPortRequest:
   $ref: ./ApplicationPortRequest.yaml
 ApplicationRequest:
-  $ref: ./ApplicationEditRequest.yaml
+  $ref: ./ApplicationRequest.yaml
 ApplicationResponseList:
   $ref: ./ApplicationResponseList.yaml
 ApplicationStorage:
   $ref: ./ApplicationStorageResponse.yaml
 ApplicationStorageRequest:
   $ref: ./ApplicationStorageRequest.yaml
+AvailableContainerRegistryResponse:
+  $ref: ./AvailableContainerRegistryResponse.yaml
 AwsCredentialsRequest:
   $ref: ./AwsCredentialsRequest.yaml
 Backup:
@@ -162,10 +160,20 @@ ContainerNetwork:
   $ref: ./ContainerNetworkResponse.yaml
 ContainerNetworkRequest:
   $ref: ./ContainerNetworkRequest.yaml
+ContainerDeployRequest:
+  $ref: ./ContainerDeployRequest.yaml
+ContainerRegistryKind:
+  $ref: ./enums/ContainerRegistryKind.yaml
+ContainerRegistryRequest:
+  $ref: ./ContainerRegistryRequest.yaml
+ContainerRegistryResponse:
+  $ref: ./ContainerRegistryResponse.yaml
 ContainerRequest:
   $ref: ./ContainerRequest.yaml
+ContainerResponse:
+  $ref: ./ContainerResponse.yaml
 ContainerResponseList:
-  $ref: ./ApplicationResponseList.yaml
+  $ref: ./ContainerResponseList.yaml
 ContainerStorage:
   $ref: ./ApplicationStorageResponse.yaml
 Cost:
@@ -511,7 +519,6 @@ StorageDisk:
 StorageDiskResponseList:
   $ref: ./StorageDiskResponseList.yaml
 StorageTypeEnum:
-  $ref: ./enums/StorageType.yaml
   $ref: ./enums/StorageType.yaml
 Tag:
   $ref: ./TagResponse.yaml

@@ -3,7 +3,7 @@ delete:
   operationId: deleteContainerRegistry
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
-    - $ref: '../parameters/path/containerId.yaml'
+    - $ref: '../parameters/path/containerRegistryId.yaml'
   tags:
     - Container Registries
   responses:
@@ -21,7 +21,7 @@ put:
   operationId: editContainerRegistry
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
-    - $ref: '../parameters/path/containerId.yaml'
+    - $ref: '../parameters/path/containerRegistryId.yaml'
 
   tags:
     - Container Registry
