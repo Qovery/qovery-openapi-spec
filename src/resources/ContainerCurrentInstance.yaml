@@ -1,0 +1,20 @@
+get:
+  summary: 'List currently running instances of the container with their CPU and RAM metrics'
+  operationId: getContainerCurrentInstance
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+  tags:
+    - Container Metrics
+  responses:
+    '200':
+      description: 'Know current resource consumption of the container for each running instance'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/InstanceResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

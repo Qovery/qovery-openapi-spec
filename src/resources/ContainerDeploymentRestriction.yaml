@@ -1,0 +1,50 @@
+get:
+  summary: 'Get container deployment restrictions'
+  description: 'Get container deployment restrictions'
+  operationId: getContainerDeploymentRestrictions
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+  tags:
+    - Container Deployment Restriction
+  responses:
+    '200':
+      description: 'Get container deployment restrictions'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ContainerDeploymentRestrictionResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+
+post:
+  summary: 'Create an container deployment restriction'
+  description: 'Create an container deployment restriction'
+  operationId: createContainerDeploymentRestriction
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+  tags:
+    - Container Deployment Restriction
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/ContainerDeploymentRestrictionRequest.yaml'
+  responses:
+    '201':
+      description: 'Added an environment variable'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ContainerDeploymentRestrictionResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '409':
+      description: An Container deployment restriction with same properties already exists for this Container
