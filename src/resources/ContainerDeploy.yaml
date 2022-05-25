@@ -1,0 +1,30 @@
+post:
+  summary: 'Deploy container'
+  description: You must provide a git commit id
+  operationId: deployContainer
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+  tags:
+    - Container Actions
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/ContainerDeployRequest.yaml'
+  responses:
+    '202':
+      description: 'Deploy container'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Status.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+    '409':
+      description: 'Operation is in progress'

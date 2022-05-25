@@ -1,0 +1,7 @@
+name: targetContainerId
+in: path
+description: Target container ID
+required: true
+schema:
+  type: string
+  format: uuid

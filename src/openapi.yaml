@@ -29,20 +29,36 @@ tags:
   - name: Application Metrics
   - name: Application Secret
   - name: Applications
+  - name: Container
+  - name: Container Actions
+  - name: Container Configuration
+  - name: Container Database
+  - name: Container Deployment Restriction
+  - name: Container Deployment History
+  - name: Container Environment Variable
+  - name: Container Event
+  - name: Container Logs
+  - name: Container Main Calls
+  - name: Container Metrics
+  - name: Container Secret
+  - name: Containers
   - name: Backups
   - name: Billing
   - name: Cloud Provider
   - name: Cloud Provider Credentials
   - name: Clusters
   - name: Custom Domain
+  - name: Container Custom Domain
   - name: Database
   - name: Database Actions
   - name: Database Application
+  - name: Database Container
   - name: Database Event
   - name: Database Main Calls
   - name: Database Metrics
   - name: Databases
   - name: Dependency
+  - name: Container Dependency
   - name: Environment
   - name: Environment Actions
   - name: Environment Deployment History
@@ -67,6 +83,7 @@ tags:
   - name: Project Secret
   - name: Projects
   - name: Referral & Rewards
+  - name: Container Registries
   - name: User Sign Up
 x-tagGroups:
   - name: Organization
@@ -81,6 +98,7 @@ x-tagGroups:
       - Cloud Provider
       - Cloud Provider Credentials
       - Github App
+      - Container Registries
   - name: Project
     tags:
       - Project Main Calls
@@ -92,6 +110,7 @@ x-tagGroups:
     tags:
       - Environment Main Calls
       - Applications
+      - Containers
       - Databases
       - Environment Actions
       - Environment Logs
@@ -114,14 +133,31 @@ x-tagGroups:
       - Application Environment Variable
       - Application Secret
       - Application Event
+  - name: Container
+    tags:
+      - Container Main Calls
+      - Container Actions
+      - Container Configuration
+      - Container Custom Domain
+      - Container Dependency
+      - Container Metrics
+      - Container Database
+      - Container Logs
+      - Container Deployment Restriction
+      - Container Deployment History
+      - Container Environment Variable
+      - Container Secret
+      - Container Event
   - name: Database
     tags:
       - Database Main Calls
       - Database Actions
       - Database Metrics
       - Database Applications
+      - Database Containers
       - Logical Database
       - Database Application
+      - Database Container
       - Backups
       - Database Event
   - name: Account
@@ -252,6 +288,12 @@ paths:
     $ref: './resources/OrganizationClusterUpdate.yaml'
   /organization/{organizationId}/cluster/{clusterId}/stop:
     $ref: './resources/OrganizationClusterStop.yaml'
+  /organization/{organizationId}/containerRegistry/:
+    $ref: './resources/OrganizationContainerRegistry.yaml'
+  /organization/{organizationId}/containerRegistry/{containerRegistryId}:
+    $ref: './resources/OrganizationContainerRegistryRef.yaml'
+  /organization/{organizationId}/AvailableContainerRegistry:
+    $ref: './resources/OrganizationAvailableContainerRegistry.yaml'
   /project/{projectId}:
     $ref: './resources/Project.yaml'
   /project/{projectId}/deploymentRule:
@@ -314,6 +356,18 @@ paths:
     $ref: './resources/EnvironmentApplicationSupportedLanguage.yaml'
   /environment/{environmentId}/application/deploy:
     $ref: './resources/EnvironmentApplicationDeploy.yaml'
+  /environment/{environmentId}/container:
+    $ref: './resources/EnvironmentContainer.yaml'
+  /environment/{environmentId}/container/status:
+    $ref: './resources/EnvironmentContainerStatus.yaml'
+  /environment/{environmentId}/container/instance:
+    $ref: './resources/EnvironmentContainerCurrentInstance.yaml'
+  /environment/{environmentId}/container/currentStorage:
+    $ref: './resources/EnvironmentContainersCurrentStorage.yaml'
+  /environment/{environmentId}/container/currentScale:
+    $ref: './resources/EnvironmentContainerCurrentScale.yaml'
+  /environment/{environmentId}/container/deploy:
+    $ref: './resources/EnvironmentContainerDeploy.yaml'
   /environment/{environmentId}/log:
     $ref: './resources/EnvironmentLog.yaml'
   /environment/{environmentId}/deploymentHistory:
@@ -346,6 +400,8 @@ paths:
     $ref: './resources/ApplicationDeploymentRestriction.yaml'
   /application/{applicationId}/deploymentRestriction/{deploymentRestrictionId}:
     $ref: './resources/ApplicationDeploymentRestrictionRef.yaml'
+  /application/{applicationId}/advancedSettings:
+    $ref: './resources/ApplicationAdvancedSettings.yaml'
   /application/{applicationId}/contributor:
     $ref: './resources/ApplicationContributor.yaml'
   /application/{applicationId}/tag:
@@ -422,6 +478,92 @@ paths:
     $ref: './resources/ApplicationLogicalDatabaseRef.yaml'
   /application/{applicationId}/link:
     $ref: './resources/ApplicationLink.yaml'
+  /container/{containerId}:
+    $ref: './resources/Container.yaml'
+  /container/{containerId}/status:
+    $ref: './resources/ContainerStatus.yaml'
+  /container/{containerId}/deploymentRestriction:
+    $ref: './resources/ContainerDeploymentRestriction.yaml'
+  /container/{containerId}/deploymentRestriction/{deploymentRestrictionId}:
+    $ref: './resources/ContainerDeploymentRestrictionRef.yaml'
+  /container/{containerId}/advancedSettings:
+    $ref: './resources/ContainerAdvancedSettings.yaml'
+  /container/{containerId}/contributor:
+    $ref: './resources/ContainerContributor.yaml'
+  /container/{containerId}/tag:
+    $ref: './resources/ContainerTag.yaml'
+  /container/{containerId}/tag/{tagId}:
+    $ref: './resources/ContainerTagRef.yaml'
+  /container/{containerId}/instance:
+    $ref: './resources/ContainerCurrentInstance.yaml'
+  /container/{containerId}/currentStorage:
+    $ref: './resources/ContainerCurrentStorageDisk.yaml'
+  /container/{containerId}/currentScale:
+    $ref: './resources/ContainerCurrentScale.yaml'
+  /container/{containerId}/metric/cpu:
+    $ref: './resources/ContainerMetricCpu.yaml'
+  /container/{containerId}/metric/memory:
+    $ref: './resources/ContainerMetricMemory.yaml'
+  /container/{containerId}/metric/healthCheck:
+    $ref: './resources/ContainerMetricHealthCheck.yaml'
+  /container/{containerId}/metric/storage:
+    $ref: './resources/ContainerMetricStorage.yaml'
+  /container/{containerId}/metric/restart:
+    $ref: './resources/ContainerMetricRestart.yaml'
+  /container/{containerId}/dependency:
+    $ref: './resources/ContainerDependency.yaml'
+  /container/{containerId}/dependency/{targetContainerId}:
+    $ref: './resources/ContainerDependencyRef.yaml'
+  /container/{containerId}/deploy:
+    $ref: './resources/ContainerDeploy.yaml'
+  /container/{containerId}/previewEnvironment:
+    $ref: './resources/ContainerPreviewEnvironment.yaml'
+  /container/{containerId}/tagHistory:
+    $ref: './resources/ContainerTagHistory.yaml'
+  /container/{containerId}/stop:
+    $ref: './resources/ContainerStop.yaml'
+  /container/{containerId}/restart:
+    $ref: './resources/ContainerRestart.yaml'
+  /container/{containerId}/event:
+    $ref: './resources/ContainerEvent.yaml'
+  /container/{containerId}/environmentVariable:
+    $ref: './resources/ContainerEnvironmentVariable.yaml'
+  /container/{containerId}/environmentVariable/import:
+    $ref: './resources/ContainerVariableImport.yaml'
+  /container/{containerId}/environmentVariable/{environmentVariableId}:
+    $ref: './resources/ContainerEnvironmentVariableRef.yaml'
+  /container/{containerId}/environmentVariable/{environmentVariableId}/override:
+    $ref: './resources/ContainerEnvironmentVariableOverride.yaml'
+  /container/{containerId}/environmentVariable/{environmentVariableId}/alias:
+    $ref: './resources/ContainerEnvironmentVariableAlias.yaml'
+  /container/{containerId}/secret:
+    $ref: './resources/ContainerSecret.yaml'
+  /container/{containerId}/secret/{secretId}:
+    $ref: './resources/ContainerSecretRef.yaml'
+  /container/{containerId}/secret/{secretId}/override:
+    $ref: './resources/ContainerSecretOverride.yaml'
+  /container/{containerId}/secret/{secretId}/alias:
+    $ref: './resources/ContainerSecretAlias.yaml'
+  /container/{containerId}/customDomain:
+    $ref: './resources/ContainerCustomDomain.yaml'
+  /container/{containerId}/customDomain/{customDomainId}:
+    $ref: './resources/ContainerCustomDomainRef.yaml'
+  /container/{containerId}/customDomain/{customDomainId}/status:
+    $ref: './resources/ContainerCustomDomainStatus.yaml'
+  /container/{containerId}/log:
+    $ref: './resources/ContainerLog.yaml'
+  /container/{containerId}/network:
+    $ref: './resources/ContainerNetwork.yaml'
+  /container/{containerId}/database:
+    $ref: './resources/ContainerDatabase.yaml'
+  /container/{containerId}/database/{targetDatabaseId}:
+    $ref: './resources/ContainerDatabaseRef.yaml'
+  /container/{containerId}/logicalDatabase:
+    $ref: './resources/ContainerLogicalDatabase.yaml'
+  /container/{containerId}/logicalDatabase/{targetLogicalDatabaseId}:
+    $ref: './resources/ContainerLogicalDatabaseRef.yaml'
+  /container/{containerId}/link:
+    $ref: './resources/ContainerLink.yaml'
   /environment/{environmentId}/database:
     $ref: './resources/EnvironmentDatabase.yaml'
   /environment/{environmentId}/database/status:
@@ -442,6 +584,10 @@ paths:
     $ref: './resources/DatabaseApplication.yaml'
   /database/{databaseId}/application/{targetApplicationId}:
     $ref: './resources/DatabaseApplicationRef.yaml'
+  /database/{databaseId}/container:
+    $ref: './resources/DatabaseContainer.yaml'
+  /database/{databaseId}/container/{targetContainerId}:
+    $ref: './resources/DatabaseContainerRef.yaml'
   /database/{databaseId}/restart:
     $ref: './resources/DatabaseRestart.yaml'
   /database/{databaseId}/stop:
@@ -472,6 +618,8 @@ paths:
     $ref: './resources/LogicalDatabaseCredentials.yaml'
   /logicalDatabase/{logicalDatabaseId}/application:
     $ref: './resources/LogicalDatabaseApplication.yaml'
+  /logicalDatabase/{logicalDatabaseId}/container:
+    $ref: './resources/LogicalDatabaseContainer.yaml'
   /account:
     $ref: './resources/AccountInformation.yaml'
   /account/gitAuthProvider:

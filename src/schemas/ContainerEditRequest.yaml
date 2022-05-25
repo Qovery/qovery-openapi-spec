@@ -1,10 +1,7 @@
 allOf:
-  - $ref: './ApplicationStorageRequest.yaml'
-  - $ref: './ApplicationPortRequest.yaml'
+  - $ref: './ApplicationStorageResponse.yaml'
+  - $ref: './ApplicationPortResponse.yaml'
   - type: object
-    required:
-      - name
-      - git_repository
     properties:
       name:
         type: string
@@ -12,17 +9,14 @@ allOf:
       description:
         type: string
         description: give a description to this application
-        nullable: true
-      git_repository:
-        $ref: './ApplicationGitRepositoryRequest.yaml'
-      build_mode:
-        $ref: './enums/BuildMode.yaml'
-      dockerfile_path:
+      registry_id:
         type: string
-        description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-        nullable: true
-      buildpack_language:
-        $ref: "./enums/BuildPackLanguage.yaml"
+        description: id of the linked registry
+      image_name:
+        type: string
+        description: name of the image container
+      arguments: 
+        type: string
       cpu:
         type: integer
         description: unit is millicores (m). 1000m = 1 cpu
@@ -48,9 +42,9 @@ allOf:
         default: 1
       healthcheck:
         $ref: './Healthcheck.yaml'
-      auto_preview:
+      sticky_session:
         type: boolean
         description: |
-          Specify if the environment preview option is activated or not for this application.
-          If activated, a preview environment will be automatically cloned at each pull request.
-        default: true
+          Specify if the sticky session option (also called persistant session) is activated or not for this application.
+          If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
+        default: false

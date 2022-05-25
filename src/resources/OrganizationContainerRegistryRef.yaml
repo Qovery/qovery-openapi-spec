@@ -1,0 +1,48 @@
+delete:
+  summary: 'Delete a container registry'
+  operationId: deleteContainerRegistry
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/containerId.yaml'
+  tags:
+    - Container Registries
+  responses:
+    '204':
+      $ref: '../responses/Deleted.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+
+put:
+  summary: 'Edit a container registry'
+  operationId: editContainerRegistry
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/containerId.yaml'
+
+  tags:
+    - Container Registry
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/ContainerRegistryRequest.yaml'
+
+  responses:
+    '200':
+      description: 'Edited the container registry'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ContainerRegistryResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

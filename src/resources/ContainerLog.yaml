@@ -1,0 +1,21 @@
+get:
+  summary: 'List logs'
+  operationId: listContainerLog
+  description: This will list the last 1000 logs of the container
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+  tags:
+    - Container Logs
+  responses:
+    '200':
+      description: 'List logs'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/LogResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

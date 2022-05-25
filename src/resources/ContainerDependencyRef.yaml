@@ -1,0 +1,42 @@
+post:
+  summary: 'Add container dependency to this application.'
+  description: 'Add container dependency to this container to prevent this container starting before the linked dependencies'
+  operationId: createContainerDependency
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+    - $ref: '../parameters/path/targetContainerId.yaml'
+  tags:
+    - Container Dependency
+  responses:
+    '200':
+      description: 'Add container dependencies'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ContainerResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+      
+delete:
+  summary: 'Remove container dependency to this container.'
+  operationId: removeContainerDependency
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+    - $ref: '../parameters/path/targetContainerId.yaml'
+  tags:
+    - Container Dependency
+  responses:
+    '204':
+      $ref: '../responses/Deleted.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

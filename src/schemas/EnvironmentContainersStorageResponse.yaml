@@ -1,0 +1,12 @@
+type: object
+required:
+  - container
+  - instances
+properties:
+  container:
+    type: string
+    format: uuid
+  disks:
+    type: array
+    items:
+      $ref: '../schemas/StorageDiskResponse.yaml'

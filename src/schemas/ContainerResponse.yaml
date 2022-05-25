@@ -1,28 +1,36 @@
 allOf:
-  - $ref: './ApplicationStorageRequest.yaml'
-  - $ref: './ApplicationPortRequest.yaml'
+  - $ref: './BaseResponse.yaml'
+  - $ref: './ApplicationStorageResponse.yaml'
+  - $ref: './ApplicationPortResponse.yaml'
   - type: object
-    required:
-      - name
-      - git_repository
     properties:
+      environment:
+        $ref: './ReferenceObject.yaml'
+      maximum_cpu:
+        type: integer
+        description: Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+        default: 250
+        example: 1250
+      maximum_memory:
+        type: integer
+        description: Maximum memory that can be allocated to the container based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+        default: 256
+        example: 1024
       name:
         type: string
         description: name is case insensitive
       description:
         type: string
-        description: give a description to this application
+        description: give a description to this container
         nullable: true
-      git_repository:
-        $ref: './ApplicationGitRepositoryRequest.yaml'
-      build_mode:
-        $ref: './enums/BuildMode.yaml'
-      dockerfile_path:
+      registry_id:
         type: string
-        description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-        nullable: true
-      buildpack_language:
-        $ref: "./enums/BuildPackLanguage.yaml"
+        description: id of the linked registry
+      image_name:
+        type: string
+        description: name of the image container
+      arguments: 
+        type: string
       cpu:
         type: integer
         description: unit is millicores (m). 1000m = 1 cpu
@@ -38,7 +46,7 @@ allOf:
         minimum: 0
         description: |
           Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-          Note: 0 means that there is no application running.
+          Note: 0 means that there is no container running.
         default: 1
       max_running_instances:
         type: integer
@@ -48,9 +56,3 @@ allOf:
         default: 1
       healthcheck:
         $ref: './Healthcheck.yaml'
-      auto_preview:
-        type: boolean
-        description: |
-          Specify if the environment preview option is activated or not for this application.
-          If activated, a preview environment will be automatically cloned at each pull request.
-        default: true
