@@ -69,6 +69,7 @@ tags:
   - name: Environment Variable
   - name: Environments
   - name: Git
+  - name: Github App
   - name: Git repositories
   - name: Logical Database
   - name: Members
@@ -96,6 +97,7 @@ x-tagGroups:
       - Clusters
       - Cloud Provider
       - Cloud Provider Credentials
+      - Github App
       - Container Registries
   - name: Project
     tags:
@@ -1362,6 +1364,47 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/github/connect':
+    post:
+      summary: Connect a github account to an organization
+      operationId: organizationGithubAppConnect
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Github App
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationGithubAppConnectRequest'
+      responses:
+        '200':
+          description: Github App connected
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/github/disconnect':
+    delete:
+      summary: Disconnect a github account from an organization
+      operationId: organizationGithubAppDisconnect
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Github App
+      responses:
+        '204':
+          description: Github App disconnected
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -11324,6 +11367,16 @@ components:
         name:
           type: string
           example: main
+    OrganizationGithubAppConnectRequest:
+      type: object
+      required:
+        - installation_id
+        - code
+      properties:
+        installation_id:
+          type: string
+        code:
+          type: string
     BuildPackLanguageEnum:
       type: string
       description: Development language of the application
