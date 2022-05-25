@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: stoplightio/spectral-action@v0.8.1
+      - uses: stoplightio/spectral-action@v0.8.2
         with:
           file_glob: 'src/openapi.yaml'
           spectral_ruleset: '.spectral.yaml'

@@ -2,7 +2,7 @@
 put:
   summary: 'Edit a Custom Domain'
   description: 'To edit a Custom Domain  you must have the project user permission'
-  operationId: editCustomDomain
+  operationId: editContainerCustomDomain
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
     - $ref: '../parameters/path/customDomainId.yaml'
@@ -32,7 +32,7 @@ put:
 delete:
   summary: 'Delete a Custom Domain'
   description: 'To delete an CustomDomain you must have the project user permission'
-  operationId: deleteCustomDomain
+  operationId: deleteContainerCustomDomain
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
     - $ref: '../parameters/path/customDomainId.yaml'

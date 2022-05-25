@@ -506,7 +506,7 @@ paths:
     $ref: './resources/ContainerMetricRestart.yaml'
   /container/{containerId}/dependency:
     $ref: './resources/ContainerDependency.yaml'
-  /container/{containerId}/dependency/{targetApplicationId}:
+  /container/{containerId}/dependency/{targetContainerId}:
     $ref: './resources/ContainerDependencyRef.yaml'
   /container/{containerId}/deploy:
     $ref: './resources/ContainerDeploy.yaml'

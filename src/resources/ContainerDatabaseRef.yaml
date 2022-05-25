@@ -1,8 +1,8 @@
 post:
   summary: 'Link a database to the container'
-  operationId: attachDatabasetoContainer
+  operationId: attachDatabaseToContainer
   parameters:
-    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/containerId.yaml'
     - $ref: '../parameters/path/targetDatabaseId.yaml'
   tags:
     - Container Database

@@ -1,6 +1,6 @@
 get:
   summary: 'List linked databases'
-  operationId: listContaienrDatabase
+  operationId: listContainerDatabase
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
   tags:

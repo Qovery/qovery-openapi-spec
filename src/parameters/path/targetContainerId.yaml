@@ -1,6 +1,6 @@
-name: targetApplicationId
+name: targetContainerId
 in: path
-description: Target application ID
+description: Target container ID
 required: true
 schema:
   type: string

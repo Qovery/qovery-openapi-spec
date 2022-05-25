@@ -1,18 +1,18 @@
 post:
-  summary: 'Link a database to the container'
-  operationId: attachDatabasetoContainer
+  summary: 'Link a logical database to the container'
+  operationId: attachLogicalDatabaseToContainer
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
-    - $ref: '../parameters/path/targetDatabaseId.yaml'
+    - $ref: '../parameters/path/targetLogicalDatabaseId.yaml'
   tags:
     - Container Database
   responses:
     '201':
-      description: 'Linked the database to the container'
+      description: 'Linked the logical database to the container'
       content:
         application/json:
           schema:
-            $ref: '../schemas/DatabaseResponse.yaml'
+            $ref: '../schemas/LogicalDatabaseResponse.yaml'
     '400':
       $ref: '../responses/BadRequest.yaml'
     '401':
@@ -22,14 +22,14 @@ post:
     '404':
       $ref: '../responses/NotFound.yaml'
     '409':
-      description: This database is already linked to the container
+      description: This logical database is already linked to the container
       
 delete:
-  summary: 'Remove database link to this container.'
-  operationId: removeDatabaseFromContainer
+  summary: 'Remove logical database link to this container.'
+  operationId: removeLogicalDatabaseFromContainer
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
-    - $ref: '../parameters/path/targetDatabaseId.yaml'
+    - $ref: '../parameters/path/targetLogicalDatabaseId.yaml'
   tags:
     - Container Database
   responses:
