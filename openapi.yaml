@@ -7986,7 +7986,7 @@ components:
     Application:
       allOf:
         - $ref: '#/components/schemas/Base'
-        - $ref: '#/components/schemas/ContainerStorage'
+        - $ref: '#/components/schemas/ApplicationStorage'
         - $ref: '#/components/schemas/ApplicationPort'
         - type: object
           properties:
@@ -8116,7 +8116,7 @@ components:
             $ref: '#/components/schemas/ApplicationDeploymentRestriction'
     ApplicationEditRequest:
       allOf:
-        - $ref: '#/components/schemas/ContainerStorage'
+        - $ref: '#/components/schemas/ApplicationStorage'
         - $ref: '#/components/schemas/ApplicationPort'
         - type: object
           properties:
@@ -8370,7 +8370,29 @@ components:
           items:
             $ref: '#/components/schemas/Application'
     ApplicationStorage:
-      $ref: '#/components/schemas/ContainerStorage'
+      type: object
+      properties:
+        storage:
+          type: array
+          items:
+            type: object
+            required:
+              - type
+              - size
+              - mount_point
+            properties:
+              id:
+                type: string
+                format: uuid
+              type:
+                $ref: '#/components/schemas/StorageTypeEnum'
+              size:
+                type: integer
+                description: unit is GB
+                example: 16
+              mount_point:
+                type: string
+                example: /mnt/images
     ApplicationStorageRequest:
       type: object
       properties:
@@ -9078,7 +9100,7 @@ components:
             $ref: '#/components/schemas/ContainerDeploymentRestriction'
     ContainerEditRequest:
       allOf:
-        - $ref: '#/components/schemas/ContainerStorage'
+        - $ref: '#/components/schemas/ApplicationStorage'
         - $ref: '#/components/schemas/ApplicationPort'
         - type: object
           properties:
@@ -9258,7 +9280,7 @@ components:
     ContainerResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
-        - $ref: '#/components/schemas/ContainerStorage'
+        - $ref: '#/components/schemas/ApplicationStorage'
         - $ref: '#/components/schemas/ApplicationPort'
         - type: object
           properties:
@@ -9322,29 +9344,8 @@ components:
           items:
             $ref: '#/components/schemas/ContainerResponse'
     ContainerStorage:
-      type: object
-      properties:
-        storage:
-          type: array
-          items:
-            type: object
-            required:
-              - type
-              - size
-              - mount_point
-            properties:
-              id:
-                type: string
-                format: uuid
-              type:
-                $ref: '#/components/schemas/StorageTypeEnum'
-              size:
-                type: integer
-                description: unit is GB
-                example: 16
-              mount_point:
-                type: string
-                example: /mnt/images
+      allOf:
+        - $ref: '#/components/schemas/ApplicationStorage'
     Cost:
       type: object
       required:
