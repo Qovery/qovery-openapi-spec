@@ -175,7 +175,7 @@ ContainerResponse:
 ContainerResponseList:
   $ref: ./ContainerResponseList.yaml
 ContainerStorage:
-  $ref: ./ApplicationStorageResponse.yaml
+  $ref: ./ContainerStorageResponse.yaml
 Cost:
   $ref: ./CostResponse.yaml
 CostRange:
