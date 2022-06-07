@@ -1,0 +1,19 @@
+get:
+  summary: 'Get cluster hostname'
+  operationId: getClusterHostname
+  description: Get the hostname of your EC2 instance.
+  tags:
+    - Clusters
+  responses:
+    '200':
+      description: 'return hostname'
+      content:
+        application/json:
+          schema:
+            type: string
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

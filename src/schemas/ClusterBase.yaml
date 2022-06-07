@@ -3,6 +3,7 @@ required:
   - name
   - cloud_provider
   - region
+  - kubernetes
 properties:
   name:
     type: string
@@ -25,6 +26,8 @@ properties:
     description: unit is MB. 1024 MB = 1GB
     default: 256
     example: 1024
+  kubernetes:
+    $ref: ./enums/Kubernetes.yaml
   min_running_nodes:
     type: integer
     default: 1
@@ -40,3 +43,11 @@ properties:
     example: 50
     default: 20
     description: the disk size to be used for the node configuration
+  ssh_key:
+    type: object
+    description: Indicate your public ssh_key to remotely connect to your EC2 instance.
+    properties:
+      results:
+        type: array
+        items:
+          type: string
