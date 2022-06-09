@@ -8055,21 +8055,29 @@ components:
       properties:
         deployment.delay_start_time_sec:
           type: integer
+          default: 30
         deployment.custom_domain_check_enabled:
           type: boolean
           description: disable custom domain check when deploying an application
+          default: true
         build.timeout_max_sec:
           type: integer
+          default: 1800
         network.ingress.proxy_body_size_mb:
           type: integer
+          default: 100
         network.ingress.enable_cors:
           type: boolean
+          default: false
         network.ingress.cors_allow_origin:
           type: string
+          default: '*'
         network.ingress.cors_allow_methods:
           type: string
+          default: 'GET, PUT, POST, DELETE, PATCH, OPTIONS'
         network.ingress.cors_allow_headers:
           type: string
+          default: 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization'
         readiness_probe.type:
           type: string
           enum:
@@ -8080,25 +8088,31 @@ components:
             `NONE` disable readiness probe
             `TCP` enable TCP readiness probe
             `HTTP` enable HTTP readiness probe
+          default: TCP
         readiness_probe.http_get.path:
           type: string
-          default: /
           description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
+          default: /
         readiness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
+          default: 10
         readiness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
+          default: 10
         readiness_probe.timeout_seconds:
           type: integer
           description: When the probe times out
+          default: 1
         readiness_probe.success_threshold:
           type: integer
           description: Minimum consecutive successes for the probe to be considered successful after having failed.
+          default: 1
         readiness_probe.failure_threshold:
           type: integer
           description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
+          default: 3
         liveness_probe.type:
           type: string
           enum:
@@ -8109,25 +8123,31 @@ components:
             `NONE` disable liveness probe
             `TCP` enable TCP liveness probe
             `HTTP` enable HTTP liveness probe
+          default: TCP
         liveness_probe.http_get.path:
           type: string
-          default: /
           description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
+          default: /
         liveness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
+          default: 10
         liveness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
+          default: 10
         liveness_probe.timeout_seconds:
           type: integer
           description: When the probe times out
+          default: 5
         liveness_probe.success_threshold:
           type: integer
           description: Minimum consecutive successes for the probe to be considered successful after having failed.
+          default: 1
         liveness_probe.failure_threshold:
           type: integer
           description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
+          default: 3
     ApplicationAdvancedSettingsRequest:
       type: array
       items:
@@ -9100,21 +9120,29 @@ components:
       properties:
         deployment.delay_start_time_sec:
           type: integer
+          default: 30
         deployment.custom_domain_check_enabled:
           type: boolean
           description: disable custom domain check when deploying an application
+          default: true
         build.timeout_max_sec:
           type: integer
+          default: 1800
         network.ingress.proxy_body_size_mb:
           type: integer
+          default: 100
         network.ingress.enable_cors:
           type: boolean
+          default: false
         network.ingress.cors_allow_origin:
           type: string
+          default: '*'
         network.ingress.cors_allow_methods:
           type: string
+          default: 'GET, PUT, POST, DELETE, PATCH, OPTIONS'
         network.ingress.cors_allow_headers:
           type: string
+          default: 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization'
         readiness_probe.type:
           type: string
           enum:
@@ -9125,25 +9153,31 @@ components:
             `NONE` disable readiness probe
             `TCP` enable TCP readiness probe
             `HTTP` enable HTTP readiness probe
+          default: TCP
         readiness_probe.http_get.path:
           type: string
-          default: /
           description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
+          default: /
         readiness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
+          default: 10
         readiness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
+          default: 10
         readiness_probe.timeout_seconds:
           type: integer
           description: When the probe times out
+          default: 1
         readiness_probe.success_threshold:
           type: integer
           description: Minimum consecutive successes for the probe to be considered successful after having failed.
+          default: 1
         readiness_probe.failure_threshold:
           type: integer
           description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
+          default: 3
         liveness_probe.type:
           type: string
           enum:
@@ -9154,25 +9188,31 @@ components:
             `NONE` disable liveness probe
             `TCP` enable TCP liveness probe
             `HTTP` enable HTTP liveness probe
+          default: TCP
         liveness_probe.http_get.path:
           type: string
-          default: /
           description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
+          default: /
         liveness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
+          default: 10
         liveness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
+          default: 10
         liveness_probe.timeout_seconds:
           type: integer
           description: When the probe times out
+          default: 5
         liveness_probe.success_threshold:
           type: integer
           description: Minimum consecutive successes for the probe to be considered successful after having failed.
+          default: 1
         liveness_probe.failure_threshold:
           type: integer
           description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
+          default: 3
     ContainerAdvancedSettingsRequest:
       type: array
       items:
@@ -9182,21 +9222,29 @@ components:
       properties:
         deployment.delay_start_time_sec:
           type: integer
+          default: 30
         deployment.custom_domain_check_enabled:
           type: boolean
           description: disable custom domain check when deploying an application
+          default: true
         build.timeout_max_sec:
           type: integer
+          default: 1800
         network.ingress.proxy_body_size_mb:
           type: integer
+          default: 100
         network.ingress.enable_cors:
           type: boolean
+          default: false
         network.ingress.cors_allow_origin:
           type: string
+          default: '*'
         network.ingress.cors_allow_methods:
           type: string
+          default: 'GET, PUT, POST, DELETE, PATCH, OPTIONS'
         network.ingress.cors_allow_headers:
           type: string
+          default: 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization'
         readiness_probe.type:
           type: string
           enum:
@@ -9207,25 +9255,31 @@ components:
             `NONE` disable readiness probe
             `TCP` enable TCP readiness probe
             `HTTP` enable HTTP readiness probe
+          default: TCP
         readiness_probe.http_get.path:
           type: string
-          default: /
           description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
+          default: /
         readiness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
+          default: 10
         readiness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
+          default: 10
         readiness_probe.timeout_seconds:
           type: integer
           description: When the probe times out
+          default: 1
         readiness_probe.success_threshold:
           type: integer
           description: Minimum consecutive successes for the probe to be considered successful after having failed.
+          default: 1
         readiness_probe.failure_threshold:
           type: integer
           description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
+          default: 3
         liveness_probe.type:
           type: string
           enum:
@@ -9236,25 +9290,31 @@ components:
             `NONE` disable liveness probe
             `TCP` enable TCP liveness probe
             `HTTP` enable HTTP liveness probe
+          default: TCP
         liveness_probe.http_get.path:
           type: string
-          default: /
           description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
+          default: /
         liveness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
+          default: 10
         liveness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
+          default: 10
         liveness_probe.timeout_seconds:
           type: integer
           description: When the probe times out
+          default: 5
         liveness_probe.success_threshold:
           type: integer
           description: Minimum consecutive successes for the probe to be considered successful after having failed.
+          default: 1
         liveness_probe.failure_threshold:
           type: integer
           description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
+          default: 3
     ContainerCurrentScale:
       type: object
       properties:
