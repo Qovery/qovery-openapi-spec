@@ -18,8 +18,6 @@ properties:
     default: false
   network.ingress.cors_allow_origin:
     type: string
-    default: |
-      *
   network.ingress.cors_allow_methods:
     type: string
     default: GET, PUT, POST, DELETE, PATCH, OPTIONS
