@@ -24,6 +24,6 @@ properties:
     nullable: true
   admin_emails:
     type: array
-    nullable: true
+    nullable: false
     items:
       type: string
