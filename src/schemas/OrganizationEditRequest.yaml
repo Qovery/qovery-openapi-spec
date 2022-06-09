@@ -20,3 +20,8 @@ properties:
   icon_url:
     type: string
     nullable: true
+  admin_emails:
+    type: array
+    nullable: true
+    items:
+      type: string
