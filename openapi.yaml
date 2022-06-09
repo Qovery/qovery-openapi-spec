@@ -11010,6 +11010,11 @@ components:
         icon_url:
           type: string
           nullable: true
+        admin_emails:
+          type: array
+          nullable: true
+          items:
+            type: string
     OrganizationGithubAppConnectRequest:
       type: object
       required:
@@ -11045,6 +11050,11 @@ components:
         icon_url:
           type: string
           nullable: true
+        admin_emails:
+          type: array
+          nullable: true
+          items:
+            type: string
     OrganizationResponseList:
       type: object
       properties:
