@@ -2,13 +2,15 @@ extends: 'spectral:oas'
 
 aliases:
   SchemaResponsePath:
-    - "$.paths[*].*.responses.*.content[*].schema"
+    - "$.paths[?(@.ref !== './resources/ApplicationAdvancedSettings.yaml')].*.responses.*.content[*].schema"
   SchemaResponsePropertyObject:
     - "#SchemaResponsePath.properties"
   SchemaRequestPath:
-    - "$.paths[*].*.requestBody.content[*].schema"
+    - "$.paths[?(@.$ref !== './resources/ApplicationAdvancedSettings.yaml')].*.requestBody.content[*].schema"
   SchemaRequestPropertyObject:
     - "#SchemaRequestPath.*.properties"
+  AdvancedSettingsPath:
+    - "$.paths[*AdvancedSettings*]"
 
 rules:
   snake-case-for-response-properties:
@@ -31,4 +33,3 @@ rules:
       function: casing
       functionOptions:
         type: snake
-
