@@ -29,5 +29,5 @@ properties:
     example: 1024
   storage:
     type: integer
-    description: unit is MB
-    default: 10240
+    description: unit is GB
+    default: 10
