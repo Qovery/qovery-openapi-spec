@@ -8150,6 +8150,10 @@ components:
           type: integer
           description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
           default: 3
+        hpa.cpu.average_utilization_percent:
+          type: integer
+          description: Percentage value of cpu usage at which point pods should scale up.
+          default: 60
     ApplicationAdvancedSettingsRequest:
       type: array
       items:
