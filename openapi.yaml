@@ -8056,6 +8056,8 @@ components:
         deployment.delay_start_time_sec:
           type: integer
           default: 30
+          deprecated: true
+          description: please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
         deployment.custom_domain_check_enabled:
           type: boolean
           description: disable custom domain check when deploying an application
@@ -8096,7 +8098,7 @@ components:
         readiness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
-          default: 10
+          default: 30
         readiness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
@@ -8131,7 +8133,7 @@ components:
         liveness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
-          default: 10
+          default: 30
         liveness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
@@ -9121,6 +9123,8 @@ components:
         deployment.delay_start_time_sec:
           type: integer
           default: 30
+          deprecated: true
+          description: please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
         deployment.custom_domain_check_enabled:
           type: boolean
           description: disable custom domain check when deploying an application
@@ -9161,7 +9165,7 @@ components:
         readiness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
-          default: 10
+          default: 30
         readiness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
@@ -9196,7 +9200,7 @@ components:
         liveness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
-          default: 10
+          default: 30
         liveness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
@@ -9223,6 +9227,8 @@ components:
         deployment.delay_start_time_sec:
           type: integer
           default: 30
+          deprecated: true
+          description: please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
         deployment.custom_domain_check_enabled:
           type: boolean
           description: disable custom domain check when deploying an application
@@ -9263,7 +9269,7 @@ components:
         readiness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
-          default: 10
+          default: 30
         readiness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
@@ -9298,7 +9304,7 @@ components:
         liveness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
-          default: 10
+          default: 30
         liveness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
