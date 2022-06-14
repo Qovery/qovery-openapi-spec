@@ -1,0 +1,12 @@
+type: string
+description: |
+  Events to subscribe to and send to the `target_url`.
+  - `DEPLOYMENT_STARTED` send an event when a deployment is started and going to be executed
+  - `DEPLOYMENT_CANCELLED` send an event when a deployment is cancelled
+  - `DEPLOYMENT_FAILURE` send an event when a deployment failed
+  - `DEPLOYMENT_SUCCESSFUL` send an event when a deployment is successful
+enum:
+  - DEPLOYMENT_STARTED
+  - DEPLOYMENT_CANCELLED
+  - DEPLOYMENT_FAILURE
+  - DEPLOYMENT_SUCCESSFUL

@@ -1,0 +1,27 @@
+type: object
+required:
+  - kind
+  - target_url
+  - events
+properties:
+  kind:
+    $ref: './enums/OrganizationWebhookKind.yaml'
+  target_url:
+    type: string
+    description: |
+      Set the public HTTP or HTTPS endpoint that will receive the specified events.
+      The target URL must starts with `http://` or `https://`
+  target_secret:
+    type: string
+    description: |
+      Make sure you receive a payload to sign the Qovery request with your secret.
+      Qovery will add a HTTP header `Qovery-Signature: <Your Secret>` to every webhook requests sent to your target URL.
+  description:
+    type: string
+  enabled:
+    type: boolean
+    description: Turn on or off your endpoint.
+  events:
+    type: array
+    items:
+      $ref: './enums/OrganizationWebhookEvent.yaml'

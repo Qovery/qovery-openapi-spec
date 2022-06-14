@@ -1,0 +1,70 @@
+get:
+  summary: 'Get an Organization webhook'
+  description: 'Get an Organization webhook'
+  operationId: getOrganizationWebhook
+  parameters:
+    - $ref: '../parameters/path/projectId.yaml'
+    - $ref: '../parameters/path/webhookId.yaml'
+  tags:
+    - Organization Webhook
+  responses:
+    '200':
+      description: 'Get organization webhook'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationWebhookResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+
+put:
+  summary: 'Edit an organization webhook'
+  description: 'Edit an organization webhook'
+  operationId: editOrganizationWebhook
+  parameters:
+    - $ref: '../parameters/path/projectId.yaml'
+    - $ref: '../parameters/path/webhookId.yaml'
+  tags:
+    - Organization Webhook
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/OrganizationWebhookRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit an organization webhook'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationWebhookResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+delete:
+  summary: 'Delete organization webhook'
+  description: 'Delete organization webhook'
+  operationId: deleteOrganizationWebhook
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/webhookId.yaml'
+  tags:
+    - Organization Webhook
+  responses:
+    '204':
+      $ref: '../responses/NoContent.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

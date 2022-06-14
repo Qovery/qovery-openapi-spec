@@ -76,6 +76,7 @@ tags:
   - name: Organization
   - name: Organization Main Calls
   - name: Organization Api Token
+  - name: Organization Webhook
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
@@ -91,6 +92,7 @@ x-tagGroups:
       - Organization Main Calls
       - Organization Api Token
       - Organization Account Git Repositories
+      - Organization Webhook
       - Projects
       - Members
       - Billing
@@ -258,6 +260,10 @@ paths:
     $ref: './resources/OrganizationAccountGitRepositoryBitbucket.yaml'
   /organization/{organizationId}/account/bitbucket/repository/branch:
     $ref: './resources/OrganizationAccountGitRepositoryBitbucketBranch.yaml'
+  /organization/{organizationId}/webhook:
+    $ref: './resources/OrganizationWebhook.yaml'
+  /organization/{organizationId}/webhook/{webhookId}:
+    $ref: './resources/OrganizationWebhookRef.yaml'
   /cloudProvider:
     $ref: './resources/CloudProvider.yaml'
   /aws/region:
