@@ -220,8 +220,6 @@ paths:
     $ref: './resources/OrganizationProjectStats.yaml'
   /organization/{organizationId}/cluster:
     $ref: './resources/OrganizationCluster.yaml'
-  /organization/{organizationId}/cluster/hostname:
-    $ref: './resources/OrganizationClusterHostname.yaml'
   /organization/{organizationId}/cluster/status:
     $ref: './resources/OrganizationClusterStatusList.yaml'
   /organization/{organizationId}/cluster/{clusterId}:
