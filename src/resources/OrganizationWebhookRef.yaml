@@ -34,14 +34,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../schemas/OrganizationWebhookRequest.yaml'
+          $ref: '../schemas/OrganizationWebhookCreateRequest.yaml'
   responses:
     '200':
       description: 'Edit an organization webhook'
       content:
         application/json:
           schema:
-            $ref: '../schemas/OrganizationWebhookResponse.yaml'
+            $ref: '../schemas/OrganizationWebhookCreateResponse.yaml'
     '400':
       $ref: '../responses/BadRequest.yaml'
     '401':
