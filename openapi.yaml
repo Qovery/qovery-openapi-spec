@@ -76,6 +76,7 @@ tags:
   - name: Organization
   - name: Organization Main Calls
   - name: Organization Api Token
+  - name: Organization Webhook
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
@@ -91,6 +92,7 @@ x-tagGroups:
       - Organization Main Calls
       - Organization Api Token
       - Organization Account Git Repositories
+      - Organization Webhook
       - Projects
       - Members
       - Billing
@@ -1545,6 +1547,219 @@ paths:
                 $ref: '#/components/schemas/GitRepositoryBranchResponseList'
         '401':
           $ref: '#/components/responses/401'
+  '/organization/{organizationId}/webhook':
+    get:
+      summary: List organization webhooks
+      description: List organization webhooks
+      operationId: listOrganizationWebHooks
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Webhook
+      responses:
+        '200':
+          description: List organization webhooks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook~1%7BwebhookId%7D/get/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create an organization webhook
+      description: Create an organization webhook.
+      operationId: createOrganizationWebhook
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Webhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - kind
+                - target_url
+                - events
+              properties:
+                kind:
+                  type: string
+                  description: Define the type of the webhook. `SLACK` is a special webhook type to push notifications directly to slack. The `target_url` must be a Slack compatible endpoint.
+                  enum:
+                    - STANDARD
+                    - SLACK
+                  example: STANDARD
+                target_url:
+                  type: string
+                  description: |
+                    Set the public HTTP or HTTPS endpoint that will receive the specified events.
+                    The target URL must starts with `http://` or `https://`
+                target_secret:
+                  type: string
+                  description: |
+                    Make sure you receive a payload to sign the Qovery request with your secret.
+                    Qovery will add a HTTP header `Qovery-Signature: <Your Secret>` to every webhook requests sent to your target URL.
+                description:
+                  type: string
+                enabled:
+                  type: boolean
+                  description: Turn on or off your endpoint.
+                events:
+                  type: array
+                  items:
+                    type: string
+                    description: |
+                      Events to subscribe to and send to the `target_url`.
+                      - `DEPLOYMENT_STARTED` send an event when a deployment is started and going to be executed
+                      - `DEPLOYMENT_CANCELLED` send an event when a deployment is cancelled
+                      - `DEPLOYMENT_FAILURE` send an event when a deployment failed
+                      - `DEPLOYMENT_SUCCESSFUL` send an event when a deployment is successful
+                    enum:
+                      - DEPLOYMENT_STARTED
+                      - DEPLOYMENT_CANCELLED
+                      - DEPLOYMENT_FAILURE
+                      - DEPLOYMENT_SUCCESSFUL
+      responses:
+        '201':
+          description: Organization webhook created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Base'
+                  - type: object
+                    properties:
+                      kind:
+                        $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema/properties/kind'
+                      target_url:
+                        type: string
+                        description: |
+                          Set the public HTTP or HTTPS endpoint that will receive the specified events.
+                          The target URL must starts with `http://` or `https://`
+                      target_secret_set:
+                        type: boolean
+                      description:
+                        type: string
+                      enabled:
+                        type: boolean
+                        description: Turn on or off your endpoint.
+                      events:
+                        type: array
+                        items:
+                          $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema/properties/events/items'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  '/organization/{organizationId}/webhook/{webhookId}':
+    get:
+      summary: Get an Organization webhook
+      description: Get an Organization webhook
+      operationId: getOrganizationWebhook
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - name: webhookId
+          in: path
+          description: Webhook ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Organization Webhook
+      responses:
+        '200':
+          description: Get organization webhook
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Base'
+                  - type: object
+                    properties:
+                      kind:
+                        $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema/properties/kind'
+                      target_url:
+                        type: string
+                        description: |
+                          Set the public HTTP or HTTPS endpoint that will receive the specified events.
+                          The target URL must starts with `http://` or `https://`
+                      target_secret_set:
+                        type: boolean
+                      description:
+                        type: string
+                      enabled:
+                        type: boolean
+                        description: Turn on or off your endpoint.
+                      events:
+                        type: array
+                        items:
+                          $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema/properties/events/items'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit an organization webhook
+      description: Edit an organization webhook
+      operationId: editOrganizationWebhook
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook~1%7BwebhookId%7D/get/parameters/1'
+      tags:
+        - Organization Webhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema'
+      responses:
+        '200':
+          description: Edit an organization webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/responses/201/content/application~1json/schema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete organization webhook
+      description: Delete organization webhook
+      operationId: deleteOrganizationWebhook
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook~1%7BwebhookId%7D/get/parameters/1'
+      tags:
+        - Organization Webhook
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /cloudProvider:
     get:
       summary: List Cloud providers available
