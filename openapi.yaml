@@ -5385,7 +5385,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationAdvancedSettingsResponse'
+                $ref: '#/components/schemas/ApplicationAdvancedSettings'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5404,14 +5404,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ApplicationAdvancedSettingsRequest'
+              $ref: '#/components/schemas/ApplicationAdvancedSettings'
       responses:
         '201':
           description: Updated advanced settings
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationAdvancedSettingsResponse'
+                $ref: '#/components/schemas/ApplicationAdvancedSettings'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -8369,14 +8369,6 @@ components:
           type: integer
           description: Percentage value of cpu usage at which point pods should scale up.
           default: 60
-    ApplicationAdvancedSettingsRequest:
-      type: array
-      items:
-        $ref: '#/components/schemas/ApplicationAdvancedSettings'
-    ApplicationAdvancedSettingsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/ApplicationAdvancedSettings'
     ApplicationCurrentScale:
       type: object
       properties:
