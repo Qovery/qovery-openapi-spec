@@ -8,10 +8,6 @@ Application:
   $ref: ./ApplicationResponse.yaml
 ApplicationAdvancedSettings:
   $ref: ./ApplicationAdvancedSettings.yaml
-ApplicationAdvancedSettingsRequest:
-  $ref: ./ApplicationAdvancedSettingsRequest.yaml
-ApplicationAdvancedSettingsResponse:
-  $ref: ./ApplicationAdvancedSettingsResponse.yaml
 ApplicationCurrentScale:
   $ref: ./ApplicationCurrentScaleResponse.yaml
 ApplicationDependencyRequest:
