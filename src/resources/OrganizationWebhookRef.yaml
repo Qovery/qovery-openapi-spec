@@ -3,7 +3,7 @@ get:
   description: 'Get an Organization webhook'
   operationId: getOrganizationWebhook
   parameters:
-    - $ref: '../parameters/path/projectId.yaml'
+    - $ref: '../parameters/path/organizationId.yaml'
     - $ref: '../parameters/path/webhookId.yaml'
   tags:
     - Organization Webhook
@@ -26,7 +26,7 @@ put:
   description: 'Edit an organization webhook'
   operationId: editOrganizationWebhook
   parameters:
-    - $ref: '../parameters/path/projectId.yaml'
+    - $ref: '../parameters/path/organizationId.yaml'
     - $ref: '../parameters/path/webhookId.yaml'
   tags:
     - Organization Webhook
