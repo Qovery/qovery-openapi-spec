@@ -9056,7 +9056,7 @@ components:
           type: integer
           example: 50
           default: 20
-          description: the disk size to be used for the node configuration
+          description: Unit is in GB. The disk size to be used for the node configuration
     ClusterCloudProviderInfo:
       type: object
       properties:
@@ -10529,8 +10529,10 @@ components:
           properties:
             requested_in_float:
               type: number
+              description: unit is millicores (m). 1000m = 1 cpu
             consumed_in_number:
               type: number
+              description: unit is millicores (m). 1000m = 1 cpu
             consumed_in_percent:
               type: number
             warning_threshold_in_percent:
@@ -10544,8 +10546,10 @@ components:
           properties:
             requested_in_mb:
               type: integer
+              description: unit is MB. 1024 MB = 1GB
             consumed_in_mb:
               type: integer
+              description: unit is MB. 1024 MB = 1GB
             consumed_in_percent:
               type: number
             warning_threshold_in_percent:
@@ -10559,8 +10563,10 @@ components:
           properties:
             requested_in_gb:
               type: integer
+              description: Unit is in GB.
             consumed_in_gb:
               type: integer
+              description: Unit is in GB.
             consumed_in_percent:
               type: number
             warning_threshold_in_percent:
@@ -10990,8 +10996,10 @@ components:
           properties:
             requested_in_float:
               type: number
+              description: unit is millicores (m). 1000m = 1 cpu
             consumed_in_number:
               type: number
+              description: unit is millicores (m). 1000m = 1 cpu
             consumed_in_percent:
               type: number
             warning_threshold_in_percent:
@@ -11005,8 +11013,10 @@ components:
           properties:
             requested_in_mb:
               type: integer
+              description: unit is MB. 1024 MB = 1GB.
             consumed_in_mb:
               type: integer
+              description: unit is MB. 1024 MB = 1GB.
             consumed_in_percent:
               type: number
             warning_threshold_in_percent:
@@ -11253,8 +11263,10 @@ components:
           format: date-time
         requested_in_number:
           type: number
+          description: unit is millicores (m). 1000m = 1 cpu
         consumed_in_number:
           type: number
+          description: unit is millicores (m). 1000m = 1 cpu
         consumed_in_percent:
           type: number
     MetricCPUDatapointResponseList:
@@ -11329,8 +11341,10 @@ components:
           format: date-time
         requested_in_mb:
           type: integer
+          description: unit is MB. 1024 MB = 1GB
         consumed_in_mb:
           type: integer
+          description: unit is MB. 1024 MB = 1GB
         consumed_in_percent:
           type: number
     MetricMemoryDatapointResponseList:
@@ -11388,8 +11402,10 @@ components:
           format: date-time
         requested_in_gb:
           type: integer
+          description: Unit is in GB.
         consumed_in_gb:
           type: number
+          description: Unit is in GB.
         consumed_in_percent:
           type: number
     MetricStorageDatapointResponseList:
@@ -12021,8 +12037,10 @@ components:
           type: string
         requested_in_gb:
           type: integer
+          description: Unit is in GB.
         consumed_in_gb:
           type: number
+          description: Unit is in GB.
         consumed_in_percent:
           type: number
         warning_threshold_in_percent:
