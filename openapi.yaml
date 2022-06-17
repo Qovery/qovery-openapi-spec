@@ -1405,6 +1405,11 @@ paths:
       operationId: organizationGithubAppDisconnect
       parameters:
         - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: force
+          schema:
+            type: boolean
+          description: Indicates if the github app should be disconnected despite github applications linked to organization
       tags:
         - Github App
       responses:
