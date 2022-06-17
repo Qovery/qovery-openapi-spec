@@ -1669,7 +1669,7 @@ paths:
       description: Get an Organization webhook
       operationId: getOrganizationWebhook
       parameters:
-        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/organizationId'
         - name: webhookId
           in: path
           description: Webhook ID
@@ -1718,7 +1718,7 @@ paths:
       description: Edit an organization webhook
       operationId: editOrganizationWebhook
       parameters:
-        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/organizationId'
         - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook~1%7BwebhookId%7D/get/parameters/1'
       tags:
         - Organization Webhook
