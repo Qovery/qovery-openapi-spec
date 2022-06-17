@@ -40,6 +40,7 @@ tags:
   - name: Container Logs
   - name: Container Main Calls
   - name: Container Metrics
+  - name: Container Registry
   - name: Container Secret
   - name: Containers
   - name: Backups
@@ -74,6 +75,7 @@ tags:
   - name: Logical Database
   - name: Members
   - name: Organization
+  - name: Organization Account Git Repositories
   - name: Organization Main Calls
   - name: Organization Api Token
   - name: Organization Webhook
@@ -148,6 +150,7 @@ x-tagGroups:
       - Container Deployment Restriction
       - Container Deployment History
       - Container Environment Variable
+      - Container Registry
       - Container Secret
       - Container Event
   - name: Database
