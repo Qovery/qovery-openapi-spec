@@ -1637,6 +1637,21 @@ paths:
                       - DEPLOYMENT_CANCELLED
                       - DEPLOYMENT_FAILURE
                       - DEPLOYMENT_SUCCESSFUL
+                project_id_filter:
+                  type: array
+                  items:
+                    type: string
+                    description: |
+                      Specify the project IDs you want to filter to. 
+                      This webhook will be triggered only if the event is coming from the specified Project IDs.
+                environment_types_filter:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/EnvironmentModeEnum'
+                    example: PRODUCTION
+                    description: |
+                      Specify the environment modes you want to filter to.
+                      This webhook will be triggered only if the event is coming from an environment with the specified mode.
       responses:
         '201':
           description: Organization webhook created
@@ -1665,6 +1680,21 @@ paths:
                         type: array
                         items:
                           $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema/properties/events/items'
+                      project_id_filter:
+                        type: array
+                        items:
+                          type: string
+                          description: |
+                            Specify the project IDs you want to filter to. 
+                            This webhook will be triggered only if the event is coming from the specified Project IDs.
+                      environment_types_filter:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/EnvironmentModeEnum'
+                          example: PRODUCTION
+                          description: |
+                            Specify the environment modes you want to filter to.
+                            This webhook will be triggered only if the event is coming from an environment with the specified mode.
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1715,6 +1745,21 @@ paths:
                         type: array
                         items:
                           $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema/properties/events/items'
+                      project_id_filter:
+                        type: array
+                        items:
+                          type: string
+                          description: |
+                            Specify the project IDs you want to filter to. 
+                            This webhook will be triggered only if the event is coming from the specified Project IDs.
+                      environment_types_filter:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/EnvironmentModeEnum'
+                          example: PRODUCTION
+                          description: |
+                            Specify the environment modes you want to filter to.
+                            This webhook will be triggered only if the event is coming from an environment with the specified mode.
         '401':
           $ref: '#/components/responses/401'
         '403':
