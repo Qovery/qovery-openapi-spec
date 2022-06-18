@@ -20,3 +20,18 @@ allOf:
         type: array
         items:
           $ref: './enums/OrganizationWebhookEvent.yaml'
+      project_id_filter:
+        type: array
+        items:
+          type: string
+          description: |
+            Specify the project IDs you want to filter to. 
+            This webhook will be triggered only if the event is coming from the specified Project IDs.
+      environment_types_filter:
+        type: array
+        items:
+          $ref: './enums/EnvironmentMode.yaml'
+          example: PRODUCTION
+          description: |
+            Specify the environment modes you want to filter to.
+            This webhook will be triggered only if the event is coming from an environment with the specified mode.
