@@ -1756,7 +1756,6 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/EnvironmentModeEnum'
-                          example: PRODUCTION
                           description: |
                             Specify the environment modes you want to filter to.
                             This webhook will be triggered only if the event is coming from an environment with the specified mode.
@@ -8775,7 +8774,7 @@ components:
       type: object
       properties:
         kind:
-          $ref: '#/components/schemas/ContainerRegistryKind'
+          $ref: '#/components/schemas/ContainerRegistryKindEnum'
         required_config:
           type: object
           additionalProperties: true
@@ -9089,7 +9088,7 @@ components:
           default: 256
           example: 1024
         kubernetes:
-          $ref: '#/components/schemas/Kubernetes'
+          $ref: '#/components/schemas/KubernetesEnum'
         min_running_nodes:
           type: integer
           default: 1
@@ -9729,7 +9728,7 @@ components:
         image_tag:
           type: string
           description: Image tag to deploy
-    ContainerRegistryKind:
+    ContainerRegistryKindEnum:
       type: string
       enum:
         - ECR
@@ -9755,7 +9754,7 @@ components:
         name:
           type: string
         kind:
-          $ref: '#/components/schemas/ContainerRegistryKind'
+          $ref: '#/components/schemas/ContainerRegistryKindEnum'
         description:
           type: string
         url:
@@ -9772,7 +9771,7 @@ components:
         name:
           type: string
         kind:
-          $ref: '#/components/schemas/ContainerRegistryKind'
+          $ref: '#/components/schemas/ContainerRegistryKindEnum'
         description:
           type: string
         url:
@@ -10786,6 +10785,7 @@ components:
         - PREVIEW
         - PRODUCTION
         - STAGING
+      example: PRODUCTION
     EnvironmentRequest:
       type: object
       required:
@@ -11193,7 +11193,7 @@ components:
       properties:
         key:
           type: string
-    Kubernetes:
+    KubernetesEnum:
       type: string
       enum:
         - K3S
