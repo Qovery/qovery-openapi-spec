@@ -4,3 +4,4 @@ enum:
   - PREVIEW
   - PRODUCTION
   - STAGING
+example: PRODUCTION

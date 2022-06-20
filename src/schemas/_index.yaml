@@ -158,7 +158,7 @@ ContainerNetworkRequest:
   $ref: ./ContainerNetworkRequest.yaml
 ContainerDeployRequest:
   $ref: ./ContainerDeployRequest.yaml
-ContainerRegistryKind:
+ContainerRegistryKindEnum:
   $ref: ./enums/ContainerRegistryKind.yaml
 ContainerRegistryRequest:
   $ref: ./ContainerRegistryRequest.yaml
@@ -358,7 +358,7 @@ InvoiceStatusEnum:
   $ref: ./enums/InvoiceStatus.yaml
 Key:
   $ref: ./Key.yaml
-Kubernetes:
+KubernetesEnum:
   $ref: ./enums/Kubernetes.yaml
 Link:
   $ref: ./LinkResponse.yaml
