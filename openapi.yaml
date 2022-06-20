@@ -1570,12 +1570,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook~1%7BwebhookId%7D/get/responses/200/content/application~1json/schema'
+                $ref: '#/components/schemas/OrganizationWebhookResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1594,107 +1589,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - kind
-                - target_url
-                - events
-              properties:
-                kind:
-                  type: string
-                  description: Define the type of the webhook. `SLACK` is a special webhook type to push notifications directly to slack. The `target_url` must be a Slack compatible endpoint.
-                  enum:
-                    - STANDARD
-                    - SLACK
-                  example: STANDARD
-                target_url:
-                  type: string
-                  description: |
-                    Set the public HTTP or HTTPS endpoint that will receive the specified events.
-                    The target URL must starts with `http://` or `https://`
-                target_secret:
-                  type: string
-                  description: |
-                    Make sure you receive a payload to sign the Qovery request with your secret.
-                    Qovery will add a HTTP header `Qovery-Signature: <Your Secret>` to every webhook requests sent to your target URL.
-                description:
-                  type: string
-                enabled:
-                  type: boolean
-                  description: Turn on or off your endpoint.
-                events:
-                  type: array
-                  items:
-                    type: string
-                    description: |
-                      Events to subscribe to and send to the `target_url`.
-                      - `DEPLOYMENT_STARTED` send an event when a deployment is started and going to be executed
-                      - `DEPLOYMENT_CANCELLED` send an event when a deployment is cancelled
-                      - `DEPLOYMENT_FAILURE` send an event when a deployment failed
-                      - `DEPLOYMENT_SUCCESSFUL` send an event when a deployment is successful
-                    enum:
-                      - DEPLOYMENT_STARTED
-                      - DEPLOYMENT_CANCELLED
-                      - DEPLOYMENT_FAILURE
-                      - DEPLOYMENT_SUCCESSFUL
-                project_id_filter:
-                  type: array
-                  items:
-                    type: string
-                    description: |
-                      Specify the project IDs you want to filter to. 
-                      This webhook will be triggered only if the event is coming from the specified Project IDs.
-                environment_types_filter:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/EnvironmentModeEnum'
-                    example: PRODUCTION
-                    description: |
-                      Specify the environment modes you want to filter to.
-                      This webhook will be triggered only if the event is coming from an environment with the specified mode.
+              $ref: '#/components/schemas/OrganizationWebhookCreateRequest'
       responses:
         '201':
           description: Organization webhook created
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Base'
-                  - type: object
-                    properties:
-                      kind:
-                        $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema/properties/kind'
-                      target_url:
-                        type: string
-                        description: |
-                          Set the public HTTP or HTTPS endpoint that will receive the specified events.
-                          The target URL must starts with `http://` or `https://`
-                      target_secret_set:
-                        type: boolean
-                      description:
-                        type: string
-                      enabled:
-                        type: boolean
-                        description: Turn on or off your endpoint.
-                      events:
-                        type: array
-                        items:
-                          $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema/properties/events/items'
-                      project_id_filter:
-                        type: array
-                        items:
-                          type: string
-                          description: |
-                            Specify the project IDs you want to filter to. 
-                            This webhook will be triggered only if the event is coming from the specified Project IDs.
-                      environment_types_filter:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/EnvironmentModeEnum'
-                          example: PRODUCTION
-                          description: |
-                            Specify the environment modes you want to filter to.
-                            This webhook will be triggered only if the event is coming from an environment with the specified mode.
+                $ref: '#/components/schemas/OrganizationWebhookCreateResponse'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1723,42 +1625,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Base'
-                  - type: object
-                    properties:
-                      kind:
-                        $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema/properties/kind'
-                      target_url:
-                        type: string
-                        description: |
-                          Set the public HTTP or HTTPS endpoint that will receive the specified events.
-                          The target URL must starts with `http://` or `https://`
-                      target_secret_set:
-                        type: boolean
-                      description:
-                        type: string
-                      enabled:
-                        type: boolean
-                        description: Turn on or off your endpoint.
-                      events:
-                        type: array
-                        items:
-                          $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema/properties/events/items'
-                      project_id_filter:
-                        type: array
-                        items:
-                          type: string
-                          description: |
-                            Specify the project IDs you want to filter to. 
-                            This webhook will be triggered only if the event is coming from the specified Project IDs.
-                      environment_types_filter:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/EnvironmentModeEnum'
-                          description: |
-                            Specify the environment modes you want to filter to.
-                            This webhook will be triggered only if the event is coming from an environment with the specified mode.
+                $ref: '#/components/schemas/OrganizationWebhookResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1778,14 +1645,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/requestBody/content/application~1json/schema'
+              $ref: '#/components/schemas/OrganizationWebhookCreateRequest'
       responses:
         '200':
           description: Edit an organization webhook
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook/post/responses/201/content/application~1json/schema'
+                $ref: '#/components/schemas/OrganizationWebhookCreateResponse'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -11653,6 +11520,147 @@ components:
           type: string
         scope:
           $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
+    OrganizationWebhookCreateRequest:
+      type: object
+      required:
+        - kind
+        - target_url
+        - events
+      properties:
+        kind:
+          type: string
+          description: Define the type of the webhook. `SLACK` is a special webhook type to push notifications directly to slack. The `target_url` must be a Slack compatible endpoint.
+          enum:
+            - STANDARD
+            - SLACK
+          example: STANDARD
+        target_url:
+          type: string
+          description: |
+            Set the public HTTP or HTTPS endpoint that will receive the specified events.
+            The target URL must starts with `http://` or `https://`
+        target_secret:
+          type: string
+          description: |
+            Make sure you receive a payload to sign the Qovery request with your secret.
+            Qovery will add a HTTP header `Qovery-Signature: <Your Secret>` to every webhook requests sent to your target URL.
+        description:
+          type: string
+        enabled:
+          type: boolean
+          description: Turn on or off your endpoint.
+        events:
+          type: array
+          items:
+            type: string
+            description: |
+              Events to subscribe to and send to the `target_url`.
+              - `DEPLOYMENT_STARTED` send an event when a deployment is started and going to be executed
+              - `DEPLOYMENT_CANCELLED` send an event when a deployment is cancelled
+              - `DEPLOYMENT_FAILURE` send an event when a deployment failed
+              - `DEPLOYMENT_SUCCESSFUL` send an event when a deployment is successful
+            enum:
+              - DEPLOYMENT_STARTED
+              - DEPLOYMENT_CANCELLED
+              - DEPLOYMENT_FAILURE
+              - DEPLOYMENT_SUCCESSFUL
+        project_id_filter:
+          type: array
+          items:
+            type: string
+            description: |
+              Specify the project IDs you want to filter to. 
+              This webhook will be triggered only if the event is coming from the specified Project IDs.
+        environment_types_filter:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentModeEnum'
+            example: PRODUCTION
+            description: |
+              Specify the environment modes you want to filter to.
+              This webhook will be triggered only if the event is coming from an environment with the specified mode.
+    OrganizationWebhookCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          properties:
+            kind:
+              $ref: '#/components/schemas/OrganizationWebhookCreateRequest/properties/kind'
+            target_url:
+              type: string
+              description: |
+                Set the public HTTP or HTTPS endpoint that will receive the specified events.
+                The target URL must starts with `http://` or `https://`
+            target_secret_set:
+              type: boolean
+            description:
+              type: string
+            enabled:
+              type: boolean
+              description: Turn on or off your endpoint.
+            events:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrganizationWebhookCreateRequest/properties/events/items'
+            project_id_filter:
+              type: array
+              items:
+                type: string
+                description: |
+                  Specify the project IDs you want to filter to. 
+                  This webhook will be triggered only if the event is coming from the specified Project IDs.
+            environment_types_filter:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnvironmentModeEnum'
+                example: PRODUCTION
+                description: |
+                  Specify the environment modes you want to filter to.
+                  This webhook will be triggered only if the event is coming from an environment with the specified mode.
+    OrganizationWebhookResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          properties:
+            kind:
+              $ref: '#/components/schemas/OrganizationWebhookCreateRequest/properties/kind'
+            target_url:
+              type: string
+              description: |
+                Set the public HTTP or HTTPS endpoint that will receive the specified events.
+                The target URL must starts with `http://` or `https://`
+            target_secret_set:
+              type: boolean
+            description:
+              type: string
+            enabled:
+              type: boolean
+              description: Turn on or off your endpoint.
+            events:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrganizationWebhookCreateRequest/properties/events/items'
+            project_id_filter:
+              type: array
+              items:
+                type: string
+                description: |
+                  Specify the project IDs you want to filter to. 
+                  This webhook will be triggered only if the event is coming from the specified Project IDs.
+            environment_types_filter:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnvironmentModeEnum'
+                description: |
+                  Specify the environment modes you want to filter to.
+                  This webhook will be triggered only if the event is coming from an environment with the specified mode.
+    OrganizationWebhookResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationWebhookResponse'
     PaginationData:
       type: object
       required:
