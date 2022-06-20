@@ -9065,6 +9065,7 @@ components:
         - name
         - cloud_provider
         - region
+        - kubernetes
       properties:
         name:
           type: string
@@ -9087,6 +9088,8 @@ components:
           description: unit is MB. 1024 MB = 1GB
           default: 256
           example: 1024
+        kubernetes:
+          $ref: '#/components/schemas/Kubernetes'
         min_running_nodes:
           type: integer
           default: 1
@@ -9102,6 +9105,14 @@ components:
           example: 50
           default: 20
           description: Unit is in GB. The disk size to be used for the node configuration
+        ssh_key:
+          type: object
+          description: Indicate your public ssh_key to remotely connect to your EC2 instance.
+          properties:
+            results:
+              type: array
+              items:
+                type: string
     ClusterCloudProviderInfo:
       type: object
       properties:
@@ -11176,6 +11187,11 @@ components:
       properties:
         key:
           type: string
+    Kubernetes:
+      type: string
+      enum:
+        - K3S
+        - MANAGED
     Link:
       type: object
       properties:
