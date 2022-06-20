@@ -358,6 +358,8 @@ InvoiceStatusEnum:
   $ref: ./enums/InvoiceStatus.yaml
 Key:
   $ref: ./Key.yaml
+Kubernetes:
+  $ref: ./enums/Kubernetes.yaml
 Link:
   $ref: ./LinkResponse.yaml
 LinkResponseList:
@@ -546,3 +548,4 @@ VersionResponseList:
   $ref: ./VersionResponseList.yaml
 WeekdayEnum:
   $ref: ./enums/Weekday.yaml
+
