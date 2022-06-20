@@ -440,6 +440,14 @@ OrganizationResponseList:
   $ref: ./OrganizationResponseList.yaml
 OverriddenSecret:
   $ref: ./OverriddenSecret.yaml
+OrganizationWebhookCreateRequest:
+  $ref: ./OrganizationWebhookCreateRequest.yaml
+OrganizationWebhookCreateResponse:
+  $ref: ./OrganizationWebhookCreateResponse.yaml
+OrganizationWebhookResponse:
+  $ref: ./OrganizationWebhookResponse.yaml
+OrganizationWebhookResponseList:
+  $ref: ./OrganizationWebhookResponseList.yaml
 PaginationData:
   $ref: ./PaginationDataResponse.yaml
 PaidUsage:
