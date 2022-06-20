@@ -8,8 +8,10 @@ properties:
     properties:
       requested_in_float:
         type: number
+        description: unit is millicores (m). 1000m = 1 cpu
       consumed_in_number:
         type: number
+        description: unit is millicores (m). 1000m = 1 cpu
       consumed_in_percent:
         type: number
       warning_threshold_in_percent:
@@ -23,8 +25,10 @@ properties:
     properties:
       requested_in_mb:
         type: integer
+        description: unit is MB. 1024 MB = 1GB
       consumed_in_mb:
         type: integer
+        description: unit is MB. 1024 MB = 1GB
       consumed_in_percent:
         type: number
       warning_threshold_in_percent:
@@ -38,8 +42,10 @@ properties:
     properties:
       requested_in_gb:
         type: integer
+        description: Unit is in GB.
       consumed_in_gb:
         type: integer
+        description: Unit is in GB.
       consumed_in_percent:
         type: number
       warning_threshold_in_percent:

@@ -8,10 +8,6 @@ Application:
   $ref: ./ApplicationResponse.yaml
 ApplicationAdvancedSettings:
   $ref: ./ApplicationAdvancedSettings.yaml
-ApplicationAdvancedSettingsRequest:
-  $ref: ./ApplicationAdvancedSettingsRequest.yaml
-ApplicationAdvancedSettingsResponse:
-  $ref: ./ApplicationAdvancedSettingsResponse.yaml
 ApplicationCurrentScale:
   $ref: ./ApplicationCurrentScaleResponse.yaml
 ApplicationDependencyRequest:
@@ -175,7 +171,7 @@ ContainerResponse:
 ContainerResponseList:
   $ref: ./ContainerResponseList.yaml
 ContainerStorage:
-  $ref: ./ApplicationStorageResponse.yaml
+  $ref: ./ContainerStorageResponse.yaml
 Cost:
   $ref: ./CostResponse.yaml
 CostRange:

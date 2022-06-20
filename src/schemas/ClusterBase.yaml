@@ -42,7 +42,7 @@ properties:
     type: integer
     example: 50
     default: 20
-    description: the disk size to be used for the node configuration
+    description: Unit is in GB. The disk size to be used for the node configuration
   ssh_key:
     type: object
     description: Indicate your public ssh_key to remotely connect to your EC2 instance.
@@ -51,3 +51,4 @@ properties:
         type: array
         items:
           type: string
+          

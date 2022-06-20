@@ -1,0 +1,7 @@
+name: webhookId
+in: path
+description: Webhook ID
+required: true
+schema:
+  type: string
+  format: uuid

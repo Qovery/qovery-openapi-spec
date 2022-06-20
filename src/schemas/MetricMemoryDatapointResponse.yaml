@@ -10,7 +10,9 @@ properties:
     format: date-time
   requested_in_mb:
     type: integer
+    description: unit is MB. 1024 MB = 1GB
   consumed_in_mb:
     type: integer
+    description: unit is MB. 1024 MB = 1GB
   consumed_in_percent:
     type: number

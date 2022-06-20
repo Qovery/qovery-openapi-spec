@@ -1,0 +1,47 @@
+get:
+  summary: 'List organization webhooks'
+  description: 'List organization webhooks'
+  operationId: listOrganizationWebHooks
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Organization Webhook
+  responses:
+    '200':
+      description: 'List organization webhooks'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationWebhookResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+post:
+  summary: 'Create an organization webhook'
+  description: 'Create an organization webhook.'
+  operationId: createOrganizationWebhook
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Organization Webhook
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/OrganizationWebhookCreateRequest.yaml'
+  responses:
+    '201':
+      description: 'Organization webhook created'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationWebhookCreateResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'

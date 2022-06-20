@@ -40,6 +40,7 @@ tags:
   - name: Container Logs
   - name: Container Main Calls
   - name: Container Metrics
+  - name: Container Registry
   - name: Container Secret
   - name: Containers
   - name: Backups
@@ -74,8 +75,10 @@ tags:
   - name: Logical Database
   - name: Members
   - name: Organization
+  - name: Organization Account Git Repositories
   - name: Organization Main Calls
   - name: Organization Api Token
+  - name: Organization Webhook
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
@@ -91,6 +94,7 @@ x-tagGroups:
       - Organization Main Calls
       - Organization Api Token
       - Organization Account Git Repositories
+      - Organization Webhook
       - Projects
       - Members
       - Billing
@@ -146,6 +150,7 @@ x-tagGroups:
       - Container Deployment Restriction
       - Container Deployment History
       - Container Environment Variable
+      - Container Registry
       - Container Secret
       - Container Event
   - name: Database
@@ -258,6 +263,10 @@ paths:
     $ref: './resources/OrganizationAccountGitRepositoryBitbucket.yaml'
   /organization/{organizationId}/account/bitbucket/repository/branch:
     $ref: './resources/OrganizationAccountGitRepositoryBitbucketBranch.yaml'
+  /organization/{organizationId}/webhook:
+    $ref: './resources/OrganizationWebhook.yaml'
+  /organization/{organizationId}/webhook/{webhookId}:
+    $ref: './resources/OrganizationWebhookRef.yaml'
   /cloudProvider:
     $ref: './resources/CloudProvider.yaml'
   /aws/region:
