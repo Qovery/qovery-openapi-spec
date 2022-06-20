@@ -9941,9 +9941,15 @@ components:
     Credentials:
       type: object
       required:
+        - host
+        - port
         - login
         - password
       properties:
+        host:
+          type: string
+        port:
+          type: integer
         login:
           type: string
         password:
