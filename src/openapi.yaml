@@ -233,6 +233,8 @@ paths:
     $ref: './resources/OrganizationClusterStatus.yaml'
   /organization/{organizationId}/cluster/{clusterId}/routingTable:
     $ref: './resources/OrganizationClusterRoutingTable.yaml'
+  /organization/{organizationId}/cluster/{clusterId}/logs:
+    $ref: './resources/OrganizationClusterLogs.yaml'
   /organization/{organizationId}/aws/credentials:
     $ref: './resources/CloudProviderAWSCredentials.yaml'
   /organization/{organizationId}/aws/credentials/{credentialsId}:

@@ -86,6 +86,8 @@ CluserCredentials:
   $ref: ./ClusterCredentialsRequest.yaml
 Cluster:
   $ref: ./ClusterResponse.yaml
+ClusterLogs:
+  $ref: ./ClusterLogsResponse.yaml
 ClusterCloudProviderInfo:
   $ref: ./ClusterCloudProviderInfoResponse.yaml
 ClusterCloudProviderInfoRequest:
@@ -111,6 +113,8 @@ ClusterRegionResponseList:
 ClusterRequest:
   $ref: ./ClusterRequest.yaml
 ClusterResponseList:
+  $ref: ./ClusterResponseList.yaml
+ClusterLogsResponseList:
   $ref: ./ClusterResponseList.yaml
 ClusterRoutingTable:
   $ref: ./ClusterRoutingTableResponse.yaml
