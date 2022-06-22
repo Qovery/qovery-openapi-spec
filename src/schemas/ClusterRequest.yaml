@@ -1,3 +1,56 @@
-allOf:
-  - $ref: './ClusterBase.yaml'
-  - $ref: './ClusterFeatureRequest.yaml'
+type: object
+required:
+  - name
+  - cloud_provider
+  - region
+properties:
+  name:
+    type: string
+    description: name is case-insensitive
+  description:
+    type: string
+  region:
+    type: string
+  cloud_provider:
+    $ref: './enums/CloudProvider.yaml'
+  min_running_nodes:
+    type: integer
+    default: 1
+  max_running_nodes:
+    type: integer
+    default: 1
+  disk_size:
+    type: integer
+    example: 50
+    default: 20
+    description: Unit is in GB. The disk size to be used for the node configuration
+  instance_type:
+    type: string
+    example: "T3A_LARGE"
+    description: the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
+  kubernetes:
+    $ref: ./enums/Kubernetes.yaml
+    default: "MANAGED"
+  ssh_keys:
+    type: object
+    description: Indicate your public ssh_key to remotely connect to your EC2 instance.
+    properties:
+      results:
+        type: array
+        items:
+          type: string
+  features:
+    type: object
+    properties:
+      features:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              nullable: false
+            value:
+              type: string
+              nullable: true

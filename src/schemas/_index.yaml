@@ -86,8 +86,6 @@ CluserCredentials:
   $ref: ./ClusterCredentialsRequest.yaml
 Cluster:
   $ref: ./ClusterResponse.yaml
-ClusterBase:
-  $ref: ./ClusterBase.yaml
 ClusterCloudProviderInfo:
   $ref: ./ClusterCloudProviderInfoResponse.yaml
 ClusterCloudProviderInfoRequest:
@@ -100,8 +98,6 @@ ClusterCredentialsResponseList:
   $ref: ./ClusterCredentialsResponseList.yaml
 ClusterFeature:
   $ref: ./ClusterFeatureResponse.yaml
-ClusterFeatureRequest:
-  $ref: ./ClusterFeatureRequest.yaml
 ClusterFeatureResponseList:
   $ref: ./ClusterFeatureResponseList.yaml
 ClusterInstanceTypeResponseList:
