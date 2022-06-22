@@ -1093,6 +1093,34 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/logs':
+    get:
+      summary: List Cluster Logs
+      description: List Cluster Logs
+      operationId: listClusterLogs
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: list cluster logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ClusterLogs'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/aws/credentials':
     get:
       summary: List AWS credentials
@@ -9011,6 +9039,114 @@ components:
                       oneOf:
                         - type: string
                         - type: boolean
+    ClusterLogs:
+      type: object
+      properties:
+        type:
+          type: string
+          description: log level
+          example: info
+        timestamp:
+          type: string
+          description: log date creation
+          format: date-time
+          example: '2022-06-22T14:20:17.733084815Z'
+        step:
+          description: log step
+          example: Create
+          type: string
+          enum:
+            - LoadConfiguration
+            - Create
+            - Created
+            - CreateError
+            - Pause
+            - Paused
+            - PauseError
+            - Delete
+            - Deleted
+            - DeleteError
+            - RetrieveClusterConfig
+            - RetrieveClusterResources
+            - ValidateSystemRequirements
+            - UnderMigration
+            - Unknown
+        message:
+          type: object
+          properties:
+            safe_message:
+              type: string
+              description: log global message
+              example: Preparing to delete EKS cluster.
+        error:
+          type: object
+          description: Present only for `error` log
+          properties:
+            tag:
+              type: string
+              description: log error tag
+              example: CANNOT_UNINSTALL_HELM_CHART
+            user_log_message:
+              type: string
+              description: log details about the error
+              example: Wasn't able to delete all objects type Cert-Manager
+            link:
+              type: string
+              description: link to our documentation
+            hint_message:
+              type: string
+              description: hint the user can follow
+            event_details:
+              type: object
+              properties:
+                provider_kind:
+                  type: string
+                  description: cloud provider used
+                  example: aws
+                region:
+                  type: string
+                  example: eu-west-3
+                transmitter:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      example: kubernetes
+                    id:
+                      type: string
+                      example: za6ecdf3f
+                    name:
+                      type: string
+                      example: cluster-name
+                underlying_error:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: technical details about the error
+        details:
+          type: object
+          description: 'Present only for `info`, `warning` and `debug` logs'
+          properties:
+            provider_kind:
+              type: string
+              description: cloud provider used
+              example: aws
+            region:
+              type: string
+              example: eu-west-3
+            transmitter:
+              type: object
+              properties:
+                type:
+                  type: string
+                  example: kubernetes
+                id:
+                  type: string
+                  example: za6ecdf3f
+                name:
+                  type: string
+                  example: cluster-name
     ClusterCloudProviderInfo:
       type: object
       properties:
@@ -9228,6 +9364,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Cluster'
+    ClusterLogsResponseList:
+      $ref: '#/components/schemas/ClusterResponseList'
     ClusterRoutingTable:
       type: object
       properties:
