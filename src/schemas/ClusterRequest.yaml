@@ -31,6 +31,9 @@ properties:
   kubernetes:
     $ref: ./enums/Kubernetes.yaml
     default: "MANAGED"
+  production:
+    type: boolean
+    description: specific flag to indicate that this cluster is a production one
   ssh_keys:
     type: object
     description: Indicate your public ssh_key to remotely connect to your EC2 instance.
