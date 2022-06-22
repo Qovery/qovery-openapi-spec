@@ -8907,78 +8907,107 @@ components:
     Cluster:
       allOf:
         - $ref: '#/components/schemas/Base'
-        - $ref: '#/components/schemas/ClusterBase'
         - type: object
+          required:
+            - name
+            - cloud_provider
+            - region
           properties:
+            name:
+              type: string
+              description: name is case-insensitive
+            description:
+              type: string
+            region:
+              type: string
+            cloud_provider:
+              $ref: '#/components/schemas/CloudProviderEnum'
+            min_running_nodes:
+              type: integer
+              default: 1
+            max_running_nodes:
+              type: integer
+              default: 1
+            disk_size:
+              type: integer
+              example: 50
+              default: 20
+              description: Unit is in GB. The disk size to be used for the node configuration
+            instance_type:
+              type: string
+              example: T3A_LARGE
+              description: 'the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType'
+            kubernetes:
+              $ref: '#/components/schemas/KubernetesEnum'
+              default: MANAGED
+            cpu:
+              type: integer
+              example: 10000
+              description: unit is millicores (m). 1000m = 1 cpu
+            memory:
+              type: integer
+              example: 4096
+              description: unit is MB. 1024 MB = 1GB
             estimated_cloud_provider_cost:
               type: integer
               description: 'This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration'
             status:
               $ref: '#/components/schemas/StateEnum'
-            features:
-              type: array
-              items:
-                $ref: '#/components/schemas/ClusterFeature'
             has_access:
               type: boolean
             version:
               type: string
             is_default:
               type: boolean
-    ClusterBase:
-      type: object
-      required:
-        - name
-        - cloud_provider
-        - region
-        - kubernetes
-      properties:
-        name:
-          type: string
-          description: name is case-insensitive
-        description:
-          type: string
-        cloud_provider:
-          $ref: '#/components/schemas/CloudProviderEnum'
-        region:
-          type: string
-        auto_update:
-          type: boolean
-        cpu:
-          type: integer
-          description: unit is millicores (m). 1000m = 1 cpu
-          default: 250
-          example: 1250
-        memory:
-          type: integer
-          description: unit is MB. 1024 MB = 1GB
-          default: 256
-          example: 1024
-        kubernetes:
-          $ref: '#/components/schemas/KubernetesEnum'
-        min_running_nodes:
-          type: integer
-          default: 1
-        max_running_nodes:
-          type: integer
-          default: 1
-        instance_type:
-          type: string
-          example: T3A_LARGE
-          description: 'the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType'
-        disk_size:
-          type: integer
-          example: 50
-          default: 20
-          description: Unit is in GB. The disk size to be used for the node configuration
-        ssh_key:
-          type: object
-          description: Indicate your public ssh_key to remotely connect to your EC2 instance.
-          properties:
-            results:
+            ssh_keys:
+              type: object
+              description: Indicate your public ssh_key to remotely connect to your EC2 instance.
+              properties:
+                results:
+                  type: array
+                  items:
+                    type: string
+            features:
               type: array
               items:
-                type: string
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  title:
+                    type: string
+                    nullable: false
+                  description:
+                    type: string
+                    nullable: true
+                  cost_per_month_in_cents:
+                    type: integer
+                    nullable: true
+                    example: 9900
+                  cost_per_month:
+                    type: number
+                    nullable: true
+                    example: 99
+                  value_type:
+                    type: string
+                    nullable: false
+                    enum:
+                      - BOOLEAN
+                  value:
+                    oneOf:
+                      - type: string
+                      - type: boolean
+                    nullable: true
+                  is_value_updatable:
+                    type: boolean
+                    default: false
+                  accepted_values:
+                    type: array
+                    items:
+                      oneOf:
+                        - type: string
+                        - type: boolean
     ClusterCloudProviderInfo:
       type: object
       properties:
@@ -9069,21 +9098,6 @@ components:
             oneOf:
               - type: string
               - type: boolean
-    ClusterFeatureRequest:
-      type: object
-      properties:
-        features:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uuid
-                nullable: false
-              value:
-                type: string
-                nullable: true
     ClusterFeatureResponseList:
       type: object
       properties:
@@ -9145,9 +9159,62 @@ components:
           items:
             $ref: '#/components/schemas/ClusterRegion'
     ClusterRequest:
-      allOf:
-        - $ref: '#/components/schemas/ClusterBase'
-        - $ref: '#/components/schemas/ClusterFeatureRequest'
+      type: object
+      required:
+        - name
+        - cloud_provider
+        - region
+      properties:
+        name:
+          type: string
+          description: name is case-insensitive
+        description:
+          type: string
+        region:
+          type: string
+        cloud_provider:
+          $ref: '#/components/schemas/CloudProviderEnum'
+        min_running_nodes:
+          type: integer
+          default: 1
+        max_running_nodes:
+          type: integer
+          default: 1
+        disk_size:
+          type: integer
+          example: 50
+          default: 20
+          description: Unit is in GB. The disk size to be used for the node configuration
+        instance_type:
+          type: string
+          example: T3A_LARGE
+          description: 'the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType'
+        kubernetes:
+          $ref: '#/components/schemas/KubernetesEnum'
+          default: MANAGED
+        ssh_keys:
+          type: object
+          description: Indicate your public ssh_key to remotely connect to your EC2 instance.
+          properties:
+            results:
+              type: array
+              items:
+                type: string
+        features:
+          type: object
+          properties:
+            features:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    nullable: false
+                  value:
+                    type: string
+                    nullable: true
     ClusterResponseList:
       type: object
       properties:
