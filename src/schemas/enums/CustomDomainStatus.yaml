@@ -1,0 +1,7 @@
+type: string
+enum:
+  - deploying
+  - checking
+  - ready
+  - error
+example: deploying
