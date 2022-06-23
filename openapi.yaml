@@ -11726,9 +11726,7 @@ components:
             description: |
               Specify the project names you want to filter to. 
               This webhook will be triggered only if the event is coming from the specified Project IDs.
-              Notes:
-                1. Wildcard is accepted E.g. `product*`.
-                2. Name is case insensitive.
+              Notes: 1. Wildcard is accepted E.g. `product*`. 2. Name is case insensitive.
         environment_types_filter:
           type: array
           description: |
@@ -11766,9 +11764,7 @@ components:
                 description: |
                   Specify the project names you want to filter to. 
                   This webhook will be triggered only if the event is coming from the specified Project IDs.
-                  Notes:
-                    1. Wildcard is accepted E.g. `product*`.
-                    2. Name is case insensitive.
+                  Notes: 1. Wildcard is accepted E.g. `product*`. 2. Name is case insensitive.
             environment_types_filter:
               type: array
               description: |
@@ -11826,9 +11822,7 @@ components:
                 description: |
                   Specify the project names you want to filter to. 
                   This webhook will be triggered only if the event is coming from the specified Project IDs.
-                  Notes:
-                    1. Wildcard is accepted E.g. `product*`.
-                    2. Name is case insensitive.
+                  Notes: 1. Wildcard is accepted E.g. `product*`. 2. Name is case insensitive.
             environment_types_filter:
               type: array
               description: |
