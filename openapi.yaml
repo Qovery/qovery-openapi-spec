@@ -10115,12 +10115,7 @@ components:
               type: string
               description: URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
             status:
-              type: string
-              enum:
-                - deploying
-                - checking
-                - ready
-                - error
+              $ref: '#/components/schemas/CustomDomainStatusEnum'
     CustomDomainRequest:
       type: object
       required:
@@ -10137,6 +10132,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomDomain'
+    CustomDomainStatusEnum:
+      type: string
+      enum:
+        - deploying
+        - checking
+        - ready
+        - error
+      example: deploying
     Database:
       allOf:
         - $ref: '#/components/schemas/Base'
