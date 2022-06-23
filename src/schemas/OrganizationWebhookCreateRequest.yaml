@@ -34,9 +34,8 @@ properties:
         This webhook will be triggered only if the event is coming from the specified Project IDs.
   environment_types_filter:
     type: array
+    description: |
+      Specify the environment modes you want to filter to.
+      This webhook will be triggered only if the event is coming from an environment with the specified mode.
     items:
       $ref: './enums/EnvironmentMode.yaml'
-      example: PRODUCTION
-      description: |
-        Specify the environment modes you want to filter to.
-        This webhook will be triggered only if the event is coming from an environment with the specified mode.

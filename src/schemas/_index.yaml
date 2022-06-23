@@ -446,6 +446,10 @@ OrganizationWebhookCreateRequest:
   $ref: ./OrganizationWebhookCreateRequest.yaml
 OrganizationWebhookCreateResponse:
   $ref: ./OrganizationWebhookCreateResponse.yaml
+OrganizationWebhookEventEnum:
+  $ref: ./enums/OrganizationWebhookEvent.yaml
+OrganizationWebhookKindEnum:
+  $ref: ./enums/OrganizationWebhookKind.yaml
 OrganizationWebhookResponse:
   $ref: ./OrganizationWebhookResponse.yaml
 OrganizationWebhookResponseList:
