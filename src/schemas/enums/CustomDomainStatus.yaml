@@ -1,7 +1,4 @@
 type: string
 enum:
-  - deploying
-  - checking
-  - ready
-  - error
+  - VALIDATION_PENDING
 example: deploying
