@@ -10093,7 +10093,7 @@ components:
       type: string
       enum:
         - VALIDATION_PENDING
-      example: deploying
+      example: VALIDATION_PENDING
     Database:
       allOf:
         - $ref: '#/components/schemas/Base'
