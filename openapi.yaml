@@ -9001,44 +9001,7 @@ components:
             features:
               type: array
               items:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  title:
-                    type: string
-                    nullable: false
-                  description:
-                    type: string
-                    nullable: true
-                  cost_per_month_in_cents:
-                    type: integer
-                    nullable: true
-                    example: 9900
-                  cost_per_month:
-                    type: number
-                    nullable: true
-                    example: 99
-                  value_type:
-                    type: string
-                    nullable: false
-                    enum:
-                      - BOOLEAN
-                  value:
-                    oneOf:
-                      - type: string
-                      - type: boolean
-                    nullable: true
-                  is_value_updatable:
-                    type: boolean
-                    default: false
-                  accepted_values:
-                    type: array
-                    items:
-                      oneOf:
-                        - type: string
-                        - type: boolean
+                $ref: '#/components/schemas/ClusterFeature'
     ClusterLogs:
       type: object
       properties:
