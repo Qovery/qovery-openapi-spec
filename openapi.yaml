@@ -8991,13 +8991,10 @@ components:
               type: boolean
               description: specific flag to indicate that this cluster is a production one
             ssh_keys:
-              type: object
               description: Indicate your public ssh_key to remotely connect to your EC2 instance.
-              properties:
-                results:
-                  type: array
-                  items:
-                    type: string
+              type: array
+              items:
+                type: string
             features:
               type: array
               items:
@@ -9298,13 +9295,10 @@ components:
           type: boolean
           description: specific flag to indicate that this cluster is a production one
         ssh_keys:
-          type: object
           description: Indicate your public ssh_key to remotely connect to your EC2 instance.
-          properties:
-            results:
-              type: array
-              items:
-                type: string
+          type: array
+          items:
+            type: string
         features:
           type: object
           properties:
