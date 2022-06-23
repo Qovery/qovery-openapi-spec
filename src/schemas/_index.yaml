@@ -194,6 +194,8 @@ CustomDomainRequest:
   $ref: ./CustomDomainRequest.yaml
 CustomDomainResponseList:
   $ref: ./CustomDomainResponseList.yaml
+CustomDomainStatusEnum:
+  $ref: ./enums/CustomDomainStatus.yaml
 Database:
   $ref: ./DatabaseResponse.yaml
 DatabaseAccessibilityEnum:
