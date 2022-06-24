@@ -7287,6 +7287,7 @@ paths:
       operationId: listDatabaseDeploymentHistory
       parameters:
         - $ref: '#/components/parameters/databaseId'
+        - $ref: '#/components/parameters/startId'
       tags:
         - Database Deployment History
       responses:
