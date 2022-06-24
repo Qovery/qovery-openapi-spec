@@ -54,6 +54,7 @@ tags:
   - name: Database Actions
   - name: Database Application
   - name: Database Container
+  - name: Database Deployment History
   - name: Database Event
   - name: Database Main Calls
   - name: Database Metrics
@@ -159,6 +160,7 @@ x-tagGroups:
       - Database Actions
       - Database Metrics
       - Database Applications
+      - Database Deployment History
       - Database Containers
       - Logical Database
       - Database Application
@@ -605,6 +607,8 @@ paths:
     $ref: './resources/DatabaseStop.yaml'
   /database/{databaseId}/deploy:
     $ref: './resources/DatabaseDeploy.yaml'
+  /database/{databaseId}/deploymentHistory:
+    $ref: './resources/DatabaseDeploymentHistory.yaml'
   /database/{databaseId}/currentMetric:
     $ref: './resources/DatabaseCurrentMetric.yaml'
   /database/{databaseId}/metric/cpu:

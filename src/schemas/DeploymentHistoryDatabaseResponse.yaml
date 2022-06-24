@@ -4,5 +4,6 @@ allOf:
     properties:
       name:
         type: string
+        description: name of the service
       status:
-        $ref: './enums/State.yaml'
+        $ref: './enums/DeploymentHistoryStatus.yaml'
