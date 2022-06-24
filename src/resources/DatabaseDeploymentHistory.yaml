@@ -4,6 +4,8 @@ get:
   operationId: listDatabaseDeploymentHistory
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/query/startId.yaml'
+    
   tags:
     - Database Deployment History
   responses:
