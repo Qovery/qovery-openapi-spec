@@ -54,6 +54,7 @@ tags:
   - name: Database Actions
   - name: Database Application
   - name: Database Container
+  - name: Database Deployment History
   - name: Database Event
   - name: Database Main Calls
   - name: Database Metrics
@@ -159,6 +160,7 @@ x-tagGroups:
       - Database Actions
       - Database Metrics
       - Database Applications
+      - Database Deployment History
       - Database Containers
       - Logical Database
       - Database Application
@@ -7278,6 +7280,28 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/database/{databaseId}/deploymentHistory':
+    get:
+      summary: List database deploys
+      description: By default it returns the 20 last results. The response is paginated.
+      operationId: listDatabaseDeploymentHistory
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - Database Deployment History
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentHistoryPaginatedResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/database/{databaseId}/currentMetric':
     get:
       summary: 'Get current metric consumption of the database '
@@ -10307,6 +10331,9 @@ components:
         - $ref: '#/components/schemas/Base'
         - type: object
           properties:
+            name:
+              type: string
+              description: name of the service
             commit:
               $ref: '#/components/schemas/Commit'
             status:
@@ -10329,8 +10356,9 @@ components:
           properties:
             name:
               type: string
+              description: name of the service
             status:
-              $ref: '#/components/schemas/StateEnum'
+              $ref: '#/components/schemas/DeploymentHistoryStatusEnum'
     DeploymentHistoryEnvironment:
       allOf:
         - $ref: '#/components/schemas/Base'
