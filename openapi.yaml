@@ -7295,7 +7295,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeploymentHistoryPaginatedResponseList'
+                allOf:
+                  - $ref: '#/components/schemas/PaginationData'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/DeploymentHistoryDatabase'
         '401':
           $ref: '#/components/responses/401'
         '403':
