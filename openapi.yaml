@@ -11637,8 +11637,6 @@ components:
           properties:
             paid_usage:
               $ref: '#/components/schemas/PaidUsage'
-            community_usage:
-              $ref: '#/components/schemas/CommunityUsage'
     OrganizationEditRequest:
       type: object
       required:
@@ -11904,11 +11902,10 @@ components:
     PlanEnum:
       type: string
       enum:
-        - BUSINESS
-        - COMMUNITY
-        - ENTERPRISE
         - FREE
         - PROFESSIONAL
+        - BUSINESS
+        - ENTERPRISE
     PortProtocolEnum:
       type: string
       default: HTTP
