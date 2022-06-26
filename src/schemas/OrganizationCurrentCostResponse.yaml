@@ -4,7 +4,5 @@ allOf:
     properties:
       paid_usage:
         $ref: './PaidUsageResponse.yaml'
-      community_usage:
-        $ref: './CommunityUsageResponse.yaml'
 
 
