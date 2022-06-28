@@ -9399,6 +9399,9 @@ components:
           $ref: '#/components/schemas/StateEnum'
         is_deployed:
           type: boolean
+        last_execution_id:
+          type: string
+          example: f73e3833-922a-48a5-9dbd-6163f43f9143-1656410242
     ClusterStatusResponseList:
       type: object
       properties:
