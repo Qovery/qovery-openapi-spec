@@ -60,12 +60,12 @@ properties:
               name:
                 type: string
                 example: "cluster-name"
-          underlying_error:
-            type: object
-            properties:
-              message:
-                type: string
-                description: technical details about the error
+      underlying_error:
+        type: object
+        properties:
+          message:
+            type: string
+            description: technical details about the error
   details:
     type: object
     description: Present only for `info`, `warning` and `debug` logs
