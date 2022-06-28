@@ -12292,6 +12292,9 @@ components:
           description: message related to the state
         service_deployment_status:
           $ref: '#/components/schemas/ServiceDeploymentStatusEnum'
+        last_deployment_date:
+          type: string
+          format: date-time
     StatusKindEnum:
       type: string
       enum:
