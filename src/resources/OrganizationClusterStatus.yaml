@@ -12,7 +12,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/ClusterStatusResponse.yaml'
+            $ref: '../schemas/ClusterStatusGetResponse.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
