@@ -7,3 +7,7 @@ properties:
     $ref: './enums/State.yaml'
   is_deployed:
     type: boolean
+  last_execution_id:
+    type: string
+    example: 'f73e3833-922a-48a5-9dbd-6163f43f9143-1656410242'
+

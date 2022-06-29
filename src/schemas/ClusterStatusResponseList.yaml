@@ -3,4 +3,4 @@ properties:
   results:
     type: array
     items:
-      $ref: './ClusterStatusResponse.yaml'
+      $ref: './ClusterStatusGetResponse.yaml'

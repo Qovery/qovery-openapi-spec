@@ -122,6 +122,8 @@ ClusterRoutingTableRequest:
   $ref: ./ClusterRoutingTableRequest.yaml
 ClusterStatus:
   $ref: ./ClusterStatusResponse.yaml
+ClusterStatusGet:
+  $ref: ./ClusterStatusGetResponse.yaml
 ClusterStatusResponseList:
   $ref: ./ClusterStatusResponseList.yaml
 Commit:
