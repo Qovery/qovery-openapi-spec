@@ -1036,7 +1036,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterStatus'
+                $ref: '#/components/schemas/ClusterStatusGet'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -9399,9 +9399,18 @@ components:
           $ref: '#/components/schemas/StateEnum'
         is_deployed:
           type: boolean
+    ClusterStatusGet:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/StateEnum'
+        is_deployed:
+          type: boolean
         last_execution_id:
           type: string
-          description: 'Only set for /organization/{organizationId}/cluster/status'
           example: f73e3833-922a-48a5-9dbd-6163f43f9143-1656410242
     ClusterStatusResponseList:
       type: object
@@ -9409,7 +9418,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterStatus'
+            $ref: '#/components/schemas/ClusterStatusGet'
     Commit:
       type: object
       required:
