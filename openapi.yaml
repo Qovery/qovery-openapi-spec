@@ -9332,20 +9332,17 @@ components:
           items:
             type: string
         features:
-          type: object
-          properties:
-            features:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                    nullable: false
-                  value:
-                    type: string
-                    nullable: true
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                nullable: false
+              value:
+                type: string
+                nullable: true
     ClusterResponseList:
       type: object
       properties:
