@@ -13,3 +13,6 @@ properties:
     description: message related to the state
   service_deployment_status:
     $ref: './enums/ServiceDeploymentStatus.yaml'
+  last_deployment_date:
+    type: string
+    format: date-time
