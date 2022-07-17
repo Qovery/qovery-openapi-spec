@@ -203,6 +203,8 @@ paths:
     $ref: './resources/OrganizationCurrentCost.yaml'
   /organization/{organizationId}/creditCode:
     $ref: './resources/OrganizationCreditCode.yaml'
+  /organization/{organizationId}/changePlan:
+    $ref: './resources/OrganizationChangePlan.yaml'
   /organization/{organizationId}/cluster/{clusterId}/currentCost:
     $ref: './resources/OrganizationClusterCurrentCost.yaml'
   /organization/{organizationId}/billingInfo:
