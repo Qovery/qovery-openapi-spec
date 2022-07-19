@@ -32,5 +32,13 @@ allOf:
             $ref: './enums/EnvironmentVariableScope.yaml'
       scope:
         $ref: './enums/EnvironmentVariableScope.yaml'
+      service_id:
+        type: string
+        format: uuid
+        description: present only for `BUILT_IN` variable
       service_name:
         type: string
+        description: present only for `BUILT_IN` variable
+      service_type:
+        $ref: './enums/EnvironmentVariableServiceType.yaml'
+        description: present only for `BUILT_IN` variable
