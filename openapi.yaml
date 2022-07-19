@@ -10984,8 +10984,19 @@ components:
                   $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
             scope:
               $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
+            service_id:
+              type: string
+              format: uuid
+              description: present only for `BUILT_IN` variable
             service_name:
               type: string
+              description: present only for `BUILT_IN` variable
+            service_type:
+              description: present only for `BUILT_IN` variable
+              type: string
+              enum:
+                - APPLICATION
+                - DATABASE
     EnvironmentVariableEditRequest:
       type: object
       required:
