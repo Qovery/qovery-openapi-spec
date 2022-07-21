@@ -9874,20 +9874,22 @@ components:
           additionalProperties: true
           description: authentification configuration
     ContainerRegistryResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        kind:
-          $ref: '#/components/schemas/ContainerRegistryKindEnum'
-        description:
-          type: string
-        url:
-          type: string
-          description: URL of the container registry
-        config:
-          type: string
-          description: authentification configuration
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          properties:
+            name:
+              type: string
+            kind:
+              $ref: '#/components/schemas/ContainerRegistryKindEnum'
+            description:
+              type: string
+            url:
+              type: string
+              description: URL of the container registry
+            config:
+              type: string
+              description: authentification configuration
     ContainerRequest:
       allOf:
         - $ref: '#/components/schemas/ApplicationStorageRequest'
