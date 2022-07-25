@@ -1,5 +1,5 @@
 get:
-  summary: 'Get current scaling of the container'
+  summary: 'NOT YET IMPLEMENTED - Get current scaling of the container'
   description: Returns min, max, and running number of instances of the application
   operationId: getContainerCurrentScale
   parameters:

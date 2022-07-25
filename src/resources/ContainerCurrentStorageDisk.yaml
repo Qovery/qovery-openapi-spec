@@ -1,5 +1,5 @@
 get:
-  summary: 'List current storage disk usage'
+  summary: 'NOT YET IMPLEMENTED - List current storage disk usage'
   operationId: getContainerCurrentStorageDisk
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

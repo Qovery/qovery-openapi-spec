@@ -1,5 +1,5 @@
 get:
-  summary: 'List container restarts'
+  summary: 'NOT YET IMPLEMENTED - List container restarts'
   description: 'Get container restart message and timestamp.'
   operationId: getContainerMetricRestart
   parameters:

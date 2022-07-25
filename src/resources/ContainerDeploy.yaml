@@ -1,5 +1,5 @@
 post:
-  summary: 'Deploy container'
+  summary: 'NOT YET IMPLEMENTED - Deploy container'
   description: You must provide a git commit id
   operationId: deployContainer
   parameters:

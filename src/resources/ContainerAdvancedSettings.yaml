@@ -1,5 +1,5 @@
 get:
-  summary: 'Get advanced settings'
+  summary: 'NOT YET IMPLEMENTED - Get advanced settings'
   description: Get list and values of the advanced settings of the container.
   operationId: getContainerAdvancedSettings
   parameters:
@@ -21,7 +21,7 @@ get:
       $ref: '../responses/NotFound.yaml'
 
 put:
-  summary: 'Edit advanced settings'
+  summary: 'NOT YET IMPLEMENTED - Edit advanced settings'
   description: Edit advanced settings by returning table of advanced settings.
   operationId: editContainerAdvancedSettings
   parameters:

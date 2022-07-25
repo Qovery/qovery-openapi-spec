@@ -1,5 +1,5 @@
 get:
-  summary: 'List contributors'
+  summary: 'NOT YET IMPLEMENTED -List contributors'
   operationId: listContainerContributor
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

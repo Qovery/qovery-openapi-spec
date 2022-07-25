@@ -1,5 +1,5 @@
 get:
-  summary: 'List container events'
+  summary: 'NOT YET IMPLEMENTED - List container events'
   description: By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
   operationId: listContainerEvent
   parameters:

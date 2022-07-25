@@ -1,5 +1,5 @@
 put:
-  summary: 'Edit a container deployment restriction'
+  summary: 'NOT YET IMPLEMENTED - Edit a container deployment restriction'
   description: 'Edit a container deployment restriction'
   operationId: editContainerDeploymentRestriction
   parameters:
@@ -30,7 +30,7 @@ put:
       $ref: '../responses/NotFound.yaml'
 
 delete:
-  summary: 'Delete a container deployment restriction'
+  summary: 'NOT YET IMPLEMENTED - Delete a container deployment restriction'
   description: 'Delete a container deployment restriction'
   operationId: deleteContainerDeploymentRestriction
   parameters:

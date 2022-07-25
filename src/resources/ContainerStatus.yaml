@@ -1,5 +1,5 @@
 get:
-  summary: 'Get container status'
+  summary: 'NOT YET IMPLEMENTED - Get container status'
   operationId: getContainerStatus
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

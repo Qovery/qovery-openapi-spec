@@ -1,5 +1,5 @@
 get:
-  summary: 'List environment variables'
+  summary: 'NOT YET IMPLEMENTED - List environment variables'
   operationId: listContainerEnvironmentVariable
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

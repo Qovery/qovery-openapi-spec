@@ -1,5 +1,5 @@
 get:
-  summary: 'Get Memory consumption metric over time for the container'
+  summary: 'NOT YET IMPLEMENTED - Get Memory consumption metric over time for the container'
   operationId: getContainerMetricMemory
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

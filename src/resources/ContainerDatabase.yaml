@@ -1,5 +1,5 @@
 get:
-  summary: 'List linked databases'
+  summary: 'NOT YET IMPLEMENTED - List linked databases'
   operationId: listContainerDatabase
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
