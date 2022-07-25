@@ -5402,7 +5402,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}':
     get:
-      summary: Get container by ID
+      summary: NOT YET IMPLEMENTED - Get container by ID
       operationId: getContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5422,7 +5422,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     put:
-      summary: Edit container
+      summary: NOT YET IMPLEMENTED - Edit container
       description: |
         - To edit the container you must have the admin permission.
         - For port edition, if you provide a port id, we will update the corresponding port. If you don't we will create a new one. If you remove a port from the payload, we will delete it.
@@ -5455,7 +5455,7 @@ paths:
         '409':
           description: Container name within the environment is already taken
     delete:
-      summary: Delete container
+      summary: NOT YET IMPLEMENTED - Delete container
       description: To delete the container you must have the admin permission
       operationId: deleteContainer
       parameters:
@@ -5473,7 +5473,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/status':
     get:
-      summary: Get container status
+      summary: NOT YET IMPLEMENTED - Get container status
       operationId: getContainerStatus
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5494,7 +5494,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/deploymentRestriction':
     get:
-      summary: Get container deployment restrictions
+      summary: NOT YET IMPLEMENTED - Get container deployment restrictions
       description: Get container deployment restrictions
       operationId: getContainerDeploymentRestrictions
       parameters:
@@ -5515,7 +5515,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     post:
-      summary: Create an container deployment restriction
+      summary: NOT YET IMPLEMENTED - Create an container deployment restriction
       description: Create an container deployment restriction
       operationId: createContainerDeploymentRestriction
       parameters:
@@ -5544,7 +5544,7 @@ paths:
           description: An Container deployment restriction with same properties already exists for this Container
   '/container/{containerId}/deploymentRestriction/{deploymentRestrictionId}':
     put:
-      summary: Edit a container deployment restriction
+      summary: NOT YET IMPLEMENTED - Edit a container deployment restriction
       description: Edit a container deployment restriction
       operationId: editContainerDeploymentRestriction
       parameters:
@@ -5579,7 +5579,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     delete:
-      summary: Delete a container deployment restriction
+      summary: NOT YET IMPLEMENTED - Delete a container deployment restriction
       description: Delete a container deployment restriction
       operationId: deleteContainerDeploymentRestriction
       parameters:
@@ -5598,7 +5598,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/advancedSettings':
     get:
-      summary: Get advanced settings
+      summary: NOT YET IMPLEMENTED - Get advanced settings
       description: Get list and values of the advanced settings of the container.
       operationId: getContainerAdvancedSettings
       parameters:
@@ -5619,7 +5619,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     put:
-      summary: Edit advanced settings
+      summary: NOT YET IMPLEMENTED - Edit advanced settings
       description: Edit advanced settings by returning table of advanced settings.
       operationId: editContainerAdvancedSettings
       parameters:
@@ -5648,7 +5648,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/contributor':
     get:
-      summary: List contributors
+      summary: NOT YET IMPLEMENTED -List contributors
       operationId: listContainerContributor
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5669,7 +5669,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/tag':
     get:
-      summary: List tags
+      summary: NOT YET IMPLEMENTED - List tags
       operationId: listContainerTag
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5689,7 +5689,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     post:
-      summary: Add container tag
+      summary: NOT YET IMPLEMENTED - Add container tag
       operationId: createContainerTag
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5717,7 +5717,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/tag/{tagId}':
     delete:
-      summary: Delete container tag
+      summary: NOT YET IMPLEMENTED - Delete container tag
       operationId: deleteContainerTag
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5735,7 +5735,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/instance':
     get:
-      summary: List currently running instances of the container with their CPU and RAM metrics
+      summary: NOT YET IMPLEMENTED - List currently running instances of the container with their CPU and RAM metrics
       operationId: getContainerCurrentInstance
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5756,7 +5756,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/currentStorage':
     get:
-      summary: List current storage disk usage
+      summary: NOT YET IMPLEMENTED - List current storage disk usage
       operationId: getContainerCurrentStorageDisk
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5777,7 +5777,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/currentScale':
     get:
-      summary: Get current scaling of the container
+      summary: NOT YET IMPLEMENTED - Get current scaling of the container
       description: 'Returns min, max, and running number of instances of the application'
       operationId: getContainerCurrentScale
       parameters:
@@ -5799,7 +5799,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/metric/cpu':
     get:
-      summary: Get CPU consumption metric over time for the container
+      summary: NOT YET IMPLEMENTED - Get CPU consumption metric over time for the container
       operationId: getContainerMetricCpu
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5821,7 +5821,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/metric/memory':
     get:
-      summary: Get Memory consumption metric over time for the container
+      summary: NOT YET IMPLEMENTED - Get Memory consumption metric over time for the container
       operationId: getContainerMetricMemory
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5843,7 +5843,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/metric/healthCheck':
     get:
-      summary: Get Health Check latency  metric over time for the container
+      summary: NOT YET IMPLEMENTED - Get Health Check latency  metric over time for the container
       description: The value returned corresponds to the 95th centile
       operationId: getContainerMetricHealthCheck
       parameters:
@@ -5866,7 +5866,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/metric/storage':
     get:
-      summary: 'Get Storage consumption metric over time for the container '
+      summary: 'NOT YET IMPLEMENTED - Get Storage consumption metric over time for the container '
       operationId: getContainerMetricStorage
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5888,7 +5888,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/metric/restart':
     get:
-      summary: List container restarts
+      summary: NOT YET IMPLEMENTED - List container restarts
       description: Get container restart message and timestamp.
       operationId: getContainerMetricRestart
       parameters:
@@ -5911,7 +5911,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/dependency':
     get:
-      summary: List container dependencies
+      summary: NOT YET IMPLEMENTED - List container dependencies
       operationId: listContainerDependency
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5932,7 +5932,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/dependency/{targetContainerId}':
     post:
-      summary: Add container dependency to this application.
+      summary: NOT YET IMPLEMENTED - Add container dependency to this application.
       description: Add container dependency to this container to prevent this container starting before the linked dependencies
       operationId: createContainerDependency
       parameters:
@@ -5956,7 +5956,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     delete:
-      summary: Remove container dependency to this container.
+      summary: NOT YET IMPLEMENTED - Remove container dependency to this container.
       operationId: removeContainerDependency
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -5974,7 +5974,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/deploy':
     post:
-      summary: Deploy container
+      summary: NOT YET IMPLEMENTED - Deploy container
       description: You must provide a git commit id
       operationId: deployContainer
       parameters:
@@ -6005,7 +6005,7 @@ paths:
           description: Operation is in progress
   '/container/{containerId}/previewEnvironment':
     post:
-      summary: Deploy a preview environment with your container application
+      summary: NOT YET IMPLEMENTED - Deploy a preview environment with your container application
       description: You must provide the image tag.
       operationId: previewEnvironmentContainer
       parameters:
@@ -6036,7 +6036,7 @@ paths:
           description: Operation is in progress
   '/container/{containerId}/tagHistory':
     get:
-      summary: List image tags
+      summary: NOT YET IMPLEMENTED - List image tags
       description: List all image container tags already deployed in the Qovery environment.
       operationId: getContainerTags
       parameters:
@@ -6063,7 +6063,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/stop':
     post:
-      summary: Stop container
+      summary: NOT YET IMPLEMENTED - Stop container
       operationId: stopContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6086,7 +6086,7 @@ paths:
           description: Container is already stopped or an operation is in progress
   '/container/{containerId}/restart':
     post:
-      summary: Restart container
+      summary: NOT YET IMPLEMENTED - Restart container
       operationId: restartContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6109,7 +6109,7 @@ paths:
           description: Operation is in progress
   '/container/{containerId}/event':
     get:
-      summary: List container events
+      summary: NOT YET IMPLEMENTED - List container events
       description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
       operationId: listContainerEvent
       parameters:
@@ -6132,7 +6132,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/environmentVariable':
     get:
-      summary: List environment variables
+      summary: NOT YET IMPLEMENTED - List environment variables
       operationId: listContainerEnvironmentVariable
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6182,7 +6182,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/environmentVariable/import':
     post:
-      summary: Import variables
+      summary: NOT YET IMPLEMENTED - Import variables
       description: 'Import environment variables in a defined scope, with a defined visibility.'
       operationId: importContainerEnvironmentVariable
       parameters:
@@ -6211,7 +6211,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/environmentVariable/{environmentVariableId}':
     delete:
-      summary: Delete an environment variable from a container
+      summary: NOT YET IMPLEMENTED - Delete an environment variable from a container
       description: |
         - To delete an environment variable from an container you must have the project user permission
         - You can't delete a BUILT_IN variable
@@ -6232,7 +6232,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     put:
-      summary: Edit an environment variable belonging to the container
+      summary: NOT YET IMPLEMENTED - Edit an environment variable belonging to the container
       description: |
         - You can't edit a BUILT_IN variable
         - For an override, you can't edit the key
@@ -6267,7 +6267,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/environmentVariable/{environmentVariableId}/override':
     post:
-      summary: Create an environment variable override at the container level
+      summary: NOT YET IMPLEMENTED - Create an environment variable override at the container level
       description: |
         - Allows you to override at container level an environment variable that has a higher scope.
         - You only have to specify a value in the request body
@@ -6302,7 +6302,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/environmentVariable/{environmentVariableId}/alias':
     post:
-      summary: Create an environment variable alias at the container level
+      summary: NOT YET IMPLEMENTED - Create an environment variable alias at the container level
       description: |
         - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key.
         - You only have to specify a key in the request body
@@ -6338,7 +6338,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/secret':
     get:
-      summary: List container secrets
+      summary: NOT YET IMPLEMENTED - List container secrets
       description: 'Secrets are like environment variables, but they are secured and can''t be revealed.'
       operationId: listContainerSecrets
       parameters:
@@ -6359,7 +6359,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     post:
-      summary: Add a secret to the container
+      summary: NOT YET IMPLEMENTED - Add a secret to the container
       description: |
         - Add a secret to the container.
       operationId: createContainerSecret
@@ -6389,7 +6389,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/secret/{secretId}':
     delete:
-      summary: Delete a secret from an container
+      summary: NOT YET IMPLEMENTED - Delete a secret from an container
       description: |
         - To delete a secret you must have the project user permission
         - You can't delete a BUILT_IN secret
@@ -6410,7 +6410,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     put:
-      summary: Edit a secret belonging to the container
+      summary: NOT YET IMPLEMENTED - Edit a secret belonging to the container
       description: |
         - You can't edit a BUILT_IN secret
         - For an override, you can't edit the key
@@ -6445,7 +6445,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/secret/{secretId}/override':
     post:
-      summary: Create a secret override at the container level
+      summary: NOT YET IMPLEMENTED - Create a secret override at the container level
       description: |
         - Allows you to override at container level a secret that has a higher scope.
         - You only have to specify a value in the request body
@@ -6480,7 +6480,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/secret/{secretId}/alias':
     post:
-      summary: Create a secret alias at the container level
+      summary: NOT YET IMPLEMENTED - Create a secret alias at the container level
       description: |
         - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key.
         - You only have to specify a key in the request body
@@ -6516,7 +6516,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/customDomain':
     get:
-      summary: List container custom domains
+      summary: NOT YET IMPLEMENTED - List container custom domains
       operationId: listContainerCustomDomain
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6536,7 +6536,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     post:
-      summary: Add custom domain to the container.
+      summary: NOT YET IMPLEMENTED - Add custom domain to the container.
       description: Add a custom domain to this container in order not to use qovery autogenerated domain
       operationId: createContainerCustomDomain
       parameters:
@@ -6565,7 +6565,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/customDomain/{customDomainId}':
     put:
-      summary: Edit a Custom Domain
+      summary: NOT YET IMPLEMENTED - Edit a Custom Domain
       description: To edit a Custom Domain  you must have the project user permission
       operationId: editContainerCustomDomain
       parameters:
@@ -6594,7 +6594,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     delete:
-      summary: Delete a Custom Domain
+      summary: NOT YET IMPLEMENTED - Delete a Custom Domain
       description: To delete an CustomDomain you must have the project user permission
       operationId: deleteContainerCustomDomain
       parameters:
@@ -6613,7 +6613,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/customDomain/{customDomainId}/status':
     get:
-      summary: Get Custom Domain status
+      summary: NOT YET IMPLEMENTED - Get Custom Domain status
       operationId: getContainerCustomDomainStatus
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6635,7 +6635,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/log':
     get:
-      summary: List logs
+      summary: NOT YET IMPLEMENTED - List logs
       operationId: listContainerLog
       description: This will list the last 1000 logs of the container
       parameters:
@@ -6657,7 +6657,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/network':
     get:
-      summary: Get Container Network information
+      summary: NOT YET IMPLEMENTED - Get Container Network information
       description: Get status of the container network settings.
       operationId: getContainerNetwork
       parameters:
@@ -6678,7 +6678,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
     put:
-      summary: Edit Container Network
+      summary: NOT YET IMPLEMENTED - Edit Container Network
       description: Edit the Network settings of the container.
       operationId: editContainerNetwork
       parameters:
@@ -6707,7 +6707,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/database':
     get:
-      summary: List linked databases
+      summary: NOT YET IMPLEMENTED - List linked databases
       operationId: listContainerDatabase
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6728,7 +6728,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/database/{targetDatabaseId}':
     post:
-      summary: Link a database to the container
+      summary: NOT YET IMPLEMENTED - Link a database to the container
       operationId: attachDatabaseToContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6753,7 +6753,7 @@ paths:
         '409':
           description: This database is already linked to the container
     delete:
-      summary: Remove database link to this container.
+      summary: NOT YET IMPLEMENTED - Remove database link to this container.
       operationId: removeDatabaseFromContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6771,7 +6771,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/logicalDatabase':
     get:
-      summary: List linked logical databases
+      summary: NOT YET IMPLEMENTED - List linked logical databases
       operationId: listContainerLogicalDatabase
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6792,7 +6792,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/logicalDatabase/{targetLogicalDatabaseId}':
     post:
-      summary: Link a logical database to the container
+      summary: NOT YET IMPLEMENTED - Link a logical database to the container
       operationId: attachLogicalDatabaseToContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6817,7 +6817,7 @@ paths:
         '409':
           description: This logical database is already linked to the container
     delete:
-      summary: Remove logical database link to this container.
+      summary: NOT YET IMPLEMENTED - Remove logical database link to this container.
       operationId: removeLogicalDatabaseFromContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6835,7 +6835,7 @@ paths:
           $ref: '#/components/responses/404'
   '/container/{containerId}/link':
     get:
-      summary: List all URLs of the container
+      summary: NOT YET IMPLEMENTED - List all URLs of the container
       description: This will return all the custom domains and Qovery autogenerated domain for the given application
       operationId: listContainerLinks
       parameters:
