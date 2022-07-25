@@ -1,5 +1,5 @@
 get:
-  summary: 'Get Health Check latency  metric over time for the container'
+  summary: 'NOT YET IMPLEMENTED - Get Health Check latency  metric over time for the container'
   description: 'The value returned corresponds to the 95th centile'
   operationId: getContainerMetricHealthCheck
   parameters:

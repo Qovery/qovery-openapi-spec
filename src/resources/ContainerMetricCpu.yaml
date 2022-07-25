@@ -1,5 +1,5 @@
 get:
-  summary: 'Get CPU consumption metric over time for the container'
+  summary: 'NOT YET IMPLEMENTED - Get CPU consumption metric over time for the container'
   operationId: getContainerMetricCpu
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

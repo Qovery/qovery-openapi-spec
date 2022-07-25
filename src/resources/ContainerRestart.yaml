@@ -1,5 +1,5 @@
 post:
-  summary: 'Restart container'
+  summary: 'NOT YET IMPLEMENTED - Restart container'
   operationId: restartContainer
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

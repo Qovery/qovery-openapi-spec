@@ -1,5 +1,5 @@
 delete:
-  summary: 'Delete container tag'
+  summary: 'NOT YET IMPLEMENTED - Delete container tag'
   operationId: deleteContainerTag
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

@@ -1,5 +1,5 @@
 get:
-  summary: 'Get container deployment restrictions'
+  summary: 'NOT YET IMPLEMENTED - Get container deployment restrictions'
   description: 'Get container deployment restrictions'
   operationId: getContainerDeploymentRestrictions
   parameters:
@@ -21,7 +21,7 @@ get:
       $ref: '../responses/NotFound.yaml'
 
 post:
-  summary: 'Create an container deployment restriction'
+  summary: 'NOT YET IMPLEMENTED - Create an container deployment restriction'
   description: 'Create an container deployment restriction'
   operationId: createContainerDeploymentRestriction
   parameters:

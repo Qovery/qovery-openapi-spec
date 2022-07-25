@@ -1,5 +1,5 @@
 get:
-  summary: 'List tags'
+  summary: 'NOT YET IMPLEMENTED - List tags'
   operationId: listContainerTag
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
@@ -21,7 +21,7 @@ get:
 
 
 post:
-  summary: 'Add container tag'
+  summary: 'NOT YET IMPLEMENTED - Add container tag'
   operationId: createContainerTag
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

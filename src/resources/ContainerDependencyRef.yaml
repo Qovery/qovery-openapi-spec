@@ -1,5 +1,5 @@
 post:
-  summary: 'Add container dependency to this application.'
+  summary: 'NOT YET IMPLEMENTED - Add container dependency to this application.'
   description: 'Add container dependency to this container to prevent this container starting before the linked dependencies'
   operationId: createContainerDependency
   parameters:
@@ -24,7 +24,7 @@ post:
       $ref: '../responses/NotFound.yaml'
       
 delete:
-  summary: 'Remove container dependency to this container.'
+  summary: 'NOT YET IMPLEMENTED - Remove container dependency to this container.'
   operationId: removeContainerDependency
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

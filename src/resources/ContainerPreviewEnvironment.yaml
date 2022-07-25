@@ -1,5 +1,5 @@
 post:
-  summary: 'Deploy a preview environment with your container application'
+  summary: 'NOT YET IMPLEMENTED - Deploy a preview environment with your container application'
   description: You must provide the image tag.
   operationId: previewEnvironmentContainer
   parameters:

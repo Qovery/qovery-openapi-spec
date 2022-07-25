@@ -1,5 +1,5 @@
 post:
-  summary: 'Link a logical database to the container'
+  summary: 'NOT YET IMPLEMENTED - Link a logical database to the container'
   operationId: attachLogicalDatabaseToContainer
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
@@ -25,7 +25,7 @@ post:
       description: This logical database is already linked to the container
       
 delete:
-  summary: 'Remove logical database link to this container.'
+  summary: 'NOT YET IMPLEMENTED - Remove logical database link to this container.'
   operationId: removeLogicalDatabaseFromContainer
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

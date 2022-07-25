@@ -1,5 +1,5 @@
 post:
-  summary: 'Stop container'
+  summary: 'NOT YET IMPLEMENTED - Stop container'
   operationId: stopContainer
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

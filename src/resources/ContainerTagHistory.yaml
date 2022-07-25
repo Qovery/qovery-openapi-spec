@@ -1,5 +1,5 @@
 get:
-  summary: 'List image tags'
+  summary: 'NOT YET IMPLEMENTED - List image tags'
   description: List all image container tags already deployed in the Qovery environment.
   operationId: getContainerTags
   parameters:
