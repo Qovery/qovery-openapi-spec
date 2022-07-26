@@ -11,6 +11,3 @@ allOf:
       url:
         type: string
         description: URL of the container registry
-      config:
-        type: string
-        description: authentification configuration
