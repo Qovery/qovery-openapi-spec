@@ -21,12 +21,12 @@ allOf:
       cpu:
         type: integer
         description: unit is millicores (m). 1000m = 1 cpu
-        default: 250
+        default: 500
         example: 1250
       memory:
         type: integer
         description: unit is MB. 1024 MB = 1GB
-        default: 256
+        default: 512
         example: 1024
       min_running_instances:
         type: integer

@@ -11,13 +11,11 @@ allOf:
       maximum_cpu:
         type: integer
         description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-        default: 250
-        example: 1250
+        example: 16000
       maximum_memory:
         type: integer
         description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-        default: 256
-        example: 1024
+        example: 16384
       name:
         type: string
         description: name is case insensitive
@@ -36,12 +34,10 @@ allOf:
       cpu:
         type: integer
         description: unit is millicores (m). 1000m = 1 cpu
-        default: 250
         example: 1250
       memory:
         type: integer
         description: unit is MB. 1024 MB = 1GB
-        default: 256
         example: 1024
       min_running_instances:
         type: integer
