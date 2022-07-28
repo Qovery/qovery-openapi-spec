@@ -6,6 +6,8 @@ allOf:
     properties:
       environment:
         $ref: './ReferenceObject.yaml'
+      registry:
+        $ref: './ReferenceObject.yaml'
       maximum_cpu:
         type: integer
         description: Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
@@ -17,18 +19,19 @@ allOf:
       name:
         type: string
         description: name is case insensitive
-      description:
-        type: string
-        description: give a description to this container
-        nullable: true
-      registry_id:
-        type: string
-        description: id of the linked registry
       image_name:
         type: string
         description: name of the image container
-      arguments: 
+      tag:
         type: string
+        description: tag of the image container
+      arguments:
+        type: array
+        items:
+          type: string
+      entrypoint:
+        type: string
+        description: optional entrypoint when launching container
       cpu:
         type: integer
         description: unit is millicores (m). 1000m = 1 cpu
@@ -50,5 +53,3 @@ allOf:
           Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
           Note: -1 means that there is no limit.
         default: 1
-      healthcheck:
-        $ref: './Healthcheck.yaml'
