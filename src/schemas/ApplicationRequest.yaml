@@ -1,6 +1,6 @@
 allOf:
-  - $ref: './ApplicationStorageRequest.yaml'
-  - $ref: './ApplicationPortRequest.yaml'
+  - $ref: './ServiceStorageRequest.yaml'
+  - $ref: './ServicePortRequest.yaml'
   - type: object
     required:
       - name

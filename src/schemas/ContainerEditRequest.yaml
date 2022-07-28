@@ -1,6 +1,6 @@
 allOf:
-  - $ref: './ApplicationStorageResponse.yaml'
-  - $ref: './ApplicationPortResponse.yaml'
+  - $ref: './ServiceStorageResponse.yaml'
+  - $ref: './ServicePortResponse.yaml'
   - type: object
     properties:
       name:

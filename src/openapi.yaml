@@ -599,10 +599,6 @@ paths:
     $ref: './resources/DatabaseApplication.yaml'
   /database/{databaseId}/application/{targetApplicationId}:
     $ref: './resources/DatabaseApplicationRef.yaml'
-  /database/{databaseId}/container:
-    $ref: './resources/DatabaseContainer.yaml'
-  /database/{databaseId}/container/{targetContainerId}:
-    $ref: './resources/DatabaseContainerRef.yaml'
   /database/{databaseId}/restart:
     $ref: './resources/DatabaseRestart.yaml'
   /database/{databaseId}/stop:

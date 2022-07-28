@@ -8,17 +8,20 @@ properties:
         - internal_port
         - publicly_accessible
       properties:
+        id:
+          type: string
+          format: uuid
         name:
           type: string
           nullable: true
         internal_port:
           type: integer
           example: 8080
-          description: The listening port of your application
+          description: The listening port of your service.
         external_port:
           type: integer
           example: 8080
-          description: The exposed port for your application. This is optional. If not set a default port will be used.
+          description: The exposed port for your service. This is optional. If not set a default port will be used.
         publicly_accessible:
           type: boolean
           description: Expose the port to the world

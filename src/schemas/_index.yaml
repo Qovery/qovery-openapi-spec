@@ -28,18 +28,18 @@ ApplicationNetwork:
   $ref: ./ApplicationNetworkResponse.yaml
 ApplicationNetworkRequest:
   $ref: ./ApplicationNetworkRequest.yaml
-ApplicationPort:
-  $ref: ./ApplicationPortResponse.yaml
-ApplicationPortRequest:
-  $ref: ./ApplicationPortRequest.yaml
+ServicePort:
+  $ref: ./ServicePortResponse.yaml
+ServicePortRequest:
+  $ref: ./ServicePortRequest.yaml
 ApplicationRequest:
   $ref: ./ApplicationRequest.yaml
 ApplicationResponseList:
   $ref: ./ApplicationResponseList.yaml
 ApplicationStorage:
-  $ref: ./ApplicationStorageResponse.yaml
-ApplicationStorageRequest:
-  $ref: ./ApplicationStorageRequest.yaml
+  $ref: ./ServiceStorageResponse.yaml
+ServiceStorageRequest:
+  $ref: ./ServiceStorageRequest.yaml
 AvailableContainerRegistryResponse:
   $ref: ./AvailableContainerRegistryResponse.yaml
 AwsCredentialsRequest:
