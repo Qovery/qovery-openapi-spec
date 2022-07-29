@@ -1,36 +1,41 @@
 allOf:
-  - $ref: './ApplicationStorageRequest.yaml'
-  - $ref: './ApplicationPortRequest.yaml'
+  - $ref: './ServiceStorageRequest.yaml'
+  - $ref: './ServicePortRequest.yaml'
   - type: object
     required:
       - name
       - registry_id
       - image_name
+      - tag
     properties:
       name:
         type: string
         description: name is case insensitive
-      description:
-        type: string
-        description: give a description to this container
-        nullable: true
       registry_id:
         type: string
         description: id of the linked registry
       image_name:
         type: string
         description: name of the image container
-      arguments: 
+      tag:
         type: string
+        description: tag of the image container
+      arguments:
+        type: array
+        items:
+          type: string
+      entrypoint:
+        type: string
+        description: optional entrypoint when launching container
       cpu:
         type: integer
         description: unit is millicores (m). 1000m = 1 cpu
-        default: 250
+        default: 500
         example: 1250
       memory:
         type: integer
         description: unit is MB. 1024 MB = 1GB
-        default: 256
+        default: 512
         example: 1024
       min_running_instances:
         type: integer
@@ -45,5 +50,3 @@ allOf:
           Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
           Note: -1 means that there is no limit.
         default: 1
-      healthcheck:
-        $ref: './Healthcheck.yaml'

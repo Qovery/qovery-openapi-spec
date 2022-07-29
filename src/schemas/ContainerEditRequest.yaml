@@ -1,31 +1,41 @@
 allOf:
-  - $ref: './ApplicationStorageResponse.yaml'
-  - $ref: './ApplicationPortResponse.yaml'
+  - $ref: './ServiceStorageResponse.yaml'
+  - $ref: './ServicePortResponse.yaml'
   - type: object
+    required:
+      - name
+      - registry_id
+      - image_name
+      - tag
     properties:
       name:
         type: string
         description: name is case insensitive
-      description:
-        type: string
-        description: give a description to this application
       registry_id:
         type: string
         description: id of the linked registry
       image_name:
         type: string
         description: name of the image container
-      arguments: 
+      tag:
         type: string
+        description: tag of the image container
+      arguments:
+        type: array
+        items:
+          type: string
+      entrypoint:
+        type: string
+        description: optional entrypoint when launching container
       cpu:
         type: integer
         description: unit is millicores (m). 1000m = 1 cpu
-        default: 250
+        default: 500
         example: 1250
       memory:
         type: integer
         description: unit is MB. 1024 MB = 1GB
-        default: 256
+        default: 512
         example: 1024
       min_running_instances:
         type: integer
@@ -40,11 +50,3 @@ allOf:
           Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
           Note: -1 means that there is no limit.
         default: 1
-      healthcheck:
-        $ref: './Healthcheck.yaml'
-      sticky_session:
-        type: boolean
-        description: |
-          Specify if the sticky session option (also called persistant session) is activated or not for this application.
-          If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
-        default: false
