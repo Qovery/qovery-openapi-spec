@@ -5937,7 +5937,13 @@ paths:
       operationId: createContainerDependency
       parameters:
         - $ref: '#/components/parameters/containerId'
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1container~1%7BtargetContainerId%7D/delete/parameters/1'
+        - name: targetContainerId
+          in: path
+          description: Target container ID
+          required: true
+          schema:
+            type: string
+            format: uuid
       tags:
         - Container Dependency
       responses:
@@ -5960,7 +5966,7 @@ paths:
       operationId: removeContainerDependency
       parameters:
         - $ref: '#/components/parameters/containerId'
-        - $ref: '#/paths/~1database~1%7BdatabaseId%7D~1container~1%7BtargetContainerId%7D/delete/parameters/1'
+        - $ref: '#/paths/~1container~1%7BcontainerId%7D~1dependency~1%7BtargetContainerId%7D/post/parameters/1'
       tags:
         - Container Dependency
       responses:
@@ -7197,51 +7203,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/database/{databaseId}/container':
-    get:
-      summary: List container using the database
-      operationId: listDatabaseContainer
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-      tags:
-        - Database Container
-      responses:
-        '200':
-          description: List linked container
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContainerResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/database/{databaseId}/container/{targetContainerId}':
-    delete:
-      summary: 'Remove an container from this database '
-      operationId: removeContainerFromDatabase
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-        - name: targetContainerId
-          in: path
-          description: Target container ID
-          required: true
-          schema:
-            type: string
-            format: uuid
-      tags:
-        - Database Container
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/database/{databaseId}/restart':
     post:
       summary: Retart database
@@ -8212,7 +8173,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ApplicationStorage'
-        - $ref: '#/components/schemas/ApplicationPort'
+        - $ref: '#/components/schemas/ServicePort'
         - type: object
           properties:
             environment:
@@ -8431,7 +8392,7 @@ components:
     ApplicationEditRequest:
       allOf:
         - $ref: '#/components/schemas/ApplicationStorage'
-        - $ref: '#/components/schemas/ApplicationPort'
+        - $ref: '#/components/schemas/ServicePort'
         - type: object
           properties:
             name:
@@ -8562,7 +8523,7 @@ components:
             Specify if the sticky session option (also called persistant session) is activated or not for this application.
             If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
           default: false
-    ApplicationPort:
+    ServicePort:
       type: object
       properties:
         ports:
@@ -8582,17 +8543,17 @@ components:
               internal_port:
                 type: integer
                 example: 8080
-                description: The listening port of your application
+                description: The listening port of your service.
               external_port:
                 type: integer
                 example: 8080
-                description: The exposed port for your application. This is optional. If not set a default port will be used.
+                description: The exposed port for your service. This is optional. If not set a default port will be used.
               publicly_accessible:
                 type: boolean
                 description: Expose the port to the world
               protocol:
                 $ref: '#/components/schemas/PortProtocolEnum'
-    ApplicationPortRequest:
+    ServicePortRequest:
       type: object
       properties:
         ports:
@@ -8609,11 +8570,11 @@ components:
               internal_port:
                 type: integer
                 example: 8080
-                description: The listening port of your application
+                description: The listening port of your service.
               external_port:
                 type: integer
                 example: 8080
-                description: The exposed port for your application. This is optional. If not set a default port will be used.
+                description: The exposed port for your service. This is optional. If not set a default port will be used.
               publicly_accessible:
                 type: boolean
                 description: Expose the port to the world
@@ -8621,8 +8582,8 @@ components:
                 $ref: '#/components/schemas/PortProtocolEnum'
     ApplicationRequest:
       allOf:
-        - $ref: '#/components/schemas/ApplicationStorageRequest'
-        - $ref: '#/components/schemas/ApplicationPortRequest'
+        - $ref: '#/components/schemas/ServiceStorageRequest'
+        - $ref: '#/components/schemas/ServicePortRequest'
         - type: object
           required:
             - name
@@ -8707,7 +8668,7 @@ components:
               mount_point:
                 type: string
                 example: /mnt/images
-    ApplicationStorageRequest:
+    ServiceStorageRequest:
       type: object
       properties:
         storage:
@@ -9502,18 +9463,10 @@ components:
     ContainerAdvancedSettings:
       type: object
       properties:
-        deployment.delay_start_time_sec:
-          type: integer
-          default: 30
-          deprecated: true
-          description: please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
         deployment.custom_domain_check_enabled:
           type: boolean
           description: disable custom domain check when deploying an application
           default: true
-        build.timeout_max_sec:
-          type: integer
-          default: 1800
         network.ingress.proxy_body_size_mb:
           type: integer
           default: 100
@@ -9604,105 +9557,9 @@ components:
       items:
         $ref: '#/components/schemas/ContainerAdvancedSettings'
     ContainerAdvancedSettingsResponse:
-      type: object
-      properties:
-        deployment.delay_start_time_sec:
-          type: integer
-          default: 30
-          deprecated: true
-          description: please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
-        deployment.custom_domain_check_enabled:
-          type: boolean
-          description: disable custom domain check when deploying an application
-          default: true
-        build.timeout_max_sec:
-          type: integer
-          default: 1800
-        network.ingress.proxy_body_size_mb:
-          type: integer
-          default: 100
-        network.ingress.enable_cors:
-          type: boolean
-          default: false
-        network.ingress.cors_allow_origin:
-          type: string
-          default: '*'
-        network.ingress.cors_allow_methods:
-          type: string
-          default: 'GET, PUT, POST, DELETE, PATCH, OPTIONS'
-        network.ingress.cors_allow_headers:
-          type: string
-          default: 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization'
-        readiness_probe.type:
-          type: string
-          enum:
-            - NONE
-            - TCP
-            - HTTP
-          description: |
-            `NONE` disable readiness probe
-            `TCP` enable TCP readiness probe
-            `HTTP` enable HTTP readiness probe
-          default: TCP
-        readiness_probe.http_get.path:
-          type: string
-          description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
-          default: /
-        readiness_probe.initial_delay_seconds:
-          type: integer
-          description: Delay before liveness probe is initiated
-          default: 30
-        readiness_probe.period_seconds:
-          type: integer
-          description: How often to perform the probe
-          default: 10
-        readiness_probe.timeout_seconds:
-          type: integer
-          description: When the probe times out
-          default: 1
-        readiness_probe.success_threshold:
-          type: integer
-          description: Minimum consecutive successes for the probe to be considered successful after having failed.
-          default: 1
-        readiness_probe.failure_threshold:
-          type: integer
-          description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
-          default: 3
-        liveness_probe.type:
-          type: string
-          enum:
-            - NONE
-            - TCP
-            - HTTP
-          description: |
-            `NONE` disable liveness probe
-            `TCP` enable TCP liveness probe
-            `HTTP` enable HTTP liveness probe
-          default: TCP
-        liveness_probe.http_get.path:
-          type: string
-          description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
-          default: /
-        liveness_probe.initial_delay_seconds:
-          type: integer
-          description: Delay before liveness probe is initiated
-          default: 30
-        liveness_probe.period_seconds:
-          type: integer
-          description: How often to perform the probe
-          default: 10
-        liveness_probe.timeout_seconds:
-          type: integer
-          description: When the probe times out
-          default: 5
-        liveness_probe.success_threshold:
-          type: integer
-          description: Minimum consecutive successes for the probe to be considered successful after having failed.
-          default: 1
-        liveness_probe.failure_threshold:
-          type: integer
-          description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
-          default: 3
+      type: array
+      items:
+        $ref: '#/components/schemas/ContainerAdvancedSettings'
     ContainerCurrentScale:
       type: object
       properties:
@@ -9762,32 +9619,42 @@ components:
     ContainerEditRequest:
       allOf:
         - $ref: '#/components/schemas/ApplicationStorage'
-        - $ref: '#/components/schemas/ApplicationPort'
+        - $ref: '#/components/schemas/ServicePort'
         - type: object
+          required:
+            - name
+            - registry_id
+            - image_name
+            - tag
           properties:
             name:
               type: string
               description: name is case insensitive
-            description:
-              type: string
-              description: give a description to this application
             registry_id:
               type: string
               description: id of the linked registry
             image_name:
               type: string
               description: name of the image container
-            arguments:
+            tag:
               type: string
+              description: tag of the image container
+            arguments:
+              type: array
+              items:
+                type: string
+            entrypoint:
+              type: string
+              description: optional entrypoint when launching container
             cpu:
               type: integer
               description: unit is millicores (m). 1000m = 1 cpu
-              default: 250
+              default: 500
               example: 1250
             memory:
               type: integer
               description: unit is MB. 1024 MB = 1GB
-              default: 256
+              default: 512
               example: 1024
             min_running_instances:
               type: integer
@@ -9802,14 +9669,6 @@ components:
                 Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
                 Note: -1 means that there is no limit.
               default: 1
-            healthcheck:
-              $ref: '#/components/schemas/Healthcheck'
-            sticky_session:
-              type: boolean
-              description: |
-                Specify if the sticky session option (also called persistant session) is activated or not for this application.
-                If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
-              default: false
     ContainerNetwork:
       type: object
       properties:
@@ -9889,38 +9748,43 @@ components:
               description: URL of the container registry
     ContainerRequest:
       allOf:
-        - $ref: '#/components/schemas/ApplicationStorageRequest'
-        - $ref: '#/components/schemas/ApplicationPortRequest'
+        - $ref: '#/components/schemas/ServiceStorageRequest'
+        - $ref: '#/components/schemas/ServicePortRequest'
         - type: object
           required:
             - name
             - registry_id
             - image_name
+            - tag
           properties:
             name:
               type: string
               description: name is case insensitive
-            description:
-              type: string
-              description: give a description to this container
-              nullable: true
             registry_id:
               type: string
               description: id of the linked registry
             image_name:
               type: string
               description: name of the image container
-            arguments:
+            tag:
               type: string
+              description: tag of the image container
+            arguments:
+              type: array
+              items:
+                type: string
+            entrypoint:
+              type: string
+              description: optional entrypoint when launching container
             cpu:
               type: integer
               description: unit is millicores (m). 1000m = 1 cpu
-              default: 250
+              default: 500
               example: 1250
             memory:
               type: integer
               description: unit is MB. 1024 MB = 1GB
-              default: 256
+              default: 512
               example: 1024
             min_running_instances:
               type: integer
@@ -9935,51 +9799,48 @@ components:
                 Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
                 Note: -1 means that there is no limit.
               default: 1
-            healthcheck:
-              $ref: '#/components/schemas/Healthcheck'
     ContainerResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ApplicationStorage'
-        - $ref: '#/components/schemas/ApplicationPort'
+        - $ref: '#/components/schemas/ServicePort'
         - type: object
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
+            registry:
+              $ref: '#/components/schemas/ReferenceObject'
             maximum_cpu:
               type: integer
               description: Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-              default: 250
-              example: 1250
+              example: 16000
             maximum_memory:
               type: integer
               description: Maximum memory that can be allocated to the container based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-              default: 256
-              example: 1024
+              example: 16384
             name:
               type: string
               description: name is case insensitive
-            description:
-              type: string
-              description: give a description to this container
-              nullable: true
-            registry_id:
-              type: string
-              description: id of the linked registry
             image_name:
               type: string
               description: name of the image container
-            arguments:
+            tag:
               type: string
+              description: tag of the image container
+            arguments:
+              type: array
+              items:
+                type: string
+            entrypoint:
+              type: string
+              description: optional entrypoint when launching container
             cpu:
               type: integer
               description: unit is millicores (m). 1000m = 1 cpu
-              default: 250
               example: 1250
             memory:
               type: integer
               description: unit is MB. 1024 MB = 1GB
-              default: 256
               example: 1024
             min_running_instances:
               type: integer
@@ -9994,8 +9855,6 @@ components:
                 Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
                 Note: -1 means that there is no limit.
               default: 1
-            healthcheck:
-              $ref: '#/components/schemas/Healthcheck'
     ContainerResponseList:
       type: object
       properties:
