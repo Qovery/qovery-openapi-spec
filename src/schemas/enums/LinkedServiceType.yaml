@@ -1,0 +1,7 @@
+type: string
+description: |
+  type of the service (application, database, job, gateway...)  
+  present only for `BUILT_IN` variable
+enum:
+  - APPLICATION
+  - DATABASE
