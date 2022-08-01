@@ -1,0 +1,72 @@
+name: Test Generate API Clients
+
+on:
+  - pull_request
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+          - language: go
+            version: 6.0.0
+            target-branch: master
+          - language: javascript
+            version: 6.0.0
+            target-branch: main
+          - language: python
+            version: 6.0.0
+            target-branch: master
+          - language: typescript-axios
+            version: 5.3.1
+            target-branch: main
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.18'
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Build OpenApi file
+        run: |
+          npm ci
+          npm run build
+
+      - name: Generate ${{ matrix.language }} client
+        uses: openapi-generators/openapitools-generator-action@v1
+        env:
+          GO_POST_PROCESS_FILE: "/usr/local/bin/gofmt -w"
+        with:
+          generator: ${{ matrix.language }}
+          generator-tag: v${{ matrix.version }}
+          openapi-file: _build/openapi.yaml
+          config-file: 'generator/configs/${{ matrix.language }}.yaml'
+          command-args: |
+            -a bearer \
+            -o out/qovery-client-${{ matrix.language }} \
+            --enable-post-process-file \
+            --git-user-id qovery \
+            --git-repo-id qovery-client-${{ matrix.language }} \
+            --package-name qovery \
+            --additional-properties packageVersion=$(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
+            --additional-properties npmVersion=$(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
+
+      - name: Check post generation script existence
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: 'generator/post_generation_scripts/${{ matrix.language }}.sh'
+
+      - name: Run ${{ matrix.language }} post generation script
+        if: steps.check_files.outputs.files_exists == 'true'
+        run: generator/post_generation_scripts/${{ matrix.language }}.sh
