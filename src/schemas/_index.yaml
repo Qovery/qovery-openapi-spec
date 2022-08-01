@@ -368,6 +368,8 @@ Link:
   $ref: ./LinkResponse.yaml
 LinkResponseList:
   $ref: ./LinkResponseList.yaml
+LinkedServiceTypeEnum:
+  $ref: ./enums/LinkedServiceType.yaml
 Log:
   $ref: ./LogResponse.yaml
 LogPaginatedResponseList:

@@ -1,5 +1,0 @@
-type: string
-description: present only for `BUILT_IN` variable
-enum:
-  - APPLICATION
-  - DATABASE
