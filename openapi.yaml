@@ -10850,7 +10850,8 @@ components:
               type: string
               description: present only for `BUILT_IN` variable
             service_type:
-              $ref: '#/components/schemas/Secret/allOf/1/properties/service_type'
+              $ref: '#/components/schemas/LinkedServiceTypeEnum'
+              description: present only for `BUILT_IN` variable
     EnvironmentVariableEditRequest:
       type: object
       required:
@@ -11187,6 +11188,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Link'
+    LinkedServiceTypeEnum:
+      type: string
+      description: |
+        type of the service (application, database, job, gateway...)  
+        present only for `BUILT_IN` variable
+      enum:
+        - APPLICATION
+        - DATABASE
     Log:
       type: object
       required:
@@ -12037,11 +12046,8 @@ components:
               type: string
               description: present only for `BUILT_IN` variable
             service_type:
-              type: string
+              $ref: '#/components/schemas/LinkedServiceTypeEnum'
               description: present only for `BUILT_IN` variable
-              enum:
-                - APPLICATION
-                - DATABASE
     SecretEditRequest:
       type: object
       properties:
