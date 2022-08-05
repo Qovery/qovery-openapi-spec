@@ -8701,6 +8701,8 @@ components:
       type: object
       required:
         - name
+        - access_key_id
+        - secret_access_key
       properties:
         name:
           type: string
