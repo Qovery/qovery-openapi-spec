@@ -16,17 +16,19 @@ allOf:
         type: string
         format: uuid
         description: uuid of the user that made the last update
-      cloud_provider:
+      cluster:
         type: object
         properties:
+          id:
+            type: string
+            format: uuid
+          name:
+            type: string
           provider:
             type: string
             example: aws
-          cluster:
+          region:
             type: string
             example: us-east-2
       mode:
         $ref: './enums/EnvironmentMode.yaml'
-      cluster_id:
-        type: string
-        format: uuid
