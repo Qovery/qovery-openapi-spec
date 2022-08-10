@@ -361,8 +361,6 @@ paths:
     $ref: './resources/EnvironmentApplication.yaml'
   /environment/{environmentId}/application/status:
     $ref: './resources/EnvironmentApplicationStatus.yaml'
-  /environment/{environmentId}/application/instance:
-    $ref: './resources/EnvironmentApplicationCurrentInstance.yaml'
   /environment/{environmentId}/application/currentStorage:
     $ref: './resources/EnvironmentApplicationsCurrentStorage.yaml'
   /environment/{environmentId}/application/currentScale:
@@ -375,8 +373,6 @@ paths:
     $ref: './resources/EnvironmentContainer.yaml'
   /environment/{environmentId}/container/status:
     $ref: './resources/EnvironmentContainerStatus.yaml'
-  /environment/{environmentId}/container/instance:
-    $ref: './resources/EnvironmentContainerCurrentInstance.yaml'
   /environment/{environmentId}/container/currentStorage:
     $ref: './resources/EnvironmentContainersCurrentStorage.yaml'
   /environment/{environmentId}/container/currentScale:
