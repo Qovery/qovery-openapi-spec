@@ -30,3 +30,6 @@ allOf:
       cluster_id:
         type: string
         format: uuid
+      cluster_name:
+        type: string
+        format: string
