@@ -501,42 +501,22 @@ paths:
     $ref: './resources/ContainerDeploymentRestrictionRef.yaml'
   /container/{containerId}/advancedSettings:
     $ref: './resources/ContainerAdvancedSettings.yaml'
-  /container/{containerId}/tag:
-    $ref: './resources/ContainerTag.yaml'
-  /container/{containerId}/tag/{tagId}:
-    $ref: './resources/ContainerTagRef.yaml'
   /container/{containerId}/instance:
     $ref: './resources/ContainerCurrentInstance.yaml'
   /container/{containerId}/currentStorage:
     $ref: './resources/ContainerCurrentStorageDisk.yaml'
   /container/{containerId}/currentScale:
     $ref: './resources/ContainerCurrentScale.yaml'
-  /container/{containerId}/metric/cpu:
-    $ref: './resources/ContainerMetricCpu.yaml'
-  /container/{containerId}/metric/memory:
-    $ref: './resources/ContainerMetricMemory.yaml'
-  /container/{containerId}/metric/healthCheck:
-    $ref: './resources/ContainerMetricHealthCheck.yaml'
-  /container/{containerId}/metric/storage:
-    $ref: './resources/ContainerMetricStorage.yaml'
-  /container/{containerId}/metric/restart:
-    $ref: './resources/ContainerMetricRestart.yaml'
   /container/{containerId}/dependency:
     $ref: './resources/ContainerDependency.yaml'
   /container/{containerId}/dependency/{targetContainerId}:
     $ref: './resources/ContainerDependencyRef.yaml'
   /container/{containerId}/deploy:
     $ref: './resources/ContainerDeploy.yaml'
-  /container/{containerId}/previewEnvironment:
-    $ref: './resources/ContainerPreviewEnvironment.yaml'
-  /container/{containerId}/tagHistory:
-    $ref: './resources/ContainerTagHistory.yaml'
   /container/{containerId}/stop:
     $ref: './resources/ContainerStop.yaml'
   /container/{containerId}/restart:
     $ref: './resources/ContainerRestart.yaml'
-  /container/{containerId}/event:
-    $ref: './resources/ContainerEvent.yaml'
   /container/{containerId}/environmentVariable:
     $ref: './resources/ContainerEnvironmentVariable.yaml'
   /container/{containerId}/environmentVariable/import:
