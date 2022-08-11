@@ -1203,6 +1203,29 @@ paths:
         '404':
           $ref: '#/components/responses/404'
   '/organization/{organizationId}/aws/credentials/{credentialsId}':
+    get:
+      summary: Get a set of AWS credentials
+      operationId: getAWSCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/credentialsId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: Get a set of AWS credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     put:
       summary: Edit a set of AWS credentials
       operationId: editAWSCredentials
@@ -1218,7 +1241,7 @@ paths:
               $ref: '#/components/schemas/AwsCredentialsRequest'
       responses:
         '200':
-          description: Edit a CustomDomain
+          description: Edit a set of AWS credentials
           content:
             application/json:
               schema:
@@ -1297,6 +1320,29 @@ paths:
         '404':
           $ref: '#/components/responses/404'
   '/organization/{organizationId}/digitalOcean/credentials/{credentialsId}':
+    get:
+      summary: Get a set of Digital Ocean credentials
+      operationId: getDOCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/credentialsId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: Get a set of Digital Ocean credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     put:
       summary: Edit a set of Digital Ocean credentials
       operationId: editDOCredentials
@@ -1312,7 +1358,7 @@ paths:
               $ref: '#/components/schemas/DoCredentialsRequest'
       responses:
         '200':
-          description: Edit a CustomDomain
+          description: Edit a set of Digital Ocean credentials
           content:
             application/json:
               schema:
@@ -1391,6 +1437,29 @@ paths:
         '404':
           $ref: '#/components/responses/404'
   '/organization/{organizationId}/scaleway/credentials/{credentialsId}':
+    get:
+      summary: Get a set of Scaleway credentials
+      operationId: getScalewayCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/credentialsId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: Get a set of Scaleway credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     put:
       summary: Edit a set of Scaleway credentials
       operationId: editScalewayCredentials
@@ -1406,7 +1475,7 @@ paths:
               $ref: '#/components/schemas/ScalewayCredentialsRequest'
       responses:
         '200':
-          description: Edit a CustomDomain
+          description: Edit a set of Scaleway credentials
           content:
             application/json:
               schema:
