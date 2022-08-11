@@ -79,7 +79,7 @@ jobs:
         run: generator/post_generation_scripts/${{ matrix.language }}.sh
 
       - name: Publish ${{ matrix.language }} client
-        if: ${{ env.PUBLISH_CLIENTS }}
+        if: contains(env.PUBLISH_CLIENTS, 'false')
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
