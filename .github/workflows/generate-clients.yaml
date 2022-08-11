@@ -12,7 +12,7 @@ jobs:
     if: success()
     env:
       # We only want to publish to client repositories when pushing on main branch
-      PUBLISH_CLIENTS: ${{ github.event_name != 'pull_request && github.ref == 'refs/heads/main' }}
+      PUBLISH_CLIENTS: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
 
     strategy:
       matrix:
