@@ -493,6 +493,8 @@ paths:
     $ref: './resources/Container.yaml'
   /container/{containerId}/status:
     $ref: './resources/ContainerStatus.yaml'
+  /container/{containerId}/deploymentHistory:
+    $ref: './resources/ContainerDeploymentHistory.yaml'
   /container/{containerId}/deploymentRestriction:
     $ref: './resources/ContainerDeploymentRestriction.yaml'
   /container/{containerId}/deploymentRestriction/{deploymentRestrictionId}:
