@@ -499,8 +499,6 @@ paths:
     $ref: './resources/ContainerDeploymentRestrictionRef.yaml'
   /container/{containerId}/advancedSettings:
     $ref: './resources/ContainerAdvancedSettings.yaml'
-  /container/{containerId}/contributor:
-    $ref: './resources/ContainerContributor.yaml'
   /container/{containerId}/tag:
     $ref: './resources/ContainerTag.yaml'
   /container/{containerId}/tag/{tagId}:
