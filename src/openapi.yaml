@@ -545,10 +545,6 @@ paths:
     $ref: './resources/ContainerLog.yaml'
   /container/{containerId}/network:
     $ref: './resources/ContainerNetwork.yaml'
-  /container/{containerId}/database:
-    $ref: './resources/ContainerDatabase.yaml'
-  /container/{containerId}/database/{targetDatabaseId}:
-    $ref: './resources/ContainerDatabaseRef.yaml'
   /container/{containerId}/logicalDatabase:
     $ref: './resources/ContainerLogicalDatabase.yaml'
   /container/{containerId}/logicalDatabase/{targetLogicalDatabaseId}:
