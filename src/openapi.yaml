@@ -379,6 +379,10 @@ paths:
     $ref: './resources/EnvironmentContainerCurrentScale.yaml'
   /environment/{environmentId}/container/deploy:
     $ref: './resources/EnvironmentContainerDeploy.yaml'
+  /organization/{organizationId}/container/deploy:
+    $ref: './resources/OrganizationContainerAutoDeploy.yaml'
+  /organization/{organizationId}/container/preview:
+    $ref: './resources/OrganizationContainerPreview.yaml'
   /environment/{environmentId}/log:
     $ref: './resources/EnvironmentLog.yaml'
   /environment/{environmentId}/deploymentHistory:
