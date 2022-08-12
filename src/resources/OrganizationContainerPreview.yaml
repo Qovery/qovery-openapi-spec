@@ -1,9 +1,9 @@
 post:
   summary: 'Preview container environments'
   description: |
-  Triggers a new container preview for each environment matching the following conditions
-  - preview environment feature should be enabled for the container
-  - the container should have the same image name and a different tag
+    Triggers a new container preview for each environment matching the following conditions
+    - preview environment feature should be enabled for the container
+    - the container should have the same image name and a different tag
   operationId: previewContainerEnvironments
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
