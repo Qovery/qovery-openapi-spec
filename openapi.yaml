@@ -8335,6 +8335,10 @@ components:
         network.ingress.cors_allow_headers:
           type: string
           default: 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization'
+        network.ingress.proxy_buffer_size_kb:
+          type: integer
+          default: 4
+          description: header buffer size used while reading response header from upstream
         readiness_probe.type:
           type: string
           enum:
@@ -9553,6 +9557,10 @@ components:
         network.ingress.cors_allow_headers:
           type: string
           default: 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization'
+        network.ingress.proxy_buffer_size_kb:
+          type: integer
+          default: 4
+          description: header buffer size used while reading response header from upstream
         readiness_probe.type:
           type: string
           enum:
