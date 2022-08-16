@@ -1,0 +1,33 @@
+post:
+  summary: 'NOT YET IMPLEMENTED - Auto deploy containers'
+  description: |
+    Triggers a new container deploy in each environment matching the following conditions
+    - environment should have the auto-deploy enabled
+    - the container should have the same image name and a different tag
+  operationId: autoDeployContainerEnvironments
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Containers
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/OrganizationContainerAutoDeployRequest.yaml'
+  responses:
+    '202':
+      description: 'Deployed containers'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Status.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+    '409':
+      description: 'Operation is in progress'

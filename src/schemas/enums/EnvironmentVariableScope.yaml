@@ -4,3 +4,4 @@ enum:
   - BUILT_IN
   - ENVIRONMENT
   - PROJECT
+  - CONTAINER

@@ -361,8 +361,6 @@ paths:
     $ref: './resources/EnvironmentApplication.yaml'
   /environment/{environmentId}/application/status:
     $ref: './resources/EnvironmentApplicationStatus.yaml'
-  /environment/{environmentId}/application/instance:
-    $ref: './resources/EnvironmentApplicationCurrentInstance.yaml'
   /environment/{environmentId}/application/currentStorage:
     $ref: './resources/EnvironmentApplicationsCurrentStorage.yaml'
   /environment/{environmentId}/application/currentScale:
@@ -375,14 +373,16 @@ paths:
     $ref: './resources/EnvironmentContainer.yaml'
   /environment/{environmentId}/container/status:
     $ref: './resources/EnvironmentContainerStatus.yaml'
-  /environment/{environmentId}/container/instance:
-    $ref: './resources/EnvironmentContainerCurrentInstance.yaml'
   /environment/{environmentId}/container/currentStorage:
     $ref: './resources/EnvironmentContainersCurrentStorage.yaml'
   /environment/{environmentId}/container/currentScale:
     $ref: './resources/EnvironmentContainerCurrentScale.yaml'
   /environment/{environmentId}/container/deploy:
     $ref: './resources/EnvironmentContainerDeploy.yaml'
+  /organization/{organizationId}/container/deploy:
+    $ref: './resources/OrganizationContainerAutoDeploy.yaml'
+  /organization/{organizationId}/container/preview:
+    $ref: './resources/OrganizationContainerPreview.yaml'
   /environment/{environmentId}/log:
     $ref: './resources/EnvironmentLog.yaml'
   /environment/{environmentId}/deploymentHistory:
@@ -497,50 +497,26 @@ paths:
     $ref: './resources/Container.yaml'
   /container/{containerId}/status:
     $ref: './resources/ContainerStatus.yaml'
-  /container/{containerId}/deploymentRestriction:
-    $ref: './resources/ContainerDeploymentRestriction.yaml'
-  /container/{containerId}/deploymentRestriction/{deploymentRestrictionId}:
-    $ref: './resources/ContainerDeploymentRestrictionRef.yaml'
+  /container/{containerId}/deploymentHistory:
+    $ref: './resources/ContainerDeploymentHistory.yaml'
   /container/{containerId}/advancedSettings:
     $ref: './resources/ContainerAdvancedSettings.yaml'
-  /container/{containerId}/contributor:
-    $ref: './resources/ContainerContributor.yaml'
-  /container/{containerId}/tag:
-    $ref: './resources/ContainerTag.yaml'
-  /container/{containerId}/tag/{tagId}:
-    $ref: './resources/ContainerTagRef.yaml'
   /container/{containerId}/instance:
     $ref: './resources/ContainerCurrentInstance.yaml'
   /container/{containerId}/currentStorage:
     $ref: './resources/ContainerCurrentStorageDisk.yaml'
   /container/{containerId}/currentScale:
     $ref: './resources/ContainerCurrentScale.yaml'
-  /container/{containerId}/metric/cpu:
-    $ref: './resources/ContainerMetricCpu.yaml'
-  /container/{containerId}/metric/memory:
-    $ref: './resources/ContainerMetricMemory.yaml'
-  /container/{containerId}/metric/healthCheck:
-    $ref: './resources/ContainerMetricHealthCheck.yaml'
-  /container/{containerId}/metric/storage:
-    $ref: './resources/ContainerMetricStorage.yaml'
-  /container/{containerId}/metric/restart:
-    $ref: './resources/ContainerMetricRestart.yaml'
   /container/{containerId}/dependency:
     $ref: './resources/ContainerDependency.yaml'
   /container/{containerId}/dependency/{targetContainerId}:
     $ref: './resources/ContainerDependencyRef.yaml'
   /container/{containerId}/deploy:
     $ref: './resources/ContainerDeploy.yaml'
-  /container/{containerId}/previewEnvironment:
-    $ref: './resources/ContainerPreviewEnvironment.yaml'
-  /container/{containerId}/tagHistory:
-    $ref: './resources/ContainerTagHistory.yaml'
   /container/{containerId}/stop:
     $ref: './resources/ContainerStop.yaml'
   /container/{containerId}/restart:
     $ref: './resources/ContainerRestart.yaml'
-  /container/{containerId}/event:
-    $ref: './resources/ContainerEvent.yaml'
   /container/{containerId}/environmentVariable:
     $ref: './resources/ContainerEnvironmentVariable.yaml'
   /container/{containerId}/environmentVariable/import:
@@ -569,10 +545,6 @@ paths:
     $ref: './resources/ContainerLog.yaml'
   /container/{containerId}/network:
     $ref: './resources/ContainerNetwork.yaml'
-  /container/{containerId}/database:
-    $ref: './resources/ContainerDatabase.yaml'
-  /container/{containerId}/database/{targetDatabaseId}:
-    $ref: './resources/ContainerDatabaseRef.yaml'
   /container/{containerId}/logicalDatabase:
     $ref: './resources/ContainerLogicalDatabase.yaml'
   /container/{containerId}/logicalDatabase/{targetLogicalDatabaseId}:

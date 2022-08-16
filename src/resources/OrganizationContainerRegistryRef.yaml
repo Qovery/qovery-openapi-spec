@@ -1,5 +1,5 @@
 delete:
-  summary: 'Delete a container registry'
+  summary: 'NOT YET IMPLEMENTED - Delete a container registry'
   operationId: deleteContainerRegistry
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
