@@ -1,5 +1,5 @@
 get:
-  summary: 'NOT YET IMPLEMENTED - Get container by ID'
+  summary: 'Get container by ID'
   operationId: getContainer
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
@@ -19,7 +19,7 @@ get:
     '404':
       $ref: '../responses/NotFound.yaml'
 put:
-  summary: 'NOT YET IMPLEMENTED - Edit container'
+  summary: 'Edit container'
   description: |
     - To edit the container you must have the admin permission.
     - For port edition, if you provide a port id, we will update the corresponding port. If you don't we will create a new one. If you remove a port from the payload, we will delete it.
@@ -52,7 +52,7 @@ put:
     '409':
       description: Container name within the environment is already taken
 delete:
-  summary: 'NOT YET IMPLEMENTED - Delete container'
+  summary: 'Delete container'
   description: 'To delete the container you must have the admin permission'
   operationId: deleteContainer
   parameters:

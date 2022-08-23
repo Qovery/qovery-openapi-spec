@@ -1,5 +1,5 @@
 post:
-  summary: 'NOT YET IMPLEMENTED - Import variables'
+  summary: 'Import variables'
   description: Import environment variables in a defined scope, with a defined visibility.
   operationId: importContainerEnvironmentVariable
   parameters:

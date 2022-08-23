@@ -1,5 +1,5 @@
 post:
-  summary: 'NOT YET IMPLEMENTED - Create an environment variable override at the container level'
+  summary: 'Create an environment variable override at the container level'
   description: |
     - Allows you to override at container level an environment variable that has a higher scope.
     - You only have to specify a value in the request body

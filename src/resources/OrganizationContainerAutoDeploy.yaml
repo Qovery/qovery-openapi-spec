@@ -1,5 +1,5 @@
 post:
-  summary: 'NOT YET IMPLEMENTED - Auto deploy containers'
+  summary: 'Auto deploy containers'
   description: |
     Triggers a new container deploy in each environment matching the following conditions
     - environment should have the auto-deploy enabled

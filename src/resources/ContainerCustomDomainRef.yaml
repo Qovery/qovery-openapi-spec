@@ -1,6 +1,6 @@
 
 put:
-  summary: 'NOT YET IMPLEMENTED - Edit a Custom Domain'
+  summary: 'Edit a Custom Domain'
   description: 'To edit a Custom Domain  you must have the project user permission'
   operationId: editContainerCustomDomain
   parameters:
@@ -30,7 +30,7 @@ put:
       $ref: '../responses/NotFound.yaml'
 
 delete:
-  summary: 'NOT YET IMPLEMENTED - Delete a Custom Domain'
+  summary: 'Delete a Custom Domain'
   description: 'To delete an CustomDomain you must have the project user permission'
   operationId: deleteContainerCustomDomain
   parameters:

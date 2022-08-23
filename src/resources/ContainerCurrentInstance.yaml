@@ -1,5 +1,5 @@
 get:
-  summary: 'NOT YET IMPLEMENTED - List currently running instances of the container with their CPU and RAM metrics'
+  summary: 'List currently running instances of the container with their CPU and RAM metrics'
   operationId: getContainerCurrentInstance
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

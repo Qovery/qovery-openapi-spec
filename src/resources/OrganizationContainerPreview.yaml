@@ -1,5 +1,5 @@
 post:
-  summary: 'NOT YET IMPLEMENTED - Preview container environments'
+  summary: 'Preview container environments'
   description: |
     Triggers a new container preview for each environment matching the following conditions
     - preview environment feature should be enabled for the container

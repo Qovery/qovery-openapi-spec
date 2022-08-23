@@ -1,5 +1,5 @@
 get:
-  summary: 'NOT YET IMPLEMENTED - List linked logical databases'
+  summary: 'List linked logical databases'
   operationId: listContainerLogicalDatabase
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

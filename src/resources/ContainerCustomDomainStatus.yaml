@@ -1,5 +1,5 @@
 get:
-  summary: 'NOT YET IMPLEMENTED - Get Custom Domain status'
+  summary: 'Get Custom Domain status'
   operationId: getContainerCustomDomainStatus
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

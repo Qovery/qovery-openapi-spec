@@ -1,5 +1,5 @@
 get:
-  summary: 'NOT YET IMPLEMENTED - List organization container registries'
+  summary: 'List organization container registries'
   operationId: listContainerRegistry
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'

@@ -1,5 +1,5 @@
 get:
-  summary: 'NOT YET IMPLEMENTED - List container deployments'
+  summary: 'List container deployments'
   description: Returns the 20 last container deployments
   operationId: listContainerDeploymentHistory
   parameters:

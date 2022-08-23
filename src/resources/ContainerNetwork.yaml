@@ -1,5 +1,5 @@
 get:
-  summary: 'NOT YET IMPLEMENTED - Get Container Network information'
+  summary: 'Get Container Network information'
   description: Get status of the container network settings.
   operationId: getContainerNetwork
   parameters:
@@ -21,7 +21,7 @@ get:
       $ref: '../responses/NotFound.yaml'
 
 put:
-  summary: 'NOT YET IMPLEMENTED - Edit Container Network'
+  summary: 'Edit Container Network'
   description: Edit the Network settings of the container.
   operationId: editContainerNetwork
   parameters:

@@ -1,5 +1,5 @@
 get:
-  summary: 'NOT YET IMPLEMENTED - List logs'
+  summary: 'List logs'
   operationId: listContainerLog
   description: This will list the last 1000 logs of the container
   parameters:
