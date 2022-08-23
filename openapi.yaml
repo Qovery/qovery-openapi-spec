@@ -2320,13 +2320,11 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/availableContainerRegistry':
+  /availableContainerRegistry:
     get:
       summary: List supported container registries
       description: List supported container registries by Qovery and get the mandatory authentification configuration.
       operationId: listAvailableContainerRegistry
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
       tags:
         - Container Registries
       responses:
