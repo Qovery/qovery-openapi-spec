@@ -14,7 +14,10 @@ properties:
   url:
     type: string
     format: uri
-    description: URL of the container registry
+    description: |
+      URL of the container registry. 
+      Must start by 'https://' and for docker_hub should be 'https://docker.io'
+
   config:
     type: object
     additionalProperties: true
