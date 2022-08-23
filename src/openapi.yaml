@@ -309,8 +309,8 @@ paths:
     $ref: './resources/OrganizationContainerRegistry.yaml'
   /organization/{organizationId}/containerRegistry/{containerRegistryId}:
     $ref: './resources/OrganizationContainerRegistryRef.yaml'
-  /organization/{organizationId}/availableContainerRegistry:
-    $ref: './resources/OrganizationAvailableContainerRegistry.yaml'
+  /availableContainerRegistry:
+    $ref: './resources/AvailableContainerRegistry.yaml'
   /project/{projectId}:
     $ref: './resources/Project.yaml'
   /project/{projectId}/deploymentRule:
