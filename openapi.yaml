@@ -8453,7 +8453,9 @@ components:
                 $ref: '#/components/schemas/StorageTypeEnum'
               size:
                 type: integer
-                description: unit is GB
+                description: |
+                  unit is GB
+                  Minimum size is 4 GB
                 example: 16
               mount_point:
                 type: string
