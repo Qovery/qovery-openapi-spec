@@ -1,0 +1,16 @@
+get:
+  summary: 'List default application advanced settings'
+  operationId: getDefaultApplicationAdvancedSettings
+  tags:
+    - Applications
+  responses:
+    '200':
+      description: 'Default application advanced settings'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ApplicationAdvancedSettings.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
