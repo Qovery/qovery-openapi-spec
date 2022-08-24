@@ -15,3 +15,18 @@ properties:
         git_commit_id:
           type: string
           description: Commit ID to deploy.
+  containers:
+    type: array
+    items:
+      type: object
+      required:
+        - id
+        - image_tag
+      properties: 
+        id:
+          type: string
+          format: uuid
+          description: id of the container to be updated. 
+        image_tag:
+          type: string
+          description: new tag for the container.

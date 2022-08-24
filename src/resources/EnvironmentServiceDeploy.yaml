@@ -1,11 +1,12 @@
 post:
-  summary: 'Deploy containers'
-  description: Deploy to the last commit the containers you specified. 
-  operationId: deployAllContainers
+  summary: 'Deploy services'
+  description: Update and deploy the selected services
+  operationId: deployAllServices
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
     - Containers
+    - Applications
   requestBody:
     content:
       application/json:
@@ -13,7 +14,7 @@ post:
           $ref: '../schemas/DeployAllRequest.yaml'
   responses:
     '202':
-      description: 'Deployed containers'
+      description: 'Deployed services'
       content:
         application/json:
           schema:
