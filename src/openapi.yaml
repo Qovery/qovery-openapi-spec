@@ -409,6 +409,8 @@ paths:
     $ref: './resources/EnvironmentLink.yaml'
   /environment/{environmentId}/databaseConfiguration:
     $ref: './resources/EnvironmentDatabaseConfiguration.yaml'
+  /defaultApplicationAdvancedSettings:
+    $ref: './resources/DefaultApplicationAdvancedSettings.yaml'
   /application/{applicationId}:
     $ref: './resources/Application.yaml'
   /application/{applicationId}/status:
