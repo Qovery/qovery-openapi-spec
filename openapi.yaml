@@ -3565,13 +3565,14 @@ paths:
           $ref: '#/components/responses/404'
   '/environment/{environmentId}/container/deploy':
     post:
-      summary: Deploy containers
-      description: Deploy to the last commit the containers you specified.
-      operationId: deployAllContainers
+      summary: Deploy services
+      description: Update and deploy the selected services
+      operationId: deployAllServices
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
         - Containers
+        - Applications
       requestBody:
         content:
           application/json:
@@ -3579,7 +3580,7 @@ paths:
               $ref: '#/components/schemas/DeployAllRequest'
       responses:
         '202':
-          description: Deployed containers
+          description: Deployed services
           content:
             application/json:
               schema:
@@ -10003,6 +10004,21 @@ components:
               git_commit_id:
                 type: string
                 description: Commit ID to deploy.
+        containers:
+          type: array
+          items:
+            type: object
+            required:
+              - id
+              - image_tag
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: id of the container to be updated.
+              image_tag:
+                type: string
+                description: new tag for the container.
     DeployRequest:
       type: object
       required:
