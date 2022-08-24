@@ -380,7 +380,7 @@ paths:
   /environment/{environmentId}/container/currentScale:
     $ref: './resources/EnvironmentContainerCurrentScale.yaml'
   /environment/{environmentId}/container/deploy:
-    $ref: './resources/EnvironmentContainerDeploy.yaml'
+    $ref: './resources/EnvironmentServiceDeploy.yaml'
   /organization/{organizationId}/container/deploy:
     $ref: './resources/OrganizationContainerAutoDeploy.yaml'
   /organization/{organizationId}/container/preview:
