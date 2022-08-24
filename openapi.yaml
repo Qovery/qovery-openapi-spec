@@ -4122,6 +4122,23 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /defaultApplicationAdvancedSettings:
+    get:
+      summary: List default application advanced settings
+      operationId: getDefaultApplicationAdvancedSettings
+      tags:
+        - Applications
+      responses:
+        '200':
+          description: Default application advanced settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationAdvancedSettings'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
   '/application/{applicationId}':
     get:
       summary: Get application by ID
