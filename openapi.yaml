@@ -7948,13 +7948,11 @@ components:
             maximum_cpu:
               type: integer
               description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-              default: 250
-              example: 1250
+              example: 16000
             maximum_memory:
               type: integer
               description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-              default: 256
-              example: 1024
+              example: 16384
             name:
               type: string
               description: name is case insensitive
@@ -7973,12 +7971,10 @@ components:
             cpu:
               type: integer
               description: unit is millicores (m). 1000m = 1 cpu
-              default: 250
               example: 1250
             memory:
               type: integer
               description: unit is MB. 1024 MB = 1GB
-              default: 256
               example: 1024
             min_running_instances:
               type: integer
@@ -8182,12 +8178,12 @@ components:
             cpu:
               type: integer
               description: unit is millicores (m). 1000m = 1 cpu
-              default: 250
+              default: 500
               example: 1250
             memory:
               type: integer
               description: unit is MB. 1024 MB = 1GB
-              default: 256
+              default: 512
               example: 1024
             min_running_instances:
               type: integer
@@ -8378,12 +8374,12 @@ components:
             cpu:
               type: integer
               description: unit is millicores (m). 1000m = 1 cpu
-              default: 250
+              default: 500
               example: 1250
             memory:
               type: integer
               description: unit is MB. 1024 MB = 1GB
-              default: 256
+              default: 512
               example: 1024
             min_running_instances:
               type: integer
@@ -9794,12 +9790,10 @@ components:
             maximum_cpu:
               type: integer
               description: Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-              default: 250
               example: 1250
             maximum_memory:
               type: integer
               description: Maximum memory that can be allocated to the database based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-              default: 256
               example: 1024
             disk_encrypted:
               type: boolean
@@ -9892,8 +9886,15 @@ components:
           example: 1250
         memory:
           type: integer
-          description: unit is MB. 1024 MB = 1GB
-          default: 256
+          description: |
+            unit is MB. 1024 MB = 1GB  
+            Default value is linked to the database type:
+            - MANAGED: 100
+            - CONTAINER
+              - POSTGRES: 100
+              - REDIS: 100
+              - MYSQL: 512
+              - MONGODB: 256
           example: 1024
         storage:
           type: integer
@@ -9931,8 +9932,15 @@ components:
           example: 1250
         memory:
           type: integer
-          description: unit is MB. 1024 MB = 1GB
-          default: 256
+          description: |
+            unit is MB. 1024 MB = 1GB  
+            Default value is linked to the database type:
+            - MANAGED: `100`
+            - CONTAINER
+              - POSTGRES: `100`
+              - REDIS: `100`
+              - MYSQL: `512`
+              - MONGODB: `256`
           example: 1024
         storage:
           type: integer
