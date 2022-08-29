@@ -128,10 +128,6 @@ ClusterStatusResponseList:
   $ref: ./ClusterStatusResponseList.yaml
 ClusterAdvancedSettings:
   $ref: ./ClusterAdvancedSettings.yaml
-ContainerAdvancedSettingsRequest:
-  $ref: ./ContainerAdvancedSettingsRequest.yaml
-ContainerAdvancedSettingsResponse:
-  $ref: ./ContainerAdvancedSettingsResponse.yaml
 Commit:
   $ref: ./CommitResponse.yaml
 CommitPaginatedResponseList:
