@@ -1090,7 +1090,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D~1advancedSettings/put/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/ClusterAdvancedSettings'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1110,31 +1110,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                registry.image_retention_time:
-                  type: integer
-                  default: 31536000
-                  description: Configure the number of seconds before cleaning images in the registry
-                load_balancer.size:
-                  type: string
-                  default: lb-s
-                  description: Select the size of the main load_balancer (only effective for Scaleway)
-                pleco.resources_ttl:
-                  type: integer
-                  default: -1
-                  deprecated: true
-                loki.log_retention_in_week:
-                  type: integer
-                  default: 12
-                  description: For how long in week loki is going to keep logs of your applications
+              $ref: '#/components/schemas/ClusterAdvancedSettings'
       responses:
         '201':
           description: Updated advanced settings
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1organization~1%7BorganizationId%7D~1cluster~1%7BclusterId%7D~1advancedSettings/put/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/ClusterAdvancedSettings'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -9195,6 +9178,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClusterStatusGet'
+    ClusterAdvancedSettings:
+      type: object
+      properties:
+        registry.image_retention_time:
+          type: integer
+          default: 31536000
+          description: Configure the number of seconds before cleaning images in the registry
+        load_balancer.size:
+          type: string
+          default: lb-s
+          description: Select the size of the main load_balancer (only effective for Scaleway)
+        pleco.resources_ttl:
+          type: integer
+          default: -1
+          deprecated: true
+        loki.log_retention_in_week:
+          type: integer
+          default: 12
+          description: For how long in week loki is going to keep logs of your applications
     Commit:
       type: object
       required:
