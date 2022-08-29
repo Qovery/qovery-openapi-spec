@@ -6,7 +6,6 @@ post:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
     - Containers
-    - Applications
   requestBody:
     content:
       application/json:
