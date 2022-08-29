@@ -3555,7 +3555,6 @@ paths:
         - $ref: '#/components/parameters/environmentId'
       tags:
         - Containers
-        - Applications
       requestBody:
         content:
           application/json:
