@@ -1,3 +1,25 @@
+get:
+  summary: 'Get a container registry'
+  operationId: getContainerRegistry
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/containerRegistryId.yaml'
+  tags:
+    - Container Registries
+  responses:
+    '200':
+      description: 'The container registry'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ContainerRegistryResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+
 delete:
   summary: 'Delete a container registry'
   operationId: deleteContainerRegistry
