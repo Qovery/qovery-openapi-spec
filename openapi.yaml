@@ -151,7 +151,6 @@ x-tagGroups:
       - Container Deployment Restriction
       - Container Deployment History
       - Container Environment Variable
-      - Container Registry
       - Container Secret
       - Container Event
   - name: Database
@@ -2303,7 +2302,7 @@ paths:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1containerRegistry~1%7BcontainerRegistryId%7D/get/parameters/1'
       tags:
-        - Container Registry
+        - Container Registries
       requestBody:
         content:
           application/json:
