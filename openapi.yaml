@@ -2252,12 +2252,39 @@ paths:
         '404':
           $ref: '#/components/responses/404'
   '/organization/{organizationId}/containerRegistry/{containerRegistryId}':
+    get:
+      summary: Get a container registry
+      operationId: getContainerRegistry
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: containerRegistryId
+          in: path
+          description: Container Registry ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Container Registries
+      responses:
+        '200':
+          description: The container registry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerRegistryResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     delete:
       summary: Delete a container registry
       operationId: deleteContainerRegistry
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1containerRegistry~1%7BcontainerRegistryId%7D/put/parameters/1'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1containerRegistry~1%7BcontainerRegistryId%7D/get/parameters/1'
       tags:
         - Container Registries
       responses:
@@ -2274,13 +2301,7 @@ paths:
       operationId: editContainerRegistry
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - name: containerRegistryId
-          in: path
-          description: Container Registry ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1containerRegistry~1%7BcontainerRegistryId%7D/get/parameters/1'
       tags:
         - Container Registry
       requestBody:
