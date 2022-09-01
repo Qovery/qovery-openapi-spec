@@ -151,7 +151,6 @@ x-tagGroups:
       - Container Deployment Restriction
       - Container Deployment History
       - Container Environment Variable
-      - Container Registry
       - Container Secret
       - Container Event
   - name: Database

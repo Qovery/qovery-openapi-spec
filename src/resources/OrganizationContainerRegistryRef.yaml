@@ -46,7 +46,7 @@ put:
     - $ref: '../parameters/path/containerRegistryId.yaml'
 
   tags:
-    - Container Registry
+    - Container Registries
   requestBody:
     content:
       application/json:
