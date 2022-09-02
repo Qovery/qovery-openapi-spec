@@ -23,6 +23,14 @@ properties:
     type: integer
     default: 4
     description: header buffer size used while reading response header from upstream
+  network.ingress.whitelist_source_range:
+    type: string
+    description: |
+      list of source ranges to allow access to ingress proxy. 
+      This property can be used to whitelist source IP ranges for ingress proxy.
+      The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1
+      To allow all source ranges, set 0.0.0.0/0.
+    default: "0.0.0.0/0"
   readiness_probe.type:
     type: string
     enum:
