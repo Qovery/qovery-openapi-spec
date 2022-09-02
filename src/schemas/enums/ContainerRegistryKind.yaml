@@ -6,5 +6,4 @@ enum:
   - PUBLIC_ECR
   - DOCR
 description: The type of your container registry
-default: ECR
 
