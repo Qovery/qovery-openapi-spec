@@ -18,13 +18,13 @@ jobs:
       matrix:
         include:
           - language: go
-            version: 6.0.0
+            version: 6.0.1
             target-branch: master
           - language: javascript
-            version: 6.0.0
+            version: 6.0.1
             target-branch: main
           - language: python
-            version: 6.0.0
+            version: 6.0.1
             target-branch: master
           - language: typescript-axios
             version: 5.3.1
