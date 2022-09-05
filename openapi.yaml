@@ -2588,7 +2588,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EnvironmentRequest'
+              $ref: '#/components/schemas/CreateEnvironmentRequest'
       responses:
         '201':
           description: Create environment
@@ -10533,7 +10533,7 @@ components:
         name:
           type: string
         mode:
-          $ref: '#/components/schemas/EnvironmentModeEnum'
+          $ref: '#/components/schemas/CreateEnvironmentModeEnum'
     EnvironmentLog:
       type: object
       required:
@@ -10601,7 +10601,14 @@ components:
         - PRODUCTION
         - STAGING
       example: PRODUCTION
-    EnvironmentRequest:
+    CreateEnvironmentModeEnum:
+      type: string
+      enum:
+        - DEVELOPMENT
+        - PRODUCTION
+        - STAGING
+      example: PRODUCTION
+    CreateEnvironmentRequest:
       type: object
       required:
         - name
@@ -10613,7 +10620,7 @@ components:
           type: string
           format: uuid
         mode:
-          $ref: '#/components/schemas/EnvironmentModeEnum'
+          $ref: '#/components/schemas/CreateEnvironmentModeEnum'
     EnvironmentResponseList:
       type: object
       properties:
