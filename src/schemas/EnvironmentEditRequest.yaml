@@ -3,4 +3,4 @@ properties:
   name:
     type: string
   mode:
-    $ref: './enums/EnvironmentMode.yaml'
+    $ref: './enums/CreateEnvironmentMode.yaml'

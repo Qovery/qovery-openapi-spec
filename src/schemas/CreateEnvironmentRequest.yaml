@@ -9,4 +9,4 @@ properties:
     type: string
     format: uuid
   mode:
-    $ref: './enums/EnvironmentMode.yaml'
+    $ref: './enums/CreateEnvironmentMode.yaml'
