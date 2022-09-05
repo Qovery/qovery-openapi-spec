@@ -9534,7 +9534,8 @@ components:
             * For others: must start by `https://`
         config:
           type: object
-          additionalProperties: true
+          additionalProperties:
+            type: string
           description: |
             This field is dependent of the container registry kind:
             * `ECR` needs in the config: region, access_key_id, secret_access_key
