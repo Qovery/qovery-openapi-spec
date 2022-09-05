@@ -288,8 +288,10 @@ EnvironmentLogTypeEnum:
   $ref: ./enums/EnvironmentLogType.yaml
 EnvironmentModeEnum:
   $ref: ./enums/EnvironmentMode.yaml
-EnvironmentRequest:
-  $ref: ./EnvironmentRequest.yaml
+CreateEnvironmentModeEnum:
+  $ref: ./enums/CreateEnvironmentMode.yaml
+CreateEnvironmentRequest:
+  $ref: ./CreateEnvironmentRequest.yaml
 EnvironmentResponseList:
   $ref: ./EnvironmentResponseList.yaml
 EnvironmentRestartRequest:
