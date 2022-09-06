@@ -7,6 +7,8 @@ clusterId:
   $ref: ./path/clusterId.yaml
 containerId:
   $ref: ./path/containerId.yaml
+containerRegistryId:
+  $ref: ./path/containerRegistryId.yaml
 credentialsId:
   $ref: ./path/credentialsId.yaml
 creditCardId:
