@@ -2256,13 +2256,7 @@ paths:
       operationId: getContainerRegistry
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - name: containerRegistryId
-          in: path
-          description: Container Registry ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/containerRegistryId'
       tags:
         - Container Registries
       responses:
@@ -2283,7 +2277,7 @@ paths:
       operationId: deleteContainerRegistry
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1containerRegistry~1%7BcontainerRegistryId%7D/get/parameters/1'
+        - $ref: '#/components/parameters/containerRegistryId'
       tags:
         - Container Registries
       responses:
@@ -2300,7 +2294,7 @@ paths:
       operationId: editContainerRegistry
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1containerRegistry~1%7BcontainerRegistryId%7D/get/parameters/1'
+        - $ref: '#/components/parameters/containerRegistryId'
       tags:
         - Container Registries
       requestBody:
@@ -7714,6 +7708,14 @@ components:
       name: containerId
       in: path
       description: Container ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    containerRegistryId:
+      name: containerRegistryId
+      in: path
+      description: Container Registry ID
       required: true
       schema:
         type: string
