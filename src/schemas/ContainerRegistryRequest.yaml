@@ -20,8 +20,28 @@ properties:
       * For others: must start by `https://`
   config:
     type: object
-    additionalProperties:
-      type: string
+    properties:
+      access_key_id:
+        type: string
+        description: Required if kind is `ECR` or `PUBLIC_ECR`
+      secret_access_key:
+        type: string
+        description: Required if kind is `ECR` or `PUBLIC_ECR`
+      region:
+        type: string
+        description: Required if kind is `ECR` or `SCALEWAY_CR`
+      scaleway_access_key:
+        type: string
+        description: Required if kind is `SCALEWAY_CR`
+      scaleway_secret_key:
+        type: string
+        description: Required if kind is `SCALEWAY_CR`
+      username:
+        type: string
+        description: Required if kind is `DOCKER_HUB`
+      password:
+        type: string
+        description: Required if kind is `DOCKER_HUB`
     description: |
       This field is dependent of the container registry kind:
       * `ECR` needs in the config: region, access_key_id, secret_access_key
