@@ -8476,6 +8476,9 @@ components:
               - size
               - mount_point
             properties:
+              id:
+                type: string
+                format: uuid
               type:
                 $ref: '#/components/schemas/StorageTypeEnum'
               size:
