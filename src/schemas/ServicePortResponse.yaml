@@ -15,7 +15,6 @@ properties:
           format: uuid
         name:
           type: string
-          nullable: true
         internal_port:
           type: integer
           example: 8080
