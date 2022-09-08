@@ -4,6 +4,8 @@ allOf:
   - $ref: './ServicePortResponse.yaml'
   - type: object
     required:
+      - environment
+      - registry
       - name
       - image_name
       - tag
