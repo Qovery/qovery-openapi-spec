@@ -7959,7 +7959,7 @@ components:
     Application:
       allOf:
         - $ref: '#/components/schemas/Base'
-        - $ref: '#/components/schemas/ApplicationStorage'
+        - $ref: '#/components/schemas/ServiceStorage'
         - $ref: '#/components/schemas/ServicePort'
         - type: object
           properties:
@@ -8440,7 +8440,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Application'
-    ApplicationStorage:
+    ServiceStorage:
       type: object
       properties:
         storage:
@@ -9587,7 +9587,7 @@ components:
     ContainerResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
-        - $ref: '#/components/schemas/ApplicationStorage'
+        - $ref: '#/components/schemas/ServiceStorage'
         - $ref: '#/components/schemas/ServicePort'
         - type: object
           required:
@@ -9667,7 +9667,7 @@ components:
             $ref: '#/components/schemas/ContainerResponse'
     ContainerStorage:
       allOf:
-        - $ref: '#/components/schemas/ApplicationStorage'
+        - $ref: '#/components/schemas/ServiceStorage'
     Cost:
       type: object
       required:
