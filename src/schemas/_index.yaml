@@ -148,8 +148,6 @@ ContainerCurrentScale:
   $ref: ./ContainerCurrentScaleResponse.yaml
 ContainerDependencyRequest:
   $ref: ./ApplicationDependencyRequest.yaml
-ContainerEditRequest:
-  $ref: ./ContainerEditRequest.yaml
 ContainerNetwork:
   $ref: ./ContainerNetworkResponse.yaml
 ContainerNetworkRequest:
