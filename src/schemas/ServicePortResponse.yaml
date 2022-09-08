@@ -5,6 +5,7 @@ properties:
     items:
       type: object
       required:
+        - id
         - internal_port
         - publicly_accessible
         - protocol
