@@ -9,6 +9,9 @@ properties:
         - size
         - mount_point
       properties:
+        id:
+          type: string
+          format: uuid
         type:
           $ref: './enums/StorageType.yaml'
         size:
