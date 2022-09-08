@@ -11947,7 +11947,6 @@ components:
               type: boolean
     ServiceDeploymentStatusEnum:
       type: string
-      nullable: true
       enum:
         - NEVER_DEPLOYED
         - OUT_OF_DATE
