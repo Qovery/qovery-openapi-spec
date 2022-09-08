@@ -33,7 +33,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../schemas/ContainerEditRequest.yaml'
+          $ref: '../schemas/ContainerRequest.yaml'
   responses:
     '200':
       description: 'Edit container'
