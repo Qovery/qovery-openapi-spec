@@ -8326,6 +8326,7 @@ components:
           items:
             type: object
             required:
+              - id
               - internal_port
               - publicly_accessible
               - protocol
@@ -8362,7 +8363,6 @@ components:
             properties:
               name:
                 type: string
-                nullable: true
               internal_port:
                 type: integer
                 example: 8080
