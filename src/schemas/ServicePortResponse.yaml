@@ -7,6 +7,7 @@ properties:
       required:
         - internal_port
         - publicly_accessible
+        - protocol
       properties:
         id:
           type: string
