@@ -36,7 +36,7 @@ ApplicationRequest:
   $ref: ./ApplicationRequest.yaml
 ApplicationResponseList:
   $ref: ./ApplicationResponseList.yaml
-ApplicationStorage:
+ServiceStorage:
   $ref: ./ServiceStorageResponse.yaml
 ServiceStorageRequest:
   $ref: ./ServiceStorageRequest.yaml
