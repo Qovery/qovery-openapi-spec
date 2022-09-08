@@ -26,5 +26,8 @@ properties:
         publicly_accessible:
           type: boolean
           description: Expose the port to the world
+        is_default:
+          type: boolean
+          description: is the default port to use for domain & probes check
         protocol:
           $ref: './enums/PortProtocol.yaml'
