@@ -8186,7 +8186,7 @@ components:
             $ref: '#/components/schemas/ApplicationDeploymentRestriction'
     ApplicationEditRequest:
       allOf:
-        - $ref: '#/components/schemas/ApplicationStorage'
+        - $ref: '#/components/schemas/ServiceStorageRequest'
         - $ref: '#/components/schemas/ServicePort'
         - type: object
           properties:
@@ -8448,6 +8448,7 @@ components:
           items:
             type: object
             required:
+              - id
               - type
               - size
               - mount_point
