@@ -3,6 +3,17 @@ allOf:
   - $ref: './ServiceStorageResponse.yaml'
   - $ref: './ServicePortResponse.yaml'
   - type: object
+    required:
+      - name
+      - image_name
+      - tag
+      - auto_preview
+      - cpu
+      - memory
+      - min_running_instances
+      - max_running_instances
+      - maximum_cpu
+      - maximum_memory
     properties:
       environment:
         $ref: './ReferenceObject.yaml'
@@ -53,3 +64,8 @@ allOf:
           Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
           Note: -1 means that there is no limit.
         default: 1
+      auto_preview:
+        type: boolean
+        description: |
+          Specify if the environment preview option is activated or not for this container.
+          If activated, a preview environment will be automatically cloned at each pull request.
