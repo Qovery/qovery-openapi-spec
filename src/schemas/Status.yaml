@@ -11,7 +11,6 @@ properties:
     $ref: './enums/State.yaml'
   message:
     type: string
-    nullable: true
     description: message related to the state
   service_deployment_status:
     $ref: './enums/ServiceDeploymentStatus.yaml'
