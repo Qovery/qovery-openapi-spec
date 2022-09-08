@@ -5,6 +5,7 @@ properties:
     items:
       type: object
       required:
+        - id
         - type
         - size
         - mount_point

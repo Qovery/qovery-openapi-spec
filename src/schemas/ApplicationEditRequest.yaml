@@ -1,5 +1,5 @@
 allOf:
-  - $ref: './ServiceStorageResponse.yaml'
+  - $ref: './ServiceStorageRequest.yaml'
   - $ref: './ServicePortResponse.yaml'
   - type: object
     properties:
