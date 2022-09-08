@@ -1,6 +1,8 @@
 type: object
 required:
+  - id
   - state
+  - service_deployment_status
 properties:
   id:
     type: string
