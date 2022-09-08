@@ -9587,6 +9587,8 @@ components:
         - $ref: '#/components/schemas/ServicePort'
         - type: object
           required:
+            - environment
+            - registry
             - name
             - image_name
             - tag
