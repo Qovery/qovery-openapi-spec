@@ -2,6 +2,11 @@
 
 link: https://api-doc.qovery.com
 
+## Generated Clients Repositories:
+- [Go](https://github.com/Qovery/qovery-client-go)
+- [Python](https://github.com/Qovery/qovery-client-python)
+- [Typescript](https://github.com/Qovery/qovery-client-typescript-axios)
+
 ## Run locally
 
 ### Install dependencies
