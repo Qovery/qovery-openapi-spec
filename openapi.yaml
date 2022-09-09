@@ -7964,7 +7964,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ServiceStorage'
-        - $ref: '#/components/schemas/ServicePortResponseList'
         - type: object
           properties:
             environment:
@@ -8023,6 +8022,8 @@ components:
                 Specify if the environment preview option is activated or not for this application.
                 If activated, a preview environment will be automatically cloned at each pull request.
               default: true
+            ports:
+              $ref: '#/components/schemas/ServicePortResponseList'
     ApplicationAdvancedSettings:
       type: object
       properties:
@@ -8191,7 +8192,6 @@ components:
     ApplicationEditRequest:
       allOf:
         - $ref: '#/components/schemas/ServiceStorageRequest'
-        - $ref: '#/components/schemas/ServicePortResponseList'
         - type: object
           properties:
             name:
@@ -8246,6 +8246,8 @@ components:
                 Specify if the sticky session option (also called persistant session) is activated or not for this application.
                 If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
               default: false
+            ports:
+              $ref: '#/components/schemas/ServicePortResponseList'
     ApplicationGitRepository:
       type: object
       properties:
@@ -9589,7 +9591,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ServiceStorage'
-        - $ref: '#/components/schemas/ServicePortResponseList'
         - type: object
           required:
             - environment
@@ -9659,6 +9660,8 @@ components:
               description: |
                 Specify if the environment preview option is activated or not for this container.
                 If activated, a preview environment will be automatically cloned at each pull request.
+            ports:
+              $ref: '#/components/schemas/ServicePortResponseList'
     ContainerResponseList:
       type: object
       properties:
