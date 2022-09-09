@@ -7964,7 +7964,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ServiceStorage'
-        - $ref: '#/components/schemas/ServicePort'
+        - $ref: '#/components/schemas/ServicePortResponseList'
         - type: object
           properties:
             environment:
@@ -8191,7 +8191,7 @@ components:
     ApplicationEditRequest:
       allOf:
         - $ref: '#/components/schemas/ServiceStorageRequest'
-        - $ref: '#/components/schemas/ServicePort'
+        - $ref: '#/components/schemas/ServicePortResponseList'
         - type: object
           properties:
             name:
@@ -8324,38 +8324,40 @@ components:
           default: false
     ServicePort:
       type: object
+      required:
+        - id
+        - internal_port
+        - publicly_accessible
+        - protocol
       properties:
-        ports:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        internal_port:
+          type: integer
+          example: 8080
+          description: The listening port of your service.
+        external_port:
+          type: integer
+          example: 8080
+          description: The exposed port for your service. This is optional. If not set a default port will be used.
+        publicly_accessible:
+          type: boolean
+          description: Expose the port to the world
+        is_default:
+          type: boolean
+          description: is the default port to use for domain & probes check
+        protocol:
+          $ref: '#/components/schemas/PortProtocolEnum'
+    ServicePortResponseList:
+      type: object
+      properties:
+        results:
           type: array
           items:
-            type: object
-            required:
-              - id
-              - internal_port
-              - publicly_accessible
-              - protocol
-            properties:
-              id:
-                type: string
-                format: uuid
-              name:
-                type: string
-              internal_port:
-                type: integer
-                example: 8080
-                description: The listening port of your service.
-              external_port:
-                type: integer
-                example: 8080
-                description: The exposed port for your service. This is optional. If not set a default port will be used.
-              publicly_accessible:
-                type: boolean
-                description: Expose the port to the world
-              is_default:
-                type: boolean
-                description: is the default port to use for domain & probes check
-              protocol:
-                $ref: '#/components/schemas/PortProtocolEnum'
+            $ref: '#/components/schemas/ServicePort'
     ServicePortRequest:
       type: object
       properties:
@@ -8758,17 +8760,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CloudProvider'
-    CluserCredentials:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-        access_key_id:
-          type: string
-        secret_access_key:
-          type: string
     Cluster:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -8976,14 +8967,15 @@ components:
           type: string
     ClusterCredentials:
       type: object
+      required:
+        - id
+        - name
       properties:
         id:
           type: string
           format: uuid
         name:
           type: string
-    ClusterCredentialsRequest:
-      $ref: '#/components/schemas/CluserCredentials'
     ClusterCredentialsResponseList:
       type: object
       properties:
@@ -9597,7 +9589,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ServiceStorage'
-        - $ref: '#/components/schemas/ServicePort'
+        - $ref: '#/components/schemas/ServicePortResponseList'
         - type: object
           required:
             - environment
@@ -9674,9 +9666,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ContainerResponse'
-    ContainerStorage:
-      allOf:
-        - $ref: '#/components/schemas/ServiceStorage'
     Cost:
       type: object
       required:
@@ -10665,30 +10654,9 @@ components:
             - scope
           properties:
             overridden_variable:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format: uuid
-                key:
-                  type: string
-                value:
-                  type: string
-                scope:
-                  $ref: '#/components/schemas/APIVariableScopeEnum'
+              $ref: '#/components/schemas/EnvironmentVariableOverride'
             aliased_variable:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format: uuid
-                key:
-                  type: string
-                  example: QOVERY_DATABASE_PSQL_NAME
-                value:
-                  type: string
-                scope:
-                  $ref: '#/components/schemas/APIVariableScopeEnum'
+              $ref: '#/components/schemas/EnvironmentVariableAlias'
             scope:
               $ref: '#/components/schemas/APIVariableScopeEnum'
             service_id:
@@ -10701,6 +10669,41 @@ components:
             service_type:
               $ref: '#/components/schemas/LinkedServiceTypeEnum'
               description: present only for `BUILT_IN` variable
+    EnvironmentVariableAlias:
+      type: object
+      required:
+        - id
+        - key
+        - value
+        - scope
+      properties:
+        id:
+          type: string
+          format: uuid
+        key:
+          type: string
+          example: QOVERY_DATABASE_PSQL_NAME
+        value:
+          type: string
+        scope:
+          $ref: '#/components/schemas/APIVariableScopeEnum'
+    EnvironmentVariableOverride:
+      type: object
+      required:
+        - id
+        - key
+        - value
+        - scope
+      properties:
+        id:
+          type: string
+          format: uuid
+        key:
+          type: string
+        value:
+          type: string
+        scope:
+          $ref: '#/components/schemas/APIVariableScopeEnum'
     EnvironmentVariableEditRequest:
       type: object
       required:
