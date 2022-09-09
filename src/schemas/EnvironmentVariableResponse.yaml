@@ -8,7 +8,7 @@ allOf:
       overridden_variable:
         $ref: './EnvironmentVariableOverride.yaml'
       aliased_variable:
-        $ref: './EnvironmentVariableOverride.yaml'
+        $ref: './EnvironmentVariableAlias.yaml'
       scope:
         $ref: './enums/APIVariableScope.yaml'
       service_id:
