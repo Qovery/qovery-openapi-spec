@@ -224,6 +224,8 @@ DeploymentHistoryApplication:
   $ref: ./DeploymentHistoryApplicationResponse.yaml
 DeploymentHistoryDatabase:
   $ref: ./DeploymentHistoryDatabaseResponse.yaml
+DeploymentHistoryContainer:
+  $ref: ./DeploymentHistoryContainerResponse.yaml
 DeploymentHistoryEnvironment:
   $ref: ./DeploymentHistoryEnvironmentResponse.yaml
 DeploymentHistoryEnvironmentPaginatedResponseList:
