@@ -304,6 +304,10 @@ EnvironmentTotalNumber:
   $ref: ./EnvironmentTotalNumber.yaml
 EnvironmentVariable:
   $ref: ./EnvironmentVariableResponse.yaml
+EnvironmentVariableAlias:
+  $ref: ./EnvironmentVariableAlias.yaml
+EnvironmentVariableOverride:
+  $ref: ./EnvironmentVariableOverride.yaml
 EnvironmentVariableEditRequest:
   $ref: ./EnvironmentVariableEditRequest.yaml
 EnvironmentVariableRequest:

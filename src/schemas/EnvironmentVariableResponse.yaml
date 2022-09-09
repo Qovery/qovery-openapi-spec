@@ -6,30 +6,9 @@ allOf:
       - scope
     properties:
       overridden_variable:
-        type: object
-        properties:
-          id:
-            type: string
-            format: uuid
-          key:
-            type: string
-          value:
-            type: string
-          scope:
-            $ref: './enums/APIVariableScope.yaml'
+        $ref: './EnvironmentVariableOverride.yaml'
       aliased_variable:
-        type: object
-        properties:
-          id:
-            type: string
-            format: uuid
-          key:
-            type: string
-            example: QOVERY_DATABASE_PSQL_NAME
-          value:
-            type: string
-          scope:
-            $ref: './enums/APIVariableScope.yaml'
+        $ref: './EnvironmentVariableOverride.yaml'
       scope:
         $ref: './enums/APIVariableScope.yaml'
       service_id:

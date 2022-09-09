@@ -1,0 +1,16 @@
+type: object
+required:
+  - id
+  - key
+  - value
+  - scope
+properties:
+  id:
+    type: string
+    format: uuid
+  key:
+    type: string
+  value:
+    type: string
+  scope:
+    $ref: './enums/APIVariableScope.yaml'
