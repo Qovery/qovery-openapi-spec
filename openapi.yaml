@@ -6306,7 +6306,7 @@ paths:
         - $ref: '#/components/parameters/containerId'
         - $ref: '#/components/parameters/secretId'
       tags:
-        - Application Secret
+        - Container Secret
       requestBody:
         content:
           application/json:
