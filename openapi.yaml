@@ -7945,8 +7945,12 @@ components:
           type: string
         profile_picture_url:
           type: string
-    AliasedSecret:
+    SecretAlias:
       type: object
+      required:
+        - id
+        - key
+        - scope
       properties:
         id:
           type: string
@@ -7955,7 +7959,7 @@ components:
           type: string
           example: QOVERY_DATABASE_PSQL_NAME
         scope:
-          $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
+          $ref: '#/components/schemas/APIVariableScopeEnum'
     Application:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -8347,6 +8351,9 @@ components:
               publicly_accessible:
                 type: boolean
                 description: Expose the port to the world
+              is_default:
+                type: boolean
+                description: is the default port to use for domain & probes check
               protocol:
                 $ref: '#/components/schemas/PortProtocolEnum'
     ServicePortRequest:
@@ -10668,7 +10675,7 @@ components:
                 value:
                   type: string
                 scope:
-                  $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
+                  $ref: '#/components/schemas/APIVariableScopeEnum'
             aliased_variable:
               type: object
               properties:
@@ -10681,9 +10688,9 @@ components:
                 value:
                   type: string
                 scope:
-                  $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
+                  $ref: '#/components/schemas/APIVariableScopeEnum'
             scope:
-              $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
+              $ref: '#/components/schemas/APIVariableScopeEnum'
             service_id:
               type: string
               format: uuid
@@ -10725,7 +10732,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentVariable'
-    EnvironmentVariableScopeEnum:
+    APIVariableScopeEnum:
       type: string
       enum:
         - APPLICATION
@@ -11470,8 +11477,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Organization'
-    OverriddenSecret:
+    SecretOverride:
       type: object
+      required:
+        - id
+        - key
+        - scope
       properties:
         id:
           type: string
@@ -11479,7 +11490,7 @@ components:
         key:
           type: string
         scope:
-          $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
+          $ref: '#/components/schemas/APIVariableScopeEnum'
     OrganizationWebhookCreateRequest:
       type: object
       required:
@@ -11870,17 +11881,18 @@ components:
         - $ref: '#/components/schemas/Base'
         - type: object
           required:
+            - key
             - scope
           properties:
             key:
               type: string
               description: key is case sensitive
             overridden_secret:
-              $ref: '#/components/schemas/OverriddenSecret'
+              $ref: '#/components/schemas/SecretOverride'
             aliased_secret:
-              $ref: '#/components/schemas/AliasedSecret'
+              $ref: '#/components/schemas/SecretAlias'
             scope:
-              $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
+              $ref: '#/components/schemas/APIVariableScopeEnum'
             service_id:
               type: string
               format: uuid
@@ -11893,6 +11905,9 @@ components:
               description: present only for `BUILT_IN` variable
     SecretEditRequest:
       type: object
+      required:
+        - key
+        - value
       properties:
         value:
           type: string
@@ -12225,7 +12240,7 @@ components:
                 type: string
                 description: Optional if the variable is secret
               scope:
-                $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
+                $ref: '#/components/schemas/APIVariableScopeEnum'
               is_secret:
                 type: boolean
     VariableImportRequest:
@@ -12252,7 +12267,7 @@ components:
               value:
                 type: string
               scope:
-                $ref: '#/components/schemas/EnvironmentVariableScopeEnum'
+                $ref: '#/components/schemas/APIVariableScopeEnum'
               is_secret:
                 type: boolean
     Version:
