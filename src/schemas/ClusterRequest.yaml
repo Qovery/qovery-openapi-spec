@@ -49,7 +49,5 @@ properties:
           format: uuid
           nullable: false
         value:
-          type:
-            - string
-            - bool
+          type: string
           nullable: true
