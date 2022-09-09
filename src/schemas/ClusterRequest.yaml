@@ -49,5 +49,7 @@ properties:
           format: uuid
           nullable: false
         value:
-          type: string
+          oneOf:
+            - type: string
+            - type: boolean
           nullable: true
