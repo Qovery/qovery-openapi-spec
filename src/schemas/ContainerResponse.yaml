@@ -1,7 +1,7 @@
 allOf:
   - $ref: './BaseResponse.yaml'
   - $ref: './ServiceStorageResponse.yaml'
-  - $ref: './ServicePortResponse.yaml'
+  - $ref: './ServicePortResponseList.yaml'
   - type: object
     required:
       - environment

@@ -30,6 +30,8 @@ ApplicationNetworkRequest:
   $ref: ./ApplicationNetworkRequest.yaml
 ServicePort:
   $ref: ./ServicePortResponse.yaml
+ServicePortResponseList:
+    $ref: ./ServicePortResponseList.yaml
 ServicePortRequest:
   $ref: ./ServicePortRequest.yaml
 ApplicationRequest:
@@ -82,8 +84,6 @@ CloudProviderEnum:
   $ref: ./enums/CloudProvider.yaml
 CloudProviderResponseList:
   $ref: ./CloudProviderResponseList.yaml
-CluserCredentials:
-  $ref: ./ClusterCredentialsRequest.yaml
 Cluster:
   $ref: ./ClusterResponse.yaml
 ClusterLogs:
@@ -94,8 +94,6 @@ ClusterCloudProviderInfoRequest:
   $ref: ./ClusterCloudProviderInfoRequest.yaml
 ClusterCredentials:
   $ref: ./ClusterCredentialsResponse.yaml
-ClusterCredentialsRequest:
-  $ref: ./ClusterCredentialsRequest.yaml
 ClusterCredentialsResponseList:
   $ref: ./ClusterCredentialsResponseList.yaml
 ClusterFeature:
@@ -166,8 +164,6 @@ ContainerResponse:
   $ref: ./ContainerResponse.yaml
 ContainerResponseList:
   $ref: ./ContainerResponseList.yaml
-ContainerStorage:
-  $ref: ./ContainerStorageResponse.yaml
 Cost:
   $ref: ./CostResponse.yaml
 CostRange:
