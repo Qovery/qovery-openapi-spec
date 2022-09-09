@@ -5694,25 +5694,7 @@ paths:
                       results:
                         type: array
                         items:
-                          allOf:
-                            - $ref: '#/components/schemas/Base'
-                            - type: object
-                              properties:
-                                name:
-                                  type: string
-                                  description: name of the container
-                                status:
-                                  $ref: '#/components/schemas/DeploymentHistoryStatusEnum'
-                                image_name:
-                                  type: string
-                                tag:
-                                  type: string
-                                arguments:
-                                  type: array
-                                  items:
-                                    type: string
-                                entrypoint:
-                                  type: string
+                          $ref: '#/components/schemas/DeploymentHistoryContainer'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -10099,6 +10081,26 @@ components:
               description: name of the service
             status:
               $ref: '#/components/schemas/DeploymentHistoryStatusEnum'
+    DeploymentHistoryContainer:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          properties:
+            name:
+              type: string
+              description: name of the container
+            status:
+              $ref: '#/components/schemas/DeploymentHistoryStatusEnum'
+            image_name:
+              type: string
+            tag:
+              type: string
+            arguments:
+              type: array
+              items:
+                type: string
+            entrypoint:
+              type: string
     DeploymentHistoryEnvironment:
       allOf:
         - $ref: '#/components/schemas/Base'
