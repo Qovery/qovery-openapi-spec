@@ -21,6 +21,6 @@ properties:
         value:
           type: string
         scope:
-          $ref: './enums/EnvironmentVariableScope.yaml'
+          $ref: './enums/APIVariableScope.yaml'
         is_secret:
           type: boolean

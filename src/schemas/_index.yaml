@@ -2,8 +2,8 @@ AccountInfo:
   $ref: ./AccountInfoResponse.yaml
 AccountInfoEditRequest:
   $ref: ./AccountInfoEditRequest.yaml
-AliasedSecret:
-  $ref: ./AliasedSecret.yaml
+SecretAlias:
+  $ref: ./SecretAlias.yaml
 Application:
   $ref: ./ApplicationResponse.yaml
 ApplicationAdvancedSettings:
@@ -310,8 +310,8 @@ EnvironmentVariableRequest:
   $ref: ./EnvironmentVariableRequest.yaml
 EnvironmentVariableResponseList:
   $ref: ./EnvironmentVariableResponseList.yaml
-EnvironmentVariableScopeEnum:
-  $ref: ./enums/EnvironmentVariableScope.yaml
+APIVariableScopeEnum:
+  $ref: ./enums/APIVariableScope.yaml
 Event:
   $ref: ./EventResponse.yaml
 EventPaginatedResponseList:
@@ -440,8 +440,8 @@ OrganizationRequest:
   $ref: ./OrganizationRequest.yaml
 OrganizationResponseList:
   $ref: ./OrganizationResponseList.yaml
-OverriddenSecret:
-  $ref: ./OverriddenSecret.yaml
+SecretOverride:
+  $ref: ./SecretOverride.yaml
 OrganizationWebhookCreateRequest:
   $ref: ./OrganizationWebhookCreateRequest.yaml
 OrganizationWebhookCreateResponse:

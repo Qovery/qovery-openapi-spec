@@ -16,7 +16,7 @@ allOf:
           value:
             type: string
           scope:
-            $ref: './enums/EnvironmentVariableScope.yaml'
+            $ref: './enums/APIVariableScope.yaml'
       aliased_variable:
         type: object
         properties:
@@ -29,9 +29,9 @@ allOf:
           value:
             type: string
           scope:
-            $ref: './enums/EnvironmentVariableScope.yaml'
+            $ref: './enums/APIVariableScope.yaml'
       scope:
-        $ref: './enums/EnvironmentVariableScope.yaml'
+        $ref: './enums/APIVariableScope.yaml'
       service_id:
         type: string
         format: uuid

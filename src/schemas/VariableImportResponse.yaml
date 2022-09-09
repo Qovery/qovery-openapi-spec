@@ -20,6 +20,6 @@ properties:
           type: string
           description: Optional if the variable is secret
         scope:
-          $ref: './enums/EnvironmentVariableScope.yaml'
+          $ref: './enums/APIVariableScope.yaml'
         is_secret:
           type: boolean
