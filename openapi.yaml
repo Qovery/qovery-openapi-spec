@@ -10112,6 +10112,10 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/DeploymentHistoryApplication'
+            containers:
+              type: array
+              items:
+                $ref: '#/components/schemas/DeploymentHistoryContainer'
             databases:
               type: array
               items:
