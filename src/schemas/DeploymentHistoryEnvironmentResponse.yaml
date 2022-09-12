@@ -8,6 +8,10 @@ allOf:
         type: array
         items:
           $ref: './DeploymentHistoryApplicationResponse.yaml'
+      containers:
+        type: array
+        items:
+          $ref: './DeploymentHistoryContainerResponse.yaml'
       databases:
         type: array
         items:
