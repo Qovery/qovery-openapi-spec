@@ -596,10 +596,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                plan:
-                  type: string
+              $ref: '#/components/schemas/OrganizationChangePlanRequest'
       responses:
         '200':
           description: plan has been successfully changed
@@ -1193,12 +1190,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ClusterLogs'
+                $ref: '#/components/schemas/ClusterLogsResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2211,12 +2203,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ContainerRegistryResponse'
+                $ref: '#/components/schemas/ContainerRegistryResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2330,12 +2317,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/AvailableContainerRegistryResponse'
+                $ref: '#/components/schemas/AvailableContainerRegistryResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3612,14 +3594,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                image_name:
-                  type: string
-                  description: the container image name to deploy
-                tag:
-                  type: string
-                  description: the new tag to deploy
+              $ref: '#/components/schemas/OrganizationContainerAutoDeployRequest'
       responses:
         '202':
           description: Deployed containers
@@ -3653,14 +3628,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                image_name:
-                  type: string
-                  description: the container image name to trigger preview environment
-                tag:
-                  type: string
-                  description: the tag to be used in the preview environment
+              $ref: '#/components/schemas/OrganizationContainerPreviewRequest'
       responses:
         '202':
           description: Preview environments processing
@@ -8497,6 +8465,13 @@ components:
         required_config:
           type: object
           additionalProperties: true
+    AvailableContainerRegistryResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableContainerRegistryResponse'
     AwsCredentialsRequest:
       type: object
       required:
@@ -9137,7 +9112,12 @@ components:
           items:
             $ref: '#/components/schemas/Cluster'
     ClusterLogsResponseList:
-      $ref: '#/components/schemas/ClusterResponseList'
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterLogs'
     ClusterRoutingTable:
       type: object
       properties:
@@ -9516,6 +9496,13 @@ components:
             url:
               type: string
               description: URL of the container registry
+    ContainerRegistryResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerRegistryResponse'
     ContainerRequest:
       allOf:
         - $ref: '#/components/schemas/ServiceStorageRequest'
@@ -11407,6 +11394,29 @@ components:
       type: string
       enum:
         - ADMIN
+    OrganizationChangePlanRequest:
+      type: object
+      properties:
+        plan:
+          type: string
+    OrganizationContainerAutoDeployRequest:
+      type: object
+      properties:
+        image_name:
+          type: string
+          description: the container image name to deploy
+        tag:
+          type: string
+          description: the new tag to deploy
+    OrganizationContainerPreviewRequest:
+      type: object
+      properties:
+        image_name:
+          type: string
+          description: the container image name to trigger preview environment
+        tag:
+          type: string
+          description: the tag to be used in the preview environment
     OrganizationCreditCodeRequest:
       type: object
       properties:
