@@ -7946,7 +7946,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ServiceStorage'
-        - $ref: '#/components/schemas/ServicePort'
         - type: object
           properties:
             environment:
@@ -8005,6 +8004,8 @@ components:
                 Specify if the environment preview option is activated or not for this application.
                 If activated, a preview environment will be automatically cloned at each pull request.
               default: true
+            ports:
+              $ref: '#/components/schemas/ServicePortResponseList'
     ApplicationAdvancedSettings:
       type: object
       properties:
