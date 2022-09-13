@@ -1,6 +1,7 @@
 allOf:
   - $ref: './BaseResponse.yaml'
   - $ref: './ServiceStorageResponse.yaml'
+  - $ref: './ServicePortResponse.yaml'
   - type: object
     properties:
       environment:
@@ -59,6 +60,3 @@ allOf:
           Specify if the environment preview option is activated or not for this application.
           If activated, a preview environment will be automatically cloned at each pull request.
         default: true
-      ports:
-        $ref: './ServicePortResponseList.yaml'
-
