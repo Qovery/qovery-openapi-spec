@@ -8174,7 +8174,6 @@ components:
     ApplicationEditRequest:
       allOf:
         - $ref: '#/components/schemas/ServiceStorageRequest'
-        - $ref: '#/components/schemas/ServicePortRequest'
         - type: object
           properties:
             name:
@@ -8229,6 +8228,8 @@ components:
                 Specify if the sticky session option (also called persistant session) is activated or not for this application.
                 If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
               default: false
+            ports:
+              $ref: '#/components/schemas/ServicePortResponseList'
     ApplicationGitRepository:
       type: object
       properties:
@@ -8335,12 +8336,9 @@ components:
         protocol:
           $ref: '#/components/schemas/PortProtocolEnum'
     ServicePortResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServicePort'
+      type: array
+      items:
+        $ref: '#/components/schemas/ServicePort'
     ServicePortRequest:
       type: object
       properties:
@@ -8373,7 +8371,6 @@ components:
     ApplicationRequest:
       allOf:
         - $ref: '#/components/schemas/ServiceStorageRequest'
-        - $ref: '#/components/schemas/ServicePortRequest'
         - type: object
           required:
             - name
@@ -8427,6 +8424,8 @@ components:
                 Specify if the environment preview option is activated or not for this application.
                 If activated, a preview environment will be automatically cloned at each pull request.
               default: true
+            ports:
+              $ref: '#/components/schemas/ServicePortResponseList'
     ApplicationResponseList:
       type: object
       properties:
