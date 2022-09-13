@@ -2330,7 +2330,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AvailableContainerRegistryResponse'
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AvailableContainerRegistryResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
