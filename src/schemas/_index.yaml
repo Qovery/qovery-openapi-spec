@@ -44,6 +44,8 @@ ServiceStorageRequest:
   $ref: ./ServiceStorageRequest.yaml
 AvailableContainerRegistryResponse:
   $ref: ./AvailableContainerRegistryResponse.yaml
+AvailableContainerRegistryResponseList:
+  $ref: ./AvailableContainerRegistryResponseList.yaml
 AwsCredentialsRequest:
   $ref: ./AwsCredentialsRequest.yaml
 Backup:
@@ -113,7 +115,7 @@ ClusterRequest:
 ClusterResponseList:
   $ref: ./ClusterResponseList.yaml
 ClusterLogsResponseList:
-  $ref: ./ClusterResponseList.yaml
+  $ref: ./ClusterLogsResponseList.yaml
 ClusterRoutingTable:
   $ref: ./ClusterRoutingTableResponse.yaml
 ClusterRoutingTableRequest:
@@ -158,6 +160,8 @@ ContainerRegistryRequest:
   $ref: ./ContainerRegistryRequest.yaml
 ContainerRegistryResponse:
   $ref: ./ContainerRegistryResponse.yaml
+ContainerRegistryResponseList:
+  $ref: ./ContainerRegistryResponseList.yaml
 ContainerRequest:
   $ref: ./ContainerRequest.yaml
 ContainerResponse:
@@ -430,6 +434,12 @@ OrganizationApiTokenResponseList:
   $ref: ./OrganizationApiTokenResponseList.yaml
 OrganizationApiTokenScope:
   $ref: ./enums/OrganizationApiTokenScope.yaml
+OrganizationChangePlanRequest:
+  $ref: ./OrganizationChangePlanRequest.yaml
+OrganizationContainerAutoDeployRequest:
+  $ref: ./OrganizationContainerAutoDeployRequest.yaml
+OrganizationContainerPreviewRequest:
+  $ref: ./OrganizationContainerPreviewRequest.yaml
 OrganizationCreditCodeRequest:
   $ref: ./OrganizationCreditCodeRequest.yaml
 OrganizationCurrentCost:
