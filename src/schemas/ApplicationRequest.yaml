@@ -1,6 +1,5 @@
 allOf:
   - $ref: './ServiceStorageRequest.yaml'
-  - $ref: './ServicePortRequest.yaml'
   - type: object
     required:
       - name
@@ -54,3 +53,5 @@ allOf:
           Specify if the environment preview option is activated or not for this application.
           If activated, a preview environment will be automatically cloned at each pull request.
         default: true
+      ports:
+        $ref: './ServicePortResponseList.yaml'
