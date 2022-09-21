@@ -8376,7 +8376,7 @@ components:
                 If activated, a preview environment will be automatically cloned at each pull request.
               default: true
             ports:
-              $ref: '#/components/schemas/ServicePortResponseList'
+              $ref: '#/components/schemas/ServicePortRequestList'
     ApplicationResponseList:
       type: object
       properties:
@@ -11685,9 +11685,6 @@ components:
       default: HTTP
       enum:
         - HTTP
-        - HTTPS
-        - TCP
-        - UDP
     Project:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -11918,6 +11915,10 @@ components:
           type: string
         key:
           type: string
+    ServicePortRequestList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ServicePortRequest'
     SecretRequest:
       type: object
       required:
