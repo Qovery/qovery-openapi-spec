@@ -54,4 +54,4 @@ allOf:
           If activated, a preview environment will be automatically cloned at each pull request.
         default: true
       ports:
-        $ref: './ServicePortResponseList.yaml'
+        $ref: './ServicePortRequestList.yaml'

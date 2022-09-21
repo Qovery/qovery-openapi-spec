@@ -514,6 +514,8 @@ Secret:
   $ref: ./SecretResponse.yaml
 SecretEditRequest:
   $ref: ./SecretEditRequest.yaml
+ServicePortRequestList:
+  $ref: ./ServicePortRequestList.yaml
 SecretRequest:
   $ref: ./SecretRequest.yaml
 SecretResponseList:

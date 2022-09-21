@@ -2,6 +2,3 @@ type: string
 default: HTTP
 enum:
   - HTTP
-  - HTTPS
-  - TCP
-  - UDP
