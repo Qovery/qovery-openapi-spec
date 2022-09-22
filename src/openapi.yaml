@@ -78,6 +78,7 @@ tags:
   - name: Organization
   - name: Organization Account Git Repositories
   - name: Organization Main Calls
+  - name: Organization Custom Role
   - name: Organization Api Token
   - name: Organization Webhook
   - name: Project
@@ -96,6 +97,7 @@ x-tagGroups:
       - Organization Api Token
       - Organization Account Git Repositories
       - Organization Webhook
+      - Organization Custom Role
       - Projects
       - Members
       - Billing
@@ -274,6 +276,10 @@ paths:
     $ref: './resources/OrganizationWebhook.yaml'
   /organization/{organizationId}/webhook/{webhookId}:
     $ref: './resources/OrganizationWebhookRef.yaml'
+  /organization/{organizationId}/customRole:
+    $ref: './resources/OrganizationCustomRole.yaml'
+  /organization/{organizationId}/customRole/{customRoleId}:
+    $ref: './resources/OrganizationCustomRoleRef.yaml'
   /cloudProvider:
     $ref: './resources/CloudProvider.yaml'
   /aws/region:

@@ -444,6 +444,16 @@ OrganizationCreditCodeRequest:
   $ref: ./OrganizationCreditCodeRequest.yaml
 OrganizationCurrentCost:
   $ref: ./OrganizationCurrentCostResponse.yaml
+OrganizationCustomRoleRequest:
+  $ref: ./OrganizationCustomRoleCreateOrUpdateRequest.yaml
+OrganizationCustomRole:
+  $ref: ./OrganizationCustomRoleResponse.yaml
+OrganizationCustomRoleList:
+  $ref: ./OrganizationCustomRoleResponseList.yaml
+OrganizationCustomRoleProjectPermission:
+  $ref: ./enums/OrganizationCustomRoleProjectPermission.yaml
+OrganizationCustomRoleClusterPermission:
+  $ref: ./enums/OrganizationCustomRoleClusterPermission.yaml
 OrganizationEditRequest:
   $ref: ./OrganizationEditRequest.yaml
 OrganizationGithubAppConnectRequest:
