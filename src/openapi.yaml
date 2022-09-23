@@ -190,6 +190,8 @@ paths:
     $ref: './resources/OrganizationApiToken.yaml'
   /organization/{organizationId}/apiToken/{apiTokenId}:
     $ref: './resources/OrganizationApiTokenRef.yaml'
+  /organization/{organizationId}/availableRole:
+    $ref: './resources/OrganizationAvailableRole.yaml'
   /organization/{organizationId}/member:
     $ref: './resources/OrganizationMember.yaml'
   /organization/{organizationId}/member/{userId}:

@@ -18,3 +18,28 @@ get:
       $ref: '../responses/Forbidden.yaml'
     '404':
       $ref: '../responses/NotFound.yaml'
+
+put:
+  summary: 'Edit an organization member role'
+  description: 'Edit an organization member role'
+  operationId: editOrganizationMemberRole
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Members
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/MemberRoleUpdateRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit an organization member role'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
