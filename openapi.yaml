@@ -78,6 +78,7 @@ tags:
   - name: Organization
   - name: Organization Account Git Repositories
   - name: Organization Main Calls
+  - name: Organization Custom Role
   - name: Organization Api Token
   - name: Organization Webhook
   - name: Project
@@ -96,6 +97,7 @@ x-tagGroups:
       - Organization Api Token
       - Organization Account Git Repositories
       - Organization Webhook
+      - Organization Custom Role
       - Projects
       - Members
       - Billing
@@ -371,6 +373,28 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/availableRole':
+    get:
+      summary: List organization available roles
+      description: List organization available roles
+      operationId: listOrganizationAvailableRoles
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Main Calls
+      responses:
+        '200':
+          description: List organization available roles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAvailableRoleList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/member':
     get:
       summary: Get organization members
@@ -386,6 +410,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MemberResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit an organization member role
+      description: Edit an organization member role
+      operationId: editOrganizationMemberRole
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberRoleUpdateRequest'
+      responses:
+        '200':
+          description: Edit an organization member role
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1843,6 +1891,130 @@ paths:
         - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook~1%7BwebhookId%7D/get/parameters/1'
       tags:
         - Organization Webhook
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/customRole':
+    get:
+      summary: List organization custom roles
+      description: List organization custom roles
+      operationId: listOrganizationCustomRoles
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Custom Role
+      responses:
+        '200':
+          description: List organization custom roles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCustomRoleList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create an organization custom role
+      description: Create an organization custom role
+      operationId: createOrganizationCustomRole
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Custom Role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationCustomRoleRequest'
+      responses:
+        '201':
+          description: Organization custom role created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCustomRole'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  '/organization/{organizationId}/customRole/{customRoleId}':
+    get:
+      summary: 'Get an organization custom role '
+      description: 'Get an organization custom role '
+      operationId: getOrganizationCustomRole
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: customRoleId
+          in: path
+          description: Custom Role ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Organization Custom Role
+      responses:
+        '200':
+          description: 'Get an organization custom role '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCustomRole'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit an organization custom role
+      description: Edit an organization custom role
+      operationId: editOrganizationCustomRole
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1customRole~1%7BcustomRoleId%7D/get/parameters/1'
+      tags:
+        - Organization Custom Role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationCustomRoleRequest'
+      responses:
+        '200':
+          description: Edit an organization custom role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCustomRole'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete organization custom role
+      description: Delete organization custom role
+      operationId: deleteOrganizationCustomRole
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1customRole~1%7BcustomRoleId%7D/get/parameters/1'
+      tags:
+        - Organization Custom Role
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -9974,6 +10146,14 @@ components:
           example: '10.1'
         supported_mode:
           $ref: '#/components/schemas/DatabaseModeEnum'
+    DefaultMemberRole:
+      type: string
+      description: 'used to specify a default role, otherwise `null`'
+      enum:
+        - VIEWER
+        - BILLING
+        - DEVOPS
+        - ADMIN
     DeployAllRequest:
       type: object
       properties:
@@ -10948,6 +11128,7 @@ components:
             $ref: '#/components/schemas/InviteMember'
     InviteMemberRoleEnum:
       type: string
+      description: deprecated
       enum:
         - ADMIN
         - DEVELOPER
@@ -11114,6 +11295,9 @@ components:
               description: last time the user was connected
             role:
               $ref: '#/components/schemas/InviteMemberRoleEnum'
+            role_name:
+              type: string
+              description: the role linked to the user
     MemberResponseList:
       type: object
       properties:
@@ -11121,6 +11305,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Member'
+    MemberRoleUpdateRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: specify the git provider user id
+        custom_role_id:
+          type: string
+          format: uuid
+          description: 'used to specify an organization custom role, otherwise `null`'
+        default_role_name:
+          $ref: '#/components/schemas/DefaultMemberRole'
     MetricCPU:
       type: object
       required:
@@ -11371,6 +11567,28 @@ components:
       type: string
       enum:
         - ADMIN
+    OrganizationAvailableRole:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Filled only for an organization custom role
+          format: uuid
+        name:
+          type: string
+          description: It can be either a custom role name or a default role name
+        is_default:
+          type: boolean
+          description: |
+            - `true` if it is a Qovery role
+            - `false` if it is a custom role
+    OrganizationAvailableRoleList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationAvailableRole'
     OrganizationChangePlanRequest:
       type: object
       properties:
@@ -11406,6 +11624,142 @@ components:
           properties:
             paid_usage:
               $ref: '#/components/schemas/PaidUsage'
+    OrganizationCustomRoleRequest:
+      type: object
+      required:
+        - name
+        - cluster_permissions
+        - project_permissions
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        cluster_permissions:
+          description: Should contain an entry for every existing cluster
+          type: array
+          items:
+            type: object
+            properties:
+              cluster_id:
+                type: string
+                format: uuid
+              permission:
+                $ref: '#/components/schemas/OrganizationCustomRoleClusterPermission'
+        project_permissions:
+          description: Should contain an entry for every existing project
+          type: array
+          items:
+            type: object
+            properties:
+              project_id:
+                type: string
+                format: uuid
+              is_admin:
+                type: boolean
+                description: |
+                  If `is_admin` is `true`, the user is:
+                  - automatically `MANAGER` for each environment type
+                  - allowed to manage project deployment rules
+                  - able to delete the project
+                  Note that `permissions` can then be ignored for this project
+                default: false
+              permissions:
+                description: |
+                  Mandatory if `is_admin` is `false`  
+                  Should contain an entry for every environment type:
+                  - `DEVELOPMENT`
+                  - `PREVIEW`
+                  - `STAGING`
+                  - `PRODUCTION`
+                type: array
+                items:
+                  type: object
+                  properties:
+                    environment_type:
+                      $ref: '#/components/schemas/EnvironmentModeEnum'
+                    permission:
+                      $ref: '#/components/schemas/OrganizationCustomRoleProjectPermission'
+    OrganizationCustomRole:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        cluster_permissions:
+          type: array
+          items:
+            type: object
+            properties:
+              cluster_id:
+                type: string
+                format: uuid
+              cluster_name:
+                type: string
+              permission:
+                $ref: '#/components/schemas/OrganizationCustomRoleClusterPermission'
+        project_permissions:
+          type: array
+          items:
+            type: object
+            properties:
+              project_id:
+                type: string
+                format: uuid
+              project_name:
+                type: string
+              is_admin:
+                type: boolean
+                description: |
+                  If `is_admin` is `true`, the user is:
+                  - automatically `MANAGER` for each environment type
+                  - allowed to manage project deployment rules
+                  - able to delete the project
+                  Note that `permissions` can then be ignored for this project
+                default: false
+              permissions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    environment_type:
+                      $ref: '#/components/schemas/EnvironmentModeEnum'
+                    permission:
+                      $ref: '#/components/schemas/OrganizationCustomRoleProjectPermission'
+    OrganizationCustomRoleList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationCustomRole'
+    OrganizationCustomRoleProjectPermission:
+      type: string
+      description: |
+        Indicates the permission for a target project and a given environment type, from the lowest to the highest:
+        - `NO_ACCESS` user has no access
+        - `VIEWER` user can access the environment (and applications / containers / databases / variables)
+        - `DEPLOYER` user can deploy the environment (dependent on the required cluster permission `ENV_CREATOR`)
+        - `MANAGER` user can create an environment (and applications / containers / databases / variables)
+      enum:
+        - NO_ACCESS
+        - VIEWER
+        - DEPLOYER
+        - MANAGER
+      example: NO_ACCESS
+    OrganizationCustomRoleClusterPermission:
+      type: string
+      description: |
+        Indicates the permission for a target cluster, from the lowest to the highest:
+        - `VIEWER` user has only read access on target cluster
+        - `ENV_CREATOR` user can deploy on the cluster
+        - `ADMIN` user can modify the cluster settings
+      enum:
+        - VIEWER
+        - ENV_CREATOR
+        - ADMIN
+      example: VIEWER
     OrganizationEditRequest:
       type: object
       required:
