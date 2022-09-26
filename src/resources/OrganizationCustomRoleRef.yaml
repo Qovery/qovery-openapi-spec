@@ -34,7 +34,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../schemas/OrganizationCustomRoleCreateOrUpdateRequest.yaml'
+          $ref: '../schemas/OrganizationCustomRoleUpdateRequest.yaml'
   responses:
     '200':
       description: 'Edit an organization custom role'
