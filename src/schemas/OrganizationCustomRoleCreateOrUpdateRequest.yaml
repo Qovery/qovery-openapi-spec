@@ -9,6 +9,7 @@ properties:
   description:
     type: string
   cluster_permissions:
+    description: Should contain an entry for every existing cluster
     type: array
     items:
       type: object
@@ -19,6 +20,7 @@ properties:
         permission:
           $ref: './enums/OrganizationCustomRoleClusterPermission.yaml'
   project_permissions:
+    description: Should contain an entry for every existing project
     type: array
     items:
       type: object
@@ -36,7 +38,13 @@ properties:
             Note that `permissions` can then be ignored for this project
           default: false
         permissions:
-          description: Mandatory if `is_admin` is `false`
+          description: |
+            Mandatory if `is_admin` is `false`  
+            Should contain an entry for every environment type:
+            - `DEVELOPMENT`
+            - `PREVIEW`
+            - `STAGING`
+            - `PRODUCTION`
           type: array
           items:
             type: object
