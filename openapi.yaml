@@ -1934,7 +1934,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrganizationCustomRoleRequest'
+              $ref: '#/components/schemas/OrganizationCustomRoleCreateRequest'
       responses:
         '201':
           description: Organization custom role created
@@ -1990,7 +1990,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrganizationCustomRoleRequest'
+              $ref: '#/components/schemas/OrganizationCustomRoleUpdateRequest'
       responses:
         '200':
           description: Edit an organization custom role
@@ -11624,7 +11624,16 @@ components:
           properties:
             paid_usage:
               $ref: '#/components/schemas/PaidUsage'
-    OrganizationCustomRoleRequest:
+    OrganizationCustomRoleCreateRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    OrganizationCustomRoleUpdateRequest:
       type: object
       required:
         - name
