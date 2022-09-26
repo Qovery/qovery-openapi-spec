@@ -1,0 +1,11 @@
+type: string
+description: |
+  Indicates the permission for a target cluster, from the lowest to the highest:
+  - `VIEWER` user has only read access on target cluster
+  - `ENV_CREATOR` user can deploy on the cluster
+  - `ADMIN` user can modify the cluster settings
+enum:
+  - VIEWER
+  - ENV_CREATOR
+  - ADMIN
+example: VIEWER

@@ -1,0 +1,11 @@
+type: object
+properties:
+  user_id:
+    type: string
+    description: specify the git provider user id
+  custom_role_id:
+    type: string
+    format: uuid
+    description: used to specify an organization custom role, otherwise `null`
+  default_role_name:
+    $ref: './enums/DefaultMemberRole.yaml'

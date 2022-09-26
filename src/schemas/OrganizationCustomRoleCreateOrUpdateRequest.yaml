@@ -1,0 +1,55 @@
+type: object
+required:
+  - name
+  - cluster_permissions
+  - project_permissions
+properties:
+  name:
+    type: string
+  description:
+    type: string
+  cluster_permissions:
+    description: Should contain an entry for every existing cluster
+    type: array
+    items:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+          format: uuid
+        permission:
+          $ref: './enums/OrganizationCustomRoleClusterPermission.yaml'
+  project_permissions:
+    description: Should contain an entry for every existing project
+    type: array
+    items:
+      type: object
+      properties:
+        project_id:
+          type: string
+          format: uuid
+        is_admin:
+          type: boolean
+          description: |
+            If `is_admin` is `true`, the user is:
+            - automatically `MANAGER` for each environment type
+            - allowed to manage project deployment rules
+            - able to delete the project
+            Note that `permissions` can then be ignored for this project
+          default: false
+        permissions:
+          description: |
+            Mandatory if `is_admin` is `false`  
+            Should contain an entry for every environment type:
+            - `DEVELOPMENT`
+            - `PREVIEW`
+            - `STAGING`
+            - `PRODUCTION`
+          type: array
+          items:
+            type: object
+            properties:
+              environment_type:
+                $ref: './enums/EnvironmentMode.yaml'
+              permission:
+                $ref: './enums/OrganizationCustomRoleProjectPermission.yaml'

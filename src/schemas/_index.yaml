@@ -214,6 +214,8 @@ DatabaseTypeEnum:
   $ref: ./enums/DatabaseType.yaml
 DatabaseVersionMode:
   $ref: ./DatabaseVersionMode.yaml
+DefaultMemberRole:
+  $ref: ./enums/DefaultMemberRole.yaml
 DeployAllRequest:
   $ref: ./DeployAllRequest.yaml
 DeployRequest:
@@ -388,6 +390,8 @@ Member:
   $ref: ./MemberResponse.yaml
 MemberResponseList:
   $ref: ./MemberResponseList.yaml
+MemberRoleUpdateRequest:
+  $ref: ./MemberRoleUpdateRequest.yaml
 MetricCPU:
   $ref: ./MetricCPUResponse.yaml
 MetricCPUDatapoint:
@@ -434,6 +438,10 @@ OrganizationApiTokenResponseList:
   $ref: ./OrganizationApiTokenResponseList.yaml
 OrganizationApiTokenScope:
   $ref: ./enums/OrganizationApiTokenScope.yaml
+OrganizationAvailableRole:
+  $ref: ./OrganizationAvailableRoleResponse.yaml
+OrganizationAvailableRoleList:
+  $ref: ./OrganizationAvailableRoleResponseList.yaml
 OrganizationChangePlanRequest:
   $ref: ./OrganizationChangePlanRequest.yaml
 OrganizationContainerAutoDeployRequest:
@@ -444,6 +452,16 @@ OrganizationCreditCodeRequest:
   $ref: ./OrganizationCreditCodeRequest.yaml
 OrganizationCurrentCost:
   $ref: ./OrganizationCurrentCostResponse.yaml
+OrganizationCustomRoleRequest:
+  $ref: ./OrganizationCustomRoleCreateOrUpdateRequest.yaml
+OrganizationCustomRole:
+  $ref: ./OrganizationCustomRoleResponse.yaml
+OrganizationCustomRoleList:
+  $ref: ./OrganizationCustomRoleResponseList.yaml
+OrganizationCustomRoleProjectPermission:
+  $ref: ./enums/OrganizationCustomRoleProjectPermission.yaml
+OrganizationCustomRoleClusterPermission:
+  $ref: ./enums/OrganizationCustomRoleClusterPermission.yaml
 OrganizationEditRequest:
   $ref: ./OrganizationEditRequest.yaml
 OrganizationGithubAppConnectRequest:

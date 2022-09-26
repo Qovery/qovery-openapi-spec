@@ -1,0 +1,7 @@
+type: string
+description: used to specify a default role, otherwise `null`
+enum:
+  - VIEWER
+  - BILLING
+  - DEVOPS
+  - ADMIN
