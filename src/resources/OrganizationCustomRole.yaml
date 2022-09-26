@@ -31,7 +31,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../schemas/OrganizationCustomRoleCreateOrUpdateRequest.yaml'
+          $ref: '../schemas/OrganizationCustomRoleCreateRequest.yaml'
   responses:
     '201':
       description: 'Organization custom role created'

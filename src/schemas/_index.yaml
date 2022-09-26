@@ -452,8 +452,10 @@ OrganizationCreditCodeRequest:
   $ref: ./OrganizationCreditCodeRequest.yaml
 OrganizationCurrentCost:
   $ref: ./OrganizationCurrentCostResponse.yaml
-OrganizationCustomRoleRequest:
-  $ref: ./OrganizationCustomRoleCreateOrUpdateRequest.yaml
+OrganizationCustomRoleCreateRequest:
+  $ref: ./OrganizationCustomRoleCreateRequest.yaml
+OrganizationCustomRoleUpdateRequest:
+  $ref: ./OrganizationCustomRoleUpdateRequest.yaml
 OrganizationCustomRole:
   $ref: ./OrganizationCustomRoleResponse.yaml
 OrganizationCustomRoleList:
