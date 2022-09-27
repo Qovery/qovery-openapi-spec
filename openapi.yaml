@@ -9452,6 +9452,30 @@ components:
           type: integer
           default: 4
           description: header buffer size used while reading response header from upstream
+        network.ingress.keepalive_time_seconds:
+          type: integer
+          default: 3600
+          description: Limits the maximum time (in seconds) during which requests can be processed through one keepalive connection
+        network.ingress.keepalive_timeout_seconds:
+          type: integer
+          default: 60
+          description: Sets a timeout (in seconds) during which an idle keepalive connection to an upstream server will stay open.
+        network.ingress.send_timeout_seconds:
+          type: integer
+          default: 60
+          description: Sets a timeout (in seconds) for transmitting a response to the client
+        network.ingress.proxy_connect_timeout_seconds:
+          type: integer
+          default: 60
+          description: Sets a timeout (in seconds) for establishing a connection to a proxied server
+        network.ingress.proxy_send_timeout_seconds:
+          type: integer
+          default: 60
+          description: Sets a timeout (in seconds) for transmitting a request to the proxied server
+        network.ingress.proxy_read_timeout_seconds:
+          type: integer
+          default: 60
+          description: Sets a timeout (in seconds) for reading a response from the proxied server
         network.ingress.whitelist_source_range:
           type: string
           description: |
