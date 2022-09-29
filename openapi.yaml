@@ -9677,7 +9677,7 @@ components:
             * `ECR` needs in the config: region, access_key_id, secret_access_key
             * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key
             * `DOCKER_HUB` needs in the config: username, password
-            * `PUBLIC_ECR` needs in the config: access_key_id, secret_access_key
+            * `PUBLIC_ECR` doesn't need credentials info
             * `DOCR` is not supported anymore
     ContainerRegistryResponse:
       allOf:
