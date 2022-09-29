@@ -11359,12 +11359,9 @@ components:
         user_id:
           type: string
           description: specify the git provider user id
-        custom_role_id:
+        role_id:
           type: string
           format: uuid
-          description: 'used to specify an organization custom role, otherwise `null`'
-        default_role_name:
-          $ref: '#/components/schemas/DefaultMemberRole'
     MetricCPU:
       type: object
       required:
@@ -11620,16 +11617,9 @@ components:
       properties:
         id:
           type: string
-          description: Filled only for an organization custom role
           format: uuid
         name:
           type: string
-          description: It can be either a custom role name or a default role name
-        is_default:
-          type: boolean
-          description: |
-            - `true` if it is a Qovery role
-            - `false` if it is a custom role
     OrganizationAvailableRoleList:
       type: object
       properties:
