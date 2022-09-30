@@ -8638,6 +8638,8 @@ components:
         required_config:
           type: object
           additionalProperties: true
+        is_mandatory:
+          type: boolean
     AvailableContainerRegistryResponseList:
       type: object
       properties:
