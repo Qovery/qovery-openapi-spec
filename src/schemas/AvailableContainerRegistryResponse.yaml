@@ -5,3 +5,5 @@ properties:
   required_config:
     type: object
     additionalProperties: true
+  is_mandatory:
+    type: boolean
