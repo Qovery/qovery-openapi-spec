@@ -2,7 +2,6 @@ type: object
 required:
   - name
   - kind
-  - url
   - config
 properties:
   name:
@@ -16,8 +15,8 @@ properties:
     format: uri
     description: |
       URL of the container registry:
-      * For `DOCKER_HUB`: should be `https://docker.io`
-      * For others: must start by `https://`
+      * For `DOCKER_HUB`: it must be `https://docker.io` (default with 'https://docker.io' if no url provided for DOCKER_HUB)
+      * For others: it's required and must start by `https://`
   config:
     type: object
     properties:
@@ -38,14 +37,18 @@ properties:
         description: Required if kind is `SCALEWAY_CR`
       username:
         type: string
-        description: Required if kind is `DOCKER_HUB`
+        description: |
+          optional, for kind `DOCKER_HUB`  
+          We encourage you to set credentials for Docker Hub due to the limits on the pull rate
       password:
         type: string
-        description: Required if kind is `DOCKER_HUB`
+        description: |
+          optional, for kind `DOCKER_HUB`  
+          We encourage you to set credentials for Docker Hub due to the limits on the pull rate
     description: |
       This field is dependent of the container registry kind:
       * `ECR` needs in the config: region, access_key_id, secret_access_key
       * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key
-      * `DOCKER_HUB` needs in the config: username, password
+      * `DOCKER_HUB` needs in the config (optional): username, password
       * `PUBLIC_ECR` doesn't need credentials info
       * `DOCR` is not supported anymore

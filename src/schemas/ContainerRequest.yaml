@@ -20,7 +20,7 @@ allOf:
           The image name pattern differs according to chosen container registry provider:  
           * `ECR`: `repository`
           * `SCALEWAY_CR`: `namespace/image`
-          * `DOCKER_HUB`: `namespace/image`
+          * `DOCKER_HUB`: `image` or `repository/image`
           * `PUBLIC_ECR`: `registry_alias/repository`
       tag:
         type: string
