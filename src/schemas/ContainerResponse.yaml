@@ -70,6 +70,6 @@ allOf:
         description: |
           Indicates if the 'environment preview option' is enabled for this container.  
           If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.  
-          If `auto_preview` is not specified, it takes the value of the `auto_preview` from the associated environment.
+          If not specified, it takes the value of the `auto_preview` property from the associated environment.
       ports:
         $ref: './ServicePortResponseList.yaml'
