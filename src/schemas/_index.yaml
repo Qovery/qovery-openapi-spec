@@ -214,8 +214,6 @@ DatabaseTypeEnum:
   $ref: ./enums/DatabaseType.yaml
 DatabaseVersionMode:
   $ref: ./DatabaseVersionMode.yaml
-DefaultMemberRole:
-  $ref: ./enums/DefaultMemberRole.yaml
 DeployAllRequest:
   $ref: ./DeployAllRequest.yaml
 DeployRequest:
