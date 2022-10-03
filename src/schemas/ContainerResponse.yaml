@@ -68,7 +68,8 @@ allOf:
       auto_preview:
         type: boolean
         description: |
-          Specify if the environment preview option is activated or not for this container.
-          If activated, a preview environment will be automatically cloned at each pull request.
+          Indicates if the 'environment preview option' is enabled for this container.  
+          If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.  
+          If `auto_preview` is not specified, it takes the value of the `auto_preview` from the associated environment.
       ports:
         $ref: './ServicePortResponseList.yaml'
