@@ -20,6 +20,10 @@ allOf:
         description: last time the user was connected
       role:
         $ref: './enums/InviteMemberRole.yaml'
+        description: deprecated
       role_name:
         type: string
         description: the role linked to the user
+      role_id:
+        type: string
+        format: uuid
