@@ -20,15 +20,19 @@ jobs:
           - language: go
             version: 6.0.1
             target-branch: master
+            deploy-ssh-key: SSH_DEPLOY_KEY_GO
           - language: javascript
             version: 6.0.1
             target-branch: main
+            deploy-ssh-key: SSH_DEPLOY_KEY_JAVASCRIPT
           - language: python
             version: 6.0.1
             target-branch: master
+            deploy-ssh-key: SSH_DEPLOY_KEY_PYTHON
           - language: typescript-axios
             version: 5.3.1
             target-branch: main
+            deploy-ssh-key: SSH_DEPLOY_KEY_TYPESCRIPT_AXIOS
 
     steps:
       - name: Check out source code
@@ -83,7 +87,7 @@ jobs:
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+          SSH_DEPLOY_KEY: ${{ secrets[matrix.deploy-ssh-key] }}
         with:
           source-directory: out/qovery-client-${{ matrix.language }}
           destination-github-username: 'qovery'
