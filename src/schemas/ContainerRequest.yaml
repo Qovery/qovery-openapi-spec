@@ -55,3 +55,9 @@ allOf:
           Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
           Note: -1 means that there is no limit.
         default: 1
+      auto_preview:
+        type: boolean
+        description: |
+          Indicates if the 'environment preview option' is enabled for this container.  
+          If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.  
+          If not specified, it takes the value of the `auto_preview` property from the associated environment.
