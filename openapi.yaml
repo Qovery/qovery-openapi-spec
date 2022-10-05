@@ -11154,6 +11154,7 @@ components:
               format: email
             role:
               $ref: '#/components/schemas/InviteMemberRoleEnum'
+              description: deprecated
             invitation_link:
               type: string
               format: uri
@@ -11164,6 +11165,11 @@ components:
             logo_url:
               type: string
               format: uri
+            role_id:
+              type: string
+              format: uuid
+            role_name:
+              type: string
     InviteMemberRequest:
       type: object
       required:
@@ -11354,9 +11360,13 @@ components:
               description: last time the user was connected
             role:
               $ref: '#/components/schemas/InviteMemberRoleEnum'
+              description: deprecated
             role_name:
               type: string
               description: the role linked to the user
+            role_id:
+              type: string
+              format: uuid
     MemberResponseList:
       type: object
       properties:
@@ -11366,6 +11376,9 @@ components:
             $ref: '#/components/schemas/Member'
     MemberRoleUpdateRequest:
       type: object
+      required:
+        - user_id
+        - role_id
       properties:
         user_id:
           type: string
