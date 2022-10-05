@@ -10209,14 +10209,6 @@ components:
           example: '10.1'
         supported_mode:
           $ref: '#/components/schemas/DatabaseModeEnum'
-    DefaultMemberRole:
-      type: string
-      description: 'used to specify a default role, otherwise `null`'
-      enum:
-        - VIEWER
-        - BILLING
-        - DEVOPS
-        - ADMIN
     DeployAllRequest:
       type: object
       properties:
