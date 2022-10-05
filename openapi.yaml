@@ -11168,12 +11168,16 @@ components:
       type: object
       required:
         - email
-        - role
       properties:
         email:
           type: string
         role:
           $ref: '#/components/schemas/InviteMemberRoleEnum'
+          description: deprecated
+        role_id:
+          type: string
+          format: uuid
+          description: the target role to attribute to the new member
     InviteMemberResponseList:
       type: object
       properties:
