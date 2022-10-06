@@ -1955,13 +1955,7 @@ paths:
       operationId: getOrganizationCustomRole
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - name: customRoleId
-          in: path
-          description: Custom Role ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/customRoleId'
       tags:
         - Organization Custom Role
       responses:
@@ -1983,7 +1977,7 @@ paths:
       operationId: editOrganizationCustomRole
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1customRole~1%7BcustomRoleId%7D/get/parameters/1'
+        - $ref: '#/components/parameters/customRoleId'
       tags:
         - Organization Custom Role
       requestBody:
@@ -2012,7 +2006,7 @@ paths:
       operationId: deleteOrganizationCustomRole
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1customRole~1%7BcustomRoleId%7D/get/parameters/1'
+        - $ref: '#/components/parameters/customRoleId'
       tags:
         - Organization Custom Role
       responses:
@@ -7845,6 +7839,14 @@ components:
       name: customDomainId
       in: path
       description: Custom Domain ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    customRoleId:
+      name: customRoleId
+      in: path
+      description: Custom Role ID
       required: true
       schema:
         type: string
