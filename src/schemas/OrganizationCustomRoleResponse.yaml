@@ -1,5 +1,7 @@
 type: object
 properties:
+  id:
+    type: string
   name:
     type: string
   description:
@@ -28,12 +30,12 @@ properties:
           type: string
         is_admin:
           type: boolean
-          description:  |
+          description: |
             If `is_admin` is `true`, the user is:
             - automatically `MANAGER` for each environment type
             - allowed to manage project deployment rules
             - able to delete the project  
-            
+
             Note that `permissions` can then be ignored for this project
           default: false
         permissions:
