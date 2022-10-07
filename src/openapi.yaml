@@ -316,6 +316,8 @@ paths:
     $ref: './resources/OrganizationContainerRegistry.yaml'
   /organization/{organizationId}/containerRegistry/{containerRegistryId}:
     $ref: './resources/OrganizationContainerRegistryRef.yaml'
+  /organization/{organizationId}/containerRegistry/{containerRegistryId}/container/status:
+    $ref: './resources/ContainerRegistryContainerStatus.yaml'
   /availableContainerRegistry:
     $ref: './resources/AvailableContainerRegistry.yaml'
   /project/{projectId}:
