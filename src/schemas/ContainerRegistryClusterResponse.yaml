@@ -1,0 +1,10 @@
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - type: object
+    properties:
+      id:
+        type: string
+        description: "Id of the cluster of which the registry belongs to"
+      name:
+        type: string
+        description: "Name of the cluster of which the registry belongs to"
