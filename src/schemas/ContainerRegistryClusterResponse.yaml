@@ -1,5 +1,4 @@
 allOf:
-  - $ref: './BaseResponse.yaml'
   - type: object
     properties:
       id:
