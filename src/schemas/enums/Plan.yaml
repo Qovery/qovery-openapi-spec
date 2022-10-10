@@ -1,6 +1,7 @@
 type: string
 enum:
   - FREE
-  - PROFESSIONAL
-  - BUSINESS
+  - TEAM
+  - TEAM_YEARLY
   - ENTERPRISE
+  - ENTERPRISE_YEARLY
