@@ -9703,9 +9703,17 @@ components:
             url:
               type: string
               description: URL of the container registry
-            belongs_to_cluster:
-              type: boolean
-              description: If this registry is used by a cluster
+            cluster:
+              allOf:
+                - $ref: '#/components/schemas/Base'
+                - type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Id of the cluster of which the registry belongs to
+                    name:
+                      type: string
+                      description: Name of the cluster of which the registry belongs to
     ContainerRegistryResponseList:
       type: object
       properties:
