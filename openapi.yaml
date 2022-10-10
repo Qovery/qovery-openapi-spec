@@ -9709,6 +9709,7 @@ components:
                   properties:
                     id:
                       type: string
+                      format: uuid
                       description: Id of the cluster of which the registry belongs to
                     name:
                       type: string
