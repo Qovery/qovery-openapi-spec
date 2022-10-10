@@ -11,6 +11,5 @@ allOf:
       url:
         type: string
         description: URL of the container registry      
-      belongs_to_cluster:
-        type: boolean
-        description: If this registry is used by a cluster
+      cluster:
+        $ref: ../schemas/ContainerRegistryClusterResponse.yaml
