@@ -9705,6 +9705,7 @@ components:
               description: URL of the container registry
             cluster:
               allOf:
+                - $ref: '#/components/schemas/Base'
                 - type: object
                   properties:
                     id:
