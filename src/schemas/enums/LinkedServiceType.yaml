@@ -4,4 +4,5 @@ description: |
   present only for `BUILT_IN` variable
 enum:
   - APPLICATION
+  - CONTAINER
   - DATABASE
