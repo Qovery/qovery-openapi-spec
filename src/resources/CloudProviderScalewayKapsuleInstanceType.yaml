@@ -1,0 +1,20 @@
+get:
+  summary: 'List Scaleway Kapsule available instance types'
+  operationId: listScalewayKapsuleInstanceType
+  parameters:
+    - $ref: '../parameters/path/zone.yaml'
+  tags:
+    - Cloud Provider
+  responses:
+    '200':
+      description: 'list the instance types available for Scaleway Kapsule by region'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterInstanceTypeResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
