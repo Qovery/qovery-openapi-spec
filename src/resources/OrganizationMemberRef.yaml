@@ -3,7 +3,11 @@ delete:
   operationId: deleteMember
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
-    - $ref: '../parameters/path/userId.yaml'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/DeleteMemberRequest.yaml'
   tags:
     - Members
   responses:
