@@ -440,19 +440,22 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/member/{userId}':
     delete:
       summary: Remove a member
       operationId: deleteMember
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - name: userId
-          in: path
-          description: User ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user_id
+              properties:
+                user_id:
+                  type: string
+                  format: uuid
       tags:
         - Members
       responses:
