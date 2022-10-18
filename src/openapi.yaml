@@ -194,8 +194,6 @@ paths:
     $ref: './resources/OrganizationAvailableRole.yaml'
   /organization/{organizationId}/member:
     $ref: './resources/OrganizationMember.yaml'
-  /organization/{organizationId}/member:
-    $ref: './resources/OrganizationMemberRef.yaml'
   /organization/{organizationId}/inviteMember:
     $ref: './resources/OrganizationInviteMember.yaml'
   /organization/{organizationId}/inviteMember/{inviteId}:
