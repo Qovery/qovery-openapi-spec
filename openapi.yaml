@@ -2548,6 +2548,29 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/containerRegistry/{containerRegistryId}/container/status':
+    get:
+      summary: List all container registry container statuses
+      description: Returns a list of containers with only their id and status.
+      operationId: getContainerRegistryContainerStatus
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/containerRegistryId'
+      tags:
+        - Containers
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferenceObjectStatusResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /availableContainerRegistry:
     get:
       summary: List supported container registries
