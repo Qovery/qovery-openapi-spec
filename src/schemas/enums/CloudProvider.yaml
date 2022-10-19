@@ -1,5 +1,5 @@
 type: string
 enum:
   - AWS
-  - DIGITAL_OCEAN
-  - SCALEWAY
+  - DO
+  - SCW
