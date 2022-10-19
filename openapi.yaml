@@ -8971,8 +8971,8 @@ components:
       type: string
       enum:
         - AWS
-        - DIGITAL_OCEAN
-        - SCALEWAY
+        - DO
+        - SCW
     CloudProviderResponseList:
       type: object
       properties:
