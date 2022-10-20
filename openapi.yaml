@@ -523,13 +523,7 @@ paths:
       operationId: postAcceptInviteMember
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - name: inviteId
-          in: path
-          description: Invite ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/inviteId'
       tags:
         - Members
       responses:
@@ -554,7 +548,7 @@ paths:
       operationId: deleteInviteMember
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1inviteMember~1%7BinviteId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/inviteId'
       tags:
         - Members
       responses:
@@ -7988,6 +7982,14 @@ components:
       name: eventId
       in: path
       description: Event ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    inviteId:
+      name: inviteId
+      in: path
+      description: Invite ID
       required: true
       schema:
         type: string
