@@ -1,7 +1,10 @@
 type: string
+description: BUSINESS & PROFESSIONAL are deprecated
 enum:
   - FREE
   - TEAM
   - TEAM_YEARLY
   - ENTERPRISE
   - ENTERPRISE_YEARLY
+  - PROFESSIONAL
+  - BUSINESS
