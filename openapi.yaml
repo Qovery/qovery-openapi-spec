@@ -12227,12 +12227,15 @@ components:
           format: date-time
     PlanEnum:
       type: string
+      description: BUSINESS & PROFESSIONAL are deprecated
       enum:
         - FREE
         - TEAM
         - TEAM_YEARLY
         - ENTERPRISE
         - ENTERPRISE_YEARLY
+        - PROFESSIONAL
+        - BUSINESS
     PortProtocolEnum:
       type: string
       default: HTTP
