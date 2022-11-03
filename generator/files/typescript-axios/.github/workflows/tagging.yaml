@@ -15,9 +15,29 @@ jobs:
       - name: Create an incremental release
         uses: aurestic/incrementarl-create-release@master
         with:
-          flag_branch: true
+          flag_branch: false
           message: Bump version
           prev_tag: 'v'
-          update_odoo_module_version: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save last tag to file
+        run: |
+          echo "LAST_TAG=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
+
+      - name: Replace tag in package.json and commit it the changes
+        run: |
+          sed -i "s/\"version\": \".*\"/\"version\": \"$LAST_TAG\"/g" package.json
+
+      - name: Setup Git
+        run: |
+          git config user.name 'Qovery Bot'
+          git config user.email 'github@qovery.com'
+
+      - name: commit changes
+        run: |
+          git add package.json
+          git commit -m "chore: bump version to $LAST_TAG"
+          git push origin main
+        
+        
