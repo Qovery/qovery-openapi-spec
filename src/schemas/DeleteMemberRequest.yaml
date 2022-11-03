@@ -1,11 +1,7 @@
 type: object
 required:
   - user_id
-  - role_id
 properties:
   user_id:
-    type: string
-    description: specify the git provider user id
-  role_id:
     type: string
     format: uuid

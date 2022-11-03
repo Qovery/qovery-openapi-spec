@@ -34,7 +34,8 @@ properties:
             If `is_admin` is `true`, the user is:
             - automatically `MANAGER` for each environment type
             - allowed to manage project deployment rules
-            - able to delete the project
+            - able to delete the project  
+            
             Note that `permissions` can then be ignored for this project
           default: false
         permissions:

@@ -4,6 +4,8 @@ required:
   - name
   - cpu
   - ram_in_gb
+  - bandwidth_in_gbps
+  - bandwidth_guarantee
 properties:
   type:
     type: string
@@ -17,3 +19,9 @@ properties:
   ram_in_gb:
     type: integer
     example: 8
+  bandwidth_in_gbps:
+    type: string
+    example: "5.2"
+  bandwidth_guarantee:
+    type: string
+    example: "UpTo"

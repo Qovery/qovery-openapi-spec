@@ -10,4 +10,6 @@ allOf:
         type: string
       url:
         type: string
-        description: URL of the container registry
+        description: URL of the container registry      
+      cluster:
+        $ref: ../schemas/ContainerRegistryClusterResponse.yaml

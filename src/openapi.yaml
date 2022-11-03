@@ -194,8 +194,6 @@ paths:
     $ref: './resources/OrganizationAvailableRole.yaml'
   /organization/{organizationId}/member:
     $ref: './resources/OrganizationMember.yaml'
-  /organization/{organizationId}/member/{userId}:
-    $ref: './resources/OrganizationMemberRef.yaml'
   /organization/{organizationId}/inviteMember:
     $ref: './resources/OrganizationInviteMember.yaml'
   /organization/{organizationId}/inviteMember/{inviteId}:
@@ -290,6 +288,10 @@ paths:
     $ref: './resources/CloudProviderAWSClusterFeature.yaml'
   /aws/instanceType:
     $ref: './resources/CloudProviderAWSInstanceType.yaml'
+  /aws/ec2/instanceType/{region}:
+    $ref: './resources/CloudProviderAWSEc2InstanceType.yaml'
+  /aws/eks/instanceType/{region}:
+    $ref: './resources/CloudProviderAWSEKSInstanceType.yaml'
   /digitalOcean/region:
     $ref: './resources/CloudProviderDORegion.yaml'
   /digitalOcean/clusterFeature:
@@ -302,6 +304,8 @@ paths:
     $ref: './resources/CloudProviderScalewayClusterFeature.yaml'
   /scaleway/instanceType:
     $ref: './resources/CloudProviderScalewayInstanceType.yaml'
+  /scaleway/instanceType/{zone}:
+    $ref: './resources/CloudProviderScalewayKapsuleInstanceType.yaml'
   /organization/{organizationId}/cluster/{clusterId}/cloudProviderInfo:
     $ref: './resources/OrganizationClusterCloudProviderInfo.yaml'
   /organization/{organizationId}/cluster/{clusterId}/isReady:
@@ -316,6 +320,8 @@ paths:
     $ref: './resources/OrganizationContainerRegistry.yaml'
   /organization/{organizationId}/containerRegistry/{containerRegistryId}:
     $ref: './resources/OrganizationContainerRegistryRef.yaml'
+  /organization/{organizationId}/containerRegistry/{containerRegistryId}/container/status:
+    $ref: './resources/ContainerRegistryContainerStatus.yaml'
   /availableContainerRegistry:
     $ref: './resources/AvailableContainerRegistry.yaml'
   /project/{projectId}:
@@ -490,14 +496,6 @@ paths:
     $ref: './resources/ApplicationLog.yaml'
   /application/{applicationId}/network:
     $ref: './resources/ApplicationNetwork.yaml'
-  /application/{applicationId}/database:
-    $ref: './resources/ApplicationDatabase.yaml'
-  /application/{applicationId}/database/{targetDatabaseId}:
-    $ref: './resources/ApplicationDatabaseRef.yaml'
-  /application/{applicationId}/logicalDatabase:
-    $ref: './resources/ApplicationLogicalDatabase.yaml'
-  /application/{applicationId}/logicalDatabase/{targetLogicalDatabaseId}:
-    $ref: './resources/ApplicationLogicalDatabaseRef.yaml'
   /application/{applicationId}/link:
     $ref: './resources/ApplicationLink.yaml'
   /application/{applicationId}/advancedSettings:
@@ -554,10 +552,6 @@ paths:
     $ref: './resources/ContainerLog.yaml'
   /container/{containerId}/network:
     $ref: './resources/ContainerNetwork.yaml'
-  /container/{containerId}/logicalDatabase:
-    $ref: './resources/ContainerLogicalDatabase.yaml'
-  /container/{containerId}/logicalDatabase/{targetLogicalDatabaseId}:
-    $ref: './resources/ContainerLogicalDatabaseRef.yaml'
   /container/{containerId}/link:
     $ref: './resources/ContainerLink.yaml'
   /environment/{environmentId}/database:
