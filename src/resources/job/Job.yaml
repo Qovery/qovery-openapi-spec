@@ -1,0 +1,68 @@
+get:
+  summary: 'Get job by ID'
+  operationId: getJob
+  parameters:
+    - $ref: '../../parameters/path/jobId.yaml'
+  tags:
+    - Job Main Calls
+  responses:
+    '200':
+      description: 'Get job by ID'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/job/JobResponse.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+put:
+  summary: 'Edit job'
+  description: |
+    - To edit the job you must have the admin permission.
+  operationId: editJob
+  parameters:
+    - $ref: '../../parameters/path/jobId.yaml'
+  tags:
+    - Job Main Calls
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/job/JobRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit job'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/job/JobResponse.yaml'
+    '400':
+      $ref: '../../responses/BadRequest.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+    '409':
+      description: Job name within the environment is already taken
+delete:
+  summary: 'Delete job'
+  description: 'To delete the job you must have the admin permission'
+  operationId: deleteJob
+  parameters:
+    - $ref: '../../parameters/path/jobId.yaml'
+  tags:
+    - Job Main Calls
+  responses:
+    '204':
+      $ref: '../../responses/Deleted.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'

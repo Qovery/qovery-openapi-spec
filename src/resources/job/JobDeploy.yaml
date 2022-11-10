@@ -1,0 +1,37 @@
+post:
+  summary: 'Deploy job'
+  description: You must provide a git commit id
+  operationId: deployJob
+  parameters:
+    - $ref: '../../parameters/path/jobId.yaml'
+    - name: force
+      in: query
+      required: false
+      description: Enable or Disable the force trigger of the job
+      schema:
+        type: boolean
+        default: false
+  tags:
+    - Job Actions
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/job/JobDeployRequest.yaml'
+  responses:
+    '202':
+      description: 'Deploy job'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/Status.yaml'
+    '400':
+      $ref: '../../responses/BadRequest.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+    '409':
+      description: 'Operation is in progress'

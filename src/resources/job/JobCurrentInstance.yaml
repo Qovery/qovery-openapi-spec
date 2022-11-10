@@ -1,0 +1,20 @@
+get:
+  summary: 'List currently running instances of the job with their CPU and RAM metrics'
+  operationId: getJobCurrentInstance
+  parameters:
+    - $ref: '../../parameters/path/jobId.yaml'
+  tags:
+    - Job Metrics
+  responses:
+    '200':
+      description: 'Know current resource consumption of the job for each running instance'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/InstanceResponseList.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'

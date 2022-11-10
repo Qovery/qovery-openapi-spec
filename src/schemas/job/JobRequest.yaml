@@ -1,0 +1,96 @@
+allOf:
+  - type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        description: name is case insensitive
+      arguments:
+        type: array
+        items:
+          type: string
+      entrypoint:
+        type: string
+        description: optional entrypoint when launching container
+      cpu:
+        type: integer
+        description: unit is millicores (m). 1000m = 1 cpu
+        default: 500
+        example: 1250
+      memory:
+        type: integer
+        description: unit is MB. 1024 MB = 1GB
+        default: 512
+        example: 1024
+      max_nb_restart:
+        type: integer
+        minimum: 0
+        description: |
+          Maximum number of restart allowed before the job is considered as failed
+          0 means that no restart/crash of the job is allowed
+      max_duration_seconds:
+        type: integer
+        minimum: 0
+        description: |
+          Maximum number of seconds allowed for the job to run before killing it and mark it as failed
+      auto_preview:
+        type: boolean
+        description: |
+          Indicates if the 'environment preview option' is enabled for this container.  
+          If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.  
+          If not specified, it takes the value of the `auto_preview` property from the associated environment.
+      port:
+        type: integer
+        nullable: true
+        minimum: 1
+        description: Port were to run readiness and liveliness probes checks. The port will not be exposed externally
+        default: null
+      source:
+        type: object
+        properties:
+          image:
+            type: object
+            nullable: true
+            properties:
+              image_name:
+                type: string
+                description: |
+                  The image name pattern differs according to chosen container registry provider:  
+                  * `ECR`: `repository`
+                  * `SCALEWAY_CR`: `namespace/image`
+                  * `DOCKER_HUB`: `image` or `repository/image`
+                  * `PUBLIC_ECR`: `registry_alias/repository`
+              tag:
+                type: string
+                description: tag of the image container
+              registry_id:
+                type: string
+                description: tag of the image container
+          docker:
+            type: object
+            nullable: true
+            properties:
+              dockerfile_path:
+                type: string
+                description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+                nullable: true
+              git_repository:
+                $ref: '../ApplicationGitRepositoryRequest.yaml'
+      schedule:
+        type: object
+        properties:
+          event:
+            $ref: '../enums/JobScheduleEvent.yaml'
+          schedule_at:
+            type: string
+            format: cron
+            nullable: true
+            description: |
+              Can only be set if the event is CRON.
+              Represent the cron format for the job schedule without seconds.
+              For example: `* * * * *` represent the cron to launch the job every minute.
+              See https://crontab.guru/ to WISIWIG interface.
+              Timezone is UTC
+
+

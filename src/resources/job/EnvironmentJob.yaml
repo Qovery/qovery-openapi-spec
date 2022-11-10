@@ -1,0 +1,50 @@
+get:
+  summary: 'List jobs'
+  operationId: listJob
+  parameters:
+    - $ref: '../../parameters/path/environmentId.yaml'
+    - $ref: '../../parameters/query/toUpdate.yaml'
+  tags:
+    - Jobs
+  responses:
+    '200':
+      description: 'List jobs'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/job/JobResponseList.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+post:
+  summary: 'Create a job'
+  operationId: createJob
+  parameters:
+    - $ref: '../../parameters/path/environmentId.yaml'
+  tags:
+    - Jobs
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/job/JobRequest.yaml'
+  responses:
+    '201':
+      description: 'Create job'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/job/JobResponse.yaml'
+    '400':
+      $ref: '../../responses/BadRequest.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+    '409':
+      description: Job name within the environment is already taken

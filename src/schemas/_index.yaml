@@ -362,8 +362,20 @@ InvoiceResponseList:
   $ref: ./InvoiceResponseList.yaml
 InvoiceStatusEnum:
   $ref: ./enums/InvoiceStatus.yaml
+JobRequest:
+  $ref: ./job/JobRequest.yaml
+JobResponse:
+  $ref: ./job/JobResponse.yaml
+JobResponseList:
+  $ref: ./job/JobResponseList.yaml
+JobAdvancedSettings:
+  $ref: ./job/JobAdvancedSettings.yaml
+JobDeployRequest:
+  $ref: ./job/JobDeployRequest.yaml
+DeploymentHistoryJobResponse:
+  $ref: ./job/DeploymentHistoryJobResponse.yaml
 Key:
-  $ref: ./Key.yaml
+ $ref: ./Key.yaml
 KubernetesEnum:
   $ref: ./enums/Kubernetes.yaml
 Link:
@@ -592,4 +604,5 @@ VersionResponseList:
   $ref: ./VersionResponseList.yaml
 WeekdayEnum:
   $ref: ./enums/Weekday.yaml
+
 
