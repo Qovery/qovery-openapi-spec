@@ -1,6 +1,6 @@
 get:
   summary: 'List jobs'
-  operationId: listJob
+  operationId: listJobs
   parameters:
     - $ref: '../../parameters/path/environmentId.yaml'
     - $ref: '../../parameters/query/toUpdate.yaml'
