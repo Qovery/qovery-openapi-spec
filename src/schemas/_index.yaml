@@ -375,7 +375,7 @@ JobDeployRequest:
 DeploymentHistoryJobResponse:
   $ref: ./job/DeploymentHistoryJobResponse.yaml
 Key:
- $ref: ./Key.yaml
+  $ref: ./Key.yaml
 KubernetesEnum:
   $ref: ./enums/Kubernetes.yaml
 Link:
