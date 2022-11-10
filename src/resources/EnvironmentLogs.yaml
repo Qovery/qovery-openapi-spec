@@ -1,0 +1,21 @@
+get:
+  summary: 'List environment deployment logs v2'
+  operationId: listEnvironmentLogs
+  description: This returns the last 1000 environment deployment logs v2
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+  tags:
+    - Environment Logs
+  responses:
+    '200':
+      description: 'List logs v2'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/EnvironmentLogsResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

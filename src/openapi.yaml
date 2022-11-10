@@ -400,6 +400,8 @@ paths:
     $ref: './resources/OrganizationContainerPreview.yaml'
   /environment/{environmentId}/log:
     $ref: './resources/EnvironmentLog.yaml'
+  /environment/{environmentId}/logs:
+    $ref: './resources/EnvironmentLogs.yaml'
   /environment/{environmentId}/deploymentHistory:
     $ref: './resources/EnvironmentDeploymentHistory.yaml'
   /environment/{environmentId}/environmentVariable:
