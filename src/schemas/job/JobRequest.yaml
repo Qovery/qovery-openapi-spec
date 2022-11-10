@@ -44,7 +44,7 @@ allOf:
         type: integer
         nullable: true
         minimum: 1
-        description: Port were to run readiness and liveliness probes checks. The port will not be exposed externally
+        description: Port where to run readiness and liveliness probes checks. The port will not be exposed externally
         default: null
       source:
         type: object
