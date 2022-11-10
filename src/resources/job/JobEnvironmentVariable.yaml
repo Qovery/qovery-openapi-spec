@@ -1,0 +1,50 @@
+get:
+  summary: 'List environment variables'
+  operationId: listJobEnvironmentVariable
+  parameters:
+    - $ref: '../../parameters/path/jobId.yaml'
+  tags:
+    - Job Environment Variable
+  responses:
+    '200':
+      description: 'List environment variables'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/EnvironmentVariableResponseList.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+post:
+  summary: 'Add an environment variable to the job'
+  description: |
+    - Add an environment variable to the job.
+  operationId: createJobEnvironmentVariable
+  parameters:
+    - $ref: '../../parameters/path/jobId.yaml'
+
+  tags:
+    - Job Environment Variable
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/EnvironmentVariableRequest.yaml'
+  responses:
+    '201':
+      description: 'Added an environment variable'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/EnvironmentVariableResponse.yaml'
+    '400':
+      $ref: '../../responses/BadRequest.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'

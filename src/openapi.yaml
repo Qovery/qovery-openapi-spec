@@ -682,16 +682,24 @@ paths:
     $ref: './resources/job/JobDeploymentHistory.yaml'
   /job/{jobId}/instance:
     $ref: './resources/job/JobCurrentInstance.yaml'
-  #/job/{jobId}/environmentVariable:
-  #/job/{jobId}/environmentVariable/{environmentVariableId}/override:
-  #/job/{jobId}/secret/{secretId}/override:
-  #/job/{jobId}/environmentVariable/{environmentVariableId}/alias:
-  #/job/{jobId}/secret/{secretId}/alias:
-  #/job/{jobId}/environmentVariable/{environmentVariableId}:
-  #/job/{jobId}/environmentVariable/{variableId}:
-  #/job/{jobId}/secret:
-  #/job/{jobId}/secret/{secretId}:
-  #/job/{jobId}/environmentVariable/import:
+  /job/{jobId}/environmentVariable:
+    $ref: './resources/job/JobEnvironmentVariable.yaml'
+  /job/{jobId}/environmentVariable/import:
+    $ref: './resources/job/JobVariableImport.yaml'
+  /job/{jobId}/environmentVariable/{environmentVariableId}:
+    $ref: './resources/job/JobEnvironmentVariableRef.yaml'
+  /job/{jobId}/environmentVariable/{environmentVariableId}/override:
+    $ref: './resources/job/JobEnvironmentVariableOverride.yaml'
+  /job/{jobId}/environmentVariable/{environmentVariableId}/alias:
+    $ref: './resources/job/JobEnvironmentVariableAlias.yaml'
+  /job/{jobId}/secret:
+    $ref: './resources/job/JobSecret.yaml'
+  /job/{jobId}/secret/{secretId}:
+    $ref: './resources/job/JobSecretRef.yaml'
+  /job/{jobId}/secret/{secretId}/override:
+    $ref: './resources/job/JobSecretOverride.yaml'
+  /job/{jobId}/secret/{secretId}/alias:
+    $ref: './resources/job/JobSecretAlias.yaml'
   #/organization/{organizationId}/job/preview:
   #/organization/{organizationId}/job/deploy:
 components:
