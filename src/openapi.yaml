@@ -43,6 +43,20 @@ tags:
   - name: Container Registry
   - name: Container Secret
   - name: Containers
+  - name: Job
+  - name: Job Actions
+  - name: Job Configuration
+  - name: Job Database
+  - name: Job Deployment Restriction
+  - name: Job Deployment History
+  - name: Job Environment Variable
+  - name: Job Event
+  - name: Job Logs
+  - name: Job Main Calls
+  - name: Job Metrics
+  - name: Job Registry
+  - name: Job Secret
+  - name: Jobs
   - name: Backups
   - name: Billing
   - name: Cloud Provider
@@ -119,6 +133,7 @@ x-tagGroups:
       - Applications
       - Containers
       - Databases
+      - Jobs
       - Environment Actions
       - Environment Logs
       - Environment Deployment History
@@ -168,6 +183,18 @@ x-tagGroups:
       - Database Container
       - Backups
       - Database Event
+  - name: Job
+    tags:
+      - Job Main Calls
+      - Job Actions
+      - Job Configuration
+      - Job Custom Domain
+      - Job Dependency
+      - Job Metrics
+      - Job Deployment History
+      - Job Environment Variable
+      - Job Secret
+      - Job Event
   - name: Account
     tags:
       - Account Info
@@ -632,6 +659,46 @@ paths:
     $ref: './resources/AccountRewardClaim.yaml'
   /admin/userSignUp:
     $ref: './resources/UserSignUp.yaml'
+  /environment/{environmentId}/job:
+    $ref: './resources/job/EnvironmentJob.yaml'
+  /environment/{environmentId}/job/status:
+    $ref: './resources/job/EnvironmentJobStatus.yaml'
+  /job/{jobId}:
+    $ref: './resources/job/Job.yaml'
+  /job/{jobId}/advancedSettings:
+    $ref: './resources/job/JobAdvancedSettings.yaml'
+  /job/{jobId}/deploy:
+    $ref: './resources/job/JobDeploy.yaml'
+  /job/{jobId}/restart:
+    $ref: './resources/job/JobRestart.yaml'
+  /job/{jobId}/stop:
+    $ref: './resources/job/JobStop.yaml'
+  /job/{jobId}/status:
+    $ref: './resources/job/JobStatus.yaml'
+  /job/{jobId}/deploymentHistory:
+    $ref: './resources/job/JobDeploymentHistory.yaml'
+  /job/{jobId}/instance:
+    $ref: './resources/job/JobCurrentInstance.yaml'
+  /job/{jobId}/environmentVariable:
+    $ref: './resources/job/JobEnvironmentVariable.yaml'
+  /job/{jobId}/environmentVariable/import:
+    $ref: './resources/job/JobVariableImport.yaml'
+  /job/{jobId}/environmentVariable/{environmentVariableId}:
+    $ref: './resources/job/JobEnvironmentVariableRef.yaml'
+  /job/{jobId}/environmentVariable/{environmentVariableId}/override:
+    $ref: './resources/job/JobEnvironmentVariableOverride.yaml'
+  /job/{jobId}/environmentVariable/{environmentVariableId}/alias:
+    $ref: './resources/job/JobEnvironmentVariableAlias.yaml'
+  /job/{jobId}/secret:
+    $ref: './resources/job/JobSecret.yaml'
+  /job/{jobId}/secret/{secretId}:
+    $ref: './resources/job/JobSecretRef.yaml'
+  /job/{jobId}/secret/{secretId}/override:
+    $ref: './resources/job/JobSecretOverride.yaml'
+  /job/{jobId}/secret/{secretId}/alias:
+    $ref: './resources/job/JobSecretAlias.yaml'
+  #/organization/{organizationId}/job/preview:
+  #/organization/{organizationId}/job/deploy:
 components:
   parameters:
     $ref: './parameters/_index.yaml'

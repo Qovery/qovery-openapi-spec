@@ -1,0 +1,7 @@
+name: jobId
+in: path
+description: Job ID
+required: true
+schema:
+  type: string
+  format: uuid

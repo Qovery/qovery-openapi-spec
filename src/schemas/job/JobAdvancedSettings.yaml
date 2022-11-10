@@ -1,0 +1,85 @@
+type: object
+properties:
+  job.delete_ttl_seconds_after_finished:
+    type: integer
+    nullable: true
+    default: null
+  cronjob.concurrency_policy:
+    type: string
+    default: "Forbid"
+  cronjob.failed_jobs_history_limit:
+    type: integer
+    default: 1
+  cronjob.success_jobs_history_limit:
+    type: integer
+    default: 1
+  readiness_probe.type:
+    type: string
+    enum:
+      - NONE
+      - TCP
+      - HTTP
+    description: |
+      `NONE` disable readiness probe
+      `TCP` enable TCP readiness probe
+      `HTTP` enable HTTP readiness probe
+    default: TCP
+  readiness_probe.http_get.path:
+    type: string
+    description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
+    default: /
+  readiness_probe.initial_delay_seconds:
+    type: integer
+    description: Delay before liveness probe is initiated
+    default: 30
+  readiness_probe.period_seconds:
+    type: integer
+    description: How often to perform the probe
+    default: 10
+  readiness_probe.timeout_seconds:
+    type: integer
+    description: When the probe times out
+    default: 1
+  readiness_probe.success_threshold:
+    type: integer
+    description: Minimum consecutive successes for the probe to be considered successful after having failed.
+    default: 1
+  readiness_probe.failure_threshold:
+    type: integer
+    description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
+    default: 3
+  liveness_probe.type:
+    type: string
+    enum:
+      - NONE
+      - TCP
+      - HTTP
+    description: |
+      `NONE` disable liveness probe
+      `TCP` enable TCP liveness probe
+      `HTTP` enable HTTP liveness probe
+    default: TCP
+  liveness_probe.http_get.path:
+    type: string
+    description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
+    default: /
+  liveness_probe.initial_delay_seconds:
+    type: integer
+    description: Delay before liveness probe is initiated
+    default: 30
+  liveness_probe.period_seconds:
+    type: integer
+    description: How often to perform the probe
+    default: 10
+  liveness_probe.timeout_seconds:
+    type: integer
+    description: When the probe times out
+    default: 5
+  liveness_probe.success_threshold:
+    type: integer
+    description: Minimum consecutive successes for the probe to be considered successful after having failed.
+    default: 1
+  liveness_probe.failure_threshold:
+    type: integer
+    description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
+    default: 3

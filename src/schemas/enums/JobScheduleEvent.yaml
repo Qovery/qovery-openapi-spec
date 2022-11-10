@@ -1,0 +1,11 @@
+type: string
+enum:
+  - ON_START
+  - ON_STOP
+  - ON_DELETE
+  - CRON
+description: |
+  On which event the job is going to run.
+  ON_START means when a deployment is requested for the environment
+  ON_STOP means when a stop of the environment is requested
+  CRON means at a scheduled interval
