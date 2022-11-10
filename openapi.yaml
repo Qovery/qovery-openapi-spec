@@ -43,6 +43,20 @@ tags:
   - name: Container Registry
   - name: Container Secret
   - name: Containers
+  - name: Job
+  - name: Job Actions
+  - name: Job Configuration
+  - name: Job Database
+  - name: Job Deployment Restriction
+  - name: Job Deployment History
+  - name: Job Environment Variable
+  - name: Job Event
+  - name: Job Logs
+  - name: Job Main Calls
+  - name: Job Metrics
+  - name: Job Registry
+  - name: Job Secret
+  - name: Jobs
   - name: Backups
   - name: Billing
   - name: Cloud Provider
@@ -119,6 +133,7 @@ x-tagGroups:
       - Applications
       - Containers
       - Databases
+      - Jobs
       - Environment Actions
       - Environment Logs
       - Environment Deployment History
@@ -168,6 +183,18 @@ x-tagGroups:
       - Database Container
       - Backups
       - Database Event
+  - name: Job
+    tags:
+      - Job Main Calls
+      - Job Actions
+      - Job Configuration
+      - Job Custom Domain
+      - Job Dependency
+      - Job Metrics
+      - Job Deployment History
+      - Job Environment Variable
+      - Job Secret
+      - Job Event
   - name: Account
     tags:
       - Account Info
@@ -3523,7 +3550,7 @@ paths:
       operationId: listApplication
       parameters:
         - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1container/get/parameters/1'
+        - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1job/get/parameters/1'
       tags:
         - Applications
       responses:
@@ -3692,13 +3719,7 @@ paths:
       operationId: listContainer
       parameters:
         - $ref: '#/components/parameters/environmentId'
-        - name: toUpdate
-          in: query
-          description: return (or not) results that must be updated
-          required: false
-          schema:
-            type: boolean
-            default: false
+        - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1job/get/parameters/1'
       tags:
         - Containers
       responses:
@@ -7702,6 +7723,756 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/job':
+    get:
+      summary: List jobs
+      operationId: listJobs
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - name: toUpdate
+          in: query
+          description: return (or not) results that must be updated
+          required: false
+          schema:
+            type: boolean
+            default: false
+      tags:
+        - Jobs
+      responses:
+        '200':
+          description: List jobs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a job
+      operationId: createJob
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Jobs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+      responses:
+        '201':
+          description: Create job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Job name within the environment is already taken
+  '/environment/{environmentId}/job/status':
+    get:
+      summary: List all environment job statuses
+      description: Returns a list of jobs with only their id and status.
+      operationId: getEnvironmentJobStatus
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Jobs
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferenceObjectStatusResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}':
+    get:
+      summary: Get job by ID
+      operationId: getJob
+      parameters:
+        - name: jobId
+          in: path
+          description: Job ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Job Main Calls
+      responses:
+        '200':
+          description: Get job by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit job
+      description: |
+        - To edit the job you must have the admin permission.
+      operationId: editJob
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+      responses:
+        '200':
+          description: Edit job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Job name within the environment is already taken
+    delete:
+      summary: Delete job
+      description: To delete the job you must have the admin permission
+      operationId: deleteJob
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Main Calls
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/advancedSettings':
+    get:
+      summary: Get advanced settings
+      description: Get list and values of the advanced settings of the job.
+      operationId: getJobAdvancedSettings
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Configuration
+      responses:
+        '200':
+          description: Advanced settings list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAdvancedSettings'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit advanced settings
+      description: Edit advanced settings by returning table of advanced settings.
+      operationId: editJobAdvancedSettings
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Configuration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobAdvancedSettings'
+      responses:
+        '201':
+          description: Updated advanced settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAdvancedSettings'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/deploy':
+    post:
+      summary: Deploy job
+      description: You must provide a git commit id
+      operationId: deployJob
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - name: force
+          in: query
+          required: false
+          description: Enable or Disable the force trigger of the job
+          schema:
+            type: boolean
+            default: false
+      tags:
+        - Job Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobDeployRequest'
+      responses:
+        '202':
+          description: Deploy job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/job/{jobId}/restart':
+    post:
+      summary: Restart job
+      operationId: restartJob
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - name: force
+          in: query
+          required: false
+          description: Enable or Disable the force trigger of the job
+          schema:
+            type: boolean
+            default: false
+      tags:
+        - Job Actions
+      responses:
+        '202':
+          description: Job restart has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/job/{jobId}/stop':
+    post:
+      summary: Stop job
+      operationId: stopJob
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Actions
+      responses:
+        '202':
+          description: Job stop has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Job is already stopped or an operation is in progress
+  '/job/{jobId}/status':
+    get:
+      summary: Get job status
+      operationId: getJobStatus
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Main Calls
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/deploymentHistory':
+    get:
+      summary: List job deployments
+      description: Returns the 20 last job deployments
+      operationId: listJobDeploymentHistory
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Deployment History
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginationData'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/DeploymentHistoryJobResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/instance':
+    get:
+      summary: List currently running instances of the job with their CPU and RAM metrics
+      operationId: getJobCurrentInstance
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Metrics
+      responses:
+        '200':
+          description: Know current resource consumption of the job for each running instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstanceResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/environmentVariable':
+    get:
+      summary: List environment variables
+      operationId: listJobEnvironmentVariable
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Environment Variable
+      responses:
+        '200':
+          description: List environment variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Add an environment variable to the job
+      description: |
+        - Add an environment variable to the job.
+      operationId: createJobEnvironmentVariable
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Environment Variable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableRequest'
+      responses:
+        '201':
+          description: Added an environment variable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/environmentVariable/import':
+    post:
+      summary: Import variables
+      description: 'Import environment variables in a defined scope, with a defined visibility.'
+      operationId: importJobEnvironmentVariable
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Environment Variable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableImportRequest'
+      responses:
+        '201':
+          description: Import environment variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableImport'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/environmentVariable/{environmentVariableId}':
+    delete:
+      summary: Delete an environment variable from a job
+      description: |
+        - To delete an environment variable from an job you must have the project user permission
+        - You can't delete a BUILT_IN variable
+        - If you delete a variable having override or alias, the associated override/alias will be deleted as well
+      operationId: deleteJobEnvironmentVariable
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - Job Environment Variable
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit an environment variable belonging to the job
+      description: |
+        - You can't edit a BUILT_IN variable
+        - For an override, you can't edit the key
+        - For an alias, you can't edit the value
+        - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER)
+      operationId: editJobEnvironmentVariable
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - Job Environment Variable
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentVariableEditRequest'
+      responses:
+        '200':
+          description: Edited the environment variable value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/environmentVariable/{environmentVariableId}/override':
+    post:
+      summary: Create an environment variable override at the job level
+      description: |
+        - Allows you to override at job level an environment variable that has a higher scope.
+        - You only have to specify a value in the request body
+        - The system will create a new environment variable at job level with the same key as the one corresponding to the variable id in the path
+        - The response body will contain the newly created variable
+        - Information regarding the overridden_variable will be exposed in the "overridden_variable" field of the newly created variable
+      operationId: createJobEnvironmentVariableOverride
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - Job Environment Variable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Value'
+      responses:
+        '201':
+          description: Create variable override
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+        '400':
+          description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/environmentVariable/{environmentVariableId}/alias':
+    post:
+      summary: Create an environment variable alias at the job level
+      description: |
+        - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key.
+        - You only have to specify a key in the request body
+        - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path
+        - The response body will contain the newly created variable
+        - Information regarding the aliased_variable will be exposed in the "aliased_variable" field of the newly created variable
+        - Only 1 alias level is allowed. You can't create an alias on an alias
+      operationId: createJobEnvironmentVariableAlias
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/environmentVariableId'
+      tags:
+        - Job Environment Variable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Key'
+      responses:
+        '201':
+          description: Create variable alias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariable'
+        '400':
+          description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/secret':
+    get:
+      summary: List job secrets
+      description: 'Secrets are like environment variables, but they are secured and can''t be revealed.'
+      operationId: listJobSecrets
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Secret
+      responses:
+        '200':
+          description: List secrets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Add a secret to the job
+      description: |
+        - Add a secret to the job.
+      operationId: createJobSecret
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+      tags:
+        - Job Secret
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretRequest'
+      responses:
+        '201':
+          description: Add a secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Secret'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/secret/{secretId}':
+    delete:
+      summary: Delete a secret from an job
+      description: |
+        - To delete a secret you must have the project user permission
+        - You can't delete a BUILT_IN secret
+        - If you delete a secret having override or alias, the associated override/alias will be deleted as well
+      operationId: deleteJobSecret
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - Job Secret
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a secret belonging to the job
+      description: |
+        - You can't edit a BUILT_IN secret
+        - For an override, you can't edit the key
+        - For an alias, you can't edit the value
+        - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER)
+      operationId: editJobSecret
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - Job Secret
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretEditRequest'
+      responses:
+        '200':
+          description: Edited the secret value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Secret'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/secret/{secretId}/override':
+    post:
+      summary: Create a secret override at the job level
+      description: |
+        - Allows you to override at job level a secret that has a higher scope.
+        - You only have to specify a value in the request body
+        - The system will create a new secret at job level with the same key as the one corresponding to the secret id in the path
+        - The response body will contain the newly created secret
+        - Information regarding the overridden_secret will be exposed in the "overridden_secret" field of the newly created secret
+      operationId: createJobSecretOverride
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - Job Secret
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Value'
+      responses:
+        '201':
+          description: Create secret override
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Secret'
+        '400':
+          description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/secret/{secretId}/alias':
+    post:
+      summary: Create a secret alias at the job level
+      description: |
+        - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key.
+        - You only have to specify a key in the request body
+        - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path
+        - The response body will contain the newly created secret
+        - Information regarding the aliased_secret will be exposed in the "aliased_secret" field of the newly created secret
+        - Only 1 alias level is allowed. You can't create an alias on an alias
+      operationId: createJobSecretAlias
+      parameters:
+        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/secretId'
+      tags:
+        - Job Secret
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Key'
+      responses:
+        '201':
+          description: Create secret alias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Secret'
+        '400':
+          description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   parameters:
     applicationId:
@@ -11266,6 +12037,351 @@ components:
         - POSTED
         - UNKNOWN
         - VOIDED
+    JobRequest:
+      allOf:
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              description: name is case insensitive
+            arguments:
+              type: array
+              items:
+                type: string
+            entrypoint:
+              type: string
+              description: optional entrypoint when launching container
+            cpu:
+              type: integer
+              description: unit is millicores (m). 1000m = 1 cpu
+              default: 500
+              example: 1250
+            memory:
+              type: integer
+              description: unit is MB. 1024 MB = 1GB
+              default: 512
+              example: 1024
+            max_nb_restart:
+              type: integer
+              minimum: 0
+              description: |
+                Maximum number of restart allowed before the job is considered as failed
+                0 means that no restart/crash of the job is allowed
+            max_duration_seconds:
+              type: integer
+              minimum: 0
+              description: |
+                Maximum number of seconds allowed for the job to run before killing it and mark it as failed
+            auto_preview:
+              type: boolean
+              description: |
+                Indicates if the 'environment preview option' is enabled for this container.  
+                If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.  
+                If not specified, it takes the value of the `auto_preview` property from the associated environment.
+            port:
+              type: integer
+              nullable: true
+              minimum: 1
+              description: Port where to run readiness and liveliness probes checks. The port will not be exposed externally
+              default: null
+            source:
+              type: object
+              properties:
+                image:
+                  type: object
+                  nullable: true
+                  properties:
+                    image_name:
+                      type: string
+                      description: |
+                        The image name pattern differs according to chosen container registry provider:  
+                        * `ECR`: `repository`
+                        * `SCALEWAY_CR`: `namespace/image`
+                        * `DOCKER_HUB`: `image` or `repository/image`
+                        * `PUBLIC_ECR`: `registry_alias/repository`
+                    tag:
+                      type: string
+                      description: tag of the image container
+                    registry_id:
+                      type: string
+                      description: tag of the image container
+                docker:
+                  type: object
+                  nullable: true
+                  properties:
+                    dockerfile_path:
+                      type: string
+                      description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+                      nullable: true
+                    git_repository:
+                      $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+            schedule:
+              type: object
+              properties:
+                event:
+                  $ref: '#/components/schemas/JobScheduleEvent'
+                schedule_at:
+                  type: string
+                  format: cron
+                  nullable: true
+                  description: |
+                    Can only be set if the event is CRON.
+                    Represent the cron format for the job schedule without seconds.
+                    For example: `* * * * *` represent the cron to launch the job every minute.
+                    See https://crontab.guru/ to WISIWIG interface.
+                    Timezone is UTC
+    JobResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - environment
+            - registry
+            - name
+            - image_name
+            - tag
+            - auto_preview
+            - cpu
+            - memory
+            - min_running_instances
+            - max_running_instances
+            - maximum_cpu
+            - maximum_memory
+          properties:
+            environment:
+              $ref: '#/components/schemas/ReferenceObject'
+            registry:
+              $ref: '#/components/schemas/ReferenceObject'
+            maximum_cpu:
+              type: integer
+              description: Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+              example: 16000
+            maximum_memory:
+              type: integer
+              description: Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+              example: 16384
+            name:
+              type: string
+              description: name is case insensitive
+            arguments:
+              type: array
+              items:
+                type: string
+            entrypoint:
+              type: string
+              description: optional entrypoint when launching container
+            cpu:
+              type: integer
+              description: unit is millicores (m). 1000m = 1 cpu
+              example: 1250
+            memory:
+              type: integer
+              description: unit is MB. 1024 MB = 1GB
+              example: 1024
+            max_nb_restart:
+              type: integer
+              minimum: 0
+              description: |
+                Maximum number of restart allowed before the job is considered as failed
+                0 means that no restart/crash of the job is allowed
+            max_duration_seconds:
+              type: integer
+              minimum: 0
+              description: |
+                Maximum number of seconds allowed for the job to run before killing it and mark it as failed
+            auto_preview:
+              type: boolean
+              description: |
+                Indicates if the 'environment preview option' is enabled for this container.  
+                If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.  
+                If not specified, it takes the value of the `auto_preview` property from the associated environment.
+            port:
+              type: integer
+              nullable: true
+              minimum: 1
+              description: Port where to run readiness and liveliness probes checks. The port will not be exposed externally
+              default: null
+            source:
+              type: object
+              properties:
+                image:
+                  type: object
+                  nullable: true
+                  properties:
+                    image_name:
+                      type: string
+                      description: |
+                        The image name pattern differs according to chosen container registry provider:  
+                        * `ECR`: `repository`
+                        * `SCALEWAY_CR`: `namespace/image`
+                        * `DOCKER_HUB`: `image` or `repository/image`
+                        * `PUBLIC_ECR`: `registry_alias/repository`
+                    tag:
+                      type: string
+                      description: tag of the image container
+                    registry_id:
+                      type: string
+                      description: tag of the image container
+                docker:
+                  type: object
+                  nullable: true
+                  properties:
+                    dockerfile_path:
+                      type: string
+                      description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+                      nullable: true
+                    git_repository:
+                      $ref: '#/components/schemas/ApplicationGitRepository'
+            schedule:
+              type: object
+              properties:
+                event:
+                  $ref: '#/components/schemas/JobScheduleEvent'
+                schedule_at:
+                  type: string
+                  format: cron
+                  nullable: true
+                  description: |
+                    Can only be set if the event is CRON.
+                    Represent the cron format for the job schedule without seconds.
+                    For example: `* * * * *` represent the cron to launch the job every minute.
+                    See https://crontab.guru/ to WISIWIG interface.
+                    Timezone is UTC
+    JobResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobResponse'
+    JobAdvancedSettings:
+      type: object
+      properties:
+        job.delete_ttl_seconds_after_finished:
+          type: integer
+          nullable: true
+          default: null
+        cronjob.concurrency_policy:
+          type: string
+          default: Forbid
+        cronjob.failed_jobs_history_limit:
+          type: integer
+          default: 1
+        cronjob.success_jobs_history_limit:
+          type: integer
+          default: 1
+        readiness_probe.type:
+          type: string
+          enum:
+            - NONE
+            - TCP
+            - HTTP
+          description: |
+            `NONE` disable readiness probe
+            `TCP` enable TCP readiness probe
+            `HTTP` enable HTTP readiness probe
+          default: TCP
+        readiness_probe.http_get.path:
+          type: string
+          description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
+          default: /
+        readiness_probe.initial_delay_seconds:
+          type: integer
+          description: Delay before liveness probe is initiated
+          default: 30
+        readiness_probe.period_seconds:
+          type: integer
+          description: How often to perform the probe
+          default: 10
+        readiness_probe.timeout_seconds:
+          type: integer
+          description: When the probe times out
+          default: 1
+        readiness_probe.success_threshold:
+          type: integer
+          description: Minimum consecutive successes for the probe to be considered successful after having failed.
+          default: 1
+        readiness_probe.failure_threshold:
+          type: integer
+          description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
+          default: 3
+        liveness_probe.type:
+          type: string
+          enum:
+            - NONE
+            - TCP
+            - HTTP
+          description: |
+            `NONE` disable liveness probe
+            `TCP` enable TCP liveness probe
+            `HTTP` enable HTTP liveness probe
+          default: TCP
+        liveness_probe.http_get.path:
+          type: string
+          description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
+          default: /
+        liveness_probe.initial_delay_seconds:
+          type: integer
+          description: Delay before liveness probe is initiated
+          default: 30
+        liveness_probe.period_seconds:
+          type: integer
+          description: How often to perform the probe
+          default: 10
+        liveness_probe.timeout_seconds:
+          type: integer
+          description: When the probe times out
+          default: 5
+        liveness_probe.success_threshold:
+          type: integer
+          description: Minimum consecutive successes for the probe to be considered successful after having failed.
+          default: 1
+        liveness_probe.failure_threshold:
+          type: integer
+          description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
+          default: 3
+    JobDeployRequest:
+      type: object
+      required:
+        - image_tag
+      properties:
+        image_tag:
+          type: string
+          description: Image tag to deploy
+    JobScheduleEvent:
+      type: string
+      enum:
+        - ON_START
+        - ON_STOP
+        - ON_DELETE
+        - CRON
+      description: |
+        On which event the job is going to run.
+        ON_START means when a deployment is requested for the environment
+        ON_STOP means when a stop of the environment is requested
+        CRON means at a scheduled interval
+    DeploymentHistoryJobResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          properties:
+            name:
+              type: string
+              description: name of the job
+            status:
+              $ref: '#/components/schemas/DeploymentHistoryStatusEnum'
+            image_name:
+              type: string
+            tag:
+              type: string
+            arguments:
+              type: array
+              items:
+                type: string
+            entrypoint:
+              type: string
     Key:
       type: object
       required:
