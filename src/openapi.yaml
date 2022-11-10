@@ -191,8 +191,6 @@ x-tagGroups:
       - Job Custom Domain
       - Job Dependency
       - Job Metrics
-      - Job Database
-      - Job Logs
       - Job Deployment Restriction
       - Job Deployment History
       - Job Environment Variable
