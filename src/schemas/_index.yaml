@@ -280,10 +280,14 @@ EnvironmentEditRequest:
   $ref: ./EnvironmentEditRequest.yaml
 EnvironmentLog:
   $ref: ./EnvironmentLogResponse.yaml
+EnvironmentLogs:
+  $ref: ./EnvironmentLogsResponse.yaml
 EnvironmentLogPaginatedResponseList:
   $ref: ./EnvironmentLogPaginatedResponseList.yaml
 EnvironmentLogResponseList:
   $ref: ./EnvironmentLogResponseList.yaml
+EnvironmentLogsResponseList:
+  $ref: ./EnvironmentLogsResponseList.yaml
 EnvironmentLogTypeEnum:
   $ref: ./enums/EnvironmentLogType.yaml
 EnvironmentModeEnum:
