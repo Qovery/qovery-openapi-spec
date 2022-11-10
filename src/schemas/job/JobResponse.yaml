@@ -21,7 +21,7 @@ allOf:
         $ref: '../ReferenceObject.yaml'
       maximum_cpu:
         type: integer
-        description: Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+        description: Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
         example: 16000
       maximum_memory:
         type: integer
