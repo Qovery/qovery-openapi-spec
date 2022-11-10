@@ -372,6 +372,8 @@ JobAdvancedSettings:
   $ref: ./job/JobAdvancedSettings.yaml
 JobDeployRequest:
   $ref: ./job/JobDeployRequest.yaml
+JobScheduleEvent:
+  $ref: ./enums/JobScheduleEvent.yaml
 DeploymentHistoryJobResponse:
   $ref: ./job/DeploymentHistoryJobResponse.yaml
 Key:
