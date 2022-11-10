@@ -25,7 +25,7 @@ allOf:
         example: 16000
       maximum_memory:
         type: integer
-        description: Maximum memory that can be allocated to the container based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+        description: Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
         example: 16384
       name:
         type: string
