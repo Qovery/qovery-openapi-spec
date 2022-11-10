@@ -3929,6 +3929,94 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/logs':
+    get:
+      summary: List environment deployment logs v2
+      operationId: listEnvironmentLogs
+      description: This returns the last 1000 environment deployment logs v2
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Logs
+      responses:
+        '200':
+          description: List logs v2
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - timestamp
+                    - details
+                  properties:
+                    id:
+                      type: string
+                      format: string
+                    timestamp:
+                      type: string
+                      format: date-time
+                    details:
+                      type: object
+                      properties:
+                        organization_id:
+                          type: string
+                          format: uuid
+                        cluster_id:
+                          type: string
+                          format: uuid
+                        execution_id:
+                          type: string
+                        transmitter:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            name:
+                              type: string
+                            type:
+                              type: string
+                        stage:
+                          type: object
+                          properties:
+                            step:
+                              type: string
+                    error:
+                      type: object
+                      nullable: true
+                      properties:
+                        tag:
+                          type: string
+                        user_log_message:
+                          type: string
+                        link:
+                          type: string
+                        hint_message:
+                          type: string
+                        underlying_error:
+                          type: object
+                          properties:
+                            message:
+                              type: string
+                            full_details:
+                              type: string
+                    message:
+                      type: object
+                      nullable: true
+                      properties:
+                        safe_message:
+                          type: string
+                        full_details:
+                          type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/deploymentHistory':
     get:
       summary: List environment deployments
