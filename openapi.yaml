@@ -11499,11 +11499,11 @@ components:
     EnvironmentLogs:
       type: object
       required:
-        - id
+        - type
         - timestamp
         - details
       properties:
-        id:
+        type:
           type: string
           format: string
         timestamp:
