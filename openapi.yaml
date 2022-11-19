@@ -4391,6 +4391,23 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+  /defaultContainerAdvancedSettings:
+    get:
+      summary: List default container advanced settings
+      operationId: getDefaultContainerAdvancedSettings
+      tags:
+        - Containers
+      responses:
+        '200':
+          description: Default container advanced settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerAdvancedSettings'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
   '/application/{applicationId}':
     get:
       summary: Get application by ID
