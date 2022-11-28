@@ -11065,6 +11065,10 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/DeploymentHistoryDatabase'
+            jobs:
+              type: array
+              items:
+                $ref: '#/components/schemas/DeploymentHistoryJobResponse'
     DeploymentHistoryEnvironmentPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
