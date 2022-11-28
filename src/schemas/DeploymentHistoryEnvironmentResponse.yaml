@@ -19,4 +19,4 @@ allOf:
       jobs:
         type: array
         items:
-          $ref: './DeploymentHistoryJobResponse.yaml'
+          $ref: './job/DeploymentHistoryJobResponse.yaml'
