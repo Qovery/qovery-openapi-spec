@@ -16,3 +16,7 @@ allOf:
         type: array
         items:
           $ref: './DeploymentHistoryDatabaseResponse.yaml'
+      jobs:
+        type: array
+        items:
+          $ref: './job/DeploymentHistoryJobResponse.yaml'
