@@ -12397,6 +12397,24 @@ components:
               type: string
             tag:
               type: string
+            commit:
+              $ref: '#/components/schemas/Commit'
+              nullable: true
+            schedule:
+              type: object
+              properties:
+                event:
+                  $ref: '#/components/schemas/JobScheduleEvent'
+                schedule_at:
+                  type: string
+                  format: cron
+                  nullable: true
+                  description: |
+                    Can only be set if the event is CRON.
+                    Represent the cron format for the job schedule without seconds.
+                    For example: `* * * * *` represent the cron to launch the job every minute.
+                    See https://crontab.guru/ to WISIWIG interface.
+                    Timezone is UTC
             arguments:
               type: array
               items:
