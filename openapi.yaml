@@ -7824,13 +7824,7 @@ paths:
       summary: Get job by ID
       operationId: getJob
       parameters:
-        - name: jobId
-          in: path
-          description: Job ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Main Calls
       responses:
@@ -7852,7 +7846,7 @@ paths:
         - To edit the job you must have the admin permission.
       operationId: editJob
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Main Calls
       requestBody:
@@ -7882,7 +7876,7 @@ paths:
       description: To delete the job you must have the admin permission
       operationId: deleteJob
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Main Calls
       responses:
@@ -7900,7 +7894,7 @@ paths:
       description: Get list and values of the advanced settings of the job.
       operationId: getJobAdvancedSettings
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Configuration
       responses:
@@ -7921,7 +7915,7 @@ paths:
       description: Edit advanced settings by returning table of advanced settings.
       operationId: editJobAdvancedSettings
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Configuration
       requestBody:
@@ -7950,7 +7944,7 @@ paths:
       description: You must provide a git commit id
       operationId: deployJob
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
         - name: force
           in: query
           required: false
@@ -7987,7 +7981,7 @@ paths:
       summary: Restart job
       operationId: restartJob
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
         - name: force
           in: query
           required: false
@@ -8017,7 +8011,7 @@ paths:
       summary: Stop job
       operationId: stopJob
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Actions
       responses:
@@ -8040,7 +8034,7 @@ paths:
       summary: Get job status
       operationId: getJobStatus
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Main Calls
       responses:
@@ -8062,7 +8056,7 @@ paths:
       description: Returns the 20 last job deployments
       operationId: listJobDeploymentHistory
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Deployment History
       responses:
@@ -8090,7 +8084,7 @@ paths:
       summary: List currently running instances of the job with their CPU and RAM metrics
       operationId: getJobCurrentInstance
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Metrics
       responses:
@@ -8111,7 +8105,7 @@ paths:
       summary: List environment variables
       operationId: listJobEnvironmentVariable
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Environment Variable
       responses:
@@ -8133,7 +8127,7 @@ paths:
         - Add an environment variable to the job.
       operationId: createJobEnvironmentVariable
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Environment Variable
       requestBody:
@@ -8162,7 +8156,7 @@ paths:
       description: 'Import environment variables in a defined scope, with a defined visibility.'
       operationId: importJobEnvironmentVariable
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Environment Variable
       requestBody:
@@ -8194,7 +8188,7 @@ paths:
         - If you delete a variable having override or alias, the associated override/alias will be deleted as well
       operationId: deleteJobEnvironmentVariable
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
         - Job Environment Variable
@@ -8216,7 +8210,7 @@ paths:
         - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER)
       operationId: editJobEnvironmentVariable
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
         - Job Environment Variable
@@ -8252,7 +8246,7 @@ paths:
         - Information regarding the overridden_variable will be exposed in the "overridden_variable" field of the newly created variable
       operationId: createJobEnvironmentVariableOverride
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
         - Job Environment Variable
@@ -8288,7 +8282,7 @@ paths:
         - Only 1 alias level is allowed. You can't create an alias on an alias
       operationId: createJobEnvironmentVariableAlias
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
         - $ref: '#/components/parameters/environmentVariableId'
       tags:
         - Job Environment Variable
@@ -8318,7 +8312,7 @@ paths:
       description: 'Secrets are like environment variables, but they are secured and can''t be revealed.'
       operationId: listJobSecrets
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Secret
       responses:
@@ -8340,7 +8334,7 @@ paths:
         - Add a secret to the job.
       operationId: createJobSecret
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Secret
       requestBody:
@@ -8372,7 +8366,7 @@ paths:
         - If you delete a secret having override or alias, the associated override/alias will be deleted as well
       operationId: deleteJobSecret
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
         - $ref: '#/components/parameters/secretId'
       tags:
         - Job Secret
@@ -8394,7 +8388,7 @@ paths:
         - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER)
       operationId: editJobSecret
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
         - $ref: '#/components/parameters/secretId'
       tags:
         - Job Secret
@@ -8430,7 +8424,7 @@ paths:
         - Information regarding the overridden_secret will be exposed in the "overridden_secret" field of the newly created secret
       operationId: createJobSecretOverride
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
         - $ref: '#/components/parameters/secretId'
       tags:
         - Job Secret
@@ -8466,7 +8460,7 @@ paths:
         - Only 1 alias level is allowed. You can't create an alias on an alias
       operationId: createJobSecretAlias
       parameters:
-        - $ref: '#/paths/~1job~1%7BjobId%7D/get/parameters/0'
+        - $ref: '#/components/parameters/jobId'
         - $ref: '#/components/parameters/secretId'
       tags:
         - Job Secret
@@ -8608,6 +8602,14 @@ components:
       name: inviteId
       in: path
       description: Invite ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    jobId:
+      name: jobId
+      in: path
+      description: Job ID
       required: true
       schema:
         type: string
