@@ -12089,6 +12089,7 @@ components:
             max_nb_restart:
               type: integer
               minimum: 0
+              default: 0
               description: |
                 Maximum number of restart allowed before the job is considered as failed
                 0 means that no restart/crash of the job is allowed
@@ -12305,31 +12306,31 @@ components:
             `NONE` disable readiness probe
             `TCP` enable TCP readiness probe
             `HTTP` enable HTTP readiness probe
-          default: TCP
+          default: NONE
         readiness_probe.http_get.path:
           type: string
           description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
-          default: /
+          default: ''
         readiness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
-          default: 30
+          default: 0
         readiness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
-          default: 10
+          default: 0
         readiness_probe.timeout_seconds:
           type: integer
           description: When the probe times out
-          default: 1
+          default: 0
         readiness_probe.success_threshold:
           type: integer
           description: Minimum consecutive successes for the probe to be considered successful after having failed.
-          default: 1
+          default: 0
         readiness_probe.failure_threshold:
           type: integer
           description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
-          default: 3
+          default: 0
         liveness_probe.type:
           type: string
           enum:
@@ -12340,31 +12341,31 @@ components:
             `NONE` disable liveness probe
             `TCP` enable TCP liveness probe
             `HTTP` enable HTTP liveness probe
-          default: TCP
+          default: NONE
         liveness_probe.http_get.path:
           type: string
           description: HTTP GET path to check status (must returns 2xx E.g "/healtz") - only usable with TYPE = HTTP
-          default: /
+          default: ''
         liveness_probe.initial_delay_seconds:
           type: integer
           description: Delay before liveness probe is initiated
-          default: 30
+          default: 0
         liveness_probe.period_seconds:
           type: integer
           description: How often to perform the probe
-          default: 10
+          default: 0
         liveness_probe.timeout_seconds:
           type: integer
           description: When the probe times out
-          default: 5
+          default: 0
         liveness_probe.success_threshold:
           type: integer
           description: Minimum consecutive successes for the probe to be considered successful after having failed.
-          default: 1
+          default: 0
         liveness_probe.failure_threshold:
           type: integer
           description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
-          default: 3
+          default: 0
     JobDeployRequest:
       type: object
       required:
