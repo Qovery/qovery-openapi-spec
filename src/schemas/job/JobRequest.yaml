@@ -6,6 +6,8 @@ allOf:
       name:
         type: string
         description: name is case insensitive
+      description:
+        type: string
       arguments:
         type: array
         items:
@@ -83,7 +85,7 @@ allOf:
         properties:
           event:
             $ref: '../enums/JobScheduleEvent.yaml'
-          schedule_at:
+          scheduled_at:
             type: string
             format: cron
             nullable: true
