@@ -12069,6 +12069,8 @@ components:
             name:
               type: string
               description: name is case insensitive
+            description:
+              type: string
             arguments:
               type: array
               items:
@@ -12146,7 +12148,7 @@ components:
               properties:
                 event:
                   $ref: '#/components/schemas/JobScheduleEvent'
-                schedule_at:
+                scheduled_at:
                   type: string
                   format: cron
                   nullable: true
