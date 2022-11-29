@@ -29,6 +29,8 @@ eventId:
   $ref: ./path/eventId.yaml
 inviteId:
   $ref: ./path/inviteId.yaml
+jobId:
+  $ref: ./path/jobId.yaml
 # QUERY
 gitCommitId:
   $ref: ./query/gitCommitId.yaml
