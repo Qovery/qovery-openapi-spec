@@ -26,6 +26,7 @@ allOf:
       max_nb_restart:
         type: integer
         minimum: 0
+        default: 0
         description: |
           Maximum number of restart allowed before the job is considered as failed
           0 means that no restart/crash of the job is allowed
