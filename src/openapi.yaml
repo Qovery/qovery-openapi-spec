@@ -385,6 +385,8 @@ paths:
     $ref: './resources/Environment.yaml'
   /environment/{environmentId}/status:
     $ref: './resources/EnvironmentStatus.yaml'
+  /environment/{environmentId}/statuses:
+    $ref: './resources/EnvironmentStatuses.yaml'
   /environment/{environmentId}/deploymentRule:
     $ref: './resources/EnvironmentDeploymentRule.yaml'
   /environment/{environmentId}/deploymentRule/{deploymentRuleId}:
