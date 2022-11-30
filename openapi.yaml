@@ -3366,6 +3366,46 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/statuses':
+    get:
+      summary: Get environment statuses with services status
+      operationId: getEnvironmentStatuses
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Main Calls
+      responses:
+        '200':
+          description: Get statuses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  environment:
+                    $ref: '#/components/schemas/Status'
+                  applications:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Status'
+                  containers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Status'
+                  jobs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Status'
+                  databases:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/deploymentRule':
     get:
       summary: Get environment deployment rule
