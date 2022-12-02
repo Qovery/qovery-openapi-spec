@@ -12185,19 +12185,61 @@ components:
                       $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
             schedule:
               type: object
+              description: |
+                If you want to define a Cron job, only the `cronjob` property must be filled  
+                A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete`
               properties:
-                event:
-                  $ref: '#/components/schemas/JobScheduleEvent'
-                scheduled_at:
-                  type: string
-                  format: cron
-                  nullable: true
-                  description: |
-                    Can only be set if the event is CRON.  
-                    Represent the cron format for the job schedule without seconds.  
-                    For example: `* * * * *` represent the cron to launch the job every minute.  
-                    See https://crontab.guru/ to WISIWIG interface.  
-                    Timezone is UTC  
+                on_start:
+                  type: object
+                  properties:
+                    arguments:
+                      type: array
+                      items:
+                        type: string
+                    entrypoint:
+                      type: string
+                      description: optional entrypoint when launching container
+                on_stop:
+                  type: object
+                  properties:
+                    arguments:
+                      type: array
+                      items:
+                        type: string
+                    entrypoint:
+                      type: string
+                      description: optional entrypoint when launching container
+                on_delete:
+                  type: object
+                  properties:
+                    arguments:
+                      type: array
+                      items:
+                        type: string
+                    entrypoint:
+                      type: string
+                      description: optional entrypoint when launching container
+                cronjob:
+                  type: object
+                  required:
+                    - scheduled_at
+                  properties:
+                    arguments:
+                      type: array
+                      items:
+                        type: string
+                    entrypoint:
+                      type: string
+                      description: optional entrypoint when launching container
+                    scheduled_at:
+                      type: string
+                      format: cron
+                      description: |
+                        Can only be set if the event is CRON.  
+                        Represent the cron format for the job schedule without seconds.  
+                        For example: `* * * * *` represent the cron to launch the job every minute.  
+                        See https://crontab.guru/ to WISIWIG interface.  
+                        Timezone is UTC
     JobResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -12231,13 +12273,8 @@ components:
             name:
               type: string
               description: name is case insensitive
-            arguments:
-              type: array
-              items:
-                type: string
-            entrypoint:
+            description:
               type: string
-              description: optional entrypoint when launching container
             cpu:
               type: integer
               description: unit is millicores (m). 1000m = 1 cpu
@@ -12302,19 +12339,61 @@ components:
                       $ref: '#/components/schemas/ApplicationGitRepository'
             schedule:
               type: object
+              description: |
+                If you want to define a Cron job, only the `cronjob` property must be filled  
+                A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete`
               properties:
-                event:
-                  $ref: '#/components/schemas/JobScheduleEvent'
-                schedule_at:
-                  type: string
-                  format: cron
-                  nullable: true
-                  description: |
-                    Can only be set if the event is CRON.
-                    Represent the cron format for the job schedule without seconds.
-                    For example: `* * * * *` represent the cron to launch the job every minute.
-                    See https://crontab.guru/ to WISIWIG interface.
-                    Timezone is UTC
+                on_start:
+                  type: object
+                  properties:
+                    arguments:
+                      type: array
+                      items:
+                        type: string
+                    entrypoint:
+                      type: string
+                      description: optional entrypoint when launching container
+                on_stop:
+                  type: object
+                  properties:
+                    arguments:
+                      type: array
+                      items:
+                        type: string
+                    entrypoint:
+                      type: string
+                      description: optional entrypoint when launching container
+                on_delete:
+                  type: object
+                  properties:
+                    arguments:
+                      type: array
+                      items:
+                        type: string
+                    entrypoint:
+                      type: string
+                      description: optional entrypoint when launching container
+                cronjob:
+                  type: object
+                  required:
+                    - scheduled_at
+                  properties:
+                    arguments:
+                      type: array
+                      items:
+                        type: string
+                    entrypoint:
+                      type: string
+                      description: optional entrypoint when launching container
+                    scheduled_at:
+                      type: string
+                      format: cron
+                      description: |
+                        Can only be set if the event is CRON.  
+                        Represent the cron format for the job schedule without seconds.  
+                        For example: `* * * * *` represent the cron to launch the job every minute.  
+                        See https://crontab.guru/ to WISIWIG interface.  
+                        Timezone is UT
     JobResponseList:
       type: object
       properties:
@@ -12427,7 +12506,7 @@ components:
         On which event the job is going to run.  
         ON_START means when a deployment is requested for the environment  
         ON_STOP means when a stop of the environment is requested  
-        ON_DELETE means when an environment delete is requested
+        ON_DELETE means when an environment delete is requested  
         CRON means at a scheduled interval  
     DeploymentHistoryJobResponse:
       allOf:
