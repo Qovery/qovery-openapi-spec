@@ -12111,13 +12111,6 @@ components:
               description: name is case insensitive
             description:
               type: string
-            arguments:
-              type: array
-              items:
-                type: string
-            entrypoint:
-              type: string
-              description: optional entrypoint when launching container
             cpu:
               type: integer
               description: unit is millicores (m). 1000m = 1 cpu
