@@ -11815,6 +11815,7 @@ components:
         - ENVIRONMENT
         - PROJECT
         - CONTAINER
+        - JOB
     Event:
       allOf:
         - $ref: '#/components/schemas/Base'
