@@ -69,7 +69,7 @@ allOf:
             properties:
               dockerfile_path:
                 type: string
-                description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+                description: The path of the associated Dockerfile
                 nullable: true
               git_repository:
                 $ref: '../ApplicationGitRepositoryRequest.yaml'
