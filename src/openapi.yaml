@@ -421,7 +421,7 @@ paths:
     $ref: './resources/EnvironmentContainersCurrentStorage.yaml'
   /environment/{environmentId}/container/currentScale:
     $ref: './resources/EnvironmentContainerCurrentScale.yaml'
-  /environment/{environmentId}/container/deploy:
+  /environment/{environmentId}/service/deploy:
     $ref: './resources/EnvironmentServiceDeploy.yaml'
   /organization/{organizationId}/container/deploy:
     $ref: './resources/OrganizationContainerAutoDeploy.yaml'
