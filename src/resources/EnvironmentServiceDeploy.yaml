@@ -5,7 +5,7 @@ post:
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
-    - Containers
+    - Environment Actions
   requestBody:
     content:
       application/json:
