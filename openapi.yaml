@@ -3869,7 +3869,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/environment/{environmentId}/container/deploy':
+  '/environment/{environmentId}/service/deploy':
     post:
       summary: Deploy services
       description: Update and deploy the selected services
@@ -3877,7 +3877,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - Containers
+        - Environment Actions
       requestBody:
         content:
           application/json:
@@ -11012,6 +11012,11 @@ components:
               git_commit_id:
                 type: string
                 description: Commit ID to deploy.
+        databases:
+          type: array
+          items:
+            type: string
+            format: uuid
         containers:
           type: array
           items:
@@ -11027,6 +11032,21 @@ components:
               image_tag:
                 type: string
                 description: new tag for the container.
+        jobs:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: id of the job to be updated.
+              image_tag:
+                type: string
+                description: new tag for the job image. Use only if job is an image source
+              git_commit_id:
+                type: string
+                description: Commit ID to deploy. Use only if job is a repository source
     DeployRequest:
       type: object
       required:
