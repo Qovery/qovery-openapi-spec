@@ -49,11 +49,5 @@ allOf:
           If activated, a preview environment will be automatically cloned at each pull request.  
           If not specified, it takes the value of the `auto_preview` property from the associated environment.
         default: true
-      sticky_session:
-        type: boolean
-        description: |
-          Specify if the sticky session option (also called persistant session) is activated or not for this application.
-          If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
-        default: false
       ports:
         $ref: './ServicePortResponseList.yaml'
