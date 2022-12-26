@@ -11,6 +11,9 @@ allOf:
       name:
         type: string
         description: name is case insensitive
+      description:
+        type: string
+        description: give a description to this container
       registry_id:
         type: string
         description: id of the linked registry
