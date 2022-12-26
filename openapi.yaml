@@ -10501,6 +10501,9 @@ components:
             name:
               type: string
               description: name is case insensitive
+            description:
+              type: string
+              description: give a description to this container
             registry_id:
               type: string
               description: id of the linked registry
@@ -10894,6 +10897,9 @@ components:
         name:
           type: string
           description: name is case-insensitive
+        description:
+          type: string
+          description: give a description to this database
         version:
           type: string
           example: '10.1'
@@ -10936,6 +10942,9 @@ components:
         name:
           type: string
           description: name is case insensitive
+        description:
+          type: string
+          description: give a description to this database
         type:
           $ref: '#/components/schemas/DatabaseTypeEnum'
         version:
