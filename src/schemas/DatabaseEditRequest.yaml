@@ -3,6 +3,9 @@ properties:
   name:
     type: string
     description: name is case-insensitive
+  description:
+    type: string
+    description: give a description to this database
   version:
     type: string
     example: '10.1'

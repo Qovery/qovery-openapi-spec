@@ -8,6 +8,9 @@ properties:
   name:
     type: string
     description: name is case insensitive
+  description:
+    type: string
+    description: give a description to this database
   type:
     $ref: './enums/DatabaseType.yaml'
   version:
