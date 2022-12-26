@@ -31,6 +31,9 @@ allOf:
       name:
         type: string
         description: name is case insensitive
+      description:
+        type: string
+        description: give a description to this container
       image_name:
         type: string
         description: name of the image container
