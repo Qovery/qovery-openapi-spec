@@ -455,6 +455,8 @@ paths:
     $ref: './resources/DefaultApplicationAdvancedSettings.yaml'
   /defaultContainerAdvancedSettings:
     $ref: './resources/DefaultContainerAdvancedSettings.yaml'
+  /defaultJobAdvancedSettings:
+    $ref: './resources/DefaultJobAdvancedSettings.yaml'
   /application/{applicationId}:
     $ref: './resources/Application.yaml'
   /application/{applicationId}/status:
