@@ -1,0 +1,16 @@
+get:
+  summary: 'List default job advanced settings'
+  operationId: getDefaultJobAdvancedSettings
+  tags:
+    - Jobs
+  responses:
+    '200':
+      description: 'Default job advanced settings'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/job/JobAdvancedSettings.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
