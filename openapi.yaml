@@ -4448,6 +4448,23 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+  /defaultJobAdvancedSettings:
+    get:
+      summary: List default job advanced settings
+      operationId: getDefaultJobAdvancedSettings
+      tags:
+        - Jobs
+      responses:
+        '200':
+          description: Default job advanced settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAdvancedSettings'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
   '/application/{applicationId}':
     get:
       summary: Get application by ID
