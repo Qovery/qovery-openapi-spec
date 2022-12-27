@@ -8524,6 +8524,30 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/job/{jobId}/commit':
+    get:
+      summary: List last job commits
+      description: Returns list of the last 100 commits made on the repository linked to the job
+      operationId: listJobCommit
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+        - $ref: '#/components/parameters/startId'
+        - $ref: '#/components/parameters/gitCommitId'
+      tags:
+        - Job Main Calls
+      responses:
+        '200':
+          description: List job commits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   parameters:
     applicationId:
