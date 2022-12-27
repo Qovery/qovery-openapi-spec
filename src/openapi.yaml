@@ -701,6 +701,8 @@ paths:
     $ref: './resources/job/JobSecretOverride.yaml'
   /job/{jobId}/secret/{secretId}/alias:
     $ref: './resources/job/JobSecretAlias.yaml'
+  /job/{jobId}/commit:
+    $ref: './resources/JobCommit.yaml'
   #/organization/{organizationId}/job/preview:
   #/organization/{organizationId}/job/deploy:
 components:
