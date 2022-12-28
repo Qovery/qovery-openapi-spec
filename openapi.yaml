@@ -12550,12 +12550,17 @@ components:
           default: 0
     JobDeployRequest:
       type: object
-      required:
-        - image_tag
       properties:
         image_tag:
           type: string
-          description: Image tag to deploy
+          description: |
+            Image tag to deploy.  
+            Cannot be set if `git_commit_id` is defined
+        git_commit_id:
+          type: string
+          description: |
+            Commit to deploy
+            Cannot be set if `image_tag` is defined
     JobScheduleEvent:
       type: string
       enum:
