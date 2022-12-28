@@ -7998,7 +7998,7 @@ paths:
   '/job/{jobId}/deploy':
     post:
       summary: Deploy job
-      description: You must provide a git commit id
+      description: You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
       operationId: deployJob
       parameters:
         - $ref: '#/components/parameters/jobId'
