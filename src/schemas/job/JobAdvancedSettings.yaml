@@ -1,5 +1,10 @@
 type: object
 properties:
+  build.timeout_max_sec:
+    type: integer
+    nullable: false
+    description: Built timeout (in seconds)
+    default: 1800
   job.delete_ttl_seconds_after_finished:
     type: integer
     nullable: true
@@ -83,3 +88,6 @@ properties:
     type: integer
     description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
     default: 0
+  security.service_account_name:
+    type: string
+    description: Define the service account name
