@@ -1,8 +1,10 @@
 type: string
 description: |
-  type of the service (application, database, job, gateway...)  
-  present only for `BUILT_IN` variable
+  Type of the service linked to the variable
+
 enum:
   - APPLICATION
   - CONTAINER
   - DATABASE
+  - LIFECYCLE_JOB
+  - CRON_JOB
