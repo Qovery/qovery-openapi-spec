@@ -12645,6 +12645,7 @@ components:
         - APPLICATION
         - CONTAINER
         - DATABASE
+        - JOB
     Log:
       type: object
       required:
