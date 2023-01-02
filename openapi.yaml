@@ -545,6 +545,27 @@ paths:
         '409':
           description: User already invited
   '/organization/{organizationId}/inviteMember/{inviteId}':
+    get:
+      summary: Get member invitation
+      operationId: getMemberInvitation
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/inviteId'
+      tags:
+        - Members
+      responses:
+        '200':
+          description: Get member invitation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteMember'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Accept Invite in the organization
       operationId: postAcceptInviteMember
