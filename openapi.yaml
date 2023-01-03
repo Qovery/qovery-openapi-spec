@@ -8026,10 +8026,11 @@ paths:
         - name: force
           in: query
           required: false
-          description: Enable or Disable the force trigger of the job
+          description: |
+            When filled, it indicates the target event to be deployed.  
+            If the concerned job hasn't the target event provided, the job won't be deployed.
           schema:
-            type: boolean
-            default: false
+            $ref: '#/components/schemas/JobForceEvent'
       tags:
         - Job Actions
       requestBody:
@@ -12595,6 +12596,13 @@ components:
         ON_STOP means when a stop of the environment is requested  
         ON_DELETE means when an environment delete is requested  
         CRON means at a scheduled interval  
+    JobForceEvent:
+      type: string
+      enum:
+        - START
+        - STOP
+        - DELETE
+        - CRON
     DeploymentHistoryJobResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
