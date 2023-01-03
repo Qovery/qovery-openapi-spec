@@ -4,7 +4,7 @@ post:
   operationId: deployJob
   parameters:
     - $ref: '../../parameters/path/jobId.yaml'
-    - name: force
+    - name: forceEvent
       in: query
       required: false
       description: |
