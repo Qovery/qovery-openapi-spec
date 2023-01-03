@@ -378,6 +378,8 @@ JobDeployRequest:
   $ref: ./job/JobDeployRequest.yaml
 JobScheduleEvent:
   $ref: ./enums/JobScheduleEvent.yaml
+JobForceEvent:
+  $ref: ./enums/JobForceEvent.yaml
 DeploymentHistoryJobResponse:
   $ref: ./job/DeploymentHistoryJobResponse.yaml
 Key:
