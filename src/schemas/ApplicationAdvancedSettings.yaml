@@ -9,6 +9,10 @@ properties:
     type: boolean
     description: disable custom domain check when deploying an application
     default: true
+  deployment.termination_grace_period_seconds:
+    type: integer
+    description: define how long in seconds an application is supposed to be stopped gracefully
+    default: 60
   build.timeout_max_sec:
     type: integer
     default: 1800
