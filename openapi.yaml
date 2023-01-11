@@ -8971,6 +8971,10 @@ components:
           type: boolean
           description: disable custom domain check when deploying an application
           default: true
+        deployment.termination_grace_period_seconds:
+          type: integer
+          description: define how long in seconds an application is supposed to be stopped gracefully
+          default: 60
         build.timeout_max_sec:
           type: integer
           default: 1800
@@ -10269,6 +10273,10 @@ components:
           type: boolean
           description: disable custom domain check when deploying an application
           default: true
+        deployment.termination_grace_period_seconds:
+          type: integer
+          description: define how long in seconds an application is supposed to be stopped gracefully
+          default: 60
         network.ingress.proxy_body_size_mb:
           type: integer
           default: 100
@@ -12488,6 +12496,10 @@ components:
     JobAdvancedSettings:
       type: object
       properties:
+        deployment.termination_grace_period_seconds:
+          type: integer
+          description: define how long in seconds an application is supposed to be stopped gracefully
+          default: 60
         job.delete_ttl_seconds_after_finished:
           type: integer
           nullable: true
