@@ -1,5 +1,9 @@
 type: object
 properties:
+  deployment.termination_grace_period_seconds:
+    type: integer
+    description: define how long in seconds an application is supposed to be stopped gracefully
+    default: 60
   job.delete_ttl_seconds_after_finished:
     type: integer
     nullable: true
