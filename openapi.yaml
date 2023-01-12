@@ -12118,6 +12118,8 @@ components:
               format: uri
             invitation_status:
               $ref: '#/components/schemas/InviteStatusEnum'
+            organization_name:
+              type: string
             inviter:
               type: string
             logo_url:
