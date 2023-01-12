@@ -19,6 +19,8 @@
          format: uri
        invitation_status:
          $ref: './enums/InviteStatus.yaml'
+       organization_name:
+         type: string
        inviter:
          type: string
        logo_url:
