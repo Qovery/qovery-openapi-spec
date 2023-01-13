@@ -10198,10 +10198,26 @@ components:
     ClusterAdvancedSettings:
       type: object
       properties:
+        loki.log_retention_in_week:
+          type: integer
+          default: 12
+          description: For how long in week loki is going to keep logs of your applications
+        aws.vpc.enable_s3_flow_logs:
+          type: boolean
+          default: false
+          description: Enable flow logs for on the VPC and store them in an S3 bucket
         registry.image_retention_time:
           type: integer
           default: 31536000
           description: Configure the number of seconds before cleaning images in the registry
+        cloud_provider_container_registry_tags:
+          type: object
+          properties:
+            key:
+              type: string
+            value:
+              type: string
+          description: Add additional tags on the cluster dedicated registry
         load_balancer.size:
           type: string
           default: lb-s
@@ -10210,10 +10226,6 @@ components:
           type: integer
           default: -1
           deprecated: true
-        loki.log_retention_in_week:
-          type: integer
-          default: 12
-          description: For how long in week loki is going to keep logs of your applications
     Commit:
       type: object
       required:
