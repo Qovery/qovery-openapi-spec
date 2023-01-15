@@ -8,6 +8,10 @@ properties:
     type: boolean
     default: false
     description: Enable flow logs for on the VPC and store them in an S3 bucket
+  aws.vpc.flow_logs_retention_days:
+    type: integer
+    default: 365
+    description: Set the number of retention days for flow logs. Disable with value "0"
   registry.image_retention_time:
     type: integer
     default: 31536000
