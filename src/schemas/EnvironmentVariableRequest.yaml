@@ -5,7 +5,12 @@ required:
 properties:
   key:
     type: string
-    description: key is case sensitive
+    description: key is case sensitive.
   value:
     type: string
     description: value of the env variable.
+  mount_path:
+    type: string
+    nullable: true
+    default: null
+    description: should be set for file only. variable mount path make variable a file (where file should be mounted).
