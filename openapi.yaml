@@ -11845,6 +11845,8 @@ components:
               $ref: '#/components/schemas/EnvironmentVariableAlias'
             scope:
               $ref: '#/components/schemas/APIVariableScopeEnum'
+            type:
+              $ref: '#/components/schemas/APIVariableTypeEnum'
             service_id:
               type: string
               format: uuid
@@ -11910,10 +11912,15 @@ components:
       properties:
         key:
           type: string
-          description: key is case sensitive
+          description: key is case sensitive.
         value:
           type: string
           description: value of the env variable.
+        mount_path:
+          type: string
+          nullable: true
+          default: null
+          description: should be set for file only. variable mount path makes variable a file (where file should be mounted).
     EnvironmentVariableResponseList:
       type: object
       properties:
@@ -11930,6 +11937,16 @@ components:
         - PROJECT
         - CONTAINER
         - JOB
+    APIVariableTypeEnum:
+      type: string
+      description: |
+        type of the environment variable (VALUE, FILE, ALIAS, OVERRIDE or BUIT_IN) 
+      enum:
+        - VALUE
+        - ALIAS
+        - OVERRIDE
+        - BUILT_IN
+        - FILE
     Event:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -13760,6 +13777,8 @@ components:
               $ref: '#/components/schemas/SecretAlias'
             scope:
               $ref: '#/components/schemas/APIVariableScopeEnum'
+            type:
+              $ref: '#/components/schemas/APIVariableTypeEnum'
             service_id:
               type: string
               format: uuid
@@ -13792,6 +13811,11 @@ components:
         value:
           type: string
           description: value of the secret. Clear value will never be returned
+        mount_path:
+          type: string
+          nullable: true
+          default: null
+          description: should be set for file only. variable mount path make secret a file (where file should be mounted).
     SecretResponseList:
       type: object
       properties:
