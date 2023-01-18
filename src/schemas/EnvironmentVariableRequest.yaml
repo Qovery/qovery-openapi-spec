@@ -13,4 +13,4 @@ properties:
     type: string
     nullable: true
     default: null
-    description: should be set for file only. variable mount path make variable a file (where file should be mounted).
+    description: should be set for file only. variable mount path makes variable a file (where file should be mounted).
