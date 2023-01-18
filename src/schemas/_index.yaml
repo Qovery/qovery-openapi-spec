@@ -322,6 +322,8 @@ EnvironmentVariableResponseList:
   $ref: ./EnvironmentVariableResponseList.yaml
 APIVariableScopeEnum:
   $ref: ./enums/APIVariableScope.yaml
+APIVariableTypeEnum:
+  $ref: ./enums/APIVariableType.yaml
 Event:
   $ref: ./EventResponse.yaml
 EventPaginatedResponseList:
