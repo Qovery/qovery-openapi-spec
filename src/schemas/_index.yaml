@@ -536,6 +536,8 @@ ProjectStats:
   $ref: ./ProjectStatsResponse.yaml
 ProjectStatsResponseList:
   $ref: ./ProjectStatsResponseList.yaml
+RebootServicesRequest:
+  $ref: ./RebootServicesRequest.yaml
 ReferenceObject:
   $ref: ./ReferenceObject.yaml
 ReferenceObjectStatus:
