@@ -1,5 +1,6 @@
 post:
-  summary: 'Restart application'
+  summary: 'Deprecated - Restart application'
+  description: '**Deprecated** - Please use the "Redeploy application" endpoint now'
   operationId: restartApplication
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'

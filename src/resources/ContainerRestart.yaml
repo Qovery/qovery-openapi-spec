@@ -1,5 +1,6 @@
 post:
-  summary: 'Restart container'
+  summary: 'Deprecated - Restart container'
+  description: '**Deprecated** - Please use the "Redeploy container" endpoint now'
   operationId: restartContainer
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

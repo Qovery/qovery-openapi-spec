@@ -397,6 +397,8 @@ paths:
     $ref: './resources/EnvironmentStop.yaml'
   /environment/{environmentId}/restart:
     $ref: './resources/EnvironmentRestart.yaml'
+  /environment/{environmentId}/redeploy:
+    $ref: './resources/EnvironmentRedeploy.yaml'
   /environment/{environmentId}/cancelDeployment:
     $ref: './resources/EnvironmentCancelDeployment.yaml'
   /environment/{environmentId}/clone:
@@ -423,6 +425,8 @@ paths:
     $ref: './resources/EnvironmentContainerCurrentScale.yaml'
   /environment/{environmentId}/service/deploy:
     $ref: './resources/EnvironmentServiceDeploy.yaml'
+  /environment/{environmentId}/service/restart-service:
+    $ref: './resources/EnvironmentServiceReboot.yaml'
   /organization/{organizationId}/container/deploy:
     $ref: './resources/OrganizationContainerAutoDeploy.yaml'
   /organization/{organizationId}/container/preview:
@@ -499,6 +503,10 @@ paths:
     $ref: './resources/ApplicationStop.yaml'
   /application/{applicationId}/restart:
     $ref: './resources/ApplicationRestart.yaml'
+  /application/{applicationId}/redeploy:
+    $ref: './resources/ApplicationRedeploy.yaml'
+  /application/{applicationId}/restart-service:
+    $ref: './resources/ApplicationReboot.yaml'
   /application/{applicationId}/deploymentHistory:
     $ref: './resources/ApplicationDeploymentHistory.yaml'
   /application/{applicationId}/event:
@@ -559,6 +567,10 @@ paths:
     $ref: './resources/ContainerStop.yaml'
   /container/{containerId}/restart:
     $ref: './resources/ContainerRestart.yaml'
+  /container/{containerId}/redeploy:
+    $ref: './resources/ContainerRedeploy.yaml'
+  /container/{containerId}/restart-service:
+    $ref: './resources/ContainerReboot.yaml'
   /container/{containerId}/environmentVariable:
     $ref: './resources/ContainerEnvironmentVariable.yaml'
   /container/{containerId}/environmentVariable/import:
@@ -611,6 +623,10 @@ paths:
     $ref: './resources/DatabaseApplicationRef.yaml'
   /database/{databaseId}/restart:
     $ref: './resources/DatabaseRestart.yaml'
+  /database/{databaseId}/redeploy:
+    $ref: './resources/DatabaseRedeploy.yaml'
+  /database/{databaseId}/restart-service:
+    $ref: './resources/DatabaseReboot.yaml'
   /database/{databaseId}/stop:
     $ref: './resources/DatabaseStop.yaml'
   /database/{databaseId}/deploy:
@@ -677,6 +693,8 @@ paths:
     $ref: './resources/job/JobDeploy.yaml'
   /job/{jobId}/restart:
     $ref: './resources/job/JobRestart.yaml'
+  /job/{jobId}/redeploy:
+    $ref: './resources/job/JobRedeploy.yaml'
   /job/{jobId}/stop:
     $ref: './resources/job/JobStop.yaml'
   /job/{jobId}/status:

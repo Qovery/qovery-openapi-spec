@@ -1,14 +1,13 @@
 post:
-  summary: 'Deprecated - Restart database'
-  description: '**Deprecated** - Please use the "Redeploy database" endpoint now'
-  operationId: restartDatabase
+  summary: 'Reboot container'
+  operationId: rebootContainer
   parameters:
-    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/path/containerId.yaml'
   tags:
-    - Database Actions
+    - Container Actions
   responses:
     '202':
-      description: 'Database  restart has been requested'
+      description: 'Container reboot has been requested'
       content:
         application/json:
           schema:
@@ -21,5 +20,3 @@ post:
       $ref: '../responses/NotFound.yaml'
     '409':
       description: 'Operation is in progress'
-
-
