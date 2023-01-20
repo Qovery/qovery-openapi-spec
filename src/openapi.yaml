@@ -457,6 +457,8 @@ paths:
     $ref: './resources/EnvironmentDatabaseConfiguration.yaml'
   /defaultApplicationAdvancedSettings:
     $ref: './resources/DefaultApplicationAdvancedSettings.yaml'
+  /defaultClusterAdvancedSettings:
+    $ref: './resources/DefaultClusterAdvancedSettings.yaml'
   /defaultContainerAdvancedSettings:
     $ref: './resources/DefaultContainerAdvancedSettings.yaml'
   /defaultJobAdvancedSettings:
