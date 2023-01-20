@@ -1,6 +1,8 @@
 post:
-  summary: 'Reboot services'
-  description: Update and reboot the selected services
+  summary: 'Restart services pods'
+  description: |
+    Restart pods of selected services.  
+    Not available for managed databases.
   operationId: rebootServices
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
@@ -13,7 +15,7 @@ post:
           $ref: '../schemas/RebootServicesRequest.yaml'
   responses:
     '202':
-      description: 'Reboot services'
+      description: 'Restart services pods has been requested'
       content:
         application/json:
           schema:

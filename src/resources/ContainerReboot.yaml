@@ -1,5 +1,5 @@
 post:
-  summary: 'Reboot container'
+  summary: 'Restart container pod(s)'
   operationId: rebootContainer
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
@@ -7,7 +7,7 @@ post:
     - Container Actions
   responses:
     '202':
-      description: 'Container reboot has been requested'
+      description: 'Restart container pod(s) has been requested'
       content:
         application/json:
           schema:

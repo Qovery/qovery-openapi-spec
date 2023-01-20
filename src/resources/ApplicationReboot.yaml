@@ -1,5 +1,5 @@
 post:
-  summary: 'Reboot application'
+  summary: 'Restart application pod(s)'
   operationId: rebootApplication
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
@@ -7,7 +7,7 @@ post:
     - Application Actions
   responses:
     '202':
-      description: 'Application reboot has been requested'
+      description: 'Restart application pod(s) has been requested'
       content:
         application/json:
           schema:

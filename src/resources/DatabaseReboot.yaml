@@ -1,5 +1,8 @@
 post:
-  summary: 'Retart database'
+  summary: 'Restart database pod'
+  description: |
+    Restart database pod.  
+    Not available for managed databases.
   operationId: rebootDatabase
   parameters:
     - $ref: '../parameters/path/databaseId.yaml'
@@ -7,7 +10,7 @@ post:
     - Database Actions
   responses:
     '202':
-      description: 'Database reboot has been requested'
+      description: 'Restart database pod has been requested'
       content:
         application/json:
           schema:
