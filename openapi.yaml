@@ -3526,20 +3526,39 @@ paths:
           description: Environment is already stopped or an operation is in progress
   '/environment/{environmentId}/restart':
     post:
-      summary: Restart environment
+      summary: Deprecated - Restart environment
+      description: '**Deprecated** - Please use the "Redeploy environment" endpoint now'
       operationId: restartEnvironment
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
         - Environment Actions
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EnvironmentRestartRequest'
       responses:
         '202':
           description: Environment restart has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/environment/{environmentId}/redeploy':
+    post:
+      summary: Redeploy environment
+      operationId: redeployEnvironment
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Actions
+      responses:
+        '202':
+          description: Environment redeploy has been requested
           content:
             application/json:
               schema:
@@ -3907,6 +3926,37 @@ paths:
       responses:
         '202':
           description: Deployed services
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/environment/{environmentId}/service/restart-service':
+    post:
+      summary: Reboot services
+      description: Update and reboot the selected services
+      operationId: rebootServices
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RebootServicesRequest'
+      responses:
+        '202':
+          description: Reboot services
           content:
             application/json:
               schema:
@@ -5088,7 +5138,8 @@ paths:
           description: Application is already stopped or an operation is in progress
   '/application/{applicationId}/restart':
     post:
-      summary: Restart application
+      summary: Deprecated - Restart application
+      description: '**Deprecated** - Please use the "Redeploy application" endpoint now'
       operationId: restartApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -5097,6 +5148,52 @@ paths:
       responses:
         '202':
           description: Application restart has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/application/{applicationId}/redeploy':
+    post:
+      summary: Redeploy application
+      operationId: redeployApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Application Actions
+      responses:
+        '202':
+          description: Application redeploy has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/application/{applicationId}/restart-service':
+    post:
+      summary: Reboot application
+      operationId: rebootApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Application Actions
+      responses:
+        '202':
+          description: Application reboot has been requested
           content:
             application/json:
               schema:
@@ -6162,7 +6259,8 @@ paths:
           description: Container is already stopped or an operation is in progress
   '/container/{containerId}/restart':
     post:
-      summary: Restart container
+      summary: Deprecated - Restart container
+      description: '**Deprecated** - Please use the "Redeploy container" endpoint now'
       operationId: restartContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -6171,6 +6269,52 @@ paths:
       responses:
         '202':
           description: Container restart has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/container/{containerId}/redeploy':
+    post:
+      summary: Redeploy container
+      operationId: redeployContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Actions
+      responses:
+        '202':
+          description: Container redeploy has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/container/{containerId}/restart-service':
+    post:
+      summary: Reboot container
+      operationId: rebootContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Actions
+      responses:
+        '202':
+          description: Container reboot has been requested
           content:
             application/json:
               schema:
@@ -7124,7 +7268,8 @@ paths:
           $ref: '#/components/responses/404'
   '/database/{databaseId}/restart':
     post:
-      summary: Retart database
+      summary: Deprecated - Restart database
+      description: '**Deprecated** - Please use the "Redeploy database" endpoint now'
       operationId: restartDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
@@ -7133,6 +7278,52 @@ paths:
       responses:
         '202':
           description: Database  restart has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/database/{databaseId}/redeploy':
+    post:
+      summary: Redeploy database
+      operationId: redeployDatabase
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - Database Actions
+      responses:
+        '202':
+          description: Database redeploy has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/database/{databaseId}/restart-service':
+    post:
+      summary: Retart database
+      operationId: rebootDatabase
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - Database Actions
+      responses:
+        '202':
+          description: Database reboot has been requested
           content:
             application/json:
               schema:
@@ -8057,7 +8248,8 @@ paths:
           description: Operation is in progress
   '/job/{jobId}/restart':
     post:
-      summary: Restart job
+      summary: Deprecated - Restart job
+      description: '**Deprecated** - Please use the "Redeploy job" endpoint now'
       operationId: restartJob
       parameters:
         - $ref: '#/components/parameters/jobId'
@@ -8074,6 +8266,37 @@ paths:
       responses:
         '202':
           description: Job restart has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/job/{jobId}/redeploy':
+    post:
+      summary: Redeploy job
+      operationId: redeployJob
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+        - name: forceEvent
+          in: query
+          required: false
+          description: |
+            When filled, it indicates the target event to be deployed.  
+            If the concerned job hasn't the target event provided, the job won't be deployed.
+          schema:
+            $ref: '#/components/schemas/JobForceEvent'
+      tags:
+        - Job Actions
+      responses:
+        '202':
+          description: Job redeploy has been requested
           content:
             application/json:
               schema:
@@ -11800,12 +12023,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Environment'
-    EnvironmentRestartRequest:
-      type: object
-      properties:
-        restart_db:
-          type: boolean
-          default: false
     EnvironmentStats:
       allOf:
         - $ref: '#/components/schemas/ReferenceObject'
@@ -13704,6 +13921,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProjectStats'
+    RebootServicesRequest:
+      type: object
+      properties:
+        applicationIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        databaseIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        containerIds:
+          type: array
+          items:
+            type: string
+            format: uuid
     ReferenceObject:
       type: object
       required:
