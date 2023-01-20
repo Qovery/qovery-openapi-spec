@@ -1,0 +1,16 @@
+get:
+  summary: 'List default cluster advanced settings'
+  operationId: getDefaultClusterAdvancedSettings
+  tags:
+    - Applications
+  responses:
+    '200':
+      description: 'Default cluster advanced settings'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ClusterAdvancedSettings.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
