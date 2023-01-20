@@ -1,15 +1,11 @@
 post:
-  summary: 'Restart environment'
+  summary: 'Deprecated - Restart environment'
+  description: '**Deprecated** - Please use the "Redeploy environment" endpoint now'
   operationId: restartEnvironment
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
     - Environment Actions
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: '../schemas/EnvironmentRestartRequest.yaml'
   responses:
     '202':
       description: 'Environment restart has been requested'

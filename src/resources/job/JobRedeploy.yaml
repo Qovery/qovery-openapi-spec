@@ -1,7 +1,6 @@
 post:
-  summary: 'Deprecated - Restart job'
-  description: '**Deprecated** - Please use the "Redeploy job" endpoint now'
-  operationId: restartJob
+  summary: 'Redeploy job'
+  operationId: redeployJob
   parameters:
     - $ref: '../../parameters/path/jobId.yaml'
     - name: forceEvent
@@ -16,7 +15,7 @@ post:
     - Job Actions
   responses:
     '202':
-      description: 'Job restart has been requested'
+      description: 'Job redeploy has been requested'
       content:
         application/json:
           schema:

@@ -1,5 +1,0 @@
-type: object
-properties:
-  restart_db:
-    type: boolean
-    default: false
