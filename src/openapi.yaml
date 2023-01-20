@@ -397,7 +397,7 @@ paths:
     $ref: './resources/EnvironmentStop.yaml'
   /environment/{environmentId}/restart:
     $ref: './resources/EnvironmentRestart.yaml'
-  /environment/{environmentId}/reboot:
+  /environment/{environmentId}/restart-service:
     $ref: './resources/EnvironmentReboot.yaml'
   /environment/{environmentId}/cancelDeployment:
     $ref: './resources/EnvironmentCancelDeployment.yaml'
@@ -425,7 +425,7 @@ paths:
     $ref: './resources/EnvironmentContainerCurrentScale.yaml'
   /environment/{environmentId}/service/deploy:
     $ref: './resources/EnvironmentServiceDeploy.yaml'
-  /environment/{environmentId}/service/reboot:
+  /environment/{environmentId}/service/restart-service:
     $ref: './resources/EnvironmentServiceReboot.yaml'
   /organization/{organizationId}/container/deploy:
     $ref: './resources/OrganizationContainerAutoDeploy.yaml'
@@ -503,7 +503,7 @@ paths:
     $ref: './resources/ApplicationStop.yaml'
   /application/{applicationId}/restart:
     $ref: './resources/ApplicationRestart.yaml'
-  /application/{applicationId}/reboot:
+  /application/{applicationId}/restart-service:
     $ref: './resources/ApplicationReboot.yaml'
   /application/{applicationId}/deploymentHistory:
     $ref: './resources/ApplicationDeploymentHistory.yaml'
@@ -565,7 +565,7 @@ paths:
     $ref: './resources/ContainerStop.yaml'
   /container/{containerId}/restart:
     $ref: './resources/ContainerRestart.yaml'
-  /container/{containerId}/reboot:
+  /container/{containerId}/restart-service:
     $ref: './resources/ContainerReboot.yaml'
   /container/{containerId}/environmentVariable:
     $ref: './resources/ContainerEnvironmentVariable.yaml'
@@ -619,7 +619,7 @@ paths:
     $ref: './resources/DatabaseApplicationRef.yaml'
   /database/{databaseId}/restart:
     $ref: './resources/DatabaseRestart.yaml'
-  /database/{databaseId}/reboot:
+  /database/{databaseId}/restart-service:
     $ref: './resources/DatabaseReboot.yaml'
   /database/{databaseId}/stop:
     $ref: './resources/DatabaseStop.yaml'
