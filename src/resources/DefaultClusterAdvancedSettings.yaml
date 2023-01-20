@@ -2,7 +2,7 @@ get:
   summary: 'List default cluster advanced settings'
   operationId: getDefaultClusterAdvancedSettings
   tags:
-    - Applications
+    - Clusters
   responses:
     '200':
       description: 'Default cluster advanced settings'
