@@ -4502,6 +4502,23 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+  /defaultClusterAdvancedSettings:
+    get:
+      summary: List default cluster advanced settings
+      operationId: getDefaultClusterAdvancedSettings
+      tags:
+        - Applications
+      responses:
+        '200':
+          description: Default cluster advanced settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterAdvancedSettings'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
   /defaultContainerAdvancedSettings:
     get:
       summary: List default container advanced settings
