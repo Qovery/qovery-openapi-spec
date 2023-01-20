@@ -399,8 +399,6 @@ paths:
     $ref: './resources/EnvironmentRestart.yaml'
   /environment/{environmentId}/redeploy:
     $ref: './resources/EnvironmentRedeploy.yaml'
-  /environment/{environmentId}/restart-service:
-    $ref: './resources/EnvironmentReboot.yaml'
   /environment/{environmentId}/cancelDeployment:
     $ref: './resources/EnvironmentCancelDeployment.yaml'
   /environment/{environmentId}/clone:
