@@ -1,9 +1,9 @@
 type: object
 properties:
-  loki.log_retention_in_week:
+  aws.cloudwatch.eks_logs_retention_days:
     type: integer
-    default: 12
-    description: For how long in week loki is going to keep logs of your applications
+    default: 90
+    description: Set the number of retention days for EKS Cloudwatch logs
   aws.vpc.enable_s3_flow_logs:
     type: boolean
     default: false
@@ -16,6 +16,10 @@ properties:
     type: integer
     default: 31536000
     description: Configure the number of seconds before cleaning images in the registry
+  loki.log_retention_in_week:
+    type: integer
+    default: 12
+    description: For how long in week loki is going to keep logs of your applications
   cloud_provider_container_registry_tags:
     type: object
     properties:
