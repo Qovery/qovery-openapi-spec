@@ -14205,6 +14205,10 @@ components:
         - STOPPING
         - STOP_ERROR
         - STOP_QUEUED
+        - RESTART_QUEUED
+        - RESTARTING
+        - RESTARTED
+        - RESTARTED_ERROR
     Status:
       type: object
       required:
