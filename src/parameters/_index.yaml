@@ -29,6 +29,8 @@ eventId:
   $ref: ./path/eventId.yaml
 inviteId:
   $ref: ./path/inviteId.yaml
+region:
+  $ref: ./path/region.yaml
 jobId:
   $ref: ./path/jobId.yaml
 # QUERY
