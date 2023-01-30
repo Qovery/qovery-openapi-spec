@@ -2144,13 +2144,7 @@ paths:
       summary: List AWS EC2 available instance types
       operationId: listAWSEc2InstanceType
       parameters:
-        - name: region
-          in: path
-          description: region name
-          required: true
-          schema:
-            type: string
-            example: us-east-2
+        - $ref: '#/components/parameters/region'
       tags:
         - Cloud Provider
       responses:
@@ -2171,7 +2165,7 @@ paths:
       summary: List AWS EKS available instance types
       operationId: listAWSEKSInstanceType
       parameters:
-        - $ref: '#/paths/~1aws~1ec2~1instanceType~1%7Bregion%7D/get/parameters/0'
+        - $ref: '#/components/parameters/region'
       tags:
         - Cloud Provider
       responses:
@@ -8950,6 +8944,14 @@ components:
       schema:
         type: string
         format: uuid
+    region:
+      name: region
+      in: path
+      description: region name
+      required: true
+      schema:
+        type: string
+        example: us-east-2
     jobId:
       name: jobId
       in: path
