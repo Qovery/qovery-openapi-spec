@@ -62,3 +62,10 @@ allOf:
         default: true
       ports:
         $ref: './ServicePortResponseList.yaml'
+      arguments:
+        type: array
+        items:
+          type: string
+      entrypoint:
+        type: string
+        description: optional entrypoint when launching container
