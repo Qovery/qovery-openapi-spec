@@ -55,3 +55,10 @@ allOf:
           If activated, a preview environment will be automatically cloned at each pull request.  
           If not specified, it takes the value of the `auto_preview` property from the associated environment.
         default: true
+      arguments:
+        type: array
+        items:
+          type: string
+      entrypoint:
+        type: string
+        description: optional entrypoint when launching container
