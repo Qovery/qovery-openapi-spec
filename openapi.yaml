@@ -14255,7 +14255,7 @@ components:
         - RESTART_QUEUED
         - RESTARTING
         - RESTARTED
-        - RESTARTED_ERROR
+        - RESTART_ERROR
     Status:
       type: object
       required:
