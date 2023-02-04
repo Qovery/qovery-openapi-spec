@@ -9207,7 +9207,6 @@ components:
                 type: string
             entrypoint:
               type: string
-              nullable: true
               description: optional entrypoint when launching container
     ApplicationAdvancedSettings:
       type: object
