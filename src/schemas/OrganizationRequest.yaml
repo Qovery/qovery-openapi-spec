@@ -8,6 +8,7 @@ properties:
     description: name is case insensitive
   description:
     type: string
+    nullable: true
   plan:
     $ref: './enums/Plan.yaml'
   website_url:
