@@ -15,4 +15,5 @@ properties:
   renewal_at:
     type: string
     readOnly: true
+    nullable: true
     format: date-time
