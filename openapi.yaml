@@ -13619,6 +13619,7 @@ components:
           description: name is case insensitive
         description:
           type: string
+          nullable: true
         plan:
           $ref: '#/components/schemas/PlanEnum'
         website_url:
