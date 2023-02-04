@@ -13836,6 +13836,7 @@ components:
         renewal_at:
           type: string
           readOnly: true
+          nullable: true
           format: date-time
     PlanEnum:
       type: string
