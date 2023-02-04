@@ -68,4 +68,5 @@ allOf:
           type: string
       entrypoint:
         type: string
+        nullable: true
         description: optional entrypoint when launching container
