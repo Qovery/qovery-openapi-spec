@@ -74,8 +74,6 @@ tags:
   - name: Database Main Calls
   - name: Database Metrics
   - name: Databases
-  - name: Dependency
-  - name: Container Dependency
   - name: Environment
   - name: Environment Actions
   - name: Environment Deployment History
@@ -150,7 +148,6 @@ x-tagGroups:
       - Application Actions
       - Application Configuration
       - Custom Domain
-      - Dependency
       - Application Metrics
       - Application Database
       - Application Logs
@@ -165,7 +162,6 @@ x-tagGroups:
       - Container Actions
       - Container Configuration
       - Container Custom Domain
-      - Container Dependency
       - Container Metrics
       - Container Database
       - Container Logs
@@ -193,7 +189,6 @@ x-tagGroups:
       - Job Actions
       - Job Configuration
       - Job Custom Domain
-      - Job Dependency
       - Job Metrics
       - Job Deployment History
       - Job Environment Variable
@@ -5135,69 +5130,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/application/{applicationId}/dependency':
-    get:
-      summary: List application dependencies
-      operationId: listApplicationDependency
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - Dependency
-      responses:
-        '200':
-          description: List dependencies
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApplicationResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/application/{applicationId}/dependency/{targetApplicationId}':
-    post:
-      summary: Add application dependency to this application.
-      description: Add application dependency to this application to prevent this application starting before the linked dependencies
-      operationId: createApplicationDependency
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/targetApplicationId'
-      tags:
-        - Dependency
-      responses:
-        '200':
-          description: Add application dependencies
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Application'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    delete:
-      summary: Remove application dependency to this application.
-      operationId: removeApplicationDependency
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/targetApplicationId'
-      tags:
-        - Dependency
-      responses:
-        '204':
-          $ref: '#/components/responses/204-deletion'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/application/{applicationId}/commit':
     get:
       summary: List last commits
@@ -6268,75 +6200,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ContainerCurrentScale'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/container/{containerId}/dependency':
-    get:
-      summary: List container dependencies
-      operationId: listContainerDependency
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-      tags:
-        - Container Dependency
-      responses:
-        '200':
-          description: List dependencies
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContainerResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/container/{containerId}/dependency/{targetContainerId}':
-    post:
-      summary: Add container dependency to this application.
-      description: Add container dependency to this container to prevent this container starting before the linked dependencies
-      operationId: createContainerDependency
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-        - name: targetContainerId
-          in: path
-          description: Target container ID
-          required: true
-          schema:
-            type: string
-            format: uuid
-      tags:
-        - Container Dependency
-      responses:
-        '200':
-          description: Add container dependencies
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContainerResponse'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    delete:
-      summary: Remove container dependency to this container.
-      operationId: removeContainerDependency
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-        - $ref: '#/paths/~1container~1%7BcontainerId%7D~1dependency~1%7BtargetContainerId%7D/post/parameters/1'
-      tags:
-        - Container Dependency
-      responses:
-        '204':
-          $ref: '#/components/responses/204-deletion'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -9514,8 +9377,6 @@ components:
           type: string
           readOnly: true
           format: date-time
-    ApplicationDependencyRequest:
-      $ref: '#/components/schemas/ContainerDependencyRequest'
     ApplicationDeploymentRestriction:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -10863,15 +10724,6 @@ components:
           type: string
           readOnly: true
           format: date-time
-    ContainerDependencyRequest:
-      type: object
-      required:
-        - id
-      properties:
-        id:
-          type: string
-          description: Set application ID
-          format: uuid
     ContainerNetwork:
       type: object
       properties:
