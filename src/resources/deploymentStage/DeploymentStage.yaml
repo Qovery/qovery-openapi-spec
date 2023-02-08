@@ -1,0 +1,41 @@
+delete:
+  summary: 'Delete deployment stage'
+  operationId: DeleteDeploymentStage
+  parameters:
+    - $ref: '../../parameters/path/deploymentStageId.yaml'
+  tags:
+    - Deployment Stage Main Calls
+  responses:
+    '204':
+      $ref: '../../responses/NoContent.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+put:
+  summary: 'Edit deployment stage'
+  operationId: EditDeploymentStage
+  parameters:
+    - $ref: '../../parameters/path/deploymentStageId.yaml'
+  tags:
+    - Deployment Stage Main Calls
+  requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/deploymentStage/DeploymentStageRequest.yaml'
+  responses:
+    '200':
+      description: 'created deployment stage'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/deploymentStage/DeploymentStageResponse.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'

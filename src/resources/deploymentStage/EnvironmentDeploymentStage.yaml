@@ -1,0 +1,45 @@
+get:
+  summary: 'List environment deployment stage'
+  operationId: ListEnvironmentDeploymentStage
+  parameters:
+    - $ref: '../../parameters/path/environmentId.yaml'
+  tags:
+    - Deployment Stage Main Calls
+  responses:
+    '200':
+      description: 'List deployment stage'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/deploymentStage/DeploymentStageResponseList.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+post:
+  summary: 'Create environment deployment stage'
+  operationId: CreateEnvironmentDeploymentStage
+  parameters:
+    - $ref: '../../parameters/path/environmentId.yaml'
+  tags:
+    - Deployment Stage Main Calls
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/deploymentStage/DeploymentStageRequest.yaml'
+  responses:
+    '200':
+      description: 'created deployment stage'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/deploymentStage/DeploymentStageResponse.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
