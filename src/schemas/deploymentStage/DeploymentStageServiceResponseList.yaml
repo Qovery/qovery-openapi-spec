@@ -1,7 +1,4 @@
-type: object
-properties:
-  results:
-    type: array
-    items:
-      $ref: './DeploymentStageServiceResponse.yaml'
+type: array
+items:
+  $ref: './DeploymentStageServiceResponse.yaml'
 
