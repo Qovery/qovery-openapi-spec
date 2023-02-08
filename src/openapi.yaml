@@ -43,6 +43,7 @@ tags:
   - name: Container Registry
   - name: Container Secret
   - name: Containers
+  - name: Deployment Stage Main Calls
   - name: Job
   - name: Job Actions
   - name: Job Configuration
@@ -140,6 +141,9 @@ x-tagGroups:
       - Environment Deployment Rule
       - Environment Variable
       - Environment Secret
+  - name: Deployment Stage
+    tags:
+      - Deployment Stage Main Calls
   - name: Application
     tags:
       - Application Main Calls
@@ -387,8 +391,14 @@ paths:
     $ref: './resources/EnvironmentStatus.yaml'
   /environment/{environmentId}/statuses:
     $ref: './resources/EnvironmentStatuses.yaml'
-  /environment/{environmentId}/deploymentRule:
-    $ref: './resources/EnvironmentDeploymentRule.yaml'
+  /environment/{environmentId}/deploymentStage:
+    $ref: './resources/deploymentStage/EnvironmentDeploymentStage.yaml'
+  /deploymentStage/{deploymentStageId}:
+    $ref: './resources/deploymentStage/DeploymentStage.yaml'
+  /deploymentStage/{deploymentStageId}/service/{serviceId}:
+    $ref: './resources/deploymentStage/DeploymentStageService.yaml'
+  /deploymentStage/{deploymentStageId}/moveBefore/{stageId}:
+    $ref: './resources/deploymentStage/DeploymentStageMove.yaml'
   /environment/{environmentId}/deploymentRule/{deploymentRuleId}:
     $ref: './resources/EnvironmentDeploymentRuleRef.yaml'
   /environment/{environmentId}/deploy:

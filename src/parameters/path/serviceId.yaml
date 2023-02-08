@@ -1,0 +1,7 @@
+name: serviceId
+in: path
+description: Service ID of an application/job/container/database
+required: true
+schema:
+  type: string
+  format: uuid
