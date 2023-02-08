@@ -3439,12 +3439,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/responses/200/content/application~1json/schema'
+                $ref: '#/components/schemas/DeploymentStageResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3462,14 +3457,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/requestBody/content/application~1json/schema'
+              $ref: '#/components/schemas/DeploymentStageRequest'
       responses:
         '200':
           description: created deployment stage
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/responses/200/content/application~1json/schema'
+                $ref: '#/components/schemas/DeploymentStageResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3510,48 +3505,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The name of the deployment stage
-                description:
-                  type: string
-                  description: free test describing this stage
+              $ref: '#/components/schemas/DeploymentStageRequest'
       responses:
         '200':
           description: created deployment stage
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Base'
-                  - type: object
-                    required:
-                      - environment
-                    properties:
-                      environment:
-                        $ref: '#/components/schemas/ReferenceObject'
-                      name:
-                        type: string
-                        description: name is case insensitive
-                      description:
-                        type: string
-                      deployment_order:
-                        type: integer
-                        description: Position of the deployment stage within the environment
-                        example: 1
-                      services:
-                        type: array
-                        items:
-                          allOf:
-                            - $ref: '#/components/schemas/Base'
-                            - type: object
-                              properties:
-                                service_id:
-                                  type: string
-                                  format: uuid
-                                  description: id of the service attached to the stage
+                $ref: '#/components/schemas/DeploymentStageResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3603,7 +3564,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1deploymentStage/get/responses/200/content/application~1json/schema'
+                $ref: '#/components/schemas/DeploymentStageResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -12687,6 +12648,55 @@ components:
         - POSTED
         - UNKNOWN
         - VOIDED
+    DeploymentStageRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the deployment stage
+        description:
+          type: string
+          description: free test describing this stage
+    DeploymentStageResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - environment
+          properties:
+            environment:
+              $ref: '#/components/schemas/ReferenceObject'
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+            deployment_order:
+              type: integer
+              description: Position of the deployment stage within the environment
+              example: 1
+            services:
+              $ref: '#/components/schemas/DeploymentStageServiceResponseList'
+    DeploymentStageResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentStageResponse'
+    DeploymentStageServiceResponseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DeploymentStageServiceResponse'
+    DeploymentStageServiceResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          properties:
+            service_id:
+              type: string
+              format: uuid
+              description: id of the service attached to the stage
     JobRequest:
       allOf:
         - type: object
