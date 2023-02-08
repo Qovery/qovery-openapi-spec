@@ -43,6 +43,7 @@ tags:
   - name: Container Registry
   - name: Container Secret
   - name: Containers
+  - name: Deployment Stage Main Calls
   - name: Job
   - name: Job Actions
   - name: Job Configuration
@@ -140,6 +141,9 @@ x-tagGroups:
       - Environment Deployment Rule
       - Environment Variable
       - Environment Secret
+  - name: Deployment Stage
+    tags:
+      - Deployment Stage Main Calls
   - name: Application
     tags:
       - Application Main Calls
@@ -3421,21 +3425,188 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/environment/{environmentId}/deploymentRule':
+  '/environment/{environmentId}/deploymentStage':
     get:
-      summary: Get environment deployment rule
-      operationId: getEnvironmentDeploymentRule
+      summary: List environment deployment stage
+      operationId: ListEnvironmentDeploymentStage
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
-        - Environment Deployment Rule
+        - Deployment Stage Main Calls
       responses:
         '200':
-          description: Get deployment rule
+          description: List deployment stage
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentDeploymentRule'
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create environment deployment stage
+      operationId: CreateEnvironmentDeploymentStage
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Deployment Stage Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/requestBody/content/application~1json/schema'
+      responses:
+        '200':
+          description: created deployment stage
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/deploymentStage/{deploymentStageId}':
+    delete:
+      summary: Delete deployment stage
+      operationId: DeleteDeploymentStage
+      parameters:
+        - $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/parameters/0'
+      tags:
+        - Deployment Stage Main Calls
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit deployment stage
+      operationId: EditDeploymentStage
+      parameters:
+        - name: deploymentStageId
+          in: path
+          description: Deployment Stage ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Deployment Stage Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the deployment stage
+                description:
+                  type: string
+                  description: free test describing this stage
+      responses:
+        '200':
+          description: created deployment stage
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Base'
+                  - type: object
+                    required:
+                      - environment
+                    properties:
+                      environment:
+                        $ref: '#/components/schemas/ReferenceObject'
+                      name:
+                        type: string
+                        description: name is case insensitive
+                      description:
+                        type: string
+                      deployment_order:
+                        type: integer
+                        description: Position of the deployment stage within the environment
+                        example: 1
+                      services:
+                        type: object
+                        properties:
+                          results:
+                            type: array
+                            items:
+                              allOf:
+                                - $ref: '#/components/schemas/Base'
+                                - type: object
+                                  properties:
+                                    service_id:
+                                      type: string
+                                      format: uuid
+                                      description: id of the service attached to the stage
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/deploymentStage/{deploymentStageId}/service/{serviceId}':
+    put:
+      summary: Attach service to deployment stage
+      operationId: AttachServiceToDeploymentStage
+      parameters:
+        - $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/parameters/0'
+        - name: serviceId
+          in: path
+          description: Service ID of an application/job/container/database
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Deployment Stage Main Calls
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/deploymentStage/{deploymentStageId}/moveBefore/{stageId}':
+    put:
+      summary: Move deployment stage before requested stage
+      operationId: MoveDeploymentStage
+      parameters:
+        - $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/parameters/0'
+        - name: stageId
+          in: path
+          description: Deployment Stage ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Deployment Stage Main Calls
+      responses:
+        '200':
+          description: List deployment stage
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1deploymentStage/get/responses/200/content/application~1json/schema'
         '401':
           $ref: '#/components/responses/401'
         '403':
