@@ -366,6 +366,16 @@ InvoiceResponseList:
   $ref: ./InvoiceResponseList.yaml
 InvoiceStatusEnum:
   $ref: ./enums/InvoiceStatus.yaml
+DeploymentStageRequest:
+  $ref: ./deploymentStage/DeploymentStageRequest.yaml
+DeploymentStageResponse:
+  $ref: ./deploymentStage/DeploymentStageResponse.yaml
+DeploymentStageResponseList:
+  $ref: ./deploymentStage/DeploymentStageResponseList.yaml
+DeploymentStageServiceResponseList:
+  $ref: ./deploymentStage/DeploymentStageServiceResponseList.yaml
+DeploymentStageServiceResponse:
+  $ref: ./deploymentStage/DeploymentStageServiceResponse.yaml
 JobRequest:
   $ref: ./job/JobRequest.yaml
 JobResponse:
