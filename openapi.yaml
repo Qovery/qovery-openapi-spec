@@ -3542,19 +3542,16 @@ paths:
                         description: Position of the deployment stage within the environment
                         example: 1
                       services:
-                        type: object
-                        properties:
-                          results:
-                            type: array
-                            items:
-                              allOf:
-                                - $ref: '#/components/schemas/Base'
-                                - type: object
-                                  properties:
-                                    service_id:
-                                      type: string
-                                      format: uuid
-                                      description: id of the service attached to the stage
+                        type: array
+                        items:
+                          allOf:
+                            - $ref: '#/components/schemas/Base'
+                            - type: object
+                              properties:
+                                service_id:
+                                  type: string
+                                  format: uuid
+                                  description: id of the service attached to the stage
         '401':
           $ref: '#/components/responses/401'
         '403':
