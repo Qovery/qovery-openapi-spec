@@ -74,8 +74,6 @@ tags:
   - name: Database Main Calls
   - name: Database Metrics
   - name: Databases
-  - name: Dependency
-  - name: Container Dependency
   - name: Environment
   - name: Environment Actions
   - name: Environment Deployment History
@@ -150,7 +148,6 @@ x-tagGroups:
       - Application Actions
       - Application Configuration
       - Custom Domain
-      - Dependency
       - Application Metrics
       - Application Database
       - Application Logs
@@ -165,7 +162,6 @@ x-tagGroups:
       - Container Actions
       - Container Configuration
       - Container Custom Domain
-      - Container Dependency
       - Container Metrics
       - Container Database
       - Container Logs
@@ -193,7 +189,6 @@ x-tagGroups:
       - Job Actions
       - Job Configuration
       - Job Custom Domain
-      - Job Dependency
       - Job Metrics
       - Job Deployment History
       - Job Environment Variable
@@ -503,10 +498,6 @@ paths:
     $ref: './resources/ApplicationMetricStorage.yaml'
   /application/{applicationId}/metric/restart:
     $ref: './resources/ApplicationMetricRestart.yaml'
-  /application/{applicationId}/dependency:
-    $ref: './resources/ApplicationDependency.yaml'
-  /application/{applicationId}/dependency/{targetApplicationId}:
-    $ref: './resources/ApplicationDependencyRef.yaml'
   /application/{applicationId}/commit:
     $ref: './resources/ApplicationCommit.yaml'
   /application/{applicationId}/deploy:
@@ -569,10 +560,6 @@ paths:
     $ref: './resources/ContainerCurrentStorageDisk.yaml'
   /container/{containerId}/currentScale:
     $ref: './resources/ContainerCurrentScale.yaml'
-  /container/{containerId}/dependency:
-    $ref: './resources/ContainerDependency.yaml'
-  /container/{containerId}/dependency/{targetContainerId}:
-    $ref: './resources/ContainerDependencyRef.yaml'
   /container/{containerId}/deploy:
     $ref: './resources/ContainerDeploy.yaml'
   /container/{containerId}/stop:

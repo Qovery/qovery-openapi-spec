@@ -10,8 +10,6 @@ ApplicationAdvancedSettings:
   $ref: ./ApplicationAdvancedSettings.yaml
 ApplicationCurrentScale:
   $ref: ./ApplicationCurrentScaleResponse.yaml
-ApplicationDependencyRequest:
-  $ref: ./ApplicationDependencyRequest.yaml
 ApplicationDeploymentRestriction:
   $ref: ./ApplicationDeploymentRestrictionResponse.yaml
 ApplicationDeploymentRestrictionRequest:
@@ -146,8 +144,6 @@ ContainerAdvancedSettingsResponse:
   $ref: ./ContainerAdvancedSettingsResponse.yaml
 ContainerCurrentScale:
   $ref: ./ContainerCurrentScaleResponse.yaml
-ContainerDependencyRequest:
-  $ref: ./ApplicationDependencyRequest.yaml
 ContainerNetwork:
   $ref: ./ContainerNetworkResponse.yaml
 ContainerNetworkRequest:

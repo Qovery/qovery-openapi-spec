@@ -1,8 +1,0 @@
-type: object
-required:
-  - id
-properties:
-  id:
-    type: string
-    description: Set application ID
-    format: uuid
