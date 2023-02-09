@@ -2418,31 +2418,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/cluster/{clusterId}/update':
-    post:
-      summary: Update a cluster Version
-      description: allows to update cluster version
-      operationId: UpdateCluster
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/clusterId'
-      tags:
-        - Clusters
-      responses:
-        '201':
-          description: Update cluster
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClusterStatus'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/organization/{organizationId}/cluster/{clusterId}/stop':
     post:
       summary: Stop cluster
