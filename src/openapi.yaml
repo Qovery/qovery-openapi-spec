@@ -338,8 +338,6 @@ paths:
     $ref: './resources/OrganizationClusterIsReady.yaml'
   /organization/{organizationId}/cluster/{clusterId}/deploy:
     $ref: './resources/OrganizationClusterDeploy.yaml'
-  /organization/{organizationId}/cluster/{clusterId}/update:
-    $ref: './resources/OrganizationClusterUpdate.yaml'
   /organization/{organizationId}/cluster/{clusterId}/stop:
     $ref: './resources/OrganizationClusterStop.yaml'
   /organization/{organizationId}/containerRegistry:
