@@ -12549,6 +12549,9 @@ components:
               type: string
               format: uuid
               description: id of the service attached to the stage
+            service_type:
+              type: string
+              description: 'type of the service (i.e APPLICATION, JOB, DATABASE, ...)'
     JobRequest:
       allOf:
         - type: object
