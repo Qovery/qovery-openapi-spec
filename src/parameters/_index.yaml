@@ -19,6 +19,8 @@ customRoleId:
   $ref: ./path/customRoleId.yaml
 databaseId:
   $ref: ./path/databaseId.yaml
+deploymentStageId:
+  $ref: ./path/deploymentStageId.yaml
 deploymentRuleId:
   $ref: ./path/deploymentRuleId.yaml
 environmentId:
