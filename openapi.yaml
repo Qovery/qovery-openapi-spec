@@ -3446,7 +3446,7 @@ paths:
       summary: Delete deployment stage
       operationId: DeleteDeploymentStage
       parameters:
-        - $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/parameters/0'
+        - $ref: '#/components/parameters/deploymentStageId'
       tags:
         - Deployment Stage Main Calls
       responses:
@@ -3462,13 +3462,7 @@ paths:
       summary: Edit deployment stage
       operationId: EditDeploymentStage
       parameters:
-        - name: deploymentStageId
-          in: path
-          description: Deployment Stage ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/deploymentStageId'
       tags:
         - Deployment Stage Main Calls
       requestBody:
@@ -3494,7 +3488,7 @@ paths:
       summary: Attach service to deployment stage
       operationId: AttachServiceToDeploymentStage
       parameters:
-        - $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/parameters/0'
+        - $ref: '#/components/parameters/deploymentStageId'
         - name: serviceId
           in: path
           description: Service ID of an application/job/container/database
@@ -3518,7 +3512,7 @@ paths:
       summary: Move deployment stage before requested stage
       operationId: MoveDeploymentStage
       parameters:
-        - $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D/put/parameters/0'
+        - $ref: '#/components/parameters/deploymentStageId'
         - name: stageId
           in: path
           description: Deployment Stage ID
@@ -8867,6 +8861,14 @@ components:
       name: databaseId
       in: path
       description: Database ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    deploymentStageId:
+      name: deploymentStageId
+      in: path
+      description: Deployment Stage ID
       required: true
       schema:
         type: string
