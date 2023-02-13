@@ -11,7 +11,7 @@ allOf:
         $ref: './EnvironmentVariableAlias.yaml'
       scope:
         $ref: './enums/APIVariableScope.yaml'
-      type:
+      variable_type:
         $ref: './enums/APIVariableType.yaml'
       service_id:
         type: string
