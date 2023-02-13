@@ -12094,7 +12094,7 @@ components:
               $ref: '#/components/schemas/EnvironmentVariableAlias'
             scope:
               $ref: '#/components/schemas/APIVariableScopeEnum'
-            type:
+            variable_type:
               $ref: '#/components/schemas/APIVariableTypeEnum'
             service_id:
               type: string
@@ -14119,7 +14119,7 @@ components:
               $ref: '#/components/schemas/SecretAlias'
             scope:
               $ref: '#/components/schemas/APIVariableScopeEnum'
-            type:
+            variable_type:
               $ref: '#/components/schemas/APIVariableTypeEnum'
             service_id:
               type: string
