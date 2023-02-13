@@ -9096,6 +9096,8 @@ components:
         - id
         - key
         - scope
+        - mount_path
+        - variable_type
       properties:
         id:
           type: string
@@ -9103,8 +9105,12 @@ components:
         key:
           type: string
           example: QOVERY_DATABASE_PSQL_NAME
+        mount_path:
+          type: string
         scope:
           $ref: '#/components/schemas/APIVariableScopeEnum'
+        variable_type:
+          $ref: '#/components/schemas/APIVariableTypeEnum'
     Application:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -12106,7 +12112,9 @@ components:
         - id
         - key
         - value
+        - mount_path
         - scope
+        - variable_type
       properties:
         id:
           type: string
@@ -12116,15 +12124,21 @@ components:
           example: QOVERY_DATABASE_PSQL_NAME
         value:
           type: string
+        mount_path:
+          type: string
         scope:
           $ref: '#/components/schemas/APIVariableScopeEnum'
+        variable_type:
+          $ref: '#/components/schemas/APIVariableTypeEnum'
     EnvironmentVariableOverride:
       type: object
       required:
         - id
         - key
         - value
+        - mount_path
         - scope
+        - variable_type
       properties:
         id:
           type: string
@@ -12133,8 +12147,12 @@ components:
           type: string
         value:
           type: string
+        mount_path:
+          type: string
         scope:
           $ref: '#/components/schemas/APIVariableScopeEnum'
+        variable_type:
+          $ref: '#/components/schemas/APIVariableTypeEnum'
     EnvironmentVariableEditRequest:
       type: object
       required:
@@ -13665,14 +13683,20 @@ components:
         - id
         - key
         - scope
+        - mount_path
+        - variable_type
       properties:
         id:
           type: string
           format: uuid
         key:
           type: string
+        mount_path:
+          type: string
         scope:
           $ref: '#/components/schemas/APIVariableScopeEnum'
+        variable_type:
+          $ref: '#/components/schemas/APIVariableTypeEnum'
     OrganizationWebhookCreateRequest:
       type: object
       required:
