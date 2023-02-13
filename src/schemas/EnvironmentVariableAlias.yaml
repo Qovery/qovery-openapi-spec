@@ -3,7 +3,9 @@ required:
   - id
   - key
   - value
+  - mount_path
   - scope
+  - variable_type
 properties:
   id:
     type: string
@@ -13,5 +15,9 @@ properties:
     example: QOVERY_DATABASE_PSQL_NAME
   value:
     type: string
+  mount_path:
+    type: string
   scope:
     $ref: './enums/APIVariableScope.yaml'
+  variable_type:
+    $ref: './enums/APIVariableType.yaml'
