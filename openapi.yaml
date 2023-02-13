@@ -3535,6 +3535,27 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/deploymentRule':
+    get:
+      summary: Get environment deployment rule
+      operationId: getEnvironmentDeploymentRule
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Deployment Rule
+      responses:
+        '200':
+          description: Get deployment rule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentDeploymentRule'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/deploymentRule/{deploymentRuleId}':
     put:
       summary: Edit an environment deployment rule
