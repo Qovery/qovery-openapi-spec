@@ -5,7 +5,7 @@ required:
   - value
   - mount_path
   - scope
-  - variable_type
+  - type
 properties:
   id:
     type: string
@@ -18,5 +18,5 @@ properties:
     type: string
   scope:
     $ref: './enums/APIVariableScope.yaml'
-  variable_type:
+  type:
     $ref: './enums/APIVariableType.yaml'
