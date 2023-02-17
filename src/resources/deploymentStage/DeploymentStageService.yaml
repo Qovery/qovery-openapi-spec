@@ -7,8 +7,12 @@ put:
   tags:
     - Deployment Stage Main Calls
   responses:
-    '204':
-      $ref: '../../responses/NoContent.yaml'
+    '200':
+      description: 'List of deployment stages for the env'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/deploymentStage/DeploymentStageResponseList.yaml'
     '401':
       $ref: '../../responses/NotAuthorized.yaml'
     '403':
