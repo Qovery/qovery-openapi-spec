@@ -3499,8 +3499,12 @@ paths:
       tags:
         - Deployment Stage Main Calls
       responses:
-        '204':
-          $ref: '#/components/responses/204'
+        '200':
+          description: List of deployment stages for the env
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentStageResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
