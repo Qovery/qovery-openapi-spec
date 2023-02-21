@@ -10483,6 +10483,50 @@ components:
           type: integer
           default: 365
           description: Set the number of retention days for flow logs. Disable with value "0"
+        database.postgresql.deny_public_access:
+          type: boolean
+          default: false
+          description: Deny public access to any PostgreSQL database
+        database.postgresql.allowed_cidrs:
+          type: array
+          default:
+            - 0.0.0.0/0
+          items:
+            type: string
+          description: List of CIDRs allowed to access the PostgreSQL database
+        database.mysql.deny_public_access:
+          type: boolean
+          default: false
+          description: Deny public access to any MySql database
+        database.mysql.allowed_cidrs:
+          type: array
+          default:
+            - 0.0.0.0/0
+          items:
+            type: string
+          description: List of CIDRs allowed to access the MySql database
+        database.mongodb.deny_public_access:
+          type: boolean
+          default: false
+          description: Deny public access to any MongoDB/DocumentDB database
+        database.mongodb.allowed_cidrs:
+          type: array
+          default:
+            - 0.0.0.0/0
+          items:
+            type: string
+          description: List of CIDRs allowed to access the MongoDB/DocumentDB database
+        database.redis.deny_public_access:
+          type: boolean
+          default: false
+          description: Deny public access to any Redis database
+        database.redis.allowed_cidrs:
+          type: array
+          default:
+            - 0.0.0.0/0
+          items:
+            type: string
+          description: List of CIDRs allowed to access the Redis database
         registry.image_retention_time:
           type: integer
           default: 31536000
