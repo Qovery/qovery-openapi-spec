@@ -3442,6 +3442,26 @@ paths:
         '404':
           $ref: '#/components/responses/404'
   '/deploymentStage/{deploymentStageId}':
+    get:
+      summary: Get Deployment Stage
+      operationId: getDeploymentStage
+      parameters:
+        - $ref: '#/components/parameters/deploymentStageId'
+      tags:
+        - Deployment Stage Main Calls
+      responses:
+        '200':
+          description: Get Deployment Stage
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentStageResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     delete:
       summary: Delete deployment stage
       operationId: DeleteDeploymentStage
@@ -3489,13 +3509,7 @@ paths:
       operationId: AttachServiceToDeploymentStage
       parameters:
         - $ref: '#/components/parameters/deploymentStageId'
-        - name: serviceId
-          in: path
-          description: Service ID of an application/job/container/database
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/paths/~1service~1%7BserviceId%7D~1deploymentStage/get/parameters/0'
       tags:
         - Deployment Stage Main Calls
       responses:
@@ -8802,6 +8816,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommitResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/service/{serviceId}/deploymentStage':
+    get:
+      summary: Get Service Deployment Stage
+      operationId: getServiceDeploymentStage
+      parameters:
+        - name: serviceId
+          in: path
+          description: Service ID of an application/job/container/database
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Deployment Stage Main Calls
+      responses:
+        '200':
+          description: Get Service Deployment Stage
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentStageResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
