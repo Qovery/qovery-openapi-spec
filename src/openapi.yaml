@@ -722,6 +722,8 @@ paths:
     $ref: './resources/job/JobSecretAlias.yaml'
   /job/{jobId}/commit:
     $ref: './resources/JobCommit.yaml'
+  /service/{serviceId}/deploymentStage:
+    $ref: './resources/deploymentStage/ServiceDeploymentStage.yaml'
   #/organization/{organizationId}/job/preview:
   #/organization/{organizationId}/job/deploy:
 components:

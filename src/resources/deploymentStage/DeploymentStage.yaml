@@ -1,3 +1,23 @@
+get:
+  summary: 'Get Deployment Stage'
+  operationId: getDeploymentStage
+  parameters:
+    - $ref: '../../parameters/path/deploymentStageId.yaml'
+  tags:
+    - Deployment Stage Main Calls
+  responses:
+    '200':
+      description: 'Get Deployment Stage'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/deploymentStage/DeploymentStageResponse.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
 delete:
   summary: 'Delete deployment stage'
   operationId: DeleteDeploymentStage
