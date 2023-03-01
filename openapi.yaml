@@ -3531,7 +3531,7 @@ paths:
       operationId: MoveBeforeDeploymentStage
       parameters:
         - $ref: '#/components/parameters/deploymentStageId'
-        - $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D~1moveAfter~1%7BstageId%7D/put/parameters/1'
+        - $ref: '#/components/parameters/stageId'
       tags:
         - Deployment Stage Main Calls
       responses:
@@ -3553,13 +3553,7 @@ paths:
       operationId: MoveAfterDeploymentStage
       parameters:
         - $ref: '#/components/parameters/deploymentStageId'
-        - name: stageId
-          in: path
-          description: Deployment Stage ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/stageId'
       tags:
         - Deployment Stage Main Calls
       responses:
@@ -8949,6 +8943,14 @@ components:
         format: uuid
     deploymentStageId:
       name: deploymentStageId
+      in: path
+      description: Deployment Stage ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    stageId:
+      name: stageId
       in: path
       description: Deployment Stage ID
       required: true
