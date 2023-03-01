@@ -391,7 +391,9 @@ paths:
   /deploymentStage/{deploymentStageId}/service/{serviceId}:
     $ref: './resources/deploymentStage/DeploymentStageService.yaml'
   /deploymentStage/{deploymentStageId}/moveBefore/{stageId}:
-    $ref: './resources/deploymentStage/DeploymentStageMove.yaml'
+    $ref: './resources/deploymentStage/DeploymentStageMoveBefore.yaml'
+  /deploymentStage/{deploymentStageId}/moveAfter/{stageId}:
+    $ref: './resources/deploymentStage/DeploymentStageMoveAfter.yaml'
   /environment/{environmentId}/deploymentRule:
     $ref: './resources/EnvironmentDeploymentRule.yaml'
   /environment/{environmentId}/deploymentRule/{deploymentRuleId}:
