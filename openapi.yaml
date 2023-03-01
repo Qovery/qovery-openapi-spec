@@ -3509,7 +3509,7 @@ paths:
       operationId: AttachServiceToDeploymentStage
       parameters:
         - $ref: '#/components/parameters/deploymentStageId'
-        - $ref: '#/paths/~1service~1%7BserviceId%7D~1deploymentStage/get/parameters/0'
+        - $ref: '#/components/parameters/serviceId'
       tags:
         - Deployment Stage Main Calls
       responses:
@@ -8827,13 +8827,7 @@ paths:
       summary: Get Service Deployment Stage
       operationId: getServiceDeploymentStage
       parameters:
-        - name: serviceId
-          in: path
-          description: Service ID of an application/job/container/database
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/serviceId'
       tags:
         - Deployment Stage Main Calls
       responses:
@@ -9123,6 +9117,14 @@ components:
       name: targetLogicalDatabaseId
       in: path
       description: Target database ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    serviceId:
+      name: serviceId
+      in: path
+      description: Service ID of an application/job/container/database
       required: true
       schema:
         type: string
