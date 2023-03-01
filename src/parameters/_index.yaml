@@ -70,3 +70,5 @@ targetDatabaseId:
   $ref: ./path/targetDatabaseId.yaml
 targetLogicalDatabaseId:
   $ref: ./path/targetLogicalDatabaseId.yaml
+serviceId:
+  $ref: ./path/serviceId.yaml
