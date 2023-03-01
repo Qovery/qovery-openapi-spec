@@ -3528,7 +3528,29 @@ paths:
   '/deploymentStage/{deploymentStageId}/moveBefore/{stageId}':
     put:
       summary: Move deployment stage before requested stage
-      operationId: MoveDeploymentStage
+      operationId: MoveBeforeDeploymentStage
+      parameters:
+        - $ref: '#/components/parameters/deploymentStageId'
+        - $ref: '#/paths/~1deploymentStage~1%7BdeploymentStageId%7D~1moveAfter~1%7BstageId%7D/put/parameters/1'
+      tags:
+        - Deployment Stage Main Calls
+      responses:
+        '200':
+          description: List deployment stage
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentStageResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/deploymentStage/{deploymentStageId}/moveAfter/{stageId}':
+    put:
+      summary: Move deployment stage after requested stage
+      operationId: MoveAfterDeploymentStage
       parameters:
         - $ref: '#/components/parameters/deploymentStageId'
         - name: stageId
