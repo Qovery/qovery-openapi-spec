@@ -6,4 +6,4 @@ allOf:
         type: string
         description: name of the service
       status:
-        $ref: './enums/DeploymentHistoryStatus.yaml'
+        $ref: './enums/State.yaml'

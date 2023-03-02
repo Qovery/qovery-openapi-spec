@@ -6,7 +6,7 @@ allOf:
         type: string
         description: name of the job
       status:
-        $ref: '../enums/DeploymentHistoryStatus.yaml'
+        $ref: '../enums/State.yaml'
       image_name:
         type: string
       tag:
