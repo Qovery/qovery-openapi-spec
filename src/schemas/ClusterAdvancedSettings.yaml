@@ -76,3 +76,7 @@ properties:
     type: integer
     default: -1
     deprecated: true
+  aws.iam.admin_group:
+    type: string
+    default: "Admins"
+    description: AWS IAM group name with cluster access
