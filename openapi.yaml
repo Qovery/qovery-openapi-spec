@@ -10602,7 +10602,7 @@ components:
           type: integer
           default: 12
           description: For how long in week loki is going to keep logs of your applications
-        cloud_provider_container_registry_tags:
+        cloud_provider.container_registry.tags:
           type: object
           additionalProperties:
             type: string
