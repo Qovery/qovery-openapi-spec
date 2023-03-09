@@ -12,6 +12,23 @@ properties:
     type: integer
     default: 365
     description: Set the number of retention days for flow logs. Disable with value "0"
+  loki.log_retention_in_week:
+    type: integer
+    default: 12
+    description: For how long in week loki is going to keep logs of your applications
+  registry.image_retention_time:
+    type: integer
+    default: 31536000
+    description: Configure the number of seconds before cleaning images in the registry
+  cloud_provider.container_registry.tags:
+    type: object
+    additionalProperties:
+      type: string
+    description: Add additional tags on the cluster dedicated registry
+  load_balancer.size:
+    type: string
+    default: "lb-s"
+    description: Select the size of the main load_balancer (only effective for Scaleway)
   database.postgresql.deny_public_access:
     type: boolean
     default: false
@@ -52,28 +69,19 @@ properties:
     items:
       type: string
     description: List of CIDRs allowed to access the Redis database
-  registry.image_retention_time:
-    type: integer
-    default: 31536000
-    description: Configure the number of seconds before cleaning images in the registry
-  loki.log_retention_in_week:
-    type: integer
-    default: 12
-    description: For how long in week loki is going to keep logs of your applications
-  cloud_provider.container_registry.tags:
-    type: object
-    additionalProperties:
-      type: string
-    description: Add additional tags on the cluster dedicated registry
-  load_balancer.size:
-    type: string
-    default: "lb-s"
-    description: Select the size of the main load_balancer (only effective for Scaleway)
-  pleco.resources_ttl:
-    type: integer
-    default: -1
-    deprecated: true
   aws.iam.admin_group:
     type: string
     default: "Admins"
     description: AWS IAM group name with cluster access
+  aws.eks.ec2.metadata_imds:
+    type: string
+    default: "optional"
+    enum: ["optional", "required"]
+    description: >
+      Specify the [IMDS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html) version you want to use:
+        * `required`: IMDS V2 only
+        * `optional`: IMDS V1 + V2
+  pleco.resources_ttl:
+    type: integer
+    default: -1
+    deprecated: true
