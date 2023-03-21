@@ -138,10 +138,6 @@ CompanySizeEnum:
   $ref: ./enums/CompanySize.yaml
 ContainerAdvancedSettings:
   $ref: ./ContainerAdvancedSettings.yaml
-ContainerAdvancedSettingsRequest:
-  $ref: ./ContainerAdvancedSettingsRequest.yaml
-ContainerAdvancedSettingsResponse:
-  $ref: ./ContainerAdvancedSettingsResponse.yaml
 ContainerCurrentScale:
   $ref: ./ContainerCurrentScaleResponse.yaml
 ContainerNetwork:
