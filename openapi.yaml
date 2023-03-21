@@ -6131,7 +6131,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContainerAdvancedSettingsResponse'
+                $ref: '#/components/schemas/ContainerAdvancedSettings'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -6150,14 +6150,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ContainerAdvancedSettingsRequest'
+              $ref: '#/components/schemas/ContainerAdvancedSettings'
       responses:
         '201':
           description: Updated advanced settings
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContainerAdvancedSettingsResponse'
+                $ref: '#/components/schemas/ContainerAdvancedSettings'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -10828,14 +10828,6 @@ components:
           type: integer
           description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
           default: 3
-    ContainerAdvancedSettingsRequest:
-      type: array
-      items:
-        $ref: '#/components/schemas/ContainerAdvancedSettings'
-    ContainerAdvancedSettingsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/ContainerAdvancedSettings'
     ContainerCurrentScale:
       type: object
       properties:
