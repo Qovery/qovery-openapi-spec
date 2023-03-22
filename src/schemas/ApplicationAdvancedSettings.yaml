@@ -159,3 +159,8 @@ properties:
     type: integer
     description: Percentage value of cpu usage at which point pods should scale up.
     default: 60
+  security.service_account_name:
+    type: string
+    default: ""
+    description: |
+      Allows you to set an existing Kubernetes service account name

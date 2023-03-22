@@ -87,3 +87,8 @@ properties:
     type: integer
     description: Minimum consecutive failures for the probe to be considered failed after having succeeded.
     default: 0
+  security.service_account_name:
+    type: string
+    default: ""
+    description: |
+      Allows you to set an existing Kubernetes service account name
