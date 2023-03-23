@@ -152,3 +152,7 @@ properties:
     default: ""
     description: |
       Allows you to set an existing Kubernetes service account name
+  hpa.cpu.average_utilization_percent:
+    type: integer
+    description: Percentage value of cpu usage at which point pods should scale up.
+    default: 60
