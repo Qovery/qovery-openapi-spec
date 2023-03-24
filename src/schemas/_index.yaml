@@ -434,8 +434,6 @@ MetricMemoryDatapointResponseList:
   $ref: ./MetricMemoryDatapointResponseList.yaml
 MetricMemoryResponseList:
   $ref: ./MetricMemoryResponseList.yaml
-MetricRestart:
-  $ref: ./MetricRestartResponse.yaml
 MetricStorage:
   $ref: ./MetricStorageResponse.yaml
 MetricStorageDatapoint:
