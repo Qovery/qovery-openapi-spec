@@ -498,8 +498,6 @@ paths:
     $ref: './resources/ApplicationMetricHealthCheck.yaml'
   /application/{applicationId}/metric/storage:
     $ref: './resources/ApplicationMetricStorage.yaml'
-  /application/{applicationId}/metric/restart:
-    $ref: './resources/ApplicationMetricRestart.yaml'
   /application/{applicationId}/commit:
     $ref: './resources/ApplicationCommit.yaml'
   /application/{applicationId}/deploy:
@@ -644,8 +642,6 @@ paths:
     $ref: './resources/DatabaseMetricStorage.yaml'
   /database/{databaseId}/metric/healthCheck:
     $ref: './resources/DatabaseMetricHealthCheck.yaml'
-  /database/{databaseId}/metric/restart:
-    $ref: './resources/DatabaseMetricRestart.yaml'
   /database/{databaseId}/backup:
     $ref: './resources/DatabaseBackup.yaml'
   /database/{databaseId}/backup/{backupId}:
