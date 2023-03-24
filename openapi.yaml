@@ -5131,29 +5131,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/application/{applicationId}/metric/restart':
-    get:
-      summary: List application restarts
-      description: Get application restart message and timestamp.
-      operationId: getApplicationMetricRestart
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/lastSeconds'
-      tags:
-        - Application Metrics
-      responses:
-        '200':
-          description: Restarts
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MetricRestart'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/application/{applicationId}/commit':
     get:
       summary: List last commits
@@ -7543,29 +7520,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MetricGenericResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/database/{databaseId}/metric/restart':
-    get:
-      summary: List database restarts
-      description: Get database restart message and timestamp.
-      operationId: getDatabaseMetricRestart
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-        - $ref: '#/components/parameters/lastSeconds'
-      tags:
-        - Database Metrics
-      responses:
-        '200':
-          description: Restarts
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MetricRestart'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -13449,22 +13403,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MetricMemory'
-    MetricRestart:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            type: object
-            required:
-              - datetime
-              - message
-            properties:
-              datetime:
-                type: string
-                format: date-time
-              message:
-                type: string
     MetricStorage:
       type: object
       required:
