@@ -1875,13 +1875,7 @@ paths:
       operationId: getOrganizationWebhook
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - name: webhookId
-          in: path
-          description: Webhook ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/webhookId'
       tags:
         - Organization Webhook
       responses:
@@ -1903,7 +1897,7 @@ paths:
       operationId: editOrganizationWebhook
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook~1%7BwebhookId%7D/get/parameters/1'
+        - $ref: '#/components/parameters/webhookId'
       tags:
         - Organization Webhook
       requestBody:
@@ -1932,7 +1926,7 @@ paths:
       operationId: deleteOrganizationWebhook
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1webhook~1%7BwebhookId%7D/get/parameters/1'
+        - $ref: '#/components/parameters/webhookId'
       tags:
         - Organization Webhook
       responses:
@@ -9103,6 +9097,14 @@ components:
       name: serviceId
       in: path
       description: Service ID of an application/job/container/database
+      required: true
+      schema:
+        type: string
+        format: uuid
+    webhookId:
+      name: webhookId
+      in: path
+      description: Webhook ID
       required: true
       schema:
         type: string
