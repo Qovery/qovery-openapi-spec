@@ -29,7 +29,7 @@ ApplicationNetworkRequest:
 ServicePort:
   $ref: ./ServicePortResponse.yaml
 ServicePortResponseList:
-    $ref: ./ServicePortResponseList.yaml
+  $ref: ./ServicePortResponseList.yaml
 ServicePortRequest:
   $ref: ./ServicePortRequest.yaml
 ApplicationRequest:
@@ -576,6 +576,8 @@ StateEnum:
   $ref: ./enums/State.yaml
 Status:
   $ref: ./Status.yaml
+Stage:
+  $ref: ./Stage.yaml
 StatusKindEnum:
   $ref: ./enums/StatusKind.yaml
 StorageDisk:
@@ -614,5 +616,3 @@ VersionResponseList:
   $ref: ./VersionResponseList.yaml
 WeekdayEnum:
   $ref: ./enums/Weekday.yaml
-
-

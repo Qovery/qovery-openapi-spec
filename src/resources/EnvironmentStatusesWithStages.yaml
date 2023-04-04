@@ -7,7 +7,7 @@ get:
     - Environment Main Calls
   responses:
     '200':
-      description: 'Get statuses'
+      description: 'Get statuses with stages'
       content:
         application/json:
           schema:
