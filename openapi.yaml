@@ -3389,6 +3389,56 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/statusesWithStages':
+    get:
+      summary: Get environment statuses with stages
+      operationId: getEnvironmentStatusesWithStages
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Main Calls
+      responses:
+        '200':
+          description: Get statuses with stages
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  environment:
+                    $ref: '#/components/schemas/Status'
+                  stages:
+                    type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            applications:
+                              type: array
+                              items:
+                                $ref: '#/components/schemas/Status'
+                            containers:
+                              type: array
+                              items:
+                                $ref: '#/components/schemas/Status'
+                            jobs:
+                              type: array
+                              items:
+                                $ref: '#/components/schemas/Status'
+                            databases:
+                              type: array
+                              items:
+                                $ref: '#/components/schemas/Status'
+                            stage:
+                              $ref: '#/components/schemas/Stage'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/deploymentStage':
     get:
       summary: List environment deployment stage
@@ -14428,6 +14478,18 @@ components:
         last_deployment_date:
           type: string
           format: date-time
+    Stage:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: stage name
     StatusKindEnum:
       type: string
       enum:
