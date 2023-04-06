@@ -286,16 +286,18 @@ EnvironmentModeEnum:
   $ref: ./enums/EnvironmentMode.yaml
 CreateEnvironmentModeEnum:
   $ref: ./enums/CreateEnvironmentMode.yaml
+CreateEnvironmentModeEnum:
+  $ref: ./enums/CreateEnvironmentMode.yaml
 CreateEnvironmentRequest:
   $ref: ./CreateEnvironmentRequest.yaml
-EnvironmentResponseList:
-  $ref: ./EnvironmentResponseList.yaml
 EnvironmentStats:
   $ref: ./EnvironmentStatsResponse.yaml
 EnvironmentStatsResponseList:
   $ref: ./EnvironmentStatsResponseList.yaml
 EnvironmentStatusList:
   $ref: ./EnvironmentStatusList.yaml
+EnvironmentStatusesWithStages:
+  $ref: ./EnvironmentStatusesWithStages.yaml
 EnvironmentTotalNumber:
   $ref: ./EnvironmentTotalNumber.yaml
 EnvironmentVariable:
@@ -368,6 +370,10 @@ DeploymentStageServiceResponseList:
   $ref: ./deploymentStage/DeploymentStageServiceResponseList.yaml
 DeploymentStageServiceResponse:
   $ref: ./deploymentStage/DeploymentStageServiceResponse.yaml
+DeploymentStageWithServiceStatusesList:
+  $ref: ./DeploymentStageWithServicesStatuses.yaml
+DeploymentStageWithServicesStatuses:
+  $ref: ./DeploymentStageWithServicesStatuses.yaml
 JobRequest:
   $ref: ./job/JobRequest.yaml
 JobResponse:
