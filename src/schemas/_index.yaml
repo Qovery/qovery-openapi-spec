@@ -580,6 +580,8 @@ StateEnum:
   $ref: ./enums/State.yaml
 Status:
   $ref: ./Status.yaml
+Stage:
+  $ref: ./Stage.yaml
 StatusKindEnum:
   $ref: ./enums/StatusKind.yaml
 StorageDisk:
