@@ -3408,31 +3408,7 @@ paths:
                   environment:
                     $ref: '#/components/schemas/Status'
                   stages:
-                    type: object
-                    properties:
-                      results:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            applications:
-                              type: array
-                              items:
-                                $ref: '#/components/schemas/Status'
-                            containers:
-                              type: array
-                              items:
-                                $ref: '#/components/schemas/Status'
-                            jobs:
-                              type: array
-                              items:
-                                $ref: '#/components/schemas/Status'
-                            databases:
-                              type: array
-                              items:
-                                $ref: '#/components/schemas/Status'
-                            stage:
-                              $ref: '#/components/schemas/Stage'
+                    $ref: '#/components/schemas/DeploymentStageWithServiceStatusesList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -11790,6 +11766,13 @@ components:
             cluster_name:
               type: string
               format: string
+    EnvironmentResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Environment'
     EnvironmentApplicationsCurrentScale:
       type: object
       properties:
@@ -12222,13 +12205,6 @@ components:
           format: uuid
         mode:
           $ref: '#/components/schemas/CreateEnvironmentModeEnum'
-    EnvironmentResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Environment'
     EnvironmentStats:
       allOf:
         - $ref: '#/components/schemas/ReferenceObject'
@@ -12724,6 +12700,34 @@ components:
             service_type:
               type: string
               description: 'type of the service (i.e APPLICATION, JOB, DATABASE, ...)'
+    DeploymentStageWithServiceStatusesList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentStageWithServicesStatuses'
+    DeploymentStageWithServicesStatuses:
+      type: object
+      properties:
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+        containers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+        jobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+        databases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+        stage:
+          $ref: '#/components/schemas/Stage'
     JobRequest:
       allOf:
         - type: object
