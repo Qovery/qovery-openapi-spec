@@ -286,8 +286,6 @@ EnvironmentModeEnum:
   $ref: ./enums/EnvironmentMode.yaml
 CreateEnvironmentModeEnum:
   $ref: ./enums/CreateEnvironmentMode.yaml
-CreateEnvironmentModeEnum:
-  $ref: ./enums/CreateEnvironmentMode.yaml
 CreateEnvironmentRequest:
   $ref: ./CreateEnvironmentRequest.yaml
 EnvironmentStats:
