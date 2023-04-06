@@ -238,6 +238,8 @@ DoCredentialsRequest:
   $ref: ./DoCredentialsRequest.yaml
 Environment:
   $ref: ./EnvironmentResponse.yaml
+EnvironmentResponseList:
+  $ref: ./EnvironmentResponseList.yaml
 EnvironmentApplicationsCurrentScale:
   $ref: ./EnvironmentApplicationsCurrentScaleResponse.yaml
 EnvironmentApplicationsCurrentScaleResponseList:
