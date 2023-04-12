@@ -1,7 +1,0 @@
-name: targetLogicalDatabaseId
-in: path
-description: Target database ID
-required: true
-schema:
-  type: string
-  format: uuid

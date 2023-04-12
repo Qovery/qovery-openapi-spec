@@ -86,7 +86,6 @@ tags:
   - name: Git
   - name: Github App
   - name: Git repositories
-  - name: Logical Database
   - name: Members
   - name: Organization
   - name: Organization Account Git Repositories
@@ -178,7 +177,6 @@ x-tagGroups:
       - Database Applications
       - Database Deployment History
       - Database Containers
-      - Logical Database
       - Database Application
       - Database Container
       - Backups
@@ -616,8 +614,6 @@ paths:
     $ref: './resources/DatabaseVersion.yaml'
   /database/{databaseId}/masterCredentials:
     $ref: './resources/DatabaseMasterCredentials.yaml'
-  /database/{databaseId}/logicalDatabase:
-    $ref: './resources/DatabaseLogicalDatabase.yaml'
   /database/{databaseId}/application:
     $ref: './resources/DatabaseApplication.yaml'
   /database/{databaseId}/application/{targetApplicationId}:
@@ -650,14 +646,6 @@ paths:
     $ref: './resources/DatabaseBackupRef.yaml'
   /database/{databaseId}/event:
     $ref: './resources/DatabaseEvent.yaml'
-  /logicalDatabase/{logicalDatabaseId}:
-    $ref: './resources/LogicalDatabase.yaml'
-  /logicalDatabase/{logicalDatabaseId}/credentials:
-    $ref: './resources/LogicalDatabaseCredentials.yaml'
-  /logicalDatabase/{logicalDatabaseId}/application:
-    $ref: './resources/LogicalDatabaseApplication.yaml'
-  /logicalDatabase/{logicalDatabaseId}/container:
-    $ref: './resources/LogicalDatabaseContainer.yaml'
   /account:
     $ref: './resources/AccountInformation.yaml'
   /account/gitAuthProvider:

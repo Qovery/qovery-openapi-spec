@@ -404,12 +404,6 @@ LogPaginatedResponseList:
   $ref: ./LogPaginatedResponseList.yaml
 LogResponseList:
   $ref: ./LogResponseList.yaml
-LogicalDatabase:
-  $ref: ./LogicalDatabaseResponse.yaml
-LogicalDatabaseRequest:
-  $ref: ./LogicalDatabaseRequest.yaml
-LogicalDatabaseResponseList:
-  $ref: ./LogicalDatabaseResponseList.yaml
 Member:
   $ref: ./MemberResponse.yaml
 MemberResponseList:
