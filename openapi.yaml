@@ -86,7 +86,6 @@ tags:
   - name: Git
   - name: Github App
   - name: Git repositories
-  - name: Logical Database
   - name: Members
   - name: Organization
   - name: Organization Account Git Repositories
@@ -178,7 +177,6 @@ x-tagGroups:
       - Database Applications
       - Database Deployment History
       - Database Containers
-      - Logical Database
       - Database Application
       - Database Container
       - Backups
@@ -7199,58 +7197,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/database/{databaseId}/logicalDatabase':
-    get:
-      summary: List logical databases of a database
-      description: 'A logical database exists inside a database. The database is a service that exists within an environment, that you can deploy, and that has allocated resources. A database can have several logical databases'
-      operationId: listLogicalDatabaseDatabase
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-      tags:
-        - Logical Database
-      responses:
-        '200':
-          description: List logical databases
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LogicalDatabaseResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    post:
-      summary: Create a logical database on the database
-      description: 'If you don''t specify credentials, Qovery will autogenerate them.'
-      operationId: createLogicalDatabaseOnDatabase
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-      tags:
-        - Logical Database
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LogicalDatabaseRequest'
-      responses:
-        '201':
-          description: Created database on the database
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LogicalDatabase'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Logical Database with this name already exists on the database
   '/database/{databaseId}/application':
     get:
       summary: List applications using the database
@@ -7631,162 +7577,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventPaginatedResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/logicalDatabase/{logicalDatabaseId}':
-    get:
-      summary: Get logical database by ID
-      description: 'A logical database exists inside a database. The database is a service that exists within an environment, that you can deploy, and that has allocated resources. A database can have several logical databases'
-      operationId: getLogicalDatabase
-      parameters:
-        - $ref: '#/components/parameters/logicalDatabaseId'
-      tags:
-        - Logical Database
-      responses:
-        '200':
-          description: Get logical database by ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LogicalDatabase'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    put:
-      summary: Edit a logical database
-      operationId: editLogicalDatabase
-      parameters:
-        - $ref: '#/components/parameters/logicalDatabaseId'
-      tags:
-        - Logical Database
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LogicalDatabaseRequest'
-      responses:
-        '200':
-          description: Edit a Logical Database
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LogicalDatabase'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    delete:
-      summary: Delete a Logical database
-      description: To delete a logical database you must have the project user permission
-      operationId: deleteLogicalDatabase
-      parameters:
-        - $ref: '#/components/parameters/logicalDatabaseId'
-      tags:
-        - Logical Database
-      responses:
-        '204':
-          $ref: '#/components/responses/204-deletion'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/logicalDatabase/{logicalDatabaseId}/credentials':
-    get:
-      summary: Get  credentials of the logical database
-      operationId: getLogicalDatabaseCredentials
-      parameters:
-        - $ref: '#/components/parameters/logicalDatabaseId'
-      tags:
-        - Logical Database
-      responses:
-        '200':
-          description: get credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Credentials'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    put:
-      summary: Edit logical database credentials
-      operationId: editLogicalDatabaseCredentials
-      parameters:
-        - $ref: '#/components/parameters/logicalDatabaseId'
-      tags:
-        - Logical Database
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CredentialsRequest'
-      responses:
-        '200':
-          description: Edit logical database credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Credentials'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/logicalDatabase/{logicalDatabaseId}/application':
-    get:
-      summary: List linked applications
-      operationId: listLogicalDatabaseApplication
-      parameters:
-        - $ref: '#/components/parameters/logicalDatabaseId'
-      tags:
-        - Logical Database
-      responses:
-        '200':
-          description: List linked applications
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApplicationResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/logicalDatabase/{logicalDatabaseId}/container':
-    get:
-      summary: List linked containers
-      operationId: listLogicalDatabaseContainer
-      parameters:
-        - $ref: '#/components/parameters/logicalDatabaseId'
-      tags:
-        - Logical Database
-      responses:
-        '200':
-          description: List linked containers
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContainerResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -9033,14 +8823,6 @@ components:
       schema:
         type: integer
         format: int32
-    logicalDatabaseId:
-      name: logicalDatabaseId
-      in: path
-      description: Logical Database ID
-      required: true
-      schema:
-        type: string
-        format: uuid
     organizationId:
       name: organizationId
       in: path
@@ -9105,14 +8887,6 @@ components:
         format: uuid
     targetDatabaseId:
       name: targetDatabaseId
-      in: path
-      description: Target database ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    targetLogicalDatabaseId:
-      name: targetLogicalDatabaseId
       in: path
       description: Target database ID
       required: true
@@ -13268,31 +13042,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Log'
-    LogicalDatabase:
-      allOf:
-        - $ref: '#/components/schemas/Base'
-        - $ref: '#/components/schemas/LogicalDatabaseRequest'
-        - type: object
-          properties:
-            database:
-              $ref: '#/components/schemas/ReferenceObject'
-    LogicalDatabaseRequest:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-          description: name is case insensitive
-        description:
-          type: string
-    LogicalDatabaseResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/LogicalDatabase'
     Member:
       allOf:
         - $ref: '#/components/schemas/Base'
