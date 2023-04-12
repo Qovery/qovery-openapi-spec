@@ -12124,6 +12124,13 @@ components:
               properties:
                 step:
                   type: string
+                id:
+                  type: string
+                  format: uuid
+                  nullable: true
+                name:
+                  type: string
+                  nullable: true
         error:
           type: object
           nullable: true
