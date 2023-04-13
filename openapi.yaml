@@ -3364,7 +3364,7 @@ paths:
                 type: object
                 properties:
                   environment:
-                    $ref: '#/components/schemas/Status'
+                    $ref: '#/components/schemas/EnvironmentStatus'
                   applications:
                     type: array
                     items:
@@ -3404,7 +3404,7 @@ paths:
                 type: object
                 properties:
                   environment:
-                    $ref: '#/components/schemas/Status'
+                    $ref: '#/components/schemas/EnvironmentStatus'
                   stages:
                     $ref: '#/components/schemas/DeploymentStageWithServiceStatusesList'
         '401':
@@ -3675,7 +3675,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Status'
+                $ref: '#/components/schemas/EnvironmentStatus'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3699,7 +3699,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Status'
+                $ref: '#/components/schemas/EnvironmentStatus'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3722,7 +3722,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Status'
+                $ref: '#/components/schemas/EnvironmentStatus'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3746,7 +3746,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Status'
+                $ref: '#/components/schemas/EnvironmentStatus'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -11990,6 +11990,23 @@ components:
       allOf:
         - $ref: '#/components/schemas/ReferenceObject'
         - $ref: '#/components/schemas/ServiceTotalNumber'
+    EnvironmentStatus:
+      type: object
+      required:
+        - id
+        - state
+        - last_deployment_state
+      properties:
+        id:
+          type: string
+          format: uuid
+        state:
+          $ref: '#/components/schemas/StateEnum'
+        last_deployment_date:
+          type: string
+          format: date-time
+        last_deployment_state:
+          $ref: '#/components/schemas/StateEnum'
     EnvironmentStatsResponseList:
       type: object
       properties:
@@ -12003,7 +12020,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/Status'
+            $ref: '#/components/schemas/EnvironmentStatus'
     EnvironmentTotalNumber:
       type: object
       required:
@@ -14230,9 +14247,6 @@ components:
           format: uuid
         state:
           $ref: '#/components/schemas/StateEnum'
-        message:
-          type: string
-          description: message related to the state
         service_deployment_status:
           $ref: '#/components/schemas/ServiceDeploymentStatusEnum'
         last_deployment_date:
