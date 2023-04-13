@@ -2,15 +2,15 @@ type: object
 required:
   - id
   - state
-  - service_deployment_status
+  - last_deployment_state
 properties:
   id:
     type: string
     format: uuid
   state:
     $ref: './enums/State.yaml'
-  service_deployment_status:
-    $ref: './enums/ServiceDeploymentStatus.yaml'
   last_deployment_date:
     type: string
     format: date-time
+  last_deployment_state:
+    $ref: './enums/State.yaml'

@@ -1,7 +1,7 @@
 type: object
 properties:
   environment:
-    $ref: '../schemas/Status.yaml'
+    $ref: '../schemas/EnvironmentStatus.yaml'
   applications:
     type: array
     items:
