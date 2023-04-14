@@ -12007,6 +12007,8 @@ components:
           format: date-time
         last_deployment_state:
           $ref: '#/components/schemas/StateEnum'
+        last_deployment_id:
+          type: string
     EnvironmentStatsResponseList:
       type: object
       properties:
