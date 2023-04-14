@@ -14256,6 +14256,8 @@ components:
         last_deployment_date:
           type: string
           format: date-time
+        is_part_last_deployment:
+          type: boolean
     Stage:
       type: object
       required:
