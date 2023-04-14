@@ -12005,10 +12005,12 @@ components:
         last_deployment_date:
           type: string
           format: date-time
+          nullable: true
         last_deployment_state:
           $ref: '#/components/schemas/StateEnum'
         last_deployment_id:
           type: string
+          nullable: true
     EnvironmentStatsResponseList:
       type: object
       properties:
