@@ -1,6 +1,7 @@
 type: string
 enum:
   - BUILDING
+  - BUILD_ERROR
   - CANCELED
   - CANCELING
   - DELETED
@@ -13,7 +14,6 @@ enum:
   - DEPLOYMENT_QUEUED
   - QUEUED
   - READY
-  - RUNNING
   - STOPPED
   - STOPPING
   - STOP_ERROR
