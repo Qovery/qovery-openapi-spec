@@ -14218,6 +14218,7 @@ components:
       type: string
       enum:
         - BUILDING
+        - BUILD_ERROR
         - CANCELED
         - CANCELING
         - DELETED
@@ -14230,7 +14231,6 @@ components:
         - DEPLOYMENT_QUEUED
         - QUEUED
         - READY
-        - RUNNING
         - STOPPED
         - STOPPING
         - STOP_ERROR
