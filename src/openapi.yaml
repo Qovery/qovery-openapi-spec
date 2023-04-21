@@ -93,6 +93,7 @@ tags:
   - name: Organization Custom Role
   - name: Organization Api Token
   - name: Organization Webhook
+  - name: Organization Event
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
@@ -110,6 +111,7 @@ x-tagGroups:
       - Organization Account Git Repositories
       - Organization Webhook
       - Organization Custom Role
+      - Organization Event
       - Projects
       - Members
       - Billing
@@ -304,6 +306,8 @@ paths:
     $ref: './resources/OrganizationCustomRole.yaml'
   /organization/{organizationId}/customRole/{customRoleId}:
     $ref: './resources/OrganizationCustomRoleRef.yaml'
+  /organization/{organizationId}/events:
+    $ref: './resources/OrganizationEvent.yaml'
   /cloudProvider:
     $ref: './resources/CloudProvider.yaml'
   /aws/region:

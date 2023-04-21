@@ -1,0 +1,15 @@
+type: string
+description: Type of the organization event
+enum:
+  - APPLICATION
+  - CLUSTER
+  - CONTAINER
+  - CONTAINER_REGISTRY
+  - DATABASE
+  - ENVIRONMENT
+  - JOB
+  - MEMBERS_AND_ROLES
+  - ORGANIZATION
+  - PROJECT
+  - WEBHOOK
+example: APPLICATION
