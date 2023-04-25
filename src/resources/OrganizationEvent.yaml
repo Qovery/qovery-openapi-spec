@@ -9,6 +9,8 @@ get:
       description: The number of events to display in the current page
       schema:
         type: number
+        nullable: true
+        default: 10
     - in: query
       name: from-timestamp
       description: |
@@ -17,6 +19,7 @@ get:
       schema:
         type: string
         format: date-time
+        nullable: true
     - in: query
       name: to-timestamp
       description: |
@@ -25,6 +28,7 @@ get:
       schema:
         type: string
         format: date-time
+        nullable: true
     - in: query
       name: event_type
       schema:
@@ -35,9 +39,13 @@ get:
         $ref: '../schemas/enums/OrganizationEventTargetType.yaml'
     - in: query
       name: target_id
+      description: |
+        The target resource id to search.  
+        Must be specified with the corresponding `target_type`
       schema:
         type: string
         format: uuid
+        nullable: true
     - in: query
       name: sub_target
       schema:
