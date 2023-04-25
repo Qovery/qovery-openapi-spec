@@ -93,6 +93,7 @@ tags:
   - name: Organization Custom Role
   - name: Organization Api Token
   - name: Organization Webhook
+  - name: Organization Event
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
@@ -110,6 +111,7 @@ x-tagGroups:
       - Organization Account Git Repositories
       - Organization Webhook
       - Organization Custom Role
+      - Organization Event
       - Projects
       - Members
       - Billing
@@ -2048,6 +2050,70 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/events':
+    get:
+      summary: Get all events inside the organization
+      description: Get all events inside the organization
+      operationId: getOrganizationEvents
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: from-timestamp
+          description: |
+            Display events triggered since this timestamp.  
+            A range of date can be specified by using `from-timestamp` with `to-timestamp`
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: to-timestamp
+          description: |
+            Display events triggered before this timestamp.  
+            A range of date can be specified by using `to-timestamp` with `from-timestamp`
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: event_type
+          schema:
+            $ref: '#/components/schemas/OrganizationEventType'
+        - in: query
+          name: target_type
+          schema:
+            $ref: '#/components/schemas/OrganizationEventTargetType'
+        - in: query
+          name: target_id
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: sub_target
+          schema:
+            $ref: '#/components/schemas/OrganizationEventSubTargetType'
+        - in: query
+          name: user
+          description: The username who has triggered the action
+          schema:
+            type: string
+        - in: query
+          name: origin
+          schema:
+            $ref: '#/components/schemas/OrganizationEventOrigin'
+      tags:
+        - Organization Event
+      responses:
+        '200':
+          description: Get organization events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationEventResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -13621,6 +13687,126 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Organization'
+    OrganizationEventResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        event_type:
+          $ref: '#/components/schemas/OrganizationEventType'
+        target_id:
+          type: string
+          format: uuid
+          nullable: true
+        target_name:
+          type: string
+        target_type:
+          type: string
+          $ref: '#/components/schemas/OrganizationEventTargetType'
+        sub_target_type:
+          type: string
+          nullable: true
+          $ref: '#/components/schemas/OrganizationEventSubTargetType'
+        change:
+          type: string
+        origin:
+          type: string
+          $ref: '#/components/schemas/OrganizationEventOrigin'
+        triggered_by:
+          type: string
+        project_id:
+          type: string
+          format: uuid
+          nullable: true
+        environment_id:
+          type: string
+          format: uuid
+          nullable: true
+    OrganizationEventResponseList:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            previous:
+              type: string
+              format: uri
+            next:
+              type: string
+              format: uri
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationEventResponse'
+    OrganizationEventOrigin:
+      type: string
+      description: Origin of the organization event
+      enum:
+        - API
+        - CLI
+        - CONSOLE
+        - GIT
+        - TERRAFORM_PROVIDER
+      example: API
+    OrganizationEventSubTargetType:
+      type: string
+      description: Type of the organization event
+      enum:
+        - ADVANCED_SETTINGS
+        - API_TOKEN
+        - BILLING_INFO
+        - CLOUD_PROVIDER_CREDENTIALS
+        - CLUSTER_CREDENTIALS
+        - CLUSTER_ROUTING_TABLE
+        - CREDIT_CARD
+        - CREDIT_CODE
+        - CUSTOM_DOMAIN
+        - CUSTOM_ROLE
+        - DEPLOYMENT_RULE
+        - DEPLOYMENT_STAGE
+        - GITHUB_APP
+        - GIT_REPOSITORY
+        - INVITATION
+        - MEMBER_ROLE
+        - PLAN
+        - SECRET
+        - TRANSFER_OWNERSHIP
+        - VARIABLE
+      example: ADVANCED_SETTINGS
+    OrganizationEventTargetType:
+      type: string
+      description: Type of the organization event
+      enum:
+        - APPLICATION
+        - CLUSTER
+        - CONTAINER
+        - CONTAINER_REGISTRY
+        - DATABASE
+        - ENVIRONMENT
+        - JOB
+        - MEMBERS_AND_ROLES
+        - ORGANIZATION
+        - PROJECT
+        - WEBHOOK
+      example: APPLICATION
+    OrganizationEventType:
+      type: string
+      description: Type of the organization event
+      enum:
+        - CREATE
+        - UPDATE
+        - DELETE
+        - ACCEPT
+        - TRIGGER_DEPLOY
+        - TRIGGER_REDEPLOY
+        - TRIGGER_STOP
+        - TRIGGER_CANCEL
+        - TRIGGER_RESTART
+        - TRIGGER_DELETE
+      example: CREATE
     SecretOverride:
       type: object
       required:
