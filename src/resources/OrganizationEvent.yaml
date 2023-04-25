@@ -5,6 +5,11 @@ get:
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
     - in: query
+      name: page-size
+      description: The number of events to display in the current page
+      schema:
+        type: number
+    - in: query
       name: from-timestamp
       description: |
         Display events triggered since this timestamp.  
