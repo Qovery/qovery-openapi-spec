@@ -47,7 +47,7 @@ get:
         format: uuid
         nullable: true
     - in: query
-      name: sub_target
+      name: sub_target_type
       schema:
         $ref: '../schemas/enums/OrganizationEventSubTargetType.yaml'
     - in: query
