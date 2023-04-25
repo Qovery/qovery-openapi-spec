@@ -1,0 +1,63 @@
+get:
+  summary: 'Get all events inside the organization'
+  description: 'Get all events inside the organization'
+  operationId: getOrganizationEvents
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - in: query
+      name: from-timestamp
+      description: |
+        Display events triggered since this timestamp.  
+        A range of date can be specified by using `from-timestamp` with `to-timestamp`
+      schema:
+        type: string
+        format: date-time
+    - in: query
+      name: to-timestamp
+      description: |
+        Display events triggered before this timestamp.  
+        A range of date can be specified by using `to-timestamp` with `from-timestamp`
+      schema:
+        type: string
+        format: date-time
+    - in: query
+      name: event_type
+      schema:
+        $ref: '../schemas/enums/OrganizationEventType.yaml'
+    - in: query
+      name: target_type
+      schema:
+        $ref: '../schemas/enums/OrganizationEventTargetType.yaml'
+    - in: query
+      name: target_id
+      schema:
+        type: string
+        format: uuid
+    - in: query
+      name: sub_target
+      schema:
+        $ref: '../schemas/enums/OrganizationEventSubTargetType.yaml'
+    - in: query
+      name: user
+      description: The username who has triggered the action
+      schema:
+        type: string
+    - in: query
+      name: origin
+      schema:
+        $ref: '../schemas/enums/OrganizationEventOrigin.yaml'
+  tags:
+    - Organization Event
+  responses:
+    '200':
+      description: 'Get organization events'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationEventResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

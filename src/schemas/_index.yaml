@@ -490,6 +490,18 @@ OrganizationRequest:
   $ref: ./OrganizationRequest.yaml
 OrganizationResponseList:
   $ref: ./OrganizationResponseList.yaml
+OrganizationEventResponse:
+  $ref: ./OrganizationEventResponse.yaml
+OrganizationEventResponseList:
+  $ref: ./OrganizationEventResponseList.yaml
+OrganizationEventOrigin:
+  $ref: ./enums/OrganizationEventOrigin.yaml
+OrganizationEventSubTargetType:
+  $ref: ./enums/OrganizationEventSubTargetType.yaml
+OrganizationEventTargetType:
+  $ref: ./enums/OrganizationEventTargetType.yaml
+OrganizationEventType:
+  $ref: ./enums/OrganizationEventType.yaml
 SecretOverride:
   $ref: ./SecretOverride.yaml
 OrganizationWebhookCreateRequest:
