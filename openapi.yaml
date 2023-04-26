@@ -2064,6 +2064,13 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - in: query
+          name: page-size
+          description: The number of events to display in the current page
+          schema:
+            type: number
+            nullable: true
+            default: 10
+        - in: query
           name: from-timestamp
           description: |
             Display events triggered since this timestamp.  
@@ -2071,6 +2078,7 @@ paths:
           schema:
             type: string
             format: date-time
+            nullable: true
         - in: query
           name: to-timestamp
           description: |
@@ -2079,6 +2087,7 @@ paths:
           schema:
             type: string
             format: date-time
+            nullable: true
         - in: query
           name: event_type
           schema:
@@ -2089,16 +2098,20 @@ paths:
             $ref: '#/components/schemas/OrganizationEventTargetType'
         - in: query
           name: target_id
+          description: |
+            The target resource id to search.  
+            Must be specified with the corresponding `target_type`
           schema:
             type: string
             format: uuid
+            nullable: true
         - in: query
-          name: sub_target
+          name: sub_target_type
           schema:
             $ref: '#/components/schemas/OrganizationEventSubTargetType'
         - in: query
-          name: user
-          description: The username who has triggered the action
+          name: triggered_by
+          description: Information about the owner of the event (user name / apitoken / automatic action)
           schema:
             type: string
         - in: query
@@ -12124,6 +12137,9 @@ components:
             service_type:
               $ref: '#/components/schemas/LinkedServiceTypeEnum'
               description: present only for `BUILT_IN` variable
+            owned_by:
+              type: string
+              description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
     EnvironmentVariableAlias:
       type: object
       required:
@@ -13690,8 +13706,6 @@ components:
     OrganizationEventResponse:
       type: object
       properties:
-        id:
-          type: string
         timestamp:
           type: string
           format: date-time
@@ -14261,6 +14275,9 @@ components:
             service_type:
               $ref: '#/components/schemas/LinkedServiceTypeEnum'
               description: present only for `BUILT_IN` variable
+            owned_by:
+              type: string
+              description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
     SecretEditRequest:
       type: object
       required:
