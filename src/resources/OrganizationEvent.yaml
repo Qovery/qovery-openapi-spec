@@ -51,8 +51,8 @@ get:
       schema:
         $ref: '../schemas/enums/OrganizationEventSubTargetType.yaml'
     - in: query
-      name: user
-      description: The username who has triggered the action
+      name: triggered_by
+      description: Information about the owner of the event (user name / apitoken / automatic action)
       schema:
         type: string
     - in: query
