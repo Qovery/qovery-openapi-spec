@@ -9887,6 +9887,9 @@ components:
           format: uuid
         mode:
           $ref: '#/components/schemas/EnvironmentModeEnum'
+        apply_deployment_rule:
+          type: boolean
+          default: false
     CloudProvider:
       type: object
       properties:
