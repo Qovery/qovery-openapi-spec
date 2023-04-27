@@ -10,3 +10,6 @@ properties:
     format: uuid
   mode:
     $ref: './enums/EnvironmentMode.yaml'
+  apply_deployment_rule:
+    type: boolean
+    default: false
