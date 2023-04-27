@@ -16,19 +16,33 @@ get:
       description: |
         Display events triggered since this timestamp.  
         A range of date can be specified by using `from-timestamp` with `to-timestamp`
+        The format is a timestamp with nano precision
       schema:
         type: string
-        format: date-time
         nullable: true
     - in: query
       name: to-timestamp
       description: |
         Display events triggered before this timestamp.  
         A range of date can be specified by using `to-timestamp` with `from-timestamp`
+        The format is a timestamp with nano precision
       schema:
         type: string
-        format: date-time
         nullable: true
+    - in: query
+      name: continue-token
+      description: |
+        Token used to fetch the next page results
+        The format is a timestamp with nano precision
+      schema:
+        type: string
+    - in: query
+      name: step-back-token
+      description: |
+        Token used to fetch the previous page results
+        The format is a timestamp with nano precision
+      schema:
+        type: string
     - in: query
       name: event_type
       schema:
