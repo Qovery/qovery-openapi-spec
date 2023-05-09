@@ -2064,14 +2064,14 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - in: query
-          name: page-size
+          name: pageSize
           description: The number of events to display in the current page
           schema:
             type: number
             nullable: true
             default: 10
         - in: query
-          name: from-timestamp
+          name: fromTimestamp
           description: |
             Display events triggered since this timestamp.  
             A range of date can be specified by using `from-timestamp` with `to-timestamp`
@@ -2080,7 +2080,7 @@ paths:
             type: string
             nullable: true
         - in: query
-          name: to-timestamp
+          name: toTimestamp
           description: |
             Display events triggered before this timestamp.  
             A range of date can be specified by using `to-timestamp` with `from-timestamp`
@@ -2089,29 +2089,29 @@ paths:
             type: string
             nullable: true
         - in: query
-          name: continue-token
+          name: continueToken
           description: |
             Token used to fetch the next page results
             The format is a timestamp with nano precision
           schema:
             type: string
         - in: query
-          name: step-back-token
+          name: stepBackToken
           description: |
             Token used to fetch the previous page results
             The format is a timestamp with nano precision
           schema:
             type: string
         - in: query
-          name: event_type
+          name: eventType
           schema:
             $ref: '#/components/schemas/OrganizationEventType'
         - in: query
-          name: target_type
+          name: targetType
           schema:
             $ref: '#/components/schemas/OrganizationEventTargetType'
         - in: query
-          name: target_id
+          name: targetId
           description: |
             The target resource id to search.  
             Must be specified with the corresponding `target_type`
@@ -2120,11 +2120,11 @@ paths:
             format: uuid
             nullable: true
         - in: query
-          name: sub_target_type
+          name: subTargetType
           schema:
             $ref: '#/components/schemas/OrganizationEventSubTargetType'
         - in: query
-          name: triggered_by
+          name: triggeredBy
           description: Information about the owner of the event (user name / apitoken / automatic action)
           schema:
             type: string
@@ -14458,7 +14458,7 @@ components:
         - RESTART_QUEUED
         - RESTARTING
         - RESTARTED
-        - RESTART_ERROR
+        - RESTARTED_ERROR
     Status:
       type: object
       required:
