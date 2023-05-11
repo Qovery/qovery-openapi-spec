@@ -9140,6 +9140,23 @@ components:
           type: integer
           description: define how long in seconds an application is supposed to be stopped gracefully
           default: 60
+        deployment.update_strategy.type:
+          type: string
+          enum:
+            - RollingUpdate
+            - Recreate
+          default: RollingUpdate
+          description: |
+            * `RollingUpdate` gracefully rollout new versions, and automatically rollback if the new version fails to start
+            * `Recreate` stop all current versions and create new ones once all old ones have been shutdown
+        deployment.update_strategy.rolling_update.max_unavailable_percent:
+          type: integer
+          default: 25
+          description: Define the percentage of a maximum number of pods that can be unavailable during the update process
+        deployment.update_strategy.rolling_update.max_surge_percent:
+          type: integer
+          default: 25
+          description: Define the percentage of the maximum number of pods that can be created over the desired number of pods
         build.timeout_max_sec:
           type: integer
           default: 1800
@@ -9219,9 +9236,9 @@ components:
             - TCP
             - HTTP
           description: |
-            `NONE` disable readiness probe
-            `TCP` enable TCP readiness probe
-            `HTTP` enable HTTP readiness probe
+            * `NONE` disable readiness probe
+            * `TCP` enable TCP readiness probe
+            * `HTTP` enable HTTP readiness probe
           default: TCP
         readiness_probe.http_get.path:
           type: string
@@ -9254,9 +9271,9 @@ components:
             - TCP
             - HTTP
           description: |
-            `NONE` disable liveness probe
-            `TCP` enable TCP liveness probe
-            `HTTP` enable HTTP liveness probe
+            * `NONE` disable liveness probe
+            * `TCP` enable TCP liveness probe
+            * `HTTP` enable HTTP liveness probe
           default: TCP
         liveness_probe.http_get.path:
           type: string
@@ -10558,6 +10575,23 @@ components:
           type: integer
           description: define how long in seconds an application is supposed to be stopped gracefully
           default: 60
+        deployment.update_strategy.type:
+          type: string
+          enum:
+            - RollingUpdate
+            - Recreate
+          default: RollingUpdate
+          description: |
+            * `RollingUpdate` gracefully rollout new versions, and automatically rollback if the new version fails to start
+            * `Recreate` stop all current versions and create new ones once all old ones have been shutdown
+        deployment.update_strategy.rolling_update.max_unavailable_percent:
+          type: integer
+          default: 25
+          description: Define the percentage of a maximum number of pods that can be unavailable during the update process
+        deployment.update_strategy.rolling_update.max_surge_percent:
+          type: integer
+          default: 25
+          description: Define the percentage of the maximum number of pods that can be created over the desired number of pods
         network.ingress.proxy_body_size_mb:
           type: integer
           default: 100
@@ -10634,9 +10668,9 @@ components:
             - TCP
             - HTTP
           description: |
-            `NONE` disable readiness probe
-            `TCP` enable TCP readiness probe
-            `HTTP` enable HTTP readiness probe
+            * `NONE` disable readiness probe
+            * `TCP` enable TCP readiness probe
+            * `HTTP` enable HTTP readiness probe
           default: TCP
         readiness_probe.http_get.path:
           type: string
@@ -10669,9 +10703,9 @@ components:
             - TCP
             - HTTP
           description: |
-            `NONE` disable liveness probe
-            `TCP` enable TCP liveness probe
-            `HTTP` enable HTTP liveness probe
+            * `NONE` disable liveness probe
+            * `TCP` enable TCP liveness probe
+            * `HTTP` enable HTTP liveness probe
           default: TCP
         liveness_probe.http_get.path:
           type: string
