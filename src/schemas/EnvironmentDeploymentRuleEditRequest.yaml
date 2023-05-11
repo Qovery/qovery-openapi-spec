@@ -8,6 +8,12 @@ properties:
   auto_deploy:
     type: boolean
     default: true
+  on_demand_preview:
+    type: boolean
+    default: false
+  auto_preview:
+    type: boolean
+    default: false
   auto_delete:
     type: boolean
     default: false
