@@ -3,33 +3,42 @@ properties:
   first_name:
     type: string
     example: Forrest
+    nullable: true
   last_name:
     type: string
     example: Gump
+    nullable: true
   email:
     type: string
     format: email
     example: forrest@gump.com
     description: email used for billing, and to receive all invoices by email
+    nullable: true
   address:
     type: string
     example: "21 Jenny Street"
+    nullable: true
   city:
     type: string
     example: Greenbow
+    nullable: true
   zip:
     type: string
     example: "36744"
+    nullable: true
   state:
     type: string
     example: Alabama
     description: only for US
+    nullable: true
   country_code:
     type: string
     description: ISO code of the country
     example: "US"
+    nullable: true
   company:
     type: string
     description: name of the company to bill
   vat_number:
     type: string
+    nullable: true
