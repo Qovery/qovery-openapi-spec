@@ -86,7 +86,6 @@ tags:
   - name: Git
   - name: Github App
   - name: Git repositories
-  - name: Logical Database
   - name: Members
   - name: Organization
   - name: Organization Account Git Repositories
@@ -94,6 +93,7 @@ tags:
   - name: Organization Custom Role
   - name: Organization Api Token
   - name: Organization Webhook
+  - name: Organization Event
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
@@ -111,6 +111,7 @@ x-tagGroups:
       - Organization Account Git Repositories
       - Organization Webhook
       - Organization Custom Role
+      - Organization Event
       - Projects
       - Members
       - Billing
@@ -178,7 +179,6 @@ x-tagGroups:
       - Database Applications
       - Database Deployment History
       - Database Containers
-      - Logical Database
       - Database Application
       - Database Container
       - Backups
@@ -306,6 +306,8 @@ paths:
     $ref: './resources/OrganizationCustomRole.yaml'
   /organization/{organizationId}/customRole/{customRoleId}:
     $ref: './resources/OrganizationCustomRoleRef.yaml'
+  /organization/{organizationId}/events:
+    $ref: './resources/OrganizationEvent.yaml'
   /cloudProvider:
     $ref: './resources/CloudProvider.yaml'
   /aws/region:
@@ -384,6 +386,8 @@ paths:
     $ref: './resources/EnvironmentStatus.yaml'
   /environment/{environmentId}/statuses:
     $ref: './resources/EnvironmentStatuses.yaml'
+  /environment/{environmentId}/statusesWithStages:
+    $ref: './resources/EnvironmentStatusesWithStages.yaml'
   /environment/{environmentId}/deploymentStage:
     $ref: './resources/deploymentStage/EnvironmentDeploymentStage.yaml'
   /deploymentStage/{deploymentStageId}:
@@ -391,7 +395,11 @@ paths:
   /deploymentStage/{deploymentStageId}/service/{serviceId}:
     $ref: './resources/deploymentStage/DeploymentStageService.yaml'
   /deploymentStage/{deploymentStageId}/moveBefore/{stageId}:
-    $ref: './resources/deploymentStage/DeploymentStageMove.yaml'
+    $ref: './resources/deploymentStage/DeploymentStageMoveBefore.yaml'
+  /deploymentStage/{deploymentStageId}/moveAfter/{stageId}:
+    $ref: './resources/deploymentStage/DeploymentStageMoveAfter.yaml'
+  /environment/{environmentId}/deploymentRule:
+    $ref: './resources/EnvironmentDeploymentRule.yaml'
   /environment/{environmentId}/deploymentRule/{deploymentRuleId}:
     $ref: './resources/EnvironmentDeploymentRuleRef.yaml'
   /environment/{environmentId}/deploy:
@@ -494,8 +502,6 @@ paths:
     $ref: './resources/ApplicationMetricHealthCheck.yaml'
   /application/{applicationId}/metric/storage:
     $ref: './resources/ApplicationMetricStorage.yaml'
-  /application/{applicationId}/metric/restart:
-    $ref: './resources/ApplicationMetricRestart.yaml'
   /application/{applicationId}/commit:
     $ref: './resources/ApplicationCommit.yaml'
   /application/{applicationId}/deploy:
@@ -612,8 +618,6 @@ paths:
     $ref: './resources/DatabaseVersion.yaml'
   /database/{databaseId}/masterCredentials:
     $ref: './resources/DatabaseMasterCredentials.yaml'
-  /database/{databaseId}/logicalDatabase:
-    $ref: './resources/DatabaseLogicalDatabase.yaml'
   /database/{databaseId}/application:
     $ref: './resources/DatabaseApplication.yaml'
   /database/{databaseId}/application/{targetApplicationId}:
@@ -640,22 +644,12 @@ paths:
     $ref: './resources/DatabaseMetricStorage.yaml'
   /database/{databaseId}/metric/healthCheck:
     $ref: './resources/DatabaseMetricHealthCheck.yaml'
-  /database/{databaseId}/metric/restart:
-    $ref: './resources/DatabaseMetricRestart.yaml'
   /database/{databaseId}/backup:
     $ref: './resources/DatabaseBackup.yaml'
   /database/{databaseId}/backup/{backupId}:
     $ref: './resources/DatabaseBackupRef.yaml'
   /database/{databaseId}/event:
     $ref: './resources/DatabaseEvent.yaml'
-  /logicalDatabase/{logicalDatabaseId}:
-    $ref: './resources/LogicalDatabase.yaml'
-  /logicalDatabase/{logicalDatabaseId}/credentials:
-    $ref: './resources/LogicalDatabaseCredentials.yaml'
-  /logicalDatabase/{logicalDatabaseId}/application:
-    $ref: './resources/LogicalDatabaseApplication.yaml'
-  /logicalDatabase/{logicalDatabaseId}/container:
-    $ref: './resources/LogicalDatabaseContainer.yaml'
   /account:
     $ref: './resources/AccountInformation.yaml'
   /account/gitAuthProvider:
@@ -720,6 +714,8 @@ paths:
     $ref: './resources/job/JobSecretAlias.yaml'
   /job/{jobId}/commit:
     $ref: './resources/JobCommit.yaml'
+  /service/{serviceId}/deploymentStage:
+    $ref: './resources/deploymentStage/ServiceDeploymentStage.yaml'
   #/organization/{organizationId}/job/preview:
   #/organization/{organizationId}/job/deploy:
 components:

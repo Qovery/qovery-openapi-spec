@@ -12,7 +12,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/ContainerAdvancedSettingsResponse.yaml'
+            $ref: '../schemas/ContainerAdvancedSettings.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':
@@ -32,14 +32,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../schemas/ContainerAdvancedSettingsRequest.yaml'
+          $ref: '../schemas/ContainerAdvancedSettings.yaml'
   responses:
     '201':
       description: 'Updated advanced settings'
       content:
         application/json:
           schema:
-            $ref: '../schemas/ContainerAdvancedSettingsResponse.yaml'
+            $ref: '../schemas/ContainerAdvancedSettings.yaml'
     '400':
       $ref: '../responses/BadRequest.yaml'
     '401':

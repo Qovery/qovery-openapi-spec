@@ -25,3 +25,6 @@ properties:
   bandwidth_guarantee:
     type: string
     example: "UpTo"
+  architecture:
+    type: string
+    example: "ARM64"

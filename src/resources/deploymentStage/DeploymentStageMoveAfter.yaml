@@ -1,6 +1,6 @@
 put:
-  summary: 'Move deployment stage before requested stage'
-  operationId: MoveDeploymentStage
+  summary: 'Move deployment stage after requested stage'
+  operationId: MoveAfterDeploymentStage
   parameters:
     - $ref: '../../parameters/path/deploymentStageId.yaml'
     - $ref: '../../parameters/path/stageId.yaml'

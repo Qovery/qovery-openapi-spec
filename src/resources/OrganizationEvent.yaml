@@ -1,0 +1,90 @@
+get:
+  summary: 'Get all events inside the organization'
+  description: 'Get all events inside the organization'
+  operationId: getOrganizationEvents
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - in: query
+      name: pageSize
+      description: The number of events to display in the current page
+      schema:
+        type: number
+        nullable: true
+        default: 10
+    - in: query
+      name: fromTimestamp
+      description: |
+        Display events triggered since this timestamp.  
+        A range of date can be specified by using `from-timestamp` with `to-timestamp`
+        The format is a timestamp with nano precision
+      schema:
+        type: string
+        nullable: true
+    - in: query
+      name: toTimestamp
+      description: |
+        Display events triggered before this timestamp.  
+        A range of date can be specified by using `to-timestamp` with `from-timestamp`
+        The format is a timestamp with nano precision
+      schema:
+        type: string
+        nullable: true
+    - in: query
+      name: continueToken
+      description: |
+        Token used to fetch the next page results
+        The format is a timestamp with nano precision
+      schema:
+        type: string
+    - in: query
+      name: stepBackToken
+      description: |
+        Token used to fetch the previous page results
+        The format is a timestamp with nano precision
+      schema:
+        type: string
+    - in: query
+      name: eventType
+      schema:
+        $ref: '../schemas/enums/OrganizationEventType.yaml'
+    - in: query
+      name: targetType
+      schema:
+        $ref: '../schemas/enums/OrganizationEventTargetType.yaml'
+    - in: query
+      name: targetId
+      description: |
+        The target resource id to search.  
+        Must be specified with the corresponding `target_type`
+      schema:
+        type: string
+        format: uuid
+        nullable: true
+    - in: query
+      name: subTargetType
+      schema:
+        $ref: '../schemas/enums/OrganizationEventSubTargetType.yaml'
+    - in: query
+      name: triggeredBy
+      description: Information about the owner of the event (user name / apitoken / automatic action)
+      schema:
+        type: string
+    - in: query
+      name: origin
+      schema:
+        $ref: '../schemas/enums/OrganizationEventOrigin.yaml'
+  tags:
+    - Organization Event
+  responses:
+    '200':
+      description: 'Get organization events'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationEventResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

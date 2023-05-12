@@ -29,7 +29,7 @@ ApplicationNetworkRequest:
 ServicePort:
   $ref: ./ServicePortResponse.yaml
 ServicePortResponseList:
-    $ref: ./ServicePortResponseList.yaml
+  $ref: ./ServicePortResponseList.yaml
 ServicePortRequest:
   $ref: ./ServicePortRequest.yaml
 ApplicationRequest:
@@ -138,10 +138,6 @@ CompanySizeEnum:
   $ref: ./enums/CompanySize.yaml
 ContainerAdvancedSettings:
   $ref: ./ContainerAdvancedSettings.yaml
-ContainerAdvancedSettingsRequest:
-  $ref: ./ContainerAdvancedSettingsRequest.yaml
-ContainerAdvancedSettingsResponse:
-  $ref: ./ContainerAdvancedSettingsResponse.yaml
 ContainerCurrentScale:
   $ref: ./ContainerCurrentScaleResponse.yaml
 ContainerNetwork:
@@ -242,6 +238,8 @@ DoCredentialsRequest:
   $ref: ./DoCredentialsRequest.yaml
 Environment:
   $ref: ./EnvironmentResponse.yaml
+EnvironmentResponseList:
+  $ref: ./EnvironmentResponseList.yaml
 EnvironmentApplicationsCurrentScale:
   $ref: ./EnvironmentApplicationsCurrentScaleResponse.yaml
 EnvironmentApplicationsCurrentScaleResponseList:
@@ -292,10 +290,10 @@ CreateEnvironmentModeEnum:
   $ref: ./enums/CreateEnvironmentMode.yaml
 CreateEnvironmentRequest:
   $ref: ./CreateEnvironmentRequest.yaml
-EnvironmentResponseList:
-  $ref: ./EnvironmentResponseList.yaml
 EnvironmentStats:
   $ref: ./EnvironmentStatsResponse.yaml
+EnvironmentStatus:
+  $ref: ./EnvironmentStatus.yaml
 EnvironmentStatsResponseList:
   $ref: ./EnvironmentStatsResponseList.yaml
 EnvironmentStatusList:
@@ -372,6 +370,10 @@ DeploymentStageServiceResponseList:
   $ref: ./deploymentStage/DeploymentStageServiceResponseList.yaml
 DeploymentStageServiceResponse:
   $ref: ./deploymentStage/DeploymentStageServiceResponse.yaml
+DeploymentStageWithServiceStatusesList:
+  $ref: ./DeploymentStageWithServiceStatusesList.yaml
+DeploymentStageWithServicesStatuses:
+  $ref: ./DeploymentStageWithServicesStatuses.yaml
 JobRequest:
   $ref: ./job/JobRequest.yaml
 JobResponse:
@@ -404,12 +406,6 @@ LogPaginatedResponseList:
   $ref: ./LogPaginatedResponseList.yaml
 LogResponseList:
   $ref: ./LogResponseList.yaml
-LogicalDatabase:
-  $ref: ./LogicalDatabaseResponse.yaml
-LogicalDatabaseRequest:
-  $ref: ./LogicalDatabaseRequest.yaml
-LogicalDatabaseResponseList:
-  $ref: ./LogicalDatabaseResponseList.yaml
 Member:
   $ref: ./MemberResponse.yaml
 MemberResponseList:
@@ -438,8 +434,6 @@ MetricMemoryDatapointResponseList:
   $ref: ./MetricMemoryDatapointResponseList.yaml
 MetricMemoryResponseList:
   $ref: ./MetricMemoryResponseList.yaml
-MetricRestart:
-  $ref: ./MetricRestartResponse.yaml
 MetricStorage:
   $ref: ./MetricStorageResponse.yaml
 MetricStorageDatapoint:
@@ -496,6 +490,18 @@ OrganizationRequest:
   $ref: ./OrganizationRequest.yaml
 OrganizationResponseList:
   $ref: ./OrganizationResponseList.yaml
+OrganizationEventResponse:
+  $ref: ./OrganizationEventResponse.yaml
+OrganizationEventResponseList:
+  $ref: ./OrganizationEventResponseList.yaml
+OrganizationEventOrigin:
+  $ref: ./enums/OrganizationEventOrigin.yaml
+OrganizationEventSubTargetType:
+  $ref: ./enums/OrganizationEventSubTargetType.yaml
+OrganizationEventTargetType:
+  $ref: ./enums/OrganizationEventTargetType.yaml
+OrganizationEventType:
+  $ref: ./enums/OrganizationEventType.yaml
 SecretOverride:
   $ref: ./SecretOverride.yaml
 OrganizationWebhookCreateRequest:
@@ -582,6 +588,8 @@ StateEnum:
   $ref: ./enums/State.yaml
 Status:
   $ref: ./Status.yaml
+Stage:
+  $ref: ./Stage.yaml
 StatusKindEnum:
   $ref: ./enums/StatusKind.yaml
 StorageDisk:
@@ -620,5 +628,3 @@ VersionResponseList:
   $ref: ./VersionResponseList.yaml
 WeekdayEnum:
   $ref: ./enums/Weekday.yaml
-
-

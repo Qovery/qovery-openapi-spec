@@ -11,7 +11,7 @@ allOf:
         $ref: './EnvironmentVariableAlias.yaml'
       scope:
         $ref: './enums/APIVariableScope.yaml'
-      type:
+      variable_type:
         $ref: './enums/APIVariableType.yaml'
       service_id:
         type: string
@@ -23,3 +23,6 @@ allOf:
       service_type:
         $ref: './enums/LinkedServiceType.yaml'
         description: present only for `BUILT_IN` variable
+      owned_by:
+        type: string
+        description: "Entity that created/own the variable (i.e: Qovery, Doppler)"

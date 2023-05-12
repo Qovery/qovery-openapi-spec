@@ -21,6 +21,8 @@ databaseId:
   $ref: ./path/databaseId.yaml
 deploymentStageId:
   $ref: ./path/deploymentStageId.yaml
+stageId:
+  $ref: ./path/stageId.yaml
 deploymentRuleId:
   $ref: ./path/deploymentRuleId.yaml
 environmentId:
@@ -48,8 +50,6 @@ lastSeconds:
   $ref: ./query/lastSeconds.yaml
 limit:
   $ref: ./query/limit.yaml
-logicalDatabaseId:
-  $ref: ./path/logicalDatabaseId.yaml
 organizationId:
   $ref: ./path/organizationId.yaml
 projectId:
@@ -68,5 +68,7 @@ targetApplicationId:
   $ref: ./path/targetApplicationId.yaml
 targetDatabaseId:
   $ref: ./path/targetDatabaseId.yaml
-targetLogicalDatabaseId:
-  $ref: ./path/targetLogicalDatabaseId.yaml
+serviceId:
+  $ref: ./path/serviceId.yaml
+webhookId:
+  $ref: ./path/webhookId.yaml

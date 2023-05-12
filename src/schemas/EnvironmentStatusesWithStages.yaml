@@ -1,0 +1,6 @@
+type: object
+properties:
+  environment:
+    $ref: '../schemas/EnvironmentStatus.yaml'
+  stages:
+    $ref: '../schemas/DeploymentStageWithServiceStatusesList.yaml'

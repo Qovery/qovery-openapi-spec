@@ -1,17 +1,17 @@
 get:
-  summary: 'Get environment status'
-  operationId: getEnvironmentStatus
+  summary: 'Get environment statuses with stages'
+  operationId: getEnvironmentStatusesWithStages
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
   tags:
     - Environment Main Calls
   responses:
     '200':
-      description: 'Get status'
+      description: 'Get statuses with stages'
       content:
         application/json:
           schema:
-            $ref: '../schemas/EnvironmentStatus.yaml'
+            $ref: '../schemas/EnvironmentStatusesWithStages.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
     '403':

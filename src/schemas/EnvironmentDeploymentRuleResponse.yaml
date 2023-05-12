@@ -10,6 +10,9 @@ allOf:
       auto_deploy:
         type: boolean
         default: true
+      on_demand_preview:
+        type: boolean
+        default: false
       auto_stop:
         type: boolean
         default: false

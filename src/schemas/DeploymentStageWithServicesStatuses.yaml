@@ -1,7 +1,5 @@
 type: object
 properties:
-  environment:
-    $ref: '../schemas/EnvironmentStatus.yaml'
   applications:
     type: array
     items:
@@ -18,3 +16,5 @@ properties:
     type: array
     items:
       $ref: '../schemas/Status.yaml'
+  stage:
+    $ref: '../schemas/Stage.yaml'

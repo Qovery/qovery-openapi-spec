@@ -1,14 +1,14 @@
 put:
-  summary: 'Attach service to deployment stage'
-  operationId: AttachServiceToDeploymentStage
+  summary: 'Move deployment stage before requested stage'
+  operationId: MoveBeforeDeploymentStage
   parameters:
     - $ref: '../../parameters/path/deploymentStageId.yaml'
-    - $ref: '../../parameters/path/serviceId.yaml'
+    - $ref: '../../parameters/path/stageId.yaml'
   tags:
     - Deployment Stage Main Calls
   responses:
     '200':
-      description: 'List of deployment stages for the env'
+      description: 'List deployment stage'
       content:
         application/json:
           schema:
