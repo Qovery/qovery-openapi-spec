@@ -9762,14 +9762,6 @@ components:
           format: date-time
     BillingInfo:
       type: object
-      required:
-        - first_name
-        - last_name
-        - email
-        - address
-        - zip
-        - country_code
-        - city
       properties:
         first_name:
           type: string
