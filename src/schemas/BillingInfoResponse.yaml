@@ -39,6 +39,7 @@ properties:
   company:
     type: string
     description: name of the company to bill
+    nullable: true
   vat_number:
     type: string
     nullable: true
