@@ -13768,6 +13768,9 @@ components:
     OrganizationEventResponse:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
         timestamp:
           type: string
           format: date-time
