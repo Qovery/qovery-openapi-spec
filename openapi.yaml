@@ -13800,10 +13800,14 @@ components:
           type: string
           format: uuid
           nullable: true
+        project_name:
+          type: string
         environment_id:
           type: string
           format: uuid
           nullable: true
+        environment_name:
+          type: string
     OrganizationEventResponseList:
       type: object
       properties:
