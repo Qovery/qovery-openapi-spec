@@ -9106,7 +9106,7 @@ components:
                 Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
                 Note: -1 means that there is no limit.
               default: 1
-            healthcheck:
+            healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             auto_preview:
               type: boolean
@@ -9603,7 +9603,7 @@ components:
                 Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
                 Note: -1 means that there is no limit.
               default: 1
-            healthcheck:
+            healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             auto_preview:
               type: boolean
@@ -10947,6 +10947,8 @@ components:
                 Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
                 Note: -1 means that there is no limit.
               default: 1
+            healthchecks:
+              $ref: '#/components/schemas/Healthcheck'
             auto_preview:
               type: boolean
               description: |
@@ -11024,6 +11026,8 @@ components:
                 Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
                 Note: -1 means that there is no limit.
               default: 1
+            healthchecks:
+              $ref: '#/components/schemas/Healthcheck'
             auto_preview:
               type: boolean
               description: |
@@ -12428,14 +12432,10 @@ components:
     Healthcheck:
       type: object
       properties:
-        protocol:
-          type: string
-          enum:
-            - TCP
-            - HTTP
-            - None
-        value:
-          type: string
+        readiness_probe:
+          $ref: '#/components/schemas/Probe'
+        liveness_probe:
+          $ref: '#/components/schemas/Probe'
     Instance:
       type: object
       properties:
@@ -12750,6 +12750,8 @@ components:
                       nullable: true
                     git_repository:
                       $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+            healthchecks:
+              $ref: '#/components/schemas/Healthcheck'
             schedule:
               type: object
               description: |
@@ -12904,6 +12906,8 @@ components:
                       nullable: true
                     git_repository:
                       $ref: '#/components/schemas/ApplicationGitRepository'
+            healthchecks:
+              $ref: '#/components/schemas/Healthcheck'
             schedule:
               type: object
               description: |
@@ -14105,6 +14109,64 @@ components:
       default: HTTP
       enum:
         - HTTP
+    Probe:
+      type: object
+      properties:
+        probe:
+          type: object
+          properties:
+            none:
+              type: object
+              nullable: true
+            tcp:
+              type: object
+              nullable: true
+              properties:
+                host:
+                  type: string
+                  default: null
+                  nullable: true
+            http:
+              type: object
+              nullable: true
+              properties:
+                path:
+                  type: string
+                  default: /
+                scheme:
+                  type: string
+                  default: HTTP
+            exec:
+              type: object
+              nullable: true
+              properties:
+                command:
+                  type: array
+                  items:
+                    type: string
+            grpc:
+              type: object
+              nullable: true
+              properties:
+                service:
+                  type: string
+                  nullable: true
+                  default: null
+        initial_delay_seconds:
+          type: integer
+          default: 30
+        period_seconds:
+          type: integer
+          default: 10
+        timeout_seconds:
+          type: integer
+          default: 5
+        success_threshold:
+          type: integer
+          default: 1
+        failure_threshold:
+          type: integer
+          default: 9
     Project:
       allOf:
         - $ref: '#/components/schemas/Base'
