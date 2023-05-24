@@ -524,6 +524,8 @@ PlanEnum:
   $ref: ./enums/Plan.yaml
 PortProtocolEnum:
   $ref: ./enums/PortProtocol.yaml
+Probe:
+  $ref: ./Probe.yaml
 Project:
   $ref: ./ProjectResponse.yaml
 ProjectCurrentCost:

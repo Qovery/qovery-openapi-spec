@@ -94,6 +94,8 @@ allOf:
                 nullable: true
               git_repository:
                 $ref: '../ApplicationGitRepositoryResponse.yaml'
+      healthchecks:
+        $ref: '../Healthcheck.yaml'
       schedule:
         type: object
         description: |
