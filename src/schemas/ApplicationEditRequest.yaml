@@ -40,7 +40,7 @@ allOf:
           Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
           Note: -1 means that there is no limit.
         default: 1
-      healthcheck:
+      healthchecks:
         $ref: './Healthcheck.yaml'
       auto_preview:
         type: boolean
