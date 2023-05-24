@@ -14112,7 +14112,7 @@ components:
     Probe:
       type: object
       properties:
-        probe:
+        type:
           type: object
           properties:
             none:
