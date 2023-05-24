@@ -1,0 +1,57 @@
+type: object
+properties:
+  probe:
+    type: object
+    properties:
+      none:
+        type: object
+        nullable: true
+      tcp:
+        type: object
+        nullable: true
+        properties:
+          host:
+            type: string
+            default: null
+            nullable: true
+      http:
+        type: object
+        nullable: true
+        properties:
+          path:
+            type: string
+            default: "/"
+          scheme:
+            type: string
+            default: "HTTP"
+      exec:
+        type: object
+        nullable: true
+        properties:
+          command:
+            type: array
+            items:
+              type: string
+      grpc:
+        type: object
+        nullable: true
+        properties:
+          service:
+            type: string
+            nullable: true
+            default: null
+  initial_delay_seconds:
+    type: integer
+    default: 30
+  period_seconds:
+    type: integer
+    default: 10
+  timeout_seconds:
+    type: integer
+    default: 5
+  success_threshold:
+    type: integer
+    default: 1
+  failure_threshold: 
+    type: integer
+    default: 9

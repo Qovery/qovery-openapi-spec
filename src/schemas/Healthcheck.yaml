@@ -1,10 +1,6 @@
 type: object
 properties:
-  protocol:
-    type: string
-    enum:
-      - TCP
-      - HTTP
-      - None
-  value:
-    type: string
+  readiness_probe:
+    $ref: './Probe.yaml'
+  liveness_probe:
+    $ref: './Probe.yaml'
