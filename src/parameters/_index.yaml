@@ -19,6 +19,8 @@ customRoleId:
   $ref: ./path/customRoleId.yaml
 databaseId:
   $ref: ./path/databaseId.yaml
+databaseType:
+  $ref: ./path/databaseType.yaml
 deploymentStageId:
   $ref: ./path/deploymentStageId.yaml
 stageId:

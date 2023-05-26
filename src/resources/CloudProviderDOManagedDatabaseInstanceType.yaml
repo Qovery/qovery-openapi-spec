@@ -1,0 +1,21 @@
+get:
+  summary: 'List Digital Ocean available managed database instance types'
+  operationId: listDOManagedDatabaseInstanceType
+  parameters:
+    - $ref: '../parameters/path/region.yaml'
+    - $ref: '../parameters/path/databaseType.yaml'
+  tags:
+    - Cloud Provider
+  responses:
+    '200':
+      description: 'list Digital Ocean available managed database types'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ManagedDatabaseInstanceTypeResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
