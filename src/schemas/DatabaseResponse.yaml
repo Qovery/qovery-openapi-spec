@@ -21,3 +21,7 @@ allOf:
       disk_encrypted:
         type: boolean
         description: indicates if the database disk is encrypted or not
+      instance_type:
+        type: string
+        example: db.t3.medium
+        description: Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field is null for container DB.
