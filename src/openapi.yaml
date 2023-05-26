@@ -316,6 +316,8 @@ paths:
     $ref: './resources/CloudProviderAWSClusterFeature.yaml'
   /aws/instanceType:
     $ref: './resources/CloudProviderAWSInstanceType.yaml'
+  /aws/managedDatabase/type:
+    $ref: './resources/CloudProviderAWSManagedDatabaseType.yaml'
   /aws/ec2/instanceType/{region}:
     $ref: './resources/CloudProviderAWSEc2InstanceType.yaml'
   /aws/eks/instanceType/{region}:
@@ -326,12 +328,16 @@ paths:
     $ref: './resources/CloudProviderDOClusterFeature.yaml'
   /digitalOcean/instanceType:
     $ref: './resources/CloudProviderDOInstanceType.yaml'
+  /digitalOcean/managedDatabase/type:
+    $ref: './resources/CloudProviderDOManagedDatabaseType.yaml'
   /scaleway/region:
     $ref: './resources/CloudProviderScalewayRegion.yaml'
   /scaleway/clusterFeature:
     $ref: './resources/CloudProviderScalewayClusterFeature.yaml'
   /scaleway/instanceType:
     $ref: './resources/CloudProviderScalewayInstanceType.yaml'
+  /scaleway/managedDatabase/type:
+    $ref: './resources/CloudProviderSCWManagedDatabaseType.yaml'
   /scaleway/instanceType/{zone}:
     $ref: './resources/CloudProviderScalewayKapsuleInstanceType.yaml'
   /organization/{organizationId}/cluster/{clusterId}/cloudProviderInfo:

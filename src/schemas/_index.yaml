@@ -406,6 +406,10 @@ LogPaginatedResponseList:
   $ref: ./LogPaginatedResponseList.yaml
 LogResponseList:
   $ref: ./LogResponseList.yaml
+ManagedDatabaseTypeResponse:
+  $ref: ./ManagedDatabaseTypeResponse.yaml
+ManagedDatabaseTypeResponseList:
+  $ref: ./ManagedDatabaseTypeResponseList.yaml
 Member:
   $ref: ./MemberResponse.yaml
 MemberResponseList:
