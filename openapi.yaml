@@ -12446,8 +12446,10 @@ components:
       properties:
         readiness_probe:
           $ref: '#/components/schemas/Probe'
+          nullable: true
         liveness_probe:
           $ref: '#/components/schemas/Probe'
+          nullable: true
     Instance:
       type: object
       properties:
@@ -14128,9 +14130,6 @@ components:
         type:
           type: object
           properties:
-            none:
-              type: object
-              nullable: true
             tcp:
               type: object
               nullable: true
