@@ -1,0 +1,18 @@
+get:
+  summary: 'List AWS available managed database types'
+  operationId: listAWSManagedDatabaseType
+  tags:
+    - Cloud Provider
+  responses:
+    '200':
+      description: 'list AWS available managed database types'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ManagedDatabaseTypeResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
