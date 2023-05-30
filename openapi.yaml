@@ -2223,6 +2223,47 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /aws/managedDatabase/type:
+    get:
+      summary: List AWS available managed database types
+      operationId: listAWSManagedDatabaseType
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list AWS available managed database types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagedDatabaseTypeResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/aws/managedDatabase/instanceType/{region}/{databaseType}':
+    get:
+      summary: List AWS available managed database instance types
+      operationId: listAWSManagedDatabaseInstanceType
+      parameters:
+        - $ref: '#/components/parameters/region'
+        - $ref: '#/components/parameters/databaseType'
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list AWS available managed database instance types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagedDatabaseInstanceTypeResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/aws/ec2/instanceType/{region}':
     get:
       summary: List AWS EC2 available instance types
@@ -2322,6 +2363,47 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /digitalOcean/managedDatabase/type:
+    get:
+      summary: List Digital Ocean available managed database types
+      operationId: listDOManagedDatabaseType
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list Digital Ocean available managed database types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagedDatabaseTypeResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/digitalOcean/managedDatabase/instanceType/{region}/{databaseType}':
+    get:
+      summary: List Digital Ocean available managed database instance types
+      operationId: listDOManagedDatabaseInstanceType
+      parameters:
+        - $ref: '#/components/parameters/region'
+        - $ref: '#/components/parameters/databaseType'
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list Digital Ocean available managed database instance types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagedDatabaseInstanceTypeResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /scaleway/region:
     get:
       summary: List Scaleway regions
@@ -2373,6 +2455,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClusterInstanceTypeResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /scaleway/managedDatabase/type:
+    get:
+      summary: List Scaleway available managed database types
+      operationId: listSCWManagedDatabaseType
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list Scaleway available managed database types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagedDatabaseTypeResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/scaleway/managedDatabase/instanceType/{zone}/{databaseType}':
+    get:
+      summary: List Scaleway available managed database instance types
+      operationId: listSCWManagedDatabaseInstanceType
+      parameters:
+        - $ref: '#/paths/~1scaleway~1instanceType~1%7Bzone%7D/get/parameters/0'
+        - $ref: '#/components/parameters/databaseType'
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list Scaleway available managed database instance types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagedDatabaseInstanceTypeResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -8798,6 +8921,14 @@ components:
       schema:
         type: string
         format: uuid
+    databaseType:
+      name: databaseType
+      in: path
+      description: Database type
+      required: true
+      schema:
+        type: string
+        example: MYSQL
     deploymentStageId:
       name: deploymentStageId
       in: path
@@ -11239,6 +11370,10 @@ components:
             disk_encrypted:
               type: boolean
               description: indicates if the database disk is encrypted or not
+            instance_type:
+              type: string
+              example: db.t3.medium
+              description: 'Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field is null for container DB.'
     DatabaseAccessibilityEnum:
       type: string
       default: PRIVATE
@@ -11377,6 +11512,10 @@ components:
           description: unit is millicores (m). 1000m = 1 cpu
           default: 250
           example: 1250
+        instance_type:
+          type: string
+          example: db.t3.medium
+          description: 'Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field SHOULD NOT be set for container DB.'
         memory:
           type: integer
           description: |
@@ -13225,6 +13364,36 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Log'
+    ManagedDatabaseTypeResponse:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: MYSQL
+    ManagedDatabaseTypeResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedDatabaseTypeResponse'
+    ManagedDatabaseInstanceTypeResponse:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: db.t3.medium
+    ManagedDatabaseInstanceTypeResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedDatabaseInstanceTypeResponse'
     Member:
       allOf:
         - $ref: '#/components/schemas/Base'
