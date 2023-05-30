@@ -9518,7 +9518,13 @@ components:
           description: Expose the port to the world
         is_default:
           type: boolean
-          description: is the default port to use for domain & probes check
+          description: is the default port to use for domain
+        has_readiness_probe:
+          type: boolean
+          description: is port to use for probe readiness check
+        has_liveness_probe:
+          type: boolean
+          description: is port to use for probe liveness check
         protocol:
           $ref: '#/components/schemas/PortProtocolEnum'
     ServicePortResponseList:
@@ -9551,7 +9557,13 @@ components:
                 description: Expose the port to the world
               is_default:
                 type: boolean
-                description: is the default port to use for domain & probes check
+                description: is the default port to use for domain
+              has_readiness_probe:
+                type: boolean
+                description: is port to use for probe readiness check
+              has_liveness_probe:
+                type: boolean
+                description: is port to use for probe liveness check
               protocol:
                 $ref: '#/components/schemas/PortProtocolEnum'
     ApplicationRequest:
@@ -14109,6 +14121,7 @@ components:
       default: HTTP
       enum:
         - HTTP
+        - GRPC
     Probe:
       type: object
       properties:
