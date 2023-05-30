@@ -2,5 +2,7 @@ type: object
 properties:
   readiness_probe:
     $ref: './Probe.yaml'
+    nullable: true
   liveness_probe:
     $ref: './Probe.yaml'
+    nullable: true

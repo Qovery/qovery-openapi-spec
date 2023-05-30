@@ -3,9 +3,6 @@ properties:
   type:
     type: object
     properties:
-      none:
-        type: object
-        nullable: true
       tcp:
         type: object
         nullable: true
