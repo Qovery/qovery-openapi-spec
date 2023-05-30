@@ -8,7 +8,7 @@ get:
     - Cloud Provider
   responses:
     '200':
-      description: 'list Scaleway available managed database types'
+      description: 'list Scaleway available managed database instance types'
       content:
         application/json:
           schema:

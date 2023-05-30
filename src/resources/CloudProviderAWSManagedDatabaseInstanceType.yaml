@@ -8,7 +8,7 @@ get:
     - Cloud Provider
   responses:
     '200':
-      description: 'list AWS available managed database types'
+      description: 'list AWS available managed database instance types'
       content:
         application/json:
           schema:
