@@ -13308,6 +13308,12 @@ components:
       properties:
         url:
           type: string
+        port:
+          type: integer
+        is_qovery_domain:
+          type: boolean
+        is_default:
+          type: boolean
     LinkResponseList:
       type: object
       properties:
