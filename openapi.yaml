@@ -13308,7 +13308,9 @@ components:
       properties:
         url:
           type: string
-        port:
+        internal_port:
+          type: integer
+        external_port:
           type: integer
         is_qovery_domain:
           type: boolean
