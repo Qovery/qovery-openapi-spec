@@ -11479,6 +11479,10 @@ components:
           type: integer
           description: unit is GB
           example: 4
+        instance_type:
+          type: string
+          example: db.t3.medium
+          description: 'Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field SHOULD NOT be set for container DB.'
     DatabaseModeEnum:
       type: string
       enum:
