@@ -7,6 +7,8 @@ properties:
         type: object
         nullable: true
         properties:
+          port:
+            type: integer
           host:
             type: string
             default: null
@@ -21,6 +23,8 @@ properties:
           scheme:
             type: string
             default: "HTTP"
+          port:
+            type: integer
       exec:
         type: object
         nullable: true
@@ -37,6 +41,8 @@ properties:
             type: string
             nullable: true
             default: null
+          port:
+            type: integer
   initial_delay_seconds:
     type: integer
     default: 30
