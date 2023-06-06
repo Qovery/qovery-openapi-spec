@@ -4,6 +4,10 @@ get:
   description: This returns the last 1000 environment deployment logs v2
   parameters:
     - $ref: '../parameters/path/environmentId.yaml'
+    - in: query
+      name: version
+      schema:
+        type: string
   tags:
     - Environment Logs
   responses:
