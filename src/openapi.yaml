@@ -478,6 +478,8 @@ paths:
     $ref: './resources/EnvironmentSecretAlias.yaml'
   /environment/{environmentId}/databaseConfiguration:
     $ref: './resources/EnvironmentDatabaseConfiguration.yaml'
+  /environment/{environmentId}/terraformExport:
+    $ref: './resources/EnvironmentTerraformExport.yaml'
   /defaultApplicationAdvancedSettings:
     $ref: './resources/DefaultApplicationAdvancedSettings.yaml'
   /defaultClusterAdvancedSettings:
