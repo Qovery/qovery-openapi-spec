@@ -4879,7 +4879,7 @@ paths:
             type: boolean
             default: false
       tags:
-        - Applications
+        - Environment Export
       responses:
         '200':
           description: Export full environment and its resources into Terraform manifests
