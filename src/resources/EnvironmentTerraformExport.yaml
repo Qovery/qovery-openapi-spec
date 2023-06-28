@@ -5,7 +5,7 @@ get:
     - $ref: '../parameters/path/environmentId.yaml'
     - $ref: '../parameters/query/exportSecrets.yaml'
   tags:
-    - Applications
+    - Environment Export
   responses:
     '200':
       description: 'Export full environment and its resources into Terraform manifests'
