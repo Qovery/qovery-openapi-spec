@@ -4865,6 +4865,35 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/terraformExport':
+    get:
+      summary: Export full environment and its resources into Terraform manifests
+      operationId: exportEnvironmentConfigurationIntoTerraform
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - name: exportSecrets
+          in: query
+          description: export Secrets from configuration and include them into Terraform export
+          required: false
+          schema:
+            type: boolean
+            default: false
+      tags:
+        - Applications
+      responses:
+        '200':
+          description: Export full environment and its resources into Terraform manifests
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /defaultApplicationAdvancedSettings:
     get:
       summary: List default application advanced settings
