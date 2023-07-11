@@ -12452,7 +12452,6 @@ components:
       type: object
       required:
         - key
-        - value
       properties:
         key:
           type: string
@@ -14967,8 +14966,6 @@ components:
             $ref: '#/components/schemas/User'
     Value:
       type: object
-      required:
-        - value
       properties:
         value:
           type: string
