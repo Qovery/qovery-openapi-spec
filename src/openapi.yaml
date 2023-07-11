@@ -309,6 +309,8 @@ paths:
     $ref: './resources/OrganizationCustomRoleRef.yaml'
   /organization/{organizationId}/events:
     $ref: './resources/OrganizationEvent.yaml'
+  /organization/{organizationId}/targets:
+    $ref: './resources/OrganizationEventTarget.yaml'
   /cloudProvider:
     $ref: './resources/CloudProvider.yaml'
   /aws/region:
