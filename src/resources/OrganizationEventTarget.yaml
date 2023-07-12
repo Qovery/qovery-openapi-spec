@@ -1,0 +1,68 @@
+get:
+  summary: 'Get available event targets to filter events'
+  description: 'Get available event targets to filter events'
+  operationId: getOrganizationEventTargets
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - in: query
+      name: fromTimestamp
+      description: |
+        Display targets available since this timestamp.  
+        A range of date can be specified by using `from-timestamp` with `to-timestamp`
+        The format is a timestamp with nano precision
+      schema:
+        type: string
+        nullable: true
+    - in: query
+      name: toTimestamp
+      description: |
+        Display targets triggered before this timestamp.  
+        A range of date can be specified by using `to-timestamp` with `from-timestamp`
+        The format is a timestamp with nano precision
+      schema:
+        type: string
+        nullable: true
+    - in: query
+      name: eventType
+      schema:
+        $ref: '../schemas/enums/OrganizationEventType.yaml'
+    - in: query
+      name: targetType
+      schema:
+        $ref: '../schemas/enums/OrganizationEventTargetType.yaml'
+    - in: query
+      name: triggeredBy
+      description: Information about the owner of the event (user name / apitoken / automatic action)
+      schema:
+        type: string
+    - in: query
+      name: origin
+      schema:
+        $ref: '../schemas/enums/OrganizationEventOrigin.yaml'
+    - in: query
+      name: projectId
+      description: Mandatory when requesting an environment or a service
+      schema:
+        type: string
+        format: uuid
+    - in: query
+      name: environmentId
+      description: Mandatory when requesting a service
+      schema:
+        type: string
+        format: uuid
+  tags:
+    - Organization Event
+  responses:
+    '200':
+      description: 'Get organization event targets'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationEventTargetResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
