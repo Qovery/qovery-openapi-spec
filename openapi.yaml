@@ -2148,6 +2148,86 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/targets':
+    get:
+      summary: Get available event targets to filter events
+      description: Get available event targets to filter events
+      operationId: getOrganizationEventTargets
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: fromTimestamp
+          description: |
+            Display targets available since this timestamp.  
+            A range of date can be specified by using `from-timestamp` with `to-timestamp`
+            The format is a timestamp with nano precision
+          schema:
+            type: string
+            nullable: true
+        - in: query
+          name: toTimestamp
+          description: |
+            Display targets triggered before this timestamp.  
+            A range of date can be specified by using `to-timestamp` with `from-timestamp`
+            The format is a timestamp with nano precision
+          schema:
+            type: string
+            nullable: true
+        - in: query
+          name: eventType
+          schema:
+            $ref: '#/components/schemas/OrganizationEventType'
+        - in: query
+          name: targetType
+          schema:
+            $ref: '#/components/schemas/OrganizationEventTargetType'
+        - in: query
+          name: triggeredBy
+          description: Information about the owner of the event (user name / apitoken / automatic action)
+          schema:
+            type: string
+        - in: query
+          name: origin
+          schema:
+            $ref: '#/components/schemas/OrganizationEventOrigin'
+        - in: query
+          name: projectId
+          description: Mandatory when requesting an environment or a service
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: environmentId
+          description: Mandatory when requesting a service
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Organization Event
+      responses:
+        '200':
+          description: Get organization event targets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  targets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        name:
+                          type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /cloudProvider:
     get:
       summary: List Cloud providers available
