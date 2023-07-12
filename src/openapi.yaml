@@ -565,6 +565,8 @@ paths:
     $ref: './resources/ApplicationLink.yaml'
   /application/{applicationId}/advancedSettings:
     $ref: './resources/ApplicationAdvancedSettings.yaml'
+  /application/{applicationId}/clone:
+    $ref: './resources/ApplicationClone.yaml'
   /container/{containerId}:
     $ref: './resources/Container.yaml'
   /container/{containerId}/status:
@@ -619,6 +621,8 @@ paths:
     $ref: './resources/ContainerNetwork.yaml'
   /container/{containerId}/link:
     $ref: './resources/ContainerLink.yaml'
+  /container/{containerId}/clone:
+      $ref: './resources/ContainerClone.yaml'
   /environment/{environmentId}/database:
     $ref: './resources/EnvironmentDatabase.yaml'
   /environment/{environmentId}/database/status:
@@ -665,6 +669,8 @@ paths:
     $ref: './resources/DatabaseBackupRef.yaml'
   /database/{databaseId}/event:
     $ref: './resources/DatabaseEvent.yaml'
+  /database/{databaseId}/clone:
+    $ref: './resources/DatabaseClone.yaml'
   /account:
     $ref: './resources/AccountInformation.yaml'
   /account/gitAuthProvider:
@@ -729,6 +735,8 @@ paths:
     $ref: './resources/job/JobSecretAlias.yaml'
   /job/{jobId}/commit:
     $ref: './resources/JobCommit.yaml'
+  /job/{jobId}/clone:
+      $ref: './resources/JobClone.yaml'
   /service/{serviceId}/deploymentStage:
     $ref: './resources/deploymentStage/ServiceDeploymentStage.yaml'
   #/organization/{organizationId}/job/preview:

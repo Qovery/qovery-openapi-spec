@@ -1,0 +1,28 @@
+post:
+  summary: 'Clone container'
+  description: This will create a new container with the same configuration on the targeted environment Id.
+  operationId: cloneContainer
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+  tags:
+    - Containers
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/CloneContainerRequest.yaml'
+  responses:
+    '202':
+      description: 'Container clone has been requested'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ContainerResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+    '409':
+      description: 'Operation is in progress'
