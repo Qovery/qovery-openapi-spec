@@ -565,6 +565,8 @@ paths:
     $ref: './resources/ApplicationLink.yaml'
   /application/{applicationId}/advancedSettings:
     $ref: './resources/ApplicationAdvancedSettings.yaml'
+  /application/{applicationId}/clone:
+    $ref: './resources/ApplicationClone.yaml'
   /container/{containerId}:
     $ref: './resources/Container.yaml'
   /container/{containerId}/status:
