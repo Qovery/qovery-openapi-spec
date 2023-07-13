@@ -5,7 +5,6 @@ required:
 properties:
   name:
     type: string
-    description: name is case insensitive
   environment_id:
     type: string
     format: uuid
