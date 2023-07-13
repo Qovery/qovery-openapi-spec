@@ -6320,6 +6320,35 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/clone':
+    post:
+      summary: Clone application
+      description: This will create a new application with the same configuration on the targeted environment Id.
+      operationId: cloneApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Applications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneApplicationRequest'
+      responses:
+        '202':
+          description: Application clone has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   '/container/{containerId}':
     get:
       summary: Get container by ID
@@ -7276,6 +7305,35 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/container/{containerId}/clone':
+    post:
+      summary: Clone container
+      description: This will create a new container with the same configuration on the targeted environment Id.
+      operationId: cloneContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Containers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneContainerRequest'
+      responses:
+        '202':
+          description: Container clone has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   '/environment/{environmentId}/database':
     get:
       summary: List environment databases
@@ -7913,6 +7971,35 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/database/{databaseId}/clone':
+    post:
+      summary: Clone database
+      description: This will create a new database with the same configuration on the targeted environment Id.
+      operationId: cloneDatabase
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - Databases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneDatabaseRequest'
+      responses:
+        '202':
+          description: Database clone has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Database'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   /account:
     get:
       summary: Get Account information
@@ -8932,6 +9019,35 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/job/{jobId}/clone':
+    post:
+      summary: Clone job
+      description: This will create a new job with the same configuration on the targeted environment Id.
+      operationId: cloneJob
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      tags:
+        - Jobs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneJobRequest'
+      responses:
+        '202':
+          description: Job clone has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   '/service/{serviceId}/deploymentStage':
     get:
       summary: Get Service Deployment Stage
@@ -10168,6 +10284,50 @@ components:
         apply_deployment_rule:
           type: boolean
           default: false
+    CloneApplicationRequest:
+      type: object
+      required:
+        - name
+        - environment_id
+      properties:
+        name:
+          type: string
+        environment_id:
+          type: string
+          format: uuid
+    CloneContainerRequest:
+      type: object
+      required:
+        - name
+        - environment_id
+      properties:
+        name:
+          type: string
+        environment_id:
+          type: string
+          format: uuid
+    CloneDatabaseRequest:
+      type: object
+      required:
+        - name
+        - environment_id
+      properties:
+        name:
+          type: string
+        environment_id:
+          type: string
+          format: uuid
+    CloneJobRequest:
+      type: object
+      required:
+        - name
+        - environment_id
+      properties:
+        name:
+          type: string
+        environment_id:
+          type: string
+          format: uuid
     CloudProvider:
       type: object
       properties:
