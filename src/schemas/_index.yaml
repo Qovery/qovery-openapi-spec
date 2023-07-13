@@ -510,6 +510,8 @@ OrganizationEventResponse:
   $ref: ./OrganizationEventResponse.yaml
 OrganizationEventResponseList:
   $ref: ./OrganizationEventResponseList.yaml
+OrganizationEventTargetResponseList:
+  $ref: ./OrganizationEventTargetResponseList.yaml
 OrganizationEventOrigin:
   $ref: ./enums/OrganizationEventOrigin.yaml
 OrganizationEventSubTargetType:
