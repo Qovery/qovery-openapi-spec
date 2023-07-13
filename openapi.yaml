@@ -2210,18 +2210,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  targets:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uuid
-                        name:
-                          type: string
+                $ref: '#/components/schemas/OrganizationEventTargetResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -14290,6 +14279,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrganizationEventResponse'
+    OrganizationEventTargetResponseList:
+      type: object
+      properties:
+        targets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              name:
+                type: string
     OrganizationEventOrigin:
       type: string
       description: Origin of the organization event
