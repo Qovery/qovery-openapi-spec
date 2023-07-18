@@ -648,3 +648,7 @@ VersionResponseList:
   $ref: ./VersionResponseList.yaml
 WeekdayEnum:
   $ref: ./enums/Weekday.yaml
+VariableAliasRequest:
+  $ref: ./variable/VariableAliasRequest.yaml
+VariableResponse:
+  $ref: ./variable/VariableResponse.yaml

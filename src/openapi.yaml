@@ -203,6 +203,9 @@ x-tagGroups:
   - name: Git
     tags:
       - Git repositories
+  - name: Variable
+    tags:
+      - Variable Main Calls
   - name: Admin
     tags:
       - User Sign Up
@@ -741,6 +744,8 @@ paths:
       $ref: './resources/JobClone.yaml'
   /service/{serviceId}/deploymentStage:
     $ref: './resources/deploymentStage/ServiceDeploymentStage.yaml'
+  /variable/{variableId}/alias:
+    $ref: './resources/variable/VariableAlias.yaml'
   #/organization/{organizationId}/job/preview:
   #/organization/{organizationId}/job/deploy:
 components:

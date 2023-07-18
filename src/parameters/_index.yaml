@@ -74,3 +74,5 @@ serviceId:
   $ref: ./path/serviceId.yaml
 webhookId:
   $ref: ./path/webhookId.yaml
+variableId:
+  $ref: ./path/variableId.yaml
