@@ -650,6 +650,8 @@ WeekdayEnum:
   $ref: ./enums/Weekday.yaml
 VariableAliasRequest:
   $ref: ./variable/VariableAliasRequest.yaml
+VariableOverrideRequest:
+  $ref: ./variable/VariableOverrideRequest.yaml
 VariableResponse:
   $ref: ./variable/VariableResponse.yaml
 VariableAlias:

@@ -1,5 +1,5 @@
 post:
-  summary: 'WIP: Create a variable alias'
+  summary: 'Create a variable alias'
   description: |
     - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key.
     - You have to specify a key in the request body and the scope and the parent id of the alias

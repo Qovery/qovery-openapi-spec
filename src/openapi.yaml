@@ -746,6 +746,8 @@ paths:
     $ref: './resources/deploymentStage/ServiceDeploymentStage.yaml'
   /variable/{variableId}/alias:
     $ref: './resources/variable/VariableAlias.yaml'
+  /variable/{variableId}/override:
+    $ref: './resources/variable/VariableOverride.yaml'
   #/organization/{organizationId}/job/preview:
   #/organization/{organizationId}/job/deploy:
 components:
