@@ -25,7 +25,7 @@ post:
           schema:
             $ref: '../../schemas/variable/VariableResponse.yaml'
     '400':
-      description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER
+      description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is ORGANIZATION > PROJECT > ENVIRONMENT > CONTAINER
     '401':
       $ref: '../../responses/NotAuthorized.yaml'
     '403':
