@@ -203,6 +203,9 @@ x-tagGroups:
   - name: Git
     tags:
       - Git repositories
+  - name: Variable
+    tags:
+      - Variable Main Calls
   - name: Admin
     tags:
       - User Sign Up
@@ -9058,6 +9061,41 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/variable/{variableId}/alias':
+    post:
+      summary: Create a variable alias
+      description: |
+        - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key.
+        - You have to specify a key in the request body and the scope and the parent id of the alias
+        - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path
+        - The response body will contain the newly created variable
+        - Information regarding the aliased_variable will be exposed in the "aliased_variable" or in the "aliased_secret" field of the newly created variable
+        - Only 1 alias level is allowed. You can't create an alias on an alias
+      operationId: createVariableAlias
+      parameters:
+        - $ref: '#/components/parameters/variableId'
+      tags:
+        - Variable Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableAliasRequest'
+      responses:
+        '201':
+          description: Create variable alias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableResponse'
+        '400':
+          description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is ORGANIZATION > PROJECT > ENVIRONMENT > CONTAINER
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   parameters:
     applicationId:
@@ -9348,6 +9386,14 @@ components:
       name: webhookId
       in: path
       description: Webhook ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    variableId:
+      name: variableId
+      in: path
+      description: Variable ID
       required: true
       schema:
         type: string
@@ -15290,6 +15336,52 @@ components:
         - SATURDAY
         - SUNDAY
       example: MONDAY
+    VariableAliasRequest:
+      type: object
+      required:
+        - key
+        - aliasScope
+        - aliasParentId
+      properties:
+        key:
+          type: string
+        aliasScope:
+          $ref: '#/components/schemas/APIVariableScopeEnum'
+        aliasParentId:
+          type: string
+          format: uuid
+    VariableResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - scope
+          properties:
+            overridden_variable:
+              $ref: '#/components/schemas/EnvironmentVariableOverride'
+            aliased_variable:
+              $ref: '#/components/schemas/EnvironmentVariableAlias'
+            overridden_secret:
+              $ref: '#/components/schemas/SecretOverride'
+            aliased_secret:
+              $ref: '#/components/schemas/SecretAlias'
+            scope:
+              $ref: '#/components/schemas/APIVariableScopeEnum'
+            variable_type:
+              $ref: '#/components/schemas/APIVariableTypeEnum'
+            service_id:
+              type: string
+              format: uuid
+              description: present only for `BUILT_IN` variable
+            service_name:
+              type: string
+              description: present only for `BUILT_IN` variable
+            service_type:
+              $ref: '#/components/schemas/LinkedServiceTypeEnum'
+              description: present only for `BUILT_IN` variable
+            owned_by:
+              type: string
+              description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
   responses:
     '204':
       description: no content
