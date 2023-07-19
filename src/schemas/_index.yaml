@@ -652,3 +652,7 @@ VariableAliasRequest:
   $ref: ./variable/VariableAliasRequest.yaml
 VariableResponse:
   $ref: ./variable/VariableResponse.yaml
+VariableAlias:
+  $ref: ./variable/VariableAlias.yaml
+VariableOverride:
+  $ref: ./variable/VariableOverride.yaml
