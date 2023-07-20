@@ -1,0 +1,23 @@
+type: object
+required:
+  - id
+  - key
+  - mount_path
+  - scope
+  - variable_type
+properties:
+  id:
+    type: string
+    format: uuid
+  key:
+    type: string
+    example: QOVERY_DATABASE_PSQL_NAME
+  value:
+    type: string
+    nullable: true
+  mount_path:
+    type: string
+  scope:
+    $ref: '../enums/APIVariableScope.yaml'
+  variable_type:
+    $ref: '../enums/APIVariableType.yaml'

@@ -5,13 +5,9 @@ allOf:
       - scope
     properties:
       overridden_variable:
-        $ref: '../EnvironmentVariableOverride.yaml'
+        $ref: './VariableOverride.yaml'
       aliased_variable:
-        $ref: '../EnvironmentVariableAlias.yaml'
-      overridden_secret:
-        $ref: '../SecretOverride.yaml'
-      aliased_secret:
-        $ref: '../SecretAlias.yaml'
+        $ref: './VariableAlias.yaml'
       scope:
         $ref: '../enums/APIVariableScope.yaml'
       variable_type:
