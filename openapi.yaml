@@ -12709,7 +12709,6 @@ components:
       type: object
       required:
         - key
-        - value
       properties:
         key:
           type: string
@@ -14920,7 +14919,6 @@ components:
       type: object
       required:
         - key
-        - value
       properties:
         value:
           type: string
@@ -14930,7 +14928,6 @@ components:
       type: object
       required:
         - key
-        - value
       properties:
         key:
           type: string
