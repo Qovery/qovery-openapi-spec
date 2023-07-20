@@ -9063,7 +9063,7 @@ paths:
           $ref: '#/components/responses/404'
   '/variable/{variableId}/alias':
     post:
-      summary: Create a variable alias
+      summary: 'WIP: Create a variable alias'
       description: |
         - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key.
         - You have to specify a key in the request body and the scope and the parent id of the alias
@@ -15358,13 +15358,9 @@ components:
             - scope
           properties:
             overridden_variable:
-              $ref: '#/components/schemas/EnvironmentVariableOverride'
+              $ref: '#/components/schemas/VariableOverride'
             aliased_variable:
-              $ref: '#/components/schemas/EnvironmentVariableAlias'
-            overridden_secret:
-              $ref: '#/components/schemas/SecretOverride'
-            aliased_secret:
-              $ref: '#/components/schemas/SecretAlias'
+              $ref: '#/components/schemas/VariableAlias'
             scope:
               $ref: '#/components/schemas/APIVariableScopeEnum'
             variable_type:
@@ -15382,6 +15378,53 @@ components:
             owned_by:
               type: string
               description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
+    VariableAlias:
+      type: object
+      required:
+        - id
+        - key
+        - mount_path
+        - scope
+        - variable_type
+      properties:
+        id:
+          type: string
+          format: uuid
+        key:
+          type: string
+          example: QOVERY_DATABASE_PSQL_NAME
+        value:
+          type: string
+          nullable: true
+        mount_path:
+          type: string
+        scope:
+          $ref: '#/components/schemas/APIVariableScopeEnum'
+        variable_type:
+          $ref: '#/components/schemas/APIVariableTypeEnum'
+    VariableOverride:
+      type: object
+      required:
+        - id
+        - key
+        - mount_path
+        - scope
+        - variable_type
+      properties:
+        id:
+          type: string
+          format: uuid
+        key:
+          type: string
+        value:
+          type: string
+          nullable: true
+        mount_path:
+          type: string
+        scope:
+          $ref: '#/components/schemas/APIVariableScopeEnum'
+        variable_type:
+          $ref: '#/components/schemas/APIVariableTypeEnum'
   responses:
     '204':
       description: no content
