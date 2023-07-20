@@ -28,9 +28,6 @@ properties:
   auto_stop:
     type: boolean
     default: false
-  auto_delete:
-    type: boolean
-    default: false
   timezone:
     type: string
     example: UTC
