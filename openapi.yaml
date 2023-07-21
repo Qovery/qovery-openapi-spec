@@ -9063,7 +9063,7 @@ paths:
           $ref: '#/components/responses/404'
   '/variable/{variableId}/alias':
     post:
-      summary: 'WIP: Create a variable alias'
+      summary: Create a variable alias
       description: |
         - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key.
         - You have to specify a key in the request body and the scope and the parent id of the alias
@@ -9090,6 +9090,40 @@ paths:
                 $ref: '#/components/schemas/VariableResponse'
         '400':
           description: Can't create an alias on a higher scope. Aliases can only be created from one scope to a lower scope. Scope hierarchy is ORGANIZATION > PROJECT > ENVIRONMENT > CONTAINER
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/variable/{variableId}/override':
+    post:
+      summary: Create a variable override
+      description: |
+        - Allows you to override a variable that has a higher scope.
+        - You have to specify a value in the request body and the scope and the parent id of the variable to alias
+        - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path
+        - The response body will contain the newly created variable
+        - Information regarding the overridden_variable will be exposed in the "overridden_variable" or in the "overridden_secret" field of the newly created variable
+      operationId: createVariableOverride
+      parameters:
+        - $ref: '#/components/parameters/variableId'
+      tags:
+        - Variable Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableOverrideRequest'
+      responses:
+        '201':
+          description: Create variable override
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableResponse'
+        '400':
+          description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is ORGANIZATION > PROJECT > ENVIRONMENT > APPLICATION
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -15328,14 +15362,28 @@ components:
       type: object
       required:
         - key
-        - aliasScope
-        - aliasParentId
+        - alias_scope
+        - alias_parent_id
       properties:
         key:
           type: string
-        aliasScope:
+        alias_scope:
           $ref: '#/components/schemas/APIVariableScopeEnum'
-        aliasParentId:
+        alias_parent_id:
+          type: string
+          format: uuid
+    VariableOverrideRequest:
+      type: object
+      required:
+        - value
+        - alias_scope
+        - alias_parent_id
+      properties:
+        value:
+          type: string
+        alias_scope:
+          $ref: '#/components/schemas/APIVariableScopeEnum'
+        alias_parent_id:
           type: string
           format: uuid
     VariableResponse:
