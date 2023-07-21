@@ -9,7 +9,6 @@ post:
   operationId: createVariableOverride
   parameters:
     - $ref: '../../parameters/path/variableId.yaml'
-
   tags:
     - Variable Main Calls
   requestBody:

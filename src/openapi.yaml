@@ -103,6 +103,7 @@ tags:
   - name: Referral & Rewards
   - name: Container Registries
   - name: User Sign Up
+  - name: Variable Main Calls
 x-tagGroups:
   - name: Organization
     tags:
@@ -744,10 +745,14 @@ paths:
       $ref: './resources/JobClone.yaml'
   /service/{serviceId}/deploymentStage:
     $ref: './resources/deploymentStage/ServiceDeploymentStage.yaml'
+  /variable:
+    $ref: './resources/variable/Variable.yaml'
   /variable/{variableId}/alias:
     $ref: './resources/variable/VariableAlias.yaml'
   /variable/{variableId}/override:
     $ref: './resources/variable/VariableOverride.yaml'
+  /variable/{variableId}:
+    $ref: './resources/variable/VariableRef.yaml'
   #/organization/{organizationId}/job/preview:
   #/organization/{organizationId}/job/deploy:
 components:
