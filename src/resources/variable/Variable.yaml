@@ -1,0 +1,65 @@
+get:
+  summary: 'List variables'
+  description: Returns a list of variables
+  operationId: listVariables
+  parameters:
+    - in: query
+      name: parent_id
+      schema:
+        type: string
+        format: uuid
+      description: the id where the variable will be added
+    - in: query
+      name: scope
+      schema:
+        $ref: '../../schemas/enums/APIVariableScope.yaml'
+      description: the scope of the parent where the variable will be added
+    - in: query
+      name: is_secret
+      schema:
+        type: boolean
+        nullable: true
+        description: true if the variable is a secret
+  tags:
+    - Variable Main Calls
+  responses:
+    '200':
+      description: 'List variables'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/variable/VariableResponseList.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+post:
+  summary: 'Create a variable'
+  description: |
+    - Create a variable at the level defined in the request body.
+  operationId: createVariable
+
+  tags:
+    - Variable Main Calls
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/variable/VariableRequest.yaml'
+  responses:
+    '201':
+      description: 'Create a variable'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/variable/VariableResponse.yaml'
+    '400':
+      $ref: '../../responses/BadRequest.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
