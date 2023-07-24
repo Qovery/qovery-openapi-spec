@@ -103,6 +103,7 @@ tags:
   - name: Referral & Rewards
   - name: Container Registries
   - name: User Sign Up
+  - name: Variable Main Calls
 x-tagGroups:
   - name: Organization
     tags:
@@ -9061,6 +9062,71 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /variable:
+    get:
+      summary: List variables
+      description: Returns a list of variables
+      operationId: listVariables
+      parameters:
+        - in: query
+          name: parent_id
+          schema:
+            type: string
+            format: uuid
+          description: the id where the variable will be added
+        - in: query
+          name: scope
+          schema:
+            $ref: '#/components/schemas/APIVariableScopeEnum'
+          description: the scope of the parent where the variable will be added
+        - in: query
+          name: is_secret
+          schema:
+            type: boolean
+            nullable: true
+            description: true if the variable is a secret
+      tags:
+        - Variable Main Calls
+      responses:
+        '200':
+          description: List variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a variable
+      description: |
+        - Create a variable at the level defined in the request body.
+      operationId: createVariable
+      tags:
+        - Variable Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableRequest'
+      responses:
+        '201':
+          description: Create a variable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/variable/{variableId}/alias':
     post:
       summary: Create a variable alias
@@ -9124,6 +9190,59 @@ paths:
                 $ref: '#/components/schemas/VariableResponse'
         '400':
           description: Can't create an override on a higher scope. Overrides can only be created from one scope to a lower scope. Scope hierarchy is ORGANIZATION > PROJECT > ENVIRONMENT > APPLICATION
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/variable/{variableId}':
+    delete:
+      summary: Delete a variable
+      description: |
+        - To delete a variable
+        - You can't delete a BUILT_IN variable
+        - If you delete a variable having override or alias, the associated override/alias will be deleted as well
+      operationId: deleteVariable
+      parameters:
+        - $ref: '#/components/parameters/variableId'
+      tags:
+        - Variable Main Calls
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a variable
+      description: |
+        - You can't edit a BUILT_IN variable
+        - For an override, you can't edit the key
+        - For an alias, you can't edit the value
+      operationId: editVariable
+      parameters:
+        - $ref: '#/components/parameters/variableId'
+      tags:
+        - Variable Main Calls
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableEditRequest'
+      responses:
+        '200':
+          description: Edited variable value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableResponse'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -15386,6 +15505,39 @@ components:
         alias_parent_id:
           type: string
           format: uuid
+    VariableRequest:
+      type: object
+      required:
+        - key
+        - value
+        - is_secret
+        - variable_scope
+        - variable_parent_id
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        mount_path:
+          type: string
+          nullable: true
+        is_secret:
+          type: boolean
+        variable_scope:
+          $ref: '#/components/schemas/APIVariableScopeEnum'
+        variable_parent_id:
+          type: string
+          format: uuid
+    VariableEditRequest:
+      type: object
+      required:
+        - key
+        - value
+      properties:
+        key:
+          type: string
+        value:
+          type: string
     VariableResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -15414,6 +15566,13 @@ components:
             owned_by:
               type: string
               description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
+    VariableResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableResponse'
     VariableAlias:
       type: object
       required:
