@@ -11907,7 +11907,6 @@ components:
             type: object
             required:
               - application_id
-              - git_commit_id
             properties:
               application_id:
                 type: string
@@ -11915,7 +11914,7 @@ components:
                 description: id of the application to be deployed.
               git_commit_id:
                 type: string
-                description: Commit ID to deploy.
+                description: Commit ID to deploy. Can be empty only if the service has been already deployed (in this case the service version won't be changed)
         databases:
           type: array
           items:
@@ -11927,7 +11926,6 @@ components:
             type: object
             required:
               - id
-              - image_tag
             properties:
               id:
                 type: string
@@ -11935,7 +11933,7 @@ components:
                 description: id of the container to be updated.
               image_tag:
                 type: string
-                description: new tag for the container.
+                description: new tag for the container. Can be empty only if the service has been already deployed (in this case the service version won't be changed)
         jobs:
           type: array
           items:
@@ -11947,10 +11945,10 @@ components:
                 description: id of the job to be updated.
               image_tag:
                 type: string
-                description: new tag for the job image. Use only if job is an image source
+                description: new tag for the job image. Use only if job is an image source. Can be empty only if the service has been already deployed (in this case the service version won't be changed)
               git_commit_id:
                 type: string
-                description: Commit ID to deploy. Use only if job is a repository source
+                description: Commit ID to deploy. Use only if job is a repository source. Can be empty only if the service has been already deployed (in this case the service version won't be changed)
     DeployRequest:
       type: object
       required:
