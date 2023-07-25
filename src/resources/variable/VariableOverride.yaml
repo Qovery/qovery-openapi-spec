@@ -2,8 +2,8 @@ post:
   summary: 'Create a variable override'
   description: |
     - Allows you to override a variable that has a higher scope.
-    - You have to specify a value in the request body and the scope and the parent id of the variable to alias
-    - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path
+    - You have to specify a value (override) in the request body and the scope and the parent id of the variable to override (project id, environment id or service id)
+    - The system will create a new environment variable at the requested level with the same key as the one corresponding to the variable id passed as path parameter.
     - The response body will contain the newly created variable
     - Information regarding the overridden_variable will be exposed in the "overridden_variable" or in the "overridden_secret" field of the newly created variable
   operationId: createVariableOverride

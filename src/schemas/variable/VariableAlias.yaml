@@ -11,7 +11,7 @@ properties:
     format: uuid
   key:
     type: string
-    example: QOVERY_DATABASE_PSQL_NAME
+    example: DATABASE_PSQL_NAME
   value:
     type: string
     nullable: true
