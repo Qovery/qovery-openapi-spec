@@ -1,0 +1,10 @@
+type: object
+properties:
+  type:
+    type: string
+    enum:
+      - ALIAS_VARIABLE_CREATION_FAILED
+      - OVERRIDE_VARIABLE_CREATION_FAILED
+  code:
+    type: string
+

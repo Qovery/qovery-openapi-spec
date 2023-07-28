@@ -78,3 +78,9 @@ allOf:
           If not specified, it takes the value of the `auto_preview` property from the associated environment.
       ports:
         $ref: './ServicePortResponseList.yaml'
+      warnings:
+        type: array
+        items:
+          $ref: "./ServiceCreationWarning.yaml"
+        description: |
+          List of warnings that can occur during the creation/clone of a container.

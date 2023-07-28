@@ -664,3 +664,6 @@ VariableAlias:
   $ref: ./variable/VariableAlias.yaml
 VariableOverride:
   $ref: ./variable/VariableOverride.yaml
+ServiceCreationWarning:
+  $ref: ./ServiceCreationWarning.yaml
+
