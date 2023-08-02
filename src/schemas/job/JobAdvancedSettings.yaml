@@ -16,6 +16,11 @@ properties:
     type: integer
     description: define how long in seconds an application is supposed to be stopped gracefully
     default: 60
+  deployment.affinity.node.required:
+    type: object
+    additionalProperties:
+      type: string
+    description: Set pod placement on specific Kubernetes nodes labels
   job.delete_ttl_seconds_after_finished:
     type: integer
     nullable: true
