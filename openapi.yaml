@@ -9676,11 +9676,6 @@ components:
     ApplicationAdvancedSettings:
       type: object
       properties:
-        deployment.delay_start_time_sec:
-          type: integer
-          default: 30
-          deprecated: true
-          description: please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
         deployment.custom_domain_check_enabled:
           type: boolean
           description: disable custom domain check when deploying an application
