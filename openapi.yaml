@@ -3651,26 +3651,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  environment:
-                    $ref: '#/components/schemas/EnvironmentStatus'
-                  applications:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Status'
-                  containers:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Status'
-                  jobs:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Status'
-                  databases:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Status'
+                $ref: '#/components/schemas/EnvironmentStatuses'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -12675,6 +12656,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentStats'
+    EnvironmentStatuses:
+      type: object
+      properties:
+        environment:
+          $ref: '#/components/schemas/EnvironmentStatus'
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+        containers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+        jobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+        databases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
     EnvironmentStatusList:
       type: object
       properties:
