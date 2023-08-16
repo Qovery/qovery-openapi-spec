@@ -304,6 +304,8 @@ EnvironmentStatus:
   $ref: ./EnvironmentStatus.yaml
 EnvironmentStatsResponseList:
   $ref: ./EnvironmentStatsResponseList.yaml
+EnvironmentStatuses:
+  $ref: ./EnvironmentStatuses.yaml
 EnvironmentStatusList:
   $ref: ./EnvironmentStatusList.yaml
 EnvironmentTotalNumber:
@@ -659,7 +661,7 @@ VariableEditRequest:
 VariableResponse:
   $ref: ./variable/VariableResponse.yaml
 VariableResponseList:
-    $ref: ./variable/VariableResponseList.yaml
+  $ref: ./variable/VariableResponseList.yaml
 VariableAlias:
   $ref: ./variable/VariableAlias.yaml
 VariableOverride:
