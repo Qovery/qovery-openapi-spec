@@ -306,6 +306,8 @@ EnvironmentStatsResponseList:
   $ref: ./EnvironmentStatsResponseList.yaml
 EnvironmentStatuses:
   $ref: ./EnvironmentStatuses.yaml
+EnvironmentStatusesWithStages:
+  $ref: ./EnvironmentStatusesWithStages.yaml
 EnvironmentStatusList:
   $ref: ./EnvironmentStatusList.yaml
 EnvironmentTotalNumber:
