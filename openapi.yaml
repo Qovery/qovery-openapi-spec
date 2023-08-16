@@ -3672,12 +3672,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  environment:
-                    $ref: '#/components/schemas/EnvironmentStatus'
-                  stages:
-                    $ref: '#/components/schemas/DeploymentStageWithServiceStatusesList'
+                $ref: '#/components/schemas/EnvironmentStatusesWithStages'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -12677,6 +12672,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Status'
+    EnvironmentStatusesWithStages:
+      type: object
+      properties:
+        environment:
+          $ref: '#/components/schemas/EnvironmentStatus'
+        stages:
+          $ref: '#/components/schemas/DeploymentStageWithServiceStatusesList'
     EnvironmentStatusList:
       type: object
       properties:
