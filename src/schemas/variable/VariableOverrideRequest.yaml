@@ -1,13 +1,15 @@
 type: object
 required:
   - value
-  - alias_scope
-  - alias_parent_id
+  - override_scope
+  - override_parent_id
 properties:
   value:
     type: string
-  alias_scope:
+    description: the value to be used as Override of the targeted environment variable.
+  override_scope:
     $ref: '../enums/APIVariableScope.yaml'
-  alias_parent_id:
+  override_parent_id:
     type: string
     format: uuid
+    description: the id of the variable that is aliased.
