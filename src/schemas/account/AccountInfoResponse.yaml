@@ -1,6 +1,4 @@
 type: object
-required:
- - username
 properties:
   id:
     type: string
@@ -15,4 +13,6 @@ properties:
   last_name:
     type: string
   profile_picture_url:
+    type: string
+  communication_email:
     type: string
