@@ -1,7 +1,7 @@
 AccountInfo:
-  $ref: ./AccountInfoResponse.yaml
+  $ref: ./account/AccountInfoResponse.yaml
 AccountInfoEditRequest:
-  $ref: ./AccountInfoEditRequest.yaml
+  $ref: ./account/AccountInfoEditRequest.yaml
 SecretAlias:
   $ref: ./SecretAlias.yaml
 Application:

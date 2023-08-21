@@ -9,6 +9,27 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/AccountInfoResponse.yaml'
+            $ref: '../schemas/account/AccountInfoResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+put:
+  summary: 'Edit account information'
+  operationId: editAccountInformation
+  tags:
+    - Account Info
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/account/AccountInfoEditRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit application'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/account/AccountInfoResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
     '401':
       $ref: '../responses/NotAuthorized.yaml'
