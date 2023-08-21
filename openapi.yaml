@@ -7984,6 +7984,27 @@ paths:
                 $ref: '#/components/schemas/AccountInfo'
         '401':
           $ref: '#/components/responses/401'
+    put:
+      summary: Edit account information
+      operationId: editAccountInformation
+      tags:
+        - Account Info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountInfoEditRequest'
+      responses:
+        '200':
+          description: Edit application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountInfo'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
   /account/gitAuthProvider:
     get:
       deprecated: true
@@ -9530,8 +9551,6 @@ components:
   schemas:
     AccountInfo:
       type: object
-      required:
-        - username
       properties:
         id:
           type: string
@@ -9547,15 +9566,15 @@ components:
           type: string
         profile_picture_url:
           type: string
+        communication_email:
+          type: string
     AccountInfoEditRequest:
       type: object
       properties:
-        first_name:
+        communication_email:
           type: string
-        last_name:
-          type: string
-        profile_picture_url:
-          type: string
+          nullable: true
+          description: The email to be used for official Qovery communications
     SecretAlias:
       type: object
       required:
