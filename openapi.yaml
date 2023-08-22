@@ -33,7 +33,6 @@ tags:
   - name: Container Actions
   - name: Container Configuration
   - name: Container Database
-  - name: Container Deployment Restriction
   - name: Container Deployment History
   - name: Container Environment Variable
   - name: Container Event
@@ -168,7 +167,6 @@ x-tagGroups:
       - Container Metrics
       - Container Database
       - Container Logs
-      - Container Deployment Restriction
       - Container Deployment History
       - Container Environment Variable
       - Container Secret
@@ -5161,13 +5159,7 @@ paths:
       operationId: editApplicationDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - name: deploymentRestrictionId
-          in: path
-          description: Deployment Restriction ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/deploymentRestrictionId'
       tags:
         - Application Deployment Restriction
       requestBody:
@@ -5196,7 +5188,7 @@ paths:
       operationId: deleteApplicationDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1application~1%7BapplicationId%7D~1deploymentRestriction~1%7BdeploymentRestrictionId%7D/put/parameters/1'
+        - $ref: '#/components/parameters/deploymentRestrictionId'
       tags:
         - Application Deployment Restriction
       responses:
@@ -9348,6 +9340,14 @@ components:
       name: stageId
       in: path
       description: Deployment Stage ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    deploymentRestrictionId:
+      name: deploymentRestrictionId
+      in: path
+      description: Deployment Restriction ID
       required: true
       schema:
         type: string
