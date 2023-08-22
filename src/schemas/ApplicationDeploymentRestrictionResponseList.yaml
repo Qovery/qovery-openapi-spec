@@ -1,6 +1,6 @@
 type: object
 properties:
-  deployment_restrictions:
+  results:
     type: array
     items:
       $ref: './ApplicationDeploymentRestrictionResponse.yaml'
