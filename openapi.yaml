@@ -9851,7 +9851,7 @@ components:
     ApplicationDeploymentRestrictionResponseList:
       type: object
       properties:
-        deployment_restrictions:
+        results:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationDeploymentRestriction'
