@@ -33,7 +33,6 @@ tags:
   - name: Container Actions
   - name: Container Configuration
   - name: Container Database
-  - name: Container Deployment Restriction
   - name: Container Deployment History
   - name: Container Environment Variable
   - name: Container Event
@@ -168,7 +167,6 @@ x-tagGroups:
       - Container Metrics
       - Container Database
       - Container Logs
-      - Container Deployment Restriction
       - Container Deployment History
       - Container Environment Variable
       - Container Secret

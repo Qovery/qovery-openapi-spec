@@ -25,6 +25,8 @@ deploymentStageId:
   $ref: ./path/deploymentStageId.yaml
 stageId:
   $ref: ./path/stageId.yaml
+deploymentRestrictionId:
+  $ref: ./path/deploymentRestrictionId.yaml
 deploymentRuleId:
   $ref: ./path/deploymentRuleId.yaml
 environmentId:
