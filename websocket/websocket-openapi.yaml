@@ -1,0 +1,604 @@
+openapi: 3.0.3
+info:
+  title: websocket-gateway
+  description: Describe the weboscket endpoints
+  contact:
+    name: Romain GERARD
+    email: erebe@erebe.eu
+  license:
+    name: ''
+  version: 0.1.0
+servers:
+- url: wss://ws.qovery.com
+paths:
+  /deployment/logs:
+    get:
+      tags:
+      - deployment
+      operationId: handle_deployment_logs_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: environment
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: Stream of deployment logs
+          content:
+            text/plain:
+              schema:
+                type: string
+  /deployment/status:
+    get:
+      tags:
+      - deployment
+      operationId: handle_deployment_status_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: environment
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: Stream of deployment status
+          content:
+            text/plain:
+              schema:
+                type: string
+  /infra/logs:
+    get:
+      tags:
+      - logs
+      operationId: handle_infra_logs_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          nullable: true
+      - name: environment
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          nullable: true
+      - name: service
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          nullable: true
+      - name: infra_component_type
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Stream of infra logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfraLogResponseDto'
+  /service/logs:
+    get:
+      tags:
+      - logs
+      operationId: handle_service_logs_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: environment
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: service
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Stream of services logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceLogResponseDto'
+  /service/metrics:
+    get:
+      tags:
+      - service_metrics
+      operationId: handle_metrics_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: environment
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: service
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: service_type
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ServiceType'
+      responses:
+        '200':
+          description: Stream of services metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceMetricsDto'
+  /service/status:
+    get:
+      tags:
+      - service_status
+      operationId: handle_service_status_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          nullable: true
+      - name: environment
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          nullable: true
+      responses:
+        '200':
+          description: Stream of services status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceStatusDto'
+components:
+  schemas:
+    ApplicationStatusDto:
+      type: object
+      required:
+      - id
+      - state
+      - pods
+      - certificates
+      properties:
+        certificates:
+          type: array
+          items:
+            $ref: '#/components/schemas/CertificateStatusDto'
+        id:
+          type: string
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodStatusDto'
+        state:
+          $ref: '#/components/schemas/ServiceStateDto'
+    CertificateStatusDto:
+      type: object
+      required:
+      - dns_names
+      - state
+      - failed_issuance_attempt_count
+      properties:
+        dns_names:
+          type: array
+          items:
+            type: string
+        failed_issuance_attempt_count:
+          type: integer
+          format: int64
+          minimum: 0
+        last_failure_issuance_time:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          nullable: true
+        not_after:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          nullable: true
+        not_before:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          nullable: true
+        renewal_time:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          nullable: true
+        state:
+          $ref: '#/components/schemas/ServiceStateDto'
+        state_message:
+          type: string
+          nullable: true
+    ContainerStateDto:
+      type: object
+      required:
+      - state
+      properties:
+        started_at:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          nullable: true
+        state:
+          $ref: '#/components/schemas/ServiceStateDto'
+        state_message:
+          type: string
+          nullable: true
+        state_reason:
+          type: string
+          nullable: true
+    ContainerStateTerminatedDto:
+      type: object
+      required:
+      - exit_code
+      - exit_code_message
+      - message
+      - reason
+      - signal
+      properties:
+        exit_code:
+          type: integer
+          format: int32
+        exit_code_message:
+          type: string
+        finished_at:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          nullable: true
+        message:
+          type: string
+        reason:
+          type: string
+        signal:
+          type: integer
+          format: int32
+        started_at:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          nullable: true
+    ContainerStatusDto:
+      type: object
+      required:
+      - name
+      - image
+      - restart_count
+      properties:
+        current_state:
+          allOf:
+          - $ref: '#/components/schemas/ContainerStateDto'
+          nullable: true
+        image:
+          type: string
+        last_terminated_state:
+          allOf:
+          - $ref: '#/components/schemas/ContainerStateTerminatedDto'
+          nullable: true
+        name:
+          type: string
+        restart_count:
+          type: integer
+          format: int32
+          minimum: 0
+    DatabaseStatusDto:
+      type: object
+      required:
+      - id
+      - state
+      - pods
+      properties:
+        id:
+          type: string
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodStatusDto'
+        state:
+          $ref: '#/components/schemas/ServiceStateDto'
+    EnvironmentStatusDto:
+      type: object
+      required:
+      - state
+      - id
+      - project_id
+      - applications
+      - containers
+      - databases
+      - jobs
+      properties:
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatusDto'
+        containers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatusDto'
+        databases:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatabaseStatusDto'
+        id:
+          type: string
+        jobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatusDto'
+        project_id:
+          type: string
+        state:
+          $ref: '#/components/schemas/ServiceStateDto'
+    MetricDto:
+      type: object
+      required:
+      - current
+      - limit
+      - current_percent
+      - status
+      - unit
+      properties:
+        current:
+          type: integer
+          format: int32
+          minimum: 0
+        current_percent:
+          type: integer
+          format: int32
+          minimum: 0
+        limit:
+          type: integer
+          format: int32
+          minimum: 0
+        name:
+          type: string
+          nullable: true
+        status:
+          $ref: '#/components/schemas/ResourceStatusDto'
+        unit:
+          $ref: '#/components/schemas/UnitDto'
+    PodStatusDto:
+      type: object
+      required:
+      - name
+      - state
+      - state_reason
+      - state_message
+      - restart_count
+      - containers
+      - service_version
+      properties:
+        containers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerStatusDto'
+        name:
+          type: string
+        restart_count:
+          type: integer
+          format: int32
+          minimum: 0
+        service_version:
+          type: string
+        started_at:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          nullable: true
+        state:
+          $ref: '#/components/schemas/ServiceStateDto'
+        state_message:
+          type: string
+        state_reason:
+          type: string
+    ResourceStatusDto:
+      type: string
+      enum:
+      - OK
+      - WARNING
+      - ALERT
+    ServiceInfraLogResponseDto:
+      type: object
+      required:
+      - message
+      properties:
+        created_at:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          nullable: true
+        message:
+          type: string
+    ServiceLogResponseDto:
+      type: object
+      required:
+      - pod_name
+      - message
+      - version
+      properties:
+        created_at:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          nullable: true
+        message:
+          type: string
+        pod_name:
+          type: string
+        version:
+          type: string
+    ServiceMetricsDto:
+      type: object
+      required:
+      - pod_name
+      - cpu
+      - memory
+      - storages
+      properties:
+        cpu:
+          $ref: '#/components/schemas/MetricDto'
+        memory:
+          $ref: '#/components/schemas/MetricDto'
+        pod_name:
+          type: string
+        storages:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetricDto'
+    ServiceStateDto:
+      type: string
+      enum:
+      - STARTING
+      - RUNNING
+      - ERROR
+      - STOPPING
+      - STOPPED
+      - COMPLETED
+      - WARNING
+      - UNKNOWN
+    ServiceStatusDto:
+      type: object
+      required:
+      - environments
+      properties:
+        environments:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentStatusDto'
+    ServiceType:
+      type: string
+      enum:
+      - APPLICATION
+      - CONTAINER
+      - DATABASE
+      - JOB
+    Timestamp:
+      type: integer
+      description: Timestamp in milliseconds
+      nullable: true
+    UnitDto:
+      type: string
+      enum:
+      - mCPU
+      - MiB

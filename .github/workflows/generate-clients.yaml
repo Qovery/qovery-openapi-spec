@@ -72,6 +72,25 @@ jobs:
             --additional-properties packageVersion=$(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
             --additional-properties npmVersion=$(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
 
+      - name: Generate ${{ matrix.language }} websocket client
+        uses: openapi-generators/openapitools-generator-action@v1
+        env:
+          GO_POST_PROCESS_FILE: "/usr/local/bin/gofmt -w"
+        with:
+          generator: ${{ matrix.language }}
+          generator-tag: v${{ matrix.version }}
+          openapi-file: websocket/websocket-openapi.yml
+          config-file: "generator/configs/${{ matrix.language }}.yaml"
+          command-args: |
+            -a bearer \
+            -o out/qovery-client-ws-${{ matrix.language }} \
+            --enable-post-process-file \
+            --git-user-id qovery \
+            --git-repo-id qovery-client-${{ matrix.language }} \
+            --package-name qovery \
+            --additional-properties packageVersion=$(grep 'version' websocket/websocket-openapi.yml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
+            --additional-properties npmVersion=$(grep 'version' websocket/websocket-openapi.yml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
+
       - name: Check post generation script existence
         id: check_files
         uses: andstor/file-existence-action@v1
@@ -92,6 +111,20 @@ jobs:
           source-directory: out/qovery-client-${{ matrix.language }}
           destination-github-username: "qovery"
           destination-repository-name: "qovery-client-${{ matrix.language }}"
+          user-email: github@qovery.com
+          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+          target-branch: ${{ matrix.target-branch }}
+
+      - name: Publish ${{ matrix.language }} websocket client
+        if: contains(env.PUBLISH_CLIENTS, 'true')
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets[matrix.deploy-ssh-key] }}
+        with:
+          source-directory: out/qovery-client-ws-${{ matrix.language }}
+          destination-github-username: "qovery"
+          destination-repository-name: "qovery-client-ws-${{ matrix.language }}"
           user-email: github@qovery.com
           commit-message: See ORIGIN_COMMIT from $GITHUB_REF
           target-branch: ${{ matrix.target-branch }}
