@@ -595,7 +595,7 @@ components:
       - JOB
     Timestamp:
       type: integer
-      description: Timestamp in milliseconds
+      description: Unix timestamp with millisecond precision
       nullable: true
     UnitDto:
       type: string
