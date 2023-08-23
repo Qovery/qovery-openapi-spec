@@ -1,6 +1,4 @@
 additionalProperties:
   supportsES6: true
-  stringEnums: true
   enumPropertyNaming: UPPERCASE
-  paramNaming: camelCase
   npmName: qovery-ws-typescript-axios
