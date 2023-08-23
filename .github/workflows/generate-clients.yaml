@@ -91,7 +91,7 @@ jobs:
             --enable-post-process-file \
             --git-user-id qovery \
             --git-repo-id qovery-client-ws-${{ matrix.language }} \
-            --package-name qovery \
+            --package-name qovery-ws \
             --additional-properties packageVersion=$(grep 'version' websocket/websocket-openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
             --additional-properties npmVersion=$(grep 'version' websocket/websocket-openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
 
