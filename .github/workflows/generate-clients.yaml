@@ -117,7 +117,7 @@ jobs:
 
       - name: Publish ${{ matrix.language }} websocket client
         if: contains(env.PUBLISH_CLIENTS, 'true')
-        id: push_directory
+        id: push_directory_ws
         uses: cpina/github-action-push-to-another-repository@main
         env:
           SSH_DEPLOY_KEY: ${{ secrets[matrix.deploy-ssh-key] }}
