@@ -1,0 +1,3 @@
+additionalProperties:
+  packageVersion: $(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
+  enumClassPrefix: true
