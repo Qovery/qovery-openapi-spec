@@ -2,5 +2,5 @@ type: object
 properties:
   communication_email:
     type: string
-    nullable: true
+    nullable: false
     description: The email to be used for official Qovery communications
