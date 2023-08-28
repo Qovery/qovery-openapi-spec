@@ -5221,72 +5221,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/application/{applicationId}/tag':
-    get:
-      summary: List tags
-      operationId: listApplicationTag
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - Application Main Calls
-      responses:
-        '200':
-          description: List application tags
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TagResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    post:
-      summary: Add application tag
-      operationId: createApplicationTag
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - Application Main Calls
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TagRequest'
-      responses:
-        '201':
-          description: Create application
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TagResponseList'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/application/{applicationId}/tag/{tagId}':
-    delete:
-      summary: Delete application tag
-      operationId: deleteApplicationTag
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/tagId'
-      tags:
-        - Application Main Calls
-      responses:
-        '204':
-          $ref: '#/components/responses/204-deletion'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/application/{applicationId}/instance':
     get:
       summary: List currently running instances of the application with their CPU and RAM metrics
@@ -15191,30 +15125,6 @@ components:
       type: string
       enum:
         - FAST_SSD
-    Tag:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-        id:
-          type: string
-          format: uuid
-    TagRequest:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-    TagResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
     ThresholdMetricStatusEnum:
       type: string
       enum:
