@@ -503,10 +503,6 @@ paths:
     $ref: './resources/ApplicationDeploymentRestrictionRef.yaml'
   /application/{applicationId}/contributor:
     $ref: './resources/ApplicationContributor.yaml'
-  /application/{applicationId}/tag:
-    $ref: './resources/ApplicationTag.yaml'
-  /application/{applicationId}/tag/{tagId}:
-    $ref: './resources/ApplicationTagRef.yaml'
   /application/{applicationId}/instance:
     $ref: './resources/ApplicationCurrentInstance.yaml'
   /application/{applicationId}/currentStorage:
