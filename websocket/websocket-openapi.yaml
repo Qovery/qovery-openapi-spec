@@ -29,6 +29,7 @@ paths:
         schema:
           type: string
           format: uuid
+          nullable: true
       - name: project
         in: path
         required: true
@@ -72,6 +73,7 @@ paths:
         schema:
           type: string
           format: uuid
+          nullable: true
       - name: project
         in: path
         required: true
