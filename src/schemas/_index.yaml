@@ -622,12 +622,6 @@ StorageDiskResponseList:
   $ref: ./StorageDiskResponseList.yaml
 StorageTypeEnum:
   $ref: ./enums/StorageType.yaml
-Tag:
-  $ref: ./TagResponse.yaml
-TagRequest:
-  $ref: ./TagRequest.yaml
-TagResponseList:
-  $ref: ./TagResponseList.yaml
 ThresholdMetricStatusEnum:
   $ref: ./enums/ThresholdMetricStatus.yaml
 TransferOwnershipRequest:
