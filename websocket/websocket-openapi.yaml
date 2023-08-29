@@ -578,7 +578,6 @@ components:
       - STOPPED
       - COMPLETED
       - WARNING
-      - UNKNOWN
     ServiceStatusDto:
       type: object
       required:
