@@ -94,6 +94,14 @@ properties:
     type: integer
     default: 60
     description: Sets a timeout (in seconds) for reading a response from the proxied server
+  network.ingress.proxy_buffering:
+    type: string
+    default: "on"
+    description: Allows to enable or disable nginx `proxy-buffering`
+  network.ingress.proxy_request_buffering:
+    type: string
+    default: "on"
+    description: Allows to enable or disable nginx `proxy-request-buffering`
   network.ingress.whitelist_source_range:
     type: string
     description: |
@@ -128,6 +136,11 @@ properties:
     type: integer
     description: Sets a timeout (in seconds) for transmitting a request to the grpc server
     default: 60
+  network.ingress.extra_headers:
+    type: string
+    default: "{}"
+    description: Allows to define response headers
+    example: '{"X-Frame-Options":"DENY ","X-Content-Type-Options":"nosniff"}'
   hpa.cpu.average_utilization_percent:
     type: integer
     description: Percentage value of cpu usage at which point pods should scale up.
