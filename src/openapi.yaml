@@ -189,6 +189,7 @@ x-tagGroups:
       - Job Actions
       - Job Configuration
       - Job Custom Domain
+      - Job Deployment Restriction
       - Job Metrics
       - Job Deployment History
       - Job Environment Variable
@@ -713,6 +714,10 @@ paths:
     $ref: './resources/job/JobStatus.yaml'
   /job/{jobId}/deploymentHistory:
     $ref: './resources/job/JobDeploymentHistory.yaml'
+  /job/{jobId}/deploymentRestriction:
+    $ref: './resources/job/JobDeploymentRestriction.yaml'
+  /job/{jobId}/deploymentRestriction/{deploymentRestrictionId}:
+    $ref: './resources/job/JobDeploymentRestrictionRef.yaml'
   /job/{jobId}/instance:
     $ref: './resources/job/JobCurrentInstance.yaml'
   /job/{jobId}/environmentVariable:

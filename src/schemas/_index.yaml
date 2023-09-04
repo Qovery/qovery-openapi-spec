@@ -396,6 +396,12 @@ JobAdvancedSettings:
   $ref: ./job/JobAdvancedSettings.yaml
 JobDeployRequest:
   $ref: ./job/JobDeployRequest.yaml
+JobDeploymentRestrictionRequest:
+  $ref: ./job/JobDeploymentRestrictionRequest.yaml
+JobDeploymentRestrictionResponse:
+  $ref: ./job/JobDeploymentRestrictionResponse.yaml
+JobDeploymentRestrictionResponseList:
+  $ref: ./job/JobDeploymentRestrictionResponseList.yaml
 JobScheduleEvent:
   $ref: ./enums/JobScheduleEvent.yaml
 JobForceEvent:
