@@ -525,25 +525,23 @@ components:
     ServiceInfraLogResponseDto:
       type: object
       required:
+      - created_at
       - message
       properties:
         created_at:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
+          $ref: '#/components/schemas/Timestamp'
         message:
           type: string
     ServiceLogResponseDto:
       type: object
       required:
+      - created_at
       - pod_name
       - message
       - version
       properties:
         created_at:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
+          $ref: '#/components/schemas/Timestamp'
         message:
           type: string
         pod_name:
