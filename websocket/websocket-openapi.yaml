@@ -529,9 +529,7 @@ components:
       - message
       properties:
         created_at:
-          type: integer
-          format: int64
-          minimum: 0
+          $ref: '#/components/schemas/Timestamp'
         message:
           type: string
     ServiceLogResponseDto:
@@ -543,9 +541,7 @@ components:
       - version
       properties:
         created_at:
-          type: integer
-          format: int64
-          minimum: 0
+          $ref: '#/components/schemas/Timestamp'
         message:
           type: string
         pod_name:
@@ -599,7 +595,6 @@ components:
     Timestamp:
       type: integer
       description: Unix timestamp with millisecond precision
-      nullable: true
     UnitDto:
       type: string
       enum:
