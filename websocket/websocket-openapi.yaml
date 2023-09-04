@@ -529,7 +529,9 @@ components:
       - message
       properties:
         created_at:
-          $ref: '#/components/schemas/Timestamp'
+          type: integer
+          format: int64
+          minimum: 0
         message:
           type: string
     ServiceLogResponseDto:
@@ -541,7 +543,9 @@ components:
       - version
       properties:
         created_at:
-          $ref: '#/components/schemas/Timestamp'
+          type: integer
+          format: int64
+          minimum: 0
         message:
           type: string
         pod_name:
