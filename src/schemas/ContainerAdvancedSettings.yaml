@@ -118,6 +118,7 @@ properties:
     type: string
     default: "{}"
     description: Allows to define response headers
+    example: '{"X-Frame-Options":"DENY ","X-Content-Type-Options":"nosniff"}'
   network.ingress.basic_auth_env_var:
     type: string
     default: ""
