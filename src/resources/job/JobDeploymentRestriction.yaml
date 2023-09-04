@@ -1,0 +1,50 @@
+get:
+  summary: 'Get job deployment restrictions'
+  description: 'Get job deployment restrictions'
+  operationId: getJobDeploymentRestrictions
+  parameters:
+    - $ref: '../../parameters/path/jobId.yaml'
+  tags:
+    - Job Deployment Restriction
+  responses:
+    '200':
+      description: 'Get job deployment restrictions'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/job/JobDeploymentRestrictionResponseList.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+
+post:
+  summary: 'Create a job deployment restriction'
+  description: 'Create a job deployment restriction'
+  operationId: createJobDeploymentRestriction
+  parameters:
+    - $ref: '../../parameters/path/jobId.yaml'
+  tags:
+    - Job Deployment Restriction
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/job/JobDeploymentRestrictionRequest.yaml'
+  responses:
+    '201':
+      description: 'Added an environment variable'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/job/JobDeploymentRestrictionResponse.yaml'
+    '400':
+      $ref: '../../responses/BadRequest.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '409':
+      description: A Job deployment restriction with same properties already exists for this job
