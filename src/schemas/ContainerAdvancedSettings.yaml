@@ -83,6 +83,14 @@ properties:
     type: integer
     default: 60
     description: Sets a timeout (in seconds) for reading a response from the proxied server
+  network.ingress.proxy_buffering:
+    type: string
+    default: "on"
+    description: Allows to enable or disable nginx `proxy-buffering`
+  network.ingress.proxy_request_buffering:
+    type: string
+    default: "on"
+    description: Allows to enable or disable nginx `proxy-request-buffering`
   network.ingress.grpc_send_timeout_seconds:
     type: integer
     description: Sets a timeout (in seconds) for transmitting a request to the grpc server
@@ -106,6 +114,10 @@ properties:
       list of source ranges to deny access to ingress proxy. 
       This property can be used to blacklist source IP ranges for ingress proxy.
       The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1
+  network.ingress.extra_headers:
+    type: string
+    default: "{}"
+    description: Allows to define response headers
   network.ingress.basic_auth_env_var:
     type: string
     default: ""
