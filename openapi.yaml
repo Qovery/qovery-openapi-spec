@@ -189,6 +189,7 @@ x-tagGroups:
       - Job Actions
       - Job Configuration
       - Job Custom Domain
+      - Job Deployment Restriction
       - Job Metrics
       - Job Deployment History
       - Job Environment Variable
@@ -8506,6 +8507,104 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/job/{jobId}/deploymentRestriction':
+    get:
+      summary: Get job deployment restrictions
+      description: Get job deployment restrictions
+      operationId: getJobDeploymentRestrictions
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      tags:
+        - Job Deployment Restriction
+      responses:
+        '200':
+          description: Get job deployment restrictions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobDeploymentRestrictionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a job deployment restriction
+      description: Create a job deployment restriction
+      operationId: createJobDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      tags:
+        - Job Deployment Restriction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobDeploymentRestrictionRequest'
+      responses:
+        '201':
+          description: Added an environment variable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobDeploymentRestrictionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '409':
+          description: A Job deployment restriction with same properties already exists for this job
+  '/job/{jobId}/deploymentRestriction/{deploymentRestrictionId}':
+    put:
+      summary: Edit a job deployment restriction
+      description: Edit a job deployment restriction
+      operationId: editJobDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+        - $ref: '#/components/parameters/deploymentRestrictionId'
+      tags:
+        - Job Deployment Restriction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobDeploymentRestrictionRequest'
+      responses:
+        '200':
+          description: Edit a job deployment restriction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobDeploymentRestrictionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a job deployment restriction
+      description: Delete a job deployment restriction
+      operationId: deleteJobDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+        - $ref: '#/components/parameters/deploymentRestrictionId'
+      tags:
+        - Job Deployment Restriction
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/job/{jobId}/instance':
     get:
       summary: List currently running instances of the job with their CPU and RAM metrics
@@ -9699,6 +9798,14 @@ components:
           type: integer
           default: 60
           description: Sets a timeout (in seconds) for reading a response from the proxied server
+        network.ingress.proxy_buffering:
+          type: string
+          default: 'on'
+          description: Allows to enable or disable nginx `proxy-buffering`
+        network.ingress.proxy_request_buffering:
+          type: string
+          default: 'on'
+          description: Allows to enable or disable nginx `proxy-request-buffering`
         network.ingress.whitelist_source_range:
           type: string
           description: |
@@ -9733,6 +9840,11 @@ components:
           type: integer
           description: Sets a timeout (in seconds) for transmitting a request to the grpc server
           default: 60
+        network.ingress.extra_headers:
+          type: string
+          default: '{}'
+          description: Allows to define response headers
+          example: '{"X-Frame-Options":"DENY ","X-Content-Type-Options":"nosniff"}'
         hpa.cpu.average_utilization_percent:
           type: integer
           description: Percentage value of cpu usage at which point pods should scale up.
@@ -11130,6 +11242,14 @@ components:
           type: integer
           default: 60
           description: Sets a timeout (in seconds) for reading a response from the proxied server
+        network.ingress.proxy_buffering:
+          type: string
+          default: 'on'
+          description: Allows to enable or disable nginx `proxy-buffering`
+        network.ingress.proxy_request_buffering:
+          type: string
+          default: 'on'
+          description: Allows to enable or disable nginx `proxy-request-buffering`
         network.ingress.grpc_send_timeout_seconds:
           type: integer
           description: Sets a timeout (in seconds) for transmitting a request to the grpc server
@@ -11153,6 +11273,11 @@ components:
             list of source ranges to deny access to ingress proxy. 
             This property can be used to blacklist source IP ranges for ingress proxy.
             The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1
+        network.ingress.extra_headers:
+          type: string
+          default: '{}'
+          description: Allows to define response headers
+          example: '{"X-Frame-Options":"DENY ","X-Content-Type-Options":"nosniff"}'
         network.ingress.basic_auth_env_var:
           type: string
           default: ''
@@ -13496,6 +13621,32 @@ components:
           description: |
             Commit to deploy
             Cannot be set if `image_tag` is defined
+    JobDeploymentRestrictionRequest:
+      type: object
+      required:
+        - mode
+        - type
+        - value
+      properties:
+        mode:
+          $ref: '#/components/schemas/DeploymentRestrictionModeEnum'
+        type:
+          $ref: '#/components/schemas/DeploymentRestrictionTypeEnum'
+        value:
+          type: string
+          description: 'For `PATH` restrictions, the value must not start with `/`'
+          example: job1/src/
+    JobDeploymentRestrictionResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/JobDeploymentRestrictionRequest'
+    JobDeploymentRestrictionResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobDeploymentRestrictionResponse'
     JobScheduleEvent:
       type: string
       enum:
