@@ -50,7 +50,7 @@ paths:
           nullable: true
       responses:
         '200':
-          description: Stream of deployment logs. Type api is at https://api-doc.qovery.com/#tag/Environment-Logs/operation/listEnvironmentLogs
+          description: Stream of deployment logs. Type API is at https://api-doc.qovery.com/#tag/Environment-Logs/operation/listEnvironmentLogs
           content:
             text/plain:
               schema:
@@ -94,7 +94,7 @@ paths:
           nullable: true
       responses:
         '200':
-          description: Stream of deployment status. Type Api is at https://api-doc.qovery.com/#tag/Environment-Main-Calls/operation/getEnvironmentStatusesWithStages
+          description: Stream of deployment status. Type API is at https://api-doc.qovery.com/#tag/Environment-Main-Calls/operation/getEnvironmentStatusesWithStages
           content:
             text/plain:
               schema:
