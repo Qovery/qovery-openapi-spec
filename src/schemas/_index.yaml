@@ -668,3 +668,5 @@ VariableAlias:
   $ref: ./variable/VariableAlias.yaml
 VariableOverride:
   $ref: ./variable/VariableOverride.yaml
+ClusterDeploymentStatusEnum:
+  $ref: ./enums/ClusterDeploymentStatus.yaml
