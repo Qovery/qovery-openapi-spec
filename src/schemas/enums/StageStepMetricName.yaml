@@ -1,0 +1,6 @@
+type: string
+enum:
+  - PROVISION_BUILDER
+description: |
+  The name of the deployment step at the stage level:
+  - PROVISION_BUILDER: The step to provision builders before the actual build

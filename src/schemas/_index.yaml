@@ -670,3 +670,17 @@ VariableOverride:
   $ref: ./variable/VariableOverride.yaml
 ClusterDeploymentStatusEnum:
   $ref: ./enums/ClusterDeploymentStatus.yaml
+ServiceStepMetric:
+  $ref: ./ServiceStepMetric.yaml
+StageStepMetrics:
+  $ref: ./StageStepMetrics.yaml
+ServiceStepMetrics:
+  $ref: ./ServiceStepMetrics.yaml
+StageStepMetric:
+  $ref: ./StageStepMetric.yaml
+StageStepMetricNameEnum:
+  $ref: ./enums/StageStepMetricName.yaml
+StepMetricStatusEnum:
+  $ref: ./enums/StepMetricStatus.yaml
+ServiceStepMetricNameEnum:
+  $ref: ./enums/ServiceStepMetricName.yaml

@@ -1,0 +1,10 @@
+type: object
+properties:
+  total_duration_sec:
+    description: The total duration in seconds of the stage deployment.
+    type: integer
+  details:
+    description: A list of metrics for deployment steps of the stage.
+    type: array
+    items:
+      $ref: './StageStepMetric.yaml'
