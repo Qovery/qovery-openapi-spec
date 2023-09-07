@@ -64,3 +64,5 @@ allOf:
         type: array
         items:
           $ref: './ClusterFeatureResponse.yaml'
+      deployment_status:
+         $ref: './enums/ClusterDeploymentStatus.yaml'
