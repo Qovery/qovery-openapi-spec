@@ -10611,6 +10611,8 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ClusterFeature'
+            deployment_status:
+              $ref: '#/components/schemas/ClusterDeploymentStatusEnum'
     ClusterLogs:
       type: object
       properties:
@@ -15602,6 +15604,12 @@ components:
           $ref: '#/components/schemas/APIVariableScopeEnum'
         variable_type:
           $ref: '#/components/schemas/APIVariableTypeEnum'
+    ClusterDeploymentStatusEnum:
+      type: string
+      enum:
+        - NEVER_DEPLOYED
+        - OUT_OF_DATE
+        - UP_TO_DATE
   responses:
     '204':
       description: no content
