@@ -9854,6 +9854,11 @@ components:
           default: ''
           description: |
             Allows you to set an existing Kubernetes service account name
+        security.read_only_root_filesystem:
+          type: boolean
+          default: false
+          description: |
+            Mounts the container's root filesystem as read-only
     ApplicationCurrentScale:
       type: object
       properties:
@@ -11298,6 +11303,11 @@ components:
           type: integer
           description: Percentage value of cpu usage at which point pods should scale up.
           default: 60
+        security.read_only_root_filesystem:
+          type: boolean
+          default: false
+          description: |
+            Mounts the container's root filesystem as read-only
     ContainerCurrentScale:
       type: object
       properties:
@@ -13608,6 +13618,11 @@ components:
           default: ''
           description: |
             Allows you to set an existing Kubernetes service account name
+        security.read_only_root_filesystem:
+          type: boolean
+          default: false
+          description: |
+            Mounts the container's root filesystem as read-only
     JobDeployRequest:
       type: object
       properties:
