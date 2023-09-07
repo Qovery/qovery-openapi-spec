@@ -39,3 +39,8 @@ properties:
     default: ""
     description: |
       Allows you to set an existing Kubernetes service account name
+  security.read_only_root_filesystem:
+    type: boolean
+    default: false
+    description: |
+      Mounts the container's root filesystem as read-only
