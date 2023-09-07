@@ -3,7 +3,10 @@ enum:
   - ECR
   - SCALEWAY_CR
   - DOCKER_HUB
+  - GITHUB_CR
+  - GITLAB_CR
   - PUBLIC_ECR
   - DOCR
+  - GENERIC_CR
 description: The type of your container registry
 
