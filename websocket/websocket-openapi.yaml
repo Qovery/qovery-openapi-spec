@@ -86,6 +86,7 @@ paths:
         schema:
           type: string
           format: uuid
+          nullable: true
       - name: version
         in: path
         required: true
