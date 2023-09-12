@@ -15250,6 +15250,8 @@ components:
           format: date-time
         is_part_last_deployment:
           type: boolean
+        metrics:
+          $ref: '#/components/schemas/ServiceStepMetrics'
     Stage:
       type: object
       required:
@@ -15262,6 +15264,8 @@ components:
         name:
           type: string
           description: stage name
+        metrics:
+          $ref: '#/components/schemas/StageStepMetrics'
     StatusKindEnum:
       type: string
       enum:
@@ -15618,6 +15622,85 @@ components:
         - NEVER_DEPLOYED
         - OUT_OF_DATE
         - UP_TO_DATE
+    ServiceStepMetric:
+      type: object
+      properties:
+        step_name:
+          $ref: '#/components/schemas/ServiceStepMetricNameEnum'
+        status:
+          $ref: '#/components/schemas/StepMetricStatusEnum'
+        duration_sec:
+          description: The duration of the step in seconds.
+          type: integer
+    StageStepMetrics:
+      type: object
+      properties:
+        total_duration_sec:
+          description: The total duration in seconds of the stage deployment or null if the deployment is not completed
+          type: integer
+          nullable: true
+        details:
+          description: A list of metrics for deployment steps of the stage.
+          type: array
+          items:
+            $ref: '#/components/schemas/StageStepMetric'
+    ServiceStepMetrics:
+      type: object
+      properties:
+        total_duration_sec:
+          description: The total duration in seconds of the service deployment or null if the deployment is not completed.
+          type: integer
+          nullable: true
+        details:
+          description: A list of metrics for deployment steps of the service.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceStepMetric'
+    StageStepMetric:
+      type: object
+      properties:
+        step_name:
+          $ref: '#/components/schemas/StageStepMetricNameEnum'
+        status:
+          $ref: '#/components/schemas/StepMetricStatusEnum'
+        duration_sec:
+          description: The duration of the step in seconds.
+          type: integer
+    StageStepMetricNameEnum:
+      type: string
+      enum:
+        - PROVISION_BUILDER
+      description: |
+        The name of the deployment step at the stage level:
+        - PROVISION_BUILDER: The step to provision builders before the actual build
+    StepMetricStatusEnum:
+      type: string
+      enum:
+        - SUCCESS
+        - ERROR
+        - CANCEL
+        - SKIP
+      description: |
+        The status of completion for the step:
+        - SUCCESS: The step completed successfully.
+        - ERROR: The step completed with an error.
+        - CANCEL: The step was canceled.
+        - SKIP: The step was skipped because it was not necessary.
+    ServiceStepMetricNameEnum:
+      type: string
+      enum:
+        - REGISTRY_CREATE_REPOSITORY
+        - GIT_CLONE
+        - BUILD
+        - DEPLOYMENT
+        - ROUTER_DEPLOYMENT
+      description: |
+        The name of the deployment step at the service level:
+        - REGISTRY_CREATE_REPOSITORY: The step to create the repository in the registry.
+        - GIT_CLONE: The step to clone the source code repository. 
+        - BUILD: The step to build the source code.
+        - DEPLOYMENT: The step to deploy the service. 
+        - ROUTER_DEPLOYMENT: The step to deploy the router. 
   responses:
     '204':
       description: no content
