@@ -1,8 +1,9 @@
 type: object
 properties:
   total_duration_sec:
-    description: The total duration in seconds of the stage deployment.
+    description: The total duration in seconds of the stage deployment or null if the deployment is not completed
     type: integer
+    nullable: true
   details:
     description: A list of metrics for deployment steps of the stage.
     type: array
