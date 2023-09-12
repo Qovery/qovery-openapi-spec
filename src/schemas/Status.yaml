@@ -16,3 +16,6 @@ properties:
     format: date-time
   is_part_last_deployment:
     type: boolean
+  metrics:
+    $ref: './ServiceStepMetrics.yaml'
+

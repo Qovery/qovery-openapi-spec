@@ -1,0 +1,12 @@
+type: string
+enum:
+  - SUCCESS
+  - ERROR
+  - CANCEL
+  - SKIP
+description: |
+  The status of completion for the step:
+  - SUCCESS: The step completed successfully.
+  - ERROR: The step completed with an error.
+  - CANCEL: The step was canceled.
+  - SKIP: The step was skipped because it was not necessary.
