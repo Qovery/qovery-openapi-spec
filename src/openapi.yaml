@@ -23,7 +23,6 @@ tags:
   - name: Application Deployment Restriction
   - name: Application Deployment History
   - name: Application Environment Variable
-  - name: Application Event
   - name: Application Logs
   - name: Application Main Calls
   - name: Application Metrics
@@ -35,7 +34,6 @@ tags:
   - name: Container Database
   - name: Container Deployment History
   - name: Container Environment Variable
-  - name: Container Event
   - name: Container Logs
   - name: Container Main Calls
   - name: Container Metrics
@@ -50,7 +48,6 @@ tags:
   - name: Job Deployment Restriction
   - name: Job Deployment History
   - name: Job Environment Variable
-  - name: Job Event
   - name: Job Logs
   - name: Job Main Calls
   - name: Job Metrics
@@ -69,7 +66,6 @@ tags:
   - name: Database Application
   - name: Database Container
   - name: Database Deployment History
-  - name: Database Event
   - name: Database Main Calls
   - name: Database Metrics
   - name: Databases
@@ -90,6 +86,7 @@ tags:
   - name: Organization Account Git Repositories
   - name: Organization Main Calls
   - name: Organization Custom Role
+  - name: Organization Event
   - name: Organization Api Token
   - name: Organization Webhook
   - name: Organization Event
@@ -157,7 +154,6 @@ x-tagGroups:
       - Application Deployment History
       - Application Environment Variable
       - Application Secret
-      - Application Event
   - name: Container
     tags:
       - Container Main Calls
@@ -170,7 +166,6 @@ x-tagGroups:
       - Container Deployment History
       - Container Environment Variable
       - Container Secret
-      - Container Event
   - name: Database
     tags:
       - Database Main Calls
@@ -182,7 +177,6 @@ x-tagGroups:
       - Database Application
       - Database Container
       - Backups
-      - Database Event
   - name: Job
     tags:
       - Job Main Calls
@@ -194,7 +188,6 @@ x-tagGroups:
       - Job Deployment History
       - Job Environment Variable
       - Job Secret
-      - Job Event
   - name: Account
     tags:
       - Account Info
@@ -532,8 +525,6 @@ paths:
     $ref: './resources/ApplicationReboot.yaml'
   /application/{applicationId}/deploymentHistory:
     $ref: './resources/ApplicationDeploymentHistory.yaml'
-  /application/{applicationId}/event:
-    $ref: './resources/ApplicationEvent.yaml'
   /application/{applicationId}/environmentVariable:
     $ref: './resources/ApplicationEnvironmentVariable.yaml'
   /application/{applicationId}/environmentVariable/import:
@@ -668,8 +659,6 @@ paths:
     $ref: './resources/DatabaseBackup.yaml'
   /database/{databaseId}/backup/{backupId}:
     $ref: './resources/DatabaseBackupRef.yaml'
-  /database/{databaseId}/event:
-    $ref: './resources/DatabaseEvent.yaml'
   /database/{databaseId}/clone:
     $ref: './resources/DatabaseClone.yaml'
   /account:
