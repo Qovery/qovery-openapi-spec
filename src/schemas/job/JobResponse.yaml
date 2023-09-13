@@ -153,3 +153,6 @@ allOf:
                   For example: `* * * * *` represent the cron to launch the job every minute.  
                   See https://crontab.guru/ to WISIWIG interface.  
                   Timezone is UT
+      auto_deploy:
+        type: boolean
+        description: Specify if the job would be automatically updated after receiving a new image or a new commit according to the source type.

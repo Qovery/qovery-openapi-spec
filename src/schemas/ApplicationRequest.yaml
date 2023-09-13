@@ -62,3 +62,7 @@ allOf:
       entrypoint:
         type: string
         description: optional entrypoint when launching container
+      auto_deploy:
+        type: boolean
+        nullable: true
+        description: Specify if the application would be automatically updated after receiving new commit.

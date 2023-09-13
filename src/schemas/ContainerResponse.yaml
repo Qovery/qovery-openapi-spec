@@ -78,3 +78,6 @@ allOf:
           If not specified, it takes the value of the `auto_preview` property from the associated environment.
       ports:
         $ref: './ServicePortResponseList.yaml'
+      auto_deploy:
+        type: boolean
+        description: Specify if the container would be automatically updated after receiving a new image.
