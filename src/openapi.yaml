@@ -89,7 +89,6 @@ tags:
   - name: Organization Event
   - name: Organization Api Token
   - name: Organization Webhook
-  - name: Organization Event
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
