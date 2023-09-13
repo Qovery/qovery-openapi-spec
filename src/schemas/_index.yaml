@@ -684,3 +684,6 @@ StepMetricStatusEnum:
   $ref: ./enums/StepMetricStatus.yaml
 ServiceStepMetricNameEnum:
   $ref: ./enums/ServiceStepMetricName.yaml
+OrganizationJobAutoDeployRequest:
+  $ref: ./OrganizationJobAutoDeployRequest.yaml
+

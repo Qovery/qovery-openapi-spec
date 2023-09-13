@@ -460,6 +460,8 @@ paths:
     $ref: './resources/OrganizationContainerAutoDeploy.yaml'
   /organization/{organizationId}/container/preview:
     $ref: './resources/OrganizationContainerPreview.yaml'
+  /organization/{organizationId}/job/deploy:
+    $ref: './resources/OrganizationJobAutoDeploy.yaml'
   /environment/{environmentId}/log:
     $ref: './resources/EnvironmentLog.yaml'
   /environment/{environmentId}/logs:

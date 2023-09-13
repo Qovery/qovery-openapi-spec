@@ -69,4 +69,6 @@ allOf:
       auto_deploy:
         type: boolean
         nullable: true
-        description: Specify if the container would be automatically updated after receiving a new image.
+        description: |
+          Specify if the container will be automatically updated after receiving a new image tag. 
+          The new image tag shall be communicated via the "Auto Deploy container" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments
