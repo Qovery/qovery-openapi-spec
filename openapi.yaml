@@ -9949,6 +9949,8 @@ components:
       allOf:
         - $ref: '#/components/schemas/ServiceStorageRequest'
         - type: object
+          required:
+            - healthchecks
           properties:
             name:
               type: string
