@@ -5,6 +5,7 @@ allOf:
     required:
       - name
       - git_repository
+      - healthchecks
     properties:
       name:
         type: string

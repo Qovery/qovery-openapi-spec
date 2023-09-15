@@ -1,4 +1,5 @@
 type: object
+nullable: false
 properties:
   readiness_probe:
     $ref: './Probe.yaml'
