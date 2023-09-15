@@ -9668,6 +9668,8 @@ components:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ServiceStorage'
         - type: object
+          required:
+            - healthchecks
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -11602,6 +11604,7 @@ components:
             - max_running_instances
             - maximum_cpu
             - maximum_memory
+            - healthchecks
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -13506,6 +13509,7 @@ components:
             - max_running_instances
             - maximum_cpu
             - maximum_memory
+            - healthchecks
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
