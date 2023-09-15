@@ -1,6 +1,8 @@
 allOf:
   - $ref: './ServiceStorageRequest.yaml'
   - type: object
+    required:
+      - healthchecks
     properties:
       name:
         type: string
