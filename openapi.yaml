@@ -10154,6 +10154,7 @@ components:
           required:
             - name
             - git_repository
+            - healthchecks
           properties:
             name:
               type: string
@@ -11517,6 +11518,7 @@ components:
             - registry_id
             - image_name
             - tag
+            - healthchecks
           properties:
             name:
               type: string
@@ -13099,6 +13101,7 @@ components:
             $ref: '#/components/schemas/GitRepository'
     Healthcheck:
       type: object
+      nullable: false
       properties:
         readiness_probe:
           $ref: '#/components/schemas/Probe'
@@ -13349,6 +13352,7 @@ components:
         - type: object
           required:
             - name
+            - healthchecks
           properties:
             name:
               type: string
