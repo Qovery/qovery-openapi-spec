@@ -15,6 +15,7 @@ allOf:
       - max_running_instances
       - maximum_cpu
       - maximum_memory
+      - healthchecks
     properties:
       environment:
         $ref: './ReferenceObject.yaml'

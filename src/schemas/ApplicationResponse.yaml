@@ -2,6 +2,8 @@ allOf:
   - $ref: './BaseResponse.yaml'
   - $ref: './ServiceStorageResponse.yaml'
   - type: object
+    required:
+      - healthchecks
     properties:
       environment:
         $ref: './ReferenceObject.yaml'
