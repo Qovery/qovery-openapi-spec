@@ -2,6 +2,7 @@ allOf:
   - type: object
     required:
       - name
+      - healthchecks
     properties:
       name:
         type: string
