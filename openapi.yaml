@@ -12805,6 +12805,9 @@ components:
         last_deployment_id:
           type: string
           nullable: true
+        total_deployment_duration_in_seconds:
+          type: integer
+          nullable: true
     EnvironmentStatsResponseList:
       type: object
       properties:
@@ -15327,7 +15330,7 @@ components:
           format: date-time
         is_part_last_deployment:
           type: boolean
-        metrics:
+        steps:
           $ref: '#/components/schemas/ServiceStepMetrics'
     Stage:
       type: object
@@ -15341,7 +15344,7 @@ components:
         name:
           type: string
           description: stage name
-        metrics:
+        steps:
           $ref: '#/components/schemas/StageStepMetrics'
     StatusKindEnum:
       type: string
