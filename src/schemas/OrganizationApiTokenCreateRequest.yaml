@@ -13,3 +13,4 @@ properties:
     type: string
     format: uuid
     nullable: true
+    description: the roleId provided by the "List organization custom roles" endpoint.
