@@ -14175,8 +14175,11 @@ components:
               type: string
             description:
               type: string
-            scope:
-              $ref: '#/components/schemas/OrganizationApiTokenScope'
+            roleName:
+              type: string
+            roleId:
+              type: string
+              format: uuid
     OrganizationApiTokenCreate:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -14189,13 +14192,16 @@ components:
             token:
               type: string
               description: the generated token to send in 'Authorization' header prefixed by 'Token '
-            scope:
-              $ref: '#/components/schemas/OrganizationApiTokenScope'
+            roleName:
+              type: string
+            roleId:
+              type: string
+              format: uuid
     OrganizationApiTokenCreateRequest:
       type: object
       required:
         - name
-        - scope
+        - roleId
       properties:
         name:
           type: string
@@ -14203,6 +14209,11 @@ components:
           type: string
         scope:
           $ref: '#/components/schemas/OrganizationApiTokenScope'
+        roleId:
+          type: string
+          format: uuid
+          nullable: true
+          description: the roleId provided by the "List organization custom roles" endpoint.
     OrganizationApiTokenResponseList:
       type: object
       properties:
@@ -14212,6 +14223,8 @@ components:
             $ref: '#/components/schemas/OrganizationApiToken'
     OrganizationApiTokenScope:
       type: string
+      nullable: true
+      description: deprecated
       enum:
         - ADMIN
     OrganizationAvailableRole:
