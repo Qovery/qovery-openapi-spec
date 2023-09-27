@@ -1,7 +1,7 @@
 type: object
 required:
   - name
-  - scope
+  - roleId
 properties:
   name:
     type: string
@@ -9,3 +9,7 @@ properties:
     type: string
   scope:
     $ref: './enums/OrganizationApiTokenScope.yaml'
+  roleId:
+    type: string
+    format: uuid
+    nullable: true
