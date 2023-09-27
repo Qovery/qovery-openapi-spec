@@ -1,3 +1,5 @@
 type: string
+nullable: true
+description: deprecated
 enum:
   - ADMIN

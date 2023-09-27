@@ -9,5 +9,8 @@ allOf:
       token:
         type: string
         description: the generated token to send in 'Authorization' header prefixed by 'Token '
-      scope:
-        $ref: './enums/OrganizationApiTokenScope.yaml'
+      roleName:
+        type: string
+      roleId:
+        type: string
+        format: uuid
