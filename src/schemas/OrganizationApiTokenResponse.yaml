@@ -6,8 +6,8 @@ allOf:
         type: string
       description:
         type: string
-      roleName:
+      role_name:
         type: string
-      roleId:
+      role_id:
         type: string
         format: uuid
