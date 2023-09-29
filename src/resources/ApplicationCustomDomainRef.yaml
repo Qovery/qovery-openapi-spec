@@ -1,7 +1,7 @@
 
 put:
   summary: 'Edit a Custom Domain'
-  description: 'To edit a Custom Domain  you must have the project user permission'
+  description: 'To edit a Custom Domain you must have the project user permission'
   operationId: editCustomDomain
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'

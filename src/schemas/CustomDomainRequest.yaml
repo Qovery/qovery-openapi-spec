@@ -6,3 +6,6 @@ properties:
     type: string
     description: your custom domain
     example: my.domain.tld
+  generate_certificate:
+    type: boolean
+    description: to control if a certificate will be generated for this custom domain.
