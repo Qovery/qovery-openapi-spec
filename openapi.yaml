@@ -10642,7 +10642,7 @@ components:
               type: integer
               description: 'This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration'
             status:
-              $ref: '#/components/schemas/StateEnum'
+              $ref: '#/components/schemas/ClusterStateEnum'
             has_access:
               type: boolean
             version:
@@ -11044,7 +11044,7 @@ components:
           type: string
           format: uuid
         status:
-          $ref: '#/components/schemas/StateEnum'
+          $ref: '#/components/schemas/ClusterStateEnum'
         is_deployed:
           type: boolean
     ClusterStatusGet:
@@ -11054,7 +11054,7 @@ components:
           type: string
           format: uuid
         status:
-          $ref: '#/components/schemas/StateEnum'
+          $ref: '#/components/schemas/ClusterStateEnum'
         is_deployed:
           type: boolean
         last_execution_id:
@@ -15324,6 +15324,32 @@ components:
         - RESTARTING
         - RESTARTED
         - RESTART_ERROR
+    ClusterStateEnum:
+      type: string
+      enum:
+        - BUILDING
+        - BUILD_ERROR
+        - CANCELED
+        - CANCELING
+        - DELETED
+        - DELETE_ERROR
+        - DELETE_QUEUED
+        - DELETING
+        - DEPLOYED
+        - DEPLOYING
+        - DEPLOYMENT_ERROR
+        - DEPLOYMENT_QUEUED
+        - QUEUED
+        - READY
+        - STOPPED
+        - STOPPING
+        - STOP_ERROR
+        - STOP_QUEUED
+        - RESTART_QUEUED
+        - RESTARTING
+        - RESTARTED
+        - RESTART_ERROR
+        - INVALID_CREDENTIALS
     Status:
       type: object
       required:
