@@ -4,6 +4,6 @@ properties:
     type: string
     format: uuid
   status:
-    $ref: './enums/State.yaml'
+    $ref: './enums/ClusterState.yaml'
   is_deployed:
     type: boolean
