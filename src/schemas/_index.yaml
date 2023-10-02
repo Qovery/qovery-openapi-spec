@@ -616,6 +616,8 @@ SignUpRequest:
   $ref: ./SignUpRequest.yaml
 StateEnum:
   $ref: ./enums/State.yaml
+ClusterStateEnum:
+  $ref: ./enums/ClusterState.yaml
 Status:
   $ref: ./Status.yaml
 Stage:
