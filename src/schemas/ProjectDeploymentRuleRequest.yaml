@@ -22,9 +22,6 @@ properties:
   cluster_id:
     type: string
     format: uuid
-  auto_deploy:
-    type: boolean
-    default: false
   auto_stop:
     type: boolean
     default: false

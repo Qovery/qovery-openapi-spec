@@ -5,9 +5,6 @@ required:
   - stop_time
   - weekdays
 properties:
-  auto_deploy:
-    type: boolean
-    default: true
   on_demand_preview:
     type: boolean
     default: false
