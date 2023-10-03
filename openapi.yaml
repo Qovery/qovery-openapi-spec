@@ -13503,7 +13503,6 @@ components:
         - type: object
           required:
             - environment
-            - registry
             - name
             - image_name
             - tag
@@ -13520,7 +13519,6 @@ components:
               $ref: '#/components/schemas/ReferenceObject'
             registry:
               $ref: '#/components/schemas/ReferenceObject'
-              nullable: true
             maximum_cpu:
               type: integer
               description: Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
