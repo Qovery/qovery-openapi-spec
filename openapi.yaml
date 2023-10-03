@@ -11505,6 +11505,19 @@ components:
                     name:
                       type: string
                       description: Name of the cluster of which the registry belongs to
+    ContainerRegistryProviderDetailsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        url:
+          type: string
+          description: URL of the container registry
+        kind:
+          $ref: '#/components/schemas/ContainerRegistryKindEnum'
     ContainerRegistryResponseList:
       type: object
       properties:
@@ -11611,7 +11624,7 @@ components:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
             registry:
-              $ref: '#/components/schemas/ReferenceObject'
+              $ref: '#/components/schemas/ContainerRegistryProviderDetailsResponse'
             maximum_cpu:
               type: integer
               description: Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
@@ -13517,8 +13530,6 @@ components:
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
-            registry:
-              $ref: '#/components/schemas/ReferenceObject'
             maximum_cpu:
               type: integer
               description: Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
@@ -13584,6 +13595,8 @@ components:
                     registry_id:
                       type: string
                       description: tag of the image container
+                    registry:
+                      $ref: '#/components/schemas/ContainerRegistryProviderDetailsResponse'
                 docker:
                   type: object
                   nullable: true
