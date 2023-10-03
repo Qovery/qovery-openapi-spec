@@ -12268,9 +12268,6 @@ components:
         cluster:
           type: string
           format: uuid
-        auto_deploy:
-          type: boolean
-          default: true
         auto_stop:
           type: boolean
           default: false
@@ -12560,9 +12557,6 @@ components:
             - stop_time
             - weekdays
           properties:
-            auto_deploy:
-              type: boolean
-              default: true
             on_demand_preview:
               type: boolean
               default: false
@@ -12595,9 +12589,6 @@ components:
         - stop_time
         - weekdays
       properties:
-        auto_deploy:
-          type: boolean
-          default: true
         on_demand_preview:
           type: boolean
           default: false
@@ -14998,9 +14989,6 @@ components:
         cluster_id:
           type: string
           format: uuid
-        auto_deploy:
-          type: boolean
-          default: false
         auto_stop:
           type: boolean
           default: false
