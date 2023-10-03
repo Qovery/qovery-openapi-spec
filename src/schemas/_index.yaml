@@ -160,6 +160,8 @@ ContainerRegistryRequest:
   $ref: ./ContainerRegistryRequest.yaml
 ContainerRegistryResponse:
   $ref: ./ContainerRegistryResponse.yaml
+ContainerRegistryProviderDetailsResponse:
+  $ref: ./ContainerRegistryProviderDetailsResponse.yaml
 ContainerRegistryResponseList:
   $ref: ./ContainerRegistryResponseList.yaml
 ContainerRequest:
