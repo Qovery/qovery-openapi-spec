@@ -1,4 +1,9 @@
 type: object
+required:
+  - id
+  - name
+  - url
+  - kind
 properties:
   id:
     type: string
