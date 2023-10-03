@@ -11507,6 +11507,11 @@ components:
                       description: Name of the cluster of which the registry belongs to
     ContainerRegistryProviderDetailsResponse:
       type: object
+      required:
+        - id
+        - name
+        - url
+        - kind
       properties:
         id:
           type: string
