@@ -1,0 +1,12 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  url:
+    type: string
+    description: URL of the container registry
+  kind:
+    $ref: ./enums/ContainerRegistryKind.yaml
