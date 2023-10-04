@@ -4400,6 +4400,60 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/environment/{environmentId}/service/stop':
+    post:
+      summary: Stop services
+      description: Stop selected services
+      operationId: stopSelectedServices
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentServiceIdsAllRequest'
+      responses:
+        '200':
+          description: Services have been triggered to be deleted
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/environment/{environmentId}/service/delete':
+    post:
+      summary: Delete services
+      description: Delete selected services
+      operationId: deleteSelectedServices
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentServiceIdsAllRequest'
+      responses:
+        '200':
+          description: Services have been triggered to be deleted
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   '/organization/{organizationId}/container/deploy':
     post:
       summary: Auto deploy containers
@@ -13000,6 +13054,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentVariable'
+    EnvironmentServiceIdsAllRequest:
+      type: object
+      properties:
+        application_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        container_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        database_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        job_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
     APIVariableScopeEnum:
       type: string
       enum:
