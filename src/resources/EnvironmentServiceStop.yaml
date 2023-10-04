@@ -1,0 +1,26 @@
+post:
+  summary: 'Stop services'
+  description: Stop selected services
+  operationId: stopSelectedServices
+  parameters:
+    - $ref: '../parameters/path/environmentId.yaml'
+  tags:
+    - Environment Actions
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/EnvironmentServiceIdsAllRequest.yaml'
+  responses:
+    '200':
+      description: 'Services have been triggered to be deleted'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+    '409':
+      description: 'Operation is in progress'
