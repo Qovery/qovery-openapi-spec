@@ -94,6 +94,8 @@ CloudProviderResponseList:
   $ref: ./CloudProviderResponseList.yaml
 Cluster:
   $ref: ./ClusterResponse.yaml
+ClusterDeleteMode:
+  $ref: ./enums/ClusterDeleteMode.yaml
 ClusterLogs:
   $ref: ./ClusterLogsResponse.yaml
 ClusterCloudProviderInfo:
