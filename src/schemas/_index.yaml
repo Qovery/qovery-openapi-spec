@@ -326,6 +326,8 @@ EnvironmentVariableRequest:
   $ref: ./EnvironmentVariableRequest.yaml
 EnvironmentVariableResponseList:
   $ref: ./EnvironmentVariableResponseList.yaml
+EnvironmentServiceIdsAllRequest:
+  $ref: ./EnvironmentServiceIdsAllRequest.yaml
 APIVariableScopeEnum:
   $ref: ./enums/APIVariableScope.yaml
 APIVariableTypeEnum:

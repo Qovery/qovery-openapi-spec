@@ -1,0 +1,22 @@
+type: object
+properties:
+  application_ids:
+    type: array
+    items:
+      type: string
+      format: uuid
+  container_ids:
+    type: array
+    items:
+      type: string
+      format: uuid
+  database_ids:
+    type: array
+    items:
+      type: string
+      format: uuid
+  job_ids:
+    type: array
+    items:
+      type: string
+      format: uuid

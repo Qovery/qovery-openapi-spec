@@ -456,6 +456,10 @@ paths:
     $ref: './resources/EnvironmentServiceDeploy.yaml'
   /environment/{environmentId}/service/restart-service:
     $ref: './resources/EnvironmentServiceReboot.yaml'
+  /environment/{environmentId}/service/stop:
+    $ref: './resources/EnvironmentServiceStop.yaml'
+  /environment/{environmentId}/service/delete:
+    $ref: './resources/EnvironmentServiceDelete.yaml'
   /organization/{organizationId}/container/deploy:
     $ref: './resources/OrganizationContainerAutoDeploy.yaml'
   /organization/{organizationId}/container/preview:
