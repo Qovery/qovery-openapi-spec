@@ -35,7 +35,6 @@ tags:
   - name: Container Database
   - name: Container Deployment History
   - name: Container Environment Variable
-  - name: Container Event
   - name: Container Logs
   - name: Container Main Calls
   - name: Container Metrics
@@ -50,7 +49,6 @@ tags:
   - name: Job Deployment Restriction
   - name: Job Deployment History
   - name: Job Environment Variable
-  - name: Job Event
   - name: Job Logs
   - name: Job Main Calls
   - name: Job Metrics
@@ -170,7 +168,6 @@ x-tagGroups:
       - Container Deployment History
       - Container Environment Variable
       - Container Secret
-      - Container Event
   - name: Database
     tags:
       - Database Main Calls
@@ -194,7 +191,6 @@ x-tagGroups:
       - Job Deployment History
       - Job Environment Variable
       - Job Secret
-      - Job Event
   - name: Account
     tags:
       - Account Info
@@ -5638,29 +5634,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/application/{applicationId}/event':
-    get:
-      summary: List application events
-      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
-      operationId: listApplicationEvent
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/startId'
-      tags:
-        - Application Event
-      responses:
-        '200':
-          description: List events
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventPaginatedResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/application/{applicationId}/environmentVariable':
     get:
       summary: List environment variables
@@ -7930,29 +7903,6 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/database/{databaseId}/event':
-    get:
-      summary: List database  events
-      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
-      operationId: listDatabaseEvent
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-        - $ref: '#/components/parameters/startId'
-      tags:
-        - Database Event
-      responses:
-        '200':
-          description: List events
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventPaginatedResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
