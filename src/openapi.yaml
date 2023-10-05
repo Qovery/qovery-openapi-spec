@@ -35,7 +35,6 @@ tags:
   - name: Container Database
   - name: Container Deployment History
   - name: Container Environment Variable
-  - name: Container Event
   - name: Container Logs
   - name: Container Main Calls
   - name: Container Metrics
@@ -50,7 +49,6 @@ tags:
   - name: Job Deployment Restriction
   - name: Job Deployment History
   - name: Job Environment Variable
-  - name: Job Event
   - name: Job Logs
   - name: Job Main Calls
   - name: Job Metrics
@@ -170,7 +168,6 @@ x-tagGroups:
       - Container Deployment History
       - Container Environment Variable
       - Container Secret
-      - Container Event
   - name: Database
     tags:
       - Database Main Calls
@@ -194,7 +191,6 @@ x-tagGroups:
       - Job Deployment History
       - Job Environment Variable
       - Job Secret
-      - Job Event
   - name: Account
     tags:
       - Account Info
@@ -538,8 +534,6 @@ paths:
     $ref: './resources/ApplicationReboot.yaml'
   /application/{applicationId}/deploymentHistory:
     $ref: './resources/ApplicationDeploymentHistory.yaml'
-  /application/{applicationId}/event:
-    $ref: './resources/ApplicationEvent.yaml'
   /application/{applicationId}/environmentVariable:
     $ref: './resources/ApplicationEnvironmentVariable.yaml'
   /application/{applicationId}/environmentVariable/import:
@@ -674,8 +668,6 @@ paths:
     $ref: './resources/DatabaseBackup.yaml'
   /database/{databaseId}/backup/{backupId}:
     $ref: './resources/DatabaseBackupRef.yaml'
-  /database/{databaseId}/event:
-    $ref: './resources/DatabaseEvent.yaml'
   /database/{databaseId}/clone:
     $ref: './resources/DatabaseClone.yaml'
   /account:
@@ -783,4 +775,4 @@ security:
   - ApiKeyAuth: []
 
 
-  
+
