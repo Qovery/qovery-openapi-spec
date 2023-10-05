@@ -1,0 +1,18 @@
+name: OpenAPI Test
+
+on:
+  pull_request:
+
+jobs:
+  npm-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - name: Test
+        run: |
+          npm install -g @apidevtools/swagger-cli
+          npm install -g @stoplight/spectral
+          npm run test
