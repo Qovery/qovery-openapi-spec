@@ -1,6 +1,7 @@
 type: object
 required:
   - domain
+  - generate_certificate
 properties:
   domain:
     type: string
