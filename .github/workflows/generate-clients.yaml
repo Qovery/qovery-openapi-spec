@@ -33,7 +33,7 @@ jobs:
             deploy-ssh-key: SSH_DEPLOY_KEY_PYTHON
             deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_PYTHON
           - language: typescript-axios
-            version: 5.3.1
+            version: 7.0.1
             target-branch: main
             deploy-ssh-key: SSH_DEPLOY_KEY_TYPESCRIPT_AXIOS
             deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_TYPESCRIPT_AXIOS
