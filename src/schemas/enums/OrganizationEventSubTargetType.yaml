@@ -1,5 +1,6 @@
 type: string
 description: Type of the organization event
+nullable: true
 enum:
   - ADVANCED_SETTINGS
   - API_TOKEN
