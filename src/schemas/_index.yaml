@@ -694,4 +694,7 @@ ServiceStepMetricNameEnum:
   $ref: ./enums/ServiceStepMetricName.yaml
 OrganizationJobAutoDeployRequest:
   $ref: ./OrganizationJobAutoDeployRequest.yaml
+RegistryMirroringModeEnum:
+  $ref: ./enums/RegistryMirroringMode.yaml
+
 
