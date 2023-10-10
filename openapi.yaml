@@ -10637,7 +10637,6 @@ components:
               description: 'the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType'
             kubernetes:
               $ref: '#/components/schemas/KubernetesEnum'
-              default: MANAGED
             cpu:
               type: integer
               example: 10000
@@ -10988,7 +10987,6 @@ components:
           description: 'the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType'
         kubernetes:
           $ref: '#/components/schemas/KubernetesEnum'
-          default: MANAGED
         production:
           type: boolean
           description: specific flag to indicate that this cluster is a production one
@@ -11185,6 +11183,7 @@ components:
           deprecated: true
     Commit:
       type: object
+      nullable: true
       required:
         - git_commit_id
         - created_at
@@ -12914,13 +12913,10 @@ components:
             service_id:
               type: string
               format: uuid
-              description: present only for `BUILT_IN` variable
             service_name:
               type: string
-              description: present only for `BUILT_IN` variable
             service_type:
               $ref: '#/components/schemas/LinkedServiceTypeEnum'
-              description: present only for `BUILT_IN` variable
             owned_by:
               type: string
               description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
@@ -13174,10 +13170,8 @@ components:
       properties:
         readiness_probe:
           $ref: '#/components/schemas/Probe'
-          nullable: true
         liveness_probe:
           $ref: '#/components/schemas/Probe'
-          nullable: true
     Instance:
       type: object
       properties:
@@ -13244,7 +13238,6 @@ components:
               format: email
             role:
               $ref: '#/components/schemas/InviteMemberRoleEnum'
-              description: deprecated
             invitation_link:
               type: string
               format: uri
@@ -13271,7 +13264,6 @@ components:
           type: string
         role:
           $ref: '#/components/schemas/InviteMemberRoleEnum'
-          description: deprecated
         role_id:
           type: string
           format: uuid
@@ -13848,7 +13840,6 @@ components:
               type: string
             commit:
               $ref: '#/components/schemas/Commit'
-              nullable: true
             schedule:
               type: object
               properties:
@@ -13882,6 +13873,7 @@ components:
       enum:
         - K3S
         - MANAGED
+      default: MANAGED
     Link:
       type: object
       properties:
@@ -13914,9 +13906,7 @@ components:
             $ref: '#/components/schemas/Link'
     LinkedServiceTypeEnum:
       type: string
-      description: |
-        type of the service (application, database, job, gateway...)  
-        present only for `BUILT_IN` variable
+      description: 'type of the service (application, database, job, gateway...)'
       enum:
         - APPLICATION
         - CONTAINER
@@ -14014,7 +14004,6 @@ components:
               description: last time the user was connected
             role:
               $ref: '#/components/schemas/InviteMemberRoleEnum'
-              description: deprecated
             role_name:
               type: string
               description: the role linked to the user
@@ -14583,16 +14572,12 @@ components:
         target_name:
           type: string
         target_type:
-          type: string
           $ref: '#/components/schemas/OrganizationEventTargetType'
         sub_target_type:
-          type: string
-          nullable: true
           $ref: '#/components/schemas/OrganizationEventSubTargetType'
         change:
           type: string
         origin:
-          type: string
           $ref: '#/components/schemas/OrganizationEventOrigin'
         triggered_by:
           type: string
@@ -14651,6 +14636,7 @@ components:
     OrganizationEventSubTargetType:
       type: string
       description: Type of the organization event
+      nullable: true
       enum:
         - ADVANCED_SETTINGS
         - API_TOKEN
@@ -14926,6 +14912,7 @@ components:
         - UDP
     Probe:
       type: object
+      nullable: true
       properties:
         type:
           type: object
@@ -15212,13 +15199,10 @@ components:
             service_id:
               type: string
               format: uuid
-              description: present only for `BUILT_IN` variable
             service_name:
               type: string
-              description: present only for `BUILT_IN` variable
             service_type:
               $ref: '#/components/schemas/LinkedServiceTypeEnum'
-              description: present only for `BUILT_IN` variable
             owned_by:
               type: string
               description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
@@ -15727,13 +15711,12 @@ components:
             service_id:
               type: string
               format: uuid
-              description: The id of the service referenced by this variable. present only for `BUILT_IN` variable
+              description: The id of the service referenced by this variable.
             service_name:
               type: string
-              description: The name of the service referenced by this variable. present only for `BUILT_IN` variable
+              description: The name of the service referenced by this variable.
             service_type:
               $ref: '#/components/schemas/LinkedServiceTypeEnum'
-              description: present only for `BUILT_IN` variable
             owned_by:
               type: string
               description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
