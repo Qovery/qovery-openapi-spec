@@ -64,33 +64,9 @@ allOf:
         type: object
         properties:
           image:
-            type: object
-            nullable: true
-            required:
-              - image_name
-              - tag
-              - registry_id
-              - registry
-            properties:
-              image_name:
-                type: string
-                description: |
-                  The image name pattern differs according to chosen container registry provider:  
-                  * `ECR`: `repository`
-                  * `SCALEWAY_CR`: `namespace/image`
-                  * `DOCKER_HUB`: `image` or `repository/image`
-                  * `PUBLIC_ECR`: `registry_alias/repository`
-              tag:
-                type: string
-                description: tag of the image container
-              registry_id:
-                type: string
-                description: tag of the image container
-              registry:
-                $ref: '../ContainerRegistryProviderDetailsResponse.yaml'
+            $ref: '../ContainerSource.yaml'
           docker:
             type: object
-            nullable: true
             properties:
               dockerfile_path:
                 type: string
@@ -98,6 +74,9 @@ allOf:
                 nullable: true
               git_repository:
                 $ref: '../ApplicationGitRepositoryResponse.yaml'
+        oneOf:
+          - required: [image]
+          - required: [docker]
       healthchecks:
         $ref: '../Healthcheck.yaml'
       schedule:
