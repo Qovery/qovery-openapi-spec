@@ -15,13 +15,12 @@ allOf:
       service_id:
         type: string
         format: uuid
-        description: The id of the service referenced by this variable. present only for `BUILT_IN` variable
+        description: The id of the service referenced by this variable.
       service_name:
         type: string
-        description: The name of the service referenced by this variable. present only for `BUILT_IN` variable
+        description: The name of the service referenced by this variable.
       service_type:
         $ref: '../enums/LinkedServiceType.yaml'
-        description: present only for `BUILT_IN` variable
       owned_by:
         type: string
         description: "Entity that created/own the variable (i.e: Qovery, Doppler)"
