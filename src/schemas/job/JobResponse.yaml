@@ -4,7 +4,6 @@ allOf:
     required:
       - environment
       - name
-      - image_name
       - tag
       - auto_preview
       - cpu
@@ -67,6 +66,11 @@ allOf:
           image:
             type: object
             nullable: true
+            required:
+              - image_name
+              - tag
+              - registry_id
+              - registry
             properties:
               image_name:
                 type: string
