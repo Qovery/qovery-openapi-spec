@@ -1,13 +1,11 @@
 allOf:
   - $ref: './BaseResponse.yaml'
   - $ref: './ServiceStorageResponse.yaml'
+  - $ref: './ContainerSource.yaml'
   - type: object
     required:
       - environment
-      - registry
       - name
-      - image_name
-      - tag
       - auto_preview
       - cpu
       - memory
@@ -19,8 +17,6 @@ allOf:
     properties:
       environment:
         $ref: './ReferenceObject.yaml'
-      registry:
-        $ref: './ContainerRegistryProviderDetailsResponse.yaml'
       maximum_cpu:
         type: integer
         description: Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
@@ -35,12 +31,6 @@ allOf:
       description:
         type: string
         description: give a description to this container
-      image_name:
-        type: string
-        description: name of the image container
-      tag:
-        type: string
-        description: tag of the image container
       arguments:
         type: array
         items:

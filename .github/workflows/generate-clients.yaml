@@ -18,7 +18,7 @@ jobs:
       matrix:
         include:
           - language: go
-            version: 6.0.1
+            version: 7.0.1
             target-branch: master
             deploy-ssh-key: SSH_DEPLOY_KEY_GO
             deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_GO
