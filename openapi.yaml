@@ -11181,6 +11181,8 @@ components:
           type: integer
           default: -1
           deprecated: true
+        registry.mirroring_mode:
+          $ref: '#/components/schemas/RegistryMirroringModeEnum'
     Commit:
       type: object
       nullable: true
@@ -15884,6 +15886,16 @@ components:
         tag:
           type: string
           description: the new tag to deploy
+    RegistryMirroringModeEnum:
+      type: string
+      default: SERVICE
+      enum:
+        - CLUSTER
+        - SERVICE
+      description: |
+        Mirroring mode when deploying a service from a container registry
+        - CLUSTER: This is not available on Scaleway. Images within the mirroring registry are organized by "Qovery cluster", meaning that the application deployed on the same cluster are all mirrored on the same repository.
+        - SERVICE: Images within the mirroring registry are organized by "Qovery service", each service has its own repository
   responses:
     '204':
       description: no content
