@@ -11633,13 +11633,11 @@ components:
       allOf:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ServiceStorage'
+        - $ref: '#/components/schemas/ContainerSource'
         - type: object
           required:
             - environment
-            - registry
             - name
-            - image_name
-            - tag
             - auto_preview
             - cpu
             - memory
@@ -11651,8 +11649,6 @@ components:
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
-            registry:
-              $ref: '#/components/schemas/ContainerRegistryProviderDetailsResponse'
             maximum_cpu:
               type: integer
               description: Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
@@ -11667,12 +11663,6 @@ components:
             description:
               type: string
               description: give a description to this container
-            image_name:
-              type: string
-              description: name of the image container
-            tag:
-              type: string
-              description: tag of the image container
             arguments:
               type: array
               items:
@@ -11723,6 +11713,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ContainerResponse'
+    ContainerSource:
+      type: object
+      required:
+        - image_name
+        - tag
+        - registry
+      properties:
+        image_name:
+          type: string
+          description: |
+            The image name pattern differs according to chosen container registry provider:
+            * `ECR`: `repository`
+            * `SCALEWAY_CR`: `namespace/image`
+            * `DOCKER_HUB`: `image` or `repository/image`
+            * `PUBLIC_ECR`: `registry_alias/repository`
+        tag:
+          type: string
+          description: tag of the image container
+        registry_id:
+          type: string
+          description: tag of the image container
+        registry:
+          $ref: '#/components/schemas/ContainerRegistryProviderDetailsResponse'
     Cost:
       type: object
       required:
@@ -13568,6 +13581,7 @@ components:
             - maximum_cpu
             - maximum_memory
             - healthchecks
+            - source
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -13616,43 +13630,23 @@ components:
               description: Port where to run readiness and liveliness probes checks. The port will not be exposed externally
               default: null
             source:
-              type: object
-              properties:
-                image:
-                  type: object
-                  nullable: true
-                  required:
-                    - image_name
-                    - tag
-                    - registry_id
-                    - registry
+              nullable: false
+              oneOf:
+                - type: object
                   properties:
-                    image_name:
-                      type: string
-                      description: |
-                        The image name pattern differs according to chosen container registry provider:  
-                        * `ECR`: `repository`
-                        * `SCALEWAY_CR`: `namespace/image`
-                        * `DOCKER_HUB`: `image` or `repository/image`
-                        * `PUBLIC_ECR`: `registry_alias/repository`
-                    tag:
-                      type: string
-                      description: tag of the image container
-                    registry_id:
-                      type: string
-                      description: tag of the image container
-                    registry:
-                      $ref: '#/components/schemas/ContainerRegistryProviderDetailsResponse'
-                docker:
-                  type: object
-                  nullable: true
+                    image:
+                      $ref: '#/components/schemas/ContainerSource'
+                - type: object
                   properties:
-                    dockerfile_path:
-                      type: string
-                      description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-                      nullable: true
-                    git_repository:
-                      $ref: '#/components/schemas/ApplicationGitRepository'
+                    docker:
+                      type: object
+                      properties:
+                        dockerfile_path:
+                          type: string
+                          description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+                          nullable: true
+                        git_repository:
+                          $ref: '#/components/schemas/ApplicationGitRepository'
             healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             schedule:
