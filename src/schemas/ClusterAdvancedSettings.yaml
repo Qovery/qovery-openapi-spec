@@ -85,3 +85,5 @@ properties:
     type: integer
     default: -1
     deprecated: true
+  registry.mirroring_mode:
+    $ref: './enums/RegistryMirroringMode.yaml'
