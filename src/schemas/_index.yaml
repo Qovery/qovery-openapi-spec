@@ -172,6 +172,8 @@ ContainerResponse:
   $ref: ./ContainerResponse.yaml
 ContainerResponseList:
   $ref: ./ContainerResponseList.yaml
+ContainerSource:
+  $ref: ./ContainerSource.yaml
 Cost:
   $ref: ./CostResponse.yaml
 CostRange:
