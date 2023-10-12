@@ -3,4 +3,6 @@ properties:
   environment:
     $ref: '../schemas/EnvironmentStatus.yaml'
   stages:
-    $ref: '../schemas/DeploymentStageWithServiceStatusesList.yaml'
+    type: array
+    items:
+      $ref: '../schemas/DeploymentStageWithServicesStatuses.yaml'
