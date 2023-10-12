@@ -12894,7 +12894,9 @@ components:
         environment:
           $ref: '#/components/schemas/EnvironmentStatus'
         stages:
-          $ref: '#/components/schemas/DeploymentStageWithServiceStatusesList'
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentStageWithServicesStatuses'
     EnvironmentStatusList:
       type: object
       properties:
@@ -13395,13 +13397,6 @@ components:
             service_type:
               type: string
               description: 'type of the service (i.e APPLICATION, JOB, DATABASE, ...)'
-    DeploymentStageWithServiceStatusesList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentStageWithServicesStatuses'
     DeploymentStageWithServicesStatuses:
       type: object
       properties:
