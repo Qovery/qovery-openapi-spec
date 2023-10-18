@@ -9678,6 +9678,8 @@ components:
         - type: object
           required:
             - healthchecks
+            - name
+            - environment
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -12362,6 +12364,7 @@ components:
             - cloud_provider
             - mode
             - cluster_id
+            - project
           properties:
             name:
               type: string
