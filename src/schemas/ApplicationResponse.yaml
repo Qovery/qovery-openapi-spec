@@ -4,6 +4,8 @@ allOf:
   - type: object
     required:
       - healthchecks
+      - name
+      - environment
     properties:
       environment:
         $ref: './ReferenceObject.yaml'
