@@ -6,6 +6,12 @@ get:
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
     - in: query
+      name: gitTokenId
+      schema:
+        type: string
+        format: uuid
+      description: The git token id that must be used for the application
+    - in: query
       name: name
       schema:
         type: string
