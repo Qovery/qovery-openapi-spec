@@ -421,6 +421,33 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/gitToken':
+    get:
+      summary: List organization git tokens
+      description: List organization git tokens
+      operationId: listOrganizationGitTokens
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Main Calls
+      responses:
+        '200':
+          description: List organization git tokens
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitTokenResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/member':
     get:
       summary: Get organization members
@@ -1713,6 +1740,12 @@ paths:
       operationId: getOrganizationGithubRepositories
       parameters:
         - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: gitTokenId
+          schema:
+            type: string
+            format: uuid
+          description: The git token id that must be used for the application
       tags:
         - Organization Account Git Repositories
       responses:
@@ -1733,6 +1766,12 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - in: query
+          name: gitTokenId
+          schema:
+            type: string
+            format: uuid
+          description: The git token id that must be used for the application
+        - in: query
           name: name
           schema:
             type: string
@@ -1752,6 +1791,12 @@ paths:
       operationId: getOrganizationGitlabRepositories
       parameters:
         - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: gitTokenId
+          schema:
+            type: string
+            format: uuid
+          description: The git token id that must be used for the application
       tags:
         - Organization Account Git Repositories
       responses:
@@ -1772,6 +1817,12 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - in: query
+          name: gitTokenId
+          schema:
+            type: string
+            format: uuid
+          description: The git token id that must be used for the application
+        - in: query
           name: name
           schema:
             type: string
@@ -1791,6 +1842,12 @@ paths:
       operationId: getOrganizationBitbucketRepositories
       parameters:
         - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: gitTokenId
+          schema:
+            type: string
+            format: uuid
+          description: The git token id that must be used for the application
       tags:
         - Organization Account Git Repositories
       responses:
@@ -1810,6 +1867,12 @@ paths:
         - Organization Account Git Repositories
       parameters:
         - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: gitTokenId
+          schema:
+            type: string
+            format: uuid
+          description: The git token id that must be used for the application
         - in: query
           name: name
           schema:
@@ -10080,6 +10143,11 @@ components:
           type: string
           default: /
           description: indicates the root path of the application.
+        git_token_id:
+          type: string
+          format: uuid
+          description: The git token id on Qovery side
+          nullable: true
     ApplicationNetwork:
       type: object
       properties:
@@ -13184,6 +13252,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GitRepository'
+    GitTokenResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+            - type
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            type:
+              $ref: '#/components/schemas/GitProviderEnum'
     Healthcheck:
       type: object
       nullable: false
