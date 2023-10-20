@@ -19,3 +19,8 @@ properties:
     type: string
     default: /
     description: indicates the root path of the application.
+  git_token_id:
+    type: string
+    format: uuid
+    description: The git token id on Qovery side
+    nullable: true
