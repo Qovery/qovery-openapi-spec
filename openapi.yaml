@@ -436,12 +436,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/GitTokenResponse'
+                $ref: '#/components/schemas/GitTokenResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -13266,6 +13261,13 @@ components:
               type: string
             type:
               $ref: '#/components/schemas/GitProviderEnum'
+    GitTokenResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitTokenResponse'
     Healthcheck:
       type: object
       nullable: false
