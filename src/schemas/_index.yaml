@@ -358,6 +358,8 @@ GitRepositoryBranchResponseList:
   $ref: ./GitRepositoryBranchResponseList.yaml
 GitRepositoryResponseList:
   $ref: ./GitRepositoryResponseList.yaml
+GitTokenResponse:
+  $ref: ./GitTokenResponse.yaml
 Healthcheck:
   $ref: ./Healthcheck.yaml
 Instance:

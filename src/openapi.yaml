@@ -218,6 +218,8 @@ paths:
     $ref: './resources/OrganizationApiTokenRef.yaml'
   /organization/{organizationId}/availableRole:
     $ref: './resources/OrganizationAvailableRole.yaml'
+  /organization/{organizationId}/gitToken:
+    $ref: './resources/GitToken.yaml'
   /organization/{organizationId}/member:
     $ref: './resources/OrganizationMember.yaml'
   /organization/{organizationId}/inviteMember:

@@ -1,0 +1,21 @@
+get:
+  summary: 'List organization git tokens'
+  description: 'List organization git tokens'
+  operationId: listOrganizationGitTokens
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Organization Main Calls
+  responses:
+    '200':
+      description: 'List organization git tokens'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/GitTokenResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
