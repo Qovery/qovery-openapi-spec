@@ -360,6 +360,8 @@ GitRepositoryResponseList:
   $ref: ./GitRepositoryResponseList.yaml
 GitTokenResponse:
   $ref: ./GitTokenResponse.yaml
+GitTokenResponseList:
+  $ref: ./GitTokenResponseList.yaml
 Healthcheck:
   $ref: ./Healthcheck.yaml
 Instance:
