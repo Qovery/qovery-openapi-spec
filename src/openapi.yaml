@@ -55,6 +55,19 @@ tags:
   - name: Job Registry
   - name: Job Secret
   - name: Jobs
+  - name: Helm
+  - name: Helm Actions
+  - name: Helm Configuration
+  - name: Helm Database
+  - name: Helm Deployment Restriction
+  - name: Helm Deployment History
+  - name: Helm Environment Variable
+  - name: Helm Logs
+  - name: Helm Main Calls
+  - name: Helm Metrics
+  - name: Helm Registry
+  - name: Helm Secret
+  - name: Helms
   - name: Backups
   - name: Billing
   - name: Cloud Provider
@@ -191,6 +204,17 @@ x-tagGroups:
       - Job Deployment History
       - Job Environment Variable
       - Job Secret
+  - name: Helm
+    tags:
+      - Helm Main Calls
+      - Helm Actions
+      - Helm Configuration
+      - Helm Custom Domain
+      - Helm Deployment Restriction
+      - Helm Metrics
+      - Helm Deployment History
+      - Helm Environment Variable
+      - Helm Secret
   - name: Account
     tags:
       - Account Info
@@ -498,6 +522,8 @@ paths:
     $ref: './resources/DefaultContainerAdvancedSettings.yaml'
   /defaultJobAdvancedSettings:
     $ref: './resources/DefaultJobAdvancedSettings.yaml'
+  /defaultHelmAdvancedSettings:
+    $ref: './resources/DefaultHelmAdvancedSettings.yaml'
   /application/{applicationId}:
     $ref: './resources/Application.yaml'
   /application/{applicationId}/status:
@@ -694,6 +720,30 @@ paths:
     $ref: './resources/AccountRewardClaim.yaml'
   /admin/userSignUp:
     $ref: './resources/UserSignUp.yaml'
+  /environment/{environmentId}/helm:
+    $ref: './resources/helm/EnvironmentHelm.yaml'
+  /environment/{environmentId}/helm/status:
+    $ref: './resources/helm/EnvironmentHelmStatus.yaml'
+  /helm/{helmId}:
+    $ref: './resources/helm/Helm.yaml'
+  /helm/{helmId}/advancedSettings:
+    $ref: './resources/helm/HelmAdvancedSettings.yaml'
+  /helm/{helmId}/deploy:
+    $ref: './resources/helm/HelmDeploy.yaml'
+  /helm/{helmId}/restart:
+    $ref: './resources/helm/HelmRestart.yaml'
+  /helm/{helmId}/redeploy:
+    $ref: './resources/helm/HelmRedeploy.yaml'
+  /helm/{helmId}/stop:
+    $ref: './resources/helm/HelmStop.yaml'
+  /helm/{helmId}/status:
+    $ref: './resources/helm/HelmStatus.yaml'
+  /helm/{helmId}/deploymentHistory:
+    $ref: './resources/helm/HelmDeploymentHistory.yaml'
+  /helm/{helmId}/deploymentRestriction:
+    $ref: './resources/helm/HelmDeploymentRestriction.yaml'
+  /helm/{helmId}/deploymentRestriction/{deploymentRestrictionId}:
+    $ref: './resources/helm/HelmDeploymentRestrictionRef.yaml'
   /environment/{environmentId}/job:
     $ref: './resources/job/EnvironmentJob.yaml'
   /environment/{environmentId}/job/status:

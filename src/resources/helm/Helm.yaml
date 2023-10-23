@@ -1,0 +1,68 @@
+get:
+  summary: 'Get helm by ID'
+  operationId: getHelm
+  parameters:
+    - $ref: '../../parameters/path/helmId.yaml'
+  tags:
+    - Helm Main Calls
+  responses:
+    '200':
+      description: 'Get helm by ID'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/helm/HelmResponse.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+put:
+  summary: 'Edit helm'
+  description: |
+    - To edit the helm you must have the admin permission.
+  operationId: editHelm
+  parameters:
+    - $ref: '../../parameters/path/helmId.yaml'
+  tags:
+    - Helm Main Calls
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/helm/HelmRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit helm'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/helm/HelmResponse.yaml'
+    '400':
+      $ref: '../../responses/BadRequest.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+    '409':
+      description: Helm name within the environment is already taken
+delete:
+  summary: 'Delete helm'
+  description: 'To delete the helm you must have the admin permission'
+  operationId: deleteHelm
+  parameters:
+    - $ref: '../../parameters/path/helmId.yaml'
+  tags:
+    - Helm Main Calls
+  responses:
+    '204':
+      $ref: '../../responses/Deleted.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'

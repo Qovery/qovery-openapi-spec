@@ -1,0 +1,7 @@
+name: helmId
+in: path
+description: Helm ID
+required: true
+schema:
+  type: string
+  format: uuid

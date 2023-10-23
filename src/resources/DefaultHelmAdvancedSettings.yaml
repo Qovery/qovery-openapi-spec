@@ -1,0 +1,16 @@
+get:
+  summary: 'List default helm advanced settings'
+  operationId: getDefaultHelmAdvancedSettings
+  tags:
+    - Helm
+  responses:
+    '200':
+      description: 'Default helm advanced settings'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/helm/HelmAdvancedSettings.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'

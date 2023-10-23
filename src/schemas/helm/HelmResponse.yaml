@@ -1,0 +1,116 @@
+allOf:
+  - $ref: '../BaseResponse.yaml'
+  - type: object
+    required:
+      - environment
+      - name
+      - tag
+      - auto_preview
+      - auto_deploy
+      - source
+    properties:
+      environment:
+        $ref: '../ReferenceObject.yaml'
+      name:
+        type: string
+        description: name is case insensitive
+      description:
+        type: string
+      auto_preview:
+        type: boolean
+        description: |
+          Indicates if the 'environment preview option' is enabled.  
+          If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.  
+          If not specified, it takes the value of the `auto_preview` property from the associated environment.
+      auto_deploy:
+        type: boolean
+        description: |
+          Specify if the service will be automatically updated after receiving a new image tag or a new commit according to the source type. 
+      source:
+        type: object
+        properties:
+          git:
+            type: object
+            nullable: true
+            properties:
+              git_repository:
+                $ref: '../ApplicationGitRepositoryRequest.yaml'
+          repository:
+            type: object
+            nullable: true
+            properties:
+              repository:
+                type: string
+                format: UUID
+                description: The id of the helm repository
+                nullable: true
+              chart_name:
+                type: string
+                description: The name of the chart in the repository
+              chart_version:
+                type: string
+                description: The version of the chart to use
+      arguments:
+        type: array
+        description: The extra arguments to pass to helm
+        items:
+          type: string
+      allow_cluster_wide_resources:
+        type: boolean
+        default: false
+        description: |
+          If we should allow the chart to deploy object outside his specified namespace.
+          Setting this flag to true, requires special rights
+      values_override:
+        type: object
+        description: |
+          Specify helm values you want to set or override
+        properties:
+          set:
+            type: array
+            items:
+              type: array
+              items:
+                type: string
+          set_string:
+            type: array
+            items:
+              type: array
+              items:
+                type: string
+          set_json:
+            type: array
+            items:
+              type: array
+              items:
+                type: string
+          file:
+            type: object
+            nullable: true
+            properties:
+              raw:
+                type: object
+                nullable: true
+                properties:
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: The name of the value file
+                        content:
+                          type: string
+                          description: The content of the value file
+              git:
+                type: object
+                nullable: true
+                properties:
+                  git_repository:
+                    $ref: '../ApplicationGitRepositoryRequest.yaml'
+                  paths:
+                    type: array
+                    description: List of path inside your git repository to locate values file. Must start by a /
+                    items:
+                      type: string

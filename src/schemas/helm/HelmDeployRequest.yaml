@@ -1,0 +1,12 @@
+type: object
+properties:
+  version:
+    type: string
+    description: |
+      version of the chart to deploy.
+      Cannot be set if `git_commit_id` is defined
+  git_commit_id:
+    type: string
+    description: |
+      Commit to deploy
+      Cannot be set if `version` is defined
