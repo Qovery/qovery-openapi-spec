@@ -418,6 +418,28 @@ JobForceEvent:
   $ref: ./enums/JobForceEvent.yaml
 DeploymentHistoryJobResponse:
   $ref: ./job/DeploymentHistoryJobResponse.yaml
+HelmRequest:
+  $ref: ./helm/HelmRequest.yaml
+HelmResponse:
+  $ref: ./helm/HelmResponse.yaml
+HelmResponseList:
+  $ref: ./helm/HelmResponseList.yaml
+HelmAdvancedSettings:
+  $ref: ./helm/HelmAdvancedSettings.yaml
+#HelmDeployRequest:
+#  $ref: ./helm/HelmDeployRequest.yaml
+HelmDeploymentRestrictionRequest:
+  $ref: ./helm/HelmDeploymentRestrictionRequest.yaml
+HelmDeploymentRestrictionResponse:
+  $ref: ./helm/HelmDeploymentRestrictionResponse.yaml
+HelmDeploymentRestrictionResponseList:
+  $ref: ./helm/HelmDeploymentRestrictionResponseList.yaml
+#HelmScheduleEvent:
+#  $ref: ./enums/HelmScheduleEvent.yaml
+HelmForceEvent:
+  $ref: ./enums/HelmForceEvent.yaml
+#DeploymentHistoryHelmResponse:
+#  $ref: ./helm/DeploymentHistoryHelmResponse.yaml
 Key:
   $ref: ./Key.yaml
 KubernetesEnum:
@@ -700,5 +722,3 @@ OrganizationJobAutoDeployRequest:
   $ref: ./OrganizationJobAutoDeployRequest.yaml
 RegistryMirroringModeEnum:
   $ref: ./enums/RegistryMirroringMode.yaml
-
-

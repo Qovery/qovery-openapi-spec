@@ -78,3 +78,5 @@ webhookId:
   $ref: ./path/webhookId.yaml
 variableId:
   $ref: ./path/variableId.yaml
+helmId:
+  $ref: ./path/helmId.yaml
