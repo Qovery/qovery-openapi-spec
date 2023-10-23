@@ -55,6 +55,19 @@ tags:
   - name: Job Registry
   - name: Job Secret
   - name: Jobs
+  - name: Helm
+  - name: Helm Actions
+  - name: Helm Configuration
+  - name: Helm Database
+  - name: Helm Deployment Restriction
+  - name: Helm Deployment History
+  - name: Helm Environment Variable
+  - name: Helm Logs
+  - name: Helm Main Calls
+  - name: Helm Metrics
+  - name: Helm Registry
+  - name: Helm Secret
+  - name: Helms
   - name: Backups
   - name: Billing
   - name: Cloud Provider
@@ -191,6 +204,17 @@ x-tagGroups:
       - Job Deployment History
       - Job Environment Variable
       - Job Secret
+  - name: Helm
+    tags:
+      - Helm Main Calls
+      - Helm Actions
+      - Helm Configuration
+      - Helm Custom Domain
+      - Helm Deployment Restriction
+      - Helm Metrics
+      - Helm Deployment History
+      - Helm Environment Variable
+      - Helm Secret
   - name: Account
     tags:
       - Account Info
@@ -5157,6 +5181,23 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+  /defaultHelmAdvancedSettings:
+    get:
+      summary: List default helm advanced settings
+      operationId: getDefaultHelmAdvancedSettings
+      tags:
+        - Helm
+      responses:
+        '200':
+          description: Default helm advanced settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmAdvancedSettings'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
   '/application/{applicationId}':
     get:
       summary: Get application by ID
@@ -8234,6 +8275,490 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/helm':
+    get:
+      summary: List helms
+      operationId: listHelms
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1job/get/parameters/1'
+      tags:
+        - Helms
+      responses:
+        '200':
+          description: List helms
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a helm
+      operationId: createHelm
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Helms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmRequest'
+      responses:
+        '201':
+          description: Create helm
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Helm name within the environment is already taken
+  '/environment/{environmentId}/helm/status':
+    get:
+      summary: List all environment helm statuses
+      description: Returns a list of helms with only their id and status.
+      operationId: getEnvironmentHelmStatus
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Helms
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferenceObjectStatusResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/helm/{helmId}':
+    get:
+      summary: Get helm by ID
+      operationId: getHelm
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Main Calls
+      responses:
+        '200':
+          description: Get helm by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit helm
+      description: |
+        - To edit the helm you must have the admin permission.
+      operationId: editHelm
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmRequest'
+      responses:
+        '200':
+          description: Edit helm
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Helm name within the environment is already taken
+    delete:
+      summary: Delete helm
+      description: To delete the helm you must have the admin permission
+      operationId: deleteHelm
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Main Calls
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/helm/{helmId}/advancedSettings':
+    get:
+      summary: Get advanced settings
+      description: Get list and values of the advanced settings of the helm.
+      operationId: getHelmAdvancedSettings
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Configuration
+      responses:
+        '200':
+          description: Advanced settings list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmAdvancedSettings'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit advanced settings
+      description: Edit advanced settings by returning table of advanced settings.
+      operationId: editHelmAdvancedSettings
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Configuration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmAdvancedSettings'
+      responses:
+        '201':
+          description: Updated advanced settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmAdvancedSettings'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/helm/{helmId}/deploy':
+    post:
+      summary: Deploy helm
+      description: You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
+      operationId: deployHelm
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+        - name: forceEvent
+          in: query
+          required: false
+          description: |
+            When filled, it indicates the target event to be deployed.  
+            If the concerned helm hasn't the target event provided, the helm won't be deployed.
+          schema:
+            $ref: '#/components/schemas/HelmForceEvent'
+      tags:
+        - Helm Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                version:
+                  type: string
+                  description: |
+                    version of the chart to deploy.
+                    Cannot be set if `git_commit_id` is defined
+                git_commit_id:
+                  type: string
+                  description: |
+                    Commit to deploy
+                    Cannot be set if `version` is defined
+      responses:
+        '202':
+          description: Deploy helm
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/helm/{helmId}/restart':
+    post:
+      summary: Deprecated - Restart helm
+      description: '**Deprecated** - Please use the "Redeploy helm" endpoint now'
+      operationId: restartHelm
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+        - name: forceEvent
+          in: query
+          required: false
+          description: |
+            When filled, it indicates the target event to be deployed.  
+            If the concerned helm hasn't the target event provided, the helm won't be deployed.
+          schema:
+            $ref: '#/components/schemas/HelmForceEvent'
+      tags:
+        - Helm Actions
+      responses:
+        '202':
+          description: Helm restart has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/helm/{helmId}/redeploy':
+    post:
+      summary: Redeploy helm
+      operationId: redeployHelm
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+        - name: forceEvent
+          in: query
+          required: false
+          description: |
+            When filled, it indicates the target event to be deployed.  
+            If the concerned helm hasn't the target event provided, the helm won't be deployed.
+          schema:
+            $ref: '#/components/schemas/HelmForceEvent'
+      tags:
+        - Helm Actions
+      responses:
+        '202':
+          description: Helm redeploy has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/helm/{helmId}/stop':
+    post:
+      summary: Stop helm
+      operationId: stopHelm
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Actions
+      responses:
+        '202':
+          description: Helm stop has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Helm is already stopped or an operation is in progress
+  '/helm/{helmId}/status':
+    get:
+      summary: Get helm status
+      operationId: getHelmStatus
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Main Calls
+      responses:
+        '200':
+          description: Get status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/helm/{helmId}/deploymentHistory':
+    get:
+      summary: List helm deployments
+      description: Returns the 20 last helm deployments
+      operationId: listHelmDeploymentHistory
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Deployment History
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginationData'
+                  - type: object
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          allOf:
+                            - $ref: '#/components/schemas/Base'
+                            - type: object
+                              properties:
+                                name:
+                                  type: string
+                                  description: name of the helm
+                                status:
+                                  $ref: '#/components/schemas/StateEnum'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/helm/{helmId}/deploymentRestriction':
+    get:
+      summary: Get helm deployment restrictions
+      description: Get helm deployment restrictions
+      operationId: getHelmDeploymentRestrictions
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Deployment Restriction
+      responses:
+        '200':
+          description: Get helm deployment restrictions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmDeploymentRestrictionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a helm deployment restriction
+      description: Create a helm deployment restriction
+      operationId: createHelmDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Deployment Restriction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmDeploymentRestrictionRequest'
+      responses:
+        '201':
+          description: Added an helm deployment restriction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmDeploymentRestrictionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '409':
+          description: A Helm deployment restriction with same properties already exists for this helm
+  '/helm/{helmId}/deploymentRestriction/{deploymentRestrictionId}':
+    put:
+      summary: Edit a helm deployment restriction
+      description: Edit a helm deployment restriction
+      operationId: editHelmDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+        - $ref: '#/components/parameters/deploymentRestrictionId'
+      tags:
+        - Helm Deployment Restriction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmDeploymentRestrictionRequest'
+      responses:
+        '200':
+          description: Edit a helm deployment restriction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmDeploymentRestrictionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a helm deployment restriction
+      description: Delete a helm deployment restriction
+      operationId: deleteHelmDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+        - $ref: '#/components/parameters/deploymentRestrictionId'
+      tags:
+        - Helm Deployment Restriction
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/job':
     get:
       summary: List jobs
@@ -9677,6 +10202,14 @@ components:
       name: variableId
       in: path
       description: Variable ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    helmId:
+      name: helmId
+      in: path
+      description: Helm ID
       required: true
       schema:
         type: string
@@ -13943,6 +14476,279 @@ components:
                 type: string
             entrypoint:
               type: string
+    HelmRequest:
+      allOf:
+        - type: object
+          required:
+            - name
+            - healthchecks
+          properties:
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+            timeout_sec:
+              type: integer
+              minimum: 0
+              default: 600
+              description: |
+                Maximum number of seconds allowed for helm to run before killing it and mark it as failed
+            auto_preview:
+              type: boolean
+              nullable: true
+              description: |
+                Indicates if the 'environment preview option' is enabled.  
+                If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called or when a new commit is updated.
+                If not specified, it takes the value of the `auto_preview` property from the associated environment.
+            auto_deploy:
+              type: boolean
+              description: |
+                Specify if the helm will be automatically updated after receiving a new image tag or a new commit according to the source type. 
+            source:
+              type: object
+              properties:
+                git:
+                  type: object
+                  nullable: true
+                  properties:
+                    git_repository:
+                      $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+                repository:
+                  type: object
+                  nullable: true
+                  properties:
+                    repository:
+                      type: string
+                      format: UUID
+                      description: The id of the helm repository
+                      nullable: true
+                    chart_name:
+                      type: string
+                      description: The name of the chart in the repository
+                    chart_version:
+                      type: string
+                      description: The version of the chart to use
+            arguments:
+              type: array
+              description: The extra arguments to pass to helm
+              items:
+                type: string
+            allow_cluster_wide_resources:
+              type: boolean
+              default: false
+              description: |
+                If we should allow the chart to deploy object outside his specified namespace.
+                Setting this flag to true, requires special rights
+            values_override:
+              type: object
+              description: |
+                Specify helm values you want to set or override
+              properties:
+                set:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                set_string:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                set_json:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                file:
+                  type: object
+                  nullable: true
+                  properties:
+                    raw:
+                      type: object
+                      nullable: true
+                      properties:
+                        values:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                description: The name of the value file
+                              content:
+                                type: string
+                                description: The content of the value file
+                    git:
+                      type: object
+                      nullable: true
+                      properties:
+                        git_repository:
+                          $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+                        paths:
+                          type: array
+                          description: List of path inside your git repository to locate values file. Must start by a /
+                          items:
+                            type: string
+    HelmResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - environment
+            - name
+            - tag
+            - auto_preview
+            - auto_deploy
+            - source
+          properties:
+            environment:
+              $ref: '#/components/schemas/ReferenceObject'
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+            auto_preview:
+              type: boolean
+              description: |
+                Indicates if the 'environment preview option' is enabled.  
+                If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.  
+                If not specified, it takes the value of the `auto_preview` property from the associated environment.
+            auto_deploy:
+              type: boolean
+              description: |
+                Specify if the service will be automatically updated after receiving a new image tag or a new commit according to the source type. 
+            source:
+              type: object
+              properties:
+                git:
+                  type: object
+                  nullable: true
+                  properties:
+                    git_repository:
+                      $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+                repository:
+                  type: object
+                  nullable: true
+                  properties:
+                    repository:
+                      type: string
+                      format: UUID
+                      description: The id of the helm repository
+                      nullable: true
+                    chart_name:
+                      type: string
+                      description: The name of the chart in the repository
+                    chart_version:
+                      type: string
+                      description: The version of the chart to use
+            arguments:
+              type: array
+              description: The extra arguments to pass to helm
+              items:
+                type: string
+            allow_cluster_wide_resources:
+              type: boolean
+              default: false
+              description: |
+                If we should allow the chart to deploy object outside his specified namespace.
+                Setting this flag to true, requires special rights
+            values_override:
+              type: object
+              description: |
+                Specify helm values you want to set or override
+              properties:
+                set:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                set_string:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                set_json:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                file:
+                  type: object
+                  nullable: true
+                  properties:
+                    raw:
+                      type: object
+                      nullable: true
+                      properties:
+                        values:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                description: The name of the value file
+                              content:
+                                type: string
+                                description: The content of the value file
+                    git:
+                      type: object
+                      nullable: true
+                      properties:
+                        git_repository:
+                          $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+                        paths:
+                          type: array
+                          description: List of path inside your git repository to locate values file. Must start by a /
+                          items:
+                            type: string
+    HelmResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/HelmResponse'
+    HelmAdvancedSettings:
+      type: object
+    HelmDeploymentRestrictionRequest:
+      type: object
+      required:
+        - mode
+        - type
+        - value
+      properties:
+        mode:
+          $ref: '#/components/schemas/DeploymentRestrictionModeEnum'
+        type:
+          $ref: '#/components/schemas/DeploymentRestrictionTypeEnum'
+        value:
+          type: string
+          description: 'For `PATH` restrictions, the value must not start with `/`'
+          example: helm1/src/
+    HelmDeploymentRestrictionResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/HelmDeploymentRestrictionRequest'
+    HelmDeploymentRestrictionResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/HelmDeploymentRestrictionResponse'
+    HelmForceEvent:
+      type: string
+      enum:
+        - DIFF
     Key:
       type: object
       required:
