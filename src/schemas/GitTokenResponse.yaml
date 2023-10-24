@@ -11,3 +11,6 @@ allOf:
         type: string
       type:
         $ref: './enums/GitProvider.yaml'
+      expired_at:
+        type: string
+        format: date
