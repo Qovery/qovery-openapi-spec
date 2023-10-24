@@ -802,8 +802,6 @@ paths:
     $ref: './resources/variable/VariableOverride.yaml'
   /variable/{variableId}:
     $ref: './resources/variable/VariableRef.yaml'
-  #/organization/{organizationId}/job/preview:
-  #/organization/{organizationId}/job/deploy:
 components:
   parameters:
     $ref: './parameters/_index.yaml'
