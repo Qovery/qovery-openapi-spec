@@ -7,3 +7,15 @@ allOf:
         description: name of the helm
       status:
         $ref: '../enums/State.yaml'
+      commit:
+        $ref: '../CommitResponse.yaml'
+      repository:
+        type: object
+        nullable: true
+        description: If the chart source if from a repository, the chart name and its version
+        properties:
+          chart_name:
+            type: string
+          version:
+            type: string
+
