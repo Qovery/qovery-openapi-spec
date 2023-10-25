@@ -1786,16 +1786,16 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - in: query
+          name: name
+          schema:
+            type: string
+          description: The name of the repository where to retrieve the branches
+        - in: query
           name: gitTokenId
           schema:
             type: string
             format: uuid
           description: The git token id that must be used for the application
-        - in: query
-          name: name
-          schema:
-            type: string
-          description: The name of the repository where to retrieve the branches
       responses:
         '200':
           description: Get github repository branches
@@ -1837,16 +1837,16 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - in: query
+          name: name
+          schema:
+            type: string
+          description: The name of the repository to retrieve the branches
+        - in: query
           name: gitTokenId
           schema:
             type: string
             format: uuid
           description: The git token id that must be used for the application
-        - in: query
-          name: name
-          schema:
-            type: string
-          description: The name of the repository to retrieve the branches
       responses:
         '200':
           description: Get gitlab repository branches
@@ -1888,16 +1888,16 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - in: query
+          name: name
+          schema:
+            type: string
+          description: The name of the repository where to retrieve the branches
+        - in: query
           name: gitTokenId
           schema:
             type: string
             format: uuid
           description: The git token id that must be used for the application
-        - in: query
-          name: name
-          schema:
-            type: string
-          description: The name of the repository where to retrieve the branches
       responses:
         '200':
           description: Get bitbucket repository branches
