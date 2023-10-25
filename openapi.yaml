@@ -11797,6 +11797,38 @@ components:
           deprecated: true
         registry.mirroring_mode:
           $ref: '#/components/schemas/RegistryMirroringModeEnum'
+        nginx.vcpu.request_in_milli:
+          type: integer
+          default: 100
+          description: vcpu request in millicores
+        nginx.vcpu.limit_in_milli:
+          type: integer
+          default: 500
+          description: vcpu limit in millicores
+        nginx.memory.request_in_mib:
+          type: integer
+          default: 768
+          description: memory request in MiB
+        nginx.memory.limit_in_mib:
+          type: integer
+          default: 768
+          description: memory limit in MiB
+        nginx.hpa.cpu_utilization_percentage_threshold:
+          type: integer
+          default: 50
+          description: hpa cpu threshold in percentage
+        nginx.hpa.memory_utilization_percentage_threshold:
+          type: integer
+          default: 50
+          description: hpa memory threshold in percentage
+        nginx.hpa.min_number_instances:
+          type: integer
+          default: 2
+          description: hpa minimum number of instances
+        nginx.hpa.max_number_instances:
+          type: integer
+          default: 25
+          description: hpa maximum number of instances
     Commit:
       type: object
       nullable: true
