@@ -1,0 +1,45 @@
+put:
+  summary: 'Edit a git token'
+  operationId: editGitToken
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/gitTokenId.yaml'
+  tags:
+    - Organization Main Calls
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/GitTokenRequest.yaml'
+  responses:
+    '200':
+      description: 'Git token edited'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/GitTokenResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+delete:
+  summary: 'Delete a git token'
+  operationId: deleteGitToken
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/gitTokenId.yaml'
+  tags:
+    - Organization Main Calls
+  responses:
+    '204':
+      $ref: '../responses/Deleted.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

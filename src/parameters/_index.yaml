@@ -44,6 +44,8 @@ jobId:
 # QUERY
 gitCommitId:
   $ref: ./query/gitCommitId.yaml
+gitTokenId:
+  $ref: ./path/gitTokenId.yaml
 instanceId:
   $ref: ./path/instanceId.yaml
 invoiceId:
