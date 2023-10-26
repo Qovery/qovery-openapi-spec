@@ -10745,6 +10745,9 @@ components:
           type: string
           format: uuid
           nullable: true
+        git_token_name:
+          type: string
+          nullable: true
     ApplicationGitRepositoryRequest:
       type: object
       required:
