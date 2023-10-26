@@ -468,6 +468,78 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+    post:
+      summary: Create a git token
+      description: Create a new git token to be used as a git provider by a service
+      operationId: createGitToken
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitTokenRequest'
+      responses:
+        '201':
+          description: Git token created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitTokenResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/gitToken/{gitTokenId}':
+    put:
+      summary: Edit a git token
+      operationId: editGitToken
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/gitTokenId'
+      tags:
+        - Organization Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitTokenRequest'
+      responses:
+        '200':
+          description: Git token edited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitTokenResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a git token
+      operationId: deleteGitToken
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/gitTokenId'
+      tags:
+        - Organization Main Calls
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/member':
     get:
       summary: Get organization members
@@ -10085,6 +10157,14 @@ components:
       schema:
         type: string
         format: uuid
+    gitTokenId:
+      name: gitTokenId
+      in: path
+      description: Git Token ID
+      required: true
+      schema:
+        type: string
+        format: uuid
     instanceId:
       name: instanceId
       in: path
@@ -13824,6 +13904,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GitRepository'
+    GitTokenRequest:
+      type: object
+      required:
+        - name
+        - type
+        - token
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          $ref: '#/components/schemas/GitProviderEnum'
+        token:
+          type: string
+          description: The token from your git provider side
+        workspace:
+          type: string
+          description: 'Mandatory only for BITBUCKET git provider, to allow us to fetch repositories at creation/edition of a service'
     GitTokenResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -13838,6 +13937,9 @@ components:
               type: string
             type:
               $ref: '#/components/schemas/GitProviderEnum'
+            expired_at:
+              type: string
+              format: date
     GitTokenResponseList:
       type: object
       properties:
