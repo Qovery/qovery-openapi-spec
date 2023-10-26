@@ -87,11 +87,11 @@ properties:
     deprecated: true
   registry.mirroring_mode:
     $ref: './enums/RegistryMirroringMode.yaml'
-  nginx.vcpu.request_in_milli:
+  nginx.vcpu.request_in_milli_cpu:
     type: integer
     default: 100
     description: vcpu request in millicores
-  nginx.vcpu.limit_in_milli:
+  nginx.vcpu.limit_in_milli_cpu:
     type: integer
     default: 500
     description: vcpu limit in millicores
@@ -107,10 +107,6 @@ properties:
     type: integer
     default: 50
     description: hpa cpu threshold in percentage
-  nginx.hpa.memory_utilization_percentage_threshold:
-    type: integer
-    default: 50
-    description: hpa memory threshold in percentage
   nginx.hpa.min_number_instances:
     type: integer
     default: 2
