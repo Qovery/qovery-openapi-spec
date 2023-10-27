@@ -315,16 +315,24 @@ paths:
     $ref: './resources/OrganizationGithubAppDisconnect.yaml'
   /organization/{organizationId}/account/gitAuthProvider:
     $ref: './resources/OrganizationAccountGitAuthProvider.yaml'
+  /organization/{organizationId}/account/gitAuthProviderTemp:
+    $ref: './resources/OrganizationAccountGitAuthProviderTemp.yaml'
   /organization/{organizationId}/account/github/repository:
     $ref: './resources/OrganizationAccountGitRepositoryGithub.yaml'
+  /organization/{organizationId}/account/github/repositoryTemp:
+    $ref: './resources/OrganizationAccountGitRepositoryGithubTemp.yaml'
   /organization/{organizationId}/account/github/repository/branch:
     $ref: './resources/OrganizationAccountGitRepositoryGithubBranch.yaml'
   /organization/{organizationId}/account/gitlab/repository:
     $ref: './resources/OrganizationAccountGitRepositoryGitlab.yaml'
+  /organization/{organizationId}/account/gitlab/repositoryTemp:
+    $ref: './resources/OrganizationAccountGitRepositoryGitlabTemp.yaml'
   /organization/{organizationId}/account/gitlab/repository/branch:
     $ref: './resources/OrganizationAccountGitRepositoryGitlabBranch.yaml'
   /organization/{organizationId}/account/bitbucket/repository:
     $ref: './resources/OrganizationAccountGitRepositoryBitbucket.yaml'
+  /organization/{organizationId}/account/bitbucket/repositoryTemp:
+    $ref: './resources/OrganizationAccountGitRepositoryBitbucketTemp.yaml'
   /organization/{organizationId}/account/bitbucket/repository/branch:
     $ref: './resources/OrganizationAccountGitRepositoryBitbucketBranch.yaml'
   /organization/{organizationId}/webhook:
