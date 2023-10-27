@@ -1,0 +1,22 @@
+get:
+  summary: 'Get github repositories of the connected user'
+  operationId: getOrganizationGithubRepositoriesTemp
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - in: query
+      name: gitTokenId
+      schema:
+        type: string
+        format: uuid
+      description: The git token id that must be used for the application
+  tags:
+    - Organization Account Git Repositories
+  responses:
+    '200':
+      description: 'Get github repositories'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/GitRepositoryResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
