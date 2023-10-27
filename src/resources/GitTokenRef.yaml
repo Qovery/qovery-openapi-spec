@@ -1,3 +1,25 @@
+get:
+  summary: 'Get organization git token'
+  description: 'Get organization git tokens'
+  operationId: getOrganizationGitTokens
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/gitTokenId.yaml'
+  tags:
+    - Organization Main Calls
+  responses:
+    '200':
+      description: 'Get organization git token'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/GitTokenResponse.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
 put:
   summary: 'Edit a git token'
   operationId: editGitToken

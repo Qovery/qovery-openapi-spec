@@ -4,6 +4,7 @@ allOf:
     required:
       - name
       - type
+      - associated_services_count
     properties:
       name:
         type: string
@@ -14,3 +15,6 @@ allOf:
       expired_at:
         type: string
         format: date
+      associated_services_count:
+        type: number
+        description: The number of services using this git token
