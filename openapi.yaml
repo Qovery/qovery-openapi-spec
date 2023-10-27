@@ -495,6 +495,28 @@ paths:
         '404':
           $ref: '#/components/responses/404'
   '/organization/{organizationId}/gitToken/{gitTokenId}':
+    get:
+      summary: Get organization git token
+      description: Get organization git tokens
+      operationId: getOrganizationGitTokens
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/gitTokenId'
+      tags:
+        - Organization Main Calls
+      responses:
+        '200':
+          description: Get organization git token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitTokenResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     put:
       summary: Edit a git token
       operationId: editGitToken
@@ -534,6 +556,29 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/gitToken/{gitTokenId}/associatedServices':
+    get:
+      summary: Get organization git token associated services
+      description: Get organization git tokens associated services
+      operationId: getGitTokenAssociatedServices
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/gitTokenId'
+      tags:
+        - Organization Main Calls
+      responses:
+        '200':
+          description: Get organization git token associated services
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitTokenAssociatedServicesResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -13993,6 +14038,47 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GitRepository'
+    GitTokenAssociatedServiceType:
+      type: string
+      enum:
+        - APPLICATION
+        - JOB
+        - HELM
+    GitTokenAssociatedServiceResponse:
+      type: object
+      required:
+        - project_id
+        - project_name
+        - environment_id
+        - environment_name
+        - service_id
+        - service_name
+        - service_type
+      properties:
+        project_id:
+          type: string
+          format: uuid
+        project_name:
+          type: string
+        environment_id:
+          type: string
+          format: uuid
+        environment_name:
+          type: string
+        service_id:
+          type: string
+          format: uuid
+        service_name:
+          type: string
+        service_type:
+          $ref: '#/components/schemas/GitTokenAssociatedServiceType'
+    GitTokenAssociatedServicesResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitTokenAssociatedServiceResponse'
     GitTokenRequest:
       type: object
       required:
@@ -14019,6 +14105,7 @@ components:
           required:
             - name
             - type
+            - associated_services_count
           properties:
             name:
               type: string
@@ -14029,6 +14116,9 @@ components:
             expired_at:
               type: string
               format: date
+            associated_services_count:
+              type: number
+              description: The number of services using this git token
     GitTokenResponseList:
       type: object
       properties:
