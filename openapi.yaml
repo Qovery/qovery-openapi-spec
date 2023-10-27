@@ -1826,10 +1826,50 @@ paths:
                 $ref: '#/components/schemas/GitAuthProviderResponseList'
         '401':
           $ref: '#/components/responses/401'
+  '/organization/{organizationId}/account/gitAuthProviderTemp':
+    get:
+      summary: Get git provider accounts
+      operationId: getOrganizationGitProviderAccountTemp
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Account Git Repositories
+      responses:
+        '200':
+          description: Get account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitAuthProviderResponseList'
+        '401':
+          $ref: '#/components/responses/401'
   '/organization/{organizationId}/account/github/repository':
     get:
       summary: Get github repositories of the connected user
       operationId: getOrganizationGithubRepositories
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: gitTokenId
+          schema:
+            type: string
+            format: uuid
+          description: The git token id that must be used for the application
+      tags:
+        - Organization Account Git Repositories
+      responses:
+        '200':
+          description: Get github repositories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/organization/{organizationId}/account/github/repositoryTemp':
+    get:
+      summary: Get github repositories of the connected user
+      operationId: getOrganizationGithubRepositoriesTemp
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - in: query
@@ -1900,6 +1940,29 @@ paths:
                 $ref: '#/components/schemas/GitRepositoryResponseList'
         '401':
           $ref: '#/components/responses/401'
+  '/organization/{organizationId}/account/gitlab/repositoryTemp':
+    get:
+      summary: Get gitlab repositories of the connected user
+      operationId: getOrganizationGitlabRepositoriesTemp
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: gitTokenId
+          schema:
+            type: string
+            format: uuid
+          description: The git token id that must be used for the application
+      tags:
+        - Organization Account Git Repositories
+      responses:
+        '200':
+          description: Get gitlab repositories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryResponseList'
+        '401':
+          $ref: '#/components/responses/401'
   '/organization/{organizationId}/account/gitlab/repository/branch':
     get:
       summary: Get gitlab branches of the specified repository
@@ -1932,6 +1995,29 @@ paths:
     get:
       summary: Get bitbucket repositories of the connected user
       operationId: getOrganizationBitbucketRepositories
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: gitTokenId
+          schema:
+            type: string
+            format: uuid
+          description: The git token id that must be used for the application
+      tags:
+        - Organization Account Git Repositories
+      responses:
+        '200':
+          description: Get bitbucket repositories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+  '/organization/{organizationId}/account/bitbucket/repositoryTemp':
+    get:
+      summary: Get bitbucket repositories of the connected user
+      operationId: getOrganizationBitbucketRepositoriesTemp
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - in: query
