@@ -15,6 +15,9 @@ allOf:
       expired_at:
         type: string
         format: date
+      workspace:
+        type: string
+        description: Mandatory only for BITBUCKET git provider
       associated_services_count:
         type: number
         description: The number of services using this git token
