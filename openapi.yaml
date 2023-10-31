@@ -14361,6 +14361,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Status'
+        helms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
         stage:
           $ref: '#/components/schemas/Stage'
     JobRequest:
