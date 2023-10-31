@@ -1,7 +1,7 @@
 get:
   summary: 'Get organization git token'
-  description: 'Get organization git tokens'
-  operationId: getOrganizationGitTokens
+  description: 'Get organization git token'
+  operationId: getOrganizationGitToken
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
     - $ref: '../parameters/path/gitTokenId.yaml'
