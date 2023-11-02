@@ -497,8 +497,8 @@ paths:
   '/organization/{organizationId}/gitToken/{gitTokenId}':
     get:
       summary: Get organization git token
-      description: Get organization git tokens
-      operationId: getOrganizationGitTokens
+      description: Get organization git token
+      operationId: getOrganizationGitToken
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/gitTokenId'
