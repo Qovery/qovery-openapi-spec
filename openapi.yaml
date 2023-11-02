@@ -15873,6 +15873,7 @@ components:
         - DEPLOYMENT_STAGE
         - GITHUB_APP
         - GIT_REPOSITORY
+        - GIT_TOKEN
         - INVITATION
         - MEMBER_ROLE
         - PLAN
@@ -15892,6 +15893,7 @@ components:
         - DATABASE
         - ENVIRONMENT
         - JOB
+        - HELM
         - MEMBERS_AND_ROLES
         - ORGANIZATION
         - PROJECT
