@@ -3,19 +3,15 @@ properties:
   build.timeout_max_sec:
     type: integer
     description: define the max timeout for the build
-    default: 1800
   build.cpu_max_in_milli:
     type: integer
     description: define the max cpu resources (in milli)
-    default: 4000
   build.ram_max_in_gib:
     type: integer
     description: define the max ram resources (in gib)
-    default: 8
   deployment.termination_grace_period_seconds:
     type: integer
     description: define how long in seconds an application is supposed to be stopped gracefully
-    default: 60
   deployment.affinity.node.required:
     type: object
     additionalProperties:
@@ -24,23 +20,17 @@ properties:
   job.delete_ttl_seconds_after_finished:
     type: integer
     nullable: true
-    default: null
   cronjob.concurrency_policy:
     type: string
-    default: "Forbid"
   cronjob.failed_jobs_history_limit:
     type: integer
-    default: 1
   cronjob.success_jobs_history_limit:
     type: integer
-    default: 1
   security.service_account_name:
     type: string
-    default: ""
     description: |
       Allows you to set an existing Kubernetes service account name
   security.read_only_root_filesystem:
     type: boolean
-    default: false
     description: |
       Mounts the container's root filesystem as read-only
