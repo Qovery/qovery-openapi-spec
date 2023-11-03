@@ -1,7 +1,7 @@
 get:
   summary: 'List default application advanced settings'
   operationId: getDefaultApplicationAdvancedSettings
-  description: 'Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)'
+  description: 'Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)'
   tags:
     - Applications
   responses:
