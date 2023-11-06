@@ -601,3 +601,4 @@ components:
       enum:
       - mCPU
       - MiB
+      - GiB
