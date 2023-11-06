@@ -4,6 +4,10 @@ allOf:
     properties:
       status:
         $ref: './enums/State.yaml'
+      origin:
+        $ref: './enums/OrganizationEventOrigin.yaml'
+      triggered_by:
+        type: string
       applications:
         type: array
         items:
