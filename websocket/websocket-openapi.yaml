@@ -433,6 +433,7 @@ components:
       - containers
       - databases
       - jobs
+      - helms
       properties:
         applications:
           type: array
@@ -446,6 +447,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DatabaseStatusDto'
+        helms:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatusDto'
         id:
           type: string
         jobs:
