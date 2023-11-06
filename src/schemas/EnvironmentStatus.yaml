@@ -21,3 +21,7 @@ properties:
   total_deployment_duration_in_seconds:
     type: integer
     nullable: true
+  origin:
+    $ref: './enums/OrganizationEventOrigin.yaml'
+  triggered_by:
+    type: string
