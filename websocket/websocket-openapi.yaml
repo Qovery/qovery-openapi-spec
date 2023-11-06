@@ -598,6 +598,7 @@ components:
       - CONTAINER
       - DATABASE
       - JOB
+      - HELM
     Timestamp:
       type: integer
       description: Unix timestamp with millisecond precision
