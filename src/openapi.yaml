@@ -65,7 +65,7 @@ tags:
   - name: Helm Logs
   - name: Helm Main Calls
   - name: Helm Metrics
-  - name: Helm Registry
+  - name: Helm Repository
   - name: Helm Secret
   - name: Helms
   - name: Backups
@@ -112,6 +112,7 @@ tags:
   - name: Projects
   - name: Referral & Rewards
   - name: Container Registries
+  - name: Helm Repositories
   - name: User Sign Up
   - name: Variable Main Calls
 x-tagGroups:
@@ -131,6 +132,7 @@ x-tagGroups:
       - Cloud Provider Credentials
       - Github App
       - Container Registries
+      - Helm Repositories
   - name: Project
     tags:
       - Project Main Calls
@@ -216,6 +218,7 @@ x-tagGroups:
       - Helm Deployment History
       - Helm Environment Variable
       - Helm Secret
+      - Helm Repository
   - name: Account
     tags:
       - Account Info
