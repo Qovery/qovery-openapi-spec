@@ -65,7 +65,7 @@ tags:
   - name: Helm Logs
   - name: Helm Main Calls
   - name: Helm Metrics
-  - name: Helm Registry
+  - name: Helm Repository
   - name: Helm Secret
   - name: Helms
   - name: Backups
@@ -112,6 +112,7 @@ tags:
   - name: Projects
   - name: Referral & Rewards
   - name: Container Registries
+  - name: Helm Repositories
   - name: User Sign Up
   - name: Variable Main Calls
 x-tagGroups:
@@ -131,6 +132,7 @@ x-tagGroups:
       - Cloud Provider Credentials
       - Github App
       - Container Registries
+      - Helm Repositories
   - name: Project
     tags:
       - Project Main Calls
@@ -216,6 +218,7 @@ x-tagGroups:
       - Helm Deployment History
       - Helm Environment Variable
       - Helm Secret
+      - Helm Repository
   - name: Account
     tags:
       - Account Info
@@ -11107,6 +11110,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AvailableContainerRegistryResponse'
+    AvailableHelmRepositoryResponse:
+      type: object
+      properties:
+        kind:
+          $ref: '#/components/schemas/HelmRepositoryKindEnum'
+        required_config:
+          type: object
+          additionalProperties: true
+        is_mandatory:
+          type: boolean
+    AvailableHelmRepositoryResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableHelmRepositoryResponse'
     AwsCredentialsRequest:
       type: object
       required:
@@ -12216,6 +12236,12 @@ components:
         - DOCR
         - GENERIC_CR
       description: The type of your container registry
+    HelmRepositoryKindEnum:
+      type: string
+      enum:
+        - HTTPS
+        - OCI
+      description: The type of your helm repository
     ContainerRegistryRequest:
       type: object
       required:
