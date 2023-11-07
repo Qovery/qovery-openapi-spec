@@ -12353,6 +12353,60 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ContainerRegistryResponse'
+    HelmRepositoryRequest:
+      type: object
+      required:
+        - name
+        - kind
+        - config
+      properties:
+        name:
+          type: string
+        kind:
+          $ref: '#/components/schemas/HelmRepositoryKindEnum'
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+          description: |
+            URL of the helm chart repository:
+            * For `OCI`: it must start by oci://
+            * For `HTTPS`: it must be start by https://
+        config:
+          type: object
+          properties:
+            skip_tls_verification:
+              type: boolean
+              default: false
+              description: Bypass tls certificate verification when connecting to repository
+            login:
+              type: string
+              description: Required if the repository is private
+            password:
+              type: string
+              description: Required if the repository is private
+    HelmRepositoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          properties:
+            name:
+              type: string
+            kind:
+              $ref: '#/components/schemas/HelmRepositoryKindEnum'
+            description:
+              type: string
+            url:
+              type: string
+              description: URL of the helm repository
+    HelmRepositoryResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/HelmRepositoryResponse'
     ContainerRequest:
       allOf:
         - $ref: '#/components/schemas/ServiceStorageRequest'
