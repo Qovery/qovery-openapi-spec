@@ -1,0 +1,13 @@
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - type: object
+    properties:
+      name:
+        type: string
+      kind:
+        $ref: ../schemas/enums/HelmRepositoryKind.yaml
+      description:
+        type: string
+      url:
+        type: string
+        description: URL of the helm repository

@@ -1,0 +1,48 @@
+get:
+  summary: 'List organization helm repositories'
+  operationId: listHelmRepository
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Helm Repositories
+  responses:
+    '200':
+      description: 'List helm repositories'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/HelmRepositoryResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+
+post:
+  summary: 'Create a helm repository'
+  operationId: createHelmRepository
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+  tags:
+    - Helm Repositories
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/HelmRepositoryRequest.yaml'
+  responses:
+    '201':
+      description: 'Create a helm repository'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/HelmRepositoryResponse.yaml'
+    '400':
+      $ref: '../responses/BadRequest.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
