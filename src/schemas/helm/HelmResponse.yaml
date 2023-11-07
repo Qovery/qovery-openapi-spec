@@ -39,17 +39,25 @@ allOf:
             type: object
             nullable: true
             properties:
-              repository:
-                type: string
-                format: UUID
-                description: The id of the helm repository
-                nullable: true
               chart_name:
                 type: string
                 description: The name of the chart in the repository
               chart_version:
                 type: string
                 description: The version of the chart to use
+              repository:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: UUID
+                    description: The id of the helm repository
+                  name:
+                    type: string
+                    description: The name of the helm repository
+                  url:
+                    type: string
+                    description: The name url the helm repository
       arguments:
         type: array
         description: The extra arguments to pass to helm
