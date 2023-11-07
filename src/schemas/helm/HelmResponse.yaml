@@ -57,7 +57,7 @@ allOf:
                     description: The name of the helm repository
                   url:
                     type: string
-                    description: The name url the helm repository
+                    description: The url the helm repository
       arguments:
         type: array
         description: The extra arguments to pass to helm
