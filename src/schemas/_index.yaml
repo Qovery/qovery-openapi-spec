@@ -172,6 +172,12 @@ ContainerRegistryProviderDetailsResponse:
   $ref: ./ContainerRegistryProviderDetailsResponse.yaml
 ContainerRegistryResponseList:
   $ref: ./ContainerRegistryResponseList.yaml
+HelmRepositoryRequest:
+  $ref: ./HelmRepositoryRequest.yaml
+HelmRepositoryResponse:
+  $ref: ./HelmRepositoryResponse.yaml
+HelmRepositoryResponseList:
+  $ref: ./HelmRepositoryResponseList.yaml
 ContainerRequest:
   $ref: ./ContainerRequest.yaml
 ContainerResponse:
