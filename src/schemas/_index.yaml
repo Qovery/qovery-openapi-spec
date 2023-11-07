@@ -44,6 +44,10 @@ AvailableContainerRegistryResponse:
   $ref: ./AvailableContainerRegistryResponse.yaml
 AvailableContainerRegistryResponseList:
   $ref: ./AvailableContainerRegistryResponseList.yaml
+AvailableHelmRepositoryResponse:
+  $ref: ./AvailableHelmRepositoryResponse.yaml
+AvailableHelmRepositoryResponseList:
+  $ref: ./AvailableHelmRepositoryResponseList.yaml
 AwsCredentialsRequest:
   $ref: ./AwsCredentialsRequest.yaml
 Backup:
@@ -158,6 +162,8 @@ ContainerDeployRequest:
   $ref: ./ContainerDeployRequest.yaml
 ContainerRegistryKindEnum:
   $ref: ./enums/ContainerRegistryKind.yaml
+HelmRepositoryKindEnum:
+  $ref: ./enums/HelmRepositoryKind.yaml
 ContainerRegistryRequest:
   $ref: ./ContainerRegistryRequest.yaml
 ContainerRegistryResponse:

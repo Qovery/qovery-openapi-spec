@@ -1,0 +1,6 @@
+type: string
+enum:
+  - HTTPS
+  - OCI
+description: The type of your helm repository
+

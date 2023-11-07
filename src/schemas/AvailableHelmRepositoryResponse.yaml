@@ -1,0 +1,9 @@
+type: object
+properties:
+  kind:
+    $ref: ./enums/HelmRepositoryKind.yaml
+  required_config:
+    type: object
+    additionalProperties: true
+  is_mandatory:
+    type: boolean
