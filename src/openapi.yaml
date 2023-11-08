@@ -406,6 +406,12 @@ paths:
     $ref: './resources/ContainerRegistryContainerStatus.yaml'
   /availableContainerRegistry:
     $ref: './resources/AvailableContainerRegistry.yaml'
+  /availableHelmRepository:
+    $ref: './resources/AvailableHelmRepository.yaml'
+  /organization/{organizationId}/helmRepository:
+    $ref: './resources/OrganizationHelmRepository.yaml'
+  /organization/{organizationId}/helmRepository/{helmRepositoryId}:
+    $ref: './resources/OrganizationHelmRepositoryRef.yaml'
   /project/{projectId}:
     $ref: './resources/Project.yaml'
   /project/{projectId}/deploymentRule:
