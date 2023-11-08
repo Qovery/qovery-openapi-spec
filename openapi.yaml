@@ -3173,6 +3173,147 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /availableHelmRepository:
+    get:
+      summary: List supported helm repository
+      description: List supported helm repository by Qovery and get the mandatory authentification configuration.
+      operationId: listAvailableHelmRepository
+      tags:
+        - Helm Repositories
+      responses:
+        '200':
+          description: supported helm repositories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailableHelmRepositoryResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/helmRepository':
+    get:
+      summary: List organization helm repositories
+      operationId: listHelmRepository
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Helm Repositories
+      responses:
+        '200':
+          description: List helm repositories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmRepositoryResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a helm repository
+      operationId: createHelmRepository
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Helm Repositories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmRepositoryRequest'
+      responses:
+        '201':
+          description: Create a helm repository
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmRepositoryResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/helmRepository/{helmRepositoryId}':
+    get:
+      summary: Get a helm repository
+      operationId: getHelmRepository
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: helmRepositoryId
+          in: path
+          description: Helm chart repository ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Helm Repositories
+      responses:
+        '200':
+          description: The helm repository
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmRepositoryResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a helm repository
+      operationId: deleteHelmRepository
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1helmRepository~1%7BhelmRepositoryId%7D/get/parameters/1'
+      tags:
+        - Helm Repositories
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a helm repository
+      operationId: editHelmRepository
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1helmRepository~1%7BhelmRepositoryId%7D/get/parameters/1'
+      tags:
+        - Helm Repositories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmRepositoryRequest'
+      responses:
+        '200':
+          description: Edited the helm repository
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmRepositoryResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/project/{projectId}':
     get:
       summary: Get project by ID
