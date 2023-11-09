@@ -12804,6 +12804,7 @@ components:
         - expiry_year
         - last_digit
         - is_expired
+        - brand
       properties:
         id:
           type: string
@@ -12822,6 +12823,8 @@ components:
           example: '7890'
         is_expired:
           type: boolean
+        brand:
+          type: string
     CreditCardRequest:
       type: object
       required:
