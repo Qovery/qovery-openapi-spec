@@ -22,7 +22,7 @@ properties:
     example: 2025
   last_digit:
     type: string
-    example: '7890'
+    example: "7890"
   is_expired:
     type: boolean
   brand:
