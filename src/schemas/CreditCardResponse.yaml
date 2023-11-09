@@ -6,6 +6,7 @@ required:
   - expiry_year
   - last_digit
   - is_expired
+  - brand
 properties:
   id:
     type: string
@@ -21,8 +22,8 @@ properties:
     example: 2025
   last_digit:
     type: string
-    example: "7890"
+    example: '7890'
   is_expired:
     type: boolean
-
-
+  brand:
+    type: string
