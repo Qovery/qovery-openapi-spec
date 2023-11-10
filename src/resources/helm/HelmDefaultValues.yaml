@@ -1,0 +1,20 @@
+get:
+  summary: 'Display the contents of the values.yaml file'
+  operationId: getDefaultValues
+  parameters:
+    - $ref: '../../parameters/path/helmId.yaml'
+  tags:
+    - Helm Main Calls
+  responses:
+    '200':
+      description: 'Display the contents of the values.yaml file'
+      content:
+        text/plain:
+          schema:
+            type: string
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'

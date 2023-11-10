@@ -766,6 +766,8 @@ paths:
     $ref: './resources/helm/HelmDeploymentRestriction.yaml'
   /helm/{helmId}/deploymentRestriction/{deploymentRestrictionId}:
     $ref: './resources/helm/HelmDeploymentRestrictionRef.yaml'
+  /helm/{helmId}/defaultValues:
+    $ref: './resources/helm/HelmDefaultValues.yaml'
   /environment/{environmentId}/job:
     $ref: './resources/job/EnvironmentJob.yaml'
   /environment/{environmentId}/job/status:
