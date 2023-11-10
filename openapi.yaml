@@ -15121,37 +15121,39 @@ components:
               description: |
                 Specify if the service will be automatically updated after receiving a new image tag or a new commit according to the source type. 
             source:
-              type: object
-              properties:
-                git:
-                  type: object
-                  nullable: true
+              nullable: false
+              oneOf:
+                - type: object
                   properties:
-                    git_repository:
-                      $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
-                repository:
-                  type: object
-                  nullable: true
+                    git:
+                      type: object
+                      properties:
+                        git_repository:
+                          $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+                - type: object
                   properties:
-                    chart_name:
-                      type: string
-                      description: The name of the chart in the repository
-                    chart_version:
-                      type: string
-                      description: The version of the chart to use
                     repository:
                       type: object
                       properties:
-                        id:
+                        chart_name:
                           type: string
-                          format: UUID
-                          description: The id of the helm repository
-                        name:
+                          description: The name of the chart in the repository
+                        chart_version:
                           type: string
-                          description: The name of the helm repository
-                        url:
-                          type: string
-                          description: The url the helm repository
+                          description: The version of the chart to use
+                        repository:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: UUID
+                              description: The id of the helm repository
+                            name:
+                              type: string
+                              description: The name of the helm repository
+                            url:
+                              type: string
+                              description: The url the helm repository
             arguments:
               type: array
               description: The extra arguments to pass to helm
