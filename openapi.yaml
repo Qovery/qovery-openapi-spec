@@ -14953,7 +14953,10 @@ components:
         - type: object
           required:
             - name
-            - healthchecks
+            - source
+            - values_override
+            - arguments
+            - auto_deploy
           properties:
             name:
               type: string
@@ -15072,10 +15075,12 @@ components:
           required:
             - environment
             - name
-            - tag
             - auto_preview
             - auto_deploy
             - source
+            - values_override
+            - arguments
+            - allow_cluster_wide_resources
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
