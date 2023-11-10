@@ -4,10 +4,12 @@ allOf:
     required:
       - environment
       - name
-      - tag
       - auto_preview
       - auto_deploy
       - source
+      - values_override
+      - arguments
+      - allow_cluster_wide_resources
     properties:
       environment:
         $ref: '../ReferenceObject.yaml'

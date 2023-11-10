@@ -2,7 +2,10 @@ allOf:
   - type: object
     required:
       - name
-      - healthchecks
+      - source
+      - values_override
+      - arguments
+      - auto_deploy
     properties:
       name:
         type: string
