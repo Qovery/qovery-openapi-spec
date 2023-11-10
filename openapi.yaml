@@ -9128,6 +9128,27 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/helm/{helmId}/defaultValues':
+    get:
+      summary: Display the contents of the values.yaml file
+      operationId: getDefaultValues
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Main Calls
+      responses:
+        '200':
+          description: Display the contents of the values.yaml file
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/job':
     get:
       summary: List jobs
