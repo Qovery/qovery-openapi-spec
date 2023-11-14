@@ -3,7 +3,14 @@ allOf:
   - type: object
     required:
       - scope
+      - key
+      - value
     properties:
+      key:
+        type: string
+      value:
+        type: string
+        nullable: true
       overridden_variable:
         $ref: './VariableOverride.yaml'
       aliased_variable:
