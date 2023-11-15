@@ -13,7 +13,7 @@ allOf:
         nullable: true
       mount_path:
         type: string
-        nullable: true,
+        nullable: true
       overridden_variable:
         $ref: './VariableOverride.yaml'
       aliased_variable:
