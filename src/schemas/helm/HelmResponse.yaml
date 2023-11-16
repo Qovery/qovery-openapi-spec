@@ -27,7 +27,9 @@ allOf:
       auto_deploy:
         type: boolean
         description: |
-          Specify if the service will be automatically updated after receiving a new image tag or a new commit according to the source type. 
+          Specify if the service will be automatically updated after receiving a new image tag or a new commit according to the source type.
+      ports:
+        $ref: './HelmPortResponseList.yaml'
       source:
         nullable: false
         oneOf:

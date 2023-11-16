@@ -454,12 +454,20 @@ HelmDeploymentRestrictionResponse:
   $ref: ./helm/HelmDeploymentRestrictionResponse.yaml
 HelmDeploymentRestrictionResponseList:
   $ref: ./helm/HelmDeploymentRestrictionResponseList.yaml
+HelmPortRequest:
+  $ref: ./helm/HelmPortRequest.yaml
+HelmPortResponse:
+  $ref: ./helm/HelmResponse.yaml
+HelmPortResponseList:
+  $ref: ./helm/HelmResponseList.yaml
 #HelmScheduleEvent:
 #  $ref: ./enums/HelmScheduleEvent.yaml
 HelmForceEvent:
   $ref: ./enums/HelmForceEvent.yaml
 #DeploymentHistoryHelmResponse:
 #  $ref: ./helm/DeploymentHistoryHelmResponse.yaml
+HelmPortProtocolEnum:
+  $ref: ./enums/HelmPortProtocol.yaml
 Key:
   $ref: ./Key.yaml
 KubernetesEnum:
