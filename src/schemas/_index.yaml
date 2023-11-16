@@ -742,3 +742,5 @@ OrganizationJobAutoDeployRequest:
   $ref: ./OrganizationJobAutoDeployRequest.yaml
 RegistryMirroringModeEnum:
   $ref: ./enums/RegistryMirroringMode.yaml
+ServiceTypeForVariableEnum:
+  $ref: ./enums/ServiceTypeForVariable.yaml
