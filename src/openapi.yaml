@@ -818,6 +818,8 @@ paths:
     $ref: './resources/variable/VariableOverride.yaml'
   /variable/{variableId}:
     $ref: './resources/variable/VariableRef.yaml'
+  /variable/import:
+    $ref: './resources/variable/VariablesImport.yaml'
 components:
   parameters:
     $ref: './parameters/_index.yaml'
