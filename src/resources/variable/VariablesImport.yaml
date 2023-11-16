@@ -11,11 +11,11 @@ post:
         format: uuid
       description: service id
     - in: query
-      name: scope
+      name: service_type
       required: true
       schema:
-        $ref: '../../schemas/enums/APIVariableScope.yaml'
-      description: scope
+        $ref: '../../schemas/enums/ServiceTypeForVariable.yaml'
+      description: service type
   tags:
     - Variable Main Calls
   requestBody:

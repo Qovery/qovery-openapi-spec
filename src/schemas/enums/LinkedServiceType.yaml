@@ -1,7 +1,1 @@
-type: string
-description: type of the service (application, database, job, gateway...)
-enum:
-  - APPLICATION
-  - CONTAINER
-  - DATABASE
-  - JOB
+q
