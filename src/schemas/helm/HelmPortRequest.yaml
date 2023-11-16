@@ -1,0 +1,26 @@
+type: object
+properties:
+  ports:
+    type: array
+    items:
+      type: object
+      required:
+        - service_name
+        - internal_port
+      properties:
+        name:
+          type: string
+        internal_port:
+          type: integer
+          example: 8080
+          description: The listening port of your service.
+        external_port:
+          type: integer
+          example: 8080
+          description: The exposed port for your service. This is optional. If not set a default port will be used.
+        service_name:
+          type: string
+        namespace:
+          type: string
+        protocol:
+          $ref: '../enums/HelmPortProtocol.yaml'
