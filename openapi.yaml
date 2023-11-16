@@ -10218,11 +10218,11 @@ paths:
             format: uuid
           description: service id
         - in: query
-          name: scope
+          name: service_type
           required: true
           schema:
-            $ref: '#/components/schemas/APIVariableScopeEnum'
-          description: scope
+            $ref: '#/components/schemas/ServiceTypeForVariableEnum'
+          description: service type
       tags:
         - Variable Main Calls
       requestBody:
@@ -15266,6 +15266,7 @@ components:
         - CONTAINER
         - DATABASE
         - JOB
+        - HELM
     Log:
       type: object
       required:
@@ -17256,6 +17257,14 @@ components:
         Mirroring mode when deploying a service from a container registry
         - CLUSTER: This is not available on Scaleway. Images within the mirroring registry are organized by "Qovery cluster", meaning that the application deployed on the same cluster are all mirrored on the same repository.
         - SERVICE: Images within the mirroring registry are organized by "Qovery service", each service has its own repository
+    ServiceTypeForVariableEnum:
+      type: string
+      description: type of the service
+      enum:
+        - APPLICATION
+        - CONTAINER
+        - JOB
+        - HELM
   responses:
     '204':
       description: no content
