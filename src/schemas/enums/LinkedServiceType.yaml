@@ -5,3 +5,4 @@ enum:
   - CONTAINER
   - DATABASE
   - JOB
+  - HELM
