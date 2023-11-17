@@ -1,0 +1,5 @@
+type: string
+default: HTTP
+enum:
+  - HTTP
+  - GRPC
