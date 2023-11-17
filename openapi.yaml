@@ -14929,6 +14929,7 @@ components:
               type: string
     HelmRequest:
       allOf:
+        - $ref: '#/components/schemas/HelmPortRequest'
         - type: object
           required:
             - name
@@ -15077,7 +15078,36 @@ components:
             auto_deploy:
               type: boolean
               description: |
-                Specify if the service will be automatically updated after receiving a new image tag or a new commit according to the source type. 
+                Specify if the service will be automatically updated after receiving a new image tag or a new commit according to the source type.
+            ports:
+              type: array
+              items:
+                type: object
+                required:
+                  - id
+                  - internal_port
+                  - protocol
+                  - service_name
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                  internal_port:
+                    type: integer
+                    example: 8080
+                    description: The listening port of your service.
+                  external_port:
+                    type: integer
+                    example: 8080
+                    description: The exposed port for your service. This is optional. If not set a default port will be used.
+                  service_name:
+                    type: string
+                  namespace:
+                    type: string
+                  protocol:
+                    $ref: '#/components/schemas/HelmPortProtocolEnum'
             source:
               nullable: false
               oneOf:
@@ -15211,10 +15241,47 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/HelmDeploymentRestrictionResponse'
+    HelmPortRequest:
+      type: object
+      properties:
+        ports:
+          type: array
+          items:
+            type: object
+            required:
+              - service_name
+              - internal_port
+            properties:
+              name:
+                type: string
+              internal_port:
+                type: integer
+                example: 8080
+                description: The listening port of your service.
+              external_port:
+                type: integer
+                example: 8080
+                description: The exposed port for your service. This is optional. If not set a default port will be used.
+              service_name:
+                type: string
+              namespace:
+                type: string
+              protocol:
+                $ref: '#/components/schemas/HelmPortProtocolEnum'
+    HelmPortResponse:
+      $ref: '#/components/schemas/HelmResponse'
+    HelmPortResponseList:
+      $ref: '#/components/schemas/HelmResponseList'
     HelmForceEvent:
       type: string
       enum:
         - DIFF
+    HelmPortProtocolEnum:
+      type: string
+      default: HTTP
+      enum:
+        - HTTP
+        - GRPC
     Key:
       type: object
       required:
