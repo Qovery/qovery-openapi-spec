@@ -1,0 +1,27 @@
+type: object
+nullable: true
+required:
+  - provider
+  - owner
+  - name
+  - url
+properties:
+  url:
+    type: string
+    description: application git repository URL
+    example: https://github.com/Qovery/simple-node-app
+  branch:
+    type: string
+    description: |
+      Name of the branch to use. This is optional
+      If not specified, then the branch used is the `main` or `master` one
+    example: feat/text_xxx
+  root_path:
+    type: string
+    default: /
+    description: indicates the root path of the application.
+  git_token_id:
+    type: string
+    format: uuid
+    description: The git token id on Qovery side
+    nullable: true

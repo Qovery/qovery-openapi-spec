@@ -758,3 +758,5 @@ CronJobResponse:
   $ref: ./job/CronJobResponse.yaml
 BaseJobResponse:
   $ref: ./job/BaseJobResponse.yaml
+HelmGitRepositoryRequest:
+  $ref: ./HelmGitRepositoryRequest.yaml

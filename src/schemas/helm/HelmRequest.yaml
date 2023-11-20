@@ -34,8 +34,7 @@ allOf:
         type: object
         properties:
           git_repository:
-            nullable: true
-            $ref: '../ApplicationGitRepositoryRequest.yaml'
+            $ref: '../HelmGitRepositoryRequest.yaml'
           helm_repository:
             type: object
             nullable: true
