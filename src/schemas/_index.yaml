@@ -756,3 +756,5 @@ LifecycleJobResponse:
   $ref: ./job/LifecycleJobResponse.yaml
 CronJobResponse:
   $ref: ./job/CronJobResponse.yaml
+BaseJobResponse:
+  $ref: ./job/BaseJobResponse.yaml
