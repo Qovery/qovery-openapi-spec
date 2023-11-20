@@ -33,13 +33,10 @@ allOf:
       source:
         type: object
         properties:
-          git:
-            type: object
+          git_repository:
             nullable: true
-            properties:
-              git_repository:
-                $ref: '../ApplicationGitRepositoryRequest.yaml'
-          repository:
+            $ref: '../ApplicationGitRepositoryRequest.yaml'
+          helm_repository:
             type: object
             nullable: true
             properties:
