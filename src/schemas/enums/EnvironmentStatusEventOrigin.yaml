@@ -1,0 +1,11 @@
+type: string
+nullable: true
+description: Origin of the organization event
+enum:
+  - API
+  - CLI
+  - CONSOLE
+  - GIT
+  - QOVERY_INTERNAL
+  - TERRAFORM_PROVIDER
+example: API

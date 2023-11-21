@@ -324,6 +324,8 @@ EnvironmentStatsResponseList:
   $ref: ./EnvironmentStatsResponseList.yaml
 EnvironmentStatuses:
   $ref: ./EnvironmentStatuses.yaml
+EnvironmentStatusEventOriginEnum:
+  $ref: ./enums/EnvironmentStatusEventOrigin.yaml
 EnvironmentStatusesWithStages:
   $ref: ./EnvironmentStatusesWithStages.yaml
 EnvironmentStatusList:
