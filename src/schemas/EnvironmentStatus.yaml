@@ -22,6 +22,7 @@ properties:
     type: integer
     nullable: true
   origin:
-    $ref: './enums/OrganizationEventOrigin.yaml'
+    $ref: './enums/EnvironmentStatusEventOrigin.yaml'
   triggered_by:
+    nullable: true
     type: string
