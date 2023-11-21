@@ -12884,6 +12884,8 @@ components:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/DatabaseRequest'
         - type: object
+          required:
+            - environment
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
