@@ -762,3 +762,5 @@ BaseJobResponse:
   $ref: ./job/BaseJobResponse.yaml
 HelmGitRepositoryRequest:
   $ref: ./HelmGitRepositoryRequest.yaml
+HelmValuesGitRepositoryRequest:
+  $ref: ./HelmValuesGitRepositoryRequest.yaml
