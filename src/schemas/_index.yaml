@@ -82,14 +82,8 @@ BuildPackLanguageEnum:
   $ref: ./enums/BuildPackLanguage.yaml
 CloneEnvironmentRequest:
   $ref: ./CloneEnvironmentRequest.yaml
-CloneApplicationRequest:
-  $ref: ./CloneApplicationRequest.yaml
-CloneContainerRequest:
-  $ref: ./CloneContainerRequest.yaml
-CloneDatabaseRequest:
-  $ref: ./CloneDatabaseRequest.yaml
-CloneJobRequest:
-  $ref: ./CloneJobRequest.yaml
+CloneServiceRequest:
+  $ref: ./CloneServiceRequest.yaml
 CloudProvider:
   $ref: ./CloudProviderResponse.yaml
 CloudProviderEnum:
