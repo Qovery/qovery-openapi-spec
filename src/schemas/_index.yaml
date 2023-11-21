@@ -80,8 +80,8 @@ BuildModeEnum:
   $ref: ./enums/BuildMode.yaml
 BuildPackLanguageEnum:
   $ref: ./enums/BuildPackLanguage.yaml
-CloneRequest:
-  $ref: ./CloneRequest.yaml
+CloneEnvironmentRequest:
+  $ref: ./CloneEnvironmentRequest.yaml
 CloneApplicationRequest:
   $ref: ./CloneApplicationRequest.yaml
 CloneContainerRequest:

@@ -10,7 +10,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../schemas/CloneRequest.yaml'
+          $ref: '../schemas/CloneEnvironmentRequest.yaml'
   responses:
     '202':
       description: 'Environment clone has been requested'
