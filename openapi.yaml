@@ -14826,13 +14826,9 @@ components:
             source:
               type: object
               properties:
-                git:
-                  type: object
-                  nullable: true
-                  properties:
-                    git_repository:
-                      $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
-                repository:
+                git_repository:
+                  $ref: '#/components/schemas/HelmGitRepositoryRequest'
+                helm_repository:
                   type: object
                   nullable: true
                   properties:
@@ -17365,6 +17361,34 @@ components:
               description: |
                 Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type. 
                 The new image tag shall be communicated via the "Auto Deploy job" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments
+    HelmGitRepositoryRequest:
+      type: object
+      nullable: true
+      required:
+        - provider
+        - owner
+        - name
+        - url
+      properties:
+        url:
+          type: string
+          description: application git repository URL
+          example: 'https://github.com/Qovery/simple-node-app'
+        branch:
+          type: string
+          description: |
+            Name of the branch to use. This is optional
+            If not specified, then the branch used is the `main` or `master` one
+          example: feat/text_xxx
+        root_path:
+          type: string
+          default: /
+          description: indicates the root path of the application.
+        git_token_id:
+          type: string
+          format: uuid
+          description: The git token id on Qovery side
+          nullable: true
   responses:
     '204':
       description: no content
