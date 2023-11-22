@@ -14839,25 +14839,27 @@ components:
               description: |
                 Specify if the helm will be automatically updated after receiving a new image tag or a new commit according to the source type. 
             source:
-              type: object
-              properties:
-                git_repository:
-                  $ref: '#/components/schemas/HelmGitRepositoryRequest'
-                helm_repository:
-                  type: object
-                  nullable: true
+              oneOf:
+                - type: object
                   properties:
-                    repository:
-                      type: string
-                      format: UUID
-                      description: The id of the helm repository
-                      nullable: true
-                    chart_name:
-                      type: string
-                      description: The name of the chart in the repository
-                    chart_version:
-                      type: string
-                      description: The version of the chart to use
+                    git_repository:
+                      $ref: '#/components/schemas/HelmGitRepositoryRequest'
+                - type: object
+                  properties:
+                    helm_repository:
+                      type: object
+                      properties:
+                        repository:
+                          type: string
+                          format: UUID
+                          description: The id of the helm repository
+                          nullable: true
+                        chart_name:
+                          type: string
+                          description: The name of the chart in the repository
+                        chart_version:
+                          type: string
+                          description: The version of the chart to use
             arguments:
               type: array
               description: The extra arguments to pass to helm
@@ -14911,17 +14913,8 @@ components:
                               content:
                                 type: string
                                 description: The content of the value file
-                    git:
-                      type: object
-                      nullable: true
-                      properties:
-                        git_repository:
-                          $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
-                        paths:
-                          type: array
-                          description: List of path inside your git repository to locate values file. Must start by a /
-                          items:
-                            type: string
+                    git_repository:
+                      $ref: '#/components/schemas/HelmValuesGitRepositoryRequest'
     HelmResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -17378,7 +17371,6 @@ components:
                 The new image tag shall be communicated via the "Auto Deploy job" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments
     HelmGitRepositoryRequest:
       type: object
-      nullable: true
       required:
         - provider
         - owner
@@ -17399,6 +17391,33 @@ components:
           type: string
           default: /
           description: indicates the root path of the application.
+        git_token_id:
+          type: string
+          format: uuid
+          description: The git token id on Qovery side
+          nullable: true
+    HelmValuesGitRepositoryRequest:
+      type: object
+      required:
+        - url
+        - branch
+        - paths
+      properties:
+        url:
+          type: string
+          description: application git repository URL
+          example: 'https://github.com/Qovery/simple-node-app'
+        branch:
+          type: string
+          description: |
+            Name of the branch to use. This is optional
+            If not specified, then the branch used is the `main` or `master` one
+          example: feat/text_xxx
+        paths:
+          type: array
+          description: List of path inside your git repository to locate values file. Must start by a /
+          items:
+            type: string
         git_token_id:
           type: string
           format: uuid
