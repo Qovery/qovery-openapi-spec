@@ -4379,7 +4379,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CloneRequest'
+              $ref: '#/components/schemas/CloneEnvironmentRequest'
       responses:
         '202':
           description: Environment clone has been requested
@@ -6663,7 +6663,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CloneApplicationRequest'
+              $ref: '#/components/schemas/CloneServiceRequest'
       responses:
         '202':
           description: Application clone has been requested
@@ -7650,7 +7650,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CloneContainerRequest'
+              $ref: '#/components/schemas/CloneServiceRequest'
       responses:
         '202':
           description: Container clone has been requested
@@ -8293,7 +8293,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CloneDatabaseRequest'
+              $ref: '#/components/schemas/CloneServiceRequest'
       responses:
         '202':
           description: Database clone has been requested
@@ -9978,7 +9978,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CloneJobRequest'
+              $ref: '#/components/schemas/CloneServiceRequest'
       responses:
         '202':
           description: Job clone has been requested
@@ -11459,7 +11459,7 @@ components:
         - PLAY
         - PYTHON
         - SCALA
-    CloneRequest:
+    CloneEnvironmentRequest:
       type: object
       required:
         - name
@@ -11475,40 +11475,7 @@ components:
         apply_deployment_rule:
           type: boolean
           default: false
-    CloneApplicationRequest:
-      type: object
-      required:
-        - name
-        - environment_id
-      properties:
-        name:
-          type: string
-        environment_id:
-          type: string
-          format: uuid
-    CloneContainerRequest:
-      type: object
-      required:
-        - name
-        - environment_id
-      properties:
-        name:
-          type: string
-        environment_id:
-          type: string
-          format: uuid
-    CloneDatabaseRequest:
-      type: object
-      required:
-        - name
-        - environment_id
-      properties:
-        name:
-          type: string
-        environment_id:
-          type: string
-          format: uuid
-    CloneJobRequest:
+    CloneServiceRequest:
       type: object
       required:
         - name
