@@ -1,9 +1,8 @@
 type: object
 required:
-  - provider
-  - owner
-  - name
   - url
+  - branch
+  - paths
 properties:
   url:
     type: string
@@ -15,10 +14,11 @@ properties:
       Name of the branch to use. This is optional
       If not specified, then the branch used is the `main` or `master` one
     example: feat/text_xxx
-  root_path:
-    type: string
-    default: /
-    description: indicates the root path of the application.
+  paths:
+    type: array
+    description: List of path inside your git repository to locate values file. Must start by a /
+    items:
+      type: string
   git_token_id:
     type: string
     format: uuid

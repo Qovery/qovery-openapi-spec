@@ -31,25 +31,27 @@ allOf:
         description: |
           Specify if the helm will be automatically updated after receiving a new image tag or a new commit according to the source type. 
       source:
-        type: object
-        properties:
-          git_repository:
-            $ref: '../HelmGitRepositoryRequest.yaml'
-          helm_repository:
-            type: object
-            nullable: true
+        oneOf:
+          - type: object
             properties:
-              repository:
-                type: string
-                format: UUID
-                description: The id of the helm repository
-                nullable: true
-              chart_name:
-                type: string
-                description: The name of the chart in the repository
-              chart_version:
-                type: string
-                description: The version of the chart to use
+              git_repository:
+                $ref: '../HelmGitRepositoryRequest.yaml'
+          - type: object
+            properties:
+              helm_repository:
+                type: object
+                properties:
+                  repository:
+                    type: string
+                    format: UUID
+                    description: The id of the helm repository
+                    nullable: true
+                  chart_name:
+                    type: string
+                    description: The name of the chart in the repository
+                  chart_version:
+                    type: string
+                    description: The version of the chart to use
       arguments:
         type: array
         description: The extra arguments to pass to helm
@@ -103,14 +105,5 @@ allOf:
                         content:
                           type: string
                           description: The content of the value file
-              git:
-                type: object
-                nullable: true
-                properties:
-                  git_repository:
-                    $ref: '../ApplicationGitRepositoryRequest.yaml'
-                  paths:
-                    type: array
-                    description: List of path inside your git repository to locate values file. Must start by a /
-                    items:
-                      type: string
+              git_repository:
+                  $ref: '../HelmValuesGitRepositoryRequest.yaml'
