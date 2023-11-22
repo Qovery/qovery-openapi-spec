@@ -80,16 +80,10 @@ BuildModeEnum:
   $ref: ./enums/BuildMode.yaml
 BuildPackLanguageEnum:
   $ref: ./enums/BuildPackLanguage.yaml
-CloneRequest:
-  $ref: ./CloneRequest.yaml
-CloneApplicationRequest:
-  $ref: ./CloneApplicationRequest.yaml
-CloneContainerRequest:
-  $ref: ./CloneContainerRequest.yaml
-CloneDatabaseRequest:
-  $ref: ./CloneDatabaseRequest.yaml
-CloneJobRequest:
-  $ref: ./CloneJobRequest.yaml
+CloneEnvironmentRequest:
+  $ref: ./CloneEnvironmentRequest.yaml
+CloneServiceRequest:
+  $ref: ./CloneServiceRequest.yaml
 CloudProvider:
   $ref: ./CloudProviderResponse.yaml
 CloudProviderEnum:

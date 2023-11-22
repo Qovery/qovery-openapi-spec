@@ -10,7 +10,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../schemas/CloneApplicationRequest.yaml'
+          $ref: '../schemas/CloneServiceRequest.yaml'
   responses:
     '202':
       description: 'Application clone has been requested'
