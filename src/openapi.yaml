@@ -665,7 +665,7 @@ paths:
   /container/{containerId}/link:
     $ref: './resources/ContainerLink.yaml'
   /container/{containerId}/clone:
-      $ref: './resources/ContainerClone.yaml'
+    $ref: './resources/ContainerClone.yaml'
   /environment/{environmentId}/database:
     $ref: './resources/EnvironmentDatabase.yaml'
   /environment/{environmentId}/database/status:
@@ -760,6 +760,8 @@ paths:
     $ref: './resources/helm/HelmDeploymentRestrictionRef.yaml'
   /helm/{helmId}/defaultValues:
     $ref: './resources/helm/HelmDefaultValues.yaml'
+  /helm/{helmId}/clone:
+    $ref: './resources/helm/HelmClone.yaml'
   /environment/{environmentId}/job:
     $ref: './resources/job/EnvironmentJob.yaml'
   /environment/{environmentId}/job/status:
@@ -807,7 +809,7 @@ paths:
   /job/{jobId}/commit:
     $ref: './resources/JobCommit.yaml'
   /job/{jobId}/clone:
-      $ref: './resources/JobClone.yaml'
+    $ref: './resources/JobClone.yaml'
   /service/{serviceId}/deploymentStage:
     $ref: './resources/deploymentStage/ServiceDeploymentStage.yaml'
   /variable:
