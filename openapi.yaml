@@ -9063,6 +9063,35 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/helm/{helmId}/clone':
+    post:
+      summary: Clone helm
+      description: This will create a new helm with the same configuration on the targeted environment Id.
+      operationId: cloneHelm
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Containers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneServiceRequest'
+      responses:
+        '202':
+          description: Helm clone has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   '/environment/{environmentId}/job':
     get:
       summary: List jobs
