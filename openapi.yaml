@@ -3161,13 +3161,7 @@ paths:
       operationId: getHelmRepository
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - name: helmRepositoryId
-          in: path
-          description: Helm chart repository ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/helmRepositoryId'
       tags:
         - Helm Repositories
       responses:
@@ -3188,7 +3182,7 @@ paths:
       operationId: deleteHelmRepository
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1helmRepository~1%7BhelmRepositoryId%7D/get/parameters/1'
+        - $ref: '#/components/parameters/helmRepositoryId'
       tags:
         - Helm Repositories
       responses:
@@ -3205,7 +3199,7 @@ paths:
       operationId: editHelmRepository
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1organization~1%7BorganizationId%7D~1helmRepository~1%7BhelmRepositoryId%7D/get/parameters/1'
+        - $ref: '#/components/parameters/helmRepositoryId'
       tags:
         - Helm Repositories
       requestBody:
@@ -10596,6 +10590,14 @@ components:
       name: helmId
       in: path
       description: Helm ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    helmRepositoryId:
+      name: helmRepositoryId
+      in: path
+      description: Helm chart repository ID
       required: true
       schema:
         type: string
