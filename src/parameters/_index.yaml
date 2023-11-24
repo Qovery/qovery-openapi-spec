@@ -82,3 +82,5 @@ variableId:
   $ref: ./path/variableId.yaml
 helmId:
   $ref: ./path/helmId.yaml
+helmRepositoryId:
+  $ref: ./path/helmRepositoryId.yaml
