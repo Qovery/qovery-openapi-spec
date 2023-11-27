@@ -28,5 +28,5 @@ properties:
   disk_size:
     type: integer
     example: 50
-    default: 20
-    description: Unit is in GB. The disk size to be used for the node configuration 
+    default: 40
+    description: Unit is in GB. The disk size to be used for the node configuration

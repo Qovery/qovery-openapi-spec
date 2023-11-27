@@ -22,7 +22,7 @@ properties:
   disk_size:
     type: integer
     example: 50
-    default: 20
+    default: 40
     description: Unit is in GB. The disk size to be used for the node configuration
   instance_type:
     type: string
