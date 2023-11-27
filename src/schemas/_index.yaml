@@ -464,6 +464,8 @@ HelmForceEvent:
 #  $ref: ./helm/DeploymentHistoryHelmResponse.yaml
 HelmPortProtocolEnum:
   $ref: ./enums/HelmPortProtocol.yaml
+HelmDefaultValuesRequest:
+  $ref: ./helm/HelmDefaultValuesRequest.yaml
 Key:
   $ref: ./Key.yaml
 KubernetesEnum:
