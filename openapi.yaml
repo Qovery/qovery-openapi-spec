@@ -11245,6 +11245,10 @@ components:
                 example: /mnt/images
     AvailableContainerRegistryResponse:
       type: object
+      required:
+        - kind
+        - required_config
+        - is_mandatory
       properties:
         kind:
           $ref: '#/components/schemas/ContainerRegistryKindEnum'
@@ -11262,6 +11266,10 @@ components:
             $ref: '#/components/schemas/AvailableContainerRegistryResponse'
     AvailableHelmRepositoryResponse:
       type: object
+      required:
+        - kind
+        - required_config
+        - is_mandatory
       properties:
         kind:
           $ref: '#/components/schemas/HelmRepositoryKindEnum'
