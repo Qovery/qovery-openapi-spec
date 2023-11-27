@@ -736,6 +736,8 @@ paths:
     $ref: './resources/UserSignUp.yaml'
   /environment/{environmentId}/helm:
     $ref: './resources/helm/EnvironmentHelm.yaml'
+  /environment/{environmentId}/helmDefaultValues:
+      $ref: './resources/helm/EnvironmentHelmDefaultValues.yaml'
   /environment/{environmentId}/helm/status:
     $ref: './resources/helm/EnvironmentHelmStatus.yaml'
   /helm/{helmId}:
@@ -758,8 +760,6 @@ paths:
     $ref: './resources/helm/HelmDeploymentRestriction.yaml'
   /helm/{helmId}/deploymentRestriction/{deploymentRestrictionId}:
     $ref: './resources/helm/HelmDeploymentRestrictionRef.yaml'
-  /helm/{helmId}/defaultValues:
-    $ref: './resources/helm/HelmDefaultValues.yaml'
   /helm/{helmId}/clone:
     $ref: './resources/helm/HelmClone.yaml'
   /environment/{environmentId}/job:
