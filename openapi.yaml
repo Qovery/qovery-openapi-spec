@@ -8592,6 +8592,32 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Helm name within the environment is already taken
+  '/environment/{environmentId}/helmDefaultValues':
+    post:
+      summary: Get helm default values
+      operationId: createHelmDefaultValues
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Helms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmDefaultValuesRequest'
+      responses:
+        '201':
+          description: helm values
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/helm/status':
     get:
       summary: List all environment helm statuses
@@ -9030,27 +9056,6 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/helm/{helmId}/defaultValues':
-    get:
-      summary: Display the contents of the values.yaml file
-      operationId: getDefaultValues
-      parameters:
-        - $ref: '#/components/parameters/helmId'
-      tags:
-        - Helm Main Calls
-      responses:
-        '200':
-          description: Display the contents of the values.yaml file
-          content:
-            text/plain:
-              schema:
-                type: string
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -15156,6 +15161,34 @@ components:
       enum:
         - HTTP
         - GRPC
+    HelmDefaultValuesRequest:
+      allOf:
+        - type: object
+          required:
+            - source
+          properties:
+            source:
+              oneOf:
+                - type: object
+                  properties:
+                    git_repository:
+                      $ref: '#/components/schemas/HelmGitRepositoryRequest'
+                - type: object
+                  properties:
+                    helm_repository:
+                      type: object
+                      properties:
+                        repository:
+                          type: string
+                          format: UUID
+                          description: The id of the helm repository
+                          nullable: true
+                        chart_name:
+                          type: string
+                          description: The name of the chart in the repository
+                        chart_version:
+                          type: string
+                          description: The version of the chart to use
     Key:
       type: object
       required:
