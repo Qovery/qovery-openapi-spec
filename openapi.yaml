@@ -8700,6 +8700,29 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/helm/{helmId}/commit':
+    get:
+      summary: List last helm commits
+      description: Returns list of the last 100 commits made on the repository linked to helm
+      operationId: listHelmCommit
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+        - $ref: '#/components/parameters/helmOf'
+      tags:
+        - Helm Main Calls
+      responses:
+        '200':
+          description: List Helm commits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/helm/{helmId}/advancedSettings':
     get:
       summary: Get advanced settings
@@ -10598,6 +10621,13 @@ components:
       schema:
         type: string
         format: uuid
+    helmOf:
+      name: of
+      in: query
+      description: Source of git commit. Can be 'chart' or 'values'
+      schema:
+        type: string
+        default: chart
   schemas:
     AccountInfo:
       type: object
