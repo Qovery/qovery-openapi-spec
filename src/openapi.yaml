@@ -733,6 +733,8 @@ paths:
     $ref: './resources/helm/EnvironmentHelmStatus.yaml'
   /helm/{helmId}:
     $ref: './resources/helm/Helm.yaml'
+  /helm/{helmId}/commit:
+    $ref: './resources/helm/HelmCommit.yaml'
   /helm/{helmId}/advancedSettings:
     $ref: './resources/helm/HelmAdvancedSettings.yaml'
   /helm/{helmId}/deploy:
