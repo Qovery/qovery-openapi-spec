@@ -6,6 +6,7 @@ allOf:
       - cloud_provider
       - mode
       - cluster_id
+      - project
     properties:
       name:
         type: string

@@ -1,5 +1,6 @@
 get:
   summary: 'List default job advanced settings'
+  description: 'Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)'
   operationId: getDefaultJobAdvancedSettings
   tags:
     - Jobs

@@ -6,5 +6,8 @@ allOf:
         type: string
       description:
         type: string
-      scope:
-        $ref: './enums/OrganizationApiTokenScope.yaml'
+      role_name:
+        type: string
+      role_id:
+        type: string
+        format: uuid

@@ -433,6 +433,7 @@ components:
       - containers
       - databases
       - jobs
+      - helms
       properties:
         applications:
           type: array
@@ -446,6 +447,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DatabaseStatusDto'
+        helms:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatusDto'
         id:
           type: string
         jobs:
@@ -593,6 +598,7 @@ components:
       - CONTAINER
       - DATABASE
       - JOB
+      - HELM
     Timestamp:
       type: integer
       description: Unix timestamp with millisecond precision
@@ -601,3 +607,4 @@ components:
       enum:
       - mCPU
       - MiB
+      - GiB

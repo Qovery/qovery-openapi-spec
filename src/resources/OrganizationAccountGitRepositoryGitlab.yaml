@@ -3,6 +3,12 @@ get:
   operationId: getOrganizationGitlabRepositories
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
+    - in: query
+      name: gitTokenId
+      schema:
+        type: string
+        format: uuid
+      description: The git token id that must be used for the application
   tags:
     - Organization Account Git Repositories
   responses:

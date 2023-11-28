@@ -4,6 +4,10 @@ delete:
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
     - $ref: '../parameters/path/clusterId.yaml'
+    - in: query
+      name: deleteMode
+      schema:
+        $ref: '../schemas/enums/ClusterDeleteMode.yaml'
   tags:
     - Clusters
   responses:

@@ -13,7 +13,6 @@
          format: email
        role:
          $ref: './enums/InviteMemberRole.yaml'
-         description: deprecated
        invitation_link:
          type: string
          format: uri

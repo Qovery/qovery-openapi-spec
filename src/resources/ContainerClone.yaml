@@ -10,7 +10,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../schemas/CloneContainerRequest.yaml'
+          $ref: '../schemas/CloneServiceRequest.yaml'
   responses:
     '202':
       description: 'Container clone has been requested'

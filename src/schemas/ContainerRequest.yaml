@@ -7,6 +7,7 @@ allOf:
       - registry_id
       - image_name
       - tag
+      - healthchecks
     properties:
       name:
         type: string
@@ -66,3 +67,9 @@ allOf:
           Indicates if the 'environment preview option' is enabled for this container.  
           If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.  
           If not specified, it takes the value of the `auto_preview` property from the associated environment.
+      auto_deploy:
+        type: boolean
+        nullable: true
+        description: |
+          Specify if the container will be automatically updated after receiving a new image tag. 
+          The new image tag shall be communicated via the "Auto Deploy container" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments

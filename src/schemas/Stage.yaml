@@ -9,5 +9,5 @@ properties:
   name:
     type: string
     description: stage name
-  metrics:
+  steps:
     $ref: './StageStepMetrics.yaml'

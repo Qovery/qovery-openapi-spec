@@ -1,0 +1,35 @@
+allOf:
+  - $ref: './BaseJobResponse.yaml'
+  - type: object
+    required:
+      - schedule
+      - job_type
+    properties:
+      job_type:
+        type: string
+        enum:
+          - CRON
+      schedule:
+        type: object
+        properties:
+          cronjob:
+            type: object
+            required:
+              - scheduled_at
+            properties:
+              arguments:
+                type: array
+                items:
+                  type: string
+              entrypoint:
+                type: string
+                description: optional entrypoint when launching container
+              scheduled_at:
+                type: string
+                format: cron
+                description: |
+                  Can only be set if the event is CRON.  
+                  Represent the cron format for the job schedule without seconds.  
+                  For example: `* * * * *` represent the cron to launch the job every minute.  
+                  See https://crontab.guru/ to WISIWIG interface.  
+                  Timezone is UT

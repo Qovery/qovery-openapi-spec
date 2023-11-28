@@ -22,15 +22,14 @@ properties:
   disk_size:
     type: integer
     example: 50
-    default: 20
+    default: 40
     description: Unit is in GB. The disk size to be used for the node configuration
   instance_type:
     type: string
     example: "T3A_LARGE"
     description: the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
   kubernetes:
-    $ref: ./enums/Kubernetes.yaml
-    default: "MANAGED"
+    $ref: './enums/Kubernetes.yaml'
   production:
     type: boolean
     description: specific flag to indicate that this cluster is a production one

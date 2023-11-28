@@ -2,6 +2,10 @@ allOf:
   - $ref: './BaseResponse.yaml'
   - $ref: './ServiceStorageResponse.yaml'
   - type: object
+    required:
+      - healthchecks
+      - name
+      - environment
     properties:
       environment:
         $ref: './ReferenceObject.yaml'
@@ -69,3 +73,6 @@ allOf:
       entrypoint:
         type: string
         description: optional entrypoint when launching container
+      auto_deploy:
+        type: boolean
+        description: Specify if the application will be automatically updated after receiving a new commit.

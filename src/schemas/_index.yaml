@@ -44,6 +44,10 @@ AvailableContainerRegistryResponse:
   $ref: ./AvailableContainerRegistryResponse.yaml
 AvailableContainerRegistryResponseList:
   $ref: ./AvailableContainerRegistryResponseList.yaml
+AvailableHelmRepositoryResponse:
+  $ref: ./AvailableHelmRepositoryResponse.yaml
+AvailableHelmRepositoryResponseList:
+  $ref: ./AvailableHelmRepositoryResponseList.yaml
 AwsCredentialsRequest:
   $ref: ./AwsCredentialsRequest.yaml
 Backup:
@@ -76,16 +80,10 @@ BuildModeEnum:
   $ref: ./enums/BuildMode.yaml
 BuildPackLanguageEnum:
   $ref: ./enums/BuildPackLanguage.yaml
-CloneRequest:
-  $ref: ./CloneRequest.yaml
-CloneApplicationRequest:
-  $ref: ./CloneApplicationRequest.yaml
-CloneContainerRequest:
-  $ref: ./CloneContainerRequest.yaml
-CloneDatabaseRequest:
-  $ref: ./CloneDatabaseRequest.yaml
-CloneJobRequest:
-  $ref: ./CloneJobRequest.yaml
+CloneEnvironmentRequest:
+  $ref: ./CloneEnvironmentRequest.yaml
+CloneServiceRequest:
+  $ref: ./CloneServiceRequest.yaml
 CloudProvider:
   $ref: ./CloudProviderResponse.yaml
 CloudProviderEnum:
@@ -94,6 +92,8 @@ CloudProviderResponseList:
   $ref: ./CloudProviderResponseList.yaml
 Cluster:
   $ref: ./ClusterResponse.yaml
+ClusterDeleteMode:
+  $ref: ./enums/ClusterDeleteMode.yaml
 ClusterLogs:
   $ref: ./ClusterLogsResponse.yaml
 ClusterCloudProviderInfo:
@@ -156,18 +156,30 @@ ContainerDeployRequest:
   $ref: ./ContainerDeployRequest.yaml
 ContainerRegistryKindEnum:
   $ref: ./enums/ContainerRegistryKind.yaml
+HelmRepositoryKindEnum:
+  $ref: ./enums/HelmRepositoryKind.yaml
 ContainerRegistryRequest:
   $ref: ./ContainerRegistryRequest.yaml
 ContainerRegistryResponse:
   $ref: ./ContainerRegistryResponse.yaml
+ContainerRegistryProviderDetailsResponse:
+  $ref: ./ContainerRegistryProviderDetailsResponse.yaml
 ContainerRegistryResponseList:
   $ref: ./ContainerRegistryResponseList.yaml
+HelmRepositoryRequest:
+  $ref: ./HelmRepositoryRequest.yaml
+HelmRepositoryResponse:
+  $ref: ./HelmRepositoryResponse.yaml
+HelmRepositoryResponseList:
+  $ref: ./HelmRepositoryResponseList.yaml
 ContainerRequest:
   $ref: ./ContainerRequest.yaml
 ContainerResponse:
   $ref: ./ContainerResponse.yaml
 ContainerResponseList:
   $ref: ./ContainerResponseList.yaml
+ContainerSource:
+  $ref: ./ContainerSource.yaml
 Cost:
   $ref: ./CostResponse.yaml
 CostRange:
@@ -306,6 +318,8 @@ EnvironmentStatsResponseList:
   $ref: ./EnvironmentStatsResponseList.yaml
 EnvironmentStatuses:
   $ref: ./EnvironmentStatuses.yaml
+EnvironmentStatusEventOriginEnum:
+  $ref: ./enums/EnvironmentStatusEventOrigin.yaml
 EnvironmentStatusesWithStages:
   $ref: ./EnvironmentStatusesWithStages.yaml
 EnvironmentStatusList:
@@ -324,6 +338,8 @@ EnvironmentVariableRequest:
   $ref: ./EnvironmentVariableRequest.yaml
 EnvironmentVariableResponseList:
   $ref: ./EnvironmentVariableResponseList.yaml
+EnvironmentServiceIdsAllRequest:
+  $ref: ./EnvironmentServiceIdsAllRequest.yaml
 APIVariableScopeEnum:
   $ref: ./enums/APIVariableScope.yaml
 APIVariableTypeEnum:
@@ -344,6 +360,18 @@ GitRepositoryBranchResponseList:
   $ref: ./GitRepositoryBranchResponseList.yaml
 GitRepositoryResponseList:
   $ref: ./GitRepositoryResponseList.yaml
+GitTokenAssociatedServiceType:
+  $ref: ./enums/GitTokenAssociatedServiceType.yaml
+GitTokenAssociatedServiceResponse:
+  $ref: ./GitTokenAssociatedServiceResponse.yaml
+GitTokenAssociatedServicesResponseList:
+  $ref: ./GitTokenAssociatedServicesResponseList.yaml
+GitTokenRequest:
+  $ref: ./GitTokenRequest.yaml
+GitTokenResponse:
+  $ref: ./GitTokenResponse.yaml
+GitTokenResponseList:
+  $ref: ./GitTokenResponseList.yaml
 Healthcheck:
   $ref: ./Healthcheck.yaml
 Instance:
@@ -376,8 +404,6 @@ DeploymentStageServiceResponseList:
   $ref: ./deploymentStage/DeploymentStageServiceResponseList.yaml
 DeploymentStageServiceResponse:
   $ref: ./deploymentStage/DeploymentStageServiceResponse.yaml
-DeploymentStageWithServiceStatusesList:
-  $ref: ./DeploymentStageWithServiceStatusesList.yaml
 DeploymentStageWithServicesStatuses:
   $ref: ./DeploymentStageWithServicesStatuses.yaml
 JobRequest:
@@ -402,6 +428,38 @@ JobForceEvent:
   $ref: ./enums/JobForceEvent.yaml
 DeploymentHistoryJobResponse:
   $ref: ./job/DeploymentHistoryJobResponse.yaml
+HelmRequest:
+  $ref: ./helm/HelmRequest.yaml
+HelmResponse:
+  $ref: ./helm/HelmResponse.yaml
+HelmResponseList:
+  $ref: ./helm/HelmResponseList.yaml
+HelmAdvancedSettings:
+  $ref: ./helm/HelmAdvancedSettings.yaml
+#HelmDeployRequest:
+#  $ref: ./helm/HelmDeployRequest.yaml
+HelmDeploymentRestrictionRequest:
+  $ref: ./helm/HelmDeploymentRestrictionRequest.yaml
+HelmDeploymentRestrictionResponse:
+  $ref: ./helm/HelmDeploymentRestrictionResponse.yaml
+HelmDeploymentRestrictionResponseList:
+  $ref: ./helm/HelmDeploymentRestrictionResponseList.yaml
+HelmPortRequest:
+  $ref: ./helm/HelmPortRequest.yaml
+HelmPortResponse:
+  $ref: ./helm/HelmResponse.yaml
+HelmPortResponseList:
+  $ref: ./helm/HelmResponseList.yaml
+#HelmScheduleEvent:
+#  $ref: ./enums/HelmScheduleEvent.yaml
+HelmForceEvent:
+  $ref: ./enums/HelmForceEvent.yaml
+#DeploymentHistoryHelmResponse:
+#  $ref: ./helm/DeploymentHistoryHelmResponse.yaml
+HelmPortProtocolEnum:
+  $ref: ./enums/HelmPortProtocol.yaml
+HelmDefaultValuesRequest:
+  $ref: ./helm/HelmDefaultValuesRequest.yaml
 Key:
   $ref: ./Key.yaml
 KubernetesEnum:
@@ -610,6 +668,8 @@ SignUpRequest:
   $ref: ./SignUpRequest.yaml
 StateEnum:
   $ref: ./enums/State.yaml
+ClusterStateEnum:
+  $ref: ./enums/ClusterState.yaml
 Status:
   $ref: ./Status.yaml
 Stage:
@@ -678,3 +738,19 @@ StepMetricStatusEnum:
   $ref: ./enums/StepMetricStatus.yaml
 ServiceStepMetricNameEnum:
   $ref: ./enums/ServiceStepMetricName.yaml
+OrganizationJobAutoDeployRequest:
+  $ref: ./OrganizationJobAutoDeployRequest.yaml
+RegistryMirroringModeEnum:
+  $ref: ./enums/RegistryMirroringMode.yaml
+ServiceTypeForVariableEnum:
+  $ref: ./enums/ServiceTypeForVariable.yaml
+LifecycleJobResponse:
+  $ref: ./job/LifecycleJobResponse.yaml
+CronJobResponse:
+  $ref: ./job/CronJobResponse.yaml
+BaseJobResponse:
+  $ref: ./job/BaseJobResponse.yaml
+HelmGitRepositoryRequest:
+  $ref: ./HelmGitRepositoryRequest.yaml
+HelmValuesGitRepositoryRequest:
+  $ref: ./HelmValuesGitRepositoryRequest.yaml

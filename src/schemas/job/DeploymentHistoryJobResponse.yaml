@@ -13,7 +13,6 @@ allOf:
         type: string
       commit:
         $ref: '../CommitResponse.yaml'
-        nullable: true
       schedule:
         type: object
         properties:

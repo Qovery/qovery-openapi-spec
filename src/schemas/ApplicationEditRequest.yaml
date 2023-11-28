@@ -1,6 +1,8 @@
 allOf:
   - $ref: './ServiceStorageRequest.yaml'
   - type: object
+    required:
+      - healthchecks
     properties:
       name:
         type: string
@@ -58,3 +60,7 @@ allOf:
       entrypoint:
         type: string
         description: optional entrypoint when launching container
+      auto_deploy:
+        type: boolean
+        nullable: true
+        description: Specify if the application will be automatically updated after receiving a new commit.

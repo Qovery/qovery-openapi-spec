@@ -31,8 +31,7 @@ allOf:
         example: "T3A_LARGE"
         description: the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
       kubernetes:
-        $ref: ./enums/Kubernetes.yaml
-        default: "MANAGED"
+        $ref: './enums/Kubernetes.yaml'
       cpu:
         type: integer
         example: 10000
@@ -45,7 +44,7 @@ allOf:
         type: integer
         description: This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
       status:
-        $ref: './enums/State.yaml'
+        $ref: './enums/ClusterState.yaml'
       has_access:
         type: boolean
       version:

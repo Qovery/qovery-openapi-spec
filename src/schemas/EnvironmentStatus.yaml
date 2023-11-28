@@ -18,3 +18,11 @@ properties:
   last_deployment_id:
     type: string
     nullable: true
+  total_deployment_duration_in_seconds:
+    type: integer
+    nullable: true
+  origin:
+    $ref: './enums/EnvironmentStatusEventOrigin.yaml'
+  triggered_by:
+    nullable: true
+    type: string

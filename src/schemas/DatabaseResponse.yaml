@@ -2,6 +2,8 @@ allOf:
   - $ref: './BaseResponse.yaml'
   - $ref: './DatabaseRequest.yaml'
   - type: object
+    required:
+      - environment
     properties:
       environment:
         $ref: './ReferenceObject.yaml'

@@ -3,11 +3,9 @@ properties:
   deployment.custom_domain_check_enabled:
     type: boolean
     description: disable custom domain check when deploying an application
-    default: true
   deployment.termination_grace_period_seconds:
     type: integer
     description: define how long in seconds an application is supposed to be stopped gracefully
-    default: 60
   deployment.affinity.node.required:
     type: object
     additionalProperties:
@@ -15,7 +13,6 @@ properties:
     description: Set pod placement on specific Kubernetes nodes labels
   deployment.antiaffinity.pod:
     type: string
-    default: Preferred
     enum:
       - Preferred
       - Requirred
@@ -28,79 +25,56 @@ properties:
     enum:
       - RollingUpdate
       - Recreate
-    default: RollingUpdate
     description: |
       * `RollingUpdate` gracefully rollout new versions, and automatically rollback if the new version fails to start
       * `Recreate` stop all current versions and create new ones once all old ones have been shutdown
   deployment.update_strategy.rolling_update.max_unavailable_percent:
     type: integer
-    default: 25
     description: Define the percentage of a maximum number of pods that can be unavailable during the update process
   deployment.update_strategy.rolling_update.max_surge_percent:
     type: integer
-    default: 25
     description: Define the percentage of the maximum number of pods that can be created over the desired number of pods
   build.timeout_max_sec:
     type: integer
-    default: 1800
   build.cpu_max_in_milli:
     type: integer
     description: define the max cpu resources (in milli)
-    default: 4000
   build.ram_max_in_gib:
     type: integer
     description: define the max ram resources (in gib)
-    default: 8
   network.ingress.proxy_body_size_mb:
     type: integer
-    default: 100
   network.ingress.enable_cors:
     type: boolean
-    default: false
   network.ingress.cors_allow_origin:
     type: string
-    default: "*"
   network.ingress.cors_allow_methods:
     type: string
-    default: GET, PUT, POST, DELETE, PATCH, OPTIONS
   network.ingress.cors_allow_headers:
     type: string
-    default: DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization
   network.ingress.proxy_buffer_size_kb:
     type: integer
-    default: 4
     description: header buffer size used while reading response header from upstream
   network.ingress.keepalive_time_seconds:
     type: integer
-    default: 3600
     description: Limits the maximum time (in seconds) during which requests can be processed through one keepalive connection
   network.ingress.keepalive_timeout_seconds:
     type: integer
-    default: 60
     description: Sets a timeout (in seconds) during which an idle keepalive connection to an upstream server will stay open.
   network.ingress.send_timeout_seconds:
     type: integer
-    default: 60
     description: Sets a timeout (in seconds) for transmitting a response to the client
   network.ingress.proxy_connect_timeout_seconds:
     type: integer
-    default: 60
     description: Sets a timeout (in seconds) for establishing a connection to a proxied server
   network.ingress.proxy_send_timeout_seconds:
     type: integer
-    default: 60
     description: Sets a timeout (in seconds) for transmitting a request to the proxied server
   network.ingress.proxy_read_timeout_seconds:
     type: integer
-    default: 60
     description: Sets a timeout (in seconds) for reading a response from the proxied server
   network.ingress.proxy_buffering:
     type: string
-    default: "on"
-    description: Allows to enable or disable nginx `proxy-buffering`
-  network.ingress.proxy_request_buffering:
-    type: string
-    default: "on"
     description: Allows to enable or disable nginx `proxy-request-buffering`
   network.ingress.whitelist_source_range:
     type: string
@@ -109,49 +83,39 @@ properties:
       This property can be used to whitelist source IP ranges for ingress proxy.
       The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1
       To allow all source ranges, set 0.0.0.0/0.
-    default: "0.0.0.0/0"
   network.ingress.denylist_source_range:
     type: string
-    default: ""
     description: |
       list of source ranges to deny access to ingress proxy. 
       This property can be used to blacklist source IP ranges for ingress proxy.
       The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1
   network.ingress.basic_auth_env_var:
     type: string
-    default: ""
     description: |
       Set the name of an environment variable to use as a basic authentication (`login:crypted_password`) from `htpasswd` command.
   network.ingress.enable_sticky_session:
     type: boolean
-    default: false
     description: |
       Enable the load balancer to bind a user's session to a specific target.
       This ensures that all requests from the user during the session are sent to the same target
   network.ingress.grpc_send_timeout_seconds:
     type: integer
     description: Sets a timeout (in seconds) for transmitting a request to the grpc server
-    default: 60
   network.ingress.grpc_read_timeout_seconds:
     type: integer
     description: Sets a timeout (in seconds) for transmitting a request to the grpc server
-    default: 60
   network.ingress.extra_headers:
     type: string
-    default: "{}"
     description: Allows to define response headers
     example: '{"X-Frame-Options":"DENY ","X-Content-Type-Options":"nosniff"}'
   hpa.cpu.average_utilization_percent:
     type: integer
     description: Percentage value of cpu usage at which point pods should scale up.
-    default: 60
   security.service_account_name:
     type: string
-    default: ""
     description: |
       Allows you to set an existing Kubernetes service account name
   security.read_only_root_filesystem:
     type: boolean
-    default: false
     description: |
       Mounts the container's root filesystem as read-only

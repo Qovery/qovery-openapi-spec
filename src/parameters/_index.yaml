@@ -44,6 +44,8 @@ jobId:
 # QUERY
 gitCommitId:
   $ref: ./query/gitCommitId.yaml
+gitTokenId:
+  $ref: ./path/gitTokenId.yaml
 instanceId:
   $ref: ./path/instanceId.yaml
 invoiceId:
@@ -78,3 +80,7 @@ webhookId:
   $ref: ./path/webhookId.yaml
 variableId:
   $ref: ./path/variableId.yaml
+helmId:
+  $ref: ./path/helmId.yaml
+helmRepositoryId:
+  $ref: ./path/helmRepositoryId.yaml

@@ -1,4 +1,8 @@
 type: object
+required:
+  - kind
+  - required_config
+  - is_mandatory
 properties:
   kind:
     $ref: ./enums/ContainerRegistryKind.yaml

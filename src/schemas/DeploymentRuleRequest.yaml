@@ -15,9 +15,6 @@ properties:
   cluster:
     type: string
     format: uuid
-  auto_deploy:
-    type: boolean
-    default: true
   auto_stop:
     type: boolean
     default: false

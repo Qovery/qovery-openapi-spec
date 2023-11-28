@@ -1,5 +1,6 @@
 type: string
 description: Type of the organization event
+nullable: true
 enum:
   - ADVANCED_SETTINGS
   - API_TOKEN
@@ -16,6 +17,7 @@ enum:
   - DEPLOYMENT_STAGE
   - GITHUB_APP
   - GIT_REPOSITORY
+  - GIT_TOKEN
   - INVITATION
   - MEMBER_ROLE
   - PLAN

@@ -54,6 +54,19 @@ tags:
   - name: Job Registry
   - name: Job Secret
   - name: Jobs
+  - name: Helm
+  - name: Helm Actions
+  - name: Helm Configuration
+  - name: Helm Database
+  - name: Helm Deployment Restriction
+  - name: Helm Deployment History
+  - name: Helm Environment Variable
+  - name: Helm Logs
+  - name: Helm Main Calls
+  - name: Helm Metrics
+  - name: Helm Repository
+  - name: Helm Secret
+  - name: Helms
   - name: Backups
   - name: Billing
   - name: Cloud Provider
@@ -97,6 +110,7 @@ tags:
   - name: Projects
   - name: Referral & Rewards
   - name: Container Registries
+  - name: Helm Repositories
   - name: User Sign Up
   - name: Variable Main Calls
 x-tagGroups:
@@ -116,6 +130,7 @@ x-tagGroups:
       - Cloud Provider Credentials
       - Github App
       - Container Registries
+      - Helm Repositories
   - name: Project
     tags:
       - Project Main Calls
@@ -130,6 +145,7 @@ x-tagGroups:
       - Containers
       - Databases
       - Jobs
+      - Helms
       - Environment Actions
       - Environment Logs
       - Environment Deployment History
@@ -187,6 +203,18 @@ x-tagGroups:
       - Job Deployment History
       - Job Environment Variable
       - Job Secret
+  - name: Helm
+    tags:
+      - Helm Main Calls
+      - Helm Actions
+      - Helm Configuration
+      - Helm Custom Domain
+      - Helm Deployment Restriction
+      - Helm Metrics
+      - Helm Deployment History
+      - Helm Environment Variable
+      - Helm Secret
+      - Helm Repository
   - name: Account
     tags:
       - Account Info
@@ -214,6 +242,12 @@ paths:
     $ref: './resources/OrganizationApiTokenRef.yaml'
   /organization/{organizationId}/availableRole:
     $ref: './resources/OrganizationAvailableRole.yaml'
+  /organization/{organizationId}/gitToken:
+    $ref: './resources/GitToken.yaml'
+  /organization/{organizationId}/gitToken/{gitTokenId}:
+    $ref: './resources/GitTokenRef.yaml'
+  /organization/{organizationId}/gitToken/{gitTokenId}/associatedServices:
+    $ref: './resources/GitTokenAssociatedServices.yaml'
   /organization/{organizationId}/member:
     $ref: './resources/OrganizationMember.yaml'
   /organization/{organizationId}/inviteMember:
@@ -360,6 +394,12 @@ paths:
     $ref: './resources/ContainerRegistryContainerStatus.yaml'
   /availableContainerRegistry:
     $ref: './resources/AvailableContainerRegistry.yaml'
+  /availableHelmRepository:
+    $ref: './resources/AvailableHelmRepository.yaml'
+  /organization/{organizationId}/helmRepository:
+    $ref: './resources/OrganizationHelmRepository.yaml'
+  /organization/{organizationId}/helmRepository/{helmRepositoryId}:
+    $ref: './resources/OrganizationHelmRepositoryRef.yaml'
   /project/{projectId}:
     $ref: './resources/Project.yaml'
   /project/{projectId}/deploymentRule:
@@ -448,10 +488,16 @@ paths:
     $ref: './resources/EnvironmentServiceDeploy.yaml'
   /environment/{environmentId}/service/restart-service:
     $ref: './resources/EnvironmentServiceReboot.yaml'
+  /environment/{environmentId}/service/stop:
+    $ref: './resources/EnvironmentServiceStop.yaml'
+  /environment/{environmentId}/service/delete:
+    $ref: './resources/EnvironmentServiceDelete.yaml'
   /organization/{organizationId}/container/deploy:
     $ref: './resources/OrganizationContainerAutoDeploy.yaml'
   /organization/{organizationId}/container/preview:
     $ref: './resources/OrganizationContainerPreview.yaml'
+  /organization/{organizationId}/job/deploy:
+    $ref: './resources/OrganizationJobAutoDeploy.yaml'
   /environment/{environmentId}/log:
     $ref: './resources/EnvironmentLog.yaml'
   /environment/{environmentId}/logs:
@@ -486,6 +532,8 @@ paths:
     $ref: './resources/DefaultContainerAdvancedSettings.yaml'
   /defaultJobAdvancedSettings:
     $ref: './resources/DefaultJobAdvancedSettings.yaml'
+  /defaultHelmAdvancedSettings:
+    $ref: './resources/DefaultHelmAdvancedSettings.yaml'
   /application/{applicationId}:
     $ref: './resources/Application.yaml'
   /application/{applicationId}/status:
@@ -613,7 +661,7 @@ paths:
   /container/{containerId}/link:
     $ref: './resources/ContainerLink.yaml'
   /container/{containerId}/clone:
-      $ref: './resources/ContainerClone.yaml'
+    $ref: './resources/ContainerClone.yaml'
   /environment/{environmentId}/database:
     $ref: './resources/EnvironmentDatabase.yaml'
   /environment/{environmentId}/database/status:
@@ -682,6 +730,34 @@ paths:
     $ref: './resources/AccountRewardClaim.yaml'
   /admin/userSignUp:
     $ref: './resources/UserSignUp.yaml'
+  /environment/{environmentId}/helm:
+    $ref: './resources/helm/EnvironmentHelm.yaml'
+  /environment/{environmentId}/helmDefaultValues:
+      $ref: './resources/helm/EnvironmentHelmDefaultValues.yaml'
+  /environment/{environmentId}/helm/status:
+    $ref: './resources/helm/EnvironmentHelmStatus.yaml'
+  /helm/{helmId}:
+    $ref: './resources/helm/Helm.yaml'
+  /helm/{helmId}/advancedSettings:
+    $ref: './resources/helm/HelmAdvancedSettings.yaml'
+  /helm/{helmId}/deploy:
+    $ref: './resources/helm/HelmDeploy.yaml'
+  /helm/{helmId}/restart:
+    $ref: './resources/helm/HelmRestart.yaml'
+  /helm/{helmId}/redeploy:
+    $ref: './resources/helm/HelmRedeploy.yaml'
+  /helm/{helmId}/stop:
+    $ref: './resources/helm/HelmStop.yaml'
+  /helm/{helmId}/status:
+    $ref: './resources/helm/HelmStatus.yaml'
+  /helm/{helmId}/deploymentHistory:
+    $ref: './resources/helm/HelmDeploymentHistory.yaml'
+  /helm/{helmId}/deploymentRestriction:
+    $ref: './resources/helm/HelmDeploymentRestriction.yaml'
+  /helm/{helmId}/deploymentRestriction/{deploymentRestrictionId}:
+    $ref: './resources/helm/HelmDeploymentRestrictionRef.yaml'
+  /helm/{helmId}/clone:
+    $ref: './resources/helm/HelmClone.yaml'
   /environment/{environmentId}/job:
     $ref: './resources/job/EnvironmentJob.yaml'
   /environment/{environmentId}/job/status:
@@ -729,7 +805,7 @@ paths:
   /job/{jobId}/commit:
     $ref: './resources/JobCommit.yaml'
   /job/{jobId}/clone:
-      $ref: './resources/JobClone.yaml'
+    $ref: './resources/JobClone.yaml'
   /service/{serviceId}/deploymentStage:
     $ref: './resources/deploymentStage/ServiceDeploymentStage.yaml'
   /variable:
@@ -740,8 +816,8 @@ paths:
     $ref: './resources/variable/VariableOverride.yaml'
   /variable/{variableId}:
     $ref: './resources/variable/VariableRef.yaml'
-  #/organization/{organizationId}/job/preview:
-  #/organization/{organizationId}/job/deploy:
+  /variable/import:
+    $ref: './resources/variable/VariablesImport.yaml'
 components:
   parameters:
     $ref: './parameters/_index.yaml'
@@ -758,11 +834,11 @@ components:
     ApiKeyAuth:
       type: apiKey
       in: header
-      name: Token
+      name: Authorization
       description: "Token API are generated by Qovery to manage machine to machine interaction and do not have a TTL. Curl Example ' curl https://console.qovery.com/organization -H \"Authorization: Token $qovery_token\" '"
 security:
   - bearerAuth: []
   - ApiKeyAuth: []
 
 
-  
+

@@ -10,7 +10,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../schemas/CloneJobRequest.yaml'
+          $ref: '../schemas/CloneServiceRequest.yaml'
   responses:
     '202':
       description: 'Job clone has been requested'

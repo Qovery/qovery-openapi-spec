@@ -33,3 +33,10 @@ properties:
   deployed_commit_tag:
     type: string
     example: "v1.0.1"
+  git_token_id:
+    type: string
+    format: uuid
+    nullable: true
+  git_token_name:
+    type: string
+    nullable: true

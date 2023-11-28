@@ -1,0 +1,8 @@
+type: object
+properties:
+  image_name:
+    type: string
+    description: the job image name to deploy
+  tag:
+    type: string
+    description: the new tag to deploy

@@ -1,0 +1,23 @@
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - type: object
+    required:
+      - name
+      - type
+      - associated_services_count
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      type:
+        $ref: './enums/GitProvider.yaml'
+      expired_at:
+        type: string
+        format: date
+      workspace:
+        type: string
+        description: Mandatory only for BITBUCKET git provider
+      associated_services_count:
+        type: number
+        description: The number of services using this git token
