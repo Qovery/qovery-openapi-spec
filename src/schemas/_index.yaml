@@ -344,12 +344,6 @@ APIVariableScopeEnum:
   $ref: ./enums/APIVariableScope.yaml
 APIVariableTypeEnum:
   $ref: ./enums/APIVariableType.yaml
-Event:
-  $ref: ./EventResponse.yaml
-EventPaginatedResponseList:
-  $ref: ./EventPaginatedResponseList.yaml
-EventResponseList:
-  $ref: ./EventResponseList.yaml
 GenericObjectCurrentCost:
   $ref: ./GenericObjectCurrentCostResponse.yaml
 GitAuthProvider:

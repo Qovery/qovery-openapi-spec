@@ -23,7 +23,6 @@ tags:
   - name: Application Deployment Restriction
   - name: Application Deployment History
   - name: Application Environment Variable
-  - name: Application Event
   - name: Application Logs
   - name: Application Main Calls
   - name: Application Metrics
@@ -80,7 +79,6 @@ tags:
   - name: Database Application
   - name: Database Container
   - name: Database Deployment History
-  - name: Database Event
   - name: Database Main Calls
   - name: Database Metrics
   - name: Databases
@@ -101,9 +99,9 @@ tags:
   - name: Organization Account Git Repositories
   - name: Organization Main Calls
   - name: Organization Custom Role
+  - name: Organization Event
   - name: Organization Api Token
   - name: Organization Webhook
-  - name: Organization Event
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
@@ -171,7 +169,6 @@ x-tagGroups:
       - Application Deployment History
       - Application Environment Variable
       - Application Secret
-      - Application Event
   - name: Container
     tags:
       - Container Main Calls
@@ -195,7 +192,6 @@ x-tagGroups:
       - Database Application
       - Database Container
       - Backups
-      - Database Event
   - name: Job
     tags:
       - Job Main Calls
