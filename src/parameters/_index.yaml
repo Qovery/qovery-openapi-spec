@@ -84,3 +84,5 @@ helmId:
   $ref: ./path/helmId.yaml
 helmRepositoryId:
   $ref: ./path/helmRepositoryId.yaml
+helmOf:
+  $ref: ./query/helmOf.yaml
