@@ -10,7 +10,7 @@ properties:
     description: |
       Commit to deploy for chart source.
       Cannot be set if `version` is defined
-  value_override_git_commit_id:
+  values_override_git_commit_id:
     type: string
     description: |
       Commit to deploy for values override
