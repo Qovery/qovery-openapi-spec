@@ -16488,6 +16488,10 @@ components:
       type: object
       required:
         - name
+        - scaleway_access_key
+        - scaleway_secret_key
+        - scaleway_project_id
+        - scaleway_organization_id
       properties:
         name:
           type: string
@@ -16496,6 +16500,8 @@ components:
         scaleway_secret_key:
           type: string
         scaleway_project_id:
+          type: string
+        scaleway_organization_id:
           type: string
     Secret:
       allOf:
