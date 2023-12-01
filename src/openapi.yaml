@@ -755,6 +755,8 @@ paths:
     $ref: './resources/helm/HelmDeploymentRestrictionRef.yaml'
   /helm/{helmId}/clone:
     $ref: './resources/helm/HelmClone.yaml'
+  /helm/{helmId}/link:
+    $ref: './resources/helm/HelmLink.yaml'
   /environment/{environmentId}/job:
     $ref: './resources/job/EnvironmentJob.yaml'
   /environment/{environmentId}/job/status:
