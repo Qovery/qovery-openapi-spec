@@ -4,6 +4,10 @@ properties:
     type: array
     items:
       type: object
+      required:
+        - destination
+        - target
+        - description
       properties:
         destination:
           type: string
