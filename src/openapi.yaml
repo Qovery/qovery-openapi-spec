@@ -287,6 +287,8 @@ paths:
     $ref: './resources/OrganizationClusterRef.yaml'
   /organization/{organizationId}/cluster/{clusterId}/status:
     $ref: './resources/OrganizationClusterStatus.yaml'
+  /organization/{organizationId}/cluster/{clusterId}/kubeconfig:
+    $ref: './resources/OrganizationClusterKubeconfig.yaml'
   /organization/{organizationId}/cluster/{clusterId}/advancedSettings:
     $ref: './resources/OrganizationClusterAdvancedSettings.yaml'
   /organization/{organizationId}/cluster/{clusterId}/routingTable:
