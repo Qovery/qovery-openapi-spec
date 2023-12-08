@@ -12591,12 +12591,27 @@ components:
               type: boolean
               default: false
               description: Bypass tls certificate verification when connecting to repository
-            login:
+            username:
               type: string
               description: Required if the repository is private
             password:
               type: string
               description: Required if the repository is private
+            access_key_id:
+              type: string
+              description: Required if kind is `ECR` or `PUBLIC_ECR`
+            secret_access_key:
+              type: string
+              description: Required if kind is `ECR` or `PUBLIC_ECR`
+            region:
+              type: string
+              description: Required if kind is `ECR` or `SCALEWAY_CR`
+            scaleway_access_key:
+              type: string
+              description: Required if kind is `SCALEWAY_CR`
+            scaleway_secret_key:
+              type: string
+              description: Required if kind is `SCALEWAY_CR`
     HelmRepositoryResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
