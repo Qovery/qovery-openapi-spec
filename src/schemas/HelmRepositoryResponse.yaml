@@ -11,3 +11,6 @@ allOf:
       url:
         type: string
         description: URL of the helm repository
+      skip_tls_verification:
+        type: boolean
+        description: Bypass tls certificate verification when connecting to repository
