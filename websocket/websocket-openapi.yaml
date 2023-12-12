@@ -151,6 +151,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceInfraLogResponseDto'
+  /infra/status:
+    get:
+      tags:
+      - infra_status
+      operationId: handle_infra_status_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Stream of infra status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfraStatusDto'
   /service/logs:
     get:
       tags:
@@ -461,6 +486,8 @@ components:
           type: string
         state:
           $ref: '#/components/schemas/ServiceStateDto'
+    InfraStatusDto:
+      type: object
     MetricDto:
       type: object
       required:
