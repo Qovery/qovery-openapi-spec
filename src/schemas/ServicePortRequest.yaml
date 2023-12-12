@@ -8,6 +8,9 @@ properties:
         - internal_port
         - publicly_accessible
       properties:
+        id:
+          type: string
+          format: uuid
         name:
           type: string
         internal_port:
