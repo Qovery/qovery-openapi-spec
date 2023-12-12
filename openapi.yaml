@@ -12572,6 +12572,7 @@ components:
         - name
         - kind
         - config
+        - skip_tls_verification
       properties:
         name:
           type: string
@@ -12586,13 +12587,12 @@ components:
             URL of the helm chart repository:
             * For `OCI`: it must start by oci://
             * For `HTTPS`: it must be start by https://
+        skip_tls_verification:
+          type: boolean
+          description: Bypass tls certificate verification when connecting to repository
         config:
           type: object
           properties:
-            skip_tls_verification:
-              type: boolean
-              default: false
-              description: Bypass tls certificate verification when connecting to repository
             username:
               type: string
               description: Required if the repository is private
