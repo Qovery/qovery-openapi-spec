@@ -15016,6 +15016,12 @@ components:
               description: name is case insensitive
             description:
               type: string
+            timeout_sec:
+              type: integer
+              minimum: 0
+              default: 600
+              description: |
+                Maximum number of seconds allowed for helm to run before killing it and mark it as failed
             auto_preview:
               type: boolean
               description: |
