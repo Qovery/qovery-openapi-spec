@@ -344,6 +344,8 @@ APIVariableScopeEnum:
   $ref: ./enums/APIVariableScope.yaml
 APIVariableTypeEnum:
   $ref: ./enums/APIVariableType.yaml
+GcpCredentialsRequest:
+  $ref: ./GcpCredentialsRequest.yaml
 GenericObjectCurrentCost:
   $ref: ./GenericObjectCurrentCostResponse.yaml
 GitAuthProvider:

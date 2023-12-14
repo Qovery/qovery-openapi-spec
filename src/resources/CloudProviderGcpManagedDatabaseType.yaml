@@ -1,0 +1,18 @@
+get:
+  summary: 'List GCP available managed database types'
+  operationId: listGcpManagedDatabaseType
+  tags:
+    - Cloud Provider
+  responses:
+    '200':
+      description: 'list GCP available managed database types'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ManagedDatabaseTypeResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

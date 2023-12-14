@@ -307,6 +307,10 @@ paths:
     $ref: './resources/CloudProviderScalewayCredentials.yaml'
   /organization/{organizationId}/scaleway/credentials/{credentialsId}:
     $ref: './resources/CloudProviderScalewayCredentialsRef.yaml'
+  /organization/{organizationId}/gcp/credentials:
+    $ref: './resources/CloudProviderGcpCredentials.yaml'
+  /organization/{organizationId}/gcp/credentials/{credentialsId}:
+    $ref: './resources/CloudProviderGcpCredentialsRef.yaml'
   /organization/{organizationId}/github/connect:
     $ref: './resources/OrganizationGithubAppConnect.yaml'
   /organization/{organizationId}/github/disconnect:
@@ -375,6 +379,12 @@ paths:
     $ref: './resources/CloudProviderSCWManagedDatabaseInstanceType.yaml'
   /scaleway/instanceType/{zone}:
     $ref: './resources/CloudProviderScalewayKapsuleInstanceType.yaml'
+  /gcp/region:
+    $ref: './resources/CloudProviderGcpRegion.yaml'
+  /gcp/clusterFeature:
+    $ref: './resources/CloudProviderGcpClusterFeature.yaml'
+  /gcp/instanceType/{region}:
+    $ref: './resources/CloudProviderGcpGkeInstanceType.yaml'
   /organization/{organizationId}/cluster/{clusterId}/cloudProviderInfo:
     $ref: './resources/OrganizationClusterCloudProviderInfo.yaml'
   /organization/{organizationId}/cluster/{clusterId}/isReady:
