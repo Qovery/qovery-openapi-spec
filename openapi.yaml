@@ -1826,6 +1826,123 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/gcp/credentials':
+    get:
+      summary: List GCP credentials
+      operationId: listGcpCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: list credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentialsResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create GCP credentials set
+      operationId: createGCPCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GcpCredentialsRequest'
+      responses:
+        '201':
+          description: Credentials created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/gcp/credentials/{credentialsId}':
+    get:
+      summary: Get a set of GCP credentials
+      operationId: getGcpCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/credentialsId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: Get a set of GCP credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a set of GCP credentials
+      operationId: editGcpCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/credentialsId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GcpCredentialsRequest'
+      responses:
+        '200':
+          description: Edit a set of GCP credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a set of GCP credentials
+      operationId: deleteGcpCredentials
+      parameters:
+        - $ref: '#/components/parameters/credentialsId'
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/github/connect':
     post:
       summary: Connect a github account to an organization
@@ -2810,6 +2927,65 @@ paths:
       responses:
         '200':
           description: list the instance types available for Scaleway Kapsule by region
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterInstanceTypeResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /gcp/region:
+    get:
+      summary: List GCP regions
+      operationId: listGcpRegions
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list regions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterRegionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /gcp/clusterFeature:
+    get:
+      summary: List GCP features available
+      operationId: listGcpFeatures
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list features available for GCP cloud provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterFeatureResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/gcp/instanceType/{region}':
+    get:
+      summary: List GCP GKE available instance types
+      operationId: listGcpGkeInstanceType
+      parameters:
+        - $ref: '#/components/parameters/region'
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list the instance types available for GCP GKE by region
           content:
             application/json:
               schema:
@@ -11621,6 +11797,7 @@ components:
         - AWS
         - DO
         - SCW
+        - GCP
     CloudProviderResponseList:
       type: object
       properties:
@@ -14173,6 +14350,16 @@ components:
         - OVERRIDE
         - BUILT_IN
         - FILE
+    GcpCredentialsRequest:
+      type: object
+      required:
+        - name
+        - json_credentials
+      properties:
+        name:
+          type: string
+        json_credentials:
+          type: string
     GenericObjectCurrentCost:
       type: object
       required:
