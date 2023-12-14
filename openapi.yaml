@@ -15275,6 +15275,7 @@ components:
       enum:
         - K3S
         - MANAGED
+        - SELF_MANAGED
       default: MANAGED
     Link:
       type: object
