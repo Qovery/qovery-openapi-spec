@@ -3,3 +3,4 @@ enum:
   - AWS
   - DO
   - SCW
+  - GCP
