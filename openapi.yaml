@@ -12795,6 +12795,8 @@ components:
       allOf:
         - $ref: '#/components/schemas/Base'
         - type: object
+          required:
+            - name
           properties:
             name:
               type: string
