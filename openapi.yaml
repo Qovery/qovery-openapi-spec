@@ -14356,11 +14356,11 @@ components:
       type: object
       required:
         - name
-        - json_credentials
+        - gcp_credentials
       properties:
         name:
           type: string
-        json_credentials:
+        gcp_credentials:
           type: string
     GenericObjectCurrentCost:
       type: object
