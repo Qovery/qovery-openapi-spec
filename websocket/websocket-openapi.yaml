@@ -11,6 +11,31 @@ info:
 servers:
 - url: wss://ws.qovery.com
 paths:
+  /cluster/status:
+    get:
+      tags:
+      - cluster_status
+      operationId: handle_cluster_status_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Stream of cluster status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterStatusDto'
   /deployment/logs:
     get:
       tags:
@@ -151,31 +176,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceInfraLogResponseDto'
-  /infra/status:
-    get:
-      tags:
-      - infra_status
-      operationId: handle_infra_status_request
-      parameters:
-      - name: organization
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
-      responses:
-        '200':
-          description: Stream of infra status
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InfraStatusDto'
   /service/logs:
     get:
       tags:
@@ -364,6 +364,15 @@ components:
         state_message:
           type: string
           nullable: true
+    ClusterStatusDto:
+      type: object
+      required:
+      - nodes
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterNodeDto'
     ContainerStateDto:
       type: object
       required:
@@ -486,8 +495,6 @@ components:
           type: string
         state:
           $ref: '#/components/schemas/ServiceStateDto'
-    InfraStatusDto:
-      type: object
     MetricDto:
       type: object
       required:
@@ -570,9 +577,12 @@ components:
       required:
       - created_at
       - pod_name
+      - container_name
       - message
       - version
       properties:
+        container_name:
+          type: string
         created_at:
           $ref: '#/components/schemas/Timestamp'
         message:
