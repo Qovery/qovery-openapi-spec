@@ -1849,7 +1849,7 @@ paths:
           $ref: '#/components/responses/404'
     post:
       summary: Create GCP credentials set
-      operationId: createGCPCredentials
+      operationId: createGcpCredentials
       parameters:
         - $ref: '#/components/parameters/organizationId'
       tags:
