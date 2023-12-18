@@ -8992,22 +8992,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                version:
-                  type: string
-                  description: |
-                    version of the chart to deploy.
-                    Cannot be set if `git_commit_id` is defined
-                git_commit_id:
-                  type: string
-                  description: |
-                    Commit to deploy for chart source.
-                    Cannot be set if `version` is defined
-                values_override_git_commit_id:
-                  type: string
-                  description: |
-                    Commit to deploy for values override
+              $ref: '#/components/schemas/HelmDeployRequest'
       responses:
         '202':
           description: Deploy helm
@@ -14336,6 +14321,11 @@ components:
           items:
             type: string
             format: uuid
+        helm_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
     APIVariableScopeEnum:
       type: string
       enum:
@@ -15377,6 +15367,23 @@ components:
             $ref: '#/components/schemas/HelmResponse'
     HelmAdvancedSettings:
       type: object
+    HelmDeployRequest:
+      type: object
+      properties:
+        chart_version:
+          type: string
+          description: |
+            version of the chart to deploy.
+            Cannot be set if `git_commit_id` is defined
+        git_commit_id:
+          type: string
+          description: |
+            Commit to deploy for chart source.
+            Cannot be set if `version` is defined
+        values_override_git_commit_id:
+          type: string
+          description: |
+            Commit to deploy for values override
     HelmDeploymentRestrictionRequest:
       type: object
       required:
