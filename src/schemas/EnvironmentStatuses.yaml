@@ -18,3 +18,7 @@ properties:
     type: array
     items:
       $ref: '../schemas/Status.yaml'
+  helms:
+    type: array
+    items:
+      $ref: '../schemas/Status.yaml'
