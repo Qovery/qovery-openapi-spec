@@ -364,6 +364,64 @@ components:
         state_message:
           type: string
           nullable: true
+    ClusterNodeDto:
+      type: object
+      required:
+      - name
+      - architecture
+      - kernel_version
+      - kubelet_version
+      - operating_system
+      - os_image
+      - unschedulable
+      - resources_allocatable
+      - taints
+      - conditions
+      - labels
+      - annotations
+      - addresses
+      - pods
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeAddressDto'
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        architecture:
+          type: string
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeConditionDto'
+        kernel_version:
+          type: string
+        kubelet_version:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        name:
+          type: string
+        operating_system:
+          type: string
+        os_image:
+          type: string
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodePodInfoDto'
+        resources_allocatable:
+          $ref: '#/components/schemas/NodeResourceDto'
+        taints:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeTaintDto'
+        unschedulable:
+          type: boolean
     ClusterStatusDto:
       type: object
       required:
@@ -523,6 +581,116 @@ components:
           $ref: '#/components/schemas/ResourceStatusDto'
         unit:
           $ref: '#/components/schemas/UnitDto'
+    NodeAddressDto:
+      type: object
+      required:
+      - type
+      - address
+      properties:
+        address:
+          type: string
+        type:
+          type: string
+    NodeConditionDto:
+      type: object
+      required:
+      - type
+      - status
+      - reason
+      - message
+      properties:
+        last_heartbeat_time:
+          allOf:
+          - $ref: '#/components/schemas/prost_types.Timestamp'
+          nullable: true
+        last_transition_time:
+          allOf:
+          - $ref: '#/components/schemas/prost_types.Timestamp'
+          nullable: true
+        message:
+          type: string
+        reason:
+          type: string
+        status:
+          type: string
+        type:
+          type: string
+    NodePodInfoDto:
+      type: object
+      required:
+      - name
+      - namespace
+      properties:
+        cpu_milli_limit:
+          type: integer
+          format: int32
+          nullable: true
+          minimum: 0
+        cpu_milli_request:
+          type: integer
+          format: int32
+          nullable: true
+          minimum: 0
+        environment_id:
+          type: string
+          nullable: true
+        memory_mib_limit:
+          type: integer
+          format: int32
+          nullable: true
+          minimum: 0
+        memory_mib_request:
+          type: integer
+          format: int32
+          nullable: true
+          minimum: 0
+        name:
+          type: string
+        namespace:
+          type: string
+        project_id:
+          type: string
+          nullable: true
+        service_id:
+          type: string
+          nullable: true
+    NodeResourceDto:
+      type: object
+      required:
+      - cpu_milli
+      - memory_mib
+      - ephemeral_storage_gib
+      - pods
+      properties:
+        cpu_milli:
+          type: integer
+          format: int64
+          minimum: 0
+        ephemeral_storage_gib:
+          type: integer
+          format: int64
+          minimum: 0
+        memory_mib:
+          type: integer
+          format: int64
+          minimum: 0
+        pods:
+          type: integer
+          format: int64
+          minimum: 0
+    NodeTaintDto:
+      type: object
+      required:
+      - key
+      - value
+      - effect
+      properties:
+        effect:
+          type: string
+        key:
+          type: string
+        value:
+          type: string
     PodStatusDto:
       type: object
       required:
