@@ -620,6 +620,7 @@ components:
       required:
       - name
       - namespace
+      - images_version
       properties:
         cpu_milli_limit:
           type: integer
@@ -634,6 +635,10 @@ components:
         environment_id:
           type: string
           nullable: true
+        images_version:
+          type: object
+          additionalProperties:
+            type: string
         memory_mib_limit:
           type: integer
           format: int32
