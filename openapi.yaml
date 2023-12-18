@@ -9286,7 +9286,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/helmId'
       tags:
-        - Containers
+        - Helms
       requestBody:
         content:
           application/json:
@@ -14164,6 +14164,10 @@ components:
           items:
             $ref: '#/components/schemas/Status'
         databases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+        helms:
           type: array
           items:
             $ref: '#/components/schemas/Status'
