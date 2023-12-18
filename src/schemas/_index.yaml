@@ -438,8 +438,8 @@ HelmResponseList:
   $ref: ./helm/HelmResponseList.yaml
 HelmAdvancedSettings:
   $ref: ./helm/HelmAdvancedSettings.yaml
-#HelmDeployRequest:
-#  $ref: ./helm/HelmDeployRequest.yaml
+HelmDeployRequest:
+  $ref: ./helm/HelmDeployRequest.yaml
 HelmDeploymentRestrictionRequest:
   $ref: ./helm/HelmDeploymentRestrictionRequest.yaml
 HelmDeploymentRestrictionResponse:

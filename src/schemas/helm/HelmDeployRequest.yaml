@@ -1,6 +1,6 @@
 type: object
 properties:
-  version:
+  chart_version:
     type: string
     description: |
       version of the chart to deploy.

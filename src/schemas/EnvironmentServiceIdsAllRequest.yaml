@@ -20,3 +20,8 @@ properties:
     items:
       type: string
       format: uuid
+  helm_ids:
+    type: array
+    items:
+      type: string
+      format: uuid
