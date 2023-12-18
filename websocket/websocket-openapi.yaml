@@ -601,11 +601,11 @@ components:
       properties:
         last_heartbeat_time:
           allOf:
-          - $ref: '#/components/schemas/prost_types.Timestamp'
+          - $ref: '#/components/schemas/Timestamp'
           nullable: true
         last_transition_time:
           allOf:
-          - $ref: '#/components/schemas/prost_types.Timestamp'
+          - $ref: '#/components/schemas/Timestamp'
           nullable: true
         message:
           type: string
