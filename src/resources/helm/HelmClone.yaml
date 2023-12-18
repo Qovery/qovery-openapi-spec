@@ -5,7 +5,7 @@ post:
   parameters:
     - $ref: '../../parameters/path/helmId.yaml'
   tags:
-    - Containers
+    - Helms
   requestBody:
     content:
       application/json:
