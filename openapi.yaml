@@ -15268,6 +15268,10 @@ components:
                   properties:
                     repository:
                       type: object
+                      required:
+                        - chart_name
+                        - chart_version
+                        - repository
                       properties:
                         chart_name:
                           type: string
@@ -15277,6 +15281,10 @@ components:
                           description: The version of the chart to use
                         repository:
                           type: object
+                          required:
+                            - id
+                            - name
+                            - url
                           properties:
                             id:
                               type: string
@@ -15329,11 +15337,16 @@ components:
                     raw:
                       type: object
                       nullable: true
+                      required:
+                        - values
                       properties:
                         values:
                           type: array
                           items:
                             type: object
+                            required:
+                              - name
+                              - content
                             properties:
                               name:
                                 type: string
@@ -15344,6 +15357,9 @@ components:
                     git:
                       type: object
                       nullable: true
+                      required:
+                        - git_repository
+                        - paths
                       properties:
                         git_repository:
                           $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
