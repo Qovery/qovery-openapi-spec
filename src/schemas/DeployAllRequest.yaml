@@ -48,3 +48,21 @@ properties:
         git_commit_id:
           type: string
           description: Commit ID to deploy. Use only if job is a repository source. Can be empty only if the service has been already deployed (in this case the service version won't be changed)
+  helms:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: id of the helm to be updated.
+        chart_version:
+          type: string
+          description: The new chart version for the Helm source. Use this only if the helm has a Helm repository source.
+        git_commit_id:
+          type: string
+          description: The commit Id to deploy. Use this only if the helm has a Git repository source.
+        values_override_git_commit_id:
+          type: string
+          description: The commit Id of the override values to deploy. Use only if the helm has a Git override values repository.
