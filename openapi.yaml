@@ -9139,26 +9139,7 @@ paths:
                       results:
                         type: array
                         items:
-                          allOf:
-                            - $ref: '#/components/schemas/Base'
-                            - type: object
-                              properties:
-                                name:
-                                  type: string
-                                  description: name of the helm
-                                status:
-                                  $ref: '#/components/schemas/StateEnum'
-                                commit:
-                                  $ref: '#/components/schemas/Commit'
-                                repository:
-                                  type: object
-                                  nullable: true
-                                  description: 'If the chart source if from a repository, the chart name and its version'
-                                  properties:
-                                    chart_name:
-                                      type: string
-                                    version:
-                                      type: string
+                          $ref: '#/components/schemas/DeploymentHistoryHelmResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -13532,6 +13513,10 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/DeploymentHistoryJobResponse'
+            helms:
+              type: array
+              items:
+                $ref: '#/components/schemas/DeploymentHistoryHelmResponse'
     DeploymentHistoryEnvironmentPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
@@ -15463,6 +15448,27 @@ components:
       type: string
       enum:
         - DIFF
+    DeploymentHistoryHelmResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          properties:
+            name:
+              type: string
+              description: name of the helm
+            status:
+              $ref: '#/components/schemas/StateEnum'
+            commit:
+              $ref: '#/components/schemas/Commit'
+            repository:
+              type: object
+              nullable: true
+              description: 'If the chart source if from a repository, the chart name and its version'
+              properties:
+                chart_name:
+                  type: string
+                chart_version:
+                  type: string
     HelmPortProtocolEnum:
       type: string
       default: HTTP
