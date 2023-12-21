@@ -2,7 +2,7 @@ get:
   summary: 'List default helm advanced settings'
   operationId: getDefaultHelmAdvancedSettings
   tags:
-    - Helm
+    - Helms
   responses:
     '200':
       description: 'Default helm advanced settings'
