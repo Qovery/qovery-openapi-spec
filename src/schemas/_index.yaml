@@ -456,8 +456,8 @@ HelmPortResponseList:
 #  $ref: ./enums/HelmScheduleEvent.yaml
 HelmForceEvent:
   $ref: ./enums/HelmForceEvent.yaml
-#DeploymentHistoryHelmResponse:
-#  $ref: ./helm/DeploymentHistoryHelmResponse.yaml
+DeploymentHistoryHelmResponse:
+  $ref: ./helm/DeploymentHistoryHelmResponse.yaml
 HelmPortProtocolEnum:
   $ref: ./enums/HelmPortProtocol.yaml
 HelmDefaultValuesRequest:

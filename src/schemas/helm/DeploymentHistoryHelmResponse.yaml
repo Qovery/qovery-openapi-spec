@@ -16,6 +16,6 @@ allOf:
         properties:
           chart_name:
             type: string
-          version:
+          chart_version:
             type: string
 

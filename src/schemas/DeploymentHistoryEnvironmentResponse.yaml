@@ -24,3 +24,7 @@ allOf:
         type: array
         items:
           $ref: './job/DeploymentHistoryJobResponse.yaml'
+      helms:
+        type: array
+        items:
+          $ref: './helm/DeploymentHistoryHelmResponse.yaml'
