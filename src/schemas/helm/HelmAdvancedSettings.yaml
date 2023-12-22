@@ -1,1 +1,71 @@
 type: object
+properties:
+  network.ingress.proxy_body_size_mb:
+    type: integer
+  network.ingress.enable_cors:
+    type: boolean
+  network.ingress.cors_allow_origin:
+    type: string
+  network.ingress.cors_allow_methods:
+    type: string
+  network.ingress.cors_allow_headers:
+    type: string
+  network.ingress.proxy_buffer_size_kb:
+    type: integer
+    description: header buffer size used while reading response header from upstream
+  network.ingress.keepalive_time_seconds:
+    type: integer
+    description: Limits the maximum time (in seconds) during which requests can be processed through one keepalive connection
+  network.ingress.keepalive_timeout_seconds:
+    type: integer
+    description: Sets a timeout (in seconds) during which an idle keepalive connection to an upstream server will stay open.
+  network.ingress.send_timeout_seconds:
+    type: integer
+    description: Sets a timeout (in seconds) for transmitting a response to the client
+  network.ingress.proxy_connect_timeout_seconds:
+    type: integer
+    description: Sets a timeout (in seconds) for establishing a connection to a proxied server
+  network.ingress.proxy_send_timeout_seconds:
+    type: integer
+    description: Sets a timeout (in seconds) for transmitting a request to the proxied server
+  network.ingress.proxy_read_timeout_seconds:
+    type: integer
+    description: Sets a timeout (in seconds) for reading a response from the proxied server
+  network.ingress.proxy_buffering:
+    type: string
+    description: Allows to enable or disable nginx `proxy-buffering`
+  network.ingress.proxy_request_buffering:
+    type: string
+    description: Allows to enable or disable nginx `proxy-request-buffering`
+  network.ingress.grpc_send_timeout_seconds:
+    type: integer
+    description: Sets a timeout (in seconds) for transmitting a request to the grpc server
+  network.ingress.grpc_read_timeout_seconds:
+    type: integer
+    description: Sets a timeout (in seconds) for transmitting a request to the grpc server
+  network.ingress.whitelist_source_range:
+    type: string
+    description: |
+      list of source ranges to allow access to ingress proxy. 
+      This property can be used to whitelist source IP ranges for ingress proxy.
+      The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1
+      To allow all source ranges, set 0.0.0.0/0.
+  network.ingress.denylist_source_range:
+    type: string
+    description: |
+      list of source ranges to deny access to ingress proxy. 
+      This property can be used to blacklist source IP ranges for ingress proxy.
+      The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1
+  network.ingress.extra_headers:
+    type: string
+    description: Allows to define response headers
+    example: '{"X-Frame-Options":"DENY ","X-Content-Type-Options":"nosniff"}'
+  network.ingress.basic_auth_env_var:
+    type: string
+    description: |
+      Set the name of an environment variable to use as a basic authentication (`login:crypted_password`) from `htpasswd` command. You can add multiples comma separated values.
+  network.ingress.enable_sticky_session:
+    type: boolean
+    description: |
+      Enable the load balancer to bind a user's session to a specific target.
+      This ensures that all requests from the user during the session are sent to the same target
