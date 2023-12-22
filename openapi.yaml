@@ -17353,6 +17353,7 @@ components:
             - scope
             - key
             - value
+            - is_secret
           properties:
             key:
               type: string
@@ -17382,6 +17383,8 @@ components:
             owned_by:
               type: string
               description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
+            is_secret:
+              type: boolean
     VariableResponseList:
       type: object
       properties:
