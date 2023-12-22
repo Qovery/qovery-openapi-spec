@@ -83,21 +83,15 @@ allOf:
           set:
             type: array
             items:
-              type: array
-              items:
-                type: string
+              $ref: './HelmKeyValue.yaml'
           set_string:
             type: array
             items:
-              type: array
-              items:
-                type: string
+              $ref: './HelmKeyValue.yaml'
           set_json:
             type: array
             items:
-              type: array
-              items:
-                type: string
+              $ref: './HelmKeyValue.yaml'
           file:
             type: object
             nullable: true
