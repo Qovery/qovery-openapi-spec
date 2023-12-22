@@ -756,3 +756,5 @@ HelmGitRepositoryRequest:
   $ref: ./HelmGitRepositoryRequest.yaml
 HelmValuesGitRepositoryRequest:
   $ref: ./HelmValuesGitRepositoryRequest.yaml
+HelmKeyValue:
+  $ref: ./helm/HelmKeyValue.yaml
