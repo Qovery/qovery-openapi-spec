@@ -95,17 +95,11 @@ allOf:
           Specify helm values you want to set or override
         properties:
           set:
-            type: array
-            items:
-              $ref: './HelmKeyValue.yaml'
+            $ref: './HelmKeyValues.yaml'
           set_string:
-            type: array
-            items:
-              $ref: './HelmKeyValue.yaml'
+            $ref: './HelmKeyValues.yaml'
           set_json:
-            type: array
-            items:
-              $ref: './HelmKeyValue.yaml'
+            $ref: './HelmKeyValues.yaml'
           file:
             type: object
             nullable: true

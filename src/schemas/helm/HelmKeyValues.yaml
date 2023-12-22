@@ -1,0 +1,6 @@
+type: array
+description: "The input is in json array format: [ [$KEY,$VALUE], [...] ]"
+items:
+  type: array
+  items:
+    type: string
