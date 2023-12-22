@@ -15145,21 +15145,15 @@ components:
                 set:
                   type: array
                   items:
-                    type: array
-                    items:
-                      type: string
+                    $ref: '#/components/schemas/HelmKeyValue'
                 set_string:
                   type: array
                   items:
-                    type: array
-                    items:
-                      type: string
+                    $ref: '#/components/schemas/HelmKeyValue'
                 set_json:
                   type: array
                   items:
-                    type: array
-                    items:
-                      type: string
+                    $ref: '#/components/schemas/HelmKeyValue'
                 file:
                   type: object
                   nullable: true
@@ -15308,21 +15302,15 @@ components:
                 set:
                   type: array
                   items:
-                    type: array
-                    items:
-                      type: string
+                    $ref: '#/components/schemas/HelmKeyValue'
                 set_string:
                   type: array
                   items:
-                    type: array
-                    items:
-                      type: string
+                    $ref: '#/components/schemas/HelmKeyValue'
                 set_json:
                   type: array
                   items:
-                    type: array
-                    items:
-                      type: string
+                    $ref: '#/components/schemas/HelmKeyValue'
                 file:
                   type: object
                   nullable: true
@@ -17857,6 +17845,16 @@ components:
           format: uuid
           description: The git token id on Qovery side
           nullable: true
+    HelmKeyValue:
+      type: object
+      required:
+        - key
+        - value
+      properties:
+        key:
+          type: string
+        value:
+          type: string
   responses:
     '204':
       description: no content
