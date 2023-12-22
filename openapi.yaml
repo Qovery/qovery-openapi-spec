@@ -15143,17 +15143,11 @@ components:
                 Specify helm values you want to set or override
               properties:
                 set:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/HelmKeyValue'
+                  $ref: '#/components/schemas/HelmKeyValues'
                 set_string:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/HelmKeyValue'
+                  $ref: '#/components/schemas/HelmKeyValues'
                 set_json:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/HelmKeyValue'
+                  $ref: '#/components/schemas/HelmKeyValues'
                 file:
                   type: object
                   nullable: true
@@ -15300,17 +15294,11 @@ components:
                 Specify helm values you want to set or override
               properties:
                 set:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/HelmKeyValue'
+                  $ref: '#/components/schemas/HelmKeyValues'
                 set_string:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/HelmKeyValue'
+                  $ref: '#/components/schemas/HelmKeyValues'
                 set_json:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/HelmKeyValue'
+                  $ref: '#/components/schemas/HelmKeyValues'
                 file:
                   type: object
                   nullable: true
@@ -17845,15 +17833,12 @@ components:
           format: uuid
           description: The git token id on Qovery side
           nullable: true
-    HelmKeyValue:
-      type: object
-      required:
-        - key
-        - value
-      properties:
-        key:
-          type: string
-        value:
+    HelmKeyValues:
+      type: array
+      description: 'The input is in json array format: [ [$KEY,$VALUE], [...] ]'
+      items:
+        type: array
+        items:
           type: string
   responses:
     '204':
