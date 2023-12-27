@@ -132,7 +132,7 @@ allOf:
                   - paths
                 properties:
                   git_repository:
-                    $ref: '../ApplicationGitRepositoryRequest.yaml'
+                    $ref: '../ApplicationGitRepositoryResponse.yaml'
                   paths:
                     type: array
                     description: List of path inside your git repository to locate values file. Must start by a /
