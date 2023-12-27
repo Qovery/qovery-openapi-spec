@@ -15331,7 +15331,7 @@ components:
                         - paths
                       properties:
                         git_repository:
-                          $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+                          $ref: '#/components/schemas/ApplicationGitRepository'
                         paths:
                           type: array
                           description: List of path inside your git repository to locate values file. Must start by a /
