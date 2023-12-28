@@ -267,6 +267,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceMetricsDto'
+  /service/pods:
+    get:
+      tags:
+      - service_list_pods
+      operationId: handle_service_list_pods_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: environment
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: service
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: List the pods of a service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceListPodsResponseDto'
   /service/status:
     get:
       tags:
@@ -696,6 +739,20 @@ components:
           type: string
         value:
           type: string
+    PodDto:
+      type: object
+      required:
+      - name
+      - ports
+      properties:
+        name:
+          type: string
+        ports:
+          type: array
+          items:
+            type: integer
+            format: int32
+            minimum: 0
     PodStatusDto:
       type: object
       required:
@@ -745,6 +802,15 @@ components:
           $ref: '#/components/schemas/Timestamp'
         message:
           type: string
+    ServiceListPodsResponseDto:
+      type: object
+      required:
+      - pods
+      properties:
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodDto'
     ServiceLogResponseDto:
       type: object
       required:
