@@ -45,7 +45,7 @@ allOf:
                 type: object
                 properties:
                   git_repository:
-                    $ref: '../ApplicationGitRepositoryRequest.yaml'
+                    $ref: '../ApplicationGitRepositoryResponse.yaml'
           - type: object
             properties:
               repository:
