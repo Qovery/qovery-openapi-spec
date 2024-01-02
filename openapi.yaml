@@ -15244,7 +15244,7 @@ components:
                       type: object
                       properties:
                         git_repository:
-                          $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+                          $ref: '#/components/schemas/ApplicationGitRepository'
                 - type: object
                   properties:
                     repository:
