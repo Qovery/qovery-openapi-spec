@@ -1,0 +1,72 @@
+put:
+  summary: 'Edit a Custom Domain'
+  description: 'To edit a Custom Domain you must have the project user permission'
+  operationId: editHelmCustomDomain
+  parameters:
+    - $ref: '../../parameters/path/helmId.yaml'
+    - $ref: '../../parameters/path/customDomainId.yaml'
+  tags:
+    - Helm Custom Domain
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/CustomDomainRequest.yaml'
+  responses:
+    '200':
+      description: 'Edit a CustomDomain'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/CustomDomainResponse.yaml'
+    '400':
+      $ref: '../../responses/BadRequest.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+
+delete:
+  summary: 'Delete a Custom Domain'
+  description: 'To delete an CustomDomain you must have the project user permission'
+  operationId: deleteHelmCustomDomain
+  parameters:
+    - $ref: '../../parameters/path/helmId.yaml'
+    - $ref: '../../parameters/path/customDomainId.yaml'
+  tags:
+    - Helm Custom Domain
+  responses:
+    '204':
+      $ref: '../../responses/Deleted.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'
+get:
+  summary: 'Get a Custom Domain'
+  description: 'Get a custom domain'
+  operationId: getHelmCustomDomain
+  parameters:
+    - $ref: '../../parameters/path/helmId.yaml'
+    - $ref: '../../parameters/path/customDomainId.yaml'
+  tags:
+    - Helm Custom Domain
+  responses:
+    '200':
+      description: 'Get a CustomDomain'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/CustomDomainResponse.yaml'
+    '400':
+      $ref: '../../responses/BadRequest.yaml'
+    '401':
+      $ref: '../../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../../responses/Forbidden.yaml'
+    '404':
+      $ref: '../../responses/NotFound.yaml'

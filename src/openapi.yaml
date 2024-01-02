@@ -111,6 +111,7 @@ tags:
   - name: Helm Repositories
   - name: User Sign Up
   - name: Variable Main Calls
+  - name: Helm Custom Domain
 x-tagGroups:
   - name: Organization
     tags:
@@ -769,6 +770,10 @@ paths:
     $ref: './resources/helm/HelmClone.yaml'
   /helm/{helmId}/link:
     $ref: './resources/helm/HelmLink.yaml'
+  /helm/{helmId}/customDomain:
+    $ref: './resources/helm/HelmCustomDomain.yaml'
+  /helm/{helmId}/customDomain/{customDomainId}:
+    $ref: './resources/helm/HelmCustomDomainRef.yaml'
   /environment/{environmentId}/job:
     $ref: './resources/job/EnvironmentJob.yaml'
   /environment/{environmentId}/job/status:
