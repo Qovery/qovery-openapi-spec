@@ -25,7 +25,6 @@ tags:
   - name: Application Environment Variable
   - name: Application Logs
   - name: Application Main Calls
-  - name: Application Metrics
   - name: Application Secret
   - name: Applications
   - name: Container
@@ -36,7 +35,6 @@ tags:
   - name: Container Environment Variable
   - name: Container Logs
   - name: Container Main Calls
-  - name: Container Metrics
   - name: Container Registry
   - name: Container Secret
   - name: Containers
@@ -50,7 +48,6 @@ tags:
   - name: Job Environment Variable
   - name: Job Logs
   - name: Job Main Calls
-  - name: Job Metrics
   - name: Job Registry
   - name: Job Secret
   - name: Jobs
@@ -62,7 +59,6 @@ tags:
   - name: Helm Deployment History
   - name: Helm Logs
   - name: Helm Main Calls
-  - name: Helm Metrics
   - name: Helm Repository
   - name: Helms
   - name: Backups
@@ -78,7 +74,6 @@ tags:
   - name: Database Container
   - name: Database Deployment History
   - name: Database Main Calls
-  - name: Database Metrics
   - name: Databases
   - name: Environment
   - name: Environment Actions
@@ -161,7 +156,6 @@ x-tagGroups:
       - Application Actions
       - Application Configuration
       - Custom Domain
-      - Application Metrics
       - Application Database
       - Application Logs
       - Application Deployment Restriction
@@ -174,7 +168,6 @@ x-tagGroups:
       - Container Actions
       - Container Configuration
       - Container Custom Domain
-      - Container Metrics
       - Container Database
       - Container Logs
       - Container Deployment History
@@ -184,7 +177,6 @@ x-tagGroups:
     tags:
       - Database Main Calls
       - Database Actions
-      - Database Metrics
       - Database Applications
       - Database Deployment History
       - Database Containers
@@ -198,7 +190,6 @@ x-tagGroups:
       - Job Configuration
       - Job Custom Domain
       - Job Deployment Restriction
-      - Job Metrics
       - Job Deployment History
       - Job Environment Variable
       - Job Secret
@@ -209,7 +200,6 @@ x-tagGroups:
       - Helm Configuration
       - Helm Custom Domain
       - Helm Deployment Restriction
-      - Helm Metrics
       - Helm Deployment History
   - name: Account
     tags:
@@ -300,10 +290,6 @@ paths:
     $ref: './resources/CloudProviderAWSCredentials.yaml'
   /organization/{organizationId}/aws/credentials/{credentialsId}:
     $ref: './resources/CloudProviderAWSCredentialsRef.yaml'
-  /organization/{organizationId}/digitalOcean/credentials:
-    $ref: './resources/CloudProviderDOCredentials.yaml'
-  /organization/{organizationId}/digitalOcean/credentials/{credentialsId}:
-    $ref: './resources/CloudProviderDOCredentialsRef.yaml'
   /organization/{organizationId}/scaleway/credentials:
     $ref: './resources/CloudProviderScalewayCredentials.yaml'
   /organization/{organizationId}/scaleway/credentials/{credentialsId}:
@@ -358,16 +344,6 @@ paths:
     $ref: './resources/CloudProviderAWSEc2InstanceType.yaml'
   /aws/eks/instanceType/{region}:
     $ref: './resources/CloudProviderAWSEKSInstanceType.yaml'
-  /digitalOcean/region:
-    $ref: './resources/CloudProviderDORegion.yaml'
-  /digitalOcean/clusterFeature:
-    $ref: './resources/CloudProviderDOClusterFeature.yaml'
-  /digitalOcean/instanceType:
-    $ref: './resources/CloudProviderDOInstanceType.yaml'
-  /digitalOcean/managedDatabase/type:
-    $ref: './resources/CloudProviderDOManagedDatabaseType.yaml'
-  /digitalOcean/managedDatabase/instanceType/{region}/{databaseType}:
-    $ref: './resources/CloudProviderDOManagedDatabaseInstanceType.yaml'
   /scaleway/region:
     $ref: './resources/CloudProviderScalewayRegion.yaml'
   /scaleway/clusterFeature:
@@ -476,10 +452,6 @@ paths:
     $ref: './resources/EnvironmentApplication.yaml'
   /environment/{environmentId}/application/status:
     $ref: './resources/EnvironmentApplicationStatus.yaml'
-  /environment/{environmentId}/application/currentStorage:
-    $ref: './resources/EnvironmentApplicationsCurrentStorage.yaml'
-  /environment/{environmentId}/application/currentScale:
-    $ref: './resources/EnvironmentApplicationCurrentScale.yaml'
   /environment/{environmentId}/application/supportedLanguage:
     $ref: './resources/EnvironmentApplicationSupportedLanguage.yaml'
   /environment/{environmentId}/application/deploy:
@@ -488,10 +460,6 @@ paths:
     $ref: './resources/EnvironmentContainer.yaml'
   /environment/{environmentId}/container/status:
     $ref: './resources/EnvironmentContainerStatus.yaml'
-  /environment/{environmentId}/container/currentStorage:
-    $ref: './resources/EnvironmentContainersCurrentStorage.yaml'
-  /environment/{environmentId}/container/currentScale:
-    $ref: './resources/EnvironmentContainerCurrentScale.yaml'
   /environment/{environmentId}/service/deploy:
     $ref: './resources/EnvironmentServiceDeploy.yaml'
   /environment/{environmentId}/service/restart-service:
@@ -552,20 +520,6 @@ paths:
     $ref: './resources/ApplicationDeploymentRestrictionRef.yaml'
   /application/{applicationId}/contributor:
     $ref: './resources/ApplicationContributor.yaml'
-  /application/{applicationId}/instance:
-    $ref: './resources/ApplicationCurrentInstance.yaml'
-  /application/{applicationId}/currentStorage:
-    $ref: './resources/ApplicationCurrentStorageDisk.yaml'
-  /application/{applicationId}/currentScale:
-    $ref: './resources/ApplicationCurrentScale.yaml'
-  /application/{applicationId}/metric/cpu:
-    $ref: './resources/ApplicationMetricCpu.yaml'
-  /application/{applicationId}/metric/memory:
-    $ref: './resources/ApplicationMetricMemory.yaml'
-  /application/{applicationId}/metric/healthCheck:
-    $ref: './resources/ApplicationMetricHealthCheck.yaml'
-  /application/{applicationId}/metric/storage:
-    $ref: './resources/ApplicationMetricStorage.yaml'
   /application/{applicationId}/commit:
     $ref: './resources/ApplicationCommit.yaml'
   /application/{applicationId}/deploy:
@@ -622,12 +576,6 @@ paths:
     $ref: './resources/ContainerDeploymentHistory.yaml'
   /container/{containerId}/advancedSettings:
     $ref: './resources/ContainerAdvancedSettings.yaml'
-  /container/{containerId}/instance:
-    $ref: './resources/ContainerCurrentInstance.yaml'
-  /container/{containerId}/currentStorage:
-    $ref: './resources/ContainerCurrentStorageDisk.yaml'
-  /container/{containerId}/currentScale:
-    $ref: './resources/ContainerCurrentScale.yaml'
   /container/{containerId}/deploy:
     $ref: './resources/ContainerDeploy.yaml'
   /container/{containerId}/stop:
@@ -674,8 +622,6 @@ paths:
     $ref: './resources/EnvironmentDatabase.yaml'
   /environment/{environmentId}/database/status:
     $ref: './resources/EnvironmentDatabaseStatus.yaml'
-  /environment/{environmentId}/database/currentMetric:
-    $ref: './resources/EnvironmentDatabasesCurrentMetric.yaml'
   /database/{databaseId}:
     $ref: './resources/Database.yaml'
   /database/{databaseId}/status:
@@ -700,16 +646,6 @@ paths:
     $ref: './resources/DatabaseDeploy.yaml'
   /database/{databaseId}/deploymentHistory:
     $ref: './resources/DatabaseDeploymentHistory.yaml'
-  /database/{databaseId}/currentMetric:
-    $ref: './resources/DatabaseCurrentMetric.yaml'
-  /database/{databaseId}/metric/cpu:
-    $ref: './resources/DatabaseMetricCpu.yaml'
-  /database/{databaseId}/metric/memory:
-    $ref: './resources/DatabaseMetricMemory.yaml'
-  /database/{databaseId}/metric/storage:
-    $ref: './resources/DatabaseMetricStorage.yaml'
-  /database/{databaseId}/metric/healthCheck:
-    $ref: './resources/DatabaseMetricHealthCheck.yaml'
   /database/{databaseId}/backup:
     $ref: './resources/DatabaseBackup.yaml'
   /database/{databaseId}/backup/{backupId}:
@@ -798,8 +734,6 @@ paths:
     $ref: './resources/job/JobDeploymentRestriction.yaml'
   /job/{jobId}/deploymentRestriction/{deploymentRestrictionId}:
     $ref: './resources/job/JobDeploymentRestrictionRef.yaml'
-  /job/{jobId}/instance:
-    $ref: './resources/job/JobCurrentInstance.yaml'
   /job/{jobId}/environmentVariable:
     $ref: './resources/job/JobEnvironmentVariable.yaml'
   /job/{jobId}/environmentVariable/import:

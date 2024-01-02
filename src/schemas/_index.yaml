@@ -8,8 +8,6 @@ Application:
   $ref: ./ApplicationResponse.yaml
 ApplicationAdvancedSettings:
   $ref: ./ApplicationAdvancedSettings.yaml
-ApplicationCurrentScale:
-  $ref: ./ApplicationCurrentScaleResponse.yaml
 ApplicationDeploymentRestriction:
   $ref: ./ApplicationDeploymentRestrictionResponse.yaml
 ApplicationDeploymentRestrictionRequest:
@@ -146,8 +144,6 @@ CompanySizeEnum:
   $ref: ./enums/CompanySize.yaml
 ContainerAdvancedSettings:
   $ref: ./ContainerAdvancedSettings.yaml
-ContainerCurrentScale:
-  $ref: ./ContainerCurrentScaleResponse.yaml
 ContainerNetwork:
   $ref: ./ContainerNetworkResponse.yaml
 ContainerNetworkRequest:
@@ -212,8 +208,6 @@ DatabaseConfiguration:
   $ref: ./DatabaseConfigurationResponse.yaml
 DatabaseConfigurationResponseList:
   $ref: ./DatabaseConfigurationResponseList.yaml
-DatabaseCurrentMetric:
-  $ref: ./DatabaseCurrentMetricResponse.yaml
 DatabaseEditRequest:
   $ref: ./DatabaseEditRequest.yaml
 DatabaseModeEnum:
@@ -260,32 +254,10 @@ Environment:
   $ref: ./EnvironmentResponse.yaml
 EnvironmentResponseList:
   $ref: ./EnvironmentResponseList.yaml
-EnvironmentApplicationsCurrentScale:
-  $ref: ./EnvironmentApplicationsCurrentScaleResponse.yaml
-EnvironmentApplicationsCurrentScaleResponseList:
-  $ref: ./EnvironmentApplicationsCurrentScaleResponseList.yaml
-EnvironmentApplicationsInstanceResponseList:
-  $ref: ./EnvironmentApplicationsInstanceResponseList.yaml
-EnvironmentApplicationsStorage:
-  $ref: ./EnvironmentApplicationsStorageResponse.yaml
-EnvironmentApplicationsStorageResponseList:
-  $ref: ./EnvironmentApplicationsStorageResponseList.yaml
 EnvironmentApplicationsSupportedLanguage:
   $ref: ./EnvironmentApplicationsSupportedLanguageResponse.yaml
 EnvironmentApplicationsSupportedLanguageList:
   $ref: ./EnvironmentApplicationsSupportedLanguageResponseList.yaml
-EnvironmentContainersCurrentScale:
-  $ref: ./EnvironmentContainersCurrentScaleResponse.yaml
-EnvironmentContainersCurrentScaleResponseList:
-  $ref: ./EnvironmentContainersCurrentScaleResponseList.yaml
-EnvironmentContainersStorage:
-  $ref: ./EnvironmentContainersStorageResponse.yaml
-EnvironmentContainersStorageResponseList:
-  $ref: ./EnvironmentContainersStorageResponseList.yaml
-EnvironmentDatabasesCurrentMetric:
-  $ref: ./EnvironmentDatabasesCurrentMetricResponse.yaml
-EnvironmentDatabasesCurrentMetricResponseList:
-  $ref: ./EnvironmentDatabasesCurrentMetricResponseList.yaml
 EnvironmentDeploymentRule:
   $ref: ./EnvironmentDeploymentRuleResponse.yaml
 EnvironmentDeploymentRuleEditRequest:
@@ -376,10 +348,6 @@ GitTokenResponseList:
   $ref: ./GitTokenResponseList.yaml
 Healthcheck:
   $ref: ./Healthcheck.yaml
-Instance:
-  $ref: ./InstanceResponse.yaml
-InstanceResponseList:
-  $ref: ./InstanceResponseList.yaml
 InviteMember:
   $ref: ./InviteMemberResponse.yaml
 InviteMemberRequest:
@@ -492,36 +460,6 @@ MemberResponseList:
   $ref: ./MemberResponseList.yaml
 MemberRoleUpdateRequest:
   $ref: ./MemberRoleUpdateRequest.yaml
-MetricCPU:
-  $ref: ./MetricCPUResponse.yaml
-MetricCPUDatapoint:
-  $ref: ./MetricCPUDatapointResponse.yaml
-MetricCPUDatapointResponseList:
-  $ref: ./MetricCPUDatapointResponseList.yaml
-MetricCPUResponseList:
-  $ref: ./MetricCPUResponseList.yaml
-MetricGeneric:
-  $ref: ./MetricGenericResponse.yaml
-MetricGenericDatapoint:
-  $ref: ./MetricGenericDatapointResponse.yaml
-MetricGenericResponseList:
-  $ref: ./MetricGenericResponseList.yaml
-MetricMemory:
-  $ref: ./MetricMemoryResponse.yaml
-MetricMemoryDatapoint:
-  $ref: ./MetricMemoryDatapointResponse.yaml
-MetricMemoryDatapointResponseList:
-  $ref: ./MetricMemoryDatapointResponseList.yaml
-MetricMemoryResponseList:
-  $ref: ./MetricMemoryResponseList.yaml
-MetricStorage:
-  $ref: ./MetricStorageResponse.yaml
-MetricStorageDatapoint:
-  $ref: ./MetricStorageDatapointResponse.yaml
-MetricStorageDatapointResponseList:
-  $ref: ./MetricStorageDatapointResponseList.yaml
-MetricStorageResponseList:
-  $ref: ./MetricStorageResponseList.yaml
 Name:
   $ref: ./Name.yaml
 Organization:
@@ -678,14 +616,8 @@ Stage:
   $ref: ./Stage.yaml
 StatusKindEnum:
   $ref: ./enums/StatusKind.yaml
-StorageDisk:
-  $ref: ./StorageDiskResponse.yaml
-StorageDiskResponseList:
-  $ref: ./StorageDiskResponseList.yaml
 StorageTypeEnum:
   $ref: ./enums/StorageType.yaml
-ThresholdMetricStatusEnum:
-  $ref: ./enums/ThresholdMetricStatus.yaml
 TransferOwnershipRequest:
   $ref: ./TransferOwnershipRequest.yaml
 TypeOfUseEnum:
