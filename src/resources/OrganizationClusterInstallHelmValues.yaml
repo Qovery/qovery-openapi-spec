@@ -1,0 +1,21 @@
+get:
+  summary: 'Get cluster helm values for self managed installation'
+  operationId: getInstallationHelmValues
+  parameters:
+    - $ref: '../parameters/path/organizationId.yaml'
+    - $ref: '../parameters/path/clusterId.yaml'
+  tags:
+    - Clusters
+  responses:
+    '200':
+      description: 'Helm values'
+      content:
+        application/x-yaml:
+          schema:
+            type: string
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
