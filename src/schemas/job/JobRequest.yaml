@@ -124,6 +124,9 @@ allOf:
               entrypoint:
                 type: string
                 description: optional entrypoint when launching container
+              timezone:
+                type: string
+                description: Specify a timezone identifier to run the schedule at. By default Etc/UTC
               scheduled_at:
                 type: string
                 format: cron

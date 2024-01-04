@@ -16,6 +16,7 @@ allOf:
             type: object
             required:
               - scheduled_at
+              - timezone
             properties:
               arguments:
                 type: array
@@ -24,6 +25,9 @@ allOf:
               entrypoint:
                 type: string
                 description: optional entrypoint when launching container
+              timezone:
+                type: string
+                description: tz identifier at which the schedule at will be executed
               scheduled_at:
                 type: string
                 format: cron
