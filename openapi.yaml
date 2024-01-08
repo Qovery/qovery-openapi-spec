@@ -4300,29 +4300,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/environment/{environmentId}/redeploy':
-    post:
-      summary: Redeploy environment
-      operationId: redeployEnvironment
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-      tags:
-        - Environment Actions
-      responses:
-        '202':
-          description: Environment redeploy has been requested
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentStatus'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Operation is in progress
   '/environment/{environmentId}/cancelDeployment':
     post:
       summary: Cancel environment deployment
@@ -5674,29 +5651,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/application/{applicationId}/redeploy':
-    post:
-      summary: Redeploy application
-      operationId: redeployApplication
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - Application Actions
-      responses:
-        '202':
-          description: Application redeploy has been requested
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Status'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Operation is in progress
   '/application/{applicationId}/restart-service':
     post:
       summary: Reboot application
@@ -6672,29 +6626,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/container/{containerId}/redeploy':
-    post:
-      summary: Redeploy container
-      operationId: redeployContainer
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-      tags:
-        - Container Actions
-      responses:
-        '202':
-          description: Container redeploy has been requested
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Status'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Operation is in progress
   '/container/{containerId}/restart-service':
     post:
       summary: Reboot container
@@ -7637,29 +7568,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/database/{databaseId}/redeploy':
-    post:
-      summary: Redeploy database
-      operationId: redeployDatabase
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-      tags:
-        - Database Actions
-      responses:
-        '202':
-          description: Database redeploy has been requested
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Status'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Operation is in progress
   '/database/{databaseId}/restart-service':
     post:
       summary: Retart database
@@ -8406,37 +8314,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/helm/{helmId}/redeploy':
-    post:
-      summary: Redeploy helm
-      operationId: redeployHelm
-      parameters:
-        - $ref: '#/components/parameters/helmId'
-        - name: forceEvent
-          in: query
-          required: false
-          description: |
-            When filled, it indicates the target event to be deployed.  
-            If the concerned helm hasn't the target event provided, the helm won't be deployed.
-          schema:
-            $ref: '#/components/schemas/HelmForceEvent'
-      tags:
-        - Helm Actions
-      responses:
-        '202':
-          description: Helm redeploy has been requested
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Status'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Operation is in progress
   '/helm/{helmId}/stop':
     post:
       summary: Stop helm
@@ -9040,37 +8917,6 @@ paths:
       responses:
         '202':
           description: Job restart has been requested
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Status'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Operation is in progress
-  '/job/{jobId}/redeploy':
-    post:
-      summary: Redeploy job
-      operationId: redeployJob
-      parameters:
-        - $ref: '#/components/parameters/jobId'
-        - name: forceEvent
-          in: query
-          required: false
-          description: |
-            When filled, it indicates the target event to be deployed.  
-            If the concerned job hasn't the target event provided, the job won't be deployed.
-          schema:
-            $ref: '#/components/schemas/JobForceEvent'
-      tags:
-        - Job Actions
-      responses:
-        '202':
-          description: Job redeploy has been requested
           content:
             application/json:
               schema:
