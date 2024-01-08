@@ -11051,7 +11051,6 @@ components:
       type: string
       enum:
         - AWS
-        - DO
         - SCW
         - GCP
     CloudProviderResponseList:
