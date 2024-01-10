@@ -8544,7 +8544,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/helmId'
       tags:
-        - Custom Domain
+        - Helm Custom Domain
       responses:
         '200':
           description: List custom domains
@@ -8565,7 +8565,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/helmId'
       tags:
-        - Custom Domain
+        - Helm Custom Domain
       requestBody:
         content:
           application/json:
