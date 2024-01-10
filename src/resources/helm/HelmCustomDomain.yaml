@@ -5,7 +5,7 @@ get:
   parameters:
     - $ref: '../../parameters/path/helmId.yaml'
   tags:
-    - Custom Domain
+    - Helm Custom Domain
   responses:
     '200':
       description: 'List custom domains'
@@ -26,7 +26,7 @@ post:
   parameters:
     - $ref: '../../parameters/path/helmId.yaml'
   tags:
-    - Custom Domain
+    - Helm Custom Domain
   requestBody:
     content:
       application/json:
