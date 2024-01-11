@@ -11428,6 +11428,8 @@ components:
           type: string
         cloud_provider:
           $ref: '#/components/schemas/CloudProviderEnum'
+        cloud_provider_credentials:
+          $ref: '#/components/schemas/ClusterCloudProviderInfoRequest'
         min_running_nodes:
           type: integer
           default: 1
