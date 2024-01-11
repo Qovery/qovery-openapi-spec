@@ -13,6 +13,8 @@ properties:
     type: string
   cloud_provider:
     $ref: './enums/CloudProvider.yaml'
+  cloud_provider_credentials:
+    $ref: './ClusterCloudProviderInfoRequest.yaml'
   min_running_nodes:
     type: integer
     default: 1
