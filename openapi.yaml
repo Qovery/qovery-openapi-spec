@@ -14344,6 +14344,9 @@ components:
     HelmAdvancedSettings:
       type: object
       properties:
+        deployment.custom_domain_check_enabled:
+          type: boolean
+          description: disable custom domain check when deploying a helm
         network.ingress.proxy_body_size_mb:
           type: integer
         network.ingress.enable_cors:
