@@ -78,6 +78,20 @@ allOf:
             type: object
             nullable: true
             properties:
+              git:
+                type: object
+                nullable: true
+                required:
+                  - git_repository
+                  - paths
+                properties:
+                  git_repository:
+                    $ref: '../ApplicationGitRepositoryRequest.yaml'
+                  paths:
+                    type: array
+                    description: List of path inside your git repository to locate values file. Must start by a /
+                    items:
+                      type: string
               raw:
                 type: object
                 nullable: true
@@ -93,5 +107,3 @@ allOf:
                         content:
                           type: string
                           description: The content of the value file
-              git_repository:
-                  $ref: '../HelmValuesGitRepositoryRequest.yaml'
