@@ -10473,6 +10473,11 @@ components:
               description: Specify if the application will be automatically updated after receiving a new commit.
     ApplicationGitRepository:
       type: object
+      required:
+        - provider
+        - owner
+        - name
+        - url
       properties:
         has_access:
           type: boolean
