@@ -6,6 +6,8 @@ allOf:
       - cloud_provider
       - region
     properties:
+      organization:
+        $ref: './ReferenceObject.yaml'
       name:
         type: string
         description: name is case-insensitive
