@@ -4,6 +4,9 @@ properties:
     description: The total duration in seconds of the service deployment or null if the deployment is not completed.
     type: integer
     nullable: true
+  total_computing_duration_sec:
+    description: The total duration in seconds of the service deployment without queuing steps.
+    type: integer
   details:
     description: A list of metrics for deployment steps of the service.
     type: array
