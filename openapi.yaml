@@ -11074,6 +11074,8 @@ components:
             - cloud_provider
             - region
           properties:
+            organization:
+              $ref: '#/components/schemas/ReferenceObject'
             name:
               type: string
               description: name is case-insensitive
