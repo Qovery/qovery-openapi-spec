@@ -11,6 +11,8 @@ allOf:
       name:
         type: string
         description: name is case insensitive
+      organization:
+        $ref: './ReferenceObject.yaml'
       project:
         $ref: './ReferenceObject.yaml'
       last_updated_by:
