@@ -12860,6 +12860,8 @@ components:
             name:
               type: string
               description: name is case insensitive
+            organization:
+              $ref: '#/components/schemas/ReferenceObject'
             project:
               $ref: '#/components/schemas/ReferenceObject'
             last_updated_by:
