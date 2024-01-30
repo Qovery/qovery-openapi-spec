@@ -3,6 +3,7 @@ required:
   - name
   - cloud_provider
   - region
+  - cloud_provider_credentials
 properties:
   name:
     type: string
