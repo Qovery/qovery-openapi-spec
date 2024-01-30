@@ -11073,6 +11073,7 @@ components:
             - name
             - cloud_provider
             - region
+            - organization
           properties:
             organization:
               $ref: '#/components/schemas/ReferenceObject'
@@ -12856,6 +12857,7 @@ components:
             - mode
             - cluster_id
             - project
+            - organization
           properties:
             name:
               type: string
