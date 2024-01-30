@@ -15527,6 +15527,7 @@ components:
         - type: object
           required:
             - name
+            - organization
           properties:
             name:
               type: string
