@@ -5,6 +5,7 @@ allOf:
       - name
       - cloud_provider
       - region
+      - organization
     properties:
       organization:
         $ref: './ReferenceObject.yaml'
