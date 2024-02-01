@@ -255,7 +255,7 @@ paths:
   /organization/{organizationId}/billingStatus:
     $ref: './resources/OrganizationBillingStatus.yaml'
   /organization/{organizationId}/billingExternalId:
-    $ref: './resources/OrganizationBillingStatus.yaml'
+    $ref: './resources/OrganizationBillingExternalId.yaml'
   /organization/{organizationId}/invoice:
     $ref: './resources/OrganizationInvoiceList.yaml'
   /organization/{organizationId}/invoice/{invoiceId}:
