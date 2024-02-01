@@ -952,6 +952,29 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/billingExternalId':
+    get:
+      summary: Get organization billing external ID
+      description: |
+        This endpoint returns the external ID of the organization's billing account.
+      operationId: getOrganizationBillingExternalId
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      responses:
+        '200':
+          description: Get Billing External ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingExternalId'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/invoice':
     get:
       summary: List organization invoices
@@ -10971,6 +10994,11 @@ components:
         is_valid:
           type: boolean
         message:
+          type: string
+    BillingExternalId:
+      type: object
+      properties:
+        id:
           type: string
     Budget:
       type: object
