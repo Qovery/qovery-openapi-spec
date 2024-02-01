@@ -254,6 +254,8 @@ paths:
     $ref: './resources/OrganizationBillingInfo.yaml'
   /organization/{organizationId}/billingStatus:
     $ref: './resources/OrganizationBillingStatus.yaml'
+  /organization/{organizationId}/billingExternalId:
+    $ref: './resources/OrganizationBillingExternalId.yaml'
   /organization/{organizationId}/invoice:
     $ref: './resources/OrganizationInvoiceList.yaml'
   /organization/{organizationId}/invoice/{invoiceId}:
