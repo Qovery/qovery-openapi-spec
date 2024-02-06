@@ -53,7 +53,8 @@ properties:
           format: uuid
           nullable: false
         value:
+          nullable: true
           oneOf:
             - type: string
             - type: boolean
-          nullable: true
+            - $ref: './CluterFeatureAwsExistingVpc.yaml'
