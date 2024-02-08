@@ -11508,6 +11508,72 @@ components:
                 oneOf:
                   - type: string
                   - type: boolean
+                  - type: object
+                    required:
+                      - aws_vpc_eks_id
+                      - eks_subnets_zone_a_ids
+                      - eks_subnets_zone_b_ids
+                      - eks_subnets_zone_c_ids
+                    properties:
+                      aws_vpc_eks_id:
+                        type: string
+                      eks_subnets_zone_a_ids:
+                        type: array
+                        items:
+                          type: string
+                      eks_subnets_zone_b_ids:
+                        type: array
+                        items:
+                          type: string
+                      eks_subnets_zone_c_ids:
+                        type: array
+                        items:
+                          type: string
+                      documentdb_subnets_zone_a_ids:
+                        type: array
+                        nullable: true
+                        items:
+                          type: string
+                      documentdb_subnets_zone_b_ids:
+                        type: array
+                        nullable: true
+                        items:
+                          type: string
+                      documentdb_subnets_zone_c_ids:
+                        type: array
+                        nullable: true
+                        items:
+                          type: string
+                      elasticache_subnets_zone_a_ids:
+                        type: array
+                        nullable: true
+                        items:
+                          type: string
+                      elasticache_subnets_zone_b_ids:
+                        type: array
+                        nullable: true
+                        items:
+                          type: string
+                      elasticache_subnets_zone_c_ids:
+                        type: array
+                        nullable: true
+                        items:
+                          type: string
+                      rds_subnets_zone_a_ids:
+                        type: array
+                        nullable: true
+                        items:
+                          type: string
+                      rds_subnets_zone_b_ids:
+                        type: array
+                        nullable: true
+                        items:
+                          type: string
+                      rds_subnets_zone_c_ids:
+                        type: array
+                        nullable: true
+                        items:
+                          type: string
     ClusterResponseList:
       type: object
       properties:
