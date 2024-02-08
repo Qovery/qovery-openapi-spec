@@ -106,6 +106,8 @@ ClusterCredentialsResponseList:
   $ref: ./ClusterCredentialsResponseList.yaml
 ClusterFeature:
   $ref: ./ClusterFeatureResponse.yaml
+ClusterFeatureAwsExistingVpc:
+  $ref: ./ClusterFeatureAwsExistingVpc.yaml
 ClusterFeatureResponseList:
   $ref: ./ClusterFeatureResponseList.yaml
 ClusterInstanceTypeResponseList:

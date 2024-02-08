@@ -57,4 +57,4 @@ properties:
           oneOf:
             - type: string
             - type: boolean
-            - $ref: './CluterFeatureAwsExistingVpc.yaml'
+            - $ref: './ClusterFeatureAwsExistingVpc.yaml'
