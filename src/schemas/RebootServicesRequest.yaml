@@ -1,16 +1,16 @@
 type: object
 properties:
-  applicationIds:
+  application_ids:
     type: array
     items:
       type: string
       format: uuid
-  databaseIds:
+  database_ids:
     type: array
     items:
       type: string
       format: uuid
-  containerIds:
+  container_ids:
     type: array
     items:
       type: string
