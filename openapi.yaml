@@ -11364,10 +11364,11 @@ components:
           enum:
             - BOOLEAN
         value:
+          nullable: true
           oneOf:
             - type: string
             - type: boolean
-          nullable: true
+            - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpc'
         is_value_updatable:
           type: boolean
           default: false
