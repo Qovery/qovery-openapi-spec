@@ -27,10 +27,11 @@ properties:
     enum:
       - BOOLEAN
   value:
+    nullable: true
     oneOf:
       - type: string
       - type: boolean
-    nullable: true
+      - $ref: './ClusterFeatureAwsExistingVpc.yaml'
   is_value_updatable:
     type: boolean
     default: false
