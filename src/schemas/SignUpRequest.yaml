@@ -36,3 +36,6 @@ properties:
   dx_auth:
     type: boolean
     nullable: true
+  infrastructure_hosting:
+    type: string
+    nullable: true
