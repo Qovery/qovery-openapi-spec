@@ -12493,8 +12493,12 @@ components:
         remaining_trial_day:
           type: integer
           description: number of days remaining before the end of the trial period
-        remaining_credits:
-          $ref: '#/components/schemas/RemainingCredits'
+        renewal_at:
+          type: string
+          description: date when the current plan will be renewed
+          readOnly: true
+          nullable: true
+          format: date-time
         cost:
           $ref: '#/components/schemas/Cost'
     CustomDomain:
@@ -14992,9 +14996,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/CurrentCost'
         - type: object
-          properties:
-            paid_usage:
-              $ref: '#/components/schemas/PaidUsage'
     OrganizationCustomRoleCreateRequest:
       type: object
       required:
@@ -15539,26 +15540,6 @@ components:
         page_size:
           type: number
           example: 20
-    PaidUsage:
-      type: object
-      properties:
-        max_deployments_per_month:
-          type: integer
-        consumed_deployments:
-          type: integer
-        monthly_plan_cost:
-          type: number
-        monthly_plan_cost_in_cents:
-          type: integer
-        remaining_deployments:
-          type: integer
-        deployments_exceeded:
-          type: boolean
-        renewal_at:
-          type: string
-          readOnly: true
-          nullable: true
-          format: date-time
     PlanEnum:
       type: string
       description: BUSINESS & PROFESSIONAL are deprecated
