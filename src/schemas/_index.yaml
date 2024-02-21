@@ -542,8 +542,6 @@ OrganizationWebhookResponseList:
   $ref: ./OrganizationWebhookResponseList.yaml
 PaginationData:
   $ref: ./PaginationDataResponse.yaml
-PaidUsage:
-  $ref: ./PaidUsageResponse.yaml
 PlanEnum:
   $ref: ./enums/Plan.yaml
 PortProtocolEnum:
