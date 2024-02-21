@@ -1,8 +1,5 @@
 allOf:
   - $ref: './CurrentCost.yaml'
   - type: object
-    properties:
-      paid_usage:
-        $ref: './PaidUsageResponse.yaml'
 
 
