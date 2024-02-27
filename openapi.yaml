@@ -16782,15 +16782,18 @@ components:
           type: string
           format: date-time
           example: 2020-01-01T00:00:00.000Z
+          required: true
         to:
           description: The end date of the report
           type: string
           format: date-time
           example: 2020-01-31T23:59:59.000Z
+          required: true
         report_expiration_in_seconds:
           description: The number of seconds the report will be publicly available
           type: integer
           example: 3600
+          required: true
     OrganizationBillingUsageReportResponse:
       type: object
       properties:
