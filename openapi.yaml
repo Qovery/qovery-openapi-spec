@@ -952,6 +952,34 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/billingUsageReport':
+    post:
+      summary: Generate organization billing usage report
+      operationId: generateBillingUsageReport
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Billing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationBillingUsageReportRequest'
+      responses:
+        '200':
+          description: billing usage report has been successfully generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationBillingUsageReportResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/billingExternalId':
     get:
       summary: Get organization billing external ID
@@ -16745,6 +16773,32 @@ components:
       items:
         type: array
         items:
+          type: string
+    OrganizationBillingUsageReportRequest:
+      type: object
+      properties:
+        from:
+          description: The start date of the report
+          type: string
+          format: date-time
+          example: 2020-01-01T00:00:00.000Z
+        to:
+          description: The end date of the report
+          type: string
+          format: date-time
+          example: 2020-01-31T23:59:59.000Z
+        report_expiration_in_seconds:
+          description: The number of seconds the report will be publicly available
+          type: integer
+          example: 3600
+    OrganizationBillingUsageReportResponse:
+      type: object
+      properties:
+        report_url:
+          description: The URL of the report
+          type: string
+        delete_report_url:
+          description: The URL to delete the report. Use this URL to pro-actively delete the report before it expires
           type: string
   responses:
     '204':
