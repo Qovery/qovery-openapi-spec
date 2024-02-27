@@ -1,0 +1,8 @@
+type: object
+properties:
+  report_url:
+    description: The URL of the report
+    type: string
+  delete_report_url:
+    description: The URL to delete the report. Use this URL to pro-actively delete the report before it expires
+    type: string

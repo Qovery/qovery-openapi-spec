@@ -690,3 +690,7 @@ HelmGitRepositoryRequest:
   $ref: ./HelmGitRepositoryRequest.yaml
 HelmKeyValues:
   $ref: ./helm/HelmKeyValues.yaml
+OrganizationBillingUsageReportRequest:
+  $ref: ./OrganizationBillingUsageReportRequest.yaml
+OrganizationBillingUsageReportResponse:
+    $ref: ./OrganizationBillingUsageReportResponse.yaml
