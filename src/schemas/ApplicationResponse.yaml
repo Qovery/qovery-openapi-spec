@@ -25,7 +25,6 @@ allOf:
       description:
         type: string
         description: give a description to this application
-        nullable: true
       build_mode:
         $ref: './enums/BuildMode.yaml'
       dockerfile_path:
