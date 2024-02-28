@@ -1,19 +1,20 @@
 type: object
+required:
+  - from
+  - to
+  - report_expiration_in_seconds
 properties:
   from:
     description: The start date of the report
     type: string
     format: date-time
     example: 2020-01-01T00:00:00Z
-    required: true
   to:
     description: The end date of the report
     type: string
     format: date-time
     example: 2020-01-31T23:59:59Z
-    required: true
   report_expiration_in_seconds:
     description: The number of seconds the report will be publicly available
     type: integer
     example: 3600
-    required: true
