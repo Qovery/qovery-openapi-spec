@@ -110,6 +110,10 @@ properties:
   hpa.cpu.average_utilization_percent:
     type: integer
     description: Percentage value of cpu usage at which point pods should scale up.
+  security.automount_service_account_token:
+    type: boolean
+    description: |
+      Automount Kubernetes service account token to have access to Kubernetes API from pods
   security.read_only_root_filesystem:
     type: boolean
     description: |
