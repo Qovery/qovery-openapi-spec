@@ -1,1 +1,35 @@
 extends: 'spectral:oas'
+
+aliases:
+  SchemaResponsePath:
+    - "$.paths[?(@.ref !== './resources/ApplicationAdvancedSettings.yaml')].*.responses.*.content[*].schema"
+  SchemaResponsePropertyObject:
+    - "#SchemaResponsePath.properties"
+  SchemaRequestPath:
+    - "$.paths[?(@.$ref !== './resources/ApplicationAdvancedSettings.yaml')].*.requestBody.content[*].schema"
+  SchemaRequestPropertyObject:
+    - "#SchemaRequestPath.*.properties"
+  AdvancedSettingsPath:
+    - "$.paths[*AdvancedSettings*]"
+
+rules:
+  snake-case-for-response-properties:
+    description: Enforce snake case for properties within response message.
+    message: "Response message properties should be snake case"
+    given: "#SchemaResponsePropertyObject"
+    severity: error
+    then:
+      field: "@key"
+      function: casing
+      functionOptions:
+        type: snake
+  snake-case-for-request-properties:
+    description: Enforce snake case for properties within request message.
+    message: "Request message properties should be snake case"
+    given: "#SchemaRequestPropertyObject"
+    severity: error
+    then:
+      field: "@key"
+      function: casing
+      functionOptions:
+        type: snake
