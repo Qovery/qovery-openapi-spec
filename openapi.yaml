@@ -13663,7 +13663,8 @@ components:
       type: string
       enum:
         - APPLICATION
-        - JOB
+        - CRON
+        - LIFECYCLE
         - HELM
     GitTokenAssociatedServiceResponse:
       type: object
