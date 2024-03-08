@@ -108,6 +108,8 @@ ClusterFeature:
   $ref: ./ClusterFeatureResponse.yaml
 ClusterFeatureAwsExistingVpc:
   $ref: ./ClusterFeatureAwsExistingVpc.yaml
+ClusterFeatureGcpExistingVpc:
+  $ref: ./ClusterFeatureGcpExistingVpc.yaml
 ClusterFeatureResponseList:
   $ref: ./ClusterFeatureResponseList.yaml
 ClusterInstanceTypeResponseList:

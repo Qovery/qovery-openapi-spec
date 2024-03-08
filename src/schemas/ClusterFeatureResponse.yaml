@@ -32,6 +32,7 @@ properties:
       - type: string
       - type: boolean
       - $ref: './ClusterFeatureAwsExistingVpc.yaml'
+      - $ref: './ClusterFeatureGcpExistingVpc.yaml'
   is_value_updatable:
     type: boolean
     default: false

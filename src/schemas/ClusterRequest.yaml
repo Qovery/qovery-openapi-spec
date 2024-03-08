@@ -58,3 +58,4 @@ properties:
             - type: string
             - type: boolean
             - $ref: './ClusterFeatureAwsExistingVpc.yaml'
+            - $ref: './ClusterFeatureGcpExistingVpc.yaml'
