@@ -22,16 +22,6 @@ jobs:
             target-branch: master
             deploy-ssh-key: SSH_DEPLOY_KEY_GO
             deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_GO
-          - language: javascript
-            version: 6.0.1
-            target-branch: main
-            deploy-ssh-key: SSH_DEPLOY_KEY_JAVASCRIPT
-            deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_JAVASCRIPT
-          - language: python
-            version: 7.0.1
-            target-branch: master
-            deploy-ssh-key: SSH_DEPLOY_KEY_PYTHON
-            deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_PYTHON
           - language: typescript-axios
             version: 7.0.1
             target-branch: main
@@ -46,11 +36,6 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: "1.18"
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
 
       - name: Build OpenApi file
         run: |
