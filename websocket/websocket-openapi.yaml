@@ -349,6 +349,82 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceStatusDto'
+  /shell/exec:
+    get:
+      tags:
+      - shell
+      operationId: handle_shell_exec
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: environment
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: service
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: pod_name
+        in: path
+        required: true
+        schema:
+          type: string
+          nullable: true
+      - name: container_name
+        in: path
+        required: true
+        schema:
+          type: string
+          nullable: true
+      - name: command
+        in: path
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: tty_width
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: tty_height
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      responses:
+        '200':
+          description: Allow to shell into your container/pod
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bytes'
 components:
   schemas:
     ApplicationStatusDto:
