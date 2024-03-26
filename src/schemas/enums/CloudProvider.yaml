@@ -3,3 +3,4 @@ enum:
   - AWS
   - SCW
   - GCP
+  - ON_PREMISE
