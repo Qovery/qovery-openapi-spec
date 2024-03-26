@@ -11140,6 +11140,7 @@ components:
         - AWS
         - SCW
         - GCP
+        - ON_PREMISE
     CloudProviderResponseList:
       type: object
       properties:
