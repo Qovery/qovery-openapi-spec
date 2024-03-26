@@ -422,9 +422,9 @@ paths:
         '200':
           description: Allow to shell into your container/pod
           content:
-            application/json:
+            text/plain:
               schema:
-                $ref: '#/components/schemas/Bytes'
+                type: string
 components:
   schemas:
     ApplicationStatusDto:
