@@ -1,0 +1,21 @@
+get:
+  summary: 'List container annotations group'
+  description: 'List container annotations group'
+  operationId: listContainerAnnotationsGroup
+  parameters:
+    - $ref: '../parameters/path/containerId.yaml'
+  tags:
+    - Container Annotations Group
+  responses:
+    '200':
+      description: 'List container annotations groups'
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/OrganizationAnnotationsGroupResponseList.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
