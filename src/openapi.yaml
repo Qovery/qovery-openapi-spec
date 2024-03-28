@@ -26,6 +26,7 @@ tags:
   - name: Application Logs
   - name: Application Main Calls
   - name: Application Secret
+  - name: Application Annotations Group
   - name: Applications
   - name: Container
   - name: Container Actions
@@ -37,6 +38,7 @@ tags:
   - name: Container Main Calls
   - name: Container Registry
   - name: Container Secret
+  - name: Container Annotations Group
   - name: Containers
   - name: Deployment Stage Main Calls
   - name: Job
@@ -50,6 +52,7 @@ tags:
   - name: Job Main Calls
   - name: Job Registry
   - name: Job Secret
+  - name: Job Annotations Group
   - name: Jobs
   - name: Helm
   - name: Helm Actions
@@ -74,6 +77,7 @@ tags:
   - name: Database Container
   - name: Database Deployment History
   - name: Database Main Calls
+  - name: Database Annotations Group
   - name: Databases
   - name: Environment
   - name: Environment Actions
@@ -95,6 +99,7 @@ tags:
   - name: Organization Event
   - name: Organization Api Token
   - name: Organization Webhook
+  - name: Organization Annotations Group
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
@@ -116,6 +121,7 @@ x-tagGroups:
       - Organization Webhook
       - Organization Custom Role
       - Organization Event
+      - Organization Annotations Group
       - Projects
       - Members
       - Billing
@@ -162,6 +168,7 @@ x-tagGroups:
       - Application Deployment History
       - Application Environment Variable
       - Application Secret
+      - Application Annotations Group
   - name: Container
     tags:
       - Container Main Calls
@@ -173,6 +180,7 @@ x-tagGroups:
       - Container Deployment History
       - Container Environment Variable
       - Container Secret
+      - Container Annotations Group
   - name: Database
     tags:
       - Database Main Calls
@@ -183,6 +191,7 @@ x-tagGroups:
       - Database Application
       - Database Container
       - Backups
+      - Database Annotations Group
   - name: Job
     tags:
       - Job Main Calls
@@ -193,6 +202,7 @@ x-tagGroups:
       - Job Deployment History
       - Job Environment Variable
       - Job Secret
+      - Job Annotations Group
   - name: Helm
     tags:
       - Helm Main Calls
@@ -334,6 +344,12 @@ paths:
     $ref: './resources/OrganizationEvent.yaml'
   /organization/{organizationId}/targets:
     $ref: './resources/OrganizationEventTarget.yaml'
+  /organization/{organizationId}/annotationsGroups:
+    $ref: './resources/OrganizationAnnotationsGroup.yaml'
+  /organization/{organizationId}/annotationsGroups/{annotationsGroupId}:
+    $ref: './resources/OrganizationAnnotationsGroupRef.yaml'
+  /organization/{organizationId}/annotationsGroups/{annotationsGroupId}/associatedItems:
+    $ref: './resources/OrganizationAnnotationsGroupAssociatedItems.yaml'
   /cloudProvider:
     $ref: './resources/CloudProvider.yaml'
   /aws/region:
@@ -570,6 +586,10 @@ paths:
     $ref: './resources/ApplicationAdvancedSettings.yaml'
   /application/{applicationId}/clone:
     $ref: './resources/ApplicationClone.yaml'
+  /application/{applicationId}/annotationsGroup:
+    $ref: './resources/ApplicationAnnotationsGroup.yaml'
+  /application/{applicationId}/annotationsGroup/{annotationsGroupId}:
+    $ref: './resources/ApplicationAnnotationsGroupRef.yaml'
   /container/{containerId}:
     $ref: './resources/Container.yaml'
   /container/{containerId}/status:
@@ -618,6 +638,10 @@ paths:
     $ref: './resources/ContainerLink.yaml'
   /container/{containerId}/clone:
     $ref: './resources/ContainerClone.yaml'
+  /container/{containerId}/annotationsGroup:
+    $ref: './resources/ContainerAnnotationsGroup.yaml'
+  /container/{containerId}/annotationsGroup/{annotationsGroupId}:
+    $ref: './resources/ContainerAnnotationsGroupRef.yaml'
   /environment/{environmentId}/database:
     $ref: './resources/EnvironmentDatabase.yaml'
   /environment/{environmentId}/database/status:
@@ -650,6 +674,10 @@ paths:
     $ref: './resources/DatabaseBackupRef.yaml'
   /database/{databaseId}/clone:
     $ref: './resources/DatabaseClone.yaml'
+  /database/{databaseId}/annotationsGroup:
+    $ref: './resources/DatabaseAnnotationsGroup.yaml'
+  /database/{databaseId}/annotationsGroup/{annotationsGroupId}:
+    $ref: './resources/DatabaseAnnotationsGroupRef.yaml'
   /account:
     $ref: './resources/AccountInformation.yaml'
   /account/gitAuthProvider:
@@ -750,6 +778,10 @@ paths:
     $ref: './resources/JobCommit.yaml'
   /job/{jobId}/clone:
     $ref: './resources/JobClone.yaml'
+  /job/{jobId}/annotationsGroup:
+    $ref: './resources/JobAnnotationsGroup.yaml'
+  /job/{jobId}/annotationsGroup/{annotationsGroupId}:
+    $ref: './resources/JobAnnotationsGroupRef.yaml'
   /service/{serviceId}/deploymentStage:
     $ref: './resources/deploymentStage/ServiceDeploymentStage.yaml'
   /variable:

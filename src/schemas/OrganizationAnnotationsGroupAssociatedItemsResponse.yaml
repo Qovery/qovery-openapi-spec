@@ -1,0 +1,28 @@
+type: object
+required:
+  - item_id
+  - item_name
+  - item_type
+properties:
+  cluster_id:
+    type: string
+    format: uuid
+  cluster_name:
+    type: string
+  project_id:
+    type: string
+    format: uuid
+  project_name:
+    type: string
+  environment_id:
+    type: string
+    format: uuid
+  environment_name:
+    type: string
+  item_id:
+    type: string
+    format: uuid
+  item_name:
+    type: string
+  item_type:
+    $ref: "./enums/AnnotationsGroupAssociatedItemType.yaml"
