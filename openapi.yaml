@@ -26,6 +26,7 @@ tags:
   - name: Application Logs
   - name: Application Main Calls
   - name: Application Secret
+  - name: Application Annotations Group
   - name: Applications
   - name: Container
   - name: Container Actions
@@ -37,6 +38,7 @@ tags:
   - name: Container Main Calls
   - name: Container Registry
   - name: Container Secret
+  - name: Container Annotations Group
   - name: Containers
   - name: Deployment Stage Main Calls
   - name: Job
@@ -50,6 +52,7 @@ tags:
   - name: Job Main Calls
   - name: Job Registry
   - name: Job Secret
+  - name: Job Annotations Group
   - name: Jobs
   - name: Helm
   - name: Helm Actions
@@ -74,6 +77,7 @@ tags:
   - name: Database Container
   - name: Database Deployment History
   - name: Database Main Calls
+  - name: Database Annotations Group
   - name: Databases
   - name: Environment
   - name: Environment Actions
@@ -95,6 +99,7 @@ tags:
   - name: Organization Event
   - name: Organization Api Token
   - name: Organization Webhook
+  - name: Organization Annotations Group
   - name: Project
   - name: Project Deployment Rule
   - name: Project Environment Variable
@@ -116,6 +121,7 @@ x-tagGroups:
       - Organization Webhook
       - Organization Custom Role
       - Organization Event
+      - Organization Annotations Group
       - Projects
       - Members
       - Billing
@@ -162,6 +168,7 @@ x-tagGroups:
       - Application Deployment History
       - Application Environment Variable
       - Application Secret
+      - Application Annotations Group
   - name: Container
     tags:
       - Container Main Calls
@@ -173,6 +180,7 @@ x-tagGroups:
       - Container Deployment History
       - Container Environment Variable
       - Container Secret
+      - Container Annotations Group
   - name: Database
     tags:
       - Database Main Calls
@@ -183,6 +191,7 @@ x-tagGroups:
       - Database Application
       - Database Container
       - Backups
+      - Database Annotations Group
   - name: Job
     tags:
       - Job Main Calls
@@ -193,6 +202,7 @@ x-tagGroups:
       - Job Deployment History
       - Job Environment Variable
       - Job Secret
+      - Job Annotations Group
   - name: Helm
     tags:
       - Helm Main Calls
@@ -2518,6 +2528,140 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrganizationEventTargetResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/annotationsGroups':
+    get:
+      summary: List organization annotations group
+      description: List organization annotations group
+      operationId: listOrganizationAnnotationsGroup
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Annotations Group
+      responses:
+        '200':
+          description: List organization annotations groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create an organization annotations group
+      description: Create an organization annotations group
+      operationId: createOrganizationAnnotationsGroup
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Annotations Group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationAnnotationsGroupCreateRequest'
+      responses:
+        '201':
+          description: Organization annotations group created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  '/organization/{organizationId}/annotationsGroups/{annotationsGroupId}':
+    get:
+      summary: Get organization annotations group
+      description: Get organization annotations group
+      operationId: getOrganizationAnnotationsGroup
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+      tags:
+        - Organization Annotations Group
+      responses:
+        '200':
+          description: List organization annotations groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit organization annotations group
+      description: Edit organization annotations group
+      operationId: editOrganizationAnnotationsGroup
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+      tags:
+        - Organization Annotations Group
+      responses:
+        '200':
+          description: Edit organization annotations groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete organization annotations group
+      description: Delete organization annotations group
+      operationId: deleteOrganizationAnnotationsGroup
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+      tags:
+        - Organization Annotations Group
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/annotationsGroups/{annotationsGroupId}/associatedItems':
+    get:
+      summary: Get organization annotations group associated items
+      description: Get organization annotations group associated items
+      operationId: getOrganizationAnnotationsGroupAssociatedItems
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+      tags:
+        - Organization Annotations Group
+      responses:
+        '200':
+          description: Get organization annotations group token associated items
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAnnotationsGroupAssociatedItemsResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -6448,6 +6592,65 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/application/{applicationId}/annotationsGroup':
+    get:
+      summary: List application annotations group
+      description: List application annotations group
+      operationId: listApplicationAnnotationsGroup
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Application Annotations Group
+      responses:
+        '200':
+          description: List application annotations groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/application/{applicationId}/annotationsGroup/{annotationsGroupId}':
+    post:
+      summary: Add annotations group to application
+      description: Add annotations group to application
+      operationId: addAnnotationsGroupToApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+      tags:
+        - Application Annotations Group
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete annotations group to application
+      description: Delete annotations group to application
+      operationId: deleteAnnotationsGroupToApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+      tags:
+        - Application Annotations Group
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/container/{containerId}':
     get:
       summary: Get container by ID
@@ -7348,6 +7551,65 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/container/{containerId}/annotationsGroup':
+    get:
+      summary: List container annotations group
+      description: List container annotations group
+      operationId: listContainerAnnotationsGroup
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Annotations Group
+      responses:
+        '200':
+          description: List container annotations groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/annotationsGroup/{annotationsGroupId}':
+    post:
+      summary: Add annotations group to container
+      description: Add annotations group to container
+      operationId: addAnnotationsGroupToContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+      tags:
+        - Container Annotations Group
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete annotations group to container
+      description: Delete annotations group to container
+      operationId: deleteAnnotationsGroupToContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+      tags:
+        - Container Annotations Group
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/database':
     get:
       summary: List environment databases
@@ -7837,6 +8099,65 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/database/{databaseId}/annotationsGroup':
+    get:
+      summary: List database annotations group
+      description: List database annotations group
+      operationId: listDatabaseAnnotationsGroup
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - Database Annotations Group
+      responses:
+        '200':
+          description: List database annotations groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/database/{databaseId}/annotationsGroup/{annotationsGroupId}':
+    post:
+      summary: Add annotations group to database
+      description: Add annotations group to database
+      operationId: addAnnotationsGroupToDatabase
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+      tags:
+        - Database Annotations Group
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete annotations group to database
+      description: Delete annotations group to database
+      operationId: deleteAnnotationsGroupToDatabase
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+      tags:
+        - Database Annotations Group
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /account:
     get:
       summary: Get Account information
@@ -9610,6 +9931,71 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/job/{jobId}/annotationsGroup':
+    get:
+      summary: List job annotations group
+      description: List job annotations group
+      operationId: listJobAnnotationsGroup
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      tags:
+        - Job Annotations Group
+      responses:
+        '200':
+          description: List job annotations groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/annotationsGroup/{annotationsGroupId}':
+    post:
+      summary: Add annotations group to job
+      description: Add annotations group to job
+      operationId: addAnnotationsGroupToJob
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+        - name: annotationsGroupId
+          in: path
+          description: Organization annotations group ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Job Annotations Group
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete annotations group to job
+      description: Delete annotations group to job
+      operationId: deleteAnnotationsGroupToJob
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+      tags:
+        - Job Annotations Group
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/service/{serviceId}/deploymentStage':
     get:
       summary: Get Service Deployment Stage
@@ -15595,6 +15981,124 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrganizationWebhookResponse'
+    OrganizationAnnotationsGroupResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationAnnotationsGroupResponse'
+    OrganizationAnnotationsGroupCreateRequest:
+      type: object
+      required:
+        - name
+        - annotations
+        - scopes
+      properties:
+        name:
+          type: string
+          description: name of the annotations group
+        annotations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Annotation'
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationAnnotationsGroupScopeEnum'
+    OrganizationAnnotationsGroupResponse:
+      type: object
+      required:
+        - id
+        - name
+        - annotations
+        - scopes
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        annotations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Annotation'
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationAnnotationsGroupScopeEnum'
+    OrganizationAnnotationsGroupScopeEnum:
+      type: string
+      description: Annotations Group Scope
+      enum:
+        - 'PERSISTENT_VOLUME_CLAIMS,'
+        - 'REPLICA_SETS,'
+        - 'DEPLOYMENTS,'
+        - 'STATEFUL_SETS,'
+        - 'SERVICES,'
+        - 'INGRESS,'
+        - 'HPA,'
+        - 'ENDPOINTS,'
+        - 'PODS,'
+        - 'PERSISTENT_VOLUMES,'
+        - 'SECRETS,'
+        - 'CONFIG_MAPS,'
+        - 'JOBS,'
+        - 'CRON_JOBS,'
+    OrganizationAnnotationsGroupAssociatedItemsResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            required:
+              - item_id
+              - item_name
+              - item_type
+            properties:
+              cluster_id:
+                type: string
+                format: uuid
+              cluster_name:
+                type: string
+              project_id:
+                type: string
+                format: uuid
+              project_name:
+                type: string
+              environment_id:
+                type: string
+                format: uuid
+              environment_name:
+                type: string
+              item_id:
+                type: string
+                format: uuid
+              item_name:
+                type: string
+              item_type:
+                $ref: '#/components/schemas/AnnotationsGroupAssociatedItemType'
+    AnnotationsGroupAssociatedItemType:
+      type: string
+      description: Annotations Group Associated Item Type
+      enum:
+        - 'APPLICATION,'
+        - 'DATABASE,'
+        - 'CONTAINER,'
+        - 'JOB,'
+        - 'ENVIRONMENT,'
+        - 'CLUSTER,'
+    Annotation:
+      type: object
+      required:
+        - key
+        - value
+      properties:
+        key:
+          type: string
+        value:
+          type: string
     PaginationData:
       type: object
       required:
