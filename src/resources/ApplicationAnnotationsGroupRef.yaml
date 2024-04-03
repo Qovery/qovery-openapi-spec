@@ -1,0 +1,36 @@
+post:
+  summary: 'Add annotations group to application'
+  description: 'Add annotations group to application'
+  operationId: addAnnotationsGroupToApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/annotationsGroupId.yaml'
+  tags:
+    - Application Annotations Group
+  responses:
+    '204':
+      $ref: '../responses/NoContent.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+delete:
+  summary: 'Delete annotations group to application'
+  description: 'Delete annotations group to application'
+  operationId: deleteAnnotationsGroupToApplication
+  parameters:
+    - $ref: '../parameters/path/applicationId.yaml'
+    - $ref: '../parameters/path/annotationsGroupId.yaml'
+  tags:
+    - Application Annotations Group
+  responses:
+    '204':
+      $ref: '../responses/NoContent.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'

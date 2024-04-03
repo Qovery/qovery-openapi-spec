@@ -542,6 +542,20 @@ OrganizationWebhookResponse:
   $ref: ./OrganizationWebhookResponse.yaml
 OrganizationWebhookResponseList:
   $ref: ./OrganizationWebhookResponseList.yaml
+OrganizationAnnotationsGroupResponseList:
+  $ref: ./OrganizationAnnotationsGroupResponseList.yaml
+OrganizationAnnotationsGroupCreateRequest:
+  $ref: ./OrganizationAnnotationsGroupCreateRequest.yaml
+OrganizationAnnotationsGroupResponse:
+  $ref: ./OrganizationAnnotationsGroupResponse.yaml
+OrganizationAnnotationsGroupScopeEnum:
+  $ref: ./enums/AnnotationsGroupScope.yaml
+OrganizationAnnotationsGroupAssociatedItemsResponseList:
+  $ref: ./OrganizationAnnotationsGroupAssociatedItemsResponseList.yaml
+AnnotationsGroupAssociatedItemType:
+  $ref: ./enums/AnnotationsGroupAssociatedItemType.yaml
+Annotation:
+  $ref: ./Annotation.yaml
 PaginationData:
   $ref: ./PaginationDataResponse.yaml
 PlanEnum:

@@ -1,0 +1,36 @@
+post:
+  summary: 'Add annotations group to database'
+  description: 'Add annotations group to database'
+  operationId: addAnnotationsGroupToDatabase
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/path/annotationsGroupId.yaml'
+  tags:
+    - Database Annotations Group
+  responses:
+    '204':
+      $ref: '../responses/NoContent.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
+delete:
+  summary: 'Delete annotations group to database'
+  description: 'Delete annotations group to database'
+  operationId: deleteAnnotationsGroupToDatabase
+  parameters:
+    - $ref: '../parameters/path/databaseId.yaml'
+    - $ref: '../parameters/path/annotationsGroupId.yaml'
+  tags:
+    - Database Annotations Group
+  responses:
+    '204':
+      $ref: '../responses/NoContent.yaml'
+    '401':
+      $ref: '../responses/NotAuthorized.yaml'
+    '403':
+      $ref: '../responses/Forbidden.yaml'
+    '404':
+      $ref: '../responses/NotFound.yaml'
