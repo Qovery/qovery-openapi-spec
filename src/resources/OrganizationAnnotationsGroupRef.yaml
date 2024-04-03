@@ -21,7 +21,7 @@ get:
     '404':
       $ref: '../responses/NotFound.yaml'
 put:
-  summary: 'edit organization annotations group'
+  summary: 'Edit organization annotations group'
   description: 'Edit organization annotations group'
   operationId: editOrganizationAnnotationsGroup
   parameters:
@@ -45,7 +45,7 @@ put:
 delete:
   summary: 'Delete organization annotations group'
   description: 'Delete organization annotations group'
-  operationId: DeleteOrganizationAnnotationsGroup
+  operationId: deleteOrganizationAnnotationsGroup
   parameters:
     - $ref: '../parameters/path/organizationId.yaml'
     - $ref: '../parameters/path/annotationsGroupId.yaml'

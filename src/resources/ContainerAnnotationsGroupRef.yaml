@@ -1,6 +1,6 @@
 post:
-  summary: 'add annotations group to container'
-  description: 'add annotations group to container'
+  summary: 'Add annotations group to container'
+  description: 'Add annotations group to container'
   operationId: addAnnotationsGroupToContainer
   parameters:
     - $ref: '../parameters/path/containerId.yaml'
@@ -17,8 +17,8 @@ post:
     '404':
       $ref: '../responses/NotFound.yaml'
 delete:
-  summary: 'delete annotations group to container'
-  description: 'delete annotations group to container'
+  summary: 'Delete annotations group to container'
+  description: 'Delete annotations group to container'
   operationId: deleteAnnotationsGroupToContainer
   parameters:
     - $ref: '../parameters/path/containerId.yaml'

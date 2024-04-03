@@ -1,6 +1,6 @@
 post:
-  summary: 'add annotations group to job'
-  description: 'add annotations group to job'
+  summary: 'Add annotations group to job'
+  description: 'Add annotations group to job'
   operationId: addAnnotationsGroupToJob
   parameters:
     - $ref: '../parameters/path/jobId.yaml'
@@ -17,8 +17,8 @@ post:
     '404':
       $ref: '../responses/NotFound.yaml'
 delete:
-  summary: 'delete annotations group to job'
-  description: 'delete annotations group to job'
+  summary: 'Delete annotations group to job'
+  description: 'Delete annotations group to job'
   operationId: deleteAnnotationsGroupToJob
   parameters:
     - $ref: '../parameters/path/jobId.yaml'

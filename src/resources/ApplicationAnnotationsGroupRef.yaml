@@ -1,6 +1,6 @@
 post:
-  summary: 'add annotations group to application'
-  description: 'add annotations group to application'
+  summary: 'Add annotations group to application'
+  description: 'Add annotations group to application'
   operationId: addAnnotationsGroupToApplication
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
@@ -17,8 +17,8 @@ post:
     '404':
       $ref: '../responses/NotFound.yaml'
 delete:
-  summary: 'delete annotations group to application'
-  description: 'delete annotations group to application'
+  summary: 'Delete annotations group to application'
+  description: 'Delete annotations group to application'
   operationId: deleteAnnotationsGroupToApplication
   parameters:
     - $ref: '../parameters/path/applicationId.yaml'
