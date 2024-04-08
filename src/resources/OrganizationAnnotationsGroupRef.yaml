@@ -33,7 +33,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../schemas/OrganizationAnnotationsGroupRequest.yaml'
+          $ref: '../schemas/OrganizationAnnotationsGroupCreateRequest.yaml'
   responses:
     '200':
       description: 'Edit organization annotations groups'
