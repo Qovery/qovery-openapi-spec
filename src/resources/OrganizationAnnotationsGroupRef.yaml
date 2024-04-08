@@ -29,6 +29,11 @@ put:
     - $ref: '../parameters/path/annotationsGroupId.yaml'
   tags:
     - Organization Annotations Group
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/OrganizationAnnotationsGroupCreateRequest.yaml'
   responses:
     '200':
       description: 'Edit organization annotations groups'
