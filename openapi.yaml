@@ -2614,6 +2614,11 @@ paths:
         - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Organization Annotations Group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationAnnotationsGroupCreateRequest'
       responses:
         '200':
           description: Edit organization annotations groups
@@ -16031,20 +16036,20 @@ components:
       type: string
       description: Annotations Group Scope
       enum:
-        - 'PERSISTENT_VOLUME_CLAIMS,'
-        - 'REPLICA_SETS,'
-        - 'DEPLOYMENTS,'
-        - 'STATEFUL_SETS,'
-        - 'SERVICES,'
-        - 'INGRESS,'
-        - 'HPA,'
-        - 'ENDPOINTS,'
-        - 'PODS,'
-        - 'PERSISTENT_VOLUMES,'
-        - 'SECRETS,'
-        - 'CONFIG_MAPS,'
-        - 'JOBS,'
-        - 'CRON_JOBS,'
+        - PERSISTENT_VOLUME_CLAIMS
+        - REPLICA_SETS
+        - DEPLOYMENTS
+        - STATEFUL_SETS
+        - SERVICES
+        - INGRESS
+        - HPA
+        - ENDPOINTS
+        - PODS
+        - PERSISTENT_VOLUMES
+        - SECRETS
+        - CONFIG_MAPS
+        - JOBS
+        - CRON_JOBS
     OrganizationAnnotationsGroupAssociatedItemsResponseList:
       type: object
       properties:
