@@ -2589,7 +2589,7 @@ paths:
       operationId: getOrganizationAnnotationsGroup
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Organization Annotations Group
       responses:
@@ -2611,7 +2611,7 @@ paths:
       operationId: editOrganizationAnnotationsGroup
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Organization Annotations Group
       responses:
@@ -2633,7 +2633,7 @@ paths:
       operationId: deleteOrganizationAnnotationsGroup
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Organization Annotations Group
       responses:
@@ -2652,7 +2652,7 @@ paths:
       operationId: getOrganizationAnnotationsGroupAssociatedItems
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Organization Annotations Group
       responses:
@@ -6621,7 +6621,7 @@ paths:
       operationId: addAnnotationsGroupToApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Application Annotations Group
       responses:
@@ -6639,7 +6639,7 @@ paths:
       operationId: deleteAnnotationsGroupToApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Application Annotations Group
       responses:
@@ -7580,7 +7580,7 @@ paths:
       operationId: addAnnotationsGroupToContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
-        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Container Annotations Group
       responses:
@@ -7598,7 +7598,7 @@ paths:
       operationId: deleteAnnotationsGroupToContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
-        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Container Annotations Group
       responses:
@@ -8128,7 +8128,7 @@ paths:
       operationId: addAnnotationsGroupToDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
-        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Database Annotations Group
       responses:
@@ -8146,7 +8146,7 @@ paths:
       operationId: deleteAnnotationsGroupToDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
-        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Database Annotations Group
       responses:
@@ -9960,13 +9960,7 @@ paths:
       operationId: addAnnotationsGroupToJob
       parameters:
         - $ref: '#/components/parameters/jobId'
-        - name: annotationsGroupId
-          in: path
-          description: Organization annotations group ID
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Job Annotations Group
       responses:
@@ -9984,7 +9978,7 @@ paths:
       operationId: deleteAnnotationsGroupToJob
       parameters:
         - $ref: '#/components/parameters/jobId'
-        - $ref: '#/paths/~1job~1%7BjobId%7D~1annotationsGroup~1%7BannotationsGroupId%7D/post/parameters/1'
+        - $ref: '#/components/parameters/annotationsGroupId'
       tags:
         - Job Annotations Group
       responses:
@@ -10397,6 +10391,14 @@ components:
       name: inviteId
       in: path
       description: Invite ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    annotationsGroupId:
+      name: annotationsGroupId
+      in: path
+      description: Organization annotations group ID
       required: true
       schema:
         type: string
@@ -16007,26 +16009,24 @@ components:
           items:
             $ref: '#/components/schemas/OrganizationAnnotationsGroupScopeEnum'
     OrganizationAnnotationsGroupResponse:
-      type: object
-      required:
-        - id
-        - name
-        - annotations
-        - scopes
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        annotations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Annotation'
-        scopes:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationAnnotationsGroupScopeEnum'
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+            - annotations
+            - scopes
+          properties:
+            name:
+              type: string
+            annotations:
+              type: array
+              items:
+                $ref: '#/components/schemas/Annotation'
+            scopes:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrganizationAnnotationsGroupScopeEnum'
     OrganizationAnnotationsGroupScopeEnum:
       type: string
       description: Annotations Group Scope
