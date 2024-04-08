@@ -37,6 +37,8 @@ eventId:
   $ref: ./path/eventId.yaml
 inviteId:
   $ref: ./path/inviteId.yaml
+annotationsGroupId:
+  $ref: ./path/annotationsGroupId.yaml
 region:
   $ref: ./path/region.yaml
 jobId:

@@ -1,20 +1,18 @@
-type: object
-required:
-  - id
-  - name
-  - annotations
-  - scopes
-properties:
-  id:
-    type: string
-    format: uuid
-  name:
-    type: string
-  annotations:
-    type: array
-    items:
-      $ref: './Annotation.yaml'
-  scopes:
-    type: array
-    items:
-      $ref: "./enums/AnnotationsGroupScope.yaml"
+allOf:
+  - $ref: './BaseResponse.yaml'
+  - type: object
+    required:
+      - name
+      - annotations
+      - scopes
+    properties:
+      name:
+        type: string
+      annotations:
+        type: array
+        items:
+          $ref: './Annotation.yaml'
+      scopes:
+        type: array
+        items:
+          $ref: "./enums/AnnotationsGroupScope.yaml"
