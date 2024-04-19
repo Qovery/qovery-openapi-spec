@@ -6,6 +6,7 @@ allOf:
       - key
       - value
       - is_secret
+      - variable_type
     properties:
       key:
         type: string
