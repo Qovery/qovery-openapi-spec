@@ -11,6 +11,8 @@ allOf:
           - CRON
       schedule:
         type: object
+        required:
+          - cronjob
         properties:
           cronjob:
             type: object
