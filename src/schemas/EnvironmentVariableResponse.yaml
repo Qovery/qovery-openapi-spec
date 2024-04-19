@@ -4,6 +4,7 @@ allOf:
   - type: object
     required:
       - scope
+      - variable_type
     properties:
       overridden_variable:
         $ref: './EnvironmentVariableOverride.yaml'
