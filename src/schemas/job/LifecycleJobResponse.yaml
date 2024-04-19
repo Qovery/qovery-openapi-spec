@@ -42,3 +42,6 @@ allOf:
               entrypoint:
                 type: string
                 description: optional entrypoint when launching container
+      annotations_groups:
+        $ref: '../OrganizationAnnotationsGroupResponseList.yaml'
+
