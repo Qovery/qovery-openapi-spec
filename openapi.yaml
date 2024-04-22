@@ -4501,18 +4501,17 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Environment is already stopped or an operation is in progress
-  '/environment/{environmentId}/restart':
+  '/environment/{environmentId}/redeploy':
     post:
-      summary: Deprecated - Restart environment
-      description: '**Deprecated** - Please use the "Redeploy environment" endpoint now'
-      operationId: restartEnvironment
+      summary: Redeploy environment
+      operationId: redeployEnvironment
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
         - Environment Actions
       responses:
         '202':
-          description: Environment restart has been requested
+          description: Environment redeploy has been requested
           content:
             application/json:
               schema:
@@ -5852,18 +5851,17 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Application is already stopped or an operation is in progress
-  '/application/{applicationId}/restart':
+  '/application/{applicationId}/redeploy':
     post:
-      summary: Deprecated - Restart application
-      description: '**Deprecated** - Please use the "Redeploy application" endpoint now'
-      operationId: restartApplication
+      summary: Redeploy application
+      operationId: redeployApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
         - Application Actions
       responses:
         '202':
-          description: Application restart has been requested
+          description: Application redeploy has been requested
           content:
             application/json:
               schema:
@@ -6864,18 +6862,17 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Container is already stopped or an operation is in progress
-  '/container/{containerId}/restart':
+  '/container/{containerId}/redeploy':
     post:
-      summary: Deprecated - Restart container
-      description: '**Deprecated** - Please use the "Redeploy container" endpoint now'
-      operationId: restartContainer
+      summary: Redeploy container
+      operationId: redeployContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
       tags:
         - Container Actions
       responses:
         '202':
-          description: Container restart has been requested
+          description: Container redeploy has been requested
           content:
             application/json:
               schema:
@@ -7843,18 +7840,17 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/database/{databaseId}/restart':
+  '/database/{databaseId}/redeploy':
     post:
-      summary: Deprecated - Restart database
-      description: '**Deprecated** - Please use the "Redeploy database" endpoint now'
-      operationId: restartDatabase
+      summary: Redeploy database
+      operationId: redeployDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
         - Database Actions
       responses:
         '202':
-          description: Database  restart has been requested
+          description: Database redeploy has been requested
           content:
             application/json:
               schema:
@@ -8618,11 +8614,10 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/helm/{helmId}/restart':
+  '/helm/{helmId}/redeploy':
     post:
-      summary: Deprecated - Restart helm
-      description: '**Deprecated** - Please use the "Redeploy helm" endpoint now'
-      operationId: restartHelm
+      summary: Redeploy helm
+      operationId: redeployHelm
       parameters:
         - $ref: '#/components/parameters/helmId'
         - name: forceEvent
@@ -8637,7 +8632,7 @@ paths:
         - Helm Actions
       responses:
         '202':
-          description: Helm restart has been requested
+          description: Helm redeploy has been requested
           content:
             application/json:
               schema:
@@ -9233,11 +9228,10 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/job/{jobId}/restart':
+  '/job/{jobId}/redeploy':
     post:
-      summary: Deprecated - Restart job
-      description: '**Deprecated** - Please use the "Redeploy job" endpoint now'
-      operationId: restartJob
+      summary: Redeploy job
+      operationId: redeployJob
       parameters:
         - $ref: '#/components/parameters/jobId'
         - name: forceEvent
@@ -9252,7 +9246,7 @@ paths:
         - Job Actions
       responses:
         '202':
-          description: Job restart has been requested
+          description: Job redeploy has been requested
           content:
             application/json:
               schema:
