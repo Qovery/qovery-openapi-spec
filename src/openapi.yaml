@@ -462,8 +462,8 @@ paths:
     $ref: './resources/EnvironmentDeploy.yaml'
   /environment/{environmentId}/stop:
     $ref: './resources/EnvironmentStop.yaml'
-  /environment/{environmentId}/restart:
-    $ref: './resources/EnvironmentRestart.yaml'
+  /environment/{environmentId}/redeploy:
+    $ref: './resources/EnvironmentRedeploy.yaml'
   /environment/{environmentId}/cancelDeployment:
     $ref: './resources/EnvironmentCancelDeployment.yaml'
   /environment/{environmentId}/clone:
@@ -546,8 +546,8 @@ paths:
     $ref: './resources/ApplicationDeploy.yaml'
   /application/{applicationId}/stop:
     $ref: './resources/ApplicationStop.yaml'
-  /application/{applicationId}/restart:
-    $ref: './resources/ApplicationRestart.yaml'
+  /application/{applicationId}/redeploy:
+    $ref: './resources/ApplicationRedeploy.yaml'
   /application/{applicationId}/restart-service:
     $ref: './resources/ApplicationReboot.yaml'
   /application/{applicationId}/deploymentHistory:
@@ -600,8 +600,8 @@ paths:
     $ref: './resources/ContainerDeploy.yaml'
   /container/{containerId}/stop:
     $ref: './resources/ContainerStop.yaml'
-  /container/{containerId}/restart:
-    $ref: './resources/ContainerRestart.yaml'
+  /container/{containerId}/redeploy:
+    $ref: './resources/ContainerRedeploy.yaml'
   /container/{containerId}/restart-service:
     $ref: './resources/ContainerReboot.yaml'
   /container/{containerId}/environmentVariable:
@@ -654,8 +654,8 @@ paths:
     $ref: './resources/DatabaseApplication.yaml'
   /database/{databaseId}/application/{targetApplicationId}:
     $ref: './resources/DatabaseApplicationRef.yaml'
-  /database/{databaseId}/restart:
-    $ref: './resources/DatabaseRestart.yaml'
+  /database/{databaseId}/redeploy:
+    $ref: './resources/DatabaseRedeploy.yaml'
   /database/{databaseId}/restart-service:
     $ref: './resources/DatabaseReboot.yaml'
   /database/{databaseId}/stop:
@@ -708,8 +708,8 @@ paths:
     $ref: './resources/helm/HelmAdvancedSettings.yaml'
   /helm/{helmId}/deploy:
     $ref: './resources/helm/HelmDeploy.yaml'
-  /helm/{helmId}/restart:
-    $ref: './resources/helm/HelmRestart.yaml'
+  /helm/{helmId}/redeploy:
+    $ref: './resources/helm/HelmRedeploy.yaml'
   /helm/{helmId}/stop:
     $ref: './resources/helm/HelmStop.yaml'
   /helm/{helmId}/status:
@@ -738,8 +738,8 @@ paths:
     $ref: './resources/job/JobAdvancedSettings.yaml'
   /job/{jobId}/deploy:
     $ref: './resources/job/JobDeploy.yaml'
-  /job/{jobId}/restart:
-    $ref: './resources/job/JobRestart.yaml'
+  /job/{jobId}/redeploy:
+    $ref: './resources/job/JobRedeploy.yaml'
   /job/{jobId}/stop:
     $ref: './resources/job/JobStop.yaml'
   /job/{jobId}/status:

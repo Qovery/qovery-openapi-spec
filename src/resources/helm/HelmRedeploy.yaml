@@ -1,7 +1,6 @@
 post:
-  summary: 'Deprecated - Restart helm'
-  description: '**Deprecated** - Please use the "Redeploy helm" endpoint now'
-  operationId: restartHelm
+  summary: 'Redeploy helm'
+  operationId: redeployHelm
   parameters:
     - $ref: '../../parameters/path/helmId.yaml'
     - name: forceEvent
@@ -16,7 +15,7 @@ post:
     - Helm Actions
   responses:
     '202':
-      description: 'Helm restart has been requested'
+      description: 'Helm redeploy has been requested'
       content:
         application/json:
           schema:
