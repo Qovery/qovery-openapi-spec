@@ -16037,12 +16037,9 @@ components:
           items:
             $ref: '#/components/schemas/OrganizationWebhookResponse'
     OrganizationAnnotationsGroupResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationAnnotationsGroupResponse'
+      type: array
+      items:
+        $ref: '#/components/schemas/OrganizationAnnotationsGroupResponse'
     OrganizationAnnotationsGroupCreateRequest:
       type: object
       required:
