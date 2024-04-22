@@ -65,3 +65,10 @@ allOf:
         type: boolean
         nullable: true
         description: Specify if the application will be automatically updated after receiving a new commit.
+      annotations_group_ids:
+        type: array
+        description: list of id of the annotations groups
+        items:
+          type: string
+          format: uuid
+          description: id of the annotations group

@@ -48,3 +48,11 @@ properties:
     type: integer
     description: unit is GB
     default: 10
+  annotations_group_ids:
+    type: array
+    description: list of id of the annotations groups
+    items:
+      type: string
+      format: uuid
+      description: id of the annotations group
+

@@ -73,3 +73,10 @@ allOf:
         description: |
           Specify if the container will be automatically updated after receiving a new image tag. 
           The new image tag shall be communicated via the "Auto Deploy container" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments
+      annotations_group_ids:
+        type: array
+        description: list of id of the annotations groups
+        items:
+          type: string
+          format: uuid
+          description: id of the annotations group

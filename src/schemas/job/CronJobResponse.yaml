@@ -39,3 +39,6 @@ allOf:
                   For example: `* * * * *` represent the cron to launch the job every minute.  
                   See https://crontab.guru/ to WISIWIG interface.  
                   Timezone is UT
+      annotations_groups:
+        $ref: '../OrganizationAnnotationsGroupResponseList.yaml'
+
