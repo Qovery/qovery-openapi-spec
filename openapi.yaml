@@ -2549,7 +2549,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+                type: object
+                properties:
+                  results:
+                    $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -6597,28 +6600,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/application/{applicationId}/annotationsGroup':
-    get:
-      summary: List application annotations group
-      description: List application annotations group
-      operationId: listApplicationAnnotationsGroup
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - Application Annotations Group
-      responses:
-        '200':
-          description: List application annotations groups
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/application/{applicationId}/annotationsGroup/{annotationsGroupId}':
     post:
       summary: Add annotations group to application
@@ -7556,28 +7537,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/container/{containerId}/annotationsGroup':
-    get:
-      summary: List container annotations group
-      description: List container annotations group
-      operationId: listContainerAnnotationsGroup
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-      tags:
-        - Container Annotations Group
-      responses:
-        '200':
-          description: List container annotations groups
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/container/{containerId}/annotationsGroup/{annotationsGroupId}':
     post:
       summary: Add annotations group to container
@@ -8104,28 +8063,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/database/{databaseId}/annotationsGroup':
-    get:
-      summary: List database annotations group
-      description: List database annotations group
-      operationId: listDatabaseAnnotationsGroup
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-      tags:
-        - Database Annotations Group
-      responses:
-        '200':
-          description: List database annotations groups
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/database/{databaseId}/annotationsGroup/{annotationsGroupId}':
     post:
       summary: Add annotations group to database
@@ -9936,28 +9873,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/job/{jobId}/annotationsGroup':
-    get:
-      summary: List job annotations group
-      description: List job annotations group
-      operationId: listJobAnnotationsGroup
-      parameters:
-        - $ref: '#/components/parameters/jobId'
-      tags:
-        - Job Annotations Group
-      responses:
-        '200':
-          description: List job annotations groups
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/job/{jobId}/annotationsGroup/{annotationsGroupId}':
     post:
       summary: Add annotations group to job
