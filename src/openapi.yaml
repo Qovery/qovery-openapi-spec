@@ -586,8 +586,6 @@ paths:
     $ref: './resources/ApplicationAdvancedSettings.yaml'
   /application/{applicationId}/clone:
     $ref: './resources/ApplicationClone.yaml'
-  /application/{applicationId}/annotationsGroup:
-    $ref: './resources/ApplicationAnnotationsGroup.yaml'
   /application/{applicationId}/annotationsGroup/{annotationsGroupId}:
     $ref: './resources/ApplicationAnnotationsGroupRef.yaml'
   /container/{containerId}:
@@ -638,8 +636,6 @@ paths:
     $ref: './resources/ContainerLink.yaml'
   /container/{containerId}/clone:
     $ref: './resources/ContainerClone.yaml'
-  /container/{containerId}/annotationsGroup:
-    $ref: './resources/ContainerAnnotationsGroup.yaml'
   /container/{containerId}/annotationsGroup/{annotationsGroupId}:
     $ref: './resources/ContainerAnnotationsGroupRef.yaml'
   /environment/{environmentId}/database:
@@ -674,8 +670,6 @@ paths:
     $ref: './resources/DatabaseBackupRef.yaml'
   /database/{databaseId}/clone:
     $ref: './resources/DatabaseClone.yaml'
-  /database/{databaseId}/annotationsGroup:
-    $ref: './resources/DatabaseAnnotationsGroup.yaml'
   /database/{databaseId}/annotationsGroup/{annotationsGroupId}:
     $ref: './resources/DatabaseAnnotationsGroupRef.yaml'
   /account:
@@ -778,8 +772,6 @@ paths:
     $ref: './resources/JobCommit.yaml'
   /job/{jobId}/clone:
     $ref: './resources/JobClone.yaml'
-  /job/{jobId}/annotationsGroup:
-    $ref: './resources/JobAnnotationsGroup.yaml'
   /job/{jobId}/annotationsGroup/{annotationsGroupId}:
     $ref: './resources/JobAnnotationsGroupRef.yaml'
   /service/{serviceId}/deploymentStage:
