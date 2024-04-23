@@ -30,6 +30,10 @@ ServicePortResponseList:
   $ref: ./ServicePortResponseList.yaml
 ServicePortRequest:
   $ref: ./ServicePortRequest.yaml
+ServiceAnnotationsRequestList:
+  $ref: "./ServiceAnnotationsRequestList.yaml"
+ServiceAnnotationRequest:
+  $ref: "./ServiceAnnotationRequest.yaml"
 ApplicationRequest:
   $ref: ./ApplicationRequest.yaml
 ApplicationResponseList:
