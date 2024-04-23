@@ -10852,13 +10852,8 @@ components:
               type: boolean
               nullable: true
               description: Specify if the application will be automatically updated after receiving a new commit.
-            annotations_group_ids:
-              type: array
-              description: list of id of the annotations groups
-              items:
-                type: string
-                format: uuid
-                description: id of the annotations group
+            annotations_groups:
+              $ref: '#/components/schemas/ServiceAnnotationsRequestList'
     ApplicationGitRepository:
       type: object
       required:
@@ -11017,6 +11012,18 @@ components:
                 description: is the default port to use for domain
               protocol:
                 $ref: '#/components/schemas/PortProtocolEnum'
+    ServiceAnnotationsRequestList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ServiceAnnotationRequest'
+    ServiceAnnotationRequest:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
     ApplicationRequest:
       allOf:
         - $ref: '#/components/schemas/ServiceStorageRequest'
@@ -11087,13 +11094,8 @@ components:
               type: boolean
               nullable: true
               description: Specify if the application will be automatically updated after receiving a new commit.
-            annotations_group_ids:
-              type: array
-              description: list of id of the annotations groups
-              items:
-                type: string
-                format: uuid
-                description: id of the annotations group
+            annotations_groups:
+              $ref: '#/components/schemas/ServiceAnnotationsRequestList'
     ApplicationResponseList:
       type: object
       properties:
@@ -12639,13 +12641,8 @@ components:
               description: |
                 Specify if the container will be automatically updated after receiving a new image tag. 
                 The new image tag shall be communicated via the "Auto Deploy container" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments
-            annotations_group_ids:
-              type: array
-              description: list of id of the annotations groups
-              items:
-                type: string
-                format: uuid
-                description: id of the annotations group
+            annotations_groups:
+              $ref: '#/components/schemas/ServiceAnnotationsRequestList'
     ContainerResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -13025,13 +13022,8 @@ components:
           type: string
           example: db.t3.medium
           description: 'Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field SHOULD NOT be set for container DB.'
-        annotations_group_ids:
-          type: array
-          description: list of id of the annotations groups
-          items:
-            type: string
-            format: uuid
-            description: id of the annotations group
+        annotations_groups:
+          $ref: '#/components/schemas/ServiceAnnotationsRequestList'
     DatabaseModeEnum:
       type: string
       enum:
@@ -13088,13 +13080,8 @@ components:
           type: integer
           description: unit is GB
           default: 10
-        annotations_group_ids:
-          type: array
-          description: list of id of the annotations groups
-          items:
-            type: string
-            format: uuid
-            description: id of the annotations group
+        annotations_groups:
+          $ref: '#/components/schemas/ServiceAnnotationsRequestList'
     DatabaseResponseList:
       type: object
       properties:
@@ -14457,12 +14444,8 @@ components:
               description: |
                 Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type. 
                 The new image tag shall be communicated via the "Auto Deploy job" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments
-            annotations_group_ids:
-              type: array
-              items:
-                type: string
-                format: uuid
-                description: id of the annotations group
+            annotations_groups:
+              $ref: '#/components/schemas/ServiceAnnotationsRequestList'
     JobResponse:
       oneOf:
         - $ref: '#/components/schemas/LifecycleJobResponse'
