@@ -6598,43 +6598,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/application/{applicationId}/annotationsGroup/{annotationsGroupId}':
-    post:
-      summary: Add annotations group to application
-      description: Add annotations group to application
-      operationId: addAnnotationsGroupToApplication
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/annotationsGroupId'
-      tags:
-        - Application Annotations Group
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    delete:
-      summary: Delete annotations group to application
-      description: Delete annotations group to application
-      operationId: deleteAnnotationsGroupToApplication
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/annotationsGroupId'
-      tags:
-        - Application Annotations Group
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/container/{containerId}':
     get:
       summary: Get container by ID
@@ -7534,43 +7497,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/container/{containerId}/annotationsGroup/{annotationsGroupId}':
-    post:
-      summary: Add annotations group to container
-      description: Add annotations group to container
-      operationId: addAnnotationsGroupToContainer
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-        - $ref: '#/components/parameters/annotationsGroupId'
-      tags:
-        - Container Annotations Group
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    delete:
-      summary: Delete annotations group to container
-      description: Delete annotations group to container
-      operationId: deleteAnnotationsGroupToContainer
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-        - $ref: '#/components/parameters/annotationsGroupId'
-      tags:
-        - Container Annotations Group
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/environment/{environmentId}/database':
     get:
       summary: List environment databases
@@ -8059,43 +7985,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/database/{databaseId}/annotationsGroup/{annotationsGroupId}':
-    post:
-      summary: Add annotations group to database
-      description: Add annotations group to database
-      operationId: addAnnotationsGroupToDatabase
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-        - $ref: '#/components/parameters/annotationsGroupId'
-      tags:
-        - Database Annotations Group
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    delete:
-      summary: Delete annotations group to database
-      description: Delete annotations group to database
-      operationId: deleteAnnotationsGroupToDatabase
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-        - $ref: '#/components/parameters/annotationsGroupId'
-      tags:
-        - Database Annotations Group
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   /account:
     get:
       summary: Get Account information
@@ -9867,43 +9756,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/job/{jobId}/annotationsGroup/{annotationsGroupId}':
-    post:
-      summary: Add annotations group to job
-      description: Add annotations group to job
-      operationId: addAnnotationsGroupToJob
-      parameters:
-        - $ref: '#/components/parameters/jobId'
-        - $ref: '#/components/parameters/annotationsGroupId'
-      tags:
-        - Job Annotations Group
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    delete:
-      summary: Delete annotations group to job
-      description: Delete annotations group to job
-      operationId: deleteAnnotationsGroupToJob
-      parameters:
-        - $ref: '#/components/parameters/jobId'
-        - $ref: '#/components/parameters/annotationsGroupId'
-      tags:
-        - Job Annotations Group
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/service/{serviceId}/deploymentStage':
     get:
       summary: Get Service Deployment Stage
