@@ -1,7 +1,0 @@
-name: helmRepositoryId
-in: path
-description: Helm chart repository ID
-required: true
-schema:
-  type: string
-  format: uuid

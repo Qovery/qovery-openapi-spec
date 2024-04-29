@@ -1,7 +1,0 @@
-type: object
-required:
-  - git_commit_id
-properties:
-  git_commit_id:
-    type: string
-    description: Commit ID to deploy

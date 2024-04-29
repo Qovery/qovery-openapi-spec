@@ -1,7 +1,0 @@
-name: databaseType
-in: path
-description: Database type
-required: true
-schema:
-  type: string
-  example: "MYSQL"

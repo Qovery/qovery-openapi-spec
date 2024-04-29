@@ -1,7 +1,0 @@
-name: instanceId
-in: path
-description: Instance ID
-required: true
-schema:
-  type: string
-  format: uuid

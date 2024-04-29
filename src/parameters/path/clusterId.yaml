@@ -1,7 +1,0 @@
-name: clusterId
-in: path
-description: Cluster ID
-required: true
-schema:
-  type: string
-  format: uuid

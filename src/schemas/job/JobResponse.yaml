@@ -1,8 +1,0 @@
-oneOf:
-  - $ref: './LifecycleJobResponse.yaml'
-  - $ref: './CronJobResponse.yaml'
-discriminator:
-  propertyName: job_type
-  mapping:
-    LIFECYCLE: '#/components/schemas/LifecycleJobResponse'
-    CRON: '#/components/schemas/CronJobResponse'

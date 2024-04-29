@@ -1,8 +1,0 @@
-type: string
-enum:
-  - QUEUEING
-  - PROVISION_BUILDER
-description: |
-  The name of the deployment step at the stage level:
-  - QUEUEING: The step preceding the actual stage deployment step.
-  - PROVISION_BUILDER: The step to provision builders before the actual build.

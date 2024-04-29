@@ -1,5 +1,0 @@
-type: string
-enum:
-  - NEVER_DEPLOYED
-  - OUT_OF_DATE
-  - UP_TO_DATE

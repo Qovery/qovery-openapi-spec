@@ -1,6 +1,0 @@
-type: object
-properties:
-  targets:
-    type: array
-    items:
-      $ref: './OrganizationEventTargetResponse.yaml'

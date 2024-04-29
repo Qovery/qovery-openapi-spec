@@ -1,6 +1,0 @@
-type: object
-required:
- - number
-properties:
-  service_total_number:
-    type: number

@@ -1,7 +1,0 @@
-name: region
-in: path
-description: region name
-required: true
-schema:
-  type: string
-  example: "us-east-2"

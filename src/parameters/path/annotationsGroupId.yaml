@@ -1,7 +1,0 @@
-name: annotationsGroupId
-in: path
-description: Organization annotations group ID
-required: true
-schema:
-  type: string
-  format: uuid

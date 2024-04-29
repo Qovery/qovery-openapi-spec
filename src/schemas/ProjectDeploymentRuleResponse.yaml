@@ -1,9 +1,0 @@
-allOf:
-  - $ref: './BaseResponse.yaml'
-  - $ref: './ProjectDeploymentRuleRequest.yaml'
-  - type: object
-    properties:
-      priority_index:
-        type: integer
-        description: used to select the first deployment rule to match new created environments
-        nullable: false

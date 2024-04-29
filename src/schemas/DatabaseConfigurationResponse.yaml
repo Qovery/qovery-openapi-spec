@@ -1,8 +1,0 @@
-type: object
-properties:
-  database_type:
-    $ref: './enums/DatabaseType.yaml'
-  version:
-    type: array
-    items:
-      $ref: '../schemas/DatabaseVersionMode.yaml'

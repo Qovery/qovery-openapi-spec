@@ -1,6 +1,0 @@
-name: of
-in: query
-description: Source of git commit. Can be 'chart' or 'values'
-schema:
-  type: string
-  default: chart

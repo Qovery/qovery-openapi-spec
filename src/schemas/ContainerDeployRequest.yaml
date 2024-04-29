@@ -1,7 +1,0 @@
-type: object
-required:
-  - image_tag
-properties:
-  image_tag:
-    type: string
-    description: Image tag to deploy

@@ -1,6 +1,0 @@
-type: string
-description: Define the type of the webhook. `SLACK` is a special webhook type to push notifications directly to slack. The `target_url` must be a Slack compatible endpoint.
-enum:
-  - STANDARD
-  - SLACK
-example: STANDARD

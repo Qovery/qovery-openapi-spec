@@ -1,5 +1,0 @@
-name: status
-in: query
-description: status
-schema:
-  type: string

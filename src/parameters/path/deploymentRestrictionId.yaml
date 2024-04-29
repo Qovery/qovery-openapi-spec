@@ -1,7 +1,0 @@
-name: deploymentRestrictionId
-in: path
-description: Deployment Restriction ID
-required: true
-schema:
-  type: string
-  format: uuid

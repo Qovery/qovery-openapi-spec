@@ -1,7 +1,0 @@
-name: tagId
-in: path
-description: Tag ID
-required: true
-schema:
-  type: string
-  format: uuid

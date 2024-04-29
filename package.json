@@ -4,14 +4,13 @@
   "description": "Multi-file boilerplate for Open API Specification.",
   "main": "index.js",
   "scripts": {
-    "build": "swagger-cli bundle src/openapi.yaml --outfile _build/openapi.yaml --type yaml",
-    "test": "npm run build && spectral lint _build/openapi.yaml",
-    "preview": "npm run build && redoc-cli serve _build/openapi.yaml --options src/theme.json",
-    "html": "npm run build && redoc-cli bundle _build/openapi.yaml  --output _build/index.html --options src/theme.json",
+    "test": "spectral lint openapi.yaml",
+    "preview": "redoc-cli serve openapi.yaml --options src/theme.json",
+    "html": "redoc-cli bundle openapi.yaml --output _build/index.html --options src/theme.json",
     "clean": "rm -r _build",
     "deploy": "./deploy.sh",
-    "generate": "./clean_out.sh out _build && npm run test && openapi-generator-cli generate -i _build/openapi.yaml -o out/client -g $QOVERY_CLIENT_LANGUAGE -a bearer --api-package api --package-name qovery --model-package  model --git-user-id qovery --git-repo-id qovery-client-$QOVERY_CLIENT_LANGUAGE",
-    "lint": "npm run build && spectral lint _build/openapi.yaml"
+    "generate": "./clean_out.sh out _build && npm run test && openapi-generator-cli generate -i openapi.yaml -o out/client -g $QOVERY_CLIENT_LANGUAGE -a bearer --api-package api --package-name qovery --model-package  model --git-user-id qovery --git-repo-id qovery-client-$QOVERY_CLIENT_LANGUAGE",
+    "lint": "spectral lint openapi.yaml"
   },
   "repository": {
     "type": "git",
@@ -23,7 +22,6 @@
   },
   "homepage": "https://github.com/dgarcia360/openapi-boilerplate#readme",
   "dependencies": {
-    "@apidevtools/swagger-cli": "^4.0.4",
     "@openapitools/openapi-generator-cli": "^0.0.6",
     "@stoplight/spectral-cli": "^6.5.1",
     "react-is": "^18.2.0",

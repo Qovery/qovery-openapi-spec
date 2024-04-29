@@ -1,7 +1,0 @@
-name: containerRegistryId
-in: path
-description: Container Registry ID
-required: true
-schema:
-  type: string
-  format: uuid

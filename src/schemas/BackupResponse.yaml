@@ -1,7 +1,0 @@
-allOf:
-  - $ref: './BaseResponse.yaml'
-  - $ref: './BackupRequest.yaml'
-  - type: object
-    properties:
-      status:
-        $ref: './Status.yaml'

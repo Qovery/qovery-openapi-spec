@@ -40,7 +40,6 @@ jobs:
       - name: Build OpenApi file
         run: |
           npm ci
-          npm run build
 
       - name: Generate ${{ matrix.language }} client
         uses: openapi-generators/openapitools-generator-action@v1
@@ -49,7 +48,7 @@ jobs:
         with:
           generator: ${{ matrix.language }}
           generator-tag: v${{ matrix.version }}
-          openapi-file: _build/openapi.yaml
+          openapi-file: openapi.yaml
           config-file: "generator/configs/${{ matrix.language }}.yaml"
           command-args: |
             -a bearer \
@@ -58,8 +57,8 @@ jobs:
             --git-user-id qovery \
             --git-repo-id qovery-client-${{ matrix.language }} \
             --package-name qovery \
-            --additional-properties packageVersion=$(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
-            --additional-properties npmVersion=$(grep 'version' _build/openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
+            --additional-properties packageVersion=$(grep 'version' openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
+            --additional-properties npmVersion=$(grep 'version' openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
 
       - name: Generate ${{ matrix.language }} websocket client
         uses: openapi-generators/openapitools-generator-action@v1

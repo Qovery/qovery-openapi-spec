@@ -1,9 +1,0 @@
-type: string
-enum:
-  - NOT_PAID
-  - PAID
-  - PAYMENT_DUE
-  - PENDING
-  - POSTED
-  - UNKNOWN
-  - VOIDED

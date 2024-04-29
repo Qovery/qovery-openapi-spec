@@ -1,7 +1,0 @@
-name: toUpdate
-in: query
-description: return (or not) results that must be updated
-required: false
-schema:
-  type: boolean
-  default: false

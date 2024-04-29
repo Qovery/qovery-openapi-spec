@@ -1,7 +1,0 @@
-name: targetApplicationId
-in: path
-description: Target application ID
-required: true
-schema:
-  type: string
-  format: uuid

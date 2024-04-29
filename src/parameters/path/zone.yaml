@@ -1,7 +1,0 @@
-name: zone
-in: path
-description: zone name
-required: true
-schema:
-  type: string
-  example: "fr-par-1"

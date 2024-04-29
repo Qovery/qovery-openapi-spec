@@ -1,7 +1,0 @@
-name: customRoleId
-in: path
-description: Custom Role ID
-required: true
-schema:
-  type: string
-  format: uuid

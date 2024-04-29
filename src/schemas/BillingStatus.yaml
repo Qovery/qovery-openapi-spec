@@ -1,6 +1,0 @@
-type: object
-properties:
-  is_valid:
-    type: boolean
-  message:
-    type: string

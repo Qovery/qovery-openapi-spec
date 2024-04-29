@@ -1,7 +1,0 @@
-name: lastId
-in: query
-description: ID of the last object after which to return all results 
-required: true
-schema:
-  type: string
-  format: uuid

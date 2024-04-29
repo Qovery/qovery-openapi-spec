@@ -1,7 +1,0 @@
-name: creditCardId
-in: path
-description: Credit Card ID
-required: true
-schema:
-  type: string
-  format: uuid
