@@ -1,0 +1,5 @@
+version: 2
+secret:
+  ignored_matches:
+    - name: Stoplight spectral token
+      match: 088add2b-ea84-490c-80a5-e0a1c4118e56
