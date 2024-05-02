@@ -1,8 +1,0 @@
-type: object
-properties:
-  environment:
-    $ref: '../schemas/EnvironmentStatus.yaml'
-  stages:
-    type: array
-    items:
-      $ref: '../schemas/DeploymentStageWithServicesStatuses.yaml'

@@ -1,7 +1,0 @@
-name: gitTokenId
-in: path
-description: Git Token ID
-required: true
-schema:
-  type: string
-  format: uuid

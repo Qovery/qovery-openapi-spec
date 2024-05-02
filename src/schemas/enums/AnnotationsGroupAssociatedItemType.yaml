@@ -1,9 +1,0 @@
-type: string
-description: Annotations Group Associated Item Type
-enum:
-  - APPLICATION,
-  - DATABASE,
-  - CONTAINER,
-  - JOB,
-  - ENVIRONMENT,
-  - CLUSTER,

@@ -1,8 +1,0 @@
-allOf:
-  - $ref: './GenericObjectCurrentCostResponse.yaml'
-  - type: object
-    properties:
-      environments:
-        type: array
-        items:
-          $ref: './GenericObjectCurrentCostResponse.yaml'

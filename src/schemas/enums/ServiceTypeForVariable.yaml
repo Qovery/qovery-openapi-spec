@@ -1,7 +1,0 @@
-type: string
-description: type of the service
-enum:
-  - APPLICATION
-  - CONTAINER
-  - JOB
-  - HELM

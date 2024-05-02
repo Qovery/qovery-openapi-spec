@@ -1,7 +1,0 @@
-name: apiTokenId
-in: path
-description: Organization Api Token ID
-required: true
-schema:
-  type: string
-  format: uuid

@@ -1,7 +1,0 @@
-name: variableId
-in: path
-description: Variable ID
-required: true
-schema:
-  type: string
-  format: uuid

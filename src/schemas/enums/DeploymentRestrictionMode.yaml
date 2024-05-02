@@ -1,6 +1,0 @@
-type: string
-description: Match mode will rebuild app only if specified items are updated. Exclude mode will not rebuild app if specified items are updated.
-enum:
-  - EXCLUDE
-  - MATCH
-example: MATCH

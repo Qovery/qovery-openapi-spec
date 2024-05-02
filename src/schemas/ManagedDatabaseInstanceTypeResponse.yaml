@@ -1,7 +1,0 @@
-type: object
-required:
-  - name
-properties:
-  name:
-    type: string
-    example: "db.t3.medium"

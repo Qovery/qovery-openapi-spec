@@ -1,8 +1,0 @@
-type: object
-properties:
-  image_name:
-    type: string
-    description: the container image name to trigger preview environment
-  tag:
-    type: string
-    description: the tag to be used in the preview environment

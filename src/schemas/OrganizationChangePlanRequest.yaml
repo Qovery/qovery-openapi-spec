@@ -1,4 +1,0 @@
-type: object
-properties:
-  plan:
-    type: string

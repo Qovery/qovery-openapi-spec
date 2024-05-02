@@ -1,6 +1,0 @@
-type: string
-enum:
-  - DEVELOPMENT
-  - PRODUCTION
-  - STAGING
-example: PRODUCTION

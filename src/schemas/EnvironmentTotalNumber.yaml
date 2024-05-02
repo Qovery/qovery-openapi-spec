@@ -1,6 +1,0 @@
-type: object
-required:
- - number
-properties:
-  environment_total_number:
-    type: number

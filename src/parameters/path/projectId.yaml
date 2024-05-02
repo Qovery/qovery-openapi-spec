@@ -1,7 +1,0 @@
-name: projectId
-in: path
-description: Project ID
-required: true
-schema:
-  type: string
-  format: uuid

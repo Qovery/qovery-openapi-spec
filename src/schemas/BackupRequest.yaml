@@ -1,9 +1,0 @@
-type: object
-required:
-  - name
-  - message
-properties:
-  name:
-    type: string
-  message:
-    type: string

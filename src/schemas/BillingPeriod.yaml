@@ -1,3 +1,0 @@
-allOf:
-- $ref: '../schemas/BillingStart.yaml'
-- $ref: '../schemas/BillingEnd.yaml'

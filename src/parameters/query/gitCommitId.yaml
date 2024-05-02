@@ -1,6 +1,0 @@
-name: gitCommitId
-in: query
-description: Git Commit ID
-schema:
-  type: string
-  format: uuid

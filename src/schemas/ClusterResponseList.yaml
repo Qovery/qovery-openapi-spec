@@ -1,6 +1,0 @@
-type: object
-properties:
-  results:
-    type: array
-    items:
-      $ref: './ClusterResponse.yaml'

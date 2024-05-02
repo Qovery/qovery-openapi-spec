@@ -1,9 +1,0 @@
-type: object
-required:
-  - installation_id
-  - code
-properties:
-  installation_id:
-    type: string
-  code:
-    type: string

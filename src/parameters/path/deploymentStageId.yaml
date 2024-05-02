@@ -1,7 +1,0 @@
-name: deploymentStageId
-in: path
-description: Deployment Stage ID
-required: true
-schema:
-  type: string
-  format: uuid

@@ -1,3 +1,0 @@
-allOf:
-  - $ref: '../schemas/ReferenceObject.yaml'
-  - $ref: '../schemas/ServiceTotalNumber.yaml'
