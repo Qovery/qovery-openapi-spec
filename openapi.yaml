@@ -13301,11 +13301,11 @@ components:
             start_time:
               type: string
               format: date-time
-              example: 1970-01-01T08:00:00.000Z
+              example: '1970-01-01T08:00:00.000Z'
             stop_time:
               type: string
               format: date-time
-              example: 1970-01-01T19:00:00.000Z
+              example: '1970-01-01T19:00:00.000Z'
             weekdays:
               type: array
               items:
@@ -13333,11 +13333,11 @@ components:
         start_time:
           type: string
           format: date-time
-          example: 1970-01-01T08:00:00.000Z
+          example: '1970-01-01T08:00:00.000Z'
         stop_time:
           type: string
           format: date-time
-          example: 1970-01-01T19:00:00.000Z
+          example: '1970-01-01T19:00:00.000Z'
         weekdays:
           type: array
           items:
@@ -15780,10 +15780,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrganizationWebhookResponse'
-    OrganizationAnnotationsGroupResponseList:
-      type: array
-      items:
-        $ref: '#/components/schemas/OrganizationAnnotationsGroupResponse'
     OrganizationAnnotationsGroupCreateRequest:
       type: object
       required:
@@ -15802,6 +15798,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrganizationAnnotationsGroupScopeEnum'
+    OrganizationAnnotationsGroupResponseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/OrganizationAnnotationsGroupResponse'
     OrganizationAnnotationsGroupResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -15875,9 +15875,10 @@ components:
         - 'APPLICATION,'
         - 'DATABASE,'
         - 'CONTAINER,'
-        - 'JOB,'
+        - 'LIFECYLE,'
         - 'ENVIRONMENT,'
         - 'CLUSTER,'
+        - 'CRON,'
     Annotation:
       type: object
       required:
@@ -16055,11 +16056,11 @@ components:
         start_time:
           type: string
           format: date-time
-          example: 1970-01-01T08:00:00.000Z
+          example: '1970-01-01T08:00:00.000Z'
         stop_time:
           type: string
           format: date-time
-          example: 1970-01-01T19:00:00.000Z
+          example: '1970-01-01T19:00:00.000Z'
         weekdays:
           type: array
           items:
@@ -17129,12 +17130,12 @@ components:
           description: The start date of the report
           type: string
           format: date-time
-          example: 2020-01-01T00:00:00.000Z
+          example: '2020-01-01T00:00:00.000Z'
         to:
           description: The end date of the report
           type: string
           format: date-time
-          example: 2020-01-31T23:59:59.000Z
+          example: '2020-01-31T23:59:59.000Z'
         report_expiration_in_seconds:
           description: The number of seconds the report will be publicly available
           type: integer
@@ -17148,6 +17149,48 @@ components:
         delete_report_url:
           description: The URL to delete the report. Use this URL to pro-actively delete the report before it expires
           type: string
+    OrganizationAnnotationsGroupEnrichedResponseList:
+      title: OrganizationAnnotationsGroupEnrichedResponseList
+      x-stoplight:
+        id: 2tbiuqncqaqaw
+      type: object
+      properties:
+        '':
+          type: array
+          x-stoplight:
+            id: koe4jbctfvyr0
+          items:
+            $ref: '#/components/schemas/OrganizationAnnotationsGroupEnrichedResponse'
+    OrganizationAnnotationsGroupEnrichedResponse:
+      title: OrganizationAnnotationsGroupEnrichedResponse
+      x-stoplight:
+        id: edjpmiyq8n5nt
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          x-stoplight:
+            id: 2auhw8xgz67rj
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: pjys12dlmqw9c
+            annotations:
+              type: array
+              x-stoplight:
+                id: 4yn29zdqeb0og
+              items:
+                $ref: '#/components/schemas/Annotation'
+            scopes:
+              x-stoplight:
+                id: h8qu8e8yp5dh3
+              type: array
+              items:
+                $ref: '#/components/schemas/OrganizationAnnotationsGroupScopeEnum'
+            associated_items_count:
+              type: integer
+              x-stoplight:
+                id: q71gum8nqmj8p
   responses:
     '204':
       description: no content
