@@ -15872,13 +15872,13 @@ components:
       type: string
       description: Annotations Group Associated Item Type
       enum:
-        - 'APPLICATION,'
-        - 'DATABASE,'
-        - 'CONTAINER,'
-        - 'LIFECYLE,'
-        - 'ENVIRONMENT,'
-        - 'CLUSTER,'
-        - 'CRON,'
+        - APPLICATION
+        - DATABASE
+        - CONTAINER
+        - LIFECYLE
+        - ENVIRONMENT
+        - CLUSTER
+        - CRON
     Annotation:
       type: object
       required:
