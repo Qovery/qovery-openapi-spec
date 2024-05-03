@@ -17153,14 +17153,9 @@ components:
       title: OrganizationAnnotationsGroupEnrichedResponseList
       x-stoplight:
         id: 2tbiuqncqaqaw
-      type: object
-      properties:
-        '':
-          type: array
-          x-stoplight:
-            id: koe4jbctfvyr0
-          items:
-            $ref: '#/components/schemas/OrganizationAnnotationsGroupEnrichedResponse'
+      type: array
+      items:
+        $ref: '#/components/schemas/OrganizationAnnotationsGroupEnrichedResponse'
     OrganizationAnnotationsGroupEnrichedResponse:
       title: OrganizationAnnotationsGroupEnrichedResponse
       x-stoplight:
