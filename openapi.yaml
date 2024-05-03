@@ -2552,7 +2552,7 @@ paths:
                 type: object
                 properties:
                   results:
-                    $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+                    $ref: '#/components/schemas/OrganizationAnnotationsGroupEnrichedResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
