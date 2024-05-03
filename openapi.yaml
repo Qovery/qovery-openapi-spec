@@ -17165,6 +17165,10 @@ components:
         - type: object
           x-stoplight:
             id: 2auhw8xgz67rj
+          required:
+            - name
+            - annotations
+            - scopes
           properties:
             name:
               type: string
