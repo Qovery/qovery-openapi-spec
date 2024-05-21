@@ -11377,6 +11377,9 @@ components:
               type: string
             is_default:
               type: boolean
+            is_demo:
+              type: boolean
+              description: specific flag to indicate that this cluster is a demo one
             production:
               type: boolean
               description: specific flag to indicate that this cluster is a production one
@@ -11810,9 +11813,6 @@ components:
           type: array
           items:
             type: string
-        kubeconfig:
-          description: If the cluster is a self managed one. The kubeconfig to use to connect to it
-          type: string
         features:
           type: array
           items:
