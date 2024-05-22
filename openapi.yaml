@@ -12413,7 +12413,7 @@ components:
             This field is dependent of the container registry kind:
             * `ECR` needs in the config: region, access_key_id, secret_access_key
             * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key
-            * `GCP_ARTIFACT_REGISTRY` needs in the config: region, json_credentials
+            * `GCP_ARTIFACT_REGISTRY` needs in the config: json_credentials
             * `DOCKER_HUB` needs in the config (optional): username, password
             * `GITHUB_CR` needs in the config (optional): username, password
             * `GITLAB_CR` needs in the config (optional): username, password
