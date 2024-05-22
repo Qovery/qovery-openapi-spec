@@ -1688,6 +1688,123 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/onPremise/credentials':
+    get:
+      summary: List OnPremise credentials
+      operationId: listOnPremiseCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: list credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentialsResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create OnPremise credentials set
+      operationId: createOnPremiseCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnPremiseCredentialsRequest'
+      responses:
+        '201':
+          description: Credentials created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/onPremise/credentials/{credentialsId}':
+    get:
+      summary: Get a set of OnPremise credentials
+      operationId: getOnPremiseCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/credentialsId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: Get a set of OnPremise credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a set of OnPremise credentials
+      operationId: editOnPremiseCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/credentialsId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnPremiseCredentialsRequest'
+      responses:
+        '200':
+          description: Edit a set of OnPremise credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a set of OnPremise credentials
+      operationId: deleteOnPremiseCredentials
+      parameters:
+        - $ref: '#/components/parameters/credentialsId'
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/scaleway/credentials':
     get:
       summary: List Scaleway credentials
@@ -11060,6 +11177,13 @@ components:
         access_key_id:
           type: string
         secret_access_key:
+          type: string
+    OnPremiseCredentialsRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
           type: string
     Backup:
       allOf:
