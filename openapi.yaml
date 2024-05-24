@@ -8995,6 +8995,34 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/checkDockerfile':
+    post:
+      summary: Check dockerfile configuration is correct
+      operationId: checkDockerfile
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DockerfileCheckRequest'
+      responses:
+        '200':
+          description: Information about the dockerfile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DockerfileCheckResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/job':
     get:
       summary: List jobs
@@ -14279,6 +14307,37 @@ components:
             $ref: '#/components/schemas/Status'
         stage:
           $ref: '#/components/schemas/Stage'
+    DockerfileCheckRequest:
+      type: object
+      required:
+        - git_repository
+        - dockerfile_path
+      properties:
+        git_repository:
+          $ref: '#/components/schemas/GitRepository'
+        dockerfile_path:
+          type: string
+          description: path of the dockerfile with root_path as base path
+    DockerfileCheckResponse:
+      type: object
+      required:
+        - git_repository
+        - dockerfile_path
+      properties:
+        dockerfile_path:
+          type: string
+        arg:
+          description: All ARG variable declared in the Dockerfile
+          type: array
+          items:
+            type: string
+        repositories:
+          description: All image repositories we found declared in the Dockerfile
+          type: array
+          items:
+            type: string
+
+
     JobRequest:
       allOf:
         - type: object
