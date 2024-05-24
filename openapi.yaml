@@ -12315,6 +12315,9 @@ components:
         nginx.hpa.max_number_instances:
           type: integer
           description: hpa maximum number of instances
+        storageclass.fast_ssd:
+          type: string
+          description: storage class name to use to provision pvc
     Commit:
       type: object
       nullable: true
