@@ -10785,6 +10785,8 @@ components:
               description: Specify if the application will be automatically updated after receiving a new commit.
             annotations_groups:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+            labels_groups:
+              $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
     ApplicationAdvancedSettings:
       type: object
       properties:
@@ -11007,6 +11009,8 @@ components:
               description: Specify if the application will be automatically updated after receiving a new commit.
             annotations_groups:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
+            labels_groups:
+              $ref: '#/components/schemas/ServiceLabelsRequestList'
     ApplicationGitRepository:
       type: object
       required:
@@ -11177,6 +11181,18 @@ components:
         id:
           type: string
           format: uuid
+    ServiceLabelsRequestList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ServiceLabelRequest'
+    ServiceLabelRequest:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
     ApplicationRequest:
       allOf:
         - $ref: '#/components/schemas/ServiceStorageRequest'
@@ -11249,6 +11265,8 @@ components:
               description: Specify if the application will be automatically updated after receiving a new commit.
             annotations_groups:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
+            labels_groups:
+              $ref: '#/components/schemas/ServiceLabelsRequestList'
     ApplicationResponseList:
       type: object
       properties:
@@ -12810,6 +12828,8 @@ components:
                 The new image tag shall be communicated via the "Auto Deploy container" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments
             annotations_groups:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
+            labels_groups:
+              $ref: '#/components/schemas/ServiceLabelsRequestList'
     ContainerResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -12889,6 +12909,8 @@ components:
                 The new image tag shall be communicated via the "Auto Deploy container" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments
             annotations_groups:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+            labels_groups:
+              $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
     ContainerResponseList:
       type: object
       properties:
@@ -13125,6 +13147,8 @@ components:
               description: 'Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field is null for container DB.'
             annotations_groups:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+            labels_groups:
+              $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
     DatabaseAccessibilityEnum:
       type: string
       default: PRIVATE
@@ -13191,6 +13215,8 @@ components:
           description: 'Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field SHOULD NOT be set for container DB.'
         annotations_groups:
           $ref: '#/components/schemas/ServiceAnnotationsRequestList'
+        labels_groups:
+          $ref: '#/components/schemas/ServiceLabelsRequestList'
     DatabaseModeEnum:
       type: string
       enum:
@@ -13249,6 +13275,8 @@ components:
           default: 10
         annotations_groups:
           $ref: '#/components/schemas/ServiceAnnotationsRequestList'
+        labels_groups:
+          $ref: '#/components/schemas/ServiceLabelsRequestList'
     DatabaseResponseList:
       type: object
       properties:
