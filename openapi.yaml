@@ -11906,14 +11906,33 @@ components:
           type: integer
           nullable: true
           example: 9900
+          deprecated: true
         cost_per_month:
           type: number
           nullable: true
           example: 99
+          deprecated: true
         currency_code:
           type: string
           nullable: true
           example: USD
+          deprecated: true
+        is_cloud_provider_paying_feature:
+          type: boolean
+          nullable: false
+          example: true
+        cloud_provider_feature_documentation:
+          type: string
+          nullable: true
+          example: https://cloud.provider.doc/feature
+        is_qovery_paying_feature:
+          type: boolean
+          nullable: false
+          example: true
+        qovery_feature_documentation:
+          type: string
+          nullable: true
+          example: https://qovery.doc/feature
         value_type:
           type: string
           nullable: false
