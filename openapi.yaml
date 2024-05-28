@@ -11948,10 +11948,10 @@ components:
           discriminator:
             propertyName: type
             mapping:
-              String: '#/components/schemas/ClusterFeatureStringResponse'
-              Boolean: '#/components/schemas/ClusterFeatureBooleanResponse'
-              AwsUserProvidedNetwork: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
-              GcpUserProvidedNetwork: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
+              STRING: '#/components/schemas/ClusterFeatureStringResponse'
+              BOOLEAN: '#/components/schemas/ClusterFeatureBooleanResponse'
+              AWS_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
+              GCP_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
         is_value_updatable:
           type: boolean
           default: false
@@ -11961,6 +11961,13 @@ components:
             oneOf:
               - type: string
               - type: boolean
+    ClusterFeatureResponseTypeEnum:
+      type: string
+      enum:
+        - STRING
+        - BOOLEAN
+        - AWS_USER_PROVIDED_NETWORK
+        - GCP_USER_PROVIDED_NETWORK
     ClusterFeatureStringResponse:
       type: object
       required:
@@ -11968,7 +11975,7 @@ components:
         - value
       properties:
         type:
-          type: string
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
         value:
           type: string
     ClusterFeatureBooleanResponse:
@@ -11978,7 +11985,7 @@ components:
         - value
       properties:
         type:
-          type: string
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
         value:
           type: boolean
     ClusterFeatureAwsExistingVpcResponse:
@@ -11988,7 +11995,7 @@ components:
         - value
       properties:
         type:
-          type: string
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
         value:
           $ref: '#/components/schemas/ClusterFeatureAwsExistingVpc'
     ClusterFeatureGcpExistingVpcResponse:
@@ -11998,7 +12005,7 @@ components:
         - value
       properties:
         type:
-          type: string
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
         value:
           $ref: '#/components/schemas/ClusterFeatureGcpExistingVpc'
     ClusterFeatureAwsExistingVpc:
