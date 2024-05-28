@@ -14520,7 +14520,7 @@ components:
         - dockerfile_path
       properties:
         git_repository:
-          $ref: '#/components/schemas/GitRepository'
+          $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
         dockerfile_path:
           type: string
           description: path of the dockerfile with root_path as base path
