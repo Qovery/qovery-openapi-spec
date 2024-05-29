@@ -11717,7 +11717,7 @@ components:
             features:
               type: array
               items:
-                $ref: '#/components/schemas/ClusterFeature'
+                $ref: '#/components/schemas/ClusterFeatureResponse'
             deployment_status:
               $ref: '#/components/schemas/ClusterDeploymentStatusEnum'
     ClusterDeleteMode:
@@ -11890,7 +11890,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClusterCredentials'
-    ClusterFeature:
+    ClusterFeatureResponse:
       type: object
       properties:
         id:
@@ -11938,13 +11938,20 @@ components:
           nullable: false
           enum:
             - BOOLEAN
-        value:
+        value_object:
           nullable: true
           oneOf:
-            - type: string
-            - type: boolean
-            - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpc'
-            - $ref: '#/components/schemas/ClusterFeatureGcpExistingVpc'
+            - $ref: '#/components/schemas/ClusterFeatureStringResponse'
+            - $ref: '#/components/schemas/ClusterFeatureBooleanResponse'
+            - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
+            - $ref: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
+          discriminator:
+            propertyName: type
+            mapping:
+              STRING: '#/components/schemas/ClusterFeatureStringResponse'
+              BOOLEAN: '#/components/schemas/ClusterFeatureBooleanResponse'
+              AWS_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
+              GCP_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
         is_value_updatable:
           type: boolean
           default: false
@@ -11954,6 +11961,53 @@ components:
             oneOf:
               - type: string
               - type: boolean
+    ClusterFeatureResponseTypeEnum:
+      type: string
+      enum:
+        - STRING
+        - BOOLEAN
+        - AWS_USER_PROVIDED_NETWORK
+        - GCP_USER_PROVIDED_NETWORK
+    ClusterFeatureStringResponse:
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
+        value:
+          type: string
+    ClusterFeatureBooleanResponse:
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
+        value:
+          type: boolean
+    ClusterFeatureAwsExistingVpcResponse:
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
+        value:
+          $ref: '#/components/schemas/ClusterFeatureAwsExistingVpc'
+    ClusterFeatureGcpExistingVpcResponse:
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
+        value:
+          $ref: '#/components/schemas/ClusterFeatureGcpExistingVpc'
     ClusterFeatureAwsExistingVpc:
       type: object
       required:
@@ -12050,7 +12104,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterFeature'
+            $ref: '#/components/schemas/ClusterFeatureResponse'
     ClusterInstanceTypeResponseList:
       type: object
       properties:
