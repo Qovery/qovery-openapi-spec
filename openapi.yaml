@@ -3699,6 +3699,29 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/helmRepository/{helmRepositoryId}/charts':
+    get:
+      summary: List helm charts contained inside the repository
+      operationId: getHelmCharts
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/helmRepositoryId'
+        - $ref: '#/components/parameters/chartName'
+      tags:
+        - Helm Repositories
+      responses:
+        '200':
+          description: The helm repository versions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmVersionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/project/{projectId}':
     get:
       summary: Get project by ID
@@ -10572,40 +10595,10 @@ components:
       schema:
         type: string
         format: uuid
-    status:
-      name: status
-      in: query
-      description: status
-      schema:
-        type: string
-    tagId:
-      name: tagId
-      in: path
-      description: Tag ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    tail:
-      name: tail
-      in: query
-      description: Number of last results to return
-      required: true
-      schema:
-        type: integer
-        format: int32
     targetApplicationId:
       name: targetApplicationId
       in: path
       description: Target application ID
-      required: true
-      schema:
-        type: string
-        format: uuid
-    targetDatabaseId:
-      name: targetDatabaseId
-      in: path
-      description: Target database ID
       required: true
       schema:
         type: string
@@ -10650,6 +10643,12 @@ components:
       schema:
         type: string
         format: uuid
+    chartName:
+      name: chartName
+      in: query
+      description: Helm chart name to filter the result on
+      schema:
+        type: string
     helmOf:
       name: of
       in: query
@@ -12816,6 +12815,22 @@ components:
             skip_tls_verification:
               type: boolean
               description: Bypass tls certificate verification when connecting to repository
+    HelmVersionResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/HelmVersionResponse'
+    HelmVersionResponse:
+      type: object
+      properties:
+        chart_name:
+          type: string
+        versions:
+          type: array
+          items:
+            type: string
     HelmRepositoryResponseList:
       type: object
       properties:
