@@ -3521,6 +3521,29 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/containerRegistry/{containerRegistryId}/images':
+    get:
+      summary: List image version for a container registry
+      operationId: getContainerVersions
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/containerRegistryId'
+        - $ref: '#/components/parameters/imageName'
+      tags:
+        - Container Registries
+      responses:
+        '200':
+          description: The container registry versions list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerVersionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/containerRegistry/{containerRegistryId}/container/status':
     get:
       summary: List all container registry container statuses
@@ -10365,6 +10388,13 @@ components:
       schema:
         type: string
         format: uuid
+    imageName:
+      name: imageName
+      in: query
+      required: true
+      description: container image name
+      schema:
+        type: string
     credentialsId:
       name: credentialsId
       in: path
@@ -10461,14 +10491,6 @@ components:
       schema:
         type: string
         format: uuid
-    eventId:
-      name: eventId
-      in: path
-      description: Event ID
-      required: true
-      schema:
-        type: string
-        format: uuid
     inviteId:
       name: inviteId
       in: path
@@ -10524,14 +10546,6 @@ components:
       schema:
         type: string
         format: uuid
-    instanceId:
-      name: instanceId
-      in: path
-      description: Instance ID
-      required: true
-      schema:
-        type: string
-        format: uuid
     invoiceId:
       name: invoiceId
       in: path
@@ -10540,29 +10554,6 @@ components:
       schema:
         type: string
         format: uuid
-    lastId:
-      name: lastId
-      in: query
-      description: ID of the last object after which to return all results
-      required: true
-      schema:
-        type: string
-        format: uuid
-    lastSeconds:
-      name: lastSeconds
-      in: query
-      description: Up to how many seconds in the past to ask analytics results
-      required: true
-      schema:
-        type: number
-    limit:
-      name: limit
-      in: query
-      description: How many items to return at one time (max 100)
-      required: false
-      schema:
-        type: integer
-        format: int32
     organizationId:
       name: organizationId
       in: path
@@ -12748,6 +12739,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ContainerRegistryResponse'
+    ContainerVersionResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerVersionResponse'
+    ContainerVersionResponse:
+      type: object
+      properties:
+        image_name:
+          type: string
+        versions:
+          type: array
+          items:
+              type: string
     HelmRepositoryRequest:
       type: object
       required:
