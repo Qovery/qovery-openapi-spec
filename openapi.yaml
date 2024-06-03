@@ -11424,12 +11424,6 @@ components:
           type: string
           readOnly: true
           format: date-time
-    BillingEnd:
-      type: object
-      properties:
-        billing_ended_on:
-          type: string
-          format: date-time
     BillingInfo:
       type: object
       properties:
@@ -11520,16 +11514,6 @@ components:
           description: name of the company to bill
         vat_number:
           type: string
-    BillingPeriod:
-      allOf:
-        - $ref: '#/components/schemas/BillingStart'
-        - $ref: '#/components/schemas/BillingEnd'
-    BillingStart:
-      type: object
-      properties:
-        billing_started_on:
-          type: string
-          format: date-time
     BillingStatus:
       type: object
       properties:
@@ -11554,9 +11538,6 @@ components:
         currency_code:
           type: string
           example: USD
-    BudgetThreshold:
-      allOf:
-        - $ref: '#/components/schemas/Budget'
     BuildModeEnum:
       type: string
       enum:
@@ -12425,15 +12406,6 @@ components:
           type: string
         commit_page_url:
           type: string
-    CommitPaginatedResponseList:
-      allOf:
-        - type: object
-          properties:
-            results:
-              type: array
-              items:
-                $ref: '#/components/schemas/Commit'
-        - $ref: '#/components/schemas/PaginationData'
     CommitResponseList:
       type: object
       properties:
@@ -12441,9 +12413,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Commit'
-    CommunityUsage:
-      allOf:
-        - $ref: '#/components/schemas/ProjectCurrentCostResponseList'
     CompanySizeEnum:
       type: string
       enum:
@@ -13573,13 +13542,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/DeploymentHistory'
-    DeploymentHistoryResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentHistory'
     DeploymentHistoryStatusEnum:
       type: string
       enum:
@@ -13597,61 +13559,6 @@ components:
       enum:
         - PATH
       example: PATH
-    DeploymentRuleRequest:
-      type: object
-      required:
-        - name
-        - mode
-        - cluster
-        - auto_stop
-      properties:
-        name:
-          type: string
-          description: name is case insensitive
-        description:
-          type: string
-        mode:
-          $ref: '#/components/schemas/EnvironmentModeEnum'
-        cluster:
-          type: string
-          format: uuid
-        auto_stop:
-          type: boolean
-          default: false
-        timezone:
-          type: string
-          nullable: false
-          default: Europe/London
-          description: specify value only if auto_stop = false
-        start_time:
-          type: string
-          format: date-time
-          nullable: true
-          description: specify value only if auto_stop = false
-        stop_time:
-          type: string
-          format: date-time
-          nullable: true
-          description: specify value only if auto_stop = false
-        weekdays:
-          type: array
-          nullable: true
-          description: specify value only if auto_stop = false
-          items:
-            $ref: '#/components/schemas/WeekdayEnum'
-    DoCredentialsRequest:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-        token:
-          type: string
-        spaces_access_id:
-          type: string
-        spaces_secret_key:
-          type: string
     Environment:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -13897,15 +13804,6 @@ components:
               type: string
             full_details:
               type: string
-    EnvironmentLogPaginatedResponseList:
-      allOf:
-        - $ref: '#/components/schemas/PaginationData'
-        - type: object
-          properties:
-            results:
-              type: array
-              items:
-                $ref: '#/components/schemas/EnvironmentLog'
     EnvironmentLogResponseList:
       type: object
       properties:
@@ -15356,10 +15254,6 @@ components:
               is_default:
                 type: boolean
                 description: is the default port to use for domain
-    HelmPortResponse:
-      $ref: '#/components/schemas/HelmResponse'
-    HelmPortResponseList:
-      $ref: '#/components/schemas/HelmResponseList'
     HelmForceEvent:
       type: string
       enum:
@@ -15495,15 +15389,6 @@ components:
         version:
           type: string
           example: 2bfd61fe45946c74f318050b26210be486c43a39
-    LogPaginatedResponseList:
-      allOf:
-        - $ref: '#/components/schemas/PaginationData'
-        - type: object
-          properties:
-            results:
-              type: array
-              items:
-                $ref: '#/components/schemas/Log'
     LogResponseList:
       type: object
       properties:
@@ -15589,13 +15474,6 @@ components:
         role_id:
           type: string
           format: uuid
-    Name:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
     Organization:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -16722,10 +16600,6 @@ components:
         invitation_link:
           type: string
           example: 'https://join.qovery.com/xDowkWEl'
-    RemainingCredits:
-      allOf:
-        - $ref: '#/components/schemas/Cost'
-        - type: object
     RewardClaim:
       type: object
       properties:
@@ -16858,13 +16732,6 @@ components:
         - NEVER_DEPLOYED
         - OUT_OF_DATE
         - UP_TO_DATE
-    ServiceResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Service'
     ServiceTotalNumber:
       type: object
       required:
@@ -17049,13 +16916,6 @@ components:
         - PERSONAL
         - SCHOOL
         - WORK
-    UnexpectedError:
-      type: object
-      required:
-        - message
-      properties:
-        message:
-          type: string
     User:
       type: object
       properties:
@@ -17773,8 +17633,6 @@ components:
                 $ref: '#/components/schemas/Label'
             associated_items_count:
               type: integer
-
-
   responses:
     '204':
       description: no content
@@ -17786,8 +17644,6 @@ components:
       description: Access forbidden
     '404':
       description: Resource not found
-    '409':
-      description: Conflict
     204-deletion:
       description: The resource was deleted successfully
   securitySchemes:
