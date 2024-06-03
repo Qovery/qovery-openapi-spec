@@ -9217,6 +9217,90 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/checkHelmRepository':
+    post:
+      summary: Check helm repository configuration is correct
+      operationId: checkHelm
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelmCheckRequest'
+      responses:
+        '200':
+          description: Information about the helm repository
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmCheckResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/checkContainerImage':
+    post:
+      summary: Check container image configuration is correct
+      operationId: checkContainerImage
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContainerImageCheckRequest'
+      responses:
+        '200':
+          description: Information about the image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerImageCheckResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/checkGitFile':
+    post:
+      summary: Check git file configuration is correct
+      operationId: checkGitFile
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitFileCheckRequest'
+      responses:
+        '200':
+          description: Information about the image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitFileCheckResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/job':
     get:
       summary: List jobs
@@ -14516,8 +14600,45 @@ components:
           type: array
           items:
             type: string
-
-
+    GitFileCheckRequest:
+      type: object
+      required:
+        - git_repository
+        - files
+      properties:
+        git_repository:
+          $ref: '#/components/schemas/HelmGitRepositoryRequest'
+        files:
+          type: array
+          items:
+            type: string
+    GitFileCheckResponse:
+      type: object
+    HelmCheckRequest:
+      type: object
+      required:
+        - git_repository
+      properties:
+        git_repository:
+          $ref: '#/components/schemas/HelmGitRepositoryRequest'
+    HelmCheckResponse:
+      type: object
+    ContainerImageCheckRequest:
+      type: object
+      required:
+        - registry_d
+        - image_name
+        - tag
+      properties:
+        registry_id:
+          type: string
+          format: uuid
+        image_name:
+          type: string
+        tag:
+          type: string
+    ContainerImageCheckResponse:
+      type: object
     JobRequest:
       allOf:
         - type: object
