@@ -9220,7 +9220,7 @@ paths:
   '/environment/{environmentId}/checkHelmRepository':
     post:
       summary: Check helm repository configuration is correct
-      operationId: checkHelm
+      operationId: checkHelmRepository
       parameters:
         - $ref: '#/components/parameters/environmentId'
       tags:
