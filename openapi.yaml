@@ -3702,7 +3702,7 @@ paths:
   '/organization/{organizationId}/helmRepository/{helmRepositoryId}/charts':
     get:
       summary: List helm charts contained inside the repository
-      operationId: getHelmsCharts
+      operationId: getHelmCharts
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/helmRepositoryId'
