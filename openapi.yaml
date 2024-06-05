@@ -2937,10 +2937,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-
-
-
-
   /cloudProvider:
     get:
       summary: List Cloud providers available
@@ -11979,7 +11975,7 @@ components:
         cloud_provider_feature_documentation:
           type: string
           nullable: true
-          example: https://cloud.provider.doc/feature
+          example: 'https://cloud.provider.doc/feature'
         is_qovery_paying_feature:
           type: boolean
           nullable: false
@@ -11987,7 +11983,7 @@ components:
         qovery_feature_documentation:
           type: string
           nullable: true
-          example: https://qovery.doc/feature
+          example: 'https://qovery.doc/feature'
         value_type:
           type: string
           nullable: false
@@ -12807,7 +12803,7 @@ components:
         versions:
           type: array
           items:
-              type: string
+            type: string
     HelmRepositoryRequest:
       type: object
       required:
@@ -14641,8 +14637,7 @@ components:
       type: object
     JobRequest:
       allOf:
-        - type: object
-          required:
+        - required:
             - name
             - healthchecks
           properties:
@@ -14681,10 +14676,10 @@ components:
                 If not specified, it takes the value of the `auto_preview` property from the associated environment.
             port:
               type: integer
-              nullable: true
               minimum: 1
               description: Port where to run readiness and liveliness probes checks. The port will not be exposed externally
               default: null
+              nullable: true
             source:
               type: object
               properties:
@@ -14716,6 +14711,12 @@ components:
                       nullable: true
                     git_repository:
                       $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+                    dockerfile_raw:
+                      type: string
+                      x-stoplight:
+                        id: 2ksmhx7hfs9pi
+                      description: The content of your dockerfile if it is not stored inside your git repository
+                      nullable: true
             healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             schedule:
@@ -14780,12 +14781,13 @@ components:
                         Timezone is UTC
             auto_deploy:
               type: boolean
-              nullable: true
               description: |
                 Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type. 
                 The new image tag shall be communicated via the "Auto Deploy job" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments
+              nullable: true
             annotations_groups:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
+      type: object
     JobResponse:
       oneOf:
         - $ref: '#/components/schemas/LifecycleJobResponse'
@@ -16446,9 +16448,6 @@ components:
           type: string
         propagate_to_cloud_provider:
           type: boolean
-
-
-
     PaginationData:
       type: object
       required:
@@ -17544,17 +17543,14 @@ components:
         - type: object
           required:
             - environment
-            - name
-            - tag
-            - auto_preview
-            - cpu
-            - memory
-            - min_running_instances
-            - max_running_instances
             - maximum_cpu
             - maximum_memory
-            - healthchecks
+            - name
+            - cpu
+            - memory
+            - auto_preview
             - source
+            - healthchecks
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -17598,19 +17594,17 @@ components:
                 If not specified, it takes the value of the `auto_preview` property from the associated environment.
             port:
               type: integer
-              nullable: true
               minimum: 1
               description: Port where to run readiness and liveliness probes checks. The port will not be exposed externally
               default: null
+              nullable: true
             source:
               nullable: false
               oneOf:
-                - type: object
-                  properties:
+                - properties:
                     image:
                       $ref: '#/components/schemas/ContainerSource'
-                - type: object
-                  properties:
+                - properties:
                     docker:
                       type: object
                       properties:
@@ -17620,6 +17614,13 @@ components:
                           nullable: true
                         git_repository:
                           $ref: '#/components/schemas/ApplicationGitRepository'
+                        dockerfile_raw:
+                          type: string
+                          x-stoplight:
+                            id: tyyl65k4m7275
+                          description: The content of your dockerfile if it is not stored inside your git repository
+                          nullable: true
+              type: object
             healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             auto_deploy:

@@ -18,7 +18,7 @@ jobs:
       matrix:
         include:
           - language: go
-            version: 7.0.1
+            version: 7.6.0
             target-branch: master
             deploy-ssh-key: SSH_DEPLOY_KEY_GO
             deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_GO
@@ -78,6 +78,11 @@ jobs:
             --package-name qovery-ws \
             --additional-properties packageVersion=$(grep 'version' websocket/websocket-openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
             --additional-properties npmVersion=$(grep 'version' websocket/websocket-openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: output-${{ matrix.language }}
+          path: out 
 
       - name: Check post generation script existence
         id: check_files
