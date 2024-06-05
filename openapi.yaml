@@ -17543,17 +17543,14 @@ components:
         - type: object
           required:
             - environment
-            - name
-            - tag
-            - auto_preview
-            - cpu
-            - memory
-            - min_running_instances
-            - max_running_instances
             - maximum_cpu
             - maximum_memory
-            - healthchecks
+            - name
+            - cpu
+            - memory
+            - auto_preview
             - source
+            - healthchecks
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -17597,19 +17594,17 @@ components:
                 If not specified, it takes the value of the `auto_preview` property from the associated environment.
             port:
               type: integer
-              nullable: true
               minimum: 1
               description: Port where to run readiness and liveliness probes checks. The port will not be exposed externally
               default: null
+              nullable: true
             source:
               nullable: false
               oneOf:
-                - type: object
-                  properties:
+                - properties:
                     image:
                       $ref: '#/components/schemas/ContainerSource'
-                - type: object
-                  properties:
+                - properties:
                     docker:
                       type: object
                       properties:
@@ -17619,6 +17614,13 @@ components:
                           nullable: true
                         git_repository:
                           $ref: '#/components/schemas/ApplicationGitRepository'
+                        dockerfile_raw:
+                          type: string
+                          x-stoplight:
+                            id: tyyl65k4m7275
+                          description: The content of your dockerfile if it is not stored inside your git repository
+                          nullable: true
+              type: object
             healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             auto_deploy:
