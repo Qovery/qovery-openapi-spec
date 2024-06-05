@@ -17614,12 +17614,6 @@ components:
                           type: string
                           description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
                           nullable: true
-                        dockerfile_raw:
-                          type: string
-                          x-stoplight:
-                            id: btw3n1oo0nclj
-                          description: The content of your dockerfile if it is not stored inside your git repository
-                          nullable: true
               type: object
             healthchecks:
               $ref: '#/components/schemas/Healthcheck'
