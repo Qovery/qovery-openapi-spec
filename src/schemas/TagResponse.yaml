@@ -1,8 +1,0 @@
-allOf:
-  - $ref: './BaseResponse.yaml'
-  - type: object
-    required:
-      - name
-    properties:
-      name:
-        type: string

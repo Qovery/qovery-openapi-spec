@@ -1,6 +1,0 @@
-name: environmentId
-in: path
-description: Environment ID
-required: true
-schema:
-  type: string

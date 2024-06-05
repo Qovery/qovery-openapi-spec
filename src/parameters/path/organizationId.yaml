@@ -1,6 +1,0 @@
-name: organizationId
-in: path
-description: Organization ID
-required: true
-schema:
-  type: string
