@@ -11996,6 +11996,7 @@ components:
             - $ref: '#/components/schemas/ClusterFeatureBooleanResponse'
             - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
             - $ref: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
+            - $ref: '#/components/schemas/ClusterFeatureKarpenterResponse'
           discriminator:
             propertyName: type
             mapping:
@@ -12003,6 +12004,7 @@ components:
               BOOLEAN: '#/components/schemas/ClusterFeatureBooleanResponse'
               AWS_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
               GCP_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
+              KARPENTER: '#/components/schemas/ClusterFeatureKarpenterResponse'
         is_value_updatable:
           type: boolean
           default: false
@@ -12279,6 +12281,7 @@ components:
                   - type: boolean
                   - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpc'
                   - $ref: '#/components/schemas/ClusterFeatureGcpExistingVpc'
+                  - $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
     ClusterResponseList:
       type: object
       properties:
@@ -17755,6 +17758,43 @@ components:
                 $ref: '#/components/schemas/Label'
             associated_items_count:
               type: integer
+    CpuArchitectureEnum:
+      title: CpuArchitectureEnum
+      x-stoplight:
+        id: rcixe3b8f5dqb
+      enum:
+        - AMD64
+        - ARM64
+    ClusterFeatureKarpenterParameters:
+      type: object
+      x-stoplight:
+        id: d653fdcf3d9f1
+      x-examples:
+        Example 1:
+          spot_enabled: true
+          disk_size_in_gib: 50
+          default_service_architecture: AMD64
+      required:
+        - spot_enabled
+        - disk_size_in_gib
+        - default_service_architecture
+      properties:
+        spot_enabled:
+          type: boolean
+        disk_size_in_gib:
+          type: integer
+        default_service_architecture:
+          $ref: '#/components/schemas/CpuArchitectureEnum'
+    ClusterFeatureKarpenterResponse:
+      title: ClusterFeatureKarpenterResponse
+      x-stoplight:
+        id: q9w21q3nluv1y
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
+        value:
+          $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
   responses:
     '204':
       description: no content
