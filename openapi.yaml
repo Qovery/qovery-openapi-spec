@@ -17773,10 +17773,6 @@ components:
               x-stoplight:
                 id: qxjxb9crdcsyv
               format: uri
-            '':
-              type: string
-              x-stoplight:
-                id: 0uy4n5iu6dp10
     HelmSourceGitResponse:
       title: HelmSourceGitResponse
       x-stoplight:
