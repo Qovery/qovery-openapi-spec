@@ -15607,6 +15607,16 @@ components:
               type: string
               format: uuid
               description: uuid of the user owning the organization
+        - type: object
+          properties:
+            organization_plan:
+              type: object
+              properties:
+                plan:
+                  $ref: '#/components/schemas/PlanEnum'
+                audit_logs_retention_in_days:
+                  type: number
+                  description: audit logs maximum period available in days
     OrganizationApiToken:
       allOf:
         - $ref: '#/components/schemas/Base'
