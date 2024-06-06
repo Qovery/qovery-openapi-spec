@@ -15061,9 +15061,9 @@ components:
             - auto_preview
             - auto_deploy
             - source
-            - values_override
             - arguments
             - allow_cluster_wide_resources
+            - values_override
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -15095,8 +15095,8 @@ components:
                 required:
                   - id
                   - internal_port
-                  - protocol
                   - service_name
+                  - protocol
                 properties:
                   id:
                     type: string
@@ -15123,45 +15123,15 @@ components:
             source:
               nullable: false
               oneOf:
-                - type: object
-                  properties:
+                - properties:
                     git:
-                      type: object
-                      properties:
-                        git_repository:
-                          $ref: '#/components/schemas/ApplicationGitRepository'
-                - type: object
+                      $ref: '#/components/schemas/HelmSourceGitResponse'
+                - x-stoplight:
+                    id: 0prdehm6z8pua
                   properties:
                     repository:
-                      type: object
-                      required:
-                        - chart_name
-                        - chart_version
-                        - repository
-                      properties:
-                        chart_name:
-                          type: string
-                          description: The name of the chart in the repository
-                        chart_version:
-                          type: string
-                          description: The version of the chart to use
-                        repository:
-                          type: object
-                          required:
-                            - id
-                            - name
-                            - url
-                          properties:
-                            id:
-                              type: string
-                              format: UUID
-                              description: The id of the helm repository
-                            name:
-                              type: string
-                              description: The name of the helm repository
-                            url:
-                              type: string
-                              description: The url the helm repository
+                      $ref: '#/components/schemas/HelmSourceRepositoryResponse'
+              type: object
             arguments:
               type: array
               description: The extra arguments to pass to helm
@@ -17762,6 +17732,61 @@ components:
             id: 7s4l0qg285y48
           description: The content of your dockerfile if it is not stored inside your git repository
           nullable: true
+    HelmSourceRepositoryResponse:
+      title: HelmSourceRepositoryResponse
+      x-stoplight:
+        id: 4u8sg5mvbz502
+      type: object
+      required:
+        - chart_name
+        - chart_version
+        - repository
+      properties:
+        chart_name:
+          type: string
+          x-stoplight:
+            id: myqqxis6r2wum
+        chart_version:
+          type: string
+          x-stoplight:
+            id: bxqymhkfiwauw
+        repository:
+          type: object
+          x-stoplight:
+            id: fr4th9yrro2rh
+          required:
+            - id
+            - name
+            - url
+          properties:
+            id:
+              type: string
+              x-stoplight:
+                id: 4mb2ymh7anud4
+              format: uu
+            name:
+              type: string
+              x-stoplight:
+                id: bamkqh6qvsenc
+            url:
+              type: string
+              x-stoplight:
+                id: qxjxb9crdcsyv
+              format: uri
+            '':
+              type: string
+              x-stoplight:
+                id: 0uy4n5iu6dp10
+    HelmSourceGitResponse:
+      title: HelmSourceGitResponse
+      x-stoplight:
+        id: lsxautcdafty6
+      type: object
+      required:
+        - git_repository
+      properties:
+        git_repository:
+          $ref: '#/components/schemas/ApplicationGitRepository'
   responses:
     '204':
       description: no content
