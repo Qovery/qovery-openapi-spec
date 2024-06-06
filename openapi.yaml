@@ -11955,35 +11955,35 @@ components:
           nullable: true
         cost_per_month_in_cents:
           type: integer
-          nullable: true
           example: 9900
           deprecated: true
+          nullable: true
         cost_per_month:
           type: number
-          nullable: true
           example: 99
           deprecated: true
+          nullable: true
         currency_code:
           type: string
-          nullable: true
           example: USD
           deprecated: true
+          nullable: true
         is_cloud_provider_paying_feature:
           type: boolean
           nullable: false
           example: true
         cloud_provider_feature_documentation:
           type: string
-          nullable: true
           example: 'https://cloud.provider.doc/feature'
+          nullable: true
         is_qovery_paying_feature:
           type: boolean
           nullable: false
           example: true
         qovery_feature_documentation:
           type: string
-          nullable: true
           example: 'https://qovery.doc/feature'
+          nullable: true
         value_type:
           type: string
           nullable: false
@@ -11996,6 +11996,7 @@ components:
             - $ref: '#/components/schemas/ClusterFeatureBooleanResponse'
             - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
             - $ref: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
+            - $ref: '#/components/schemas/ClusterFeatureKarpenterParametersResponse'
           discriminator:
             propertyName: type
             mapping:
@@ -12003,6 +12004,7 @@ components:
               BOOLEAN: '#/components/schemas/ClusterFeatureBooleanResponse'
               AWS_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
               GCP_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
+              KARPENTER: '#/components/schemas/ClusterFeatureKarpenterParametersResponse'
         is_value_updatable:
           type: boolean
           default: false
@@ -12019,6 +12021,7 @@ components:
         - BOOLEAN
         - AWS_USER_PROVIDED_NETWORK
         - GCP_USER_PROVIDED_NETWORK
+        - KARPENTER
     ClusterFeatureStringResponse:
       type: object
       required:
@@ -12224,8 +12227,8 @@ components:
       type: object
       required:
         - name
-        - cloud_provider
         - region
+        - cloud_provider
       properties:
         name:
           type: string
@@ -12279,6 +12282,7 @@ components:
                   - type: boolean
                   - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpc'
                   - $ref: '#/components/schemas/ClusterFeatureGcpExistingVpc'
+                  - $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
     ClusterResponseList:
       type: object
       properties:
@@ -17793,6 +17797,46 @@ components:
       properties:
         git_repository:
           $ref: '#/components/schemas/ApplicationGitRepository'
+    CpuArchitectureEnum:
+      title: CpuArchitectureEnum
+      x-stoplight:
+        id: jlrd3r03vjzoy
+      enum:
+        - AMD64
+        - ARM64
+    ClusterFeatureKarpenterParameters:
+      title: ClusterFeatureKarpenterParameters
+      x-stoplight:
+        id: fzprvq41bcge1
+      type: object
+      required:
+        - spot_enabled
+        - disk_size_in_gib
+        - default_service_architecture
+      properties:
+        spot_enabled:
+          type: boolean
+          x-stoplight:
+            id: fuolcs5q8ncp8
+        disk_size_in_gib:
+          type: integer
+          x-stoplight:
+            id: nwpjqw3bf7px0
+        default_service_architecture:
+          $ref: '#/components/schemas/CpuArchitectureEnum'
+    ClusterFeatureKarpenterParametersResponse:
+      title: ClusterFeatureKarpenterParametersResponse
+      x-stoplight:
+        id: q33tdlz4ychh5
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
+        value:
+          $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
   responses:
     '204':
       description: no content
