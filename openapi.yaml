@@ -11255,7 +11255,6 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ServiceLabelRequest'
-      title: ''
     ServiceLabelRequest:
       type: object
       required:
