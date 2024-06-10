@@ -11255,6 +11255,7 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ServiceLabelRequest'
+      title: ''
     ServiceLabelRequest:
       type: object
       required:
@@ -14791,6 +14792,8 @@ components:
               nullable: true
             annotations_groups:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
+            labels_groups:
+              $ref: '#/components/schemas/ServiceLabelsRequestList'
       type: object
     JobResponse:
       oneOf:
@@ -17435,8 +17438,8 @@ components:
         - $ref: '#/components/schemas/BaseJobResponse'
         - type: object
           required:
-            - schedule
             - job_type
+            - schedule
           properties:
             job_type:
               type: string
@@ -17477,13 +17480,15 @@ components:
                       description: optional entrypoint when launching container
             annotations_groups:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+            labels_groups:
+              $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
     CronJobResponse:
       allOf:
         - $ref: '#/components/schemas/BaseJobResponse'
         - type: object
           required:
-            - schedule
             - job_type
+            - schedule
           properties:
             job_type:
               type: string
@@ -17497,8 +17502,8 @@ components:
                 cronjob:
                   type: object
                   required:
-                    - scheduled_at
                     - timezone
+                    - scheduled_at
                   properties:
                     arguments:
                       type: array
@@ -17521,6 +17526,8 @@ components:
                         Timezone is UT
             annotations_groups:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+            labels_groups:
+              $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
     BaseJobResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
