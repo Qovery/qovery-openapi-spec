@@ -10775,88 +10775,6 @@ components:
           $ref: '#/components/schemas/APIVariableScopeEnum'
         variable_type:
           $ref: '#/components/schemas/APIVariableTypeEnum'
-    Application:
-      allOf:
-        - $ref: '#/components/schemas/Base'
-        - $ref: '#/components/schemas/ServiceStorage'
-        - type: object
-          required:
-            - healthchecks
-            - name
-            - environment
-          properties:
-            environment:
-              $ref: '#/components/schemas/ReferenceObject'
-            git_repository:
-              $ref: '#/components/schemas/ApplicationGitRepository'
-            maximum_cpu:
-              type: integer
-              description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-              example: 16000
-            maximum_memory:
-              type: integer
-              description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-              example: 16384
-            name:
-              type: string
-              description: name is case insensitive
-            description:
-              type: string
-              description: give a description to this application
-            build_mode:
-              $ref: '#/components/schemas/BuildModeEnum'
-            dockerfile_path:
-              type: string
-              description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-              nullable: true
-            buildpack_language:
-              $ref: '#/components/schemas/BuildPackLanguageEnum'
-            cpu:
-              type: integer
-              description: unit is millicores (m). 1000m = 1 cpu
-              example: 1250
-            memory:
-              type: integer
-              description: unit is MB. 1024 MB = 1GB
-              example: 1024
-            min_running_instances:
-              type: integer
-              minimum: 0
-              description: |
-                Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-                Note: 0 means that there is no application running.
-              default: 1
-            max_running_instances:
-              type: integer
-              description: |
-                Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
-                Note: -1 means that there is no limit.
-              default: 1
-            healthchecks:
-              $ref: '#/components/schemas/Healthcheck'
-            auto_preview:
-              type: boolean
-              description: |
-                Specify if the environment preview option is activated or not for this application.  
-                If activated, a preview environment will be automatically cloned at each pull request.  
-                If not specified, it takes the value of the `auto_preview` property from the associated environment.
-              default: true
-            ports:
-              $ref: '#/components/schemas/ServicePortResponseList'
-            arguments:
-              type: array
-              items:
-                type: string
-            entrypoint:
-              type: string
-              description: optional entrypoint when launching container
-            auto_deploy:
-              type: boolean
-              description: Specify if the application will be automatically updated after receiving a new commit.
-            annotations_groups:
-              $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
-            labels_groups:
-              $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
     ApplicationAdvancedSettings:
       type: object
       properties:
@@ -10868,9 +10786,9 @@ components:
           description: define how long in seconds an application is supposed to be stopped gracefully
         deployment.affinity.node.required:
           type: object
+          description: Set pod placement on specific Kubernetes nodes labels
           additionalProperties:
             type: string
-          description: Set pod placement on specific Kubernetes nodes labels
         deployment.antiaffinity.pod:
           type: string
           enum:
@@ -10880,6 +10798,24 @@ components:
             Define how you want pods affinity to behave:
             * `Preferred` allows, but does not require, pods of a given service are not co-located (or co-hosted) on a single node
             * `Requirred` ensures that the pods of a given service are not co-located (or co-hosted) on a single node (safer in term of availability but can be expensive depending on the number of replicas)
+        deployment.lifecycle.post_start_exec_command:
+          type: array
+          x-stoplight:
+            id: ucpjmpaclq1wl
+          description: Allows you to run a command after the application is started. The command should be a shell command or script.
+          items:
+            x-stoplight:
+              id: 8zq97yrgn1iom
+            type: string
+        deployment.lifecycle.pre_stop_exec_command:
+          type: array
+          x-stoplight:
+            id: skk1wo5xhz5mc
+          description: Allows you to run a command before the application is stopped. The command should be a shell command or script. Qovery requires the sh shell by default and sets a sleep of 15 seconds to let Nginx update its config. Avoiding error codes returned during a rolling update.
+          items:
+            x-stoplight:
+              id: oomiyuna5h91g
+            type: string
         deployment.update_strategy.type:
           type: string
           enum:
@@ -10983,6 +10919,88 @@ components:
           type: boolean
           description: |
             Mounts the container's root filesystem as read-only
+    Application:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/ServiceStorage'
+        - type: object
+          required:
+            - healthchecks
+            - name
+            - environment
+          properties:
+            environment:
+              $ref: '#/components/schemas/ReferenceObject'
+            git_repository:
+              $ref: '#/components/schemas/ApplicationGitRepository'
+            maximum_cpu:
+              type: integer
+              description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+              example: 16000
+            maximum_memory:
+              type: integer
+              description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+              example: 16384
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+              description: give a description to this application
+            build_mode:
+              $ref: '#/components/schemas/BuildModeEnum'
+            dockerfile_path:
+              type: string
+              description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+              nullable: true
+            buildpack_language:
+              $ref: '#/components/schemas/BuildPackLanguageEnum'
+            cpu:
+              type: integer
+              description: unit is millicores (m). 1000m = 1 cpu
+              example: 1250
+            memory:
+              type: integer
+              description: unit is MB. 1024 MB = 1GB
+              example: 1024
+            min_running_instances:
+              type: integer
+              minimum: 0
+              description: |
+                Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: 0 means that there is no application running.
+              default: 1
+            max_running_instances:
+              type: integer
+              description: |
+                Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption.
+                Note: -1 means that there is no limit.
+              default: 1
+            healthchecks:
+              $ref: '#/components/schemas/Healthcheck'
+            auto_preview:
+              type: boolean
+              description: |
+                Specify if the environment preview option is activated or not for this application.  
+                If activated, a preview environment will be automatically cloned at each pull request.  
+                If not specified, it takes the value of the `auto_preview` property from the associated environment.
+              default: true
+            ports:
+              $ref: '#/components/schemas/ServicePortResponseList'
+            arguments:
+              type: array
+              items:
+                type: string
+            entrypoint:
+              type: string
+              description: optional entrypoint when launching container
+            auto_deploy:
+              type: boolean
+              description: Specify if the application will be automatically updated after receiving a new commit.
+            annotations_groups:
+              $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
+            labels_groups:
+              $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
     ApplicationDeploymentRestriction:
       allOf:
         - $ref: '#/components/schemas/Base'
