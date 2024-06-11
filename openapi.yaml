@@ -12774,17 +12774,20 @@ components:
               type: string
               description: URL of the container registry
             cluster:
-              allOf:
-                - $ref: '#/components/schemas/Base'
-                - type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uuid
-                      description: Id of the cluster of which the registry belongs to
-                    name:
-                      type: string
-                      description: Name of the cluster of which the registry belongs to
+              type: object
+              required:
+                - id
+                - name
+              properties:
+                id:
+                  type: string
+                  x-stoplight:
+                    id: y0l22s5yhh4ez
+                  format: uuid
+                name:
+                  type: string
+                  x-stoplight:
+                    id: 5jak2m85ljxaa
     ContainerRegistryProviderDetailsResponse:
       type: object
       required:
