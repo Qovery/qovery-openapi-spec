@@ -15150,12 +15150,13 @@ components:
                 - properties:
                     git:
                       $ref: '#/components/schemas/HelmSourceGitResponse'
+                  type: object
                 - x-stoplight:
                     id: 0prdehm6z8pua
                   properties:
                     repository:
                       $ref: '#/components/schemas/HelmSourceRepositoryResponse'
-              type: object
+                  type: object
             arguments:
               type: array
               description: The extra arguments to pass to helm
