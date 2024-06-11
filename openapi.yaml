@@ -15150,12 +15150,16 @@ components:
             source:
               nullable: false
               oneOf:
-                - properties:
+                - required:
+                    - git
+                  properties:
                     git:
                       $ref: '#/components/schemas/HelmSourceGitResponse'
                   type: object
                 - x-stoplight:
                     id: 0prdehm6z8pua
+                  required:
+                    - repository
                   properties:
                     repository:
                       $ref: '#/components/schemas/HelmSourceRepositoryResponse'
