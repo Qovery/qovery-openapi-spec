@@ -17559,7 +17559,6 @@ components:
             - auto_preview
             - source
             - healthchecks
-            - test
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -17615,12 +17614,13 @@ components:
                   properties:
                     image:
                       $ref: '#/components/schemas/ContainerSource'
+                  type: object
                 - required:
                     - docker
                   properties:
                     docker:
                       $ref: '#/components/schemas/JobSourceDockerResponse'
-              type: object
+                  type: object
             healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             auto_deploy:
@@ -17628,26 +17628,6 @@ components:
               description: |
                 Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type. 
                 The new image tag shall be communicated via the "Auto Deploy job" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments
-            test:
-              x-stoplight:
-                id: 4p61xu22u4nb0
-              oneOf:
-                - x-stoplight:
-                    id: w8k0oq7p8ww9h
-                  required:
-                    - docker
-                  properties:
-                    docker:
-                      $ref: '#/components/schemas/JobSourceDockerResponse'
-                  type: object
-                - x-stoplight:
-                    id: rr2momsyze52f
-                  required:
-                    - image
-                  properties:
-                    image:
-                      $ref: '#/components/schemas/ContainerSource'
-                  type: object
     HelmGitRepositoryRequest:
       type: object
       required:
