@@ -17609,10 +17609,14 @@ components:
             source:
               nullable: false
               oneOf:
-                - properties:
+                - required:
+                    - image
+                  properties:
                     image:
                       $ref: '#/components/schemas/ContainerSource'
-                - properties:
+                - required:
+                    - docker
+                  properties:
                     docker:
                       $ref: '#/components/schemas/JobSourceDockerResponse'
               type: object
