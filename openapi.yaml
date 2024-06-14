@@ -15883,7 +15883,7 @@ components:
       type: object
       required:
         - name
-        - plan
+        - description2
       properties:
         name:
           type: string
@@ -15907,6 +15907,10 @@ components:
           nullable: true
           items:
             type: string
+        description2:
+          type: string
+          x-stoplight:
+            id: 6b5q9y1aamubn
     OrganizationGithubAppConnectRequest:
       type: object
       required:
