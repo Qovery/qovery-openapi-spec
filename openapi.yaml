@@ -4855,6 +4855,18 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Environment deployment is already cancelled or an operation is in progress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                force_cancel:
+                  type: boolean
+                  x-stoplight:
+                    id: c5k0n6yafpsig
+                  default: false
+                  description: Force cancel everything running in this environment is set to true (e.q lifecycle jobs triggered during the deployment).
   '/environment/{environmentId}/clone':
     post:
       summary: Clone environment
