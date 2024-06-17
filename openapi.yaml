@@ -4866,7 +4866,7 @@ paths:
                   x-stoplight:
                     id: c5k0n6yafpsig
                   default: false
-                  description: Force cancel everything running in this environment is set to true (e.q lifecycle jobs triggered during the deployment).
+                  description: Force cancel everything running in this environment if set to true (e.q lifecycle jobs triggered during the deployment).
   '/environment/{environmentId}/clone':
     post:
       summary: Clone environment
