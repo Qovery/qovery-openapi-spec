@@ -12415,9 +12415,9 @@ components:
           description: Configure the number of seconds before cleaning images in the registry
         cloud_provider.container_registry.tags:
           type: object
+          description: Add additional tags on the cluster dedicated registry
           additionalProperties:
             type: string
-          description: Add additional tags on the cluster dedicated registry
         load_balancer.size:
           type: string
           description: Select the size of the main load_balancer (only effective for Scaleway)
@@ -12426,33 +12426,33 @@ components:
           description: Deny public access to any PostgreSQL database
         database.postgresql.allowed_cidrs:
           type: array
+          description: List of CIDRs allowed to access the PostgreSQL database
           items:
             type: string
-          description: List of CIDRs allowed to access the PostgreSQL database
         database.mysql.deny_public_access:
           type: boolean
           description: Deny public access to any MySql database
         database.mysql.allowed_cidrs:
           type: array
+          description: List of CIDRs allowed to access the MySql database
           items:
             type: string
-          description: List of CIDRs allowed to access the MySql database
         database.mongodb.deny_public_access:
           type: boolean
           description: Deny public access to any MongoDB/DocumentDB database
         database.mongodb.allowed_cidrs:
           type: array
+          description: List of CIDRs allowed to access the MongoDB/DocumentDB database
           items:
             type: string
-          description: List of CIDRs allowed to access the MongoDB/DocumentDB database
         database.redis.deny_public_access:
           type: boolean
           description: Deny public access to any Redis database
         database.redis.allowed_cidrs:
           type: array
+          description: List of CIDRs allowed to access the Redis database
           items:
             type: string
-          description: List of CIDRs allowed to access the Redis database
         aws.iam.admin_group:
           type: string
           description: AWS IAM group name with cluster access
@@ -17454,14 +17454,14 @@ components:
           description: the new tag to deploy
     RegistryMirroringModeEnum:
       type: string
-      default: SERVICE
+      default: Service
       enum:
-        - CLUSTER
-        - SERVICE
+        - Cluster
+        - Service
       description: |
         Mirroring mode when deploying a service from a container registry
-        - CLUSTER: This is not available on Scaleway. Images within the mirroring registry are organized by "Qovery cluster", meaning that the application deployed on the same cluster are all mirrored on the same repository.
-        - SERVICE: Images within the mirroring registry are organized by "Qovery service", each service has its own repository
+        - Cluster: This is not available on Scaleway. Images within the mirroring registry are organized by "Qovery cluster", meaning that the application deployed on the same cluster are all mirrored on the same repository.
+        - Service: Images within the mirroring registry are organized by "Qovery service", each service has its own repository
     ServiceTypeForVariableEnum:
       type: string
       description: type of the service
