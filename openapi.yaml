@@ -12159,6 +12159,33 @@ components:
           nullable: true
           items:
             type: string
+        eks_karpenter_fargate_subnets_zone_a_ids:
+          type: array
+          x-stoplight:
+            id: 8rttrya00wmkr
+          nullable: true
+          items:
+            x-stoplight:
+              id: rtxx96v011irr
+            type: string
+        eks_karpenter_fargate_subnets_zone_b_ids:
+          type: array
+          x-stoplight:
+            id: xnbtr8676culs
+          nullable: true
+          items:
+            x-stoplight:
+              id: 1w592qk4spodn
+            type: string
+        eks_karpenter_fargate_subnets_zone_c_ids:
+          type: array
+          x-stoplight:
+            id: st5domzqqkcoh
+          nullable: true
+          items:
+            x-stoplight:
+              id: xyjjh50ckrzee
+            type: string
     ClusterFeatureGcpExistingVpc:
       type: object
       required:
