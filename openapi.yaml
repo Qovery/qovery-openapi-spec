@@ -14737,11 +14737,7 @@ components:
                       description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
                       nullable: true
                     dockerfile_raw:
-                      type: string
-                      x-stoplight:
-                        id: 2ksmhx7hfs9pi
-                      description: The content of your dockerfile if it is not stored inside your git repository
-                      nullable: true
+                      $ref: '#/components/schemas/JobLifecycleTypeEnum'
             healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             schedule:
@@ -14804,6 +14800,8 @@ components:
                         For example: `* * * * *` represent the cron to launch the job every minute.  
                         See https://crontab.guru/ to WISIWIG interface.  
                         Timezone is UTC
+                lifecycle_type:
+                  $ref: '#/components/schemas/JobLifecycleTypeEnum'
             auto_deploy:
               type: boolean
               description: |
@@ -16320,6 +16318,7 @@ components:
         - SECRETS
         - JOBS
         - CRON_JOBS
+      title: ''
     OrganizationAnnotationsGroupAssociatedItemsResponseList:
       type: object
       properties:
@@ -17507,6 +17506,8 @@ components:
                     entrypoint:
                       type: string
                       description: optional entrypoint when launching container
+                lifecycle_type:
+                  $ref: '#/components/schemas/JobLifecycleTypeEnum'
             annotations_groups:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
             labels_groups:
@@ -17878,6 +17879,14 @@ components:
           $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
         value:
           $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
+    JobLifecycleTypeEnum:
+      title: JobLifecycleTypeEnum
+      x-stoplight:
+        id: ka66aokw2td7t
+      enum:
+        - GENERIC
+        - TERRAFORM
+        - CLOUDFORMATION
   responses:
     '204':
       description: no content
