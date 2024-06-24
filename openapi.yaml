@@ -14843,6 +14843,8 @@ components:
                         For example: `* * * * *` represent the cron to launch the job every minute.  
                         See https://crontab.guru/ to WISIWIG interface.  
                         Timezone is UTC
+                lifecycle_type:
+                  $ref: '#/components/schemas/JobLifecycleTypeEnum'
             auto_deploy:
               type: boolean
               description: |
@@ -17542,6 +17544,8 @@ components:
                     entrypoint:
                       type: string
                       description: optional entrypoint when launching container
+                lifecycle_type:
+                  $ref: '#/components/schemas/JobLifecycleTypeEnum'
             annotations_groups:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
             labels_groups:
@@ -17913,6 +17917,14 @@ components:
           $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
         value:
           $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
+    JobLifecycleTypeEnum:
+      title: JobLifecycleTypeEnum
+      x-stoplight:
+        id: tz1t23a291l51
+      enum:
+        - GENERIC
+        - TERRAFORM
+        - CLOUDFORMATION
   responses:
     '204':
       description: no content
