@@ -10438,6 +10438,90 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/cleanFailedJobs':
+    parameters:
+      - schema:
+          type: string
+        name: environmentId
+        in: path
+        required: true
+    post:
+      summary: Clean failed jobs within an environment
+      tags:
+        - Environment Actions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  clean_job_ids:
+                    type: array
+                    x-stoplight:
+                      id: wfo0kfbtlr6uu
+                    items:
+                      x-stoplight:
+                        id: 7w5e7cmsx9pol
+                      type: string
+                      format: uuid
+                  clean_kubernetes_jobs:
+                    type: array
+                    x-stoplight:
+                      id: hga9nj7dygmcf
+                    items:
+                      x-stoplight:
+                        id: y2fcpi3zltomf
+                      type: string
+      operationId: cleanFailedJobs
+      x-stoplight:
+        id: ivybizdyn78lh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                job_ids:
+                  type: array
+                  x-stoplight:
+                    id: 9buks2moeeppz
+                  items:
+                    x-stoplight:
+                      id: j5zm35sm6zxp4
+                    type: string
+                    format: uuid
+  '/job/{jobId}/cleanFailedJob':
+    parameters:
+      - schema:
+          type: string
+        name: jobId
+        in: path
+        required: true
+    post:
+      summary: Clean a failed job
+      tags:
+        - Job Actions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  clean_kubernetes_jobs:
+                    type: array
+                    x-stoplight:
+                      id: 2mgfos3e33m8v
+                    items:
+                      x-stoplight:
+                        id: r4hfdr509e05z
+                      type: string
+      operationId: cleanFailedJob
+      x-stoplight:
+        id: eu77thczavme3
 components:
   parameters:
     applicationId:
