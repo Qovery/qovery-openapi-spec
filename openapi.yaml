@@ -10563,7 +10563,7 @@ paths:
     get:
       summary: Get specific lifecycle tempalte
       tags: []
-      operationId: get-environment-environmentId-lifecycleTemplate-lifecycleTemplateId
+      operationId: getEnvironmentLifecycleTemplate
       x-stoplight:
         id: yatyf4hs2kwc0
         get: null
