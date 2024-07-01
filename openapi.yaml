@@ -10532,7 +10532,7 @@ paths:
     get:
       summary: Your GET endpoint
       tags: []
-      operationId: get-environment-environmentId-lifecycleTemplate
+      operationId: getEnvironmentLifecycleTemplates
       x-stoplight:
         id: 597v5i445zf0v
       responses:
