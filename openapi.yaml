@@ -10522,6 +10522,64 @@ paths:
       operationId: cleanFailedJob
       x-stoplight:
         id: eu77thczavme3
+  '/environment/{environmentId}/lifecycleTemplate':
+    parameters:
+      - schema:
+          type: string
+        name: environmentId
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      operationId: getEnvironmentLifecycleTemplates
+      x-stoplight:
+        id: 597v5i445zf0v
+      responses:
+        '200':
+          description: List available lifecyle templates for this environment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LifecycleTemplateListResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/environment/{environmentId}/lifecycleTemplate/{lifecycleTemplateId}':
+    parameters:
+      - schema:
+          type: string
+        name: environmentId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: lifecycleTemplateId
+        in: path
+        required: true
+    get:
+      summary: Get specific lifecycle tempalte
+      tags: []
+      operationId: getEnvironmentLifecycleTemplate
+      x-stoplight:
+        id: yatyf4hs2kwc0
+        get: null
+      responses:
+        '200':
+          description: Lifecycle templ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LifecycleTemplateResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   parameters:
     applicationId:
@@ -18009,6 +18067,165 @@ components:
         - GENERIC
         - TERRAFORM
         - CLOUDFORMATION
+    LifecycleTemplateListResponse:
+      title: LifecycleTemplateListResponse
+      x-stoplight:
+        id: xors8ncf4ky35
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          x-stoplight:
+            id: 7641tagxo4zpi
+          items:
+            x-stoplight:
+              id: uozhvuyd6pdmu
+            type: object
+            required:
+              - id
+              - name
+              - description
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: qwkicuwqfvcw4
+                format: uuid
+              name:
+                type: string
+                x-stoplight:
+                  id: eec0zks0ju8mm
+              description:
+                type: string
+                x-stoplight:
+                  id: yg0unyqcvyzcn
+    LifecycleTemplateResponse:
+      title: LifecycleTemplateResponse
+      x-stoplight:
+        id: bvzo0blwz03tn
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - sourceUrl
+        - cloud_provider
+        - events
+        - resources
+        - variables
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: glttp2ir2fk7e
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: xrjua7zbq9eut
+        description:
+          type: string
+          x-stoplight:
+            id: humhra0a53b09
+        sourceUrl:
+          type: string
+          x-stoplight:
+            id: 6wwoi4u4iggbr
+          format: uri
+          description: location of the template
+        cloud_provider:
+          $ref: '#/components/schemas/CloudProviderEnum'
+        events:
+          type: array
+          x-stoplight:
+            id: 5dzxa31dbj27j
+          description: lis of pre-defined command for each event
+          items:
+            x-stoplight:
+              id: c2tzn0jhhq3o9
+            type: object
+            required:
+              - name
+              - command
+            properties:
+              name:
+                type: string
+                x-stoplight:
+                  id: gjv4fce8vssmm
+              entrpoint:
+                type: string
+                x-stoplight:
+                  id: 0i1rd5p3sk6f5
+              command:
+                type: array
+                x-stoplight:
+                  id: gpsvjqfwkwwft
+                items:
+                  x-stoplight:
+                    id: pcxa5np84g1ze
+                  type: string
+        resources:
+          type: object
+          x-stoplight:
+            id: q6p0dfgqw56m2
+          required:
+            - cpu_milli
+            - ram_mib
+          properties:
+            cpu_milli:
+              type: integer
+              x-stoplight:
+                id: jayn5f1p1jxh2
+            ram_mib:
+              type: integer
+              x-stoplight:
+                id: 65ta45mnalu3c
+        variables:
+          type: object
+          x-stoplight:
+            id: 6a91s0nhrkccw
+          required:
+            - name
+            - description
+            - default
+            - is_secret
+          description: Variables to inject at the creation of this lifecycle job
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: anzb9mq0akzg0
+            description:
+              type: string
+              x-stoplight:
+                id: pqluj2oprib19
+              description: |
+                Short description to explain the purpose of the variable
+            default:
+              type: string
+              x-stoplight:
+                id: 3hb20sjk3hlcd
+              description: Default value for the variable
+            is_secret:
+              type: boolean
+              x-stoplight:
+                id: zf4hv4n1piid6
+              description: If the variable should be injected as a secret
+            file:
+              type: object
+              x-stoplight:
+                id: p59g1uihh0oby
+              required:
+                - path
+              description: |
+                If present, the variable should be a file instead of a raw value
+              properties:
+                path:
+                  type: string
+                  x-stoplight:
+                    id: njn2ukyaf5ra1
   responses:
     '204':
       description: no content
