@@ -225,6 +225,9 @@ x-tagGroups:
   - name: Variable
     tags:
       - Variable Main Calls
+  - name: Lifecycle Template
+    tags:
+      - Lifecycle Template
   - name: Admin
     tags:
       - User Sign Up
