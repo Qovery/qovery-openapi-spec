@@ -113,6 +113,7 @@ tags:
   - name: User Sign Up
   - name: Variable Main Calls
   - name: Helm Custom Domain
+  - name: Lifecycle Template
 x-tagGroups:
   - name: Organization
     tags:
@@ -10531,8 +10532,9 @@ paths:
         required: true
     get:
       summary: Your GET endpoint
-      tags: []
-      operationId: getEnvironmentLifecycleTemplates
+      tags:
+        - Lifecycle Template
+      operationId: listEnvironmentLifecycleTemplates
       x-stoplight:
         id: 597v5i445zf0v
       responses:
@@ -10562,7 +10564,8 @@ paths:
         required: true
     get:
       summary: Get specific lifecycle tempalte
-      tags: []
+      tags:
+        - Lifecycle Template
       operationId: getEnvironmentLifecycleTemplate
       x-stoplight:
         id: yatyf4hs2kwc0
