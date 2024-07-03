@@ -14335,7 +14335,7 @@ components:
           x-stoplight:
             id: rf6wxepnkcoyv
           maxLength: 255
-          description: ' optional variable description (255 characters maximum)'
+          description: optional variable description (255 characters maximum)
           nullable: true
     EnvironmentVariableRequest:
       type: object
@@ -17408,7 +17408,7 @@ components:
           x-stoplight:
             id: 4u5nndk8qphxp
           maxLength: 255
-          description: ' optional variable description (255 characters maximum)'
+          description: optional variable description (255 characters maximum)
           nullable: true
     VariableRequest:
       type: object
@@ -17462,7 +17462,7 @@ components:
           x-stoplight:
             id: y471ewdkdpr4r
           maxLength: 255
-          description: ' optional variable description (255 characters maximum)'
+          description: optional variable description (255 characters maximum)
           nullable: true
     VariableResponse:
       allOf:
