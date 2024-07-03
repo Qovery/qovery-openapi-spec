@@ -4009,26 +4009,6 @@ paths:
         '409':
           description: Environment name within the project is already taken
   '/project/{projectId}/environmentVariable':
-    get:
-      summary: List project environment variables
-      operationId: listProjectEnvironmentVariable
-      parameters:
-        - $ref: '#/components/parameters/projectId'
-      tags:
-        - Project Environment Variable
-      responses:
-        '200':
-          description: List project environment variables
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentVariableResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
     post:
       summary: Add an environment variable to the project
       description: |
@@ -4054,6 +4034,26 @@ paths:
                 $ref: '#/components/schemas/EnvironmentVariable'
         '400':
           $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    get:
+      summary: List project environment variables
+      operationId: listProjectEnvironmentVariable
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - Project Environment Variable
+      responses:
+        '200':
+          description: List project environment variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentVariableResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -14325,6 +14325,18 @@ components:
         value:
           type: string
           description: value of the env variable.
+        mount_path:
+          type: string
+          x-stoplight:
+            id: dj004tdqp6pe7
+          nullable: true
+        description:
+          type: string
+          x-stoplight:
+            id: rf6wxepnkcoyv
+          maxLength: 255
+          description: optional variable description (255 characters maximum)
+          nullable: true
     EnvironmentVariableRequest:
       type: object
       required:
@@ -17368,6 +17380,13 @@ components:
           type: string
           format: uuid
           description: the id of the variable that is aliased.
+        description:
+          type: string
+          x-stoplight:
+            id: e1tqebew6jfe8
+          description: optional variable description (255 characters maximum)
+          maxLength: 255
+          nullable: true
     VariableOverrideRequest:
       type: object
       required:
@@ -17384,6 +17403,13 @@ components:
           type: string
           format: uuid
           description: the id of the variable that is aliased.
+        description:
+          type: string
+          x-stoplight:
+            id: 4u5nndk8qphxp
+          maxLength: 255
+          description: optional variable description (255 characters maximum)
+          nullable: true
     VariableRequest:
       type: object
       required:
@@ -17401,8 +17427,8 @@ components:
           description: the value of the environment variable
         mount_path:
           type: string
-          nullable: true
           description: the path where the file will be mounted (only if type =file)
+          nullable: true
         is_secret:
           type: boolean
           description: 'if true, the variable will be considered as a secret and will not be accessible after its creation. Only your applications will be able to access its value at build and run time.'
@@ -17412,6 +17438,13 @@ components:
           type: string
           format: uuid
           description: 'based on the selected scope, it contains the ID of the service, environment or project where the variable is attached'
+        description:
+          type: string
+          x-stoplight:
+            id: 328cipvix8hjo
+          description: optional variable description (255 characters maximum)
+          maxLength: 255
+          nullable: true
     VariableEditRequest:
       type: object
       required:
@@ -17424,16 +17457,23 @@ components:
         value:
           type: string
           description: the value of the environment variable
+        description:
+          type: string
+          x-stoplight:
+            id: y471ewdkdpr4r
+          maxLength: 255
+          description: optional variable description (255 characters maximum)
+          nullable: true
     VariableResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
         - type: object
           required:
-            - scope
             - key
             - value
-            - is_secret
+            - scope
             - variable_type
+            - is_secret
           properties:
             key:
               type: string
@@ -17465,6 +17505,10 @@ components:
               description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
             is_secret:
               type: boolean
+            description:
+              type: string
+              x-stoplight:
+                id: n9u4ex1jj4rxa
     VariableResponseList:
       type: object
       properties:
