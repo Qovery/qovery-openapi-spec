@@ -14350,9 +14350,16 @@ components:
           description: value of the env variable.
         mount_path:
           type: string
-          nullable: true
           default: null
           description: should be set for file only. variable mount path makes variable a file (where file should be mounted).
+          nullable: true
+        description:
+          type: string
+          x-stoplight:
+            id: 1k835w52vgl4m
+          maxLength: 255
+          description: optional variable description (255 characters maximum)
+          nullable: true
     EnvironmentVariableResponseList:
       type: object
       properties:
@@ -15645,6 +15652,14 @@ components:
       properties:
         key:
           type: string
+        description:
+          type: string
+          x-stoplight:
+            id: qe7qh1tjtkwrm
+          maxLength: 255
+          description: optional variable description (255 characters maximum)
+          nullable: true
+      title: EnvironmentVariableAliasRequest
     KubernetesEnum:
       type: string
       enum:
@@ -17285,6 +17300,14 @@ components:
       properties:
         value:
           type: string
+        description:
+          type: string
+          x-stoplight:
+            id: ygzxe4xek3thk
+          maxLength: 255
+          description: optional variable description (255 characters maximum)
+          nullable: true
+      title: EnvironmentVariableOverrideRequest
     VariableImport:
       type: object
       required:
