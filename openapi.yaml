@@ -10918,8 +10918,8 @@ components:
       required:
         - id
         - key
-        - scope
         - mount_path
+        - scope
         - variable_type
       properties:
         id:
@@ -10934,6 +10934,13 @@ components:
           $ref: '#/components/schemas/APIVariableScopeEnum'
         variable_type:
           $ref: '#/components/schemas/APIVariableTypeEnum'
+        description:
+          type: string
+          x-stoplight:
+            id: 14nham449j6uk
+          maxLength: 255
+          description: optional variable description (255 characters maximum)
+          nullable: true
     ApplicationAdvancedSettings:
       type: object
       properties:
@@ -16316,8 +16323,8 @@ components:
       required:
         - id
         - key
-        - scope
         - mount_path
+        - scope
         - variable_type
       properties:
         id:
@@ -16331,6 +16338,13 @@ components:
           $ref: '#/components/schemas/APIVariableScopeEnum'
         variable_type:
           $ref: '#/components/schemas/APIVariableTypeEnum'
+        description:
+          type: string
+          x-stoplight:
+            id: edfpfqj87ezos
+          maxLength: 255
+          description: optional variable description (255 characters maximum)
+          nullable: true
     OrganizationWebhookCreateRequest:
       type: object
       required:
@@ -17005,6 +17019,13 @@ components:
             owned_by:
               type: string
               description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
+            description:
+              type: string
+              x-stoplight:
+                id: fznezq37gx9ux
+              maxLength: 255
+              description: optional variable description (255 characters maximum)
+              nullable: true
     SecretEditRequest:
       type: object
       required:
@@ -17014,6 +17035,13 @@ components:
           type: string
         key:
           type: string
+        description:
+          type: string
+          x-stoplight:
+            id: kpr7b04o3wqkq
+          maxLength: 255
+          description: optional variable description (255 characters maximum)
+          nullable: true
     SecretRequest:
       type: object
       required:
@@ -17027,9 +17055,16 @@ components:
           description: value of the secret. Clear value will never be returned
         mount_path:
           type: string
-          nullable: true
           default: null
           description: should be set for file only. variable mount path make secret a file (where file should be mounted).
+          nullable: true
+        description:
+          type: string
+          x-stoplight:
+            id: dzjq13ney82de
+          maxLength: 255
+          description: optional variable description (255 character maximum)
+          nullable: true
     SecretResponseList:
       type: object
       properties:
