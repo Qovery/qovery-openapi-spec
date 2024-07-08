@@ -18213,6 +18213,7 @@ components:
       x-stoplight:
         id: bvzo0blwz03tn
       type: object
+      x-internal: false
       required:
         - id
         - name
@@ -18220,6 +18221,7 @@ components:
         - sourceUrl
         - cloud_provider
         - events
+        - max_duration_in_minutes
         - resources
         - variables
       properties:
@@ -18273,6 +18275,13 @@ components:
                   x-stoplight:
                     id: pcxa5np84g1ze
                   type: string
+        max_duration_in_minutes:
+          type: integer
+          x-stoplight:
+            id: l4kjmki90lplm
+          description: |-
+            Job max allowed duration in minutes.
+            After this allowed time, the job is going to be killed.
         resources:
           type: object
           x-stoplight:
@@ -18293,12 +18302,12 @@ components:
           type: object
           x-stoplight:
             id: 6a91s0nhrkccw
+          description: Variables to inject at the creation of this lifecycle job
           required:
             - name
             - description
             - default
             - is_secret
-          description: Variables to inject at the creation of this lifecycle job
           properties:
             name:
               type: string
@@ -18324,10 +18333,10 @@ components:
               type: object
               x-stoplight:
                 id: p59g1uihh0oby
-              required:
-                - path
               description: |
                 If present, the variable should be a file instead of a raw value
+              required:
+                - path
               properties:
                 path:
                   type: string
