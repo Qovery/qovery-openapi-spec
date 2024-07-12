@@ -11170,6 +11170,8 @@ components:
               $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
             icon_uri:
               type: string
+              format: uri
+              description: Icon URI representing the application.
               x-stoplight:
                 id: b8karc43pdxpu
     ApplicationDeploymentRestriction:
@@ -11528,6 +11530,8 @@ components:
               $ref: '#/components/schemas/ServiceLabelsRequestList'
             icon_uri:
               type: string
+              format: uri
+              description: Icon URI representing the application.
               x-stoplight:
                 id: om4lw1ulknsrg
     ApplicationResponseList:
@@ -13203,6 +13207,8 @@ components:
               $ref: '#/components/schemas/ServiceLabelsRequestList'
             icon_uri:
               type: string
+              format: uri
+              description: Icon URI representing the container.
               x-stoplight:
                 id: jiypvl6nd63dm
     ContainerResponse:
@@ -13289,6 +13295,8 @@ components:
               $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
             icon_uri:
               type: string
+              format: uri
+              description: Icon URI representing the container.
               x-stoplight:
                 id: o2bdci7ak3bmz
     ContainerResponseList:
@@ -13659,6 +13667,8 @@ components:
           $ref: '#/components/schemas/ServiceLabelsRequestList'
         icon_uri:
           type: string
+          format: uri
+          description: Icon URI representing the database.
           x-stoplight:
             id: ls6yevnhskd5y
     DatabaseResponseList:
@@ -15052,6 +15062,8 @@ components:
               $ref: '#/components/schemas/ServiceLabelsRequestList'
             icon_uri:
               type: string
+              format: uri
+              description: Icon URI representing the job.
               x-stoplight:
                 id: k3gangiisgxpc
       type: object
@@ -15320,6 +15332,8 @@ components:
                                 description: The content of the value file
             icon_uri:
               type: string
+              format: uri
+              description: Icon URI representing the helm service.
               x-stoplight:
                 id: 117p5u95nwx2p
     HelmResponse:
@@ -15471,6 +15485,8 @@ components:
                             type: string
             icon_uri:
               type: string
+              format: uri
+              description: Icon URI representing the helm service.
               x-stoplight:
                 id: i2pvbugqsldhe
     HelmResponseList:
@@ -17966,6 +17982,8 @@ components:
                 The new image tag shall be communicated via the "Auto Deploy job" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments
             icon_uri:
               type: string
+              format: uri
+              description: Icon URI representing the job.
               x-stoplight:
                 id: p1secr7kxozsd
     HelmGitRepositoryRequest:
