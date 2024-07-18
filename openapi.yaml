@@ -11272,6 +11272,10 @@ components:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
             labels_groups:
               $ref: '#/components/schemas/ServiceLabelsRequestList'
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the database.
     ApplicationGitRepository:
       type: object
       required:
@@ -13510,6 +13514,7 @@ components:
         - type: object
           required:
             - environment
+            - icon_uri
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -13537,6 +13542,10 @@ components:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
             labels_groups:
               $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the database.
     DatabaseAccessibilityEnum:
       type: string
       default: PRIVATE
@@ -13605,6 +13614,10 @@ components:
           $ref: '#/components/schemas/ServiceAnnotationsRequestList'
         labels_groups:
           $ref: '#/components/schemas/ServiceLabelsRequestList'
+        icon_uri:
+          type: string
+          format: uri
+          description: Icon URI representing the database.
     DatabaseModeEnum:
       type: string
       enum:
