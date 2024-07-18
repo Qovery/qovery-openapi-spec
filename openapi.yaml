@@ -11091,9 +11091,10 @@ components:
         - $ref: '#/components/schemas/ServiceStorage'
         - type: object
           required:
-            - healthchecks
-            - name
             - environment
+            - name
+            - healthchecks
+            - icon_uri
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -11167,6 +11168,12 @@ components:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
             labels_groups:
               $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the application.
+              x-stoplight:
+                id: b8karc43pdxpu
     ApplicationDeploymentRestriction:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -11515,12 +11522,18 @@ components:
               description: optional entrypoint when launching container
             auto_deploy:
               type: boolean
-              nullable: true
               description: Specify if the application will be automatically updated after receiving a new commit.
+              nullable: true
             annotations_groups:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
             labels_groups:
               $ref: '#/components/schemas/ServiceLabelsRequestList'
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the application.
+              x-stoplight:
+                id: om4lw1ulknsrg
     ApplicationResponseList:
       type: object
       properties:
@@ -13184,14 +13197,20 @@ components:
                 If not specified, it takes the value of the `auto_preview` property from the associated environment.
             auto_deploy:
               type: boolean
-              nullable: true
               description: |
                 Specify if the container will be automatically updated after receiving a new image tag. 
                 The new image tag shall be communicated via the "Auto Deploy container" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments
+              nullable: true
             annotations_groups:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
             labels_groups:
               $ref: '#/components/schemas/ServiceLabelsRequestList'
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the container.
+              x-stoplight:
+                id: jiypvl6nd63dm
     ContainerResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -13200,15 +13219,16 @@ components:
         - type: object
           required:
             - environment
+            - maximum_cpu
+            - maximum_memory
             - name
-            - auto_preview
             - cpu
             - memory
             - min_running_instances
             - max_running_instances
-            - maximum_cpu
-            - maximum_memory
             - healthchecks
+            - auto_preview
+            - icon_uri
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -13273,6 +13293,12 @@ components:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
             labels_groups:
               $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the container.
+              x-stoplight:
+                id: o2bdci7ak3bmz
     ContainerResponseList:
       type: object
       properties:
@@ -13639,6 +13665,12 @@ components:
           $ref: '#/components/schemas/ServiceAnnotationsRequestList'
         labels_groups:
           $ref: '#/components/schemas/ServiceLabelsRequestList'
+        icon_uri:
+          type: string
+          format: uri
+          description: Icon URI representing the database.
+          x-stoplight:
+            id: ls6yevnhskd5y
     DatabaseResponseList:
       type: object
       properties:
@@ -15028,6 +15060,12 @@ components:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
             labels_groups:
               $ref: '#/components/schemas/ServiceLabelsRequestList'
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the job.
+              x-stoplight:
+                id: k3gangiisgxpc
       type: object
     JobResponse:
       oneOf:
@@ -15188,10 +15226,10 @@ components:
         - type: object
           required:
             - name
-            - source
-            - values_override
-            - arguments
             - auto_deploy
+            - source
+            - arguments
+            - values_override
           properties:
             name:
               type: string
@@ -15206,11 +15244,11 @@ components:
                 Maximum number of seconds allowed for helm to run before killing it and mark it as failed
             auto_preview:
               type: boolean
-              nullable: true
               description: |
                 Indicates if the 'environment preview option' is enabled.  
                 If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called or when a new commit is updated.
                 If not specified, it takes the value of the `auto_preview` property from the associated environment.
+              nullable: true
             auto_deploy:
               type: boolean
               description: |
@@ -15292,6 +15330,12 @@ components:
                               content:
                                 type: string
                                 description: The content of the value file
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the helm service.
+              x-stoplight:
+                id: 117p5u95nwx2p
     HelmResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -15305,6 +15349,7 @@ components:
             - arguments
             - allow_cluster_wide_resources
             - values_override
+            - icon_uri
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -15438,6 +15483,12 @@ components:
                           description: List of path inside your git repository to locate values file. Must start by a /
                           items:
                             type: string
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the helm service.
+              x-stoplight:
+                id: i2pvbugqsldhe
     HelmResponseList:
       type: object
       properties:
@@ -17862,6 +17913,7 @@ components:
             - auto_preview
             - source
             - healthchecks
+            - icon_uri
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -17931,6 +17983,12 @@ components:
               description: |
                 Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type. 
                 The new image tag shall be communicated via the "Auto Deploy job" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the job.
+              x-stoplight:
+                id: p1secr7kxozsd
     HelmGitRepositoryRequest:
       type: object
       required:
