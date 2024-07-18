@@ -11275,7 +11275,7 @@ components:
             icon_uri:
               type: string
               format: uri
-              description: Icon URI representing the database.
+              description: Icon URI representing the application.
     ApplicationGitRepository:
       type: object
       required:
