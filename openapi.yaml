@@ -11985,7 +11985,7 @@ components:
         - DELETE_CLUSTER_AND_QOVERY_CONFIG
         - DELETE_QOVERY_CONFIG
       example: DEFAULT
-      default: DEFAULT          
+      default: DEFAULT
     ClusterLogs:
       type: object
       properties:
