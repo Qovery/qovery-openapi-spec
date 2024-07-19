@@ -10585,6 +10585,38 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/containerRegistry/{containerRegistryId}/associatedServices':
+    parameters:
+      - schema:
+          type: string
+        name: organizationId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: containerRegistryId
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: Get organization container registry associated services
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerRegistryAssociatedServicesResponseList'
+        '401':
+          description: Access token is missing or invalid
+        '403':
+          description: Access forbidden
+        '404':
+          description: Resource not found
+      operationId: getContainerRegistryAssociatedServices
+      x-stoplight:
+        id: dgh8t73nqaetm
+      description: Get organization container registry associated services
 components:
   parameters:
     applicationId:
@@ -18441,6 +18473,47 @@ components:
           x-stoplight:
             id: 0xkypu9qkowv3
           description: Dockerfile of the template
+    ContainerRegistryAssociatedServicesResponseList:
+      title: ContainerRegistryAssociatedServicesResponseList
+      x-stoplight:
+        id: xn1fsp17ahwfi
+      type: object
+      properties:
+        results:
+          $ref: '#/components/schemas/ContainerRegistryAssociatedServicesResponse'
+    ContainerRegistryAssociatedServicesResponse:
+      title: ContainerRegistryAssociatedServicesResponse
+      x-stoplight:
+        id: uxbkfqdj9zyi6
+      type: object
+      properties:
+        project_id:
+          type: string
+          x-stoplight:
+            id: 9jdx3t62nttjz
+          format: uuid
+        project_name:
+          type: string
+          x-stoplight:
+            id: cjlfx1ucomdv9
+        environment_id:
+          type: string
+          x-stoplight:
+            id: gk5r4dcoliuac
+          format: uuid
+        environment_name:
+          type: string
+          x-stoplight:
+            id: kxry5d624susz
+        service_id:
+          type: string
+          x-stoplight:
+            id: kmouxjf3vbtjo
+          format: uuid
+        service_name:
+          type: string
+          x-stoplight:
+            id: ga0yqhtmi4nl6
   responses:
     '204':
       description: no content
