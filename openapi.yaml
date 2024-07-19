@@ -13002,6 +13002,7 @@ components:
               type: integer
               x-stoplight:
                 id: 02mqr04rogfem
+              description: The number of services using this container registry
     ContainerRegistryProviderDetailsResponse:
       type: object
       required:
