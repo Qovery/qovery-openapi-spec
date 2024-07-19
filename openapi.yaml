@@ -11972,20 +11972,6 @@ components:
                 $ref: '#/components/schemas/ClusterFeatureResponse'
             deployment_status:
               $ref: '#/components/schemas/ClusterDeploymentStatusEnum'
-    ClusterDeleteMode:
-      type: string
-      description: |
-        Indicates the mode to apply on cluster deletion  
-        **"hard delete"** means that we delete directly from our database, this is different from a **"trigger delete"** that cleans the resource
-        - `DEFAULT`: this is the normal way, trigger delete the cluster only if no environment linked to this cluster remains
-        - `DELETE_CLUSTER_AND_QOVERY_CONFIG`: hard delete environments linked to this cluster then trigger delete the cluster
-        - `DELETE_QOVERY_CONFIG`: ⚠️ ⚠️ ⚠️ hard delete environments linked to this cluster then hard delete the cluster - whole cluster ressources **are not deleted** on our side and must be deleted on your side
-      enum:
-        - DEFAULT
-        - DELETE_CLUSTER_AND_QOVERY_CONFIG
-        - DELETE_QOVERY_CONFIG
-      example: DEFAULT
-      default: DEFAULT
     ClusterLogs:
       type: object
       properties:
@@ -12094,6 +12080,20 @@ components:
                 name:
                   type: string
                   example: cluster-name
+    ClusterDeleteMode:
+      type: string
+      description: |
+        Indicates the mode to apply on cluster deletion  
+        **"hard delete"** means that we delete directly from our database, this is different from a **"trigger delete"** that cleans the resource
+        - `DEFAULT`: this is the normal way, trigger delete the cluster only if no environment linked to this cluster remains
+        - `DELETE_CLUSTER_AND_QOVERY_CONFIG`: hard delete environments linked to this cluster then trigger delete the cluster
+        - `DELETE_QOVERY_CONFIG`: ⚠️ ⚠️ ⚠️ hard delete environments linked to this cluster then hard delete the cluster - whole cluster ressources **are not deleted** on our side and must be deleted on your side
+      enum:
+        - DEFAULT
+        - DELETE_CLUSTER_AND_QOVERY_CONFIG
+        - DELETE_QOVERY_CONFIG
+      example: DEFAULT
+      default: DEFAULT
     ClusterCloudProviderInfo:
       type: object
       properties:
@@ -18066,6 +18066,13 @@ components:
         delete_report_url:
           description: The URL to delete the report. Use this URL to pro-actively delete the report before it expires
           type: string
+    OrganizationAnnotationsGroupEnrichedResponseList:
+      title: OrganizationAnnotationsGroupEnrichedResponseList
+      x-stoplight:
+        id: 2tbiuqncqaqaw
+      type: array
+      items:
+        $ref: '#/components/schemas/OrganizationAnnotationsGroupEnrichedResponse'
     OrganizationAnnotationsGroupEnrichedResponse:
       title: OrganizationAnnotationsGroupEnrichedResponse
       x-stoplight:
@@ -18100,13 +18107,6 @@ components:
               type: integer
               x-stoplight:
                 id: q71gum8nqmj8p
-    OrganizationAnnotationsGroupEnrichedResponseList:
-      title: OrganizationAnnotationsGroupEnrichedResponseList
-      x-stoplight:
-        id: 2tbiuqncqaqaw
-      type: array
-      items:
-        $ref: '#/components/schemas/OrganizationAnnotationsGroupEnrichedResponse'
     OrganizationLabelsGroupEnrichedResponseList:
       title: OrganizationLabelsGroupEnrichedResponseList
       type: array
