@@ -12998,6 +12998,10 @@ components:
                   type: string
                   x-stoplight:
                     id: 5jak2m85ljxaa
+            associated_services_count:
+              type: integer
+              x-stoplight:
+                id: 02mqr04rogfem
     ContainerRegistryProviderDetailsResponse:
       type: object
       required:
