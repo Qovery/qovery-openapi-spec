@@ -18486,6 +18486,13 @@ components:
       x-stoplight:
         id: uxbkfqdj9zyi6
       type: object
+      required:
+        - project_id
+        - project_name
+        - environment_id
+        - environment_name
+        - service_id
+        - service_name
       properties:
         project_id:
           type: string
