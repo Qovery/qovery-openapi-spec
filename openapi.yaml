@@ -10598,7 +10598,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Your GET endpoint
+      summary: Get organization container registry associated services
       tags: []
       responses:
         '200':
