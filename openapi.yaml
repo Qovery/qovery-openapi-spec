@@ -18493,6 +18493,7 @@ components:
         - environment_name
         - service_id
         - service_name
+        - service_type
       properties:
         project_id:
           type: string
@@ -18521,6 +18522,8 @@ components:
           type: string
           x-stoplight:
             id: ga0yqhtmi4nl6
+        service_type:
+          $ref: '#/components/schemas/ContainerRegistryAssociatedServiceType'
     ContainerRegistryAssociatedServiceType:
       title: ContainerRegistryAssociatedServiceType
       x-stoplight:
