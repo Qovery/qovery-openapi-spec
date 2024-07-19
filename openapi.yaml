@@ -18521,6 +18521,12 @@ components:
           type: string
           x-stoplight:
             id: ga0yqhtmi4nl6
+    ContainerRegistryAssociatedServiceType:
+      title: ContainerRegistryAssociatedServiceType
+      x-stoplight:
+        id: dif8pj1ys444y
+      enum:
+        - CONTAINER
   responses:
     '204':
       description: no content
