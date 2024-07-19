@@ -12998,7 +12998,6 @@ components:
                   type: string
                   x-stoplight:
                     id: 5jak2m85ljxaa
-      title: ''
     ContainerRegistryProviderDetailsResponse:
       type: object
       required:
