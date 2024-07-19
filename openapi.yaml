@@ -3420,7 +3420,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContainerRegistryResponseList'
+                $ref: '#/components/schemas/ContainerRegistryEnrichedResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3469,7 +3469,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContainerRegistryResponse'
+                $ref: '#/components/schemas/ContainerRegistryEnrichedResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -12998,6 +12998,7 @@ components:
                   type: string
                   x-stoplight:
                     id: 5jak2m85ljxaa
+      title: ''
     ContainerRegistryProviderDetailsResponse:
       type: object
       required:
@@ -18066,13 +18067,6 @@ components:
         delete_report_url:
           description: The URL to delete the report. Use this URL to pro-actively delete the report before it expires
           type: string
-    OrganizationAnnotationsGroupEnrichedResponseList:
-      title: OrganizationAnnotationsGroupEnrichedResponseList
-      x-stoplight:
-        id: 2tbiuqncqaqaw
-      type: array
-      items:
-        $ref: '#/components/schemas/OrganizationAnnotationsGroupEnrichedResponse'
     OrganizationAnnotationsGroupEnrichedResponse:
       title: OrganizationAnnotationsGroupEnrichedResponse
       x-stoplight:
@@ -18107,6 +18101,13 @@ components:
               type: integer
               x-stoplight:
                 id: q71gum8nqmj8p
+    OrganizationAnnotationsGroupEnrichedResponseList:
+      title: OrganizationAnnotationsGroupEnrichedResponseList
+      x-stoplight:
+        id: 2tbiuqncqaqaw
+      type: array
+      items:
+        $ref: '#/components/schemas/OrganizationAnnotationsGroupEnrichedResponse'
     OrganizationLabelsGroupEnrichedResponseList:
       title: OrganizationLabelsGroupEnrichedResponseList
       type: array
@@ -18416,6 +18417,29 @@ components:
                   type: string
                   x-stoplight:
                     id: njn2ukyaf5ra1
+    ContainerRegistryEnrichedResponse:
+      title: ContainerRegistryEnrichedResponse
+      x-stoplight:
+        id: s9tyc8okck31v
+      allOf:
+        - $ref: '#/components/schemas/ContainerRegistryResponse'
+        - type: object
+          x-stoplight:
+            id: fudjpq93m15sj
+          required:
+            - associated_services_count
+          properties:
+            associated_services_count:
+              type: integer
+              x-stoplight:
+                id: lf1smsyikjk8e
+    ContainerRegistryEnrichedResponseList:
+      title: ContainerRegistryEnrichedResponseList
+      x-stoplight:
+        id: 7dlu9fwq0dq1v
+      type: array
+      items:
+        $ref: '#/components/schemas/ContainerRegistryEnrichedResponse'
   responses:
     '204':
       description: no content
