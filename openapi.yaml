@@ -18432,6 +18432,7 @@ components:
               type: integer
               x-stoplight:
                 id: lf1smsyikjk8e
+              description: The number of services using this container registry
     ContainerRegistryEnrichedResponseList:
       title: ContainerRegistryEnrichedResponseList
       x-stoplight:
