@@ -18352,7 +18352,7 @@ components:
                 type: string
                 x-stoplight:
                   id: gjv4fce8vssmm
-              entrpoint:
+              entrypoint:
                 type: string
                 x-stoplight:
                   id: 0i1rd5p3sk6f5
