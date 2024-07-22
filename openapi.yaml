@@ -18388,49 +18388,51 @@ components:
               x-stoplight:
                 id: 65ta45mnalu3c
         variables:
-          type: object
+          type: array
           x-stoplight:
             id: 6a91s0nhrkccw
           description: Variables to inject at the creation of this lifecycle job
-          required:
-            - name
-            - description
-            - default
-            - is_secret
-          properties:
-            name:
-              type: string
-              x-stoplight:
-                id: anzb9mq0akzg0
-            description:
-              type: string
-              x-stoplight:
-                id: pqluj2oprib19
-              description: |
-                Short description to explain the purpose of the variable
-            default:
-              type: string
-              x-stoplight:
-                id: 3hb20sjk3hlcd
-              description: Default value for the variable
-            is_secret:
-              type: boolean
-              x-stoplight:
-                id: zf4hv4n1piid6
-              description: If the variable should be injected as a secret
-            file:
-              type: object
-              x-stoplight:
-                id: p59g1uihh0oby
-              description: |
-                If present, the variable should be a file instead of a raw value
-              required:
-                - path
-              properties:
-                path:
-                  type: string
-                  x-stoplight:
-                    id: njn2ukyaf5ra1
+          items:
+            x-stoplight:
+              id: 0px0di1tv9tu8
+            type: object
+            required:
+              - name
+              - description
+              - default
+              - is_secret
+            properties:
+              name:
+                type: string
+                x-stoplight:
+                  id: 9k7i4ohmj7uz3
+              description:
+                type: string
+                x-stoplight:
+                  id: nz4h3xndjh07g
+                description: Short description to explain the purpose of the variable
+              default:
+                type: string
+                x-stoplight:
+                  id: p9jb40lqlaj4a
+                description: Default value for the variable
+              is_secret:
+                type: string
+                x-stoplight:
+                  id: v6y3uhp3xivq5
+                description: If the variable should be injected as a secret
+              file:
+                type: object
+                x-stoplight:
+                  id: 71mpuvnx5g4gm
+                description: 'If present, the variable should be a file instead of a raw value'
+                required:
+                  - path
+                properties:
+                  path:
+                    type: string
+                    x-stoplight:
+                      id: d7xqu15fk6iat
         dockerfile:
           type: string
           x-stoplight:
