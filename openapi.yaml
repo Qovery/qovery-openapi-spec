@@ -18417,7 +18417,7 @@ components:
                   id: p9jb40lqlaj4a
                 description: Default value for the variable
               is_secret:
-                type: string
+                type: boolean
                 x-stoplight:
                   id: v6y3uhp3xivq5
                 description: If the variable should be injected as a secret
