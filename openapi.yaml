@@ -18530,6 +18530,7 @@ components:
         id: dif8pj1ys444y
       enum:
         - CONTAINER
+        - JOB
   responses:
     '204':
       description: no content
