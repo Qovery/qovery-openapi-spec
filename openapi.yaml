@@ -18298,6 +18298,7 @@ components:
         - max_duration_in_minutes
         - resources
         - variables
+        - dockerfile
       properties:
         id:
           type: string
@@ -18416,6 +18417,11 @@ components:
                   type: string
                   x-stoplight:
                     id: njn2ukyaf5ra1
+        dockerfile:
+          type: string
+          x-stoplight:
+            id: 0xkypu9qkowv3
+          description: Dockerfile of the template
   responses:
     '204':
       description: no content
