@@ -10617,6 +10617,38 @@ paths:
       x-stoplight:
         id: dgh8t73nqaetm
       description: Get organization container registry associated services
+  '/organization/{organizationId}/helmRepository/{helmRepositoryId}/associatedServices':
+    parameters:
+      - schema:
+          type: string
+        name: organizationId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: helmRepositoryId
+        in: path
+        required: true
+    get:
+      summary: Get organization helm repository associated services
+      tags: []
+      responses:
+        '200':
+          description: Get organization helm repository associated services
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmRepositoryAssociatedServicesResponseList'
+        '401':
+          description: ' Access token is missing or invalid'
+        '403':
+          description: AccessForbidden
+        '404':
+          description: ResourceNot Found
+      operationId: getHelmRepositoryAssociatedServices
+      x-stoplight:
+        id: 5jvrv87m4tk5s
+      description: Get organization helm repository associated services
 components:
   parameters:
     applicationId:
@@ -13143,6 +13175,11 @@ components:
             skip_tls_verification:
               type: boolean
               description: Bypass tls certificate verification when connecting to repository
+            associated_services_count:
+              type: integer
+              x-stoplight:
+                id: 287g4iunwmf2d
+              description: The number of services using this helm repository
     HelmVersionResponseList:
       type: object
       properties:
@@ -18482,7 +18519,9 @@ components:
       type: object
       properties:
         results:
-          $ref: '#/components/schemas/ContainerRegistryAssociatedServicesResponse'
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerRegistryAssociatedServicesResponse'
     ContainerRegistryAssociatedServicesResponse:
       title: ContainerRegistryAssociatedServicesResponse
       x-stoplight:
@@ -18533,6 +18572,67 @@ components:
       enum:
         - CONTAINER
         - JOB
+    HelmRepositoryAssociatedServiceType:
+      title: HelmRepositoryAssociatedServiceType
+      x-stoplight:
+        id: 7afohg0qwqoht
+      enum:
+        - HELM
+    HelmRepositoryAssociatedServicesResponse:
+      title: HelmRepositoryAssociatedServicesResponse
+      x-stoplight:
+        id: een4pa4di1fir
+      type: object
+      required:
+        - project_id
+        - project_name
+        - environment_id
+        - environment_name
+        - service_id
+        - service_name
+        - service_type
+      properties:
+        project_id:
+          type: string
+          x-stoplight:
+            id: 5p4tj302re42n
+          format: uuid
+        project_name:
+          type: string
+          x-stoplight:
+            id: j9o1qaceqfiu8
+        environment_id:
+          type: string
+          x-stoplight:
+            id: oe1zp7vzdukve
+          format: uuid
+        environment_name:
+          type: string
+          x-stoplight:
+            id: n2usi4loyu8kn
+        service_id:
+          type: string
+          x-stoplight:
+            id: 9nnymt6uz7zdq
+          format: uuid
+        service_name:
+          type: string
+          x-stoplight:
+            id: rb0g9ev15frmu
+        service_type:
+          $ref: '#/components/schemas/HelmRepositoryAssociatedServiceType'
+    HelmRepositoryAssociatedServicesResponseList:
+      title: HelmRepositoryAssociatedServicesResponseList
+      x-stoplight:
+        id: lyrvkahz5uw6s
+      type: object
+      properties:
+        results:
+          type: array
+          x-stoplight:
+            id: 00sn35cw5lnb4
+          items:
+            $ref: '#/components/schemas/HelmRepositoryAssociatedServicesResponse'
   responses:
     '204':
       description: no content
