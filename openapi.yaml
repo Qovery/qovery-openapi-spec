@@ -13126,7 +13126,7 @@ components:
               description: Required if kind is `SCALEWAY_CR`
     HelmRepositoryResponse:
       allOf:
-        - $ref: '#/components/schemas/Base'organization/{organizationId}/helmRepository/{helmRepositoryId}
+        - $ref: '#/components/schemas/Base'
         - type: object
           required:
             - name
