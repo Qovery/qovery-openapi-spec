@@ -13126,7 +13126,7 @@ components:
               description: Required if kind is `SCALEWAY_CR`
     HelmRepositoryResponse:
       allOf:
-        - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/Base'organization/{organizationId}/helmRepository/{helmRepositoryId}
         - type: object
           required:
             - name
@@ -13143,6 +13143,11 @@ components:
             skip_tls_verification:
               type: boolean
               description: Bypass tls certificate verification when connecting to repository
+            associated_services_count:
+              type: integer
+              x-stoplight:
+                id: 287g4iunwmf2d
+              description: The number of services using this helm repository
     HelmVersionResponseList:
       type: object
       properties:
@@ -18533,6 +18538,55 @@ components:
       enum:
         - CONTAINER
         - JOB
+    HelmRepositoryAssociatedServiceType:
+      title: HelmRepositoryAssociatedServiceType
+      x-stoplight:
+        id: 7afohg0qwqoht
+      enum:
+        - HELM
+    HelmRepositoryAssociatedServicesResponse:
+      title: HelmRepositoryAssociatedServicesResponse
+      x-stoplight:
+        id: een4pa4di1fir
+      type: object
+      required:
+        - project_id
+        - project_name
+        - environment_id
+        - environment_name
+        - service_id
+        - service_name
+        - service_type
+      properties:
+        project_id:
+          type: string
+          x-stoplight:
+            id: 5p4tj302re42n
+          format: uuid
+        project_name:
+          type: string
+          x-stoplight:
+            id: j9o1qaceqfiu8
+        environment_id:
+          type: string
+          x-stoplight:
+            id: oe1zp7vzdukve
+          format: uuid
+        environment_name:
+          type: string
+          x-stoplight:
+            id: n2usi4loyu8kn
+        service_id:
+          type: string
+          x-stoplight:
+            id: 9nnymt6uz7zdq
+          format: uuid
+        service_name:
+          type: string
+          x-stoplight:
+            id: rb0g9ev15frmu
+        service_type:
+          $ref: '#/components/schemas/HelmRepositoryAssociatedServiceType'
   responses:
     '204':
       description: no content
