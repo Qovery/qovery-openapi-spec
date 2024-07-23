@@ -10617,6 +10617,38 @@ paths:
       x-stoplight:
         id: dgh8t73nqaetm
       description: Get organization container registry associated services
+  '/organization/{organizationId}/helmRepository/{helmRepositoryId}/associatedServices':
+    parameters:
+      - schema:
+          type: string
+        name: organizationId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: helmRepositoryId
+        in: path
+        required: true
+    get:
+      summary: Get organization helm repository associated services
+      tags: []
+      responses:
+        '200':
+          description: Get organization helm repository associated services
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelmRepositoryAssociatedServicesResponseList'
+        '401':
+          description: ' Access token is missing or invalid'
+        '403':
+          description: AccessForbidden
+        '404':
+          description: ResourceNot Found
+      operationId: get-organization-organizationId-helmRepository-helmRepositoryId-associatedServices
+      x-stoplight:
+        id: 5jvrv87m4tk5s
+      description: Get organization helm repository associated services
 components:
   parameters:
     applicationId:
@@ -18487,7 +18519,9 @@ components:
       type: object
       properties:
         results:
-          $ref: '#/components/schemas/ContainerRegistryAssociatedServicesResponse'
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerRegistryAssociatedServicesResponse'
     ContainerRegistryAssociatedServicesResponse:
       title: ContainerRegistryAssociatedServicesResponse
       x-stoplight:
@@ -18587,6 +18621,18 @@ components:
             id: rb0g9ev15frmu
         service_type:
           $ref: '#/components/schemas/HelmRepositoryAssociatedServiceType'
+    HelmRepositoryAssociatedServicesResponseList:
+      title: HelmRepositoryAssociatedServicesResponseList
+      x-stoplight:
+        id: lyrvkahz5uw6s
+      type: object
+      properties:
+        results:
+          type: array
+          x-stoplight:
+            id: 00sn35cw5lnb4
+          items:
+            $ref: '#/components/schemas/HelmRepositoryAssociatedServicesResponse'
   responses:
     '204':
       description: no content
