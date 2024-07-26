@@ -16368,6 +16368,8 @@ components:
           nullable: true
         environment_name:
           type: string
+      description: ''
+      title: ''
     OrganizationEventResponseList:
       type: object
       properties:
@@ -16454,6 +16456,7 @@ components:
         - PROJECT
         - WEBHOOK
       example: APPLICATION
+      title: ''
     OrganizationEventType:
       type: string
       description: Type of the organization event
@@ -16471,6 +16474,7 @@ components:
         - TRIGGER_DELETE
         - SHELL
         - PORT_FORWARD
+        - CLONE
       example: CREATE
       title: ''
     SecretOverride:
