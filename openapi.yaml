@@ -10599,7 +10599,8 @@ paths:
         required: true
     get:
       summary: Get organization container registry associated services
-      tags: []
+      tags:
+        - Organization Main Calls
       responses:
         '200':
           description: Get organization container registry associated services
@@ -10631,7 +10632,8 @@ paths:
         required: true
     get:
       summary: Get organization helm repository associated services
-      tags: []
+      tags:
+        - Organization Main Calls
       responses:
         '200':
           description: Get organization helm repository associated services
