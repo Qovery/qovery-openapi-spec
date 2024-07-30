@@ -18577,7 +18577,8 @@ components:
         id: dif8pj1ys444y
       enum:
         - CONTAINER
-        - JOB
+        - LIFECYCLE
+        - CRON
     HelmRepositoryAssociatedServiceType:
       title: HelmRepositoryAssociatedServiceType
       x-stoplight:
