@@ -12191,16 +12191,86 @@ components:
         region:
           type: string
     ClusterCredentials:
+      oneOf:
+        - $ref: '#/components/schemas/AwsClusterCredentials'
+        - $ref: '#/components/schemas/ScalewayClusterCredentials'
+        - $ref: '#/components/schemas/GenericClusterCredentials'
+      discriminator:
+        propertyName: job_type
+        mapping:
+          AWS: '#/components/schemas/AwsClusterCredentials'
+          SCW: '#/components/schemas/ScalewayClusterCredentials'
+          OTHER: '#/components/schemas/GenericClusterCredentials'
+    AwsClusterCredentials:
+      x-stoplight:
+        id: s0aosg7la96hp
+      title: AwsClusterCredentials
       type: object
       required:
         - id
         - name
+        - access_key_id
+        - object_type
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: en79y0yc76xhp
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: mx0mwek4ubieo
+        access_key_id:
+          type: string
+          x-stoplight:
+            id: 6g20j0ggu8nqc
+        object_type:
+          x-stoplight:
+            id: ravczabg8e2sp
+          enum:
+            - AWS
+    ScalewayClusterCredentials:
+      title: ScalewayClusterCredentials
+      x-stoplight:
+        id: j3ep46eyah9p5
+      type: object
+      required:
+        - id
+        - name
+        - scaleway_access_key
+        - object_type
       properties:
         id:
           type: string
           format: uuid
         name:
           type: string
+        scaleway_access_key:
+          type: string
+          x-stoplight:
+            id: 4db3031sq6tea
+        object_type:
+          enum:
+            - SCW
+    GenericClusterCredentials:
+      title: GenericClusterCredentials
+      x-stoplight:
+        id: gtibx4nzrvxm9
+      type: object
+      required:
+        - id
+        - name
+        - object_type
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        object_type:
+          enum:
+            - OTHER
     ClusterCredentialsResponseList:
       type: object
       properties:
@@ -17960,6 +18030,7 @@ components:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
             labels_groups:
               $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
+      title: ''
     CronJobResponse:
       allOf:
         - $ref: '#/components/schemas/BaseJobResponse'
