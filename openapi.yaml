@@ -12196,7 +12196,7 @@ components:
         - $ref: '#/components/schemas/ScalewayClusterCredentials'
         - $ref: '#/components/schemas/GenericClusterCredentials'
       discriminator:
-        propertyName: job_type
+        propertyName: object_type
         mapping:
           AWS: '#/components/schemas/AwsClusterCredentials'
           SCW: '#/components/schemas/ScalewayClusterCredentials'
