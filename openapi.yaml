@@ -16547,8 +16547,15 @@ components:
         - SHELL
         - PORT_FORWARD
         - CLONE
+        - DEPLOYED
+        - STOPPED
+        - DELETED
+        - RESTARTED
+        - DEPLOY_FAILED
+        - STOP_FAILED
+        - DELETE_FAILED
+        - RESTART_FAILED
       example: CREATE
-      title: ''
     SecretOverride:
       type: object
       required:
