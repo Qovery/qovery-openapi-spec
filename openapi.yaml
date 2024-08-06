@@ -18510,6 +18510,7 @@ components:
         - cloud_provider
         - events
         - max_duration_in_minutes
+        - max_duration_in_sec
         - resources
         - variables
         - dockerfile
@@ -18570,6 +18571,13 @@ components:
             id: l4kjmki90lplm
           description: |-
             Job max allowed duration in minutes.
+            After this allowed time, the job is going to be killed.
+        max_duration_in_sec:
+          type: integer
+          x-stoplight:
+            id: 6uoktngysqxii
+          description: |-
+            Job max allowed duration in secondes.
             After this allowed time, the job is going to be killed.
         resources:
           type: object
