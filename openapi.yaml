@@ -13139,6 +13139,27 @@ components:
               x-stoplight:
                 id: 02mqr04rogfem
               description: The number of services using this container registry
+            config:
+              type: object
+              x-stoplight:
+                id: s9rg5wox9j00z
+              properties:
+                username:
+                  type: string
+                  x-stoplight:
+                    id: 9g2hk57o11s8k
+                region:
+                  type: string
+                  x-stoplight:
+                    id: fo0nnlsnrdn0k
+                scaleway_access_key:
+                  type: string
+                  x-stoplight:
+                    id: fdb55y4vnpndk
+                access_key_id:
+                  type: string
+                  x-stoplight:
+                    id: s5elye0gv4lks
     ContainerRegistryProviderDetailsResponse:
       type: object
       required:
@@ -13252,6 +13273,27 @@ components:
               x-stoplight:
                 id: 287g4iunwmf2d
               description: The number of services using this helm repository
+            config:
+              type: object
+              x-stoplight:
+                id: 224az7um9x51z
+              properties:
+                username:
+                  type: string
+                  x-stoplight:
+                    id: 6xxbs3971acz5
+                region:
+                  type: string
+                  x-stoplight:
+                    id: pvi5oq9omlae8
+                access_key_id:
+                  type: string
+                  x-stoplight:
+                    id: 9tdfunoniwzed
+                scaleway_access_key:
+                  type: string
+                  x-stoplight:
+                    id: pyfdpz1vk4qq1
     HelmVersionResponseList:
       type: object
       properties:
