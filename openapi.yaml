@@ -18509,7 +18509,6 @@ components:
         - sourceUrl
         - cloud_provider
         - events
-        - max_duration_in_minutes
         - max_duration_in_sec
         - resources
         - variables
@@ -18565,19 +18564,12 @@ components:
                   x-stoplight:
                     id: pcxa5np84g1ze
                   type: string
-        max_duration_in_minutes:
-          type: integer
-          x-stoplight:
-            id: l4kjmki90lplm
-          description: |-
-            Job max allowed duration in minutes.
-            After this allowed time, the job is going to be killed.
         max_duration_in_sec:
           type: integer
           x-stoplight:
             id: 6uoktngysqxii
           description: |-
-            Job max allowed duration in secondes.
+            Job max allowed duration in seconds.
             After this allowed time, the job is going to be killed.
         resources:
           type: object
