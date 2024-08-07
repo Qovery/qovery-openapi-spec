@@ -6746,7 +6746,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/application/{applicationId}/customDomain/check':
+  '/application/{applicationId}/checkCustomDomain':
     get:
       summary: Check Application Custom Domain
       operationId: checkApplicationCustomDomain
@@ -7718,7 +7718,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/container/{containerId}/customDomain/check':
+  '/container/{containerId}/checkCustomDomain':
     get:
       summary: Check Container Custom Domain
       operationId: checkContainerCustomDomain
@@ -9243,7 +9243,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/helm/{helmId}/customDomain/check':
+  '/helm/{helmId}/checkCustomDomain':
     get:
       summary: Check Helm Custom Domain
       operationId: checkHelmCustomDomain
