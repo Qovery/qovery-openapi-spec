@@ -6746,6 +6746,27 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/customDomain/check':
+    get:
+      summary: Check Application Custom Domain
+      operationId: checkApplicationCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Custom Domain
+      responses:
+        '200':
+          description: Check Application Custom Domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckedCustomDomainsResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/log':
     get:
       summary: List logs
@@ -7691,6 +7712,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomDomain'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/container/{containerId}/customDomain/check':
+    get:
+      summary: Check Container Custom Domain
+      operationId: checkContainerCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Custom Domain
+      responses:
+        '200':
+          description: Check Container Custom Domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckedCustomDomainsResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -9201,6 +9243,28 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/helm/{helmId}/customDomain/check':
+    get:
+      summary: Check Helm Custom Domain
+      operationId: checkHelmCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Custom Domain
+      responses:
+        '200':
+          description: Check Helm Custom Domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckedCustomDomainsResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+
   '/environment/{environmentId}/checkDockerfile':
     post:
       summary: Check dockerfile configuration is correct
@@ -18648,6 +18712,41 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ContainerRegistryAssociatedServicesResponse'
+    CheckedCustomDomainsResponse:
+      title: CheckedCustomDomainsResponse
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckedCustomDomainResponse'
+    CheckedCustomDomainStatus:
+      type: string
+      enum:
+        - RESOLVES_TO_IP
+        - MATCHES_LOAD_BALANCER_HOST
+        - DOMAIN_NOT_CONFIGURED
+        - DOMAIN_LINKED_TO_WRONG_HOST
+        - GENERIC_FAILURE
+    CheckedCustomDomainResponse:
+      title: CheckedCustomDomainResponse
+      type: object
+      required:
+        - domain_name
+        - status
+      properties:
+        domain_name:
+          type: string
+          description: domain name checked
+          example: my.domain.tld
+        status:
+          $ref: '#/components/schemas/CheckedCustomDomainStatus'
+        error_details:
+          type: string
+          nullable: true
+          description: optional field containing information about failure check
     ContainerRegistryAssociatedServicesResponse:
       title: ContainerRegistryAssociatedServicesResponse
       x-stoplight:
