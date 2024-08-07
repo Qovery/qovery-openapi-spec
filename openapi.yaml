@@ -16546,6 +16546,9 @@ components:
           nullable: true
         environment_name:
           type: string
+        user_agent:
+          type: string
+          nullable: true
       description: ''
       title: ''
     OrganizationEventResponseList:
