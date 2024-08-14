@@ -9264,7 +9264,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-
   '/environment/{environmentId}/checkDockerfile':
     post:
       summary: Check dockerfile configuration is correct
@@ -11070,6 +11069,11 @@ components:
             id: 14nham449j6uk
           maxLength: 255
           description: optional variable description (255 characters maximum)
+          nullable: true
+        enable_interpolatin_in_file:
+          type: boolean
+          x-stoplight:
+            id: bm88z8ltgrcc6
           nullable: true
     ApplicationAdvancedSettings:
       type: object
@@ -14655,6 +14659,11 @@ components:
           maxLength: 255
           description: optional variable description (255 characters maximum)
           nullable: true
+        enable_interpolation_in_file:
+          type: boolean
+          x-stoplight:
+            id: bw41elfsxminc
+          nullable: true
     EnvironmentVariableRequest:
       type: object
       required:
@@ -14677,6 +14686,11 @@ components:
             id: 1k835w52vgl4m
           maxLength: 255
           description: optional variable description (255 characters maximum)
+          nullable: true
+        enable_interpolation_in_file:
+          type: boolean
+          x-stoplight:
+            id: yzgx9eytturo9
           nullable: true
     EnvironmentVariableResponseList:
       type: object
@@ -15984,6 +15998,7 @@ components:
                           description: The version of the chart to use
     Key:
       type: object
+      title: EnvironmentVariableAliasRequest
       required:
         - key
       properties:
@@ -15996,7 +16011,11 @@ components:
           maxLength: 255
           description: optional variable description (255 characters maximum)
           nullable: true
-      title: EnvironmentVariableAliasRequest
+        enable_interpolation_in_file:
+          type: boolean
+          x-stoplight:
+            id: alajw1h9vgr9e
+          nullable: true
     KubernetesEnum:
       type: string
       enum:
@@ -16692,6 +16711,11 @@ components:
           maxLength: 255
           description: optional variable description (255 characters maximum)
           nullable: true
+        enable_interpolation_in_file:
+          type: boolean
+          x-stoplight:
+            id: ls2iylkcayehn
+          nullable: true
     OrganizationWebhookCreateRequest:
       type: object
       required:
@@ -17373,6 +17397,11 @@ components:
               maxLength: 255
               description: optional variable description (255 characters maximum)
               nullable: true
+            enable_interpolation_in_file:
+              type: boolean
+              x-stoplight:
+                id: j13355s39qy21
+              nullable: true
     SecretEditRequest:
       type: object
       required:
@@ -17388,6 +17417,11 @@ components:
             id: kpr7b04o3wqkq
           maxLength: 255
           description: optional variable description (255 characters maximum)
+          nullable: true
+        enable_interpolation_in_file:
+          type: boolean
+          x-stoplight:
+            id: kfzgtx3qmrqsk
           nullable: true
     SecretRequest:
       type: object
@@ -17411,6 +17445,11 @@ components:
             id: dzjq13ney82de
           maxLength: 255
           description: optional variable description (255 character maximum)
+          nullable: true
+        enable_interpolation_in_file:
+          type: boolean
+          x-stoplight:
+            id: 5d202hkrquox8
           nullable: true
     SecretResponseList:
       type: object
@@ -17679,6 +17718,7 @@ components:
             $ref: '#/components/schemas/User'
     Value:
       type: object
+      title: EnvironmentVariableOverrideRequest
       properties:
         value:
           type: string
@@ -17689,7 +17729,11 @@ components:
           maxLength: 255
           description: optional variable description (255 characters maximum)
           nullable: true
-      title: EnvironmentVariableOverrideRequest
+        enable_interpolation_in_file:
+          type: boolean
+          x-stoplight:
+            id: ercieri1t6gqn
+          nullable: true
     VariableImport:
       type: object
       required:
@@ -17792,6 +17836,11 @@ components:
           description: optional variable description (255 characters maximum)
           maxLength: 255
           nullable: true
+        enable_interpolation_in_file:
+          type: boolean
+          x-stoplight:
+            id: udmfa3jcpde9q
+          nullable: true
     VariableOverrideRequest:
       type: object
       required:
@@ -17814,6 +17863,11 @@ components:
             id: 4u5nndk8qphxp
           maxLength: 255
           description: optional variable description (255 characters maximum)
+          nullable: true
+        enable_interpolation_in_file:
+          type: boolean
+          x-stoplight:
+            id: smk0wzzy31f5u
           nullable: true
     VariableRequest:
       type: object
