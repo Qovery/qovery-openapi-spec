@@ -3181,7 +3181,7 @@ paths:
       summary: List Scaleway available managed database instance types
       operationId: listSCWManagedDatabaseInstanceType
       parameters:
-        - $ref: '#/paths/~1scaleway~1instanceType~1%7Bzone%7D/get/parameters/0'
+        - $ref: '#/components/parameters/zone'
         - $ref: '#/components/parameters/databaseType'
       tags:
         - Cloud Provider
@@ -3203,13 +3203,7 @@ paths:
       summary: List Scaleway Kapsule available instance types
       operationId: listScalewayKapsuleInstanceType
       parameters:
-        - name: zone
-          in: path
-          description: zone name
-          required: true
-          schema:
-            type: string
-            example: fr-par-1
+        - $ref: '#/components/parameters/zone'
       tags:
         - Cloud Provider
       responses:
@@ -10811,6 +10805,14 @@ components:
       schema:
         type: string
         example: MYSQL
+    zone:
+      name: zone
+      in: path
+      description: Zone name
+      required: true
+      schema:
+        type: string
+        example: fr-par-1
     deploymentStageId:
       name: deploymentStageId
       in: path
