@@ -17973,6 +17973,10 @@ components:
               type: string
               x-stoplight:
                 id: n9u4ex1jj4rxa
+            enable_interpolation_in_file:
+              type: string
+              x-stoplight:
+                id: 43yxsvszy5k8o
     VariableResponseList:
       type: object
       properties:
