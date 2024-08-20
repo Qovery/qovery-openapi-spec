@@ -11070,7 +11070,7 @@ components:
           maxLength: 255
           description: optional variable description (255 characters maximum)
           nullable: true
-        enable_interpolatin_in_file:
+        enable_interpolation_in_file:
           type: boolean
           x-stoplight:
             id: bm88z8ltgrcc6
@@ -17904,6 +17904,11 @@ components:
           description: optional variable description (255 characters maximum)
           maxLength: 255
           nullable: true
+        enable_interpolation_in_file:
+          type: boolean
+          x-stoplight:
+            id: docfts24qtko6
+          nullable: true
     VariableEditRequest:
       type: object
       required:
@@ -17968,6 +17973,10 @@ components:
               type: string
               x-stoplight:
                 id: n9u4ex1jj4rxa
+            enable_interpolation_in_file:
+              type: string
+              x-stoplight:
+                id: 43yxsvszy5k8o
     VariableResponseList:
       type: object
       properties:
