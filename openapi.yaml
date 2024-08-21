@@ -164,7 +164,7 @@ x-tagGroups:
       - Application Main Calls
       - Application Actions
       - Application Configuration
-      - Custom Domain
+      - Application Custom Domain
       - Application Database
       - Application Logs
       - Application Deployment Restriction
@@ -6634,7 +6634,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - Custom Domain
+        - Application Custom Domain
       responses:
         '200':
           description: List custom domains
@@ -6655,7 +6655,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - Custom Domain
+        - Application Custom Domain
       requestBody:
         content:
           application/json:
@@ -6685,7 +6685,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/customDomainId'
       tags:
-        - Custom Domain
+        - Application Custom Domain
       requestBody:
         content:
           application/json:
@@ -6714,7 +6714,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/customDomainId'
       tags:
-        - Custom Domain
+        - Application Custom Domain
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
@@ -6732,7 +6732,7 @@ paths:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/customDomainId'
       tags:
-        - Custom Domain
+        - Application Custom Domain
       responses:
         '200':
           description: Get status
@@ -6753,7 +6753,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
       tags:
-        - Custom Domain
+        - Application Custom Domain
       responses:
         '200':
           description: Check Application Custom Domain
