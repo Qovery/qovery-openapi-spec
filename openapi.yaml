@@ -18350,6 +18350,12 @@ components:
                   type: string
                   x-stoplight:
                     id: njn2ukyaf5ra1
+                enable_interpolation:
+                  type: boolean
+                  x-stoplight:
+                    id: mbvppc2tt4l2t
+                  default: false
+                  description: if we should interpolate variables inside the
   responses:
     '204':
       description: no content
