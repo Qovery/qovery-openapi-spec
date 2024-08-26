@@ -12308,6 +12308,8 @@ components:
         - name
         - scaleway_access_key
         - object_type
+        - scaleway_project_id
+        - scaleway_organization_id
       properties:
         id:
           type: string
@@ -12321,6 +12323,14 @@ components:
         object_type:
           enum:
             - SCW
+        scaleway_project_id:
+          type: string
+          x-stoplight:
+            id: 0630fqc615vg4
+        scaleway_organization_id:
+          type: string
+          x-stoplight:
+            id: 5ui02pola5ndr
     GenericClusterCredentials:
       title: GenericClusterCredentials
       x-stoplight:
