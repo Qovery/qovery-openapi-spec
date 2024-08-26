@@ -12309,6 +12309,7 @@ components:
         - scaleway_access_key
         - object_type
         - scaleway_project_id
+        - scaleway_organization_id
       properties:
         id:
           type: string
