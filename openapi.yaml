@@ -18763,6 +18763,12 @@ components:
                     type: string
                     x-stoplight:
                       id: d7xqu15fk6iat
+                  enable_interpolation:
+                    type: boolean
+                    x-stoplight:
+                      id: mbvppc2tt4l2t
+                    default: false
+                    description: if we should interpolate variable inside the file
         dockerfile:
           type: string
           x-stoplight:
