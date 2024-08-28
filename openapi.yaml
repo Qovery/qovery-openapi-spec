@@ -1411,6 +1411,11 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/clusterId'
+        - schema:
+            type: boolean
+          in: query
+          name: withTokenFromCli
+          description: 'If true, the user auth part will have an exec command with qovery cli'
       tags:
         - Clusters
       responses:
@@ -10714,6 +10719,61 @@ paths:
       x-stoplight:
         id: 5jvrv87m4tk5s
       description: Get organization helm repository associated services
+  '/cluster/{clusterId}/token':
+    parameters:
+      - schema:
+          type: string
+        name: clusterId
+        in: path
+        required: true
+    get:
+      summary: Get cluster token by clusterId
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - apiVersion
+                  - kind
+                  - spec
+                  - status
+                properties:
+                  apiVersion:
+                    type: string
+                    x-stoplight:
+                      id: 3v8hnweel0h59
+                  kind:
+                    type: string
+                    x-stoplight:
+                      id: j71s6bsnathbc
+                  spec:
+                    type: object
+                    x-stoplight:
+                      id: yceokavn3wmmt
+                  status:
+                    type: object
+                    x-stoplight:
+                      id: kpc7oees1ex6o
+                    required:
+                      - token
+                      - expirationTimestamp
+                    properties:
+                      token:
+                        type: string
+                        x-stoplight:
+                          id: l3j67ojfrx07j
+                      expirationTimestamp:
+                        type: string
+                        x-stoplight:
+                          id: h0vsj9rkz1y83
+                        format: date-time
+      operationId: get-cluster-token-by-clusterId
+      x-stoplight:
+        id: zggx5u9ayalz7
 components:
   parameters:
     applicationId:
