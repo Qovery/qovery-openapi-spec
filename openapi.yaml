@@ -10774,6 +10774,27 @@ paths:
       operationId: get-cluster-token-by-clusterId
       x-stoplight:
         id: zggx5u9ayalz7
+  '/helm/{helmId}/listServices':
+    parameters:
+      - schema:
+          type: string
+        name: helmId
+        in: path
+        required: true
+    get:
+      summary: Get Helm Service
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-helm-helmId-listServices
+      x-stoplight:
+        id: lsa29d47dix0t
 components:
   parameters:
     applicationId:
