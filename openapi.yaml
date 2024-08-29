@@ -10714,6 +10714,34 @@ paths:
       x-stoplight:
         id: 5jvrv87m4tk5s
       description: Get organization helm repository associated services
+  '/helm/{helmId}/listServices':
+    parameters:
+      - schema:
+          type: string
+        name: helmId
+        in: path
+        required: true
+    get:
+      summary: Get helm kubernetes services
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/KubernetesServiceResponseList'
+        '401':
+          description: Access token is missing or invalid
+        '403':
+          description: Resource not found
+        '404':
+          description: Not Found
+      operationId: getHelmKubernetesServices
+      x-stoplight:
+        id: 345q5ja8ec46s
+      description: Get helm kubernetes services
 components:
   parameters:
     applicationId:
@@ -11584,6 +11612,7 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ServiceLabelRequest'
+      title: ''
     ServiceLabelRequest:
       type: object
       required:
@@ -18949,6 +18978,91 @@ components:
             id: 00sn35cw5lnb4
           items:
             $ref: '#/components/schemas/HelmRepositoryAssociatedServicesResponse'
+    KubernetesServiceResponseList:
+      title: KubernetesServiceResponseList
+      x-stoplight:
+        id: 91mgvynk8ostk
+      type: array
+      items:
+        $ref: '#/components/schemas/KubernetesService'
+    KubernetesService:
+      title: KubernetesService
+      x-stoplight:
+        id: e93yew0imhkxz
+      type: object
+      required:
+        - metadata
+        - service_spec
+      properties:
+        metadata:
+          $ref: '#/components/schemas/KubernetesMetadata'
+        service_spec:
+          $ref: '#/components/schemas/KubernetesServiceSpec'
+    KubernetesMetadata:
+      title: KubernetesMetadata
+      x-stoplight:
+        id: ajq08tq9ym2vh
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: n0gt58vsemvlv
+    KubernetesServiceSpec:
+      title: KubernetesServiceSpec
+      x-stoplight:
+        id: qecw98tpxage0
+      type: object
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: 5bi9ckakwdfod
+        ports:
+          type: array
+          x-stoplight:
+            id: xaa6ow6ugihju
+          items:
+            $ref: '#/components/schemas/KubernetesServicePort'
+        selectors:
+          type: array
+          x-stoplight:
+            id: snld7nhiy088w
+          items:
+            $ref: '#/components/schemas/KubernetesSelector'
+    KubernetesServicePort:
+      title: KubernetesServicePort
+      x-stoplight:
+        id: wgdmnyglzosd6
+      type: object
+      required:
+        - port
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: tusjgcztulh9m
+        port:
+          type: integer
+          x-stoplight:
+            id: iloqun4s628bz
+    KubernetesSelector:
+      title: KubernetesSelector
+      x-stoplight:
+        id: 4i1ztgngi75vs
+      type: object
+      required:
+        - key
+        - value
+      properties:
+        key:
+          type: string
+          x-stoplight:
+            id: 1zcgvzdknhr8n
+        value:
+          type: string
+          x-stoplight:
+            id: 6zpc45u4laog4
   responses:
     '204':
       description: no content
