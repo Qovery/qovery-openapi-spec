@@ -3386,6 +3386,30 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/cluster/{clusterId}/upgrade':
+    post:
+      summary: Upgrade a cluster
+      description: allows to upgrade a cluster to next available kubernetes version
+      operationId: upgradeCluster
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      responses:
+        '201':
+          description: Upgrade cluster
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterStatus'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/cluster/{clusterId}/stop':
     post:
       summary: Stop cluster
@@ -12875,6 +12899,8 @@ components:
           $ref: '#/components/schemas/ClusterStateEnum'
         is_deployed:
           type: boolean
+        next_k8s_available_version:
+          type: string
     ClusterStatusGet:
       type: object
       properties:
