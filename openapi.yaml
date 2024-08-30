@@ -12901,6 +12901,7 @@ components:
           type: boolean
         next_k8s_available_version:
           type: string
+          nullable: true
           example: "1.28"
         last_execution_id:
           type: string
