@@ -1375,7 +1375,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterStatusGet'
+                $ref: '#/components/schemas/ClusterStatus'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -12901,16 +12901,7 @@ components:
           type: boolean
         next_k8s_available_version:
           type: string
-    ClusterStatusGet:
-      type: object
-      properties:
-        cluster_id:
-          type: string
-          format: uuid
-        status:
-          $ref: '#/components/schemas/ClusterStateEnum'
-        is_deployed:
-          type: boolean
+          example: "1.28"
         last_execution_id:
           type: string
           example: f73e3833-922a-48a5-9dbd-6163f43f9143-1656410242
@@ -12920,7 +12911,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterStatusGet'
+            $ref: '#/components/schemas/ClusterStatus'
     ClusterAdvancedSettings:
       type: object
       properties:
