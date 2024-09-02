@@ -1375,7 +1375,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterStatusGet'
+                $ref: '#/components/schemas/ClusterStatus'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -3374,6 +3374,30 @@ paths:
       responses:
         '201':
           description: Deploy cluster
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterStatus'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/cluster/{clusterId}/upgrade':
+    post:
+      summary: Upgrade a cluster
+      description: allows to upgrade a cluster to next available kubernetes version
+      operationId: upgradeCluster
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      responses:
+        '201':
+          description: Upgrade cluster
           content:
             application/json:
               schema:
@@ -12875,16 +12899,10 @@ components:
           $ref: '#/components/schemas/ClusterStateEnum'
         is_deployed:
           type: boolean
-    ClusterStatusGet:
-      type: object
-      properties:
-        cluster_id:
+        next_k8s_available_version:
           type: string
-          format: uuid
-        status:
-          $ref: '#/components/schemas/ClusterStateEnum'
-        is_deployed:
-          type: boolean
+          nullable: true
+          example: "1.28"
         last_execution_id:
           type: string
           example: f73e3833-922a-48a5-9dbd-6163f43f9143-1656410242
@@ -12894,7 +12912,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterStatusGet'
+            $ref: '#/components/schemas/ClusterStatus'
     ClusterAdvancedSettings:
       type: object
       properties:
