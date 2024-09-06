@@ -19060,9 +19060,12 @@ components:
       title: KubernetesServiceResponseList
       x-stoplight:
         id: 91mgvynk8ostk
-      type: array
-      items:
-        $ref: '#/components/schemas/KubernetesService'
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/KubernetesService'
     KubernetesService:
       title: KubernetesService
       x-stoplight:
