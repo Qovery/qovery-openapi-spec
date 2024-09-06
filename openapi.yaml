@@ -10807,7 +10807,8 @@ paths:
         required: true
     get:
       summary: Get helm kubernetes services
-      tags: []
+      tags:
+        - Helm Main Calls
       responses:
         '200':
           description: OK
