@@ -10815,7 +10815,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/KubernetesServiceResponseList'
         '401':
           description: ' Access token is missing or invalid'
