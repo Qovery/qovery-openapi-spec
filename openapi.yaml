@@ -15912,6 +15912,8 @@ components:
       allOf:
         - $ref: '#/components/schemas/HelmPortResponseBase'
         - type: object
+          required:
+            - service_name
           properties:
             service_name:
               type: string
@@ -15919,6 +15921,8 @@ components:
       allOf:
         - $ref: '#/components/schemas/HelmPortResponseBase'
         - type: object
+          required:
+            - service_selectors
           properties:
             service_selectors:
               type: array
