@@ -15787,35 +15787,14 @@ components:
             ports:
               type: array
               items:
-                type: object
-                required:
-                  - id
-                  - internal_port
-                  - service_name
-                  - protocol
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  name:
-                    type: string
-                  internal_port:
-                    type: integer
-                    example: 8080
-                    description: The listening port of your service.
-                  external_port:
-                    type: integer
-                    example: 8080
-                    description: The exposed port for your service. This is optional. If not set a default port will be used.
-                  service_name:
-                    type: string
-                  namespace:
-                    type: string
-                  protocol:
-                    $ref: '#/components/schemas/HelmPortProtocolEnum'
-                  is_default:
-                    type: boolean
-                    description: is the default port to use for domain
+                oneOf:
+                  - $ref: '#/components/schemas/HelmPortResponseWithServiceName'
+                  - $ref: '#/components/schemas/HelmPortResponseWithServiceSelectors'
+                discriminator:
+                  propertyName: port_type
+                  mapping:
+                    SERVICE_NAME: '#/components/schemas/HelmPortResponseWithServiceName'
+                    SERVICE_SELECTORS: '#/components/schemas/HelmPortResponseWithServiceSelectors'
             source:
               nullable: false
               oneOf:
@@ -15899,6 +15878,56 @@ components:
               description: Icon URI representing the helm service.
               x-stoplight:
                 id: i2pvbugqsldhe
+    HelmPortResponseBase:
+      type: object
+      required:
+        - id
+        - internal_port
+        - protocol
+        - port_type
+      properties:
+        id:
+          type: string
+          format: uuid
+        port_type:
+          type: string
+        name:
+          type: string
+        internal_port:
+          type: integer
+          example: 8080
+          description: The listening port of your service.
+        external_port:
+          type: integer
+          example: 8080
+          description: The exposed port for your service. This is optional. If not set a default port will be used.
+        namespace:
+          type: string
+        protocol:
+          $ref: '#/components/schemas/HelmPortProtocolEnum'
+        is_default:
+          type: boolean
+          description: is the default port to use for domain
+    HelmPortResponseWithServiceName:
+      allOf:
+        - $ref: '#/components/schemas/HelmPortResponseBase'
+        - type: object
+          required:
+            - service_name
+          properties:
+            service_name:
+              type: string
+    HelmPortResponseWithServiceSelectors:
+      allOf:
+        - $ref: '#/components/schemas/HelmPortResponseBase'
+        - type: object
+          required:
+            - service_selectors
+          properties:
+            service_selectors:
+              type: array
+              items:
+                $ref: '#/components/schemas/KubernetesSelector'
     HelmResponseList:
       type: object
       properties:
@@ -16030,30 +16059,39 @@ components:
         ports:
           type: array
           items:
-            type: object
-            required:
-              - service_name
-              - internal_port
-            properties:
-              name:
-                type: string
-              internal_port:
-                type: integer
-                example: 8080
-                description: The listening port of your service.
-              external_port:
-                type: integer
-                example: 8080
-                description: The exposed port for your service. This is optional. If not set a default port will be used.
-              service_name:
-                type: string
-              namespace:
-                type: string
-              protocol:
-                $ref: '#/components/schemas/HelmPortProtocolEnum'
-              is_default:
-                type: boolean
-                description: is the default port to use for domain
+            allOf:
+              - type: object
+                required:
+                  - internal_port
+                properties:
+                  name:
+                    type: string
+                  internal_port:
+                    type: integer
+                    example: 8080
+                    description: The listening port of your service.
+                  external_port:
+                    type: integer
+                    example: 8080
+                    description: The exposed port for your service. This is optional. If not set a default port will be used.
+                  namespace:
+                    type: string
+                  protocol:
+                    $ref: '#/components/schemas/HelmPortProtocolEnum'
+                  is_default:
+                    type: boolean
+                    description: is the default port to use for domain
+              - oneOf:
+                - type: object
+                  properties:
+                    service_selectors:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/KubernetesSelector'
+                - type: object
+                  properties:
+                    service_name:
+                      type: string
     HelmForceEvent:
       type: string
       enum:
