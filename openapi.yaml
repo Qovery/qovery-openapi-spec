@@ -12903,7 +12903,7 @@ components:
         next_k8s_available_version:
           type: string
           nullable: true
-          example: "1.28"
+          example: '1.28'
         last_execution_id:
           type: string
           example: f73e3833-922a-48a5-9dbd-6163f43f9143-1656410242
@@ -12937,6 +12937,14 @@ components:
           description: Add additional tags on the cluster dedicated registry
           additionalProperties:
             type: string
+        aws.eks.enable_alb_controller:
+          type: boolean
+          x-stoplight:
+            id: m2nc6klof8mvh
+          default: true
+          description: |-
+            Enable the AWS ALB controller to manage the load balancer for the cluster.
+            Note: Changing this feature will create a 10 min max downtime on your application's public access (time to delete, replace and propagate DNS of the new load balancer) and will requiere to update all services with TCP/UDP open ports.
         load_balancer.size:
           type: string
           description: Select the size of the main load_balancer (only effective for Scaleway)
@@ -16082,16 +16090,16 @@ components:
                     type: boolean
                     description: is the default port to use for domain
               - oneOf:
-                - type: object
-                  properties:
-                    service_selectors:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/KubernetesSelector'
-                - type: object
-                  properties:
-                    service_name:
-                      type: string
+                  - type: object
+                    properties:
+                      service_selectors:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/KubernetesSelector'
+                  - type: object
+                    properties:
+                      service_name:
+                        type: string
     HelmForceEvent:
       type: string
       enum:
