@@ -7754,7 +7754,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/containerId'
       tags:
-        - Custom Domain
+        - Container Custom Domain
       responses:
         '200':
           description: Check Container Custom Domain
@@ -9279,7 +9279,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/helmId'
       tags:
-        - Custom Domain
+        - Helm Custom Domain
       responses:
         '200':
           description: Check Helm Custom Domain
