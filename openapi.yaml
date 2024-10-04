@@ -13021,6 +13021,22 @@ components:
         storageclass.fast_ssd:
           type: string
           description: storage class name to use to provision pvc
+        qovery.static_ip_mode:
+          type: boolean
+          x-stoplight:
+            id: i7u9vjd0o89g8
+          description: To limit public access from the internet to your Kubernetes cluster endpoint.
+        '':
+          type: array
+          x-stoplight:
+            id: w7d7zyd1de9n6
+          description: |-
+            Set custom sources to public access endpoint
+            Use CIDR notation to specify an IP address range (for example, 203.0.113.5/32)
+          items:
+            x-stoplight:
+              id: v8r1f6alk5abp
+            type: string
     Commit:
       type: object
       nullable: true
