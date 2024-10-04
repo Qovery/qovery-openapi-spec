@@ -13277,6 +13277,17 @@ components:
             * For others: it's required and must start by `https://`
         config:
           type: object
+          description: |
+            This field is dependent of the container registry kind:
+            * `ECR` needs in the config: region, access_key_id, secret_access_key
+            * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key
+            * `GCP_ARTIFACT_REGISTRY` needs in the config: region, json_credentials
+            * `DOCKER_HUB` needs in the config (optional): username, password
+            * `GITHUB_CR` needs in the config (optional): username, password
+            * `GITLAB_CR` needs in the config (optional): username, password
+            * `PUBLIC_ECR` doesn't need credentials info
+            * `GENERIC_CR` needs in the config (optional): username, password
+            * `DOCR` is not supported anymore
           properties:
             access_key_id:
               type: string
@@ -13293,6 +13304,11 @@ components:
             scaleway_secret_key:
               type: string
               description: Required if kind is `SCALEWAY_CR`
+            scaleway_project_id:
+              type: string
+              x-stoplight:
+                id: eomu5mjvhi6uu
+              description: Required if kind is `SCALEWAY_CR`
             json_credentials:
               type: string
               description: Required if kind is `GCP_ARTIFACT_REGISTRY`
@@ -13306,17 +13322,6 @@ components:
               description: |
                 optional, for kind `DOCKER_HUB`  
                 We encourage you to set credentials for Docker Hub due to the limits on the pull rate
-          description: |
-            This field is dependent of the container registry kind:
-            * `ECR` needs in the config: region, access_key_id, secret_access_key
-            * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key
-            * `GCP_ARTIFACT_REGISTRY` needs in the config: region, json_credentials
-            * `DOCKER_HUB` needs in the config (optional): username, password
-            * `GITHUB_CR` needs in the config (optional): username, password
-            * `GITLAB_CR` needs in the config (optional): username, password
-            * `PUBLIC_ECR` doesn't need credentials info
-            * `GENERIC_CR` needs in the config (optional): username, password
-            * `DOCR` is not supported anymore
     ContainerRegistryResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -13368,6 +13373,10 @@ components:
                   type: string
                   x-stoplight:
                     id: fdb55y4vnpndk
+                scaleway_project_id:
+                  type: string
+                  x-stoplight:
+                    id: ra9oc489c2wyt
                 access_key_id:
                   type: string
                   x-stoplight:
