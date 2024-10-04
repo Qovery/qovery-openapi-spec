@@ -13033,7 +13033,7 @@ components:
           x-stoplight:
             id: w7d7zyd1de9n6
           description: |-
-            Set custom sources to public access endpoint
+            Set custom sources to public access endpoint.
             Use CIDR notation to specify an IP address range 
             (for example, ['203.0.113.5/32','203.0.100/32'])
           items:
