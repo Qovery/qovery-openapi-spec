@@ -13427,8 +13427,8 @@ components:
       required:
         - name
         - kind
-        - config
         - skip_tls_verification
+        - config
       properties:
         name:
           type: string
@@ -13469,6 +13469,11 @@ components:
               description: Required if kind is `SCALEWAY_CR`
             scaleway_secret_key:
               type: string
+              description: Required if kind is `SCALEWAY_CR`
+            scaleway_project_id:
+              type: string
+              x-stoplight:
+                id: 9dw16j7cex4i6
               description: Required if kind is `SCALEWAY_CR`
     HelmRepositoryResponse:
       allOf:
@@ -13515,6 +13520,10 @@ components:
                   type: string
                   x-stoplight:
                     id: pyfdpz1vk4qq1
+                scaleway_project_id:
+                  type: string
+                  x-stoplight:
+                    id: kbrcr9377ly0q
     HelmVersionResponseList:
       type: object
       properties:
