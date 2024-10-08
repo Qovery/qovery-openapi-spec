@@ -19263,7 +19263,7 @@ components:
         id: nxbpo7v2ecz72
       type: object
       properties:
-        ' instance_category':
+        instance_category:
           type: string
           x-stoplight:
             id: epo9cqt13zoqp
