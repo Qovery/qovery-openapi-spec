@@ -19256,7 +19256,7 @@ components:
           type: string
           x-stoplight:
             id: 20yjj7h8sjtdu
-          description: he total GPU memory available.
+          description: The total GPU memory available.
     ClusterInstanceAttributes:
       title: ClusterInstanceAttributes
       x-stoplight:
@@ -19272,7 +19272,7 @@ components:
           type: integer
           x-stoplight:
             id: 274hjvkvlycxp
-          description: The generation of the instance type.
+          description: The generation of the instance.
         instance_family:
           type: string
           x-stoplight:
@@ -19287,7 +19287,7 @@ components:
           type: boolean
           x-stoplight:
             id: 8gytpdzm751we
-          description: The instance has sufficient resources to be chosen as a standalone option in a cluster.
+          description: The instance has sufficient resources to be chosen as a standalone instance in a cluster.
   responses:
     '204':
       description: no content
