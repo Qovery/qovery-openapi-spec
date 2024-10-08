@@ -12750,6 +12750,10 @@ components:
               architecture:
                 type: string
                 example: ARM64
+              gpu_info:
+                $ref: '#/components/schemas/ClusterInstanceGpuInfo'
+              attributes:
+                $ref: '#/components/schemas/ClusterInstanceAttributes'
     ClusterReadinessStatus:
       type: object
       properties:
@@ -19227,6 +19231,63 @@ components:
           type: string
           x-stoplight:
             id: 6zpc45u4laog4
+    ClusterInstanceGpuInfo:
+      title: ClusterInstanceGpuInfo
+      x-stoplight:
+        id: dfdp50z2mr1cs
+      type: object
+      properties:
+        count:
+          type: integer
+          x-stoplight:
+            id: hbl5jxfcth747
+          description: The number of GPUs included in the instance.
+        name:
+          type: string
+          x-stoplight:
+            id: pregmt5l22afi
+          description: The model name of the GPU.
+        manufacturer:
+          type: string
+          x-stoplight:
+            id: a0e1rvah0xfms
+          description: The manufacturer of the GPUs in the instance.
+        memory_in_mib:
+          type: string
+          x-stoplight:
+            id: 20yjj7h8sjtdu
+          description: The total GPU memory available.
+    ClusterInstanceAttributes:
+      title: ClusterInstanceAttributes
+      x-stoplight:
+        id: nxbpo7v2ecz72
+      type: object
+      properties:
+        instance_category:
+          type: string
+          x-stoplight:
+            id: epo9cqt13zoqp
+          description: The category of the instance.
+        instance_generation:
+          type: integer
+          x-stoplight:
+            id: 274hjvkvlycxp
+          description: The generation of the instance.
+        instance_family:
+          type: string
+          x-stoplight:
+            id: ixmy1d0nokjh5
+          description: The family or series of the instance.
+        instance_size:
+          type: string
+          x-stoplight:
+            id: dmnfjmvowgd0a
+          description: Specifies the size of the instance within its family.
+        meets_resource_reqs:
+          type: boolean
+          x-stoplight:
+            id: 8gytpdzm751we
+          description: The instance has sufficient resources to be chosen as a standalone instance in a cluster.
   responses:
     '204':
       description: no content
