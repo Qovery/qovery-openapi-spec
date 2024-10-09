@@ -18789,7 +18789,7 @@ components:
         default_service_architecture:
           $ref: '#/components/schemas/CpuArchitectureEnum'
         qovery_node_pools:
-          $ref: '#/components/schemas/ClusterFeatureKarpenterNodePool'
+          $ref: '#/components/schemas/KarpenterNodePool'
     JobLifecycleTypeEnum:
       title: JobLifecycleTypeEnum
       x-stoplight:
@@ -19295,6 +19295,8 @@ components:
       x-stoplight:
         id: q8vks57rql8x1
       type: object
+      required:
+        - requirements
       properties:
         requirements:
           x-stoplight:
@@ -19310,6 +19312,12 @@ components:
         - InstanceFamily
         - InstanceSize
         - Arch
+    KarpenterNodePoolRequirementOperator:
+      title: KarpenterNodePoolRequirementOperator
+      x-stoplight:
+        id: wkzlvifywpa0t
+      enum:
+        - In
     KarpenterNodePoolRequirement:
       title: KarpenterNodePoolRequirement
       x-stoplight:
@@ -19328,12 +19336,6 @@ components:
             x-stoplight:
               id: 02kz5mierypik
             type: string
-    KarpenterNodePoolRequirementOperator:
-      title: KarpenterNodePoolRequirementOperator
-      x-stoplight:
-        id: wkzlvifywpa0t
-      enum:
-        - In
   responses:
     '204':
       description: no content
