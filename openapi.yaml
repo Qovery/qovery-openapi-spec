@@ -19297,7 +19297,11 @@ components:
       type: object
       properties:
         requirements:
-          $ref: '#/components/schemas/KarpenterNodePoolRequirement'
+          x-stoplight:
+            id: pkowctfxv7q77
+          type: array
+          items:
+            $ref: '#/components/schemas/KarpenterNodePoolRequirement'
     KarpenterNodePoolRequirementKey:
       title: KarpenterNodePoolRequirementKey
       x-stoplight:
