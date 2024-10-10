@@ -19304,6 +19304,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/KarpenterNodePoolRequirement'
+      description: ''
     KarpenterNodePoolRequirementKey:
       title: KarpenterNodePoolRequirementKey
       x-stoplight:
@@ -19323,6 +19324,10 @@ components:
       x-stoplight:
         id: 4ebed64emvn09
       type: object
+      required:
+        - key
+        - operator
+        - values
       properties:
         key:
           $ref: '#/components/schemas/KarpenterNodePoolRequirementKey'
