@@ -18755,6 +18755,19 @@ components:
       enum:
         - AMD64
         - ARM64
+    ClusterFeatureKarpenterParametersResponse:
+      title: ClusterFeatureKarpenterParametersResponse
+      x-stoplight:
+        id: q33tdlz4ychh5
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
+        value:
+          $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
     ClusterFeatureKarpenterParameters:
       title: ClusterFeatureKarpenterParameters
       x-stoplight:
@@ -18775,19 +18788,8 @@ components:
             id: nwpjqw3bf7px0
         default_service_architecture:
           $ref: '#/components/schemas/CpuArchitectureEnum'
-    ClusterFeatureKarpenterParametersResponse:
-      title: ClusterFeatureKarpenterParametersResponse
-      x-stoplight:
-        id: q33tdlz4ychh5
-      type: object
-      required:
-        - type
-        - value
-      properties:
-        type:
-          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
-        value:
-          $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
+        qovery_node_pools:
+          $ref: '#/components/schemas/KarpenterNodePool'
     JobLifecycleTypeEnum:
       title: JobLifecycleTypeEnum
       x-stoplight:
@@ -19288,6 +19290,57 @@ components:
           x-stoplight:
             id: 8gytpdzm751we
           description: The instance has sufficient resources to be chosen as a standalone instance in a cluster.
+    KarpenterNodePool:
+      title: KarpenterNodePool
+      x-stoplight:
+        id: q8vks57rql8x1
+      type: object
+      required:
+        - requirements
+      properties:
+        requirements:
+          x-stoplight:
+            id: pkowctfxv7q77
+          type: array
+          items:
+            $ref: '#/components/schemas/KarpenterNodePoolRequirement'
+      description: ''
+    KarpenterNodePoolRequirementKey:
+      title: KarpenterNodePoolRequirementKey
+      x-stoplight:
+        id: eancn656efy06
+      enum:
+        - InstanceFamily
+        - InstanceSize
+        - Arch
+    KarpenterNodePoolRequirementOperator:
+      title: KarpenterNodePoolRequirementOperator
+      x-stoplight:
+        id: wkzlvifywpa0t
+      enum:
+        - In
+    KarpenterNodePoolRequirement:
+      title: KarpenterNodePoolRequirement
+      x-stoplight:
+        id: 4ebed64emvn09
+      type: object
+      required:
+        - key
+        - operator
+        - values
+      properties:
+        key:
+          $ref: '#/components/schemas/KarpenterNodePoolRequirementKey'
+        operator:
+          $ref: '#/components/schemas/KarpenterNodePoolRequirementOperator'
+        values:
+          type: array
+          x-stoplight:
+            id: qf036o7tch5ed
+          items:
+            x-stoplight:
+              id: 02kz5mierypik
+            type: string
   responses:
     '204':
       description: no content
