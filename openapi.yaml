@@ -18117,7 +18117,6 @@ components:
       type: object
       required:
         - key
-        - value
       properties:
         key:
           type: string
@@ -18125,6 +18124,7 @@ components:
         value:
           type: string
           description: the value of the environment variable
+          nullable: true
         description:
           type: string
           x-stoplight:
