@@ -1,0 +1,10 @@
+title: StageStatusEnum
+x-stoplight:
+  id: qb8485u1xnh1v
+enum:
+  - QUEUED
+  - ONGOING
+  - DONE
+  - ERROR
+  - SKIPPED
+  - CANCELED

@@ -17872,7 +17872,7 @@ components:
             id: gwpra9face692
         status:
           type: object
-          $ref: '#/components/schemas/StageStepMetricNameEnum'
+          $ref: ./models/StageStatusEnum.yaml
     StatusKindEnum:
       type: string
       enum:
