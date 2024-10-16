@@ -14722,7 +14722,7 @@ components:
             status:
               $ref: '#/components/schemas/StepMetricStatusEnum'
             total_duration_sec:
-              type: string
+              type: integer
               x-stoplight:
                 id: t6u28t17lth1l
     EnvironmentStatusList:
