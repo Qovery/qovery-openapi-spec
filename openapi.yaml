@@ -14714,6 +14714,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DeploymentStageWithServicesStatuses'
+        pre_check_stage:
+          type: object
+          x-stoplight:
+            id: l9y5i1bt4jmsk
+          properties:
+            status:
+              $ref: '#/components/schemas/StepMetricStatusEnum'
+            total_duration_sec:
+              type: integer
+              x-stoplight:
+                id: t6u28t17lth1l
     EnvironmentStatusList:
       type: object
       properties:
@@ -17793,6 +17804,17 @@ components:
         - WAITING_RESTARTING
         - WAITING_RUNNING
         - WAITING_STOPPING
+    StageStatusEnum:
+      type: string
+      x-stoplight:
+        id: lv5pyjmui11rn
+      enum:
+        - QUEUED
+        - ONGOING
+        - DONE
+        - ERROR
+        - SKIPPED
+        - CANCELED
     ClusterStateEnum:
       type: string
       enum:
@@ -17845,6 +17867,7 @@ components:
       required:
         - id
         - name
+        - description
       properties:
         id:
           type: string
@@ -17854,6 +17877,12 @@ components:
           description: stage name
         steps:
           $ref: '#/components/schemas/StageStepMetrics'
+        description:
+          type: string
+          x-stoplight:
+            id: gwpra9face692
+        status:
+          $ref: '#/components/schemas/StageStatusEnum'
     StatusKindEnum:
       type: string
       enum:
