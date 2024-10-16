@@ -17815,7 +17815,6 @@ components:
         - ERROR
         - SKIPPED
         - CANCELED
-      title: ''
     ClusterStateEnum:
       type: string
       enum:
@@ -17883,7 +17882,6 @@ components:
           x-stoplight:
             id: gwpra9face692
         status:
-          type: object
           $ref: '#/components/schemas/StageStatusEnum'
     StatusKindEnum:
       type: string
@@ -18332,7 +18330,6 @@ components:
         The name of the deployment step at the stage level:
         - QUEUEING: The step preceding the actual stage deployment step.
         - PROVISION_BUILDER: The step to provision builders before the actual build.
-      title: ''
     StepMetricStatusEnum:
       type: string
       enum:
