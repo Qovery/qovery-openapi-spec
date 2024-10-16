@@ -14720,7 +14720,7 @@ components:
             id: l9y5i1bt4jmsk
           properties:
             status:
-              $ref: '#/components/schemas/StageStepMetricNameEnum'
+              $ref: '#/components/schemas/StepMetricStatusEnum'
             total_duration_sec:
               type: string
               x-stoplight:
@@ -17804,6 +17804,18 @@ components:
         - WAITING_RESTARTING
         - WAITING_RUNNING
         - WAITING_STOPPING
+    StageStatusEnum:
+      type: string
+      x-stoplight:
+        id: lv5pyjmui11rn
+      enum:
+        - QUEUED
+        - ONGOING
+        - DONE
+        - ERROR
+        - SKIPPED
+        - CANCELED
+      title: ''
     ClusterStateEnum:
       type: string
       enum:
@@ -17872,7 +17884,7 @@ components:
             id: gwpra9face692
         status:
           type: object
-          $ref: ./models/StageStatusEnum.yaml
+          $ref: '#/components/schemas/StageStatusEnum'
     StatusKindEnum:
       type: string
       enum:
@@ -18320,6 +18332,7 @@ components:
         The name of the deployment step at the stage level:
         - QUEUEING: The step preceding the actual stage deployment step.
         - PROVISION_BUILDER: The step to provision builders before the actual build.
+      title: ''
     StepMetricStatusEnum:
       type: string
       enum:
