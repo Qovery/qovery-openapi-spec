@@ -12952,33 +12952,41 @@ components:
         load_balancer.size:
           type: string
           description: Select the size of the main load_balancer (only effective for Scaleway)
-        database.postgresql.deny_public_access:
+        database.postgresql.deny_any_access:
           type: boolean
           description: Deny public access to any PostgreSQL database
+          x-stoplight:
+            id: zltwd7w7mxld8
         database.postgresql.allowed_cidrs:
           type: array
           description: List of CIDRs allowed to access the PostgreSQL database
           items:
             type: string
-        database.mysql.deny_public_access:
+        database.mysql.deny_any_access:
           type: boolean
           description: Deny public access to any MySql database
+          x-stoplight:
+            id: kst5exbae6ory
         database.mysql.allowed_cidrs:
           type: array
           description: List of CIDRs allowed to access the MySql database
           items:
             type: string
-        database.mongodb.deny_public_access:
+        database.mongodb.deny_any_access:
           type: boolean
           description: Deny public access to any MongoDB/DocumentDB database
+          x-stoplight:
+            id: nc66h7gqz809g
         database.mongodb.allowed_cidrs:
           type: array
           description: List of CIDRs allowed to access the MongoDB/DocumentDB database
           items:
             type: string
-        database.redis.deny_public_access:
+        database.redis.deny_any_access:
           type: boolean
           description: Deny public access to any Redis database
+          x-stoplight:
+            id: djo0khm8r7gdy
         database.redis.allowed_cidrs:
           type: array
           description: List of CIDRs allowed to access the Redis database
