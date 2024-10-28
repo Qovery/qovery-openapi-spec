@@ -14748,8 +14748,6 @@ components:
                   type: string
                 chart_version:
                   type: string
-        - description: DatabaseDeploymentHistoryDetails
-          type: object
     DeploymentHistoryEnvironmentPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
