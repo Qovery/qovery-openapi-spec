@@ -14651,7 +14651,6 @@ components:
         - identifier
         - status
         - auditing_data
-        - details
       properties:
         identifier:
           type: object
