@@ -14682,7 +14682,7 @@ components:
         auditing_data:
           $ref: '#/components/schemas/DeploymentHistoryAuditingData'
         details:
-          anyOf:
+          oneOf:
             - description: ApplicationDeploymentHistoryData
               required:
                 - commit
