@@ -14651,6 +14651,7 @@ components:
         - identifier
         - status
         - auditing_data
+        - details
       properties:
         identifier:
           type: object
@@ -14681,95 +14682,73 @@ components:
         auditing_data:
           $ref: '#/components/schemas/DeploymentHistoryAuditingData'
         details:
-          oneOf:
-            - description: ApplicationDeploymentHistoryData
-              required:
-                - commit
+          $ref: '#/components/schemas/DeploymentHistoryServiceDetails'
+    DeploymentHistoryServiceDetails:
+      x-stoplight:
+        id: vx9hzryfyv7sb
+      oneOf:
+        - description: ApplicationDeploymentHistoryData
+          type: object
+          required:
+            - commit
+          properties:
+            commit:
+              $ref: '#/components/schemas/Commit'
+        - description: ContainerDeploymentHistoryData
+          type: object
+          required:
+            - image_name
+            - tag
+            - arguments
+          properties:
+            image_name:
+              type: string
+            tag:
+              type: string
+            arguments:
+              type: array
+              items:
+                type: string
+            entrypoint:
+              type: string
+        - description: JobDeploymentHistoryDetails
+          type: object
+          required:
+            - image_name
+            - tag
+          properties:
+            image_name:
+              type: string
+            tag:
+              type: string
+            commit:
+              $ref: '#/components/schemas/Commit'
+            schedule:
+              type: object
               properties:
-                commit:
-                  $ref: '#/components/schemas/Commit'
-            - x-stoplight:
-                id: lja8m17hali3p
-              description: ContainerDeploymentHistoryData
-              required:
-                - image_name
-                - tag
-                - arguments
+                on_start:
+                  $ref: '#/components/schemas/JobLifecyleSchedule'
+                on_stop:
+                  $ref: '#/components/schemas/JobLifecyleSchedule'
+                on_delete:
+                  $ref: '#/components/schemas/JobLifecyleSchedule'
+                cron_job:
+                  $ref: '#/components/schemas/JobCronSchedule'
+                lifecycle_type:
+                  $ref: '#/components/schemas/JobLifecycleTypeEnum'
+        - description: HelmDeploymentHistoryDetails
+          type: object
+          properties:
+            commit:
+              $ref: '#/components/schemas/Commit'
+            repository:
+              type: object
               properties:
-                image_name:
+                chart_name:
                   type: string
-                  x-stoplight:
-                    id: cp1a1637awibu
-                tag:
+                chart_version:
                   type: string
-                  x-stoplight:
-                    id: j2370fv4rsfpg
-                arguments:
-                  type: array
-                  x-stoplight:
-                    id: yjdn67mlbjepn
-                  items:
-                    x-stoplight:
-                      id: ivowoxaze0arg
-                    type: string
-                entrypoint:
-                  type: string
-                  x-stoplight:
-                    id: ctmcvgy4wj865
-            - x-stoplight:
-                id: ifzfaa7tyrfq8
-              description: JobDeploymentHistoryDetails
-              required:
-                - image_name
-                - tag
-              properties:
-                image_name:
-                  type: string
-                  x-stoplight:
-                    id: lkmz7mr4xevzg
-                tag:
-                  type: string
-                  x-stoplight:
-                    id: zexw29s3fgblp
-                commit:
-                  $ref: '#/components/schemas/Commit'
-                schedule:
-                  x-stoplight:
-                    id: g4j7aa77ezcgh
-                  type: object
-                  properties:
-                    on_start:
-                      $ref: '#/components/schemas/JobLifecyleSchedule'
-                    on_stop:
-                      $ref: '#/components/schemas/JobLifecyleSchedule'
-                    on_delete:
-                      $ref: '#/components/schemas/JobLifecyleSchedule'
-                    cron_job:
-                      $ref: '#/components/schemas/JobCronSchedule'
-                    lifecycle_type:
-                      $ref: '#/components/schemas/JobLifecycleTypeEnum'
-            - x-stoplight:
-                id: o9gzhui7ko9jd
-              description: HelmDeploymentHistoryDetails
-              properties:
-                commit:
-                  $ref: '#/components/schemas/Commit'
-                repository:
-                  type: object
-                  x-stoplight:
-                    id: 1j5omftfya2n7
-                  properties:
-                    chart_name:
-                      type: string
-                      x-stoplight:
-                        id: gerj6c9sxkjfz
-                    chart_version:
-                      type: string
-                      x-stoplight:
-                        id: ainlfgdt19umi
-            - x-stoplight:
-                id: pc3zlhtm1ocgu
-              description: DatabaseDeploymentHistoryDetails
+        - description: DatabaseDeploymentHistoryDetails
           type: object
     DeploymentHistoryEnvironmentPaginatedResponseList:
       allOf:
