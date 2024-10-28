@@ -18169,6 +18169,9 @@ components:
           maxLength: 255
           description: optional variable description (255 characters maximum)
           nullable: true
+        enable_interpolation_in_file:
+          type: boolean
+          nullable: true
     VariableResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
