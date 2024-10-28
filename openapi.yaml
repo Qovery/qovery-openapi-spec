@@ -5421,7 +5421,7 @@ paths:
     get:
       summary: List environment deployments
       description: 'List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
-      operationId: listEnvironmentDeploymentHistory
+      operationId: listEnvironmentDeploymentHistoryV2
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/startId'
@@ -6307,7 +6307,7 @@ paths:
     get:
       summary: List application deploys
       description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id'
-      operationId: listApplicationDeploymentHistory
+      operationId: listApplicationDeploymentHistoryV2
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/startId'
@@ -7158,7 +7158,7 @@ paths:
     get:
       summary: List container deployments
       description: Returns the 20 last container deployments
-      operationId: listContainerDeploymentHistory
+      operationId: listContainerDeploymentHistoryV2
       parameters:
         - $ref: '#/components/parameters/containerId'
       tags:
@@ -8378,7 +8378,7 @@ paths:
     get:
       summary: List database deploys
       description: By default it returns the 20 last results. The response is paginated.
-      operationId: listDatabaseDeploymentHistory
+      operationId: listDatabaseDeploymentHistoryV2
       parameters:
         - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/startId'
@@ -9128,7 +9128,7 @@ paths:
     get:
       summary: List helm deployments
       description: Returns the 20 last helm deployments
-      operationId: listHelmDeploymentHistory
+      operationId: listHelmDeploymentHistoryV2
       parameters:
         - $ref: '#/components/parameters/helmId'
       tags:
@@ -9905,7 +9905,7 @@ paths:
     get:
       summary: List job deployments
       description: Returns the 20 last job deployments
-      operationId: listJobDeploymentHistory
+      operationId: listJobDeploymentHistoryV2
       parameters:
         - $ref: '#/components/parameters/jobId'
       tags:
