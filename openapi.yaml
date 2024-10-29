@@ -5417,6 +5417,37 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/environment/{environmentId}/deploymentHistoryV2':
+    get:
+      summary: List environment deployments
+      description: 'List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
+      operationId: listEnvironmentDeploymentHistoryV2
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/startId'
+      tags:
+        - Environment Deployment History
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentHistoryEnvironmentPaginatedResponseListV2'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      x-stoplight:
+        id: pqsu5pghhay1j
+    parameters:
+      - schema:
+          type: string
+        name: environmentId
+        in: path
+        required: true
   '/environment/{environmentId}/environmentVariable':
     get:
       summary: List environment variables
@@ -6272,6 +6303,37 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/deploymentHistoryV2':
+    get:
+      summary: List application deploys
+      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id'
+      operationId: listApplicationDeploymentHistoryV2
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/startId'
+      tags:
+        - Application Deployment History
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentHistoryServicePaginatedResponseListV2'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      x-stoplight:
+        id: 59xza5oe7uvet
+    parameters:
+      - schema:
+          type: string
+        name: applicationId
+        in: path
+        required: true
   '/application/{applicationId}/environmentVariable':
     get:
       summary: List environment variables
@@ -7092,6 +7154,36 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/container/{containerId}/deploymentHistoryV2':
+    get:
+      summary: List container deployments
+      description: Returns the 20 last container deployments
+      operationId: listContainerDeploymentHistoryV2
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Deployment History
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentHistoryServicePaginatedResponseListV2'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      x-stoplight:
+        id: qfy5ueb8cyebe
+    parameters:
+      - schema:
+          type: string
+        name: containerId
+        in: path
+        required: true
   '/container/{containerId}/advancedSettings':
     get:
       summary: Get advanced settings
@@ -8282,6 +8374,37 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/database/{databaseId}/deploymentHistoryV2':
+    get:
+      summary: List database deploys
+      description: By default it returns the 20 last results. The response is paginated.
+      operationId: listDatabaseDeploymentHistoryV2
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+        - $ref: '#/components/parameters/startId'
+      tags:
+        - Database Deployment History
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentHistoryServicePaginatedResponseListV2'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      x-stoplight:
+        id: mzftpr17opgzp
+    parameters:
+      - schema:
+          type: string
+        name: databaseId
+        in: path
+        required: true
   '/database/{databaseId}/backup':
     get:
       summary: List database  backups
@@ -9001,6 +9124,36 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/helm/{helmId}/deploymentHistoryV2':
+    get:
+      summary: List helm deployments
+      description: Returns the 20 last helm deployments
+      operationId: listHelmDeploymentHistoryV2
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Deployment History
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentHistoryServicePaginatedResponseListV2'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      x-stoplight:
+        id: fn9qd5qn7dhdv
+    parameters:
+      - schema:
+          type: string
+        name: helmId
+        in: path
+        required: true
   '/helm/{helmId}/deploymentRestriction':
     get:
       summary: Get helm deployment restrictions
@@ -9748,6 +9901,36 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/job/{jobId}/deploymentHistoryV2':
+    get:
+      summary: List job deployments
+      description: Returns the 20 last job deployments
+      operationId: listJobDeploymentHistoryV2
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      tags:
+        - Job Deployment History
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentHistoryServicePaginatedResponseListV2'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      x-stoplight:
+        id: mcu1nwkl3q2bb
+    parameters:
+      - schema:
+          type: string
+        name: jobId
+        in: path
+        required: true
   '/job/{jobId}/deploymentRestriction':
     get:
       summary: Get job deployment restrictions
@@ -11605,7 +11788,7 @@ components:
           type: boolean
           description: |
             Specify if the sticky session option (also called persistant session) is activated or not for this application.
-            If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
+            If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
           default: false
     ApplicationNetworkRequest:
       type: object
@@ -11614,7 +11797,7 @@ components:
           type: boolean
           description: |
             Specify if the sticky session option (also called persistant session) is activated or not for this application.
-            If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
+            If activated, user will be redirected by the load balancer to the same instance each time he access to the application.
           default: false
     ServicePort:
       type: object
@@ -13221,7 +13404,7 @@ components:
           type: boolean
           description: |
             Specify if the sticky session option (also called persistant session) is activated or not for this container.
-            If activated, user will be redirected by the load balancer to the same instance each time he access to the container. 
+            If activated, user will be redirected by the load balancer to the same instance each time he access to the container.
           default: false
     ContainerNetworkRequest:
       type: object
@@ -13230,7 +13413,7 @@ components:
           type: boolean
           description: |
             Specify if the sticky session option (also called persistant session) is activated or not for this container.
-            If activated, user will be redirected by the load balancer to the same instance each time he access to the container. 
+            If activated, user will be redirected by the load balancer to the same instance each time he access to the container.
           default: false
     ContainerDeployRequest:
       type: object
@@ -14239,6 +14422,15 @@ components:
               $ref: '#/components/schemas/Commit'
             status:
               $ref: '#/components/schemas/DeploymentHistoryStatusEnum'
+    DeploymentHistoryTriggerAction:
+      x-stoplight:
+        id: 1hzy6riqo7lq4
+      enum:
+        - DEPLOY
+        - DELETE
+        - RESTART
+        - STOP
+        - UNKNOWN
     DeploymentHistoryApplication:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -14260,6 +14452,31 @@ components:
               description: name of the service
             status:
               $ref: '#/components/schemas/StateEnum'
+    DeploymentHistoryAuditingData:
+      x-stoplight:
+        id: 5oovmby4u1mxw
+      type: object
+      required:
+        - created_at
+        - updated_at
+        - triggered_by
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: e1idlr92680lb
+          format: date-time
+        updated_at:
+          type: string
+          x-stoplight:
+            id: mz8yet1k3voef
+          format: date-time
+        triggered_by:
+          type: string
+          x-stoplight:
+            id: hf405wx2g73py
+        origin:
+          $ref: '#/components/schemas/OrganizationEventOrigin'
     DeploymentHistoryContainer:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -14311,6 +14528,226 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/DeploymentHistoryHelmResponse'
+    DeploymentHistoryEnvironmentV2:
+      x-stoplight:
+        id: j6o3qzzhhu0me
+      type: object
+      required:
+        - identifier
+        - auditing_data
+        - status
+        - trigger_action
+        - total_duration
+        - stages
+      properties:
+        identifier:
+          type: object
+          x-stoplight:
+            id: cpv6dbyt9dng2
+          required:
+            - execution_id
+            - environment_id
+          properties:
+            execution_id:
+              type: string
+              x-stoplight:
+                id: 6psngtbgz1bub
+            environment_id:
+              type: string
+              x-stoplight:
+                id: 6o54s8cbk0lo6
+              format: uuid
+        auditing_data:
+          $ref: '#/components/schemas/DeploymentHistoryAuditingData'
+        status:
+          $ref: '#/components/schemas/StateEnum'
+        trigger_action:
+          $ref: '#/components/schemas/DeploymentHistoryTriggerAction'
+        total_duration:
+          type: string
+          x-stoplight:
+            id: 3qptomnr4oly4
+          format: duration
+        stages:
+          type: array
+          x-stoplight:
+            id: rz2b0h9r3p6tv
+          items:
+            $ref: '#/components/schemas/DeploymentHistoryStage'
+    DeploymentHistoryStage:
+      type: object
+      x-stoplight:
+        id: crvf2cbwrvxyh
+      required:
+        - name
+        - status
+        - duration
+        - services
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: e1fv4x2xo0wo0
+        status:
+          $ref: '#/components/schemas/StageStatusEnum'
+        duration:
+          type: string
+          x-stoplight:
+            id: mdqlsz36jtl4j
+          format: duration
+        services:
+          type: array
+          x-stoplight:
+            id: sel4jtb8tbjwz
+          items:
+            $ref: '#/components/schemas/DeploymentHistoryService'
+    JobLifecyleSchedule:
+      type: object
+      x-stoplight:
+        id: nbir5gxiux1ei
+      required:
+        - arguments
+      properties:
+        arguments:
+          type: array
+          x-stoplight:
+            id: wj3fkami4h2b7
+          items:
+            x-stoplight:
+              id: 4a4sqxpll8vlc
+            type: string
+        entrypoint:
+          type: string
+          x-stoplight:
+            id: 951clotz2i2na
+    JobCronSchedule:
+      type: object
+      x-stoplight:
+        id: y5hby49m8v5zc
+      required:
+        - arguments
+        - scheduled_at
+        - timezone
+      properties:
+        arguments:
+          type: array
+          items:
+            type: string
+        entrypoint:
+          type: string
+        scheduled_at:
+          type: string
+          x-stoplight:
+            id: a5x1s5kc53r1v
+        timezone:
+          type: string
+          x-stoplight:
+            id: btav5l3tp9w3l
+    DeploymentHistoryService:
+      type: object
+      x-stoplight:
+        id: 316ilxlmws82a
+      required:
+        - identifier
+        - status
+        - auditing_data
+        - details
+      properties:
+        identifier:
+          type: object
+          x-stoplight:
+            id: yklp44eea5vaq
+          required:
+            - name
+            - service_id
+            - service_type
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: h0xxiocxiusqw
+            service_id:
+              type: string
+              x-stoplight:
+                id: 0hb95ufaj9z82
+              format: uuid
+            service_type:
+              $ref: '#/components/schemas/ServiceTypeEnum'
+            execution_id:
+              type: string
+              x-stoplight:
+                id: 9ww6nh5lrwg37
+        status:
+          $ref: '#/components/schemas/StateEnum'
+        auditing_data:
+          $ref: '#/components/schemas/DeploymentHistoryAuditingData'
+        details:
+          $ref: '#/components/schemas/DeploymentHistoryServiceDetails'
+    DeploymentHistoryServiceDetails:
+      x-stoplight:
+        id: vx9hzryfyv7sb
+      oneOf:
+        - description: ApplicationDeploymentHistoryData
+          type: object
+          required:
+            - commit
+          properties:
+            commit:
+              $ref: '#/components/schemas/Commit'
+        - description: ContainerDeploymentHistoryData
+          type: object
+          required:
+            - image_name
+            - tag
+            - arguments
+          properties:
+            image_name:
+              type: string
+            tag:
+              type: string
+            arguments:
+              type: array
+              items:
+                type: string
+            entrypoint:
+              type: string
+        - description: JobDeploymentHistoryDetails
+          type: object
+          required:
+            - image_name
+            - tag
+          properties:
+            image_name:
+              type: string
+            tag:
+              type: string
+            commit:
+              $ref: '#/components/schemas/Commit'
+            schedule:
+              type: object
+              properties:
+                on_start:
+                  $ref: '#/components/schemas/JobLifecyleSchedule'
+                on_stop:
+                  $ref: '#/components/schemas/JobLifecyleSchedule'
+                on_delete:
+                  $ref: '#/components/schemas/JobLifecyleSchedule'
+                cron_job:
+                  $ref: '#/components/schemas/JobCronSchedule'
+                lifecycle_type:
+                  $ref: '#/components/schemas/JobLifecycleTypeEnum'
+        - description: HelmDeploymentHistoryDetails
+          type: object
+          properties:
+            commit:
+              $ref: '#/components/schemas/Commit'
+            repository:
+              type: object
+              properties:
+                chart_name:
+                  type: string
+                chart_version:
+                  type: string
     DeploymentHistoryEnvironmentPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
@@ -14320,6 +14757,28 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/DeploymentHistoryEnvironment'
+    DeploymentHistoryEnvironmentPaginatedResponseListV2:
+      allOf:
+        - $ref: '#/components/schemas/PaginationData'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/DeploymentHistoryEnvironment'
+      x-stoplight:
+        id: 0anfgzdi689ht
+    DeploymentHistoryServicePaginatedResponseListV2:
+      allOf:
+        - $ref: '#/components/schemas/PaginationData'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/DeploymentHistoryService'
+      x-stoplight:
+        id: e2g667def2r2z
     DeploymentHistoryPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
@@ -14925,7 +15384,7 @@ components:
     APIVariableTypeEnum:
       type: string
       description: |
-        type of the environment variable (VALUE, FILE, ALIAS, OVERRIDE or BUIT_IN) 
+        type of the environment variable (VALUE, FILE, ALIAS, OVERRIDE or BUIT_IN)
       enum:
         - VALUE
         - ALIAS
@@ -15653,7 +16112,7 @@ components:
         ON_START means when a deployment is requested for the environment  
         ON_STOP means when a stop of the environment is requested  
         ON_DELETE means when an environment delete is requested  
-        CRON means at a scheduled interval  
+        CRON means at a scheduled interval
     JobForceEvent:
       type: string
       enum:
@@ -15730,7 +16189,7 @@ components:
             auto_deploy:
               type: boolean
               description: |
-                Specify if the helm will be automatically updated after receiving a new image tag or a new commit according to the source type. 
+                Specify if the helm will be automatically updated after receiving a new image tag or a new commit according to the source type.
             source:
               oneOf:
                 - type: object
@@ -17736,6 +18195,10 @@ components:
       enum:
         - APPLICATION
         - DATABASE
+        - CONTAINER
+        - JOB
+        - HELM
+        - ROUTER
     SignUp:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -19055,7 +19518,7 @@ components:
           * `MATCHES_LOAD_BALANCER_HOST`: we succeeded to lookup CNAMEs & found that it matches your cluser Load Balancer host. This is the successful final status for custom domain where `use_cdn` is `false`
           * `DOMAIN_NOT_CONFIGURED`: the domain is not configured, look at the `error_details` field for more information 
           * `DOMAIN_LINKED_TO_WRONG_HOST`: the domain has CNAME(s) that matches a different host than your Load Balancer one
-          * `GENERIC_FAILURE`: an error occured when attempting to validate your domain, look at the `error_details` field for more information 
+          * `GENERIC_FAILURE`: an error occured when attempting to validate your domain, look at the `error_details` field for more information
     CheckedCustomDomainResponse:
       title: CheckedCustomDomainResponse
       type: object
