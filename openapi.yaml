@@ -3090,6 +3090,10 @@ paths:
       operationId: listAWSEKSInstanceType
       parameters:
         - $ref: '#/components/parameters/region'
+        - schema:
+            type: string
+          in: query
+          name: only_meets_resource_reqs
       tags:
         - Cloud Provider
       responses:
