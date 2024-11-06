@@ -3091,7 +3091,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/region'
         - schema:
-            type: string
+            type: boolean
           in: query
           name: only_meets_resource_reqs
       tags:
