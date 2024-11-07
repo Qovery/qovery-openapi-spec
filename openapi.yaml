@@ -17268,6 +17268,9 @@ components:
             next:
               type: string
               format: uri
+        organization_max_limit_reached:
+          type: boolean
+          description: Indicates if you cannot see previous logs according to your organization max limit
         events:
           type: array
           items:
