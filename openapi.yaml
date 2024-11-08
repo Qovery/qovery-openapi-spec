@@ -3094,6 +3094,10 @@ paths:
             type: boolean
           in: query
           name: only_meets_resource_reqs
+        - schema:
+            type: boolean
+          in: query
+          name: with_gpu
       tags:
         - Cloud Provider
       responses:
@@ -19795,9 +19799,6 @@ components:
           x-stoplight:
             id: dmnfjmvowgd0a
           description: Specifies the size of the instance within its family.
-        with_gpu:
-          type: boolean
-          description: The instance has gpu.
         meets_resource_reqs:
           type: boolean
           x-stoplight:
