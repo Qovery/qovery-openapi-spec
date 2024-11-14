@@ -3418,6 +3418,33 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/karpenterPrivateSubnetIds':
+    put:
+      summary: Update karpenter private fargate subnet ids
+      description: Update karpenter private fargate subnet ids
+      operationId: updateKarpenterPrivateFargateSubnetIds
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterKarpenterPrivateSubnetIdsPutRequest'
+      responses:
+        '200':
+          description: Updated
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+
   '/organization/{organizationId}/cluster/{clusterId}/stop':
     post:
       summary: Stop cluster
@@ -12562,6 +12589,21 @@ components:
               type: string
         region:
           type: string
+    ClusterKarpenterPrivateSubnetIdsPutRequest:
+      type: object
+      properties:
+        eks_karpenter_fargate_subnets_zone_a_ids:
+          type: array
+          items:
+            type: string
+        eks_karpenter_fargate_subnets_zone_b_ids:
+          type: array
+          items:
+            type: string
+        eks_karpenter_fargate_subnets_zone_c_ids:
+          type: array
+          items:
+            type: string
     ClusterCredentials:
       oneOf:
         - $ref: '#/components/schemas/AwsClusterCredentials'
