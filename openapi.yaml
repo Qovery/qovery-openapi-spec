@@ -3444,7 +3444,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-
   '/organization/{organizationId}/cluster/{clusterId}/stop':
     post:
       summary: Stop cluster
@@ -14815,7 +14814,7 @@ components:
             results:
               type: array
               items:
-                $ref: '#/components/schemas/DeploymentHistoryEnvironment'
+                $ref: '#/components/schemas/DeploymentHistoryEnvironmentV2'
       x-stoplight:
         id: 0anfgzdi689ht
     DeploymentHistoryServicePaginatedResponseListV2:
