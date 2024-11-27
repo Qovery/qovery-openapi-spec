@@ -11090,14 +11090,14 @@ components:
     imageName:
       name: imageName
       in: query
-      required: true
+      required: false
       description: container image name
       schema:
         type: string
     searchImageName:
       name: search
       in: query
-      required: true
+      required: false
       description: partial container image name to search
       schema:
         type: string
