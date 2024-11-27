@@ -3592,6 +3592,7 @@ paths:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/containerRegistryId'
         - $ref: '#/components/parameters/imageName'
+        - $ref: '#/components/parameters/searchImageName'
       tags:
         - Container Registries
       responses:
@@ -11091,6 +11092,13 @@ components:
       in: query
       required: true
       description: container image name
+      schema:
+        type: string
+    searchImageName:
+      name: search
+      in: query
+      required: true
+      description: partial container image name to search
       schema:
         type: string
     credentialsId:
