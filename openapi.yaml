@@ -3377,6 +3377,11 @@ paths:
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/clusterId'
+        - schema:
+            type: boolean
+          in: query
+          name: dry_run
+          description: 'default: false. Decide if the deployment of the cluster should be done in dry_run mode. Avoiding any changes'
       tags:
         - Clusters
       responses:
