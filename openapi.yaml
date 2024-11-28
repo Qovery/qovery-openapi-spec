@@ -5042,28 +5042,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/environment/{environmentId}/application/supportedLanguage':
-    get:
-      summary: List supported languages
-      description: Returns list of languages supported by Buildpacks.
-      operationId: getEnvironmentApplicationSupportedLanguages
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-      tags:
-        - Applications
-      responses:
-        '200':
-          description: Supported languages list.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentApplicationsSupportedLanguageList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/environment/{environmentId}/container':
     get:
       summary: List containers
@@ -11566,8 +11544,6 @@ components:
               type: string
               description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
               nullable: true
-            buildpack_language:
-              $ref: '#/components/schemas/BuildPackLanguageEnum'
             cpu:
               type: integer
               description: unit is millicores (m). 1000m = 1 cpu
@@ -11667,8 +11643,6 @@ components:
               type: string
               description: The path of the associated Dockerfile
               nullable: true
-            buildpack_language:
-              $ref: '#/components/schemas/BuildPackLanguageEnum'
             cpu:
               type: integer
               description: unit is millicores (m). 1000m = 1 cpu
@@ -11929,8 +11903,6 @@ components:
               type: string
               description: The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
               nullable: true
-            buildpack_language:
-              $ref: '#/components/schemas/BuildPackLanguageEnum'
             cpu:
               type: integer
               description: unit is millicores (m). 1000m = 1 cpu
@@ -12268,28 +12240,10 @@ components:
     BuildModeEnum:
       type: string
       enum:
-        - BUILDPACKS
         - DOCKER
       description: |
         `DOCKER` requires `dockerfile_path`
-        `BUILDPACKS` does not require any `dockerfile_path`
-      default: BUILDPACKS
-    BuildPackLanguageEnum:
-      type: string
-      description: Development language of the application
-      nullable: true
-      enum:
-        - CLOJURE
-        - GO
-        - GRADLE
-        - GRAILS
-        - JAVA
-        - JVM
-        - NODE_JS
-        - PHP
-        - PLAY
-        - PYTHON
-        - SCALA
+      default: DOCKER
     CloneEnvironmentRequest:
       type: object
       required:
@@ -14883,21 +14837,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Environment'
-    EnvironmentApplicationsSupportedLanguage:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-          example: Ruby
-    EnvironmentApplicationsSupportedLanguageList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentApplicationsSupportedLanguage'
     EnvironmentDeploymentRule:
       allOf:
         - $ref: '#/components/schemas/Base'
