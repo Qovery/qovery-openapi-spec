@@ -14657,7 +14657,7 @@ components:
                 id: 0hb95ufaj9z82
               format: uuid
             service_type:
-              $ref: '#/components/schemas/ServiceTypeEnum'
+              $ref: '#/components/schemas/PublicServiceTypeEnum'
             execution_id:
               type: string
               x-stoplight:
@@ -14673,14 +14673,12 @@ components:
         id: vx9hzryfyv7sb
       oneOf:
         - description: ApplicationDeploymentHistoryData
-          type: object
           required:
             - commit
           properties:
             commit:
               $ref: '#/components/schemas/Commit'
         - description: ContainerDeploymentHistoryData
-          type: object
           required:
             - image_name
             - tag
@@ -14697,10 +14695,10 @@ components:
             entrypoint:
               type: string
         - description: JobDeploymentHistoryDetails
-          type: object
           required:
             - image_name
             - tag
+            - job_type
           properties:
             image_name:
               type: string
@@ -14721,8 +14719,13 @@ components:
                   $ref: '#/components/schemas/JobCronSchedule'
                 lifecycle_type:
                   $ref: '#/components/schemas/JobLifecycleTypeEnum'
+            job_type:
+              x-stoplight:
+                id: tz8apy1pqi9c5
+              enum:
+                - CRON
+                - LIFECYCLE
         - description: HelmDeploymentHistoryDetails
-          type: object
           properties:
             commit:
               $ref: '#/components/schemas/Commit'
@@ -14733,6 +14736,7 @@ components:
                   type: string
                 chart_version:
                   type: string
+      type: object
     DeploymentHistoryEnvironmentPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
@@ -18164,6 +18168,8 @@ components:
           type: number
     ServiceTypeEnum:
       type: string
+      x-stoplight:
+        id: d66063cd29913
       description: 'type of the service (application, database, job, gateway...)'
       enum:
         - APPLICATION
@@ -18172,6 +18178,18 @@ components:
         - JOB
         - HELM
         - ROUTER
+      title: ''
+    PublicServiceTypeEnum:
+      type: string
+      x-stoplight:
+        id: meatnq0gapio9
+      description: 'type of the service (application, database, job...)'
+      enum:
+        - APPLICATION
+        - DATABASE
+        - CONTAINER
+        - JOB
+        - HELM
     SignUp:
       allOf:
         - $ref: '#/components/schemas/Base'
