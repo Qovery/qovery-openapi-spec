@@ -14701,6 +14701,7 @@ components:
           required:
             - image_name
             - tag
+            - job_type
           properties:
             image_name:
               type: string
@@ -14721,6 +14722,12 @@ components:
                   $ref: '#/components/schemas/JobCronSchedule'
                 lifecycle_type:
                   $ref: '#/components/schemas/JobLifecycleTypeEnum'
+            job_type:
+              x-stoplight:
+                id: tz8apy1pqi9c5
+              enum:
+                - CRON
+                - LIFECYCLE
         - description: HelmDeploymentHistoryDetails
           type: object
           properties:
@@ -14733,6 +14740,7 @@ components:
                   type: string
                 chart_version:
                   type: string
+      type: object
     DeploymentHistoryEnvironmentPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
@@ -18164,14 +18172,15 @@ components:
           type: number
     ServiceTypeEnum:
       type: string
-      description: 'type of the service (application, database, job, gateway...)'
+      x-stoplight:
+        id: d66063cd29913
+      description: 'type of the service (application, database, job, ...)'
       enum:
         - APPLICATION
         - DATABASE
         - CONTAINER
         - JOB
         - HELM
-        - ROUTER
     SignUp:
       allOf:
         - $ref: '#/components/schemas/Base'
