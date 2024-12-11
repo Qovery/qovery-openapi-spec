@@ -11013,16 +11013,21 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  x-stoplight:
-                    id: naz8145q04e1j
-                  oneOf:
-                    - $ref: '#/components/schemas/Application'
-                    - $ref: '#/components/schemas/ContainerResponse'
-                    - $ref: '#/components/schemas/Database'
-                    - $ref: '#/components/schemas/HelmResponse'
-                    - $ref: '#/components/schemas/JobResponse'
+                type: object
+                properties:
+                  results:
+                    type: array
+                    x-stoplight:
+                      id: 0t9ccei2ecd8d
+                    items:
+                      x-stoplight:
+                        id: lzycmwmefigki
+                      oneOf:
+                        - $ref: '#/components/schemas/Application'
+                        - $ref: '#/components/schemas/ContainerResponse'
+                        - $ref: '#/components/schemas/Database'
+                        - $ref: '#/components/schemas/HelmResponse'
+                        - $ref: '#/components/schemas/JobResponse'
       operationId: listServicesByEnvironmentId
       x-stoplight:
         id: 9adquhr5t6qx3
