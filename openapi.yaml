@@ -10997,6 +10997,35 @@ paths:
       x-stoplight:
         id: 7cl74u6hzmccd
       description: Get helm kubernetes services
+  '/environment/{environmentId}/services':
+    parameters:
+      - schema:
+          type: string
+        name: environmentId
+        in: path
+        required: true
+    get:
+      summary: List Services By EnvironmentId
+      tags: []
+      responses:
+        '200':
+          description: Service List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  x-stoplight:
+                    id: naz8145q04e1j
+                  oneOf:
+                    - $ref: '#/components/schemas/Application'
+                    - $ref: '#/components/schemas/ContainerResponse'
+                    - $ref: '#/components/schemas/Database'
+                    - $ref: '#/components/schemas/HelmResponse'
+                    - $ref: '#/components/schemas/JobResponse'
+      operationId: listServicesByEnvironmentId
+      x-stoplight:
+        id: 9adquhr5t6qx3
 components:
   parameters:
     applicationId:
@@ -11596,6 +11625,8 @@ components:
               description: Icon URI representing the application.
               x-stoplight:
                 id: b8karc43pdxpu
+            serviceType:
+              $ref: '#/components/schemas/ServiceTypeEnum'
     ApplicationDeploymentRestriction:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -13901,6 +13932,8 @@ components:
               description: Icon URI representing the container.
               x-stoplight:
                 id: o2bdci7ak3bmz
+            serviceType:
+              $ref: '#/components/schemas/ServiceTypeEnum'
     ContainerResponseList:
       type: object
       properties:
@@ -14158,6 +14191,8 @@ components:
               type: string
               format: uri
               description: Icon URI representing the database.
+            serviceType:
+              $ref: '#/components/schemas/ServiceTypeEnum'
     DatabaseAccessibilityEnum:
       type: string
       default: PRIVATE
@@ -16383,6 +16418,8 @@ components:
               description: Icon URI representing the helm service.
               x-stoplight:
                 id: i2pvbugqsldhe
+            serviceType:
+              $ref: '#/components/schemas/ServiceTypeEnum'
     HelmPortResponseBase:
       type: object
       required:
@@ -19035,6 +19072,8 @@ components:
               description: Icon URI representing the job.
               x-stoplight:
                 id: p1secr7kxozsd
+            serviceType:
+              $ref: '#/components/schemas/ServiceTypeEnum'
     HelmGitRepositoryRequest:
       type: object
       required:
