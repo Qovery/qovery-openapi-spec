@@ -19892,14 +19892,10 @@ components:
           default: false
           nullable: false
         days:
-          description: |
-            The list of days where the consolidation will occur.
-            The days are indicated in the same manner as for a cron (sunday=0, monday=1, tuesday=2, wednesday=3, thursday=4, friday=5, saturday=6).
           type: array
-          items:
-            type: number
-            example: 0
           nullable: false
+          items:
+            $ref: '#/components/schemas/WeekdayEnum'
         start_time:
           description: |
             The start date of the consolidation.
