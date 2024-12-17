@@ -15144,8 +15144,10 @@ components:
         origin:
           $ref: '#/components/schemas/EnvironmentStatusEventOriginEnum'
         triggered_by:
-          nullable: true
           type: string
+          nullable: true
+        deployment_status:
+          $ref: '#/components/schemas/EnvironmentDeploymentStatusEnum'
     EnvironmentStatsResponseList:
       type: object
       properties:
@@ -19901,7 +19903,7 @@ components:
             The start date of the consolidation.
             The expected format is "hh24:mm".
           type: string
-          example: "22:30"
+          example: '22:30'
           nullable: false
         duration:
           description: |
@@ -19909,8 +19911,16 @@ components:
             Only hours and minutes can be defined, no seconds.
             The expected format is "h:m".
           type: string
-          example: "1h05m"
+          example: 1h05m
           nullable: false
+    EnvironmentDeploymentStatusEnum:
+      title: EnvironmentDeploymentStatusEnum
+      x-stoplight:
+        id: sbw3iw6yteyba
+      enum:
+        - NEVER_DEPLOYED
+        - UP_TO_DATE
+        - OUT_OF_DATE
   responses:
     '204':
       description: no content
