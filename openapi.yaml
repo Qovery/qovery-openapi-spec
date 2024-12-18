@@ -18359,6 +18359,10 @@ components:
           type: boolean
         steps:
           $ref: '#/components/schemas/ServiceStepMetrics'
+        execution_id:
+          type: string
+          x-stoplight:
+            id: 3o9tz4272s2ct
     Stage:
       type: object
       required:
