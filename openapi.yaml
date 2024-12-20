@@ -94,6 +94,7 @@ tags:
   - name: Members
   - name: Organization
   - name: Organization Account Git Repositories
+  - name: Organization Cluster Lock
   - name: Organization Main Calls
   - name: Organization Custom Role
   - name: Organization Event
@@ -120,6 +121,7 @@ x-tagGroups:
       - Organization Main Calls
       - Organization Api Token
       - Organization Account Git Repositories
+      - Organization Cluster Lock
       - Organization Webhook
       - Organization Custom Role
       - Organization Event
@@ -11041,7 +11043,8 @@ paths:
         required: true
     post:
       summary: Lock Cluster
-      tags: []
+      tags:
+        - Clusters
       responses:
         '200':
           description: OK
@@ -11066,7 +11069,8 @@ paths:
               $ref: '#/components/schemas/ClusterLockRequest'
     delete:
       summary: Unlock Cluster
-      tags: []
+      tags:
+        - Clusters
       responses:
         '204':
           description: No Content
@@ -11098,7 +11102,8 @@ paths:
         required: true
     get:
       summary: List locked Cluster by organization
-      tags: []
+      tags:
+        - Organization Cluster Lock
       responses:
         '200':
           description: OK
@@ -11108,7 +11113,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ClusterLock'
+                  $ref: '#/components/schemas/ClusterLockList'
         '401':
           description: Unauthorized
         '403':
