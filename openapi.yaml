@@ -11115,7 +11115,7 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-      operationId: get-organization-organizationId-lock
+      operationId: list-cluster-lock
       x-stoplight:
         id: 3n7iq6cr6xx43
 components:
