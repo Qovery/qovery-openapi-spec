@@ -11032,6 +11032,79 @@ paths:
       operationId: listServicesByEnvironmentId
       x-stoplight:
         id: 9adquhr5t6qx3
+  '/cluster/{clusterId}/lock':
+    parameters:
+      - schema:
+          type: string
+        name: clusterId
+        in: path
+        required: true
+    post:
+      summary: Lock Cluster
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterLock'
+      operationId: lockCluster
+      x-stoplight:
+        id: kttp2yd6qq7m7
+      description: Lock a Cluste
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterLockRequest'
+    delete:
+      summary: Unlock Cluster
+      tags: []
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: |-
+            Unauthorized responses:
+                    '204':
+                      $ref: '#/components/responses/204-deletion'
+                    '401':
+                      $ref: '#/components/responses/401'
+                    '403':
+                      $ref: '#/components/responses/403'
+                    '404':
+                      $ref: '#/components/responses/404'
+        '403':
+          description: Forbidden
+        '404':
+          description: ''
+      operationId: unlock-cluster
+      x-stoplight:
+        id: vkn00s3mt1vew
+      description: Unlock a cluste
+  '/organization/{organizationId}/lock':
+    parameters:
+      - schema:
+          type: string
+        name: organizationId
+        in: path
+        required: true
+    get:
+      summary: List locked Cluster by organization
+      tags: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-organization-organizationId-lock
+      x-stoplight:
+        id: 3n7iq6cr6xx43
 components:
   parameters:
     applicationId:
@@ -19954,6 +20027,66 @@ components:
         max_memory_in_gibibytes:
           type: number
           description: "Memory limit that will be applied for the node pool (in Gibibytes unit: 1Gi = 1024 mebibytes)"
+    ClusterLockRequest:
+      title: ClusterLockRequest
+      x-stoplight:
+        id: d0zigj2okjq2u
+      type: object
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+          x-stoplight:
+            id: r7sy48ofln6xf
+        ttl_in_days:
+          type: number
+          x-stoplight:
+            id: m7spawrlr0mii
+    ClusterLock:
+      title: ClusterLock
+      x-stoplight:
+        id: cfl44h3tyj8p9
+      type: object
+      required:
+        - reason
+        - cluster_id
+        - locked_at
+        - owner_name
+      properties:
+        reason:
+          type: string
+          x-stoplight:
+            id: 24t21mhr6yvb8
+        ttl_in_days:
+          type: number
+          x-stoplight:
+            id: hkgmap89j628o
+        cluster_id:
+          type: string
+          x-stoplight:
+            id: uvcmzekexkogh
+          format: uuid
+        locked_at:
+          type: number
+          x-stoplight:
+            id: aqpw2xs6xlw6b
+        owner_name:
+          type: string
+          x-stoplight:
+            id: 92n5bq5he0utp
+    ClusterLockList:
+      title: ClusterLockList
+      x-stoplight:
+        id: 87swuavftz0gk
+      type: object
+      properties:
+        results:
+          type: array
+          x-stoplight:
+            id: xpi2ooy1zclay
+          items:
+            $ref: '#/components/schemas/ClusterLock'
   responses:
     '204':
       description: no content
