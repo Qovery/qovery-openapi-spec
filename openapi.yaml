@@ -11049,6 +11049,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClusterLock'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       operationId: lockCluster
       x-stoplight:
         id: kttp2yd6qq7m7
@@ -11102,6 +11108,12 @@ paths:
               schema:
                 type: object
                 properties: {}
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       operationId: get-organization-organizationId-lock
       x-stoplight:
         id: 3n7iq6cr6xx43
