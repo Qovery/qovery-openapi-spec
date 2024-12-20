@@ -11058,7 +11058,7 @@ paths:
       operationId: lockCluster
       x-stoplight:
         id: kttp2yd6qq7m7
-      description: Lock a Cluste
+      description: Lock a Cluster
       requestBody:
         content:
           application/json:
@@ -11088,7 +11088,7 @@ paths:
       operationId: unlock-cluster
       x-stoplight:
         id: vkn00s3mt1vew
-      description: Unlock a cluste
+      description: Unlock a cluster
   '/organization/{organizationId}/lock':
     parameters:
       - schema:
@@ -11106,8 +11106,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterLock'
         '401':
           description: Unauthorized
         '403':
