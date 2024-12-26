@@ -11554,6 +11554,7 @@ components:
             - name
             - healthchecks
             - icon_uri
+            - service_type
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -13868,6 +13869,7 @@ components:
             - healthchecks
             - auto_preview
             - icon_uri
+            - service_type
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -14166,6 +14168,7 @@ components:
           required:
             - environment
             - icon_uri
+            - service_type
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -16308,6 +16311,7 @@ components:
             - allow_cluster_wide_resources
             - values_override
             - icon_uri
+            - service_type
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -19009,6 +19013,7 @@ components:
             - source
             - healthchecks
             - icon_uri
+            - service_type
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
