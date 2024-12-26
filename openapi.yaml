@@ -11554,6 +11554,7 @@ components:
             - name
             - healthchecks
             - icon_uri
+            - service_type
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -11631,7 +11632,7 @@ components:
               description: Icon URI representing the application.
               x-stoplight:
                 id: b8karc43pdxpu
-            serviceType:
+            service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
     ApplicationDeploymentRestriction:
       allOf:
@@ -13868,6 +13869,7 @@ components:
             - healthchecks
             - auto_preview
             - icon_uri
+            - service_type
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -13938,7 +13940,7 @@ components:
               description: Icon URI representing the container.
               x-stoplight:
                 id: o2bdci7ak3bmz
-            serviceType:
+            service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
     ContainerResponseList:
       type: object
@@ -14166,6 +14168,7 @@ components:
           required:
             - environment
             - icon_uri
+            - service_type
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -14197,7 +14200,7 @@ components:
               type: string
               format: uri
               description: Icon URI representing the database.
-            serviceType:
+            service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
     DatabaseAccessibilityEnum:
       type: string
@@ -16308,6 +16311,7 @@ components:
             - allow_cluster_wide_resources
             - values_override
             - icon_uri
+            - service_type
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -16426,7 +16430,7 @@ components:
               description: Icon URI representing the helm service.
               x-stoplight:
                 id: i2pvbugqsldhe
-            serviceType:
+            service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
     HelmPortResponseBase:
       type: object
@@ -19009,6 +19013,7 @@ components:
             - source
             - healthchecks
             - icon_uri
+            - service_type
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -19084,7 +19089,7 @@ components:
               description: Icon URI representing the job.
               x-stoplight:
                 id: p1secr7kxozsd
-            serviceType:
+            service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
     HelmGitRepositoryRequest:
       type: object
