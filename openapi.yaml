@@ -11111,9 +11111,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ClusterLockList'
+                $ref: '#/components/schemas/ClusterLockList'
         '401':
           description: Unauthorized
         '403':
