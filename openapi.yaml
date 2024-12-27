@@ -20060,7 +20060,7 @@ components:
           x-stoplight:
             id: r7sy48ofln6xf
         ttl_in_days:
-          type: number
+          type: integer
           x-stoplight:
             id: m7spawrlr0mii
     ClusterLock:
@@ -20079,7 +20079,7 @@ components:
           x-stoplight:
             id: 24t21mhr6yvb8
         ttl_in_days:
-          type: number
+          type: integer
           x-stoplight:
             id: hkgmap89j628o
         cluster_id:
