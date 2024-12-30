@@ -20040,10 +20040,10 @@ components:
         - max_memory_in_gibibytes
       properties:
         max_cpu_in_vcpu:
-          type: number
+          type: integer
           description: "CPU limit that will be applied for the node pool (in vCPU unit: 1 vCPU = 1000 millicores)"
         max_memory_in_gibibytes:
-          type: number
+          type: integer
           description: "Memory limit that will be applied for the node pool (in Gibibytes unit: 1Gi = 1024 mebibytes)"
     ClusterLockRequest:
       title: ClusterLockRequest
