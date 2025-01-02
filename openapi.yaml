@@ -14781,6 +14781,7 @@ components:
             - name
             - service_id
             - service_type
+            - status_details
           properties:
             name:
               type: string
@@ -14803,6 +14804,8 @@ components:
           $ref: '#/components/schemas/DeploymentHistoryAuditingData'
         details:
           $ref: '#/components/schemas/DeploymentHistoryServiceDetails'
+        status_details:
+          $ref: '#/components/schemas/StatusDetails'
     DeploymentHistoryServiceDetails:
       x-stoplight:
         id: vx9hzryfyv7sb
@@ -18397,6 +18400,24 @@ components:
         - WAITING_RESTARTING
         - WAITING_RUNNING
         - WAITING_STOPPING
+    ServiceActionEnum:
+      type: string
+      enum:
+        - DEPLOY
+        - DELETE
+        - RESTART
+        - STOP
+        - UNKNOWN
+    ServiceActionStatusEnum:
+      type: string
+      enum:
+        - QUEUED
+        - ONGOING
+        - SUCCESS
+        - ERROR
+        - CANCELED
+        - CANCELING
+        - NEVER
     StageStatusEnum:
       type: string
       x-stoplight:
@@ -18440,6 +18461,7 @@ components:
         - id
         - state
         - service_deployment_status
+        - status_details
       properties:
         id:
           type: string
@@ -18459,6 +18481,18 @@ components:
           type: string
           x-stoplight:
             id: 3o9tz4272s2ct
+        status_details:
+          $ref: '#/components/schemas/StatusDetails'
+    StatusDetails:
+      type: object
+      required:
+        - action
+        - status
+      properties:
+        action:
+          $ref: '#/components/schemas/ServiceActionEnum'
+        status:
+          $ref: '#/components/schemas/ServiceActionStatusEnum'
     Stage:
       type: object
       required:
