@@ -18413,7 +18413,7 @@ components:
       enum:
         - QUEUED
         - ONGOING
-        - DONE
+        - SUCCESS
         - ERROR
         - CANCELED
         - CANCELING
