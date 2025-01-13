@@ -433,65 +433,6 @@ paths:
                 type: string
 components:
   schemas:
-    QoveryPodInErrorComponentInFailure:
-      type: object
-      required:
-        - component_name
-        - pod_name
-        - container_name
-      properties:
-        component_name:
-          type: string
-        pod_name:
-          type: string
-        container_name:
-          type: string
-        level: 
-          type: string
-          enum:
-          - ERROR
-          - WARNING
-        reason:
-          type: string
-          nullable: true
-        message:
-          type: string
-          nullable: true
-    QoveryMissingComponentInFailure:
-      type: object
-      required:
-        - component_name
-      properties:
-        component_name:
-          type: string
-    NodeInWarning:
-      type: object
-      required:
-        - reason
-        - message
-      properties:
-        reason:
-          type: string
-        message:
-          type: string
-    QoveryOkKubeVersion:
-      type: object
-      required:
-        - kube_version
-      properties:
-        kube_version:
-          type: string
-    QoveryDriftKubeVersion:
-      type: object
-      required:
-        - kube_version
-        - expected_kube_version
-      properties:
-        kube_version:
-          type: string
-        expected_kube_version:
-          type: string
-
     ApplicationStatusDto:
       type: object
       required:
@@ -609,46 +550,11 @@ components:
     ClusterStatusDto:
       type: object
       required:
-        - computed_status
-        - nodes
+      - computed_status
+      - nodes
       properties:
         computed_status:
-          type: object
-          properties:
-            global_status:
-              nullable: true
-              type: string
-              enum:
-               - RUNNING
-               - WARNING
-               - ERROR
-            qovery_components_in_failure:
-              type: array
-              items:
-                oneOf:
-                  - $ref: '#/components/schemas/QoveryPodInErrorComponentInFailure'
-                  - $ref: '#/components/schemas/QoveryMissingComponentInFailure'
-                discriminator:
-                  propertyName: type
-                  mapping:
-                    POD_IN_ERROR: '#/components/schemas/QoveryPodInErrorComponentInFailure'
-                    MISSING_COMPONENT: '#/components/schemas/QoveryMissingComponentInFailure'
-            node_warnings:
-              type: object
-              additionalProperties:
-                $ref: "#/components/schemas/NodeInWarning"
-            is_max_nodes_size_reached:
-              type: boolean
-            kube_version_status:
-              type: object
-              oneOf:
-                - $ref: '#/components/schemas/QoveryOkKubeVersion'
-                - $ref: '#/components/schemas/QoveryDriftKubeVersion'
-              discriminator:
-                propertyName: type
-                mapping:
-                  OK: '#/components/schemas/QoveryOkKubeVersion'
-                  DRIFT: '#/components/schemas/QoveryDriftKubeVersion'
+          $ref: '#/components/schemas/ClusterComputedStatusDto'
         nodes:
           type: array
           items:
