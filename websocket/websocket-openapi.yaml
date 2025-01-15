@@ -11,6 +11,31 @@ info:
 servers:
 - url: wss://ws.qovery.com
 paths:
+  /cluster/node:
+    get:
+      tags:
+      - cluster_list_nodes
+      operationId: handle_cluster_list_nodes_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: List the node of a cluster
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterListNodesResponseDto'
   /cluster/status:
     get:
       tags:
@@ -489,6 +514,15 @@ components:
         state_message:
           type: string
           nullable: true
+    ClusterListNodesResponseDto:
+      type: object
+      required:
+      - nodes
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeDto'
     ClusterNodeDto:
       type: object
       required:
@@ -742,6 +776,13 @@ components:
         status:
           type: string
         type:
+          type: string
+    NodeDto:
+      type: object
+      required:
+      - name
+      properties:
+        name:
           type: string
     NodePodInfoDto:
       type: object
