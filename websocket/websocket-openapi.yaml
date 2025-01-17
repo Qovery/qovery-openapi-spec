@@ -514,6 +514,31 @@ components:
         state_message:
           type: string
           nullable: true
+    ClusterComputedStatusDto:
+      type: object
+      required:
+      - global_status
+      - qovery_components_in_failure
+      - node_warnings
+      - is_max_nodes_size_reached
+      - kube_version_status
+      properties:
+        global_status:
+          $ref: '#/components/schemas/ClusterStatusGlobalStatus'
+        is_max_nodes_size_reached:
+          type: boolean
+        kube_version_status:
+          $ref: '#/components/schemas/QoveryClusterKubeVersionStatus'
+        node_warnings:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/QoveryNodeFailure'
+        qovery_components_in_failure:
+          type: array
+          items:
+            $ref: '#/components/schemas/QoveryComponentInFailure'
     ClusterListNodesResponseDto:
       type: object
       required:
@@ -593,6 +618,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClusterNodeDto'
+    ClusterStatusGlobalStatus:
+      type: string
+      enum:
+      - RUNNING
+      - WARNING
+      - ERROR
     ContainerStateDto:
       type: object
       required:
@@ -911,6 +942,112 @@ components:
         state_message:
           type: string
         state_reason:
+          type: string
+    QoveryClusterKubeVersionStatus:
+      oneOf:
+      - type: object
+        required:
+        - kube_version
+        - type
+        properties:
+          kube_version:
+            type: string
+          type:
+            type: string
+            enum:
+            - Ok
+      - type: object
+        required:
+        - kube_version
+        - expected_kube_version
+        - type
+        properties:
+          expected_kube_version:
+            type: string
+          kube_version:
+            type: string
+          type:
+            type: string
+            enum:
+            - Drift
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - Unknown
+      discriminator:
+        propertyName: type
+    QoveryComponentContainerStatusIssue:
+      type: object
+      required:
+      - level
+      properties:
+        level:
+          $ref: '#/components/schemas/QoveryComponentContainerStatusLevel'
+        message:
+          type: string
+          nullable: true
+        reason:
+          type: string
+          nullable: true
+    QoveryComponentContainerStatusLevel:
+      type: string
+      enum:
+      - ERROR
+      - WARNING
+    QoveryComponentInFailure:
+      oneOf:
+      - type: object
+        required:
+        - component_name
+        - pod_name
+        - container_name
+        - level
+        - type
+        properties:
+          component_name:
+            type: string
+          container_name:
+            type: string
+          level:
+            $ref: '#/components/schemas/QoveryComponentContainerStatusLevel'
+          message:
+            type: string
+            nullable: true
+          pod_name:
+            type: string
+          reason:
+            type: string
+            nullable: true
+          type:
+            type: string
+            enum:
+            - POD_IN_ERROR
+      - type: object
+        required:
+        - component_name
+        - type
+        properties:
+          component_name:
+            type: string
+          type:
+            type: string
+            enum:
+            - MISSING_COMPONENT
+      discriminator:
+        propertyName: type
+    QoveryNodeFailure:
+      type: object
+      required:
+      - reason
+      - message
+      properties:
+        message:
+          type: string
+        reason:
           type: string
     ResourceStatusDto:
       type: string
