@@ -11008,7 +11008,7 @@ paths:
         required: true
     get:
       summary: List Services By EnvironmentId
-      tags: 
+      tags:
         - Environment Main Calls
       responses:
         '200':
@@ -11121,6 +11121,21 @@ paths:
       operationId: list-cluster-lock
       x-stoplight:
         id: 3n7iq6cr6xx43
+  /deploymentStatus:
+    get:
+      summary: Get Deployment Status By DeploymentRequestId
+      tags: []
+      responses: {}
+      operationId: getDeploymentStatusByDeploymentRequestId
+      x-stoplight:
+        id: dtvjdlz9teqld
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+          in: query
+          name: deploymentRequestId
+          required: true
 components:
   parameters:
     applicationId:
@@ -20049,14 +20064,14 @@ components:
             The start date of the consolidation.
             The format should follow ISO-8601 convention: "PThh:mm"
           type: string
-          example: "PT22:30"
+          example: 'PT22:30'
           nullable: false
         duration:
           description: |
             The duration during the consolidation will be active.
             The format should follow ISO-8601 convention: "PThhHmmM"
           type: string
-          example: "PT2H45M"
+          example: PT2H45M
           nullable: false
     EnvironmentDeploymentStatusEnum:
       title: EnvironmentDeploymentStatusEnum
@@ -20080,10 +20095,10 @@ components:
           nullable: false
         max_cpu_in_vcpu:
           type: integer
-          description: "CPU limit that will be applied for the node pool (in vCPU unit: 1 vCPU = 1000 millicores)"
+          description: 'CPU limit that will be applied for the node pool (in vCPU unit: 1 vCPU = 1000 millicores)'
         max_memory_in_gibibytes:
           type: integer
-          description: "Memory limit that will be applied for the node pool (in Gibibytes unit: 1Gi = 1024 mebibytes)"
+          description: 'Memory limit that will be applied for the node pool (in Gibibytes unit: 1Gi = 1024 mebibytes)'
     ClusterLockRequest:
       title: ClusterLockRequest
       x-stoplight:
