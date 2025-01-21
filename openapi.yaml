@@ -11121,11 +11121,17 @@ paths:
       operationId: list-cluster-lock
       x-stoplight:
         id: 3n7iq6cr6xx43
-  /deploymentStatus:
+  /environment/deploymentStatus:
     get:
       summary: Get Deployment Status By DeploymentRequestId
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvDeploymentStatus'
       operationId: getDeploymentStatusByDeploymentRequestId
       x-stoplight:
         id: dtvjdlz9teqld
@@ -11136,6 +11142,7 @@ paths:
           in: query
           name: deploymentRequestId
           required: true
+    parameters: []
 components:
   parameters:
     applicationId:
@@ -20160,6 +20167,24 @@ components:
             id: xpi2ooy1zclay
           items:
             $ref: '#/components/schemas/ClusterLock'
+    EnvDeploymentStatus:
+      title: EnvDeploymentStatus
+      x-stoplight:
+        id: 3t1ibpp18xhmy
+      type: object
+      properties:
+        deployment_request_id:
+          type: string
+          x-stoplight:
+            id: moe7npwga4pwm
+          format: uuid
+        environment_id:
+          type: string
+          x-stoplight:
+            id: t6sa9u90dayva
+          format: uuid
+        status:
+          $ref: '#/components/schemas/StateEnum'
   responses:
     '204':
       description: no content
