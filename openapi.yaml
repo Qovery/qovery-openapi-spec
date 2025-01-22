@@ -14681,6 +14681,7 @@ components:
         - trigger_action
         - total_duration
         - stages
+        - action_status
       properties:
         identifier:
           type: object
@@ -14716,6 +14717,8 @@ components:
             id: rz2b0h9r3p6tv
           items:
             $ref: '#/components/schemas/DeploymentHistoryStage'
+        action_status:
+          $ref: '#/components/schemas/DeploymentHistoryActionStatus'
     DeploymentHistoryStage:
       type: object
       x-stoplight:
@@ -20185,6 +20188,18 @@ components:
           format: uuid
         status:
           $ref: '#/components/schemas/StateEnum'
+    DeploymentHistoryActionStatus:
+      title: DeploymentHistoryActionStatus
+      x-stoplight:
+        id: qppeluzk1hor1
+      enum:
+        - QUEUED
+        - ONGOING
+        - SUCCESS
+        - ERROR
+        - CANCELED
+        - CANCELING
+        - NEVER
   responses:
     '204':
       description: no content
