@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   title: websocket-gateway
   description: Describe the weboscket endpoints
@@ -77,9 +77,10 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
       - name: project
         in: path
         required: true
@@ -96,8 +97,9 @@ paths:
         in: path
         required: true
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: Stream of deployment logs. Type API is at https://api-doc.qovery.com/#tag/Environment-Logs/operation/listEnvironmentLogs
@@ -121,9 +123,10 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
       - name: project
         in: path
         required: true
@@ -134,15 +137,17 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
       - name: version
         in: path
         required: true
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: Stream of deployment status. Type API is at https://api-doc.qovery.com/#tag/Environment-Main-Calls/operation/getEnvironmentStatusesWithStages
@@ -172,23 +177,26 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
       - name: environment
         in: path
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
       - name: service
         in: path
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
       - name: infra_component_type
         in: path
         required: true
@@ -241,8 +249,9 @@ paths:
         in: path
         required: true
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: Stream of services logs
@@ -363,16 +372,18 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
       - name: environment
         in: path
         required: true
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
       responses:
         '200':
           description: Stream of services status
@@ -420,14 +431,16 @@ paths:
         in: path
         required: true
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: container_name
         in: path
         required: true
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: command
         in: path
         required: true
@@ -493,27 +506,12 @@ components:
           type: integer
           format: int64
           minimum: 0
-        last_failure_issuance_time:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
-        not_after:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
-        not_before:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
-        renewal_time:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
         state:
           $ref: '#/components/schemas/ServiceStateDto'
         state_message:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
     ClusterComputedStatusDto:
       type: object
       required:
@@ -535,6 +533,8 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/QoveryNodeFailure'
+          propertyNames:
+            type: string
         qovery_components_in_failure:
           type: array
           items:
@@ -574,6 +574,8 @@ components:
           type: object
           additionalProperties:
             type: string
+          propertyNames:
+            type: string
         architecture:
           type: string
         conditions:
@@ -587,6 +589,8 @@ components:
         labels:
           type: object
           additionalProperties:
+            type: string
+          propertyNames:
             type: string
         name:
           type: string
@@ -629,18 +633,16 @@ components:
       required:
       - state
       properties:
-        started_at:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
         state:
           $ref: '#/components/schemas/ServiceStateDto'
         state_message:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         state_reason:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
     ContainerStateTerminatedDto:
       type: object
       required:
@@ -655,10 +657,6 @@ components:
           format: int32
         exit_code_message:
           type: string
-        finished_at:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
         message:
           type: string
         reason:
@@ -666,10 +664,6 @@ components:
         signal:
           type: integer
           format: int32
-        started_at:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
     ContainerStatusDto:
       type: object
       required:
@@ -678,15 +672,15 @@ components:
       - restart_count
       properties:
         current_state:
-          allOf:
+          oneOf:
+          - type: 'null'
           - $ref: '#/components/schemas/ContainerStateDto'
-          nullable: true
         image:
           type: string
         last_terminated_state:
-          allOf:
+          oneOf:
+          - type: 'null'
           - $ref: '#/components/schemas/ContainerStateTerminatedDto'
-          nullable: true
         name:
           type: string
         restart_count:
@@ -768,8 +762,9 @@ components:
           format: int32
           minimum: 0
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         status:
           $ref: '#/components/schemas/ResourceStatusDto'
         unit:
@@ -792,14 +787,6 @@ components:
       - reason
       - message
       properties:
-        last_heartbeat_time:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
-        last_transition_time:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
         message:
           type: string
         reason:
@@ -823,42 +810,51 @@ components:
       - images_version
       properties:
         cpu_milli_limit:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int32
-          nullable: true
           minimum: 0
         cpu_milli_request:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int32
-          nullable: true
           minimum: 0
         environment_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         images_version:
           type: object
           additionalProperties:
             type: string
+          propertyNames:
+            type: string
         memory_mib_limit:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int32
-          nullable: true
           minimum: 0
         memory_mib_request:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int32
-          nullable: true
           minimum: 0
         name:
           type: string
         namespace:
           type: string
         project_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         service_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
     NodeResourceDto:
       type: object
       required:
@@ -933,10 +929,6 @@ components:
           minimum: 0
         service_version:
           type: string
-        started_at:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          nullable: true
         state:
           $ref: '#/components/schemas/ServiceStateDto'
         state_message:
@@ -978,8 +970,6 @@ components:
             type: string
             enum:
             - Unknown
-      discriminator:
-        propertyName: type
     QoveryComponentContainerStatusIssue:
       type: object
       required:
@@ -988,11 +978,13 @@ components:
         level:
           $ref: '#/components/schemas/QoveryComponentContainerStatusLevel'
         message:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         reason:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
     QoveryComponentContainerStatusLevel:
       type: string
       enum:
@@ -1015,13 +1007,15 @@ components:
           level:
             $ref: '#/components/schemas/QoveryComponentContainerStatusLevel'
           message:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
           pod_name:
             type: string
           reason:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
           type:
             type: string
             enum:
@@ -1037,8 +1031,6 @@ components:
             type: string
             enum:
             - MISSING_COMPONENT
-      discriminator:
-        propertyName: type
     QoveryNodeFailure:
       type: object
       required:
@@ -1058,11 +1050,8 @@ components:
     ServiceInfraLogResponseDto:
       type: object
       required:
-      - created_at
       - message
       properties:
-        created_at:
-          $ref: '#/components/schemas/Timestamp'
         message:
           type: string
     ServiceListPodsResponseDto:
@@ -1077,7 +1066,6 @@ components:
     ServiceLogResponseDto:
       type: object
       required:
-      - created_at
       - pod_name
       - container_name
       - message
@@ -1085,8 +1073,6 @@ components:
       properties:
         container_name:
           type: string
-        created_at:
-          $ref: '#/components/schemas/Timestamp'
         message:
           type: string
         pod_name:
@@ -1138,9 +1124,6 @@ components:
       - DATABASE
       - JOB
       - HELM
-    Timestamp:
-      type: integer
-      description: Unix timestamp with millisecond precision
     UnitDto:
       type: string
       enum:
