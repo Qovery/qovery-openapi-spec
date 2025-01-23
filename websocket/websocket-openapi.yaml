@@ -495,14 +495,34 @@ components:
       type: object
       required:
       - dns_names
+      - not_before
+      - not_after
+      - renewal_time
       - state
       - failed_issuance_attempt_count
+      - last_failure_issuance_time
       properties:
         dns_names:
           type: array
           items:
             type: string
         failed_issuance_attempt_count:
+          type: integer
+          format: int64
+          minimum: 0
+        last_failure_issuance_time:
+          type: integer
+          format: int64
+          minimum: 0
+        not_after:
+          type: integer
+          format: int64
+          minimum: 0
+        not_before:
+          type: integer
+          format: int64
+          minimum: 0
+        renewal_time:
           type: integer
           format: int64
           minimum: 0
@@ -632,7 +652,12 @@ components:
       type: object
       required:
       - state
+      - started_at
       properties:
+        started_at:
+          type: integer
+          format: int64
+          minimum: 0
         state:
           $ref: '#/components/schemas/ServiceStateDto'
         state_message:
@@ -646,6 +671,8 @@ components:
     ContainerStateTerminatedDto:
       type: object
       required:
+      - started_at
+      - finished_at
       - exit_code
       - exit_code_message
       - message
@@ -657,6 +684,10 @@ components:
           format: int32
         exit_code_message:
           type: string
+        finished_at:
+          type: integer
+          format: int64
+          minimum: 0
         message:
           type: string
         reason:
@@ -664,6 +695,10 @@ components:
         signal:
           type: integer
           format: int32
+        started_at:
+          type: integer
+          format: int64
+          minimum: 0
     ContainerStatusDto:
       type: object
       required:
@@ -784,9 +819,19 @@ components:
       required:
       - type
       - status
+      - last_heartbeat_time
+      - last_transition_time
       - reason
       - message
       properties:
+        last_heartbeat_time:
+          type: integer
+          format: int64
+          minimum: 0
+        last_transition_time:
+          type: integer
+          format: int64
+          minimum: 0
         message:
           type: string
         reason:
@@ -915,6 +960,7 @@ components:
       - state_message
       - restart_count
       - containers
+      - started_at
       - service_version
       properties:
         containers:
@@ -929,6 +975,10 @@ components:
           minimum: 0
         service_version:
           type: string
+        started_at:
+          type: integer
+          format: int64
+          minimum: 0
         state:
           $ref: '#/components/schemas/ServiceStateDto'
         state_message:
@@ -1050,8 +1100,13 @@ components:
     ServiceInfraLogResponseDto:
       type: object
       required:
+      - created_at
       - message
       properties:
+        created_at:
+          type: integer
+          format: int64
+          minimum: 0
         message:
           type: string
     ServiceListPodsResponseDto:
@@ -1066,6 +1121,7 @@ components:
     ServiceLogResponseDto:
       type: object
       required:
+      - created_at
       - pod_name
       - container_name
       - message
@@ -1073,6 +1129,10 @@ components:
       properties:
         container_name:
           type: string
+        created_at:
+          type: integer
+          format: int64
+          minimum: 0
         message:
           type: string
         pod_name:
