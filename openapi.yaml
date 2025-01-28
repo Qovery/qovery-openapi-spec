@@ -20314,6 +20314,10 @@ components:
                           id: k499ggbogft3n
                   status:
                     $ref: '#/components/schemas/StageStatusEnum'
+                  icon_uri:
+                    type: string
+                    x-stoplight:
+                      id: ykh7e1zapcvxp
   responses:
     '204':
       description: no content
