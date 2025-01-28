@@ -11181,6 +11181,27 @@ paths:
         name: organizationId
         in: path
         required: true
+  '/environment/{environmentId}/deploymentQueue':
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: environmentId
+        in: path
+        required: true
+    get:
+      summary: Get Deployment Queue By EnvironmentId
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueuedDeploymentRequestWithStages'
+      operationId: getEnvironmentDeploymentQueue
+      x-stoplight:
+        id: 0zhr0vfxayg96
 components:
   parameters:
     applicationId:
@@ -20244,6 +20265,103 @@ components:
         - CANCELED
         - CANCELING
         - NEVER
+    QueuedDeploymentRequestWithStages:
+      title: QueuedDeploymentRequestWithStages
+      x-stoplight:
+        id: ididqvn23k30w
+      type: object
+      required:
+        - identifier
+        - auditing_data
+        - trigger_action
+        - stages
+      properties:
+        identifier:
+          x-stoplight:
+            id: 0knkd1kmqqc02
+          type: object
+          required:
+            - deployment_request_id
+            - environment_id
+          properties:
+            deployment_request_id:
+              type: string
+              x-stoplight:
+                id: p9kpe6jw19qcu
+              format: uuid
+            environment_id:
+              type: string
+              x-stoplight:
+                id: vrz81gxwvya9i
+              format: uuid
+        auditing_data:
+          type: object
+          x-stoplight:
+            id: 0npwbfsta4xai
+          required:
+            - triggered_by
+          properties:
+            triggered_by:
+              type: string
+              x-stoplight:
+                id: hfi1kibghpsc3
+            origin:
+              $ref: '#/components/schemas/OrganizationEventOrigin'
+        trigger_action:
+          $ref: '#/components/schemas/DeploymentHistoryTriggerAction'
+        stages:
+          type: object
+          x-stoplight:
+            id: snkercfc1t8iq
+          required:
+            - name
+            - status
+            - services
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: 7oi55clryikks
+            status:
+              $ref: '#/components/schemas/StageStatusEnum'
+            services:
+              type: array
+              x-stoplight:
+                id: ywiz9lx5zr2gg
+              items:
+                x-stoplight:
+                  id: ghtuhxe6f1ukw
+                type: object
+                required:
+                  - identifier
+                  - status
+                properties:
+                  identifier:
+                    type: object
+                    x-stoplight:
+                      id: mnc5k25pmnnr9
+                    required:
+                      - service_id
+                      - service_type
+                      - name
+                    properties:
+                      service_id:
+                        type: string
+                        x-stoplight:
+                          id: 5efai0wdk5vrr
+                        format: uuid
+                      service_type:
+                        $ref: '#/components/schemas/ServiceTypeEnum'
+                      name:
+                        type: string
+                        x-stoplight:
+                          id: k499ggbogft3n
+                  status:
+                    $ref: '#/components/schemas/StageStatusEnum'
+                  icon_uri:
+                    type: string
+                    x-stoplight:
+                      id: ykh7e1zapcvxp
     ServiceLightResponse:
       title: ServiceLightResponse
       x-stoplight:
