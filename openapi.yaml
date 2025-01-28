@@ -11190,7 +11190,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Get Deployment Queue By EnvironmentId
+      summary: List Deployment Request By EnvironmentId
       tags:
         - Environment Main Calls
       responses:
@@ -11199,8 +11199,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QueuedDeploymentRequestWithStages'
-      operationId: getEnvironmentDeploymentQueue
+                type: object
+                properties:
+                  results:
+                    type: array
+                    x-stoplight:
+                      id: zbjhuwhtkvxkj
+                    items:
+                      $ref: '#/components/schemas/QueuedDeploymentRequestWithStages'
+      operationId: listDeploymentRequestByEnvironmentId
       x-stoplight:
         id: 0zhr0vfxayg96
 components:
