@@ -6,7 +6,8 @@ info:
     name: Romain GERARD
     email: erebe@erebe.eu
   license:
-    name: ''
+    name: apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
   version: 0.1.0
 servers:
 - url: wss://ws.qovery.com
