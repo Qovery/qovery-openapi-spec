@@ -11191,7 +11191,8 @@ paths:
         required: true
     get:
       summary: Get Deployment Queue By EnvironmentId
-      tags: []
+      tags:
+        - Environment Main Calls
       responses:
         '200':
           description: OK
