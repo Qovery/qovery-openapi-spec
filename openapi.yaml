@@ -14835,6 +14835,7 @@ components:
         - status
         - auditing_data
         - details
+        - status_details
         - icon_uri
       properties:
         identifier:
