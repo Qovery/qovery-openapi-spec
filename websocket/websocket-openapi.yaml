@@ -392,6 +392,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceStatusDto'
+  /shell/debug:
+    get:
+      tags:
+      - remote_debug
+      operationId: handle_shell_remote_debug
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: flavor
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/DebugFlavor'
+      - name: tty_width
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: tty_height
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: node_selector
+        in: path
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      responses:
+        '200':
+          description: Allow to start a debug pod and shell into-it
+          content:
+            text/plain:
+              schema:
+                type: string
   /shell/exec:
     get:
       tags:
@@ -738,6 +789,11 @@ components:
             $ref: '#/components/schemas/PodStatusDto'
         state:
           $ref: '#/components/schemas/ServiceStateDto'
+    DebugFlavor:
+      type: string
+      enum:
+      - REGULAR_PRIVILEGE
+      - FULL_PRIVILEGE
     EnvironmentStatusDto:
       type: object
       required:
