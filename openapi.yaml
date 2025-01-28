@@ -14856,6 +14856,7 @@ components:
         - status
         - auditing_data
         - details
+        - icon_uri
       properties:
         identifier:
           type: object
@@ -14865,8 +14866,6 @@ components:
             - name
             - service_id
             - service_type
-            - status_details
-            - icon_uri
           properties:
             name:
               type: string
@@ -14883,11 +14882,6 @@ components:
               type: string
               x-stoplight:
                 id: 9ww6nh5lrwg37
-            icon_uri:
-              type: string
-              format: uri
-              x-stoplight:
-                id: luoyctr9gup67
         status:
           $ref: '#/components/schemas/StateEnum'
         auditing_data:
@@ -14896,6 +14890,16 @@ components:
           $ref: '#/components/schemas/DeploymentHistoryServiceDetails'
         status_details:
           $ref: '#/components/schemas/StatusDetails'
+        icon_uri:
+          type: string
+          x-stoplight:
+            id: 3418v53rx3mn9
+          format: uri
+        total_duration:
+          type: string
+          x-stoplight:
+            id: adofwhd0bgwuw
+          format: duration
     DeploymentHistoryServiceDetails:
       x-stoplight:
         id: vx9hzryfyv7sb
