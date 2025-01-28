@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: websocket-gateway
-  description: Describe the weboscket endpoints
+  description: Describe the websocket endpoints of Qovery
   contact:
     name: Romain GERARD
     email: erebe@erebe.eu
