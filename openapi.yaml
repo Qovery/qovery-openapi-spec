@@ -11143,6 +11143,44 @@ paths:
           name: deploymentRequestId
           required: true
     parameters: []
+  '/organization/{organizationId}/services':
+    get:
+      summary: List Services By OrganizationId
+      tags: []
+      responses:
+        '200':
+          description: Service List
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    x-stoplight:
+                      id: gjtgeehwg4lb9
+                    items:
+                      $ref: '#/components/schemas/ServiceLightResponse'
+      operationId: listServicesByOrganizationId
+      x-stoplight:
+        id: qvqb4d0bpjy0v
+      parameters:
+        - schema:
+            type: string
+            nullable: true
+          in: query
+          name: project_id
+        - schema:
+            type: string
+            nullable: true
+          in: query
+          name: environment_id
+    parameters:
+      - schema:
+          type: string
+        name: organizationId
+        in: path
+        required: true
   '/environment/{environmentId}/deploymentQueue':
     parameters:
       - schema:
@@ -14828,6 +14866,7 @@ components:
             - service_id
             - service_type
             - status_details
+            - icon_uri
           properties:
             name:
               type: string
@@ -14844,6 +14883,11 @@ components:
               type: string
               x-stoplight:
                 id: 9ww6nh5lrwg37
+            icon_uri:
+              type: string
+              format: uri
+              x-stoplight:
+                id: luoyctr9gup67
         status:
           $ref: '#/components/schemas/StateEnum'
         auditing_data:
@@ -20318,6 +20362,60 @@ components:
                     type: string
                     x-stoplight:
                       id: ykh7e1zapcvxp
+    ServiceLightResponse:
+      title: ServiceLightResponse
+      x-stoplight:
+        id: tg1rwcmait89l
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - icon_uri
+        - service_type
+        - project_id
+        - project_name
+        - environment_id
+        - environment_name
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: kusnde41nhbq0
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: uxr40wquz4uo4
+        description:
+          type: string
+          x-stoplight:
+            id: 71c9yrajgrd9f
+        icon_uri:
+          type: string
+          format: uri
+          x-stoplight:
+            id: k6zs0jdg7k95f
+        service_type:
+          $ref: '#/components/schemas/ServiceTypeEnum'
+        project_id:
+          type: string
+          x-stoplight:
+            id: 6j6xz0qq65mbs
+          format: uuid
+        project_name:
+          type: string
+          x-stoplight:
+            id: jfl0pof91101b
+        environment_id:
+          type: string
+          x-stoplight:
+            id: cs79bi0ic3r18
+          format: uuid
+        environment_name:
+          type: string
+          x-stoplight:
+            id: s8c6hmto9njzg
   responses:
     '204':
       description: no content
