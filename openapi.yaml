@@ -20428,6 +20428,12 @@ components:
           type: string
           x-stoplight:
             id: s8c6hmto9njzg
+        job_type:
+          x-stoplight:
+            id: jwtmqb1fq5a6m
+          enum:
+            - CRON
+            - LIFECYCLE
   responses:
     '204':
       description: no content
