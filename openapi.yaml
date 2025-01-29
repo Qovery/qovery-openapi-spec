@@ -20322,58 +20322,62 @@ components:
         trigger_action:
           $ref: '#/components/schemas/DeploymentHistoryTriggerAction'
         stages:
-          type: object
+          type: array
           x-stoplight:
             id: snkercfc1t8iq
-          required:
-            - name
-            - status
-            - services
-          properties:
-            name:
-              type: string
-              x-stoplight:
-                id: 7oi55clryikks
-            status:
-              $ref: '#/components/schemas/StageStatusEnum'
-            services:
-              type: array
-              x-stoplight:
-                id: ywiz9lx5zr2gg
-              items:
+          items:
+            x-stoplight:
+              id: ym6jl6374zowd
+            type: object
+            required:
+              - name
+              - status
+              - services
+            properties:
+              name:
+                type: string
                 x-stoplight:
-                  id: ghtuhxe6f1ukw
-                type: object
-                required:
-                  - identifier
-                  - status
-                properties:
-                  identifier:
-                    type: object
-                    x-stoplight:
-                      id: mnc5k25pmnnr9
-                    required:
-                      - service_id
-                      - service_type
-                      - name
-                    properties:
-                      service_id:
-                        type: string
-                        x-stoplight:
-                          id: 5efai0wdk5vrr
-                        format: uuid
-                      service_type:
-                        $ref: '#/components/schemas/ServiceTypeEnum'
-                      name:
-                        type: string
-                        x-stoplight:
-                          id: k499ggbogft3n
-                  status:
-                    $ref: '#/components/schemas/StageStatusEnum'
-                  icon_uri:
-                    type: string
-                    x-stoplight:
-                      id: ykh7e1zapcvxp
+                  id: 7p40i9fzfddii
+              status:
+                $ref: '#/components/schemas/StageStatusEnum'
+              services:
+                type: array
+                x-stoplight:
+                  id: 8cnjdpbn1xllp
+                items:
+                  x-stoplight:
+                    id: yn2f0fy77v6gj
+                  type: object
+                  required:
+                    - identifier
+                    - status
+                  properties:
+                    identifier:
+                      type: object
+                      x-stoplight:
+                        id: 2qiq6p8loxy0n
+                      required:
+                        - service_id
+                        - service_type
+                        - name
+                      properties:
+                        service_id:
+                          type: string
+                          x-stoplight:
+                            id: ixyztl7bo1e7r
+                          format: uuid
+                        service_type:
+                          $ref: '#/components/schemas/ServiceTypeEnum'
+                        name:
+                          type: string
+                          x-stoplight:
+                            id: rqj252xn7e17p
+                    status:
+                      $ref: '#/components/schemas/StageStatusEnum'
+                    icon_uri:
+                      type: string
+                      x-stoplight:
+                        id: vr9mfika0841x
     ServiceLightResponse:
       title: ServiceLightResponse
       x-stoplight:
