@@ -14981,7 +14981,6 @@ components:
                 chart_version:
                   type: string
       type: object
-      title: ''
     DeploymentHistoryEnvironmentPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
@@ -20383,8 +20382,12 @@ components:
                       x-stoplight:
                         id: 8pjqibbjgziqn
                       oneOf:
-                        - x-stoplight:
+                        - description: JobDetails
+                          x-stoplight:
                             id: ibi93dbff8m63
+                          type: object
+                          required:
+                            - job_type
                           properties:
                             job_type:
                               x-stoplight:
