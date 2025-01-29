@@ -14981,6 +14981,7 @@ components:
                 chart_version:
                   type: string
       type: object
+      title: ''
     DeploymentHistoryEnvironmentPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
@@ -20378,6 +20379,20 @@ components:
                       type: string
                       x-stoplight:
                         id: vr9mfika0841x
+                    details:
+                      x-stoplight:
+                        id: 8pjqibbjgziqn
+                      oneOf:
+                        - x-stoplight:
+                            id: ibi93dbff8m63
+                          properties:
+                            job_type:
+                              x-stoplight:
+                                id: tg4bw75mf4084
+                              enum:
+                                - CRON
+                                - LIFECYCLE
+                      type: object
     ServiceLightResponse:
       title: ServiceLightResponse
       x-stoplight:
