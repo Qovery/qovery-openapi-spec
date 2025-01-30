@@ -11175,6 +11175,10 @@ paths:
             nullable: true
           in: query
           name: environment_id
+        - schema:
+            type: string
+          in: query
+          name: cluster_id
     parameters:
       - schema:
           type: string
