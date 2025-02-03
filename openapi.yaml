@@ -18589,6 +18589,12 @@ components:
             id: 3o9tz4272s2ct
         status_details:
           $ref: '#/components/schemas/StatusDetails'
+        deployment_request_id:
+          type: string
+          x-stoplight:
+            id: bepixrb7tyzme
+          format: uuid
+          nullable: true
     StatusDetails:
       type: object
       required:
