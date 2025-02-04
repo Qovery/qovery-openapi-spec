@@ -7228,7 +7228,7 @@ paths:
   '/container/{containerId}/deploy':
     post:
       summary: Deploy container
-      description: You must provide a git commit id
+      description: You must provide a container image tag
       operationId: deployContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -8973,7 +8973,7 @@ paths:
   '/helm/{helmId}/deploy':
     post:
       summary: Deploy helm
-      description: You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
+      description: You must provide a git commit id or a helm version depending on the source location of your code (git vs helm repository).
       operationId: deployHelm
       parameters:
         - $ref: '#/components/parameters/helmId'
