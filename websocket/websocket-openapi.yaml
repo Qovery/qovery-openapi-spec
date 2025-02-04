@@ -637,6 +637,7 @@ components:
       - annotations
       - addresses
       - pods
+      - metrics_usage
       properties:
         addresses:
           type: array
@@ -654,6 +655,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/NodeConditionDto'
+        instance_type:
+          type:
+          - string
+          - 'null'
         kernel_version:
           type: string
         kubelet_version:
@@ -664,6 +669,8 @@ components:
             type: string
           propertyNames:
             type: string
+        metrics_usage:
+          $ref: '#/components/schemas/MetricsUsageDto'
         name:
           type: string
         operating_system:
@@ -687,13 +694,23 @@ components:
       required:
       - computed_status
       - nodes
+      - pvcs
+      - events
       properties:
         computed_status:
           $ref: '#/components/schemas/ClusterComputedStatusDto'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/KubeEventDto'
         nodes:
           type: array
           items:
             $ref: '#/components/schemas/ClusterNodeDto'
+        pvcs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PvcInfoDto'
     ClusterStatusGlobalStatus:
       type: string
       enum:
@@ -832,6 +849,33 @@ components:
           type: string
         state:
           $ref: '#/components/schemas/ServiceStateDto'
+    KubeEventDto:
+      type: object
+      properties:
+        kind:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        namespace:
+          type:
+          - string
+          - 'null'
+        reason:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type:
+          - string
+          - 'null'
     MetricDto:
       type: object
       required:
@@ -861,6 +905,57 @@ components:
           $ref: '#/components/schemas/ResourceStatusDto'
         unit:
           $ref: '#/components/schemas/UnitDto'
+    MetricsUsageDto:
+      type: object
+      properties:
+        cpu_milli_usage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        cpu_percent_usage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        disk_mb_usage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        disk_percent_usage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        memory_mib_rss_usage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        memory_mib_working_set_usage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        memory_percent_rss_usage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        memory_percent_working_set_usage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
     NodeAddressDto:
       type: object
       required:
@@ -909,6 +1004,7 @@ components:
       required:
       - name
       - namespace
+      - metrics_usage
       - images_version
       properties:
         cpu_milli_limit:
@@ -923,10 +1019,6 @@ components:
           - 'null'
           format: int32
           minimum: 0
-        environment_id:
-          type:
-          - string
-          - 'null'
         images_version:
           type: object
           additionalProperties:
@@ -945,18 +1037,16 @@ components:
           - 'null'
           format: int32
           minimum: 0
+        metrics_usage:
+          $ref: '#/components/schemas/MetricsUsageDto'
         name:
           type: string
         namespace:
           type: string
-        project_id:
-          type:
-          - string
-          - 'null'
-        service_id:
-          type:
-          - string
-          - 'null'
+        qovery_service_info:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PodQoveryServiceInfoDto'
     NodeResourceDto:
       type: object
       required:
@@ -1008,6 +1098,28 @@ components:
             type: integer
             format: int32
             minimum: 0
+    PodQoveryServiceInfoDto:
+      type: object
+      required:
+      - project_id
+      - project_name
+      - environment_id
+      - environment_name
+      - service_id
+      - service_name
+      properties:
+        environment_id:
+          type: string
+        environment_name:
+          type: string
+        project_id:
+          type: string
+        project_name:
+          type: string
+        service_id:
+          type: string
+        service_name:
+          type: string
     PodStatusDto:
       type: object
       required:
@@ -1041,6 +1153,34 @@ components:
         state_message:
           type: string
         state_reason:
+          type: string
+    PvcInfoDto:
+      type: object
+      required:
+      - name
+      - namespace
+      - pod_name
+      - disk_mb_usage
+      - disk_percent_usage
+      - disk_mb_capacity
+      properties:
+        disk_mb_capacity:
+          type: integer
+          format: int32
+          minimum: 0
+        disk_mb_usage:
+          type: integer
+          format: int32
+          minimum: 0
+        disk_percent_usage:
+          type: integer
+          format: int32
+          minimum: 0
+        name:
+          type: string
+        namespace:
+          type: string
+        pod_name:
           type: string
     QoveryClusterKubeVersionStatus:
       oneOf:
