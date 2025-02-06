@@ -11214,6 +11214,33 @@ paths:
       operationId: listDeploymentRequestByEnvironmentId
       x-stoplight:
         id: 0zhr0vfxayg96
+  '/service/{serviceId}/deploymentQueue':
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: serviceId
+        in: path
+        required: true
+    get:
+      summary: List Deployment Request By ServiceId
+      tags:
+        - Environment Main Calls
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/QueuedDeploymentRequestWithStages'
+      operationId: listDeploymentRequestByServiceId
+      x-stoplight:
+        id: augmimjz30ix3
 components:
   parameters:
     applicationId:
