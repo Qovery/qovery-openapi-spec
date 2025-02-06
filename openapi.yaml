@@ -20433,6 +20433,54 @@ components:
                                 - CRON
                                 - LIFECYCLE
                       type: object
+    QueuedDeploymentRequestForService:
+      title: QueuedDeploymentRequestForService
+      x-stoplight:
+        id: 6tjmdk549eeaq
+      type: object
+      required:
+        - identifier
+        - auditing_data
+        - status_details
+        - icon_uri
+      properties:
+        identifier:
+          type: object
+          required:
+            - deployment_request_id
+            - service_id
+            - service_type
+            - name
+          properties:
+            deployment_request_id:
+              type: string
+              format: uuid
+            service_id:
+              type: string
+              x-stoplight:
+                id: 0l33zc2pd2ie0
+              format: uuid
+            service_type:
+              $ref: '#/components/schemas/ServiceTypeEnum'
+            name:
+              type: string
+              x-stoplight:
+                id: 476yle3ji5f9q
+        auditing_data:
+          type: object
+          required:
+            - triggered_by
+          properties:
+            triggered_by:
+              type: string
+            origin:
+              $ref: '#/components/schemas/OrganizationEventOrigin'
+        status_details:
+          $ref: '#/components/schemas/StatusDetails'
+        icon_uri:
+          type: string
+          x-stoplight:
+            id: h69hlvf3roanf
     ServiceLightResponse:
       title: ServiceLightResponse
       x-stoplight:
