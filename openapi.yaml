@@ -11194,7 +11194,7 @@ paths:
         in: path
         required: true
     get:
-      summary: List Deployment Request By EnvironmentId
+      summary: List Deployment Queue Request By EnvironmentId
       tags:
         - Environment Main Calls
       responses:
@@ -11223,7 +11223,7 @@ paths:
         in: path
         required: true
     get:
-      summary: List Deployment Request By ServiceId
+      summary: List Deployment Queue Request By ServiceId
       tags:
         - Environment Main Calls
       responses:
