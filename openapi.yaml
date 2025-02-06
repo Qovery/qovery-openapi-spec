@@ -11237,7 +11237,7 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/components/schemas/QueuedDeploymentRequestWithStages'
+                      $ref: '#/components/schemas/QueuedDeploymentRequestForService'
       operationId: listDeploymentRequestByServiceId
       x-stoplight:
         id: augmimjz30ix3
