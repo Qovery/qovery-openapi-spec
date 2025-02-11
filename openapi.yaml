@@ -11949,6 +11949,10 @@ components:
               type: string
               format: uri
               description: Icon URI representing the application.
+            docker_target_build_stage:
+              type: string
+              description: The target build stage in the Dockerfile to build
+              nullable: true
     ApplicationGitRepository:
       type: object
       required:
