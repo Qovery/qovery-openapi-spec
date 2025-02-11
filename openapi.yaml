@@ -11843,6 +11843,12 @@ components:
                 id: b8karc43pdxpu
             service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
+            docker_target_build_stage:
+              type: string
+              x-stoplight:
+                id: tdxdfoyowutcx
+              description: The target build stage in the Dockerfile to build
+              nullable: true
     ApplicationDeploymentRestriction:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -12203,6 +12209,12 @@ components:
               description: Icon URI representing the application.
               x-stoplight:
                 id: om4lw1ulknsrg
+            docker_target_build_stage:
+              type: string
+              x-stoplight:
+                id: xg9q0urac8kdq
+              description: The target build stage in the Dockerfile to build
+              nullable: true
     ApplicationResponseList:
       type: object
       properties:
@@ -16174,6 +16186,12 @@ components:
                         id: 2ksmhx7hfs9pi
                       description: The content of your dockerfile if it is not stored inside your git repository
                       nullable: true
+                    docker_target_build_stage:
+                      type: string
+                      x-stoplight:
+                        id: qogoqube2vtez
+                      description: The target build stage in the Dockerfile to build
+                      nullable: true
             healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             schedule:
@@ -19501,6 +19519,12 @@ components:
           x-stoplight:
             id: 7s4l0qg285y48
           description: The content of your dockerfile if it is not stored inside your git repository
+          nullable: true
+        docker_target_build_stage:
+          type: string
+          x-stoplight:
+            id: 8o1faq3bgz92i
+          description: The target build stage in the Dockerfile to build
           nullable: true
     HelmSourceRepositoryResponse:
       title: HelmSourceRepositoryResponse
