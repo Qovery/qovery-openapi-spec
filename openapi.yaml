@@ -4942,6 +4942,38 @@ paths:
                     id: c5k0n6yafpsig
                   default: false
                   description: Force cancel everything running in this environment if set to true (e.q lifecycle jobs triggered during the deployment).
+  '/deploymentQueue/{deploymentQueueId}/cancelDeployment':
+    post:
+      summary: Cancel deployment request
+      description: Cancel the a deployment requesnt.
+      operationId: cancelDeploymentRequest
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Actions
+      responses:
+        '202':
+          description: environment deployment cancelling has been requested
+          content: {}
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Environment deployment is already cancelled or an operation is in progress
+      requestBody:
+        content: {}
+      x-stoplight:
+        id: tybevwlak1oip
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: deploymentQueueId
+        in: path
+        required: true
   '/environment/{environmentId}/clone':
     post:
       summary: Clone environment
