@@ -852,6 +852,36 @@ components:
           type: string
         state:
           $ref: '#/components/schemas/ServiceStateDto'
+    KubeVersionStatusDriftValue:
+      type: object
+      required:
+      - kube_version
+      - expected_kube_version
+      - type
+      properties:
+        expected_kube_version:
+          type: string
+        kube_version:
+          type: string
+        type:
+          type: string
+    KubeVersionStatusOkValue:
+      type: object
+      required:
+      - kube_version
+      - type
+      properties:
+        kube_version:
+          type: string
+        type:
+          type: string
+    KubeVersionStatusUnknownValue:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
     MetricDto:
       type: object
       required:
@@ -932,6 +962,16 @@ components:
           - 'null'
           format: int32
           minimum: 0
+    MissingComponentValue:
+      type: object
+      required:
+      - component_name
+      - type
+      properties:
+        component_name:
+          type: string
+        type:
+          type: string
     NodeAddressDto:
       type: object
       required:
@@ -1118,6 +1158,33 @@ components:
             type: integer
             format: int32
             minimum: 0
+    PodInErrorValue:
+      type: object
+      required:
+      - component_name
+      - pod_name
+      - container_name
+      - level
+      - type
+      properties:
+        component_name:
+          type: string
+        container_name:
+          type: string
+        level:
+          $ref: '#/components/schemas/QoveryComponentContainerStatusLevel'
+        message:
+          type:
+          - string
+          - 'null'
+        pod_name:
+          type: string
+        reason:
+          type:
+          - string
+          - 'null'
+        type:
+          type: string
     PodQoveryServiceInfoDto:
       type: object
       required:
@@ -1208,34 +1275,15 @@ components:
           - $ref: '#/components/schemas/PodQoveryServiceInfoDto'
     QoveryClusterKubeVersionStatus:
       oneOf:
-      - type: object
-        required:
-        - Ok
-        properties:
-          Ok:
-            type: object
-            required:
-            - kube_version
-            properties:
-              kube_version:
-                type: string
-      - type: object
-        required:
-        - Drift
-        properties:
-          Drift:
-            type: object
-            required:
-            - kube_version
-            - expected_kube_version
-            properties:
-              expected_kube_version:
-                type: string
-              kube_version:
-                type: string
-      - type: string
-        enum:
-        - Unknown
+      - $ref: '#/components/schemas/KubeVersionStatusOkValue'
+      - $ref: '#/components/schemas/KubeVersionStatusDriftValue'
+      - $ref: '#/components/schemas/KubeVersionStatusUnknownValue'
+      discriminator:
+        propertyName: type
+        mapping:
+          DRIFT: '#/components/schemas/KubeVersionStatusDriftValue'
+          OK: '#/components/schemas/KubeVersionStatusOkValue'
+          UNKNOWN: '#/components/schemas/KubeVersionStatusUnknownValue'
     QoveryComponentContainerStatusIssue:
       type: object
       required:
@@ -1258,45 +1306,13 @@ components:
       - WARNING
     QoveryComponentInFailure:
       oneOf:
-      - type: object
-        required:
-        - POD_IN_ERROR
-        properties:
-          POD_IN_ERROR:
-            type: object
-            required:
-            - component_name
-            - pod_name
-            - container_name
-            - level
-            properties:
-              component_name:
-                type: string
-              container_name:
-                type: string
-              level:
-                $ref: '#/components/schemas/QoveryComponentContainerStatusLevel'
-              message:
-                type:
-                - string
-                - 'null'
-              pod_name:
-                type: string
-              reason:
-                type:
-                - string
-                - 'null'
-      - type: object
-        required:
-        - MISSING_COMPONENT
-        properties:
-          MISSING_COMPONENT:
-            type: object
-            required:
-            - component_name
-            properties:
-              component_name:
-                type: string
+      - $ref: '#/components/schemas/PodInErrorValue'
+      - $ref: '#/components/schemas/MissingComponentValue'
+      discriminator:
+        propertyName: type
+        mapping:
+          MISSING_COMPONENT: '#/components/schemas/MissingComponentValue'
+          POD_IN_ERROR: '#/components/schemas/PodInErrorValue'
     QoveryNodeFailure:
       type: object
       required:
