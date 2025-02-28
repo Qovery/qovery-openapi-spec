@@ -1210,37 +1210,32 @@ components:
       oneOf:
       - type: object
         required:
-        - kube_version
-        - type
+        - Ok
         properties:
-          kube_version:
-            type: string
-          type:
-            type: string
-            enum:
-            - Ok
+          Ok:
+            type: object
+            required:
+            - kube_version
+            properties:
+              kube_version:
+                type: string
       - type: object
         required:
-        - kube_version
-        - expected_kube_version
-        - type
+        - Drift
         properties:
-          expected_kube_version:
-            type: string
-          kube_version:
-            type: string
-          type:
-            type: string
-            enum:
-            - Drift
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - Unknown
+          Drift:
+            type: object
+            required:
+            - kube_version
+            - expected_kube_version
+            properties:
+              expected_kube_version:
+                type: string
+              kube_version:
+                type: string
+      - type: string
+        enum:
+        - Unknown
     QoveryComponentContainerStatusIssue:
       type: object
       required:
@@ -1265,43 +1260,43 @@ components:
       oneOf:
       - type: object
         required:
-        - component_name
-        - pod_name
-        - container_name
-        - level
-        - type
+        - POD_IN_ERROR
         properties:
-          component_name:
-            type: string
-          container_name:
-            type: string
-          level:
-            $ref: '#/components/schemas/QoveryComponentContainerStatusLevel'
-          message:
-            type:
-            - string
-            - 'null'
-          pod_name:
-            type: string
-          reason:
-            type:
-            - string
-            - 'null'
-          type:
-            type: string
-            enum:
-            - POD_IN_ERROR
+          POD_IN_ERROR:
+            type: object
+            required:
+            - component_name
+            - pod_name
+            - container_name
+            - level
+            properties:
+              component_name:
+                type: string
+              container_name:
+                type: string
+              level:
+                $ref: '#/components/schemas/QoveryComponentContainerStatusLevel'
+              message:
+                type:
+                - string
+                - 'null'
+              pod_name:
+                type: string
+              reason:
+                type:
+                - string
+                - 'null'
       - type: object
         required:
-        - component_name
-        - type
+        - MISSING_COMPONENT
         properties:
-          component_name:
-            type: string
-          type:
-            type: string
-            enum:
-            - MISSING_COMPONENT
+          MISSING_COMPONENT:
+            type: object
+            required:
+            - component_name
+            properties:
+              component_name:
+                type: string
     QoveryNodeFailure:
       type: object
       required:
