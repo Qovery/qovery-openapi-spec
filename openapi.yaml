@@ -11129,6 +11129,76 @@ paths:
       x-stoplight:
         id: vkn00s3mt1vew
       description: Unlock a cluster
+  '/cluster/{clusterId}/events/{nodeName}':
+    get:
+      summary: List Cluster Kubernetes Events
+      description: List Cluster Kubernetes Events
+      operationId: get-cluster-kubernetes-events
+      tags:
+        - Clusters
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+        - in: path
+          name: nodeName
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - in: query
+          name: from_date_time
+          description: | 
+            The start date time to fetch events from, following ISO-8601 format.  
+            The `+` character must be escaped (`%2B`)
+          required: true
+          example: 2025-03-03T09:00:00+00:00
+          schema:
+            type: string
+            nullable: false
+        - in: query
+          name: to_date_time
+          description: | 
+            The end date time to fetch events from, following ISO-8601 format.  
+            The `+` character must be escaped (`%2B`)
+          required: true
+          example: 2025-03-03T03:00:00+00:00
+          schema:
+            type: string
+            nullable: false
+      responses:
+        '200':
+          description: List Cluster Kubernetes Events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          description: The created date following ISO-8601 format
+                        kind:
+                          type: string
+                          description: The source kubernetes object related to the Event
+                        namespace:
+                          type: string
+                          description: The namespace of the kubernetes object related to the Event (optional)
+                        name:
+                          type: string
+                          description: The name of the Event
+                        reason:
+                          type: string
+                          description: The action that triggered the Event
+                        message:
+                          type: string
+                          description: A description of the Event
+                        type:
+                          type: string
+                          description: As of today it can be either Warning or Normal (can evolve in the next releases)
   '/organization/{organizationId}/lock':
     parameters:
       - schema:
