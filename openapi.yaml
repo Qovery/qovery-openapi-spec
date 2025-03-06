@@ -11146,21 +11146,21 @@ paths:
             nullable: false
         - in: query
           name: from_date_time
-          description: | 
+          description: |
             The start date time to fetch events from, following ISO-8601 format.  
             The `+` character must be escaped (`%2B`)
           required: true
-          example: 2025-03-03T09:00:00+00:00
+          example: '2025-03-03T09:00:00+00:00'
           schema:
             type: string
             nullable: false
         - in: query
           name: to_date_time
-          description: | 
+          description: |
             The end date time to fetch events from, following ISO-8601 format.  
             The `+` character must be escaped (`%2B`)
           required: true
-          example: 2025-03-03T03:00:00+00:00
+          example: '2025-03-03T03:00:00+00:00'
           schema:
             type: string
             nullable: false
@@ -12434,7 +12434,10 @@ components:
           items:
             $ref: '#/components/schemas/AvailableHelmRepositoryResponse'
     AwsCredentialsRequest:
-      type: object
+      oneOf:
+        - $ref: '#/components/schemas/AwsRoleCredentialsRequest'
+        - $ref: '#/components/schemas/AwsStaticCredentialsRequest'
+    AwsStaticCredentialsRequest:
       required:
         - name
         - access_key_id
@@ -12446,6 +12449,23 @@ components:
           type: string
         secret_access_key:
           type: string
+      x-stoplight:
+        id: l0s0fv735914p
+      type: object
+    AwsRoleCredentialsRequest:
+      x-stoplight:
+        id: jn74pfty2eq7c
+      type: object
+      required:
+        - name
+        - role_arn
+      properties:
+        name:
+          type: string
+        role_arn:
+          type: string
+          x-stoplight:
+            id: my3ry04bqibxp
     OnPremiseCredentialsRequest:
       type: object
       required:
@@ -12918,19 +12938,21 @@ components:
             type: string
     ClusterCredentials:
       oneOf:
-        - $ref: '#/components/schemas/AwsClusterCredentials'
+        - $ref: '#/components/schemas/AwsStaticClusterCredentials'
         - $ref: '#/components/schemas/ScalewayClusterCredentials'
         - $ref: '#/components/schemas/GenericClusterCredentials'
+        - $ref: '#/components/schemas/AwsRoleClusterCredentials'
       discriminator:
         propertyName: object_type
         mapping:
-          AWS: '#/components/schemas/AwsClusterCredentials'
+          AWS: '#/components/schemas/AwsStaticClusterCredentials'
+          AWS_ROLE: '#/components/schemas/AwsRoleClusterCredentials'
           SCW: '#/components/schemas/ScalewayClusterCredentials'
           OTHER: '#/components/schemas/GenericClusterCredentials'
-    AwsClusterCredentials:
+    AwsStaticClusterCredentials:
       x-stoplight:
         id: s0aosg7la96hp
-      title: AwsClusterCredentials
+      title: AwsStaticClusterCredentials
       type: object
       required:
         - id
@@ -12956,6 +12978,29 @@ components:
             id: ravczabg8e2sp
           enum:
             - AWS
+    AwsRoleClusterCredentials:
+      title: AwsRoleClusterCredentials
+      x-stoplight:
+        id: f5c1iewg51zam
+      type: object
+      required:
+        - id
+        - name
+        - role_arn
+        - object_type
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        role_arn:
+          type: string
+          x-stoplight:
+            id: 8l5tuxflg76d2
+        object_type:
+          enum:
+            - AWS_ROLE
     ScalewayClusterCredentials:
       title: ScalewayClusterCredentials
       x-stoplight:
@@ -13881,6 +13926,11 @@ components:
               description: |
                 optional, for kind `DOCKER_HUB`  
                 We encourage you to set credentials for Docker Hub due to the limits on the pull rate
+            role_arn:
+              type: string
+              x-stoplight:
+                id: mzi9w1zsswj47
+              description: 'For ECR, you can either set a static access_key or use a role arn that we are going to assume'
     ContainerRegistryResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -13940,6 +13990,10 @@ components:
                   type: string
                   x-stoplight:
                     id: s5elye0gv4lks
+                role_arn:
+                  type: string
+                  x-stoplight:
+                    id: iusxfgcmg72tl
     ContainerRegistryProviderDetailsResponse:
       type: object
       required:
