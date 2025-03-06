@@ -12925,7 +12925,8 @@ components:
       discriminator:
         propertyName: object_type
         mapping:
-          AWS: '#/components/schemas/AwsClusterCredentials'
+          AWS: '#/components/schemas/AwsStaticClusterCredentials'
+          AWS_ROLE: '#/components/schemas/AwsRoleClusterCredentials'
           SCW: '#/components/schemas/ScalewayClusterCredentials'
           OTHER: '#/components/schemas/GenericClusterCredentials'
     AwsStaticClusterCredentials:
