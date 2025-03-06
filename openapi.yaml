@@ -11146,21 +11146,21 @@ paths:
             nullable: false
         - in: query
           name: from_date_time
-          description: | 
+          description: |
             The start date time to fetch events from, following ISO-8601 format.  
             The `+` character must be escaped (`%2B`)
           required: true
-          example: 2025-03-03T09:00:00+00:00
+          example: '2025-03-03T09:00:00+00:00'
           schema:
             type: string
             nullable: false
         - in: query
           name: to_date_time
-          description: | 
+          description: |
             The end date time to fetch events from, following ISO-8601 format.  
             The `+` character must be escaped (`%2B`)
           required: true
-          example: 2025-03-03T03:00:00+00:00
+          example: '2025-03-03T03:00:00+00:00'
           schema:
             type: string
             nullable: false
@@ -12918,19 +12918,20 @@ components:
             type: string
     ClusterCredentials:
       oneOf:
-        - $ref: '#/components/schemas/AwsClusterCredentials'
+        - $ref: '#/components/schemas/AwsStaticClusterCredentials'
         - $ref: '#/components/schemas/ScalewayClusterCredentials'
         - $ref: '#/components/schemas/GenericClusterCredentials'
+        - $ref: '#/components/schemas/AwsRoleClusterCredentials'
       discriminator:
         propertyName: object_type
         mapping:
           AWS: '#/components/schemas/AwsClusterCredentials'
           SCW: '#/components/schemas/ScalewayClusterCredentials'
           OTHER: '#/components/schemas/GenericClusterCredentials'
-    AwsClusterCredentials:
+    AwsStaticClusterCredentials:
       x-stoplight:
         id: s0aosg7la96hp
-      title: AwsClusterCredentials
+      title: AwsStaticClusterCredentials
       type: object
       required:
         - id
@@ -12956,6 +12957,29 @@ components:
             id: ravczabg8e2sp
           enum:
             - AWS
+    AwsRoleClusterCredentials:
+      title: AwsRoleClusterCredentials
+      x-stoplight:
+        id: f5c1iewg51zam
+      type: object
+      required:
+        - id
+        - name
+        - role_arn
+        - object_type
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        role_arn:
+          type: string
+          x-stoplight:
+            id: 8l5tuxflg76d2
+        object_type:
+          enum:
+            - AWS_ROLE
     ScalewayClusterCredentials:
       title: ScalewayClusterCredentials
       x-stoplight:
