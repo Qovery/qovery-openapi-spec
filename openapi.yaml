@@ -13926,6 +13926,11 @@ components:
               description: |
                 optional, for kind `DOCKER_HUB`  
                 We encourage you to set credentials for Docker Hub due to the limits on the pull rate
+            role_arn:
+              type: string
+              x-stoplight:
+                id: mzi9w1zsswj47
+              description: 'For ECR, you can either set a static access_key or use a role arn that we are going to assume'
     ContainerRegistryResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -13985,6 +13990,10 @@ components:
                   type: string
                   x-stoplight:
                     id: s5elye0gv4lks
+                role_arn:
+                  type: string
+                  x-stoplight:
+                    id: iusxfgcmg72tl
     ContainerRegistryProviderDetailsResponse:
       type: object
       required:
