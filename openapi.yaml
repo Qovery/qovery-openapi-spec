@@ -12434,18 +12434,33 @@ components:
           items:
             $ref: '#/components/schemas/AvailableHelmRepositoryResponse'
     AwsCredentialsRequest:
+      oneOf:
+        - required:
+            - name
+            - access_key_id
+            - secret_access_key
+          properties:
+            name:
+              type: string
+            access_key_id:
+              type: string
+            secret_access_key:
+              type: string
+        - x-stoplight:
+            id: 4n37rdwvwl7bu
+          required:
+            - name
+            - role_arn
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: k1ka8pb6dx0v0
+            role_arn:
+              type: string
+              x-stoplight:
+                id: jxv4yc8r82t12
       type: object
-      required:
-        - name
-        - access_key_id
-        - secret_access_key
-      properties:
-        name:
-          type: string
-        access_key_id:
-          type: string
-        secret_access_key:
-          type: string
     OnPremiseCredentialsRequest:
       type: object
       required:
