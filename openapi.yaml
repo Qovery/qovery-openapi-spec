@@ -13432,6 +13432,10 @@ components:
                   - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpc'
                   - $ref: '#/components/schemas/ClusterFeatureGcpExistingVpc'
                   - $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
+        cloud_vendor:
+          type: string
+          x-stoplight:
+            id: kddvsgilvmvey
     ClusterResponseList:
       type: object
       properties:
