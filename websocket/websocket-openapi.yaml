@@ -1250,7 +1250,12 @@ components:
       - disk_mib_usage
       - disk_percent_usage
       - disk_mib_capacity
+      - created_at
       properties:
+        created_at:
+          type: integer
+          format: int64
+          minimum: 0
         disk_mib_capacity:
           type: integer
           format: int32
@@ -1273,6 +1278,10 @@ components:
           oneOf:
           - type: 'null'
           - $ref: '#/components/schemas/PodQoveryServiceInfoDto'
+        status:
+          type:
+          - string
+          - 'null'
     QoveryClusterKubeVersionStatus:
       oneOf:
       - $ref: '#/components/schemas/KubeVersionStatusOkValue'
