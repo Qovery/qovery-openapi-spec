@@ -12695,6 +12695,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CloudProvider'
+    CloudVendorEnum:
+      type: string
+      enum:
+        - AWS
+        - SCW
+        - GCP
+        - DO
+        - AZURE
+        - OVH
+        - CIVO
+        - HETZNER
+        - ORACLE
+        - IBM
+        - ON_PREMISE
     Cluster:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -12715,7 +12729,7 @@ components:
             region:
               type: string
             cloud_provider:
-              $ref: '#/components/schemas/CloudProviderEnum'
+              $ref: '#/components/schemas/CloudVendorEnum'
             min_running_nodes:
               type: integer
               default: 1
@@ -13387,7 +13401,7 @@ components:
         region:
           type: string
         cloud_provider:
-          $ref: '#/components/schemas/CloudProviderEnum'
+          $ref: '#/components/schemas/CloudVendorEnum'
         cloud_provider_credentials:
           $ref: '#/components/schemas/ClusterCloudProviderInfoRequest'
         min_running_nodes:
