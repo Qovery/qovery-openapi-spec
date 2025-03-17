@@ -11129,7 +11129,7 @@ paths:
       x-stoplight:
         id: vkn00s3mt1vew
       description: Unlock a cluster
-  '/cluster/{clusterId}/events/{nodeName}':
+  '/cluster/{clusterId}/events':
     get:
       summary: List Cluster Kubernetes Events
       description: List Cluster Kubernetes Events
@@ -11138,12 +11138,6 @@ paths:
         - Clusters
       parameters:
         - $ref: '#/components/parameters/clusterId'
-        - in: path
-          name: nodeName
-          required: true
-          schema:
-            type: string
-            nullable: false
         - in: query
           name: from_date_time
           description: |
@@ -11164,6 +11158,16 @@ paths:
           schema:
             type: string
             nullable: false
+        - schema:
+            type: string
+          in: query
+          name: node_name
+          description: The name of the node to fetch event from
+        - schema:
+            type: string
+          in: query
+          name: pod_name
+          description: The name of the pod to fetch event from
       responses:
         '200':
           description: List Cluster Kubernetes Events
