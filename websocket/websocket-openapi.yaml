@@ -1185,6 +1185,65 @@ components:
           - 'null'
         type:
           type: string
+    PodInfoDto:
+      type: object
+      required:
+      - created_at
+      - name
+      - namespace
+      - error_container_statuses
+      - metrics_usage
+      - images_version
+      - restart_count
+      properties:
+        cpu_milli_limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        cpu_milli_request:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        created_at:
+          type: integer
+          format: int64
+          minimum: 0
+        error_container_statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodePodErrorStatusDto'
+        images_version:
+          type: object
+          additionalProperties:
+            type: string
+          propertyNames:
+            type: string
+        memory_mib_limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        memory_mib_request:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        metrics_usage:
+          $ref: '#/components/schemas/MetricsUsageDto'
+        name:
+          type: string
+        namespace:
+          type: string
+        restart_count:
+          type: integer
+          format: int32
+          minimum: 0
     PodQoveryServiceInfoDto:
       type: object
       required:
@@ -1398,6 +1457,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MetricDto'
+    ServiceMetricsV2Dto:
+      type: object
+      required:
+      - pods
+      - pvcs
+      properties:
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodInfoDto'
+        pvcs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PvcInfoDto'
     ServiceStateDto:
       type: string
       enum:
