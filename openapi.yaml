@@ -18826,6 +18826,10 @@ components:
             id: bepixrb7tyzme
           format: uuid
           nullable: true
+        deployment_requests_count:
+          type: integer
+          x-stoplight:
+            id: crku532vt3v4p
     StatusDetails:
       type: object
       required:
