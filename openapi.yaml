@@ -13517,6 +13517,10 @@ components:
           example: f73e3833-922a-48a5-9dbd-6163f43f9143-1656410242
         cluster_lock:
           $ref: '#/components/schemas/ClusterLock'
+        last_deployment_date:
+          type: string
+          format: date-time
+          example: '2022-06-22T14:20:17.733084815Z'
     ClusterStatusResponseList:
       type: object
       properties:
