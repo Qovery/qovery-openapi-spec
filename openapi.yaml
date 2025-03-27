@@ -11252,7 +11252,8 @@ paths:
   '/organization/{organizationId}/services':
     get:
       summary: List Services By OrganizationId
-      tags: []
+      tags:
+        - Organization Main Calls
       responses:
         '200':
           description: Service List
