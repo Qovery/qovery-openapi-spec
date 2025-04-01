@@ -703,9 +703,14 @@ components:
       - computed_status
       - nodes
       - pvcs
+      - node_pools
       properties:
         computed_status:
           $ref: '#/components/schemas/ClusterComputedStatusDto'
+        node_pools:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodePoolInfoDto'
         nodes:
           type: array
           items:
@@ -1090,6 +1095,40 @@ components:
           - type: 'null'
           - $ref: '#/components/schemas/PodQoveryServiceInfoDto'
         restart_count:
+          type: integer
+          format: int32
+          minimum: 0
+    NodePoolInfoDto:
+      type: object
+      required:
+      - name
+      - nodes_count
+      - cpu_milli
+      - memory_mib
+      properties:
+        cpu_milli:
+          type: integer
+          format: int64
+          minimum: 0
+        cpu_milli_limit:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          minimum: 0
+        memory_mib:
+          type: integer
+          format: int64
+          minimum: 0
+        memory_mib_limit:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          minimum: 0
+        name:
+          type: string
+        nodes_count:
           type: integer
           format: int32
           minimum: 0
