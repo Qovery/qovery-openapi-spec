@@ -1283,6 +1283,24 @@ components:
           type: integer
           format: int32
           minimum: 0
+    PodKubernetesEventDto:
+      type: object
+      required:
+      - created_at
+      - type
+      - reason
+      - message
+      properties:
+        created_at:
+          type: integer
+          format: int64
+          minimum: 0
+        message:
+          type: string
+        reason:
+          type: string
+        type:
+          type: string
     PodQoveryServiceInfoDto:
       type: object
       required:
@@ -1316,11 +1334,16 @@ components:
       - containers
       - started_at
       - service_version
+      - last_events
       properties:
         containers:
           type: array
           items:
             $ref: '#/components/schemas/ContainerStatusDto'
+        last_events:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodKubernetesEventDto'
         name:
           type: string
         restart_count:
