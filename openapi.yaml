@@ -10579,6 +10579,15 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  existing_variable:
+                    $ref: '#/components/schemas/ExistingVariableResponse'
   '/variable/{variableId}/alias':
     post:
       summary: Create a variable alias
@@ -10614,6 +10623,15 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  existing_variable:
+                    $ref: '#/components/schemas/ExistingVariableResponse'
   '/variable/{variableId}/override':
     post:
       summary: Create a variable override
@@ -10648,6 +10666,15 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  existing_variable:
+                    $ref: '#/components/schemas/ExistingVariableResponse'
   '/variable/{variableId}':
     delete:
       summary: Delete a variable
@@ -10701,6 +10728,15 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  existing_variable:
+                    $ref: '#/components/schemas/ExistingVariableResponse'
   /variable/import:
     post:
       summary: Import variables
@@ -20764,6 +20800,46 @@ components:
           enum:
             - CRON
             - LIFECYCLE
+    ExistingVariableResponse:
+      title: ExistingVariableResponse
+      x-stoplight:
+        id: q4fqizfgailgn
+      type: object
+      required:
+        - id
+        - key
+        - scope
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 1agmjo5m71tvk
+        key:
+          type: string
+          x-stoplight:
+            id: t4waxt1c5zdi5
+        scope:
+          $ref: '#/components/schemas/APIVariableScopeEnum'
+        organization_id:
+          type: string
+          x-stoplight:
+            id: ogvrd3qiis0ja
+          format: uuid
+        projectId:
+          type: string
+          x-stoplight:
+            id: b2tq0bjztuttn
+          format: uuid
+        environment_id:
+          type: string
+          x-stoplight:
+            id: v1rhtepekjetj
+          format: uuid
+        service_id:
+          type: string
+          x-stoplight:
+            id: o2gd6mvecun1t
+          format: uuid
   responses:
     '204':
       description: no content
