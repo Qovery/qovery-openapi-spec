@@ -12662,6 +12662,9 @@ components:
         apply_deployment_rule:
           type: boolean
           default: false
+        project_id:
+          type : string
+          format: uuid
     CloneServiceRequest:
       type: object
       required:
