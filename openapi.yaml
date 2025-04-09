@@ -11253,6 +11253,11 @@ components:
           description: define the max ram resources (in gib)
         network.ingress.proxy_body_size_mb:
           type: integer
+        network.ingress.force_ssl_redirect:
+          type: boolean
+          x-stoplight:
+            id: am7oh5tdono3z
+          description: 'When using SSL offloading outside of cluster, you can enforce a redirect to HTTPS even when there is no TLS certificate available'
         network.ingress.enable_cors:
           type: boolean
         network.ingress.cors_allow_origin:
@@ -13073,9 +13078,9 @@ components:
           description: define how long in seconds an application is supposed to be stopped gracefully
         deployment.affinity.node.required:
           type: object
+          description: Set pod placement on specific Kubernetes nodes labels
           additionalProperties:
             type: string
-          description: Set pod placement on specific Kubernetes nodes labels
         deployment.antiaffinity.pod:
           type: string
           enum:
@@ -13101,6 +13106,11 @@ components:
           description: Define the percentage of the maximum number of pods that can be created over the desired number of pods
         network.ingress.proxy_body_size_mb:
           type: integer
+        network.ingress.force_ssl_redirect:
+          type: boolean
+          x-stoplight:
+            id: xrdjy3znm8mpg
+          description: 'When using SSL offloading outside of cluster, you can enforce a redirect to HTTPS even when there is no TLS certificate available'
         network.ingress.enable_cors:
           type: boolean
         network.ingress.cors_allow_origin:
@@ -15951,6 +15961,11 @@ components:
           description: disable custom domain check when deploying a helm
         network.ingress.proxy_body_size_mb:
           type: integer
+        network.ingress.force_ssl_redirect:
+          type: boolean
+          x-stoplight:
+            id: 6tcwjiqqo99ii
+          description: 'When using SSL offloading outside of cluster, you can enforce a redirect to HTTPS even when there is no TLS certificate available'
         network.ingress.enable_cors:
           type: boolean
         network.ingress.cors_allow_origin:
