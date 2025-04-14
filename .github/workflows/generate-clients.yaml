@@ -23,7 +23,7 @@ jobs:
             deploy-ssh-key: SSH_DEPLOY_KEY_GO
             deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_GO
           - language: typescript-axios
-            version: 7.0.1
+            version: 7.8.0
             target-branch: main
             deploy-ssh-key: SSH_DEPLOY_KEY_TYPESCRIPT_AXIOS
             deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_TYPESCRIPT_AXIOS
