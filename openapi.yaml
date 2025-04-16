@@ -11214,7 +11214,6 @@ paths:
         - $ref: '#/components/parameters/clusterId'
         - in: query
           name: endpoint
-          example: '2025-03-03T09:00:00+00:00'
           schema:
             type: string
             nullable: false
@@ -11222,7 +11221,6 @@ paths:
         - in: query
           name: query
           required: true
-          example: '2025-03-03T03:00:00+00:00'
           schema:
             type: string
             nullable: false
