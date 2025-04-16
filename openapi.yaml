@@ -11256,7 +11256,7 @@ paths:
           name: partial_response
       responses:
         '200':
-          description: Cluster MEtrics
+          description: Cluster Metrics
           content:
             application/json:
               schema:
