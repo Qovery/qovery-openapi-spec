@@ -11203,6 +11203,62 @@ paths:
                         type:
                           type: string
                           description: As of today it can be either Warning or Normal (can evolve in the next releases)
+  '/cluster/{clusterId}/metrics':
+    get:
+      summary: Fetch cluster metrics
+      description: Fetch cluster metrics
+      operationId: get-cluster-metrics
+      tags:
+        - Clusters
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+        - in: query
+          name: endpoint
+          schema:
+            type: string
+            nullable: false
+          required: true
+        - in: query
+          name: query
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - schema:
+            type: string
+          in: query
+          name: start
+        - schema:
+            type: string
+          in: query
+          name: end
+        - schema:
+            type: string
+          in: query
+          name: step
+        - schema:
+            type: string
+          in: query
+          name: time
+        - schema:
+            type: string
+          in: query
+          name: timeout
+        - schema:
+            type: string
+          in: query
+          name: dedup
+        - schema:
+            type: string
+          in: query
+          name: partial_response
+      responses:
+        '200':
+          description: Cluster Metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterMetricsResponse'
   '/organization/{organizationId}/lock':
     parameters:
       - schema:
@@ -12668,7 +12724,7 @@ components:
           type: boolean
           default: false
         project_id:
-          type : string
+          type: string
           format: uuid
     CloneServiceRequest:
       type: object
@@ -20782,6 +20838,16 @@ components:
           enum:
             - CRON
             - LIFECYCLE
+    ClusterMetricsResponse:
+      title: ClusterMetricsResponse
+      x-stoplight:
+        id: 7z04ha035fh6s
+      type: object
+      properties:
+        metrics:
+          type: string
+          x-stoplight:
+            id: nyp9g89joz1wv
   responses:
     '204':
       description: no content
