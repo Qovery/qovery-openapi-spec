@@ -20871,7 +20871,6 @@ components:
             propertyName: kind
             mapping:
               MANAGED_BY_QOVERY: '#/components/schemas/MetricsConfigurationManagedByQovery'
-          type: object
     MetricsConfigurationManagedByQovery:
       title: MetricsConfigurationManagedByQovery
       x-stoplight:
