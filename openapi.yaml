@@ -12783,10 +12783,10 @@ components:
         - $ref: '#/components/schemas/Base'
         - type: object
           required:
-            - name
-            - cloud_provider
-            - region
             - organization
+            - name
+            - region
+            - cloud_provider
           properties:
             organization:
               $ref: '#/components/schemas/ReferenceObject'
@@ -12852,6 +12852,8 @@ components:
                 $ref: '#/components/schemas/ClusterFeatureResponse'
             deployment_status:
               $ref: '#/components/schemas/ClusterDeploymentStatusEnum'
+            metrics_parameters:
+              $ref: '#/components/schemas/MetricsParameters'
     ClusterDeleteMode:
       type: string
       description: |
@@ -13515,6 +13517,8 @@ components:
                   - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpc'
                   - $ref: '#/components/schemas/ClusterFeatureGcpExistingVpc'
                   - $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
+        metrics_parameters:
+          $ref: '#/components/schemas/MetricsParameters'
     ClusterResponseList:
       type: object
       properties:
@@ -20849,6 +20853,36 @@ components:
           type: string
           x-stoplight:
             id: nyp9g89joz1wv
+    MetricsParameters:
+      title: MetricsParameters
+      x-stoplight:
+        id: 25tfm065x6c64
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          x-stoplight:
+            id: 0y1427jsrtwmg
+        configuration:
+          x-stoplight:
+            id: 1e9r2at0nxziv
+          oneOf:
+            - $ref: '#/components/schemas/MetricsConfigurationManagedByQovery'
+          discriminator:
+            propertyName: kind
+            mapping:
+              MANAGED_BY_QOVERY: '#/components/schemas/MetricsConfigurationManagedByQovery'
+    MetricsConfigurationManagedByQovery:
+      title: MetricsConfigurationManagedByQovery
+      x-stoplight:
+        id: d6oy3aiodk659
+      type: object
+      properties:
+        kind:
+          x-stoplight:
+            id: i8z3rzufjt5uk
+          enum:
+            - MANAGED_BY_QOVERY
   responses:
     '204':
       description: no content
