@@ -17913,6 +17913,7 @@ components:
         - STOP_FAILED
         - DELETE_FAILED
         - RESTART_FAILED
+        - MAINTENANCE
       example: CREATE
     SecretOverride:
       type: object
