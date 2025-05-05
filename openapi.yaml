@@ -11408,6 +11408,37 @@ paths:
       operationId: listDeploymentRequestByServiceId
       x-stoplight:
         id: augmimjz30ix3
+  '/{serviceType}/{serviceId}/ingressDeploymentStatus':
+    parameters:
+      - schema:
+          type: string
+          enum:
+            - container
+            - application
+            - helm
+        name: serviceType
+        in: path
+        required: true
+      - schema:
+          type: string
+          format: uuid
+        name: serviceId
+        in: path
+        required: true
+    get:
+      summary: Get Ingress Deployment Status By Service
+      tags:
+        - service_status
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngressDeploymentStatusResponse'
+      operationId: getIngressDeploymentStatus
+      x-stoplight:
+        id: cji3h6qjunupa
 components:
   parameters:
     applicationId:
@@ -20884,6 +20915,19 @@ components:
             id: i8z3rzufjt5uk
           enum:
             - MANAGED_BY_QOVERY
+    IngressDeploymentStatusResponse:
+      title: IngressDeploymentStatusResponse
+      x-stoplight:
+        id: uebtvs1ouszf2
+      type: object
+      properties:
+        routerId:
+          type: string
+          x-stoplight:
+            id: e507c0na5om2i
+          format: uuid
+        status:
+          $ref: '#/components/schemas/StateEnum'
   responses:
     '204':
       description: no content
