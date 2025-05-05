@@ -719,6 +719,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PvcInfoDto'
+        tls_certificate:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/CertificateStatusDto'
     ClusterStatusGlobalStatus:
       type: string
       enum:
