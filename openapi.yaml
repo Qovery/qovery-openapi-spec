@@ -11546,6 +11546,27 @@ paths:
         name: credentialsId
         in: path
         required: true
+  /azure/region:
+    get:
+      summary: List Azure regions
+      tags: 
+        - Cloud Provider
+      operationId: listAzureRegions
+      x-stoplight:
+        id: pccuw0fgrkcyf
+      responses:
+        '200':
+          description: list regions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterRegionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   parameters:
     applicationId:
