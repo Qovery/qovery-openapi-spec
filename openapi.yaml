@@ -1983,58 +1983,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/gcp/credentials_copy':
-    get:
-      summary: List GCP credentials
-      operationId: listGcpCredentials
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-      tags:
-        - Cloud Provider Credentials
-      responses:
-        '200':
-          description: list credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClusterCredentialsResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-      x-stoplight:
-        id: 2klmihj9dyte6
-    post:
-      summary: Create GCP credentials set
-      operationId: createGcpCredentials
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-      tags:
-        - Cloud Provider Credentials
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GcpCredentialsRequest'
-      responses:
-        '201':
-          description: Credentials created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClusterCredentials'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-      x-stoplight:
-        id: 4qc2mg13dtrok
   '/organization/{organizationId}/gcp/credentials/{credentialsId}':
     get:
       summary: Get a set of GCP credentials
@@ -11518,6 +11466,86 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/azure/credentials/{credentialsId}':
+    get:
+      summary: Get a set of Azure credentials
+      operationId: getAzureCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/credentialsId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: Get a set of Azure credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a set of Azure credentials
+      operationId: editAzureCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/credentialsId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureCredentialsRequest'
+      responses:
+        '200':
+          description: Edit a set of Azure credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a set of Azure credentials
+      operationId: deleteAzureCredentials
+      parameters:
+        - $ref: '#/components/parameters/credentialsId'
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    parameters:
+      - schema:
+          type: string
+        name: organizationId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: credentialsId
+        in: path
+        required: true
 components:
   parameters:
     applicationId:
@@ -21052,6 +21080,43 @@ components:
             id: 8oodrxjznyahm
           enum:
             - AZURE
+    AzureCredentialsRequest:
+      title: AzureCredentialsRequest
+      x-stoplight:
+        id: gjzlt9ldnn7ip
+      type: object
+      required:
+        - name
+        - azure_subscription_id
+        - azure_tenant_id
+        - azure_client_id
+        - azure_client_secret
+        - azure_resource_group_name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: ywkpnhxrygsf4
+        azure_subscription_id:
+          type: string
+          x-stoplight:
+            id: 4py3o45wxewvh
+        azure_tenant_id:
+          type: string
+          x-stoplight:
+            id: u776tz269mjb0
+        azure_client_id:
+          type: string
+          x-stoplight:
+            id: 6d8yrq1enhyc8
+        azure_client_secret:
+          type: string
+          x-stoplight:
+            id: mj5vuoojyw05b
+        azure_resource_group_name:
+          type: string
+          x-stoplight:
+            id: uudq68b36g6nk
   responses:
     '204':
       description: no content
