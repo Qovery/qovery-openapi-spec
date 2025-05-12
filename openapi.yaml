@@ -1983,6 +1983,58 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/gcp/credentials_copy':
+    get:
+      summary: List GCP credentials
+      operationId: listGcpCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: list credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentialsResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      x-stoplight:
+        id: 2klmihj9dyte6
+    post:
+      summary: Create GCP credentials set
+      operationId: createGcpCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GcpCredentialsRequest'
+      responses:
+        '201':
+          description: Credentials created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      x-stoplight:
+        id: 4qc2mg13dtrok
   '/organization/{organizationId}/gcp/credentials/{credentialsId}':
     get:
       summary: Get a set of GCP credentials
@@ -11418,6 +11470,54 @@ paths:
       operationId: getIngressDeploymentStatus
       x-stoplight:
         id: cji3h6qjunupa
+  '/organization/{organizationId}/azure/credentials':
+    get:
+      summary: List Azure credentials
+      operationId: listAzureCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: list credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentialsResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create Azure credentials set
+      operationId: createAzureCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureCredentialsRequest'
+      responses:
+        '201':
+          description: Credentials created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   parameters:
     applicationId:
@@ -13037,6 +13137,7 @@ components:
         - $ref: '#/components/schemas/ScalewayClusterCredentials'
         - $ref: '#/components/schemas/GenericClusterCredentials'
         - $ref: '#/components/schemas/AwsRoleClusterCredentials'
+        - $ref: '#/components/schemas/AzureStaticClusterCredentials'
       discriminator:
         propertyName: object_type
         mapping:
@@ -13044,6 +13145,7 @@ components:
           AWS_ROLE: '#/components/schemas/AwsRoleClusterCredentials'
           SCW: '#/components/schemas/ScalewayClusterCredentials'
           OTHER: '#/components/schemas/GenericClusterCredentials'
+          AZURE: '#/components/schemas/AzureStaticClusterCredentials'
     AwsStaticClusterCredentials:
       x-stoplight:
         id: s0aosg7la96hp
@@ -20906,6 +21008,50 @@ components:
           format: uuid
         status:
           $ref: '#/components/schemas/StateEnum'
+    AzureStaticClusterCredentials:
+      title: AzureStaticClusterCredentials
+      x-stoplight:
+        id: wo7v4e4c0jlfu
+      type: object
+      required:
+        - id
+        - name
+        - azure_subscription_id
+        - azure_tenant_id
+        - azure_client_id
+        - azure_resource_group_name
+        - object_type
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 7qy00mrnhmclv
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: f5c1wc467emz3
+        azure_subscription_id:
+          type: string
+          x-stoplight:
+            id: x0s5zbj6l1yx0
+        azure_tenant_id:
+          type: string
+          x-stoplight:
+            id: ygjwz6uqfexsc
+        azure_client_id:
+          type: string
+          x-stoplight:
+            id: vqjd5qddm3p8g
+        azure_resource_group_name:
+          type: string
+          x-stoplight:
+            id: lnc8rl0idrvve
+        object_type:
+          x-stoplight:
+            id: 8oodrxjznyahm
+          enum:
+            - AZURE
   responses:
     '204':
       description: no content
