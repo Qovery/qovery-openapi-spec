@@ -11549,7 +11549,7 @@ paths:
   /azure/region:
     get:
       summary: List Azure regions
-      tags: 
+      tags:
         - Cloud Provider
       operationId: listAzureRegions
       x-stoplight:
@@ -11567,6 +11567,27 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  /azure/clusterFeature:
+    get:
+      summary: List Azure features available
+      tags: 
+        - Cloud Provider
+      responses:
+        '200':
+          description: list features available for Azure cloud provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterFeatureResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: listAzureFeatures
+      x-stoplight:
+        id: gjin553b2f7mz
 components:
   parameters:
     applicationId:
@@ -12916,6 +12937,7 @@ components:
         - SCW
         - GCP
         - ON_PREMISE
+        - AZURE
     CloudProviderResponseList:
       type: object
       properties:
@@ -12937,6 +12959,7 @@ components:
         - ORACLE
         - IBM
         - ON_PREMISE
+        - AZURE
     Cluster:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -14101,6 +14124,7 @@ components:
         - DOCR
         - GENERIC_CR
         - GCP_ARTIFACT_REGISTRY
+        - AZURE_CR
       description: The type of your container registry
     HelmRepositoryKindEnum:
       type: string
