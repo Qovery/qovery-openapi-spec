@@ -11418,6 +11418,176 @@ paths:
       operationId: getIngressDeploymentStatus
       x-stoplight:
         id: cji3h6qjunupa
+  '/organization/{organizationId}/azure/credentials':
+    get:
+      summary: List Azure credentials
+      operationId: listAzureCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: list credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentialsResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create Azure credentials set
+      operationId: createAzureCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureCredentialsRequest'
+      responses:
+        '201':
+          description: Credentials created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/azure/credentials/{credentialsId}':
+    get:
+      summary: Get a set of Azure credentials
+      operationId: getAzureCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/credentialsId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '200':
+          description: Get a set of Azure credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a set of Azure credentials
+      operationId: editAzureCredentials
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/credentialsId'
+      tags:
+        - Cloud Provider Credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureCredentialsRequest'
+      responses:
+        '200':
+          description: Edit a set of Azure credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterCredentials'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete a set of Azure credentials
+      operationId: deleteAzureCredentials
+      parameters:
+        - $ref: '#/components/parameters/credentialsId'
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Cloud Provider Credentials
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    parameters:
+      - schema:
+          type: string
+        name: organizationId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: credentialsId
+        in: path
+        required: true
+  /azure/region:
+    get:
+      summary: List Azure regions
+      tags:
+        - Cloud Provider
+      operationId: listAzureRegions
+      x-stoplight:
+        id: pccuw0fgrkcyf
+      responses:
+        '200':
+          description: list regions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterRegionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /azure/clusterFeature:
+    get:
+      summary: List Azure features available
+      tags: 
+        - Cloud Provider
+      responses:
+        '200':
+          description: list features available for Azure cloud provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterFeatureResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: listAzureFeatures
+      x-stoplight:
+        id: gjin553b2f7mz
 components:
   parameters:
     applicationId:
@@ -12767,6 +12937,7 @@ components:
         - SCW
         - GCP
         - ON_PREMISE
+        - AZURE
     CloudProviderResponseList:
       type: object
       properties:
@@ -12788,6 +12959,7 @@ components:
         - ORACLE
         - IBM
         - ON_PREMISE
+        - AZURE
     Cluster:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -13037,6 +13209,7 @@ components:
         - $ref: '#/components/schemas/ScalewayClusterCredentials'
         - $ref: '#/components/schemas/GenericClusterCredentials'
         - $ref: '#/components/schemas/AwsRoleClusterCredentials'
+        - $ref: '#/components/schemas/AzureStaticClusterCredentials'
       discriminator:
         propertyName: object_type
         mapping:
@@ -13044,6 +13217,7 @@ components:
           AWS_ROLE: '#/components/schemas/AwsRoleClusterCredentials'
           SCW: '#/components/schemas/ScalewayClusterCredentials'
           OTHER: '#/components/schemas/GenericClusterCredentials'
+          AZURE: '#/components/schemas/AzureStaticClusterCredentials'
     AwsStaticClusterCredentials:
       x-stoplight:
         id: s0aosg7la96hp
@@ -13950,6 +14124,7 @@ components:
         - DOCR
         - GENERIC_CR
         - GCP_ARTIFACT_REGISTRY
+        - AZURE_CR
       description: The type of your container registry
     HelmRepositoryKindEnum:
       type: string
@@ -20906,6 +21081,87 @@ components:
           format: uuid
         status:
           $ref: '#/components/schemas/StateEnum'
+    AzureStaticClusterCredentials:
+      title: AzureStaticClusterCredentials
+      x-stoplight:
+        id: wo7v4e4c0jlfu
+      type: object
+      required:
+        - id
+        - name
+        - azure_subscription_id
+        - azure_tenant_id
+        - azure_client_id
+        - azure_resource_group_name
+        - object_type
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 7qy00mrnhmclv
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: f5c1wc467emz3
+        azure_subscription_id:
+          type: string
+          x-stoplight:
+            id: x0s5zbj6l1yx0
+        azure_tenant_id:
+          type: string
+          x-stoplight:
+            id: ygjwz6uqfexsc
+        azure_client_id:
+          type: string
+          x-stoplight:
+            id: vqjd5qddm3p8g
+        azure_resource_group_name:
+          type: string
+          x-stoplight:
+            id: lnc8rl0idrvve
+        object_type:
+          x-stoplight:
+            id: 8oodrxjznyahm
+          enum:
+            - AZURE
+    AzureCredentialsRequest:
+      title: AzureCredentialsRequest
+      x-stoplight:
+        id: gjzlt9ldnn7ip
+      type: object
+      required:
+        - name
+        - azure_subscription_id
+        - azure_tenant_id
+        - azure_client_id
+        - azure_client_secret
+        - azure_resource_group_name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: ywkpnhxrygsf4
+        azure_subscription_id:
+          type: string
+          x-stoplight:
+            id: 4py3o45wxewvh
+        azure_tenant_id:
+          type: string
+          x-stoplight:
+            id: u776tz269mjb0
+        azure_client_id:
+          type: string
+          x-stoplight:
+            id: 6d8yrq1enhyc8
+        azure_client_secret:
+          type: string
+          x-stoplight:
+            id: mj5vuoojyw05b
+        azure_resource_group_name:
+          type: string
+          x-stoplight:
+            id: uudq68b36g6nk
   responses:
     '204':
       description: no content
