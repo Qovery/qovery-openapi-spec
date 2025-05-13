@@ -11720,6 +11720,8 @@ components:
         - SCW
         - GCP
         - ON_PREMISE
+        - AZURE
+      title: ''
     CloudProviderResponseList:
       type: object
       properties:
