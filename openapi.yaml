@@ -20638,6 +20638,8 @@ components:
         - InstanceFamily
         - InstanceSize
         - Arch
+        - SkuFamily
+        - SkuVersion
     KarpenterNodePoolRequirementOperator:
       title: KarpenterNodePoolRequirementOperator
       x-stoplight:
