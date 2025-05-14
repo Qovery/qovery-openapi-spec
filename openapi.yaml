@@ -3065,6 +3065,35 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/azure/aks/instanceType/{region}':
+    get:
+      summary: List Azure AKS available instance types
+      operationId: listAzureAKSInstanceType
+      parameters:
+        - $ref: '#/components/parameters/region'
+        - schema:
+            type: boolean
+          in: query
+          name: only_meets_resource_reqs
+        - schema:
+            type: boolean
+          in: query
+          name: with_gpu
+      tags:
+        - Cloud Provider
+      responses:
+        '200':
+          description: list the instance types available for Azure AKS by region
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterInstanceTypeResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/aws/eks/instanceType/{region}':
     get:
       summary: List AWS EKS available instance types
