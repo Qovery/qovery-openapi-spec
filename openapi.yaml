@@ -11421,9 +11421,9 @@ paths:
       - schema:
           type: string
           enum:
-            - container
-            - application
-            - helm
+            - CONTAINER
+            - APPLICATION
+            - HELM
         name: serviceType
         in: path
         required: true
