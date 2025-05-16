@@ -5877,9 +5877,9 @@ paths:
         - Environment Export
       responses:
         '200':
-          description: Export full environment and its resources into Terraform manifests
+          description: Export full environment and its resources into Terraform manifests (ZIP file)
           content:
-            application/zip:
+            application/octet-stream:
               schema:
                 type: string
                 format: binary
