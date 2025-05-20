@@ -11676,6 +11676,74 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Terraform name within the environment is already taken
+  '/terraform/{terraformId}':
+    parameters:
+      - $ref: '#/components/parameters/terraformId'
+    get:
+      summary: Get terraform by ID
+      tags:
+        - Terraform Main Calls
+      operationId: getTerraform
+      x-stoplight:
+        id: s1dctms0dixdl
+      responses:
+        '200':
+          description: Get terrafor by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit Terraform
+      tags:
+        - Terraform Main Calls
+      operationId: editTerraform
+      x-stoplight:
+        id: pb6cdzqcvmnkh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerraformRequest'
+      responses:
+        '200':
+          description: Edit Terraform
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Terraform name within the environment is already taken
+    delete:
+      summary: Delete Terraform
+      tags: 
+        - Terraform Main Calls
+      operationId: deleteTerraform
+      x-stoplight:
+        id: 518sjlmziel46
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   parameters:
     applicationId:
@@ -11992,6 +12060,14 @@ components:
       schema:
         type: string
         default: chart
+    terraformId:
+      name: terraformId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Terraform ID
   schemas:
     AccountInfo:
       type: object
