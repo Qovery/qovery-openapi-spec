@@ -11617,6 +11617,65 @@ paths:
       operationId: listAzureFeatures
       x-stoplight:
         id: gjin553b2f7mz
+  '/environment/{environmentId}/terraform':
+    get:
+      summary: List terraforms
+      operationId: listTerraforms
+      x-stoplight:
+        id: 2azyhtuthfuft
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1job/get/parameters/1'
+      tags:
+        - Terraforms
+      responses:
+        '200':
+          description: List terraforms
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    parameters:
+      - schema:
+          type: string
+        name: environmentId
+        in: path
+        required: true
+    post:
+      summary: Create a terraform
+      tags:
+        - Terraforms
+      operationId: createTerraform
+      x-stoplight:
+        id: qgpat08kc3wir
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerraformRequest'
+      responses:
+        '201':
+          description: Create terraform
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Terraform name within the environment is already taken
 components:
   parameters:
     applicationId:
@@ -21470,6 +21529,18 @@ components:
           type: integer
           x-stoplight:
             id: dsf78pwnvmqi8
+    TerraformResponseList:
+      title: TerraformResponseList
+      x-stoplight:
+        id: ipapoxduvpkk7
+      type: object
+      properties:
+        id:
+          type: array
+          x-stoplight:
+            id: mkzx2zfzysbnp
+          items:
+            $ref: '#/components/schemas/TerraformResponse'
   responses:
     '204':
       description: no content
