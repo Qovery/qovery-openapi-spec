@@ -11730,7 +11730,7 @@ paths:
           description: Terraform name within the environment is already taken
     delete:
       summary: Delete Terraform
-      tags: 
+      tags:
         - Terraform Main Calls
       operationId: deleteTerraform
       x-stoplight:
@@ -11738,6 +11738,64 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/terraform/{terraformId}/advancedSettings':
+    get:
+      summary: Get Advanced settings
+      tags:
+        - Terraform Configuration
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+      operationId: getTerraformAdvancedSettings
+      x-stoplight:
+        id: hth6esl7sqliu
+      responses:
+        '200':
+          description: Advanced settings list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformAdvancedSettings'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    parameters:
+      - schema:
+          type: string
+        name: terraformId
+        in: path
+        required: true
+    put:
+      summary: Edit Advanced settings
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+      tags:
+        - Terraform Configuration
+      operationId: editTerraformAdvancedSettings
+      x-stoplight:
+        id: 0rd396pcy9m0e
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerraformAdvancedSettings'
+      responses:
+        '201':
+          description: Updated advanced settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformAdvancedSettings'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -21615,6 +21673,39 @@ components:
             id: mkzx2zfzysbnp
           items:
             $ref: '#/components/schemas/TerraformResponse'
+    TerraformAdvancedSettings:
+      title: TerraformAdvancedSettings
+      x-stoplight:
+        id: vykzi46lkt2y1
+      type: object
+      properties:
+        build.timeout_max_sec:
+          type: integer
+          description: define the max timeout for the build
+        build.cpu_max_in_milli:
+          type: integer
+          description: define the max cpu resources (in milli)
+        build.ram_max_in_gib:
+          type: integer
+          description: define the max ram resources (in gib)
+        build.ephemeral_storage_in_gib:
+          type: integer
+        deployment.termination_grace_period_seconds:
+          type: integer
+          description: define how long in seconds an application is supposed to be stopped gracefully
+        deployment.affinity.node.required:
+          type: object
+          additionalProperties:
+            type: string
+          description: Set pod placement on specific Kubernetes nodes labels
+        security.service_account_name:
+          type: string
+          description: |
+            Allows you to set an existing Kubernetes service account name
+        security.read_only_root_filesystem:
+          type: boolean
+          description: |
+            Mounts the container's root filesystem as read-only
   responses:
     '204':
       description: no content
