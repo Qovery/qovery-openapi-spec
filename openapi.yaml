@@ -12390,6 +12390,7 @@ components:
         git_token_name:
           type: string
           nullable: true
+      title: ''
     ApplicationGitRepositoryRequest:
       type: object
       required:
@@ -18961,6 +18962,7 @@ components:
         - CONTAINER
         - JOB
         - HELM
+        - TERRAFORM
     SignUp:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -21256,7 +21258,15 @@ components:
         - $ref: '#/components/schemas/Base'
         - type: object
           required:
-            -name
+            - name
+            - timeout_sec
+            - auto_approve
+            - auto_deploy
+            - service_type
+            - terraform_variables_source
+            - provider
+            - provider_version
+            - job_resources
           properties:
             name:
               type: string
@@ -21273,15 +21283,17 @@ components:
               type: boolean
             auto_deploy:
               type: boolean
-            terraformFilesSource:
+            terraform_files_source:
               nullable: false
               oneOf:
                 - required:
                     - git
                   properties:
                     git:
-                      $ref: '#/components/schemas/HelmSourceGitResponse'
-                  type: object
+                      $ref: '#/components/schemas/ApplicationGitRepository'
+              x-stoplight:
+                id: abfhjb6q74upq
+              type: object
             icon_uri:
               type: string
               format: uri
@@ -21290,6 +21302,17 @@ components:
                 id: i2pvbugqsldhe
             service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
+            terraform_variables_source:
+              $ref: '#/components/schemas/TerraformVariablesSourceResponse'
+            provider:
+              x-stoplight:
+                id: d2ykapq57se4s
+              enum:
+                - TERRAFORM
+            provider_version:
+              $ref: '#/components/schemas/TerraformProviderVersion'
+            job_resources:
+              $ref: '#/components/schemas/TerraformJobResourcesResponse'
     TerraformRequestJobResources:
       title: TerraformRequestJobResources
       x-stoplight:
@@ -21402,6 +21425,51 @@ components:
           type: string
           x-stoplight:
             id: ddhd4pztgc43y
+    TerraformVariablesSourceResponse:
+      title: TerraformVariablesSourceResponse
+      x-stoplight:
+        id: 2lr1mv2b3y7xy
+      type: object
+      required:
+        - tf_var_file_paths
+        - tf_vars
+      properties:
+        tf_var_file_paths:
+          type: array
+          x-stoplight:
+            id: ua5d71it2yiu5
+          items:
+            x-stoplight:
+              id: qsy17gz9fl3n3
+            type: string
+        tf_vars:
+          type: array
+          x-stoplight:
+            id: gy48tvwnicoi7
+          items:
+            $ref: '#/components/schemas/TerraformVarKeyValue'
+    TerraformJobResourcesResponse:
+      title: TerraformJobResourcesResponse
+      x-stoplight:
+        id: xhswkmfwyerrv
+      type: object
+      required:
+        - cpu_milli
+        - ram_mib
+        - storage_gb
+      properties:
+        cpu_milli:
+          type: integer
+          x-stoplight:
+            id: bg054290feb9c
+        ram_mib:
+          type: integer
+          x-stoplight:
+            id: f6dur44ah2bwe
+        storage_gb:
+          type: integer
+          x-stoplight:
+            id: dsf78pwnvmqi8
   responses:
     '204':
       description: no content
