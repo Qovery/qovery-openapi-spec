@@ -589,6 +589,7 @@ components:
       required:
       - global_status
       - qovery_components_in_failure
+      - qovery_components
       - node_warnings
       - is_max_nodes_size_reached
       - kube_version_status
@@ -607,6 +608,10 @@ components:
               $ref: '#/components/schemas/QoveryNodeFailure'
           propertyNames:
             type: string
+        qovery_components:
+          type: array
+          items:
+            $ref: '#/components/schemas/QoveryComponentDto'
         qovery_components_in_failure:
           type: array
           items:
@@ -1438,6 +1443,29 @@ components:
       enum:
       - ERROR
       - WARNING
+    QoveryComponentDto:
+      type: object
+      required:
+      - name
+      - namespace
+      - status
+      - error_detail
+      - images_version
+      properties:
+        error_detail:
+          type: array
+          items:
+            $ref: '#/components/schemas/QoveryComponentInFailure'
+        images_version:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        namespace:
+          type: string
+        status:
+          $ref: '#/components/schemas/QoveryComponentStatus'
     QoveryComponentInFailure:
       oneOf:
       - $ref: '#/components/schemas/PodInErrorValue'
@@ -1447,6 +1475,11 @@ components:
         mapping:
           MISSING_COMPONENT: '#/components/schemas/MissingComponentValue'
           POD_IN_ERROR: '#/components/schemas/PodInErrorValue'
+    QoveryComponentStatus:
+      type: string
+      enum:
+      - RUNNING
+      - ERROR
     QoveryNodeFailure:
       type: object
       required:
