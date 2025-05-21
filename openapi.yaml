@@ -11599,7 +11599,7 @@ paths:
   /azure/clusterFeature:
     get:
       summary: List Azure features available
-      tags: 
+      tags:
         - Cloud Provider
       responses:
         '200':
@@ -11617,6 +11617,191 @@ paths:
       operationId: listAzureFeatures
       x-stoplight:
         id: gjin553b2f7mz
+  '/environment/{environmentId}/terraform':
+    get:
+      summary: List terraforms
+      operationId: listTerraforms
+      x-stoplight:
+        id: 2azyhtuthfuft
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1job/get/parameters/1'
+      tags:
+        - Terraforms
+      responses:
+        '200':
+          description: List terraforms
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    parameters:
+      - schema:
+          type: string
+        name: environmentId
+        in: path
+        required: true
+    post:
+      summary: Create a terraform
+      tags:
+        - Terraforms
+      operationId: createTerraform
+      x-stoplight:
+        id: qgpat08kc3wir
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerraformRequest'
+      responses:
+        '201':
+          description: Create terraform
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Terraform name within the environment is already taken
+  '/terraform/{terraformId}':
+    parameters:
+      - $ref: '#/components/parameters/terraformId'
+    get:
+      summary: Get terraform by ID
+      tags:
+        - Terraform Main Calls
+      operationId: getTerraform
+      x-stoplight:
+        id: s1dctms0dixdl
+      responses:
+        '200':
+          description: Get terrafor by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit Terraform
+      tags:
+        - Terraform Main Calls
+      operationId: editTerraform
+      x-stoplight:
+        id: pb6cdzqcvmnkh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerraformRequest'
+      responses:
+        '200':
+          description: Edit Terraform
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Terraform name within the environment is already taken
+    delete:
+      summary: Delete Terraform
+      tags:
+        - Terraform Main Calls
+      operationId: deleteTerraform
+      x-stoplight:
+        id: 518sjlmziel46
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/terraform/{terraformId}/advancedSettings':
+    get:
+      summary: Get Advanced settings
+      tags:
+        - Terraform Configuration
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+      operationId: getTerraformAdvancedSettings
+      x-stoplight:
+        id: hth6esl7sqliu
+      responses:
+        '200':
+          description: Advanced settings list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformAdvancedSettings'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    parameters:
+      - schema:
+          type: string
+        name: terraformId
+        in: path
+        required: true
+    put:
+      summary: Edit Advanced settings
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+      tags:
+        - Terraform Configuration
+      operationId: editTerraformAdvancedSettings
+      x-stoplight:
+        id: 0rd396pcy9m0e
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerraformAdvancedSettings'
+      responses:
+        '201':
+          description: Updated advanced settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformAdvancedSettings'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   parameters:
     applicationId:
@@ -11933,6 +12118,14 @@ components:
       schema:
         type: string
         default: chart
+    terraformId:
+      name: terraformId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Terraform ID
   schemas:
     AccountInfo:
       type: object
@@ -12390,6 +12583,7 @@ components:
         git_token_name:
           type: string
           nullable: true
+      title: ''
     ApplicationGitRepositoryRequest:
       type: object
       required:
@@ -18961,6 +19155,7 @@ components:
         - CONTAINER
         - JOB
         - HELM
+        - TERRAFORM
     SignUp:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -19891,6 +20086,7 @@ components:
           format: uuid
           description: The git token id on Qovery side
           nullable: true
+      title: ''
     HelmKeyValues:
       type: array
       description: 'The input is in json array format: [ [$KEY,$VALUE], [...] ]'
@@ -21192,6 +21388,324 @@ components:
           type: string
           x-stoplight:
             id: uudq68b36g6nk
+    TerraformRequest:
+      title: TerraformRequest
+      x-stoplight:
+        id: 7ujl5rx7sd38b
+      type: object
+      required:
+        - name
+        - description
+        - auto_approve
+        - auto_deploy
+        - terraform_files_source
+        - terraform_variables_source
+        - provider
+        - provider_version
+        - job_resources
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 6mlmgpyzwe46t
+        description:
+          type: string
+          x-stoplight:
+            id: ltvpnbhjz1oho
+        auto_approve:
+          type: boolean
+          x-stoplight:
+            id: zxy6gcsq4q6bc
+        auto_deploy:
+          type: boolean
+          x-stoplight:
+            id: 38iixcrw933wy
+        terraform_files_source:
+          oneOf:
+            - type: object
+              properties:
+                git_repository:
+                  $ref: '#/components/schemas/TerraformGitRepositoryRequest'
+        terraform_variables_source:
+          $ref: '#/components/schemas/TerraformVariablesSourceRequest'
+        provider:
+          x-stoplight:
+            id: w8o05dpbvcxp1
+          enum:
+            - Terraform
+        provider_version:
+          $ref: '#/components/schemas/TerraformProviderVersion'
+        timeout_sec:
+          type: string
+          x-stoplight:
+            id: 3e5ngsw45atsd
+        icon_uri:
+          type: string
+          x-stoplight:
+            id: nem7zoh97kyzc
+          format: uri
+        job_resources:
+          $ref: '#/components/schemas/TerraformRequestJobResources'
+    TerraformResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+            - timeout_sec
+            - auto_approve
+            - auto_deploy
+            - service_type
+            - terraform_variables_source
+            - provider
+            - provider_version
+            - job_resources
+          properties:
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+            timeout_sec:
+              type: integer
+              minimum: 0
+              default: 600
+            auto_approve:
+              type: boolean
+            auto_deploy:
+              type: boolean
+            terraform_files_source:
+              nullable: false
+              oneOf:
+                - required:
+                    - git
+                  properties:
+                    git:
+                      $ref: '#/components/schemas/ApplicationGitRepository'
+              x-stoplight:
+                id: abfhjb6q74upq
+              type: object
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the terraform service.
+              x-stoplight:
+                id: i2pvbugqsldhe
+            service_type:
+              $ref: '#/components/schemas/ServiceTypeEnum'
+            terraform_variables_source:
+              $ref: '#/components/schemas/TerraformVariablesSourceResponse'
+            provider:
+              x-stoplight:
+                id: d2ykapq57se4s
+              enum:
+                - TERRAFORM
+            provider_version:
+              $ref: '#/components/schemas/TerraformProviderVersion'
+            job_resources:
+              $ref: '#/components/schemas/TerraformJobResourcesResponse'
+    TerraformRequestJobResources:
+      title: TerraformRequestJobResources
+      x-stoplight:
+        id: ucc7l63gajzu8
+      type: object
+      required:
+        - cpu_milli
+        - ram_mib
+        - storage_gb
+      properties:
+        cpu_milli:
+          type: integer
+          x-stoplight:
+            id: alsilze9jc23e
+        ram_mib:
+          type: integer
+          x-stoplight:
+            id: a5y9bv1avatm3
+        storage_gb:
+          type: integer
+          x-stoplight:
+            id: 627awhyjj26ny
+    TerraformProviderVersion:
+      title: TerraformProviderVersion
+      x-stoplight:
+        id: 1a1hkhvei2wjq
+      type: object
+      required:
+        - read_from_terraform_block
+      properties:
+        read_from_terraform_block:
+          type: boolean
+          x-stoplight:
+            id: p2dnmuifo0fki
+        explicit_version:
+          type: string
+          x-stoplight:
+            id: 611hxcvuy68lv
+    TerraformVariablesSourceRequest:
+      title: TerraformVariablesSourceRequest
+      x-stoplight:
+        id: w9dp75z2a944z
+      type: object
+      required:
+        - tf_var_file_paths
+        - tf_vars
+      properties:
+        tf_var_file_paths:
+          type: array
+          x-stoplight:
+            id: kk82s9qjluugt
+          items:
+            x-stoplight:
+              id: 7ns22ue58d2zb
+            type: string
+        tf_vars:
+          type: array
+          x-stoplight:
+            id: hg4hduxkje573
+          items:
+            $ref: '#/components/schemas/TerraformVarKeyValue'
+    TerraformVarKeyValue:
+      title: TerraformVarKeyValue
+      x-stoplight:
+        id: 86bw027e72i7f
+      type: object
+      required:
+        - key
+        - value
+      properties:
+        key:
+          type: string
+          x-stoplight:
+            id: s9jeb1aergb9d
+        value:
+          type: string
+          x-stoplight:
+            id: 1gxsc1tzlxv3w
+    TerraformFilesSourceRequest:
+      title: TerraformFilesSourceRequest
+      x-stoplight:
+        id: n91jcyroi7kt4
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: vtpiblf7t37xq
+    TerraformGitRepositoryRequest:
+      title: TerraformGitRepositoryRequest
+      x-stoplight:
+        id: ot316adf8cqn0
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          x-stoplight:
+            id: yjnlaiu6umfgc
+        branch:
+          type: string
+          x-stoplight:
+            id: 7txz9hngsrt2a
+        root_path:
+          type: string
+          x-stoplight:
+            id: 2sdr8f1ia9yr1
+        git_token_id:
+          type: string
+          x-stoplight:
+            id: ddhd4pztgc43y
+    TerraformVariablesSourceResponse:
+      title: TerraformVariablesSourceResponse
+      x-stoplight:
+        id: 2lr1mv2b3y7xy
+      type: object
+      required:
+        - tf_var_file_paths
+        - tf_vars
+      properties:
+        tf_var_file_paths:
+          type: array
+          x-stoplight:
+            id: ua5d71it2yiu5
+          items:
+            x-stoplight:
+              id: qsy17gz9fl3n3
+            type: string
+        tf_vars:
+          type: array
+          x-stoplight:
+            id: gy48tvwnicoi7
+          items:
+            $ref: '#/components/schemas/TerraformVarKeyValue'
+    TerraformJobResourcesResponse:
+      title: TerraformJobResourcesResponse
+      x-stoplight:
+        id: xhswkmfwyerrv
+      type: object
+      required:
+        - cpu_milli
+        - ram_mib
+        - storage_gb
+      properties:
+        cpu_milli:
+          type: integer
+          x-stoplight:
+            id: bg054290feb9c
+        ram_mib:
+          type: integer
+          x-stoplight:
+            id: f6dur44ah2bwe
+        storage_gb:
+          type: integer
+          x-stoplight:
+            id: dsf78pwnvmqi8
+    TerraformResponseList:
+      title: TerraformResponseList
+      x-stoplight:
+        id: ipapoxduvpkk7
+      type: object
+      properties:
+        id:
+          type: array
+          x-stoplight:
+            id: mkzx2zfzysbnp
+          items:
+            $ref: '#/components/schemas/TerraformResponse'
+    TerraformAdvancedSettings:
+      title: TerraformAdvancedSettings
+      x-stoplight:
+        id: vykzi46lkt2y1
+      type: object
+      properties:
+        build.timeout_max_sec:
+          type: integer
+          description: define the max timeout for the build
+        build.cpu_max_in_milli:
+          type: integer
+          description: define the max cpu resources (in milli)
+        build.ram_max_in_gib:
+          type: integer
+          description: define the max ram resources (in gib)
+        build.ephemeral_storage_in_gib:
+          type: integer
+        deployment.termination_grace_period_seconds:
+          type: integer
+          description: define how long in seconds an application is supposed to be stopped gracefully
+        deployment.affinity.node.required:
+          type: object
+          additionalProperties:
+            type: string
+          description: Set pod placement on specific Kubernetes nodes labels
+        security.service_account_name:
+          type: string
+          description: |
+            Allows you to set an existing Kubernetes service account name
+        security.read_only_root_filesystem:
+          type: boolean
+          description: |
+            Mounts the container's root filesystem as read-only
   responses:
     '204':
       description: no content
