@@ -3199,28 +3199,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/scaleway/managedDatabase/instanceType/{zone}/{databaseType}':
-    get:
-      summary: List Scaleway available managed database instance types
-      operationId: listSCWManagedDatabaseInstanceType
-      parameters:
-        - $ref: '#/paths/~1scaleway~1instanceType~1%7Bzone%7D/get/parameters/0'
-        - $ref: '#/components/parameters/databaseType'
-      tags:
-        - Cloud Provider
-      responses:
-        '200':
-          description: list Scaleway available managed database instance types
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ManagedDatabaseInstanceTypeResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/scaleway/instanceType/{zone}':
     get:
       summary: List Scaleway Kapsule available instance types
