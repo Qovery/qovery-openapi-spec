@@ -27,6 +27,11 @@ jobs:
             target-branch: main
             deploy-ssh-key: SSH_DEPLOY_KEY_TYPESCRIPT_AXIOS
             deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_TYPESCRIPT_AXIOS
+          - language: rust
+            version: 7.13.0
+            target-branch: main
+            deploy-ssh-key: SSH_DEPLOY_KEY_RUST
+            deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_RUST
 
     steps:
       - name: Check out source code
