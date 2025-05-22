@@ -21296,7 +21296,6 @@ components:
         - azure_subscription_id
         - azure_tenant_id
         - azure_client_id
-        - azure_resource_group_name
         - object_type
       properties:
         id:
@@ -21320,10 +21319,6 @@ components:
           type: string
           x-stoplight:
             id: vqjd5qddm3p8g
-        azure_resource_group_name:
-          type: string
-          x-stoplight:
-            id: lnc8rl0idrvve
         object_type:
           x-stoplight:
             id: 8oodrxjznyahm
@@ -21340,7 +21335,6 @@ components:
         - azure_tenant_id
         - azure_client_id
         - azure_client_secret
-        - azure_resource_group_name
       properties:
         name:
           type: string
@@ -21362,10 +21356,6 @@ components:
           type: string
           x-stoplight:
             id: mj5vuoojyw05b
-        azure_resource_group_name:
-          type: string
-          x-stoplight:
-            id: uudq68b36g6nk
     TerraformRequest:
       title: TerraformRequest
       x-stoplight:
