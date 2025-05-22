@@ -637,6 +637,7 @@ components:
       - os_image
       - unschedulable
       - resources_allocatable
+      - resources_capacity
       - resources_allocated
       - taints
       - conditions
@@ -696,6 +697,8 @@ components:
           $ref: '#/components/schemas/NodeResourceDto'
         resources_allocated:
           $ref: '#/components/schemas/NodeResourceAllocatedDto'
+        resources_capacity:
+          $ref: '#/components/schemas/NodeResourceDto'
         taints:
           type: array
           items:
@@ -1144,14 +1147,24 @@ components:
     NodeResourceAllocatedDto:
       type: object
       required:
-      - memory_mib
-      - cpu_milli
+      - request_cpu_milli
+      - limit_cpu_milli
+      - request_memory_mib
+      - limit_memory_mib
       properties:
-        cpu_milli:
+        limit_cpu_milli:
           type: integer
           format: int32
           minimum: 0
-        memory_mib:
+        limit_memory_mib:
+          type: integer
+          format: int32
+          minimum: 0
+        request_cpu_milli:
+          type: integer
+          format: int32
+          minimum: 0
+        request_memory_mib:
           type: integer
           format: int32
           minimum: 0
