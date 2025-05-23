@@ -11797,7 +11797,7 @@ paths:
         - Terraforms
       responses:
         '200':
-          description: Default helm advanced settings
+          description: Default terraform advanced settings
           content:
             application/json:
               schema:
