@@ -112,6 +112,7 @@ tags:
   - name: Terraforms
   - name: Terraform Main Calls
   - name: Terraform Deployment History
+  - name: Terraform Deployment Restriction
   - name: Container Registries
   - name: Helm Repositories
   - name: User Sign Up
@@ -11869,6 +11870,66 @@ paths:
       operationId: listTerraformDeploymentHistoryV2
       x-stoplight:
         id: qxm14ubc0l5dq
+  '/terraform/{terraformId}/deploymentRestriction':
+    parameters:
+      - schema:
+          type: string
+        name: terraformId
+        in: path
+        required: true
+    get:
+      summary: Get terraform deployment restrictions
+      description: Get terraform deployment restrictions
+      tags:
+        - Terraform Deployment Restriction
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+      responses:
+        '200':
+          description: Get terraform deployment restrictions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformDeploymentRestrictionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: getTerraformDeploymentRestrictions
+      x-stoplight:
+        id: q3y44x1wdigcd
+    post:
+      summary: Create a terraform deployment restriction
+      description: Create a terraform deployment restriction
+      tags:
+        - Terraform Deployment Restriction
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerraformDeploymentRestrictionRequest'
+      responses:
+        '201':
+          description: Added an terraform deployment restriction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformDeploymentRestrictionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '409':
+          description: A terraform deployment restriction with same properties already exists for this terraform
+      operationId: createTerraformDeploymentRestriction
+      x-stoplight:
+        id: l6192gxde3sbv
 components:
   parameters:
     applicationId:
@@ -21764,6 +21825,45 @@ components:
           type: boolean
           description: |
             Mounts the container's root filesystem as read-only
+    TerraformDeploymentRestrictionRequest:
+      title: TerraformDeploymentRestrictionRequest
+      x-stoplight:
+        id: gtjm33l5m7q0x
+      type: object
+      required:
+        - mode
+        - type
+      properties:
+        mode:
+          $ref: '#/components/schemas/DeploymentRestrictionModeEnum'
+        type:
+          $ref: '#/components/schemas/DeploymentRestrictionTypeEnum'
+        value:
+          type: string
+          x-stoplight:
+            id: hsk8w0ydpuwm4
+          description: '‘For `PATH` restrictions, the value must not start with `/`’'
+    TerraformDeploymentRestrictionResponse:
+      title: TerraformDeploymentRestrictionResponse
+      x-stoplight:
+        id: 9t9zdouc9tao0
+      allOf:
+        - x-stoplight:
+            id: 48ugbmmvwddul
+          items: {}
+      type: array
+    TerraformDeploymentRestrictionResponseList:
+      title: TerraformDeploymentRestrictionResponseList
+      x-stoplight:
+        id: olvqymwxtdfeq
+      type: object
+      properties:
+        results:
+          x-stoplight:
+            id: iu0k7b7tkayre
+          type: array
+          items:
+            $ref: '#/components/schemas/TerraformDeploymentRestrictionResponse'
   responses:
     '204':
       description: no content
