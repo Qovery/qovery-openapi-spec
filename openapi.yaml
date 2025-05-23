@@ -21848,10 +21848,8 @@ components:
       x-stoplight:
         id: 9t9zdouc9tao0
       allOf:
-        - x-stoplight:
-            id: 48ugbmmvwddul
-          items: {}
-      type: array
+        - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/TerraformDeploymentRestrictionRequest'
     TerraformDeploymentRestrictionResponseList:
       title: TerraformDeploymentRestrictionResponseList
       x-stoplight:
