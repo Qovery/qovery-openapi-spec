@@ -11793,8 +11793,24 @@ paths:
         '404':
           $ref: '#/components/responses/404'
   '/defaultTerraformAdvancedSettings:':
-    get:
-      summary: List default terraform advanced settings
+  get:
+    summary: List default terraform advanced settings
+    tags:
+      - Terraforms
+    responses:
+      '200':
+        description: Default terraform advanced settings
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerraformAdvancedSettings'
+      '401':
+        $ref: '#/components/responses/401'
+      '403':
+        $ref: '#/components/responses/403'
+    operationId: getDefaultTerraformAdvancedSettings
+    x-stoplight:
+      id: 54ay6jd3ulvo3
       tags:
         - Terraforms
       responses:
