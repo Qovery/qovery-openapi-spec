@@ -11930,6 +11930,69 @@ paths:
       operationId: createTerraformDeploymentRestriction
       x-stoplight:
         id: l6192gxde3sbv
+  '/terraform/{terraformId}/deploymentRestriction/{deploymentRestrictionId}':
+    parameters:
+      - schema:
+          type: string
+        name: terraformId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: deploymentRestrictionId
+        in: path
+        required: true
+    put:
+      summary: Edit a terraform deployment restriction
+      description: Edit a terraform deployment restriction
+      tags: 
+        - Terraform Deployment Restriction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerraformDeploymentRestrictionRequest'
+      responses:
+        '200':
+          description: Edit a terraform deployment restriction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformDeploymentRestrictionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: editTerraformDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+        - $ref: '#/components/parameters/deploymentRestrictionId'
+      x-stoplight:
+        id: w3jp2xci6bogt
+    delete:
+      summary: Delete a terraform deployment restriction
+      description: Delete a terraform deployment restriction
+      tags: 
+        - Terraform Deployment Restriction
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: deleteTerraformDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+        - $ref: '#/components/parameters/deploymentRestrictionId'
+      x-stoplight:
+        id: d896flm9ibi54
 components:
   parameters:
     applicationId:
