@@ -109,6 +109,8 @@ tags:
   - name: Project Secret
   - name: Projects
   - name: Referral & Rewards
+  - name: Terraforms
+  - name: Terraform Main Calls
   - name: Container Registries
   - name: Helm Repositories
   - name: User Sign Up
@@ -151,6 +153,7 @@ x-tagGroups:
       - Databases
       - Jobs
       - Helms
+      - Terraforms
       - Environment Actions
       - Environment Logs
       - Environment Deployment History
@@ -216,6 +219,13 @@ x-tagGroups:
       - Helm Custom Domain
       - Helm Deployment Restriction
       - Helm Deployment History
+  - name: Terraform
+    tags:
+      - Terraform Main Calls
+      - Terraform Actions
+      - Terraform Configuration
+      - Terraform Deployment Restriction
+      - Terraform Deployment History
   - name: Account
     tags:
       - Account Info
@@ -11780,6 +11790,25 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/defaultTerraformAdvancedSettings:':
+    get:
+      summary: List default terraform advanced settings
+      tags: 
+        - Terraforms
+      responses:
+        '200':
+          description: Default helm advanced settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformAdvancedSettings'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+      operationId: getDefaultTerraformAdvancedSettings
+      x-stoplight:
+        id: 5qcyy764ewhk3
 components:
   parameters:
     applicationId:
@@ -16297,6 +16326,7 @@ components:
         - CONTAINER
         - JOB
         - HELM
+        - TERRAFORM
     APIVariableTypeEnum:
       type: string
       description: |
