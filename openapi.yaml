@@ -111,6 +111,7 @@ tags:
   - name: Referral & Rewards
   - name: Terraforms
   - name: Terraform Main Calls
+  - name: Terraform Deployment History
   - name: Container Registries
   - name: Helm Repositories
   - name: User Sign Up
@@ -11793,7 +11794,7 @@ paths:
   '/defaultTerraformAdvancedSettings:':
     get:
       summary: List default terraform advanced settings
-      tags: 
+      tags:
         - Terraforms
       responses:
         '200':
@@ -11809,6 +11810,65 @@ paths:
       operationId: getDefaultTerraformAdvancedSettings
       x-stoplight:
         id: 5qcyy764ewhk3
+  '/terraform/{terraformId}/clone':
+    post:
+      summary: Clone terraform
+      description: This will create a new terraform with the same configuration on the targeted environment Id.
+      operationId: cloneTerraform
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+      tags:
+        - Terraforms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneServiceRequest'
+      responses:
+        '202':
+          description: Terraform clone has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+  '/terraform/{terraformId}/deploymentHistoryV2':
+    parameters:
+      - schema:
+          type: string
+        name: terraformId
+        in: path
+        required: true
+    get:
+      summary: List terraform deployments
+      description: Returns the 20 last terraform deployments
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+      tags:
+        - Terraform Deployment History
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentHistoryServicePaginatedResponseListV2'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: listTerraformDeploymentHistoryV2
+      x-stoplight:
+        id: qxm14ubc0l5dq
 components:
   parameters:
     applicationId:
