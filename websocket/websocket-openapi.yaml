@@ -552,7 +552,6 @@ components:
       - renewal_time
       - state
       - failed_issuance_attempt_count
-      - last_failure_issuance_time
       properties:
         dns_names:
           type: array
@@ -563,7 +562,9 @@ components:
           format: int64
           minimum: 0
         last_failure_issuance_time:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
           minimum: 0
         not_after:
@@ -1148,16 +1149,18 @@ components:
       type: object
       required:
       - request_cpu_milli
-      - limit_cpu_milli
       - request_memory_mib
-      - limit_memory_mib
       properties:
         limit_cpu_milli:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int32
           minimum: 0
         limit_memory_mib:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int32
           minimum: 0
         request_cpu_milli:
