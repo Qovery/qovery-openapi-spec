@@ -1493,15 +1493,28 @@ components:
       enum:
       - RUNNING
       - ERROR
+    QoveryNodeAttributes:
+      type: object
+      properties:
+        node_pool_name:
+          type:
+          - string
+          - 'null'
     QoveryNodeFailure:
       type: object
       required:
+      - type
       - reason
       - message
+      - node_attributes
       properties:
         message:
           type: string
+        node_attributes:
+          $ref: '#/components/schemas/QoveryNodeAttributes'
         reason:
+          type: string
+        type:
           type: string
     ResourceStatusDto:
       type: string
