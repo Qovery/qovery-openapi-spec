@@ -11945,7 +11945,7 @@ paths:
     put:
       summary: Edit a terraform deployment restriction
       description: Edit a terraform deployment restriction
-      tags: 
+      tags:
         - Terraform Deployment Restriction
       requestBody:
         content:
@@ -11976,7 +11976,7 @@ paths:
     delete:
       summary: Delete a terraform deployment restriction
       description: Delete a terraform deployment restriction
-      tags: 
+      tags:
         - Terraform Deployment Restriction
       responses:
         '204':
@@ -21638,11 +21638,13 @@ components:
             - timeout_sec
             - auto_approve
             - auto_deploy
+            - icon_uri
             - service_type
             - terraform_variables_source
             - provider
             - provider_version
             - job_resources
+            - environment
           properties:
             name:
               type: string
@@ -21687,6 +21689,8 @@ components:
               $ref: '#/components/schemas/TerraformProviderVersion'
             job_resources:
               $ref: '#/components/schemas/TerraformJobResourcesResponse'
+            environment:
+              $ref: '#/components/schemas/ReferenceObject'
     TerraformRequestJobResources:
       title: TerraformRequestJobResources
       x-stoplight:
