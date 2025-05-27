@@ -12,6 +12,31 @@ info:
 servers:
 - url: wss://ws.qovery.com
 paths:
+  /cluster/metrics:
+    get:
+      tags:
+      - cluster_metrics
+      operationId: handle_cluster_metrics_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Stream of cluster metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterStatusDto'
   /cluster/node:
     get:
       tags:
@@ -552,6 +577,7 @@ components:
       - renewal_time
       - state
       - failed_issuance_attempt_count
+      - last_failure_issuance_time
       properties:
         dns_names:
           type: array
@@ -562,9 +588,7 @@ components:
           format: int64
           minimum: 0
         last_failure_issuance_time:
-          type:
-          - integer
-          - 'null'
+          type: integer
           format: int64
           minimum: 0
         not_after:
@@ -1149,18 +1173,16 @@ components:
       type: object
       required:
       - request_cpu_milli
+      - limit_cpu_milli
       - request_memory_mib
+      - limit_memory_mib
       properties:
         limit_cpu_milli:
-          type:
-          - integer
-          - 'null'
+          type: integer
           format: int32
           minimum: 0
         limit_memory_mib:
-          type:
-          - integer
-          - 'null'
+          type: integer
           format: int32
           minimum: 0
         request_cpu_milli:
@@ -1506,18 +1528,12 @@ components:
     QoveryNodeFailure:
       type: object
       required:
-      - type
       - reason
       - message
-      - node_attributes
       properties:
         message:
           type: string
-        node_attributes:
-          $ref: '#/components/schemas/QoveryNodeAttributes'
         reason:
-          type: string
-        type:
           type: string
     ResourceStatusDto:
       type: string
