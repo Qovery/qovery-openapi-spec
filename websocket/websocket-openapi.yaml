@@ -12,31 +12,6 @@ info:
 servers:
 - url: wss://ws.qovery.com
 paths:
-  /cluster/metrics:
-    get:
-      tags:
-      - cluster_metrics
-      operationId: handle_cluster_metrics_request
-      parameters:
-      - name: organization
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
-      responses:
-        '200':
-          description: Stream of cluster metrics
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClusterMetricsDto'
   /cluster/node:
     get:
       tags:
@@ -650,25 +625,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/NodeDto'
-    ClusterMetricsDto:
-      type: object
-      required:
-      - nodes
-      - pvcs
-      - node_pools
-      properties:
-        node_pools:
-          type: array
-          items:
-            $ref: '#/components/schemas/NodePoolInfoDto'
-        nodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClusterNodeDto'
-        pvcs:
-          type: array
-          items:
-            $ref: '#/components/schemas/PvcInfoDto'
     ClusterNodeDto:
       type: object
       required:
@@ -753,9 +709,24 @@ components:
       type: object
       required:
       - computed_status
+      - nodes
+      - pvcs
+      - node_pools
       properties:
         computed_status:
           $ref: '#/components/schemas/ClusterComputedStatusDto'
+        node_pools:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodePoolInfoDto'
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterNodeDto'
+        pvcs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PvcInfoDto'
         tls_certificate:
           oneOf:
           - type: 'null'
@@ -1652,6 +1623,7 @@ components:
       - DATABASE
       - JOB
       - HELM
+      - TERRAFORM
     UnitDto:
       type: string
       enum:
