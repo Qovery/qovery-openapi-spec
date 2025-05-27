@@ -36,7 +36,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClusterStatusDto'
+                $ref: '#/components/schemas/ClusterMetricsDto'
   /cluster/node:
     get:
       tags:
@@ -650,6 +650,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/NodeDto'
+    ClusterMetricsDto:
+      type: object
+      required:
+      - nodes
+      - pvcs
+      - node_pools
+      properties:
+        node_pools:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodePoolInfoDto'
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterNodeDto'
+        pvcs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PvcInfoDto'
     ClusterNodeDto:
       type: object
       required:
@@ -734,24 +753,9 @@ components:
       type: object
       required:
       - computed_status
-      - nodes
-      - pvcs
-      - node_pools
       properties:
         computed_status:
           $ref: '#/components/schemas/ClusterComputedStatusDto'
-        node_pools:
-          type: array
-          items:
-            $ref: '#/components/schemas/NodePoolInfoDto'
-        nodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClusterNodeDto'
-        pvcs:
-          type: array
-          items:
-            $ref: '#/components/schemas/PvcInfoDto'
         tls_certificate:
           oneOf:
           - type: 'null'
@@ -1528,12 +1532,18 @@ components:
     QoveryNodeFailure:
       type: object
       required:
+      - type
       - reason
       - message
+      - node_attributes
       properties:
         message:
           type: string
+        node_attributes:
+          $ref: '#/components/schemas/QoveryNodeAttributes'
         reason:
+          type: string
+        type:
           type: string
     ResourceStatusDto:
       type: string
