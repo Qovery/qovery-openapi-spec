@@ -1652,6 +1652,7 @@ components:
       - DATABASE
       - JOB
       - HELM
+      - TERRAFORM
     UnitDto:
       type: string
       enum:
