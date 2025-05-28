@@ -13449,6 +13449,8 @@ components:
               $ref: '#/components/schemas/ClusterDeploymentStatusEnum'
             metrics_parameters:
               $ref: '#/components/schemas/MetricsParameters'
+            infrastructure_outputs:
+              $ref: '#/components/schemas/InfrastructureOutputs'
     ClusterDeleteMode:
       type: string
       description: |
@@ -21487,6 +21489,81 @@ components:
             id: i8z3rzufjt5uk
           enum:
             - MANAGED_BY_QOVERY
+    InfrastructureOutputs:
+      type: object
+      required:
+        - kind
+      discriminator:
+        propertyName: kind
+        mapping:
+          AKS: '#/components/schemas/AksInfrastructureOutputs'
+          EKS: '#/components/schemas/EksInfrastructureOutputs'
+          GKE: '#/components/schemas/GkeInfrastructureOutputs'
+          SCW_KAPSULE: '#/components/schemas/KapsuleInfrastructureOutputs'
+      oneOf:
+        - $ref: '#/components/schemas/AksInfrastructureOutputs'
+        - $ref: '#/components/schemas/EksInfrastructureOutputs'
+        - $ref: '#/components/schemas/GkeInfrastructureOutputs'
+        - $ref: '#/components/schemas/KapsuleInfrastructureOutputs'
+    AksInfrastructureOutputs:
+      type: object
+      required:
+        - kind
+        - cluster_name
+        - cluster_oidc_issuer
+      properties:
+        kind:
+          enum:
+            - AKS
+        cluster_name:
+          type: string
+        cluster_oidc_issuer:
+          type: string
+    EksInfrastructureOutputs:
+      type: object
+      required:
+        - kind
+        - cluster_name
+        - cluster_arn
+        - cluster_oidc_issuer
+        - vpc_id
+      properties:
+        kind:
+          enum:
+            - EKS
+        cluster_name:
+          type: string
+        cluster_arn:
+          type: string
+        cluster_oidc_issuer:
+          type: string
+        vpc_id:
+          type: string
+    GkeInfrastructureOutputs:
+      type: object
+      required:
+        - kind
+        - cluster_name
+        - cluster_self_link
+      properties:
+        kind:
+          enum:
+            - GKE
+        cluster_name:
+          type: string
+        cluster_self_link:
+          type: string
+    KapsuleInfrastructureOutputs:
+      type: object
+      required:
+        - kind
+        - cluster_name
+      properties:
+        kind:
+          enum:
+            - SCW_KAPSULE
+        cluster_name:
+          type: string
     IngressDeploymentStatusResponse:
       title: IngressDeploymentStatusResponse
       x-stoplight:
