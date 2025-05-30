@@ -16907,6 +16907,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Status'
+        terraforms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
         stage:
           $ref: '#/components/schemas/Stage'
     DockerfileCheckRequest:
