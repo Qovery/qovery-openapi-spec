@@ -16291,6 +16291,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Status'
+        terraforms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
     EnvironmentStatusEventOriginEnum:
       type: string
       nullable: true
