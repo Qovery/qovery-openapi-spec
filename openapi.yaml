@@ -21839,21 +21839,12 @@ components:
             $ref: '#/components/schemas/TerraformVarKeyValue'
     TerraformVarKeyValue:
       title: TerraformVarKeyValue
-      x-stoplight:
-        id: 86bw027e72i7f
-      type: object
-      required:
-        - key
-        - value
-      properties:
-        key:
+      type: array
+      description: 'The input is in json array format: [ [$KEY,$VALUE], [...] ]'
+      items:
+        type: array
+        items:
           type: string
-          x-stoplight:
-            id: s9jeb1aergb9d
-        value:
-          type: string
-          x-stoplight:
-            id: 1gxsc1tzlxv3w
     TerraformFilesSourceRequest:
       title: TerraformFilesSourceRequest
       x-stoplight:
