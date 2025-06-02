@@ -21832,11 +21832,7 @@ components:
               id: 7ns22ue58d2zb
             type: string
         tf_vars:
-          type: array
-          x-stoplight:
-            id: hg4hduxkje573
-          items:
-            $ref: '#/components/schemas/TerraformVarKeyValue'
+          $ref: '#/components/schemas/TerraformVarKeyValue'
     TerraformVarKeyValue:
       title: TerraformVarKeyValue
       type: array
@@ -21897,11 +21893,7 @@ components:
               id: qsy17gz9fl3n3
             type: string
         tf_vars:
-          type: array
-          x-stoplight:
-            id: gy48tvwnicoi7
-          items:
-            $ref: '#/components/schemas/TerraformVarKeyValue'
+          $ref: '#/components/schemas/TerraformVarKeyValue'
     TerraformJobResourcesResponse:
       title: TerraformJobResourcesResponse
       x-stoplight:
