@@ -39,8 +39,20 @@ jobs:
 
       - name: Set up Go
         uses: actions/setup-go@v3
+        if: contains(matrix.include.language, 'go')
         with:
           go-version: "1.18"
+
+      - name: Install rust toolchain for Linux
+        if: contains(matrix.include.language, 'rust')
+        uses: actions-rs/toolchain@v1
+        with:
+          # We setup Rust toolchain and the desired target
+          profile: minimal
+          toolchain: "1.86"
+          override: true
+          target: ${{ matrix.platform.target }}
+          components: rustfmt
 
       - name: Build OpenApi file
         run: |
