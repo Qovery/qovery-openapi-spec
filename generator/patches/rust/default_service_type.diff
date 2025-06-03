@@ -50,6 +50,32 @@ index bca5733..49f8d64 100644
      pub service_type: models::ServiceTypeEnum,
  }
  
+diff --git a/src/models/helm_port_response_with_service_name.rs b/src/models/helm_port_response_with_service_name.rs
+index 3c3af30..a44e877 100644
+--- a/src/models/helm_port_response_with_service_name.rs
++++ b/src/models/helm_port_response_with_service_name.rs
+@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
+ pub struct HelmPortResponseWithServiceName {
+     #[serde(rename = "id")]
+     pub id: uuid::Uuid,
+-    #[serde(rename = "port_type")]
++    #[serde(rename = "port_type", default="models::helm_response_all_of_ports::default_port_type_service_name")]
+     pub port_type: String,
+     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
+     pub name: Option<String>,
+diff --git a/src/models/helm_port_response_with_service_selectors.rs b/src/models/helm_port_response_with_service_selectors.rs
+index 1992860..77566a0 100644
+--- a/src/models/helm_port_response_with_service_selectors.rs
++++ b/src/models/helm_port_response_with_service_selectors.rs
+@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
+ pub struct HelmPortResponseWithServiceSelectors {
+     #[serde(rename = "id")]
+     pub id: uuid::Uuid,
+-    #[serde(rename = "port_type")]
++    #[serde(rename = "port_type", default="models::helm_response_all_of_ports::default_port_type_service_selectors")]
+     pub port_type: String,
+     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
+     pub name: Option<String>,
 diff --git a/src/models/helm_response.rs b/src/models/helm_response.rs
 index ce70f19..523470e 100644
 --- a/src/models/helm_response.rs
@@ -62,6 +88,22 @@ index ce70f19..523470e 100644
 +    #[serde(rename = "service_type", default="models::service_type_enum::service_type_helm")]
      pub service_type: models::ServiceTypeEnum,
  }
+ 
+diff --git a/src/models/helm_response_all_of_ports.rs b/src/models/helm_response_all_of_ports.rs
+index 8f6c617..5b6dd3f 100644
+--- a/src/models/helm_response_all_of_ports.rs
++++ b/src/models/helm_response_all_of_ports.rs
+@@ -26,4 +26,11 @@ impl Default for HelmResponseAllOfPorts {
+     }
+ }
+ 
++pub fn default_port_type_service_name() -> String {
++    "SERVICE_NAME".to_string()
++}
++
++pub fn default_port_type_service_selectors() -> String {
++    "SERVICE_SELECTORS".to_string()
++}
  
 diff --git a/src/models/lifecycle_job_response.rs b/src/models/lifecycle_job_response.rs
 index b76b33c..5f80b3a 100644
