@@ -20080,6 +20080,12 @@ components:
         - JOB
         - HELM
         - TERRAFORM
+    JobTypeEnum:
+      type: string
+      description: type of job
+      enum:
+        - LIFECYCLE
+        - CRON
     LifecycleJobResponse:
       allOf:
         - $ref: '#/components/schemas/BaseJobResponse'
@@ -20089,9 +20095,7 @@ components:
             - schedule
           properties:
             job_type:
-              type: string
-              enum:
-                - LIFECYCLE
+              $ref: '#/components/schemas/JobTypeEnum'
             schedule:
               type: object
               properties:
@@ -20141,9 +20145,7 @@ components:
             - schedule
           properties:
             job_type:
-              type: string
-              enum:
-                - CRON
+              $ref: '#/components/schemas/JobTypeEnum'
             schedule:
               type: object
               required:
