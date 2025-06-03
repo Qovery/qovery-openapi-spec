@@ -11778,6 +11778,37 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/terraform/{terraformId}/deploy':
+    post:
+      summary: Deploy terraform
+      description: You must provide a git commit id.
+      operationId: deployTerraform
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+      tags:
+        - Terraform Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerraformDeployRequest'
+      responses:
+        '202':
+          description: Deploy terraform
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
   '/defaultTerraformAdvancedSettings:':
     get:
       summary: List default terraform advanced settings
@@ -21939,6 +21970,15 @@ components:
           type: boolean
           description: |
             Mounts the container's root filesystem as read-only
+    TerraformDeployRequest:
+      type: object
+      properties:
+        git_commit_id:
+          type: string
+          description: |
+            Commit to deploy for chart source.
+        dry_run:
+          type: boolean
     TerraformDeploymentRestrictionRequest:
       title: TerraformDeploymentRestrictionRequest
       x-stoplight:
