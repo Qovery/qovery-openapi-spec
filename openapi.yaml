@@ -11809,7 +11809,7 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/defaultTerraformAdvancedSettings:':
+  '/defaultTerraformAdvancedSettings':
     get:
       summary: List default terraform advanced settings
       tags:
