@@ -25,18 +25,21 @@ index bee2d02..db3eb75 100644
  }
  
 diff --git a/src/models/cron_job_response.rs b/src/models/cron_job_response.rs
-index 8c3532c..8542a93 100644
+index 623c769..fda59d1 100644
 --- a/src/models/cron_job_response.rs
 +++ b/src/models/cron_job_response.rs
-@@ -60,7 +60,7 @@ pub struct CronJobResponse {
+@@ -60,9 +60,9 @@ pub struct CronJobResponse {
      /// Icon URI representing the job.
      #[serde(rename = "icon_uri")]
      pub icon_uri: String,
 -    #[serde(rename = "service_type")]
 +    #[serde(rename = "service_type", default="models::service_type_enum::service_type_job")]
      pub service_type: models::ServiceTypeEnum,
-     #[serde(rename = "job_type")]
-     pub job_type: JobType,
+-    #[serde(rename = "job_type")]
++    #[serde(rename = "job_type", default="models::job_type_enum::job_type_cron")]
+     pub job_type: models::JobTypeEnum,
+     #[serde(rename = "schedule")]
+     pub schedule: models::CronJobResponseAllOfSchedule,
 diff --git a/src/models/database.rs b/src/models/database.rs
 index bca5733..49f8d64 100644
 --- a/src/models/database.rs
@@ -105,19 +108,39 @@ index 8f6c617..5b6dd3f 100644
 +    "SERVICE_SELECTORS".to_string()
 +}
  
+diff --git a/src/models/job_type_enum.rs b/src/models/job_type_enum.rs
+index 0491807..5e4ae86 100644
+--- a/src/models/job_type_enum.rs
++++ b/src/models/job_type_enum.rs
+@@ -37,3 +37,11 @@ impl Default for JobTypeEnum {
+     }
+ }
+ 
++
++pub fn job_type_lifecycle() -> JobTypeEnum {
++    JobTypeEnum::Lifecycle
++}
++
++pub fn job_type_cron() -> JobTypeEnum {
++    JobTypeEnum::Cron
++}
+\ No newline at end of file
 diff --git a/src/models/lifecycle_job_response.rs b/src/models/lifecycle_job_response.rs
-index acd655d..feac102 100644
+index d587142..c608c5b 100644
 --- a/src/models/lifecycle_job_response.rs
 +++ b/src/models/lifecycle_job_response.rs
-@@ -60,7 +60,7 @@ pub struct LifecycleJobResponse {
+@@ -60,9 +60,9 @@ pub struct LifecycleJobResponse {
      /// Icon URI representing the job.
      #[serde(rename = "icon_uri")]
      pub icon_uri: String,
 -    #[serde(rename = "service_type")]
 +    #[serde(rename = "service_type", default="models::service_type_enum::service_type_job")]
      pub service_type: models::ServiceTypeEnum,
-     #[serde(rename = "job_type")]
-     pub job_type: JobType,
+-    #[serde(rename = "job_type")]
++    #[serde(rename = "job_type", default="models::job_type_enum::job_type_lifecycle")]
+     pub job_type: models::JobTypeEnum,
+     #[serde(rename = "schedule")]
+     pub schedule: models::LifecycleJobResponseAllOfSchedule,
 diff --git a/src/models/service_type_enum.rs b/src/models/service_type_enum.rs
 index e2d0e98..4a2c2f2 100644
 --- a/src/models/service_type_enum.rs
