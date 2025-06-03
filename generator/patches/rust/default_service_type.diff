@@ -1,0 +1,106 @@
+diff --git a/src/models/application.rs b/src/models/application.rs
+index 8705b5f..5440bad 100644
+--- a/src/models/application.rs
++++ b/src/models/application.rs
+@@ -76,7 +76,7 @@ pub struct Application {
+     /// Icon URI representing the application.
+     #[serde(rename = "icon_uri")]
+     pub icon_uri: String,
+-    #[serde(rename = "service_type")]
++    #[serde(rename = "service_type", default="models::service_type_enum::service_type_application")]
+     pub service_type: models::ServiceTypeEnum,
+     /// The target build stage in the Dockerfile to build
+     #[serde(rename = "docker_target_build_stage", skip_serializing_if = "Option::is_none")]
+diff --git a/src/models/container_response.rs b/src/models/container_response.rs
+index bee2d02..db3eb75 100644
+--- a/src/models/container_response.rs
++++ b/src/models/container_response.rs
+@@ -80,7 +80,7 @@ pub struct ContainerResponse {
+     /// Icon URI representing the container.
+     #[serde(rename = "icon_uri")]
+     pub icon_uri: String,
+-    #[serde(rename = "service_type")]
++    #[serde(rename = "service_type", default="models::service_type_enum::service_type_container")]
+     pub service_type: models::ServiceTypeEnum,
+ }
+ 
+diff --git a/src/models/cron_job_response.rs b/src/models/cron_job_response.rs
+index 3ef5991..d1bbcc3 100644
+--- a/src/models/cron_job_response.rs
++++ b/src/models/cron_job_response.rs
+@@ -60,7 +60,7 @@ pub struct CronJobResponse {
+     /// Icon URI representing the job.
+     #[serde(rename = "icon_uri")]
+     pub icon_uri: String,
+-    #[serde(rename = "service_type")]
++    #[serde(rename = "service_type", default="models::service_type_enum::service_type_job")]
+     pub service_type: models::ServiceTypeEnum,
+     #[serde(rename = "job_type")]
+     pub job_type: JobType,
+diff --git a/src/models/database.rs b/src/models/database.rs
+index bca5733..49f8d64 100644
+--- a/src/models/database.rs
++++ b/src/models/database.rs
+@@ -67,7 +67,7 @@ pub struct Database {
+     /// indicates if the database disk is encrypted or not
+     #[serde(rename = "disk_encrypted", skip_serializing_if = "Option::is_none")]
+     pub disk_encrypted: Option<bool>,
+-    #[serde(rename = "service_type")]
++    #[serde(rename = "service_type", default="models::service_type_enum::service_type_database")]
+     pub service_type: models::ServiceTypeEnum,
+ }
+ 
+diff --git a/src/models/helm_response.rs b/src/models/helm_response.rs
+index ce70f19..523470e 100644
+--- a/src/models/helm_response.rs
++++ b/src/models/helm_response.rs
+@@ -50,7 +50,7 @@ pub struct HelmResponse {
+     /// Icon URI representing the helm service.
+     #[serde(rename = "icon_uri")]
+     pub icon_uri: String,
+-    #[serde(rename = "service_type")]
++    #[serde(rename = "service_type", default="models::service_type_enum::service_type_helm")]
+     pub service_type: models::ServiceTypeEnum,
+ }
+ 
+diff --git a/src/models/lifecycle_job_response.rs b/src/models/lifecycle_job_response.rs
+index b76b33c..5f80b3a 100644
+--- a/src/models/lifecycle_job_response.rs
++++ b/src/models/lifecycle_job_response.rs
+@@ -60,7 +60,7 @@ pub struct LifecycleJobResponse {
+     /// Icon URI representing the job.
+     #[serde(rename = "icon_uri")]
+     pub icon_uri: String,
+-    #[serde(rename = "service_type")]
++    #[serde(rename = "service_type", default="models::service_type_enum::service_type_job")]
+     pub service_type: models::ServiceTypeEnum,
+     #[serde(rename = "job_type")]
+     pub job_type: JobType,
+diff --git a/src/models/service_type_enum.rs b/src/models/service_type_enum.rs
+index e2d0e98..4a2c2f2 100644
+--- a/src/models/service_type_enum.rs
++++ b/src/models/service_type_enum.rs
+@@ -49,3 +49,10 @@ impl Default for ServiceTypeEnum {
+     }
+ }
+ 
++
++pub fn service_type_application() -> ServiceTypeEnum { ServiceTypeEnum::Application }
++pub fn service_type_container() -> ServiceTypeEnum { ServiceTypeEnum::Container }
++pub fn service_type_database() -> ServiceTypeEnum { ServiceTypeEnum::Database }
++pub fn service_type_helm() -> ServiceTypeEnum { ServiceTypeEnum::Helm }
++pub fn service_type_terraform() -> ServiceTypeEnum { ServiceTypeEnum::Terraform }
++pub fn service_type_job() -> ServiceTypeEnum { ServiceTypeEnum::Job }
+diff --git a/src/models/terraform_response.rs b/src/models/terraform_response.rs
+index afdc518..f2cf6d5 100644
+--- a/src/models/terraform_response.rs
++++ b/src/models/terraform_response.rs
+@@ -35,7 +35,7 @@ pub struct TerraformResponse {
+     /// Icon URI representing the terraform service.
+     #[serde(rename = "icon_uri")]
+     pub icon_uri: String,
+-    #[serde(rename = "service_type")]
++    #[serde(rename = "service_type", default="models::service_type_enum::service_type_terraform")]
+     pub service_type: models::ServiceTypeEnum,
+     #[serde(rename = "terraform_variables_source")]
+     pub terraform_variables_source: models::TerraformVariablesSourceResponse,

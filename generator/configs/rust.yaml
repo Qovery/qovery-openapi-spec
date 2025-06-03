@@ -1,2 +1,4 @@
 additionalProperties:
   useBonBuilder: true
+  avoidBoxedModels: true
+  packageName: qovery

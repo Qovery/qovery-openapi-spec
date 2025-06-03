@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.1.1
 info:
   version: 1.0.3
   title: Qovery API
@@ -4945,8 +4945,6 @@ paths:
       summary: Cancel deployment request
       description: Cancel the a deployment request.
       operationId: cancelDeploymentRequest
-      parameters:
-        - $ref: '#/components/parameters/deploymentRequestId'
       tags:
         - Deployment Queue Actions
       responses:
@@ -5084,7 +5082,6 @@ paths:
       operationId: listContainer
       parameters:
         - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1job/get/parameters/1'
       tags:
         - Containers
       responses:
@@ -5446,7 +5443,6 @@ paths:
       description: 'List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
       operationId: listEnvironmentDeploymentHistoryV2
       parameters:
-        - $ref: '#/components/parameters/environmentId'
         - $ref: '#/components/parameters/startId'
       tags:
         - Environment Deployment History
@@ -5468,6 +5464,7 @@ paths:
     parameters:
       - schema:
           type: string
+          format: uuid
         name: environmentId
         in: path
         required: true
@@ -6332,7 +6329,6 @@ paths:
       description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id'
       operationId: listApplicationDeploymentHistoryV2
       parameters:
-        - $ref: '#/components/parameters/applicationId'
         - $ref: '#/components/parameters/startId'
       tags:
         - Application Deployment History
@@ -7201,12 +7197,6 @@ paths:
           $ref: '#/components/responses/404'
       x-stoplight:
         id: qfy5ueb8cyebe
-    parameters:
-      - schema:
-          type: string
-        name: containerId
-        in: path
-        required: true
   '/container/{containerId}/advancedSettings':
     get:
       summary: Get advanced settings
@@ -8403,7 +8393,6 @@ paths:
       description: By default it returns the 20 last results. The response is paginated.
       operationId: listDatabaseDeploymentHistoryV2
       parameters:
-        - $ref: '#/components/parameters/databaseId'
         - $ref: '#/components/parameters/startId'
       tags:
         - Database Deployment History
@@ -8425,6 +8414,7 @@ paths:
     parameters:
       - schema:
           type: string
+          format: uuid
         name: databaseId
         in: path
         required: true
@@ -9152,8 +9142,6 @@ paths:
       summary: List helm deployments
       description: Returns the 20 last helm deployments
       operationId: listHelmDeploymentHistoryV2
-      parameters:
-        - $ref: '#/components/parameters/helmId'
       tags:
         - Helm Deployment History
       responses:
@@ -9174,6 +9162,7 @@ paths:
     parameters:
       - schema:
           type: string
+          format: uuid
         name: helmId
         in: path
         required: true
@@ -9929,8 +9918,6 @@ paths:
       summary: List job deployments
       description: Returns the 20 last job deployments
       operationId: listJobDeploymentHistoryV2
-      parameters:
-        - $ref: '#/components/parameters/jobId'
       tags:
         - Job Deployment History
       responses:
@@ -9951,6 +9938,7 @@ paths:
     parameters:
       - schema:
           type: string
+          format: uuid
         name: jobId
         in: path
         required: true
@@ -11065,6 +11053,16 @@ paths:
                         - $ref: '#/components/schemas/Database'
                         - $ref: '#/components/schemas/HelmResponse'
                         - $ref: '#/components/schemas/JobResponse'
+                        - $ref: '#/components/schemas/TerraformResponse'
+                      discriminator:
+                        propertyName: service_type
+                        mapping:
+                          APPLICATION: '#/components/schemas/Application'
+                          CONTAINER: '#/components/schemas/ContainerResponse'
+                          DATABASE: '#/components/schemas/Database'
+                          HELM: '#/components/schemas/HelmResponse'
+                          JOB: '#/components/schemas/JobResponse'
+                          TERRAFORM: '#/components/schemas/TerraformResponse'
       operationId: listServicesByEnvironmentId
       x-stoplight:
         id: 9adquhr5t6qx3
@@ -11489,9 +11487,6 @@ paths:
     get:
       summary: Get a set of Azure credentials
       operationId: getAzureCredentials
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/credentialsId'
       tags:
         - Cloud Provider Credentials
       responses:
@@ -11512,9 +11507,6 @@ paths:
     put:
       summary: Edit a set of Azure credentials
       operationId: editAzureCredentials
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/credentialsId'
       tags:
         - Cloud Provider Credentials
       requestBody:
@@ -11540,9 +11532,6 @@ paths:
     delete:
       summary: Delete a set of Azure credentials
       operationId: deleteAzureCredentials
-      parameters:
-        - $ref: '#/components/parameters/credentialsId'
-        - $ref: '#/components/parameters/organizationId'
       tags:
         - Cloud Provider Credentials
       responses:
@@ -11557,11 +11546,13 @@ paths:
     parameters:
       - schema:
           type: string
+          format: uuid
         name: organizationId
         in: path
         required: true
       - schema:
           type: string
+          format: uuid
         name: credentialsId
         in: path
         required: true
@@ -11613,9 +11604,6 @@ paths:
       operationId: listTerraforms
       x-stoplight:
         id: 2azyhtuthfuft
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/paths/~1environment~1%7BenvironmentId%7D~1job/get/parameters/1'
       tags:
         - Terraforms
       responses:
@@ -11634,6 +11622,7 @@ paths:
     parameters:
       - schema:
           type: string
+          format: uuid
         name: environmentId
         in: path
         required: true
@@ -11739,8 +11728,6 @@ paths:
       summary: Get Advanced settings
       tags:
         - Terraform Configuration
-      parameters:
-        - $ref: '#/components/parameters/terraformId'
       operationId: getTerraformAdvancedSettings
       x-stoplight:
         id: hth6esl7sqliu
@@ -11760,13 +11747,12 @@ paths:
     parameters:
       - schema:
           type: string
+          format: uuid
         name: terraformId
         in: path
         required: true
     put:
       summary: Edit Advanced settings
-      parameters:
-        - $ref: '#/components/parameters/terraformId'
       tags:
         - Terraform Configuration
       operationId: editTerraformAdvancedSettings
@@ -11844,14 +11830,13 @@ paths:
     parameters:
       - schema:
           type: string
+          format: uuid
         name: terraformId
         in: path
         required: true
     get:
       summary: List terraform deployments
       description: Returns the 20 last terraform deployments
-      parameters:
-        - $ref: '#/components/parameters/terraformId'
       tags:
         - Terraform Deployment History
       responses:
@@ -11882,8 +11867,6 @@ paths:
       description: Get terraform deployment restrictions
       tags:
         - Terraform Deployment Restriction
-      parameters:
-        - $ref: '#/components/parameters/terraformId'
       responses:
         '200':
           description: Get terraform deployment restrictions
@@ -11905,8 +11888,6 @@ paths:
       description: Create a terraform deployment restriction
       tags:
         - Terraform Deployment Restriction
-      parameters:
-        - $ref: '#/components/parameters/terraformId'
       requestBody:
         content:
           application/json:
@@ -11934,11 +11915,13 @@ paths:
     parameters:
       - schema:
           type: string
+          format: uuid
         name: terraformId
         in: path
         required: true
       - schema:
           type: string
+          format: uuid
         name: deploymentRestrictionId
         in: path
         required: true
@@ -11968,9 +11951,6 @@ paths:
         '404':
           $ref: '#/components/responses/404'
       operationId: editTerraformDeploymentRestriction
-      parameters:
-        - $ref: '#/components/parameters/terraformId'
-        - $ref: '#/components/parameters/deploymentRestrictionId'
       x-stoplight:
         id: w3jp2xci6bogt
     delete:
@@ -11988,9 +11968,6 @@ paths:
         '404':
           $ref: '#/components/responses/404'
       operationId: deleteTerraformDeploymentRestriction
-      parameters:
-        - $ref: '#/components/parameters/terraformId'
-        - $ref: '#/components/parameters/deploymentRestrictionId'
       x-stoplight:
         id: d896flm9ibi54
 components:
@@ -12615,7 +12592,7 @@ components:
               x-stoplight:
                 id: b8karc43pdxpu
             service_type:
-              $ref: '#/components/schemas/ServiceTypeEnum'
+                $ref: '#/components/schemas/ServiceTypeEnum'
             docker_target_build_stage:
               type: string
               x-stoplight:
@@ -12762,14 +12739,12 @@ components:
           description: Git commit date corresponding to the deployed version of the app
         deployed_commit_contributor:
           type: string
-          format: uuid
           description: Git commit user corresponding to the deployed version of the app
         deployed_commit_tag:
           type: string
           example: v1.0.1
         git_token_id:
           type: string
-          format: uuid
           nullable: true
         git_token_name:
           type: string
