@@ -21759,7 +21759,7 @@ components:
       required:
         - cpu_milli
         - ram_mib
-        - storage_gb
+        - storage_gib
       properties:
         cpu_milli:
           type: integer
@@ -21769,7 +21769,7 @@ components:
           type: integer
           x-stoplight:
             id: a5y9bv1avatm3
-        storage_gb:
+        storage_gib:
           type: integer
           x-stoplight:
             id: 627awhyjj26ny
@@ -21877,7 +21877,7 @@ components:
       required:
         - cpu_milli
         - ram_mib
-        - storage_gb
+        - storage_gib
       properties:
         cpu_milli:
           type: integer
@@ -21887,7 +21887,7 @@ components:
           type: integer
           x-stoplight:
             id: f6dur44ah2bwe
-        storage_gb:
+        storage_gib:
           type: integer
           x-stoplight:
             id: dsf78pwnvmqi8
