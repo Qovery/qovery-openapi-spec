@@ -1,5 +1,5 @@
 diff --git a/src/models/application.rs b/src/models/application.rs
-index 8705b5f..5440bad 100644
+index d39d8db..4245433 100644
 --- a/src/models/application.rs
 +++ b/src/models/application.rs
 @@ -76,7 +76,7 @@ pub struct Application {
@@ -10,7 +10,7 @@ index 8705b5f..5440bad 100644
 +    #[serde(rename = "service_type", default="models::service_type_enum::service_type_application")]
      pub service_type: models::ServiceTypeEnum,
      /// The target build stage in the Dockerfile to build
-     #[serde(rename = "docker_target_build_stage", skip_serializing_if = "Option::is_none")]
+     #[serde(rename = "docker_target_build_stage", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
 diff --git a/src/models/container_response.rs b/src/models/container_response.rs
 index bee2d02..db3eb75 100644
 --- a/src/models/container_response.rs
@@ -25,7 +25,7 @@ index bee2d02..db3eb75 100644
  }
  
 diff --git a/src/models/cron_job_response.rs b/src/models/cron_job_response.rs
-index 3ef5991..d1bbcc3 100644
+index 8c3532c..8542a93 100644
 --- a/src/models/cron_job_response.rs
 +++ b/src/models/cron_job_response.rs
 @@ -60,7 +60,7 @@ pub struct CronJobResponse {
@@ -106,7 +106,7 @@ index 8f6c617..5b6dd3f 100644
 +}
  
 diff --git a/src/models/lifecycle_job_response.rs b/src/models/lifecycle_job_response.rs
-index b76b33c..5f80b3a 100644
+index acd655d..feac102 100644
 --- a/src/models/lifecycle_job_response.rs
 +++ b/src/models/lifecycle_job_response.rs
 @@ -60,7 +60,7 @@ pub struct LifecycleJobResponse {
