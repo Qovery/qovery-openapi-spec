@@ -16608,6 +16608,7 @@ components:
         - CRON
         - LIFECYCLE
         - HELM
+        - TERRAFORM
     GitTokenAssociatedServiceResponse:
       type: object
       required:
@@ -17872,6 +17873,7 @@ components:
         - DATABASE
         - JOB
         - HELM
+        - TERRAFORM
     Log:
       type: object
       required:
@@ -20046,6 +20048,7 @@ components:
         - CONTAINER
         - JOB
         - HELM
+        - TERRAFORM
     LifecycleJobResponse:
       allOf:
         - $ref: '#/components/schemas/BaseJobResponse'
