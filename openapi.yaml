@@ -11886,6 +11886,28 @@ paths:
       operationId: listTerraformDeploymentHistoryV2
       x-stoplight:
         id: qxm14ubc0l5dq
+  '/terraform/{terraformId}/commit':
+    get:
+      summary: List last commits
+      description: Returns list of the last 100 commits made on the repository linked to the terraform service
+      operationId: listTerraformCommit
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+      tags:
+        - Terraform Main Calls
+      responses:
+        '200':
+          description: List commits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/terraform/{terraformId}/deploymentRestriction':
     parameters:
       - schema:
