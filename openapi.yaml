@@ -11809,7 +11809,7 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/defaultTerraformAdvancedSettings':
+  /defaultTerraformAdvancedSettings:
     get:
       summary: List default terraform advanced settings
       tags:
@@ -12645,7 +12645,7 @@ components:
               x-stoplight:
                 id: b8karc43pdxpu
             service_type:
-                $ref: '#/components/schemas/ServiceTypeEnum'
+              $ref: '#/components/schemas/ServiceTypeEnum'
             docker_target_build_stage:
               type: string
               x-stoplight:
@@ -21628,7 +21628,6 @@ components:
         - name
         - azure_subscription_id
         - azure_tenant_id
-        - azure_client_id
         - object_type
       properties:
         id:
@@ -21648,10 +21647,6 @@ components:
           type: string
           x-stoplight:
             id: ygjwz6uqfexsc
-        azure_client_id:
-          type: string
-          x-stoplight:
-            id: vqjd5qddm3p8g
         object_type:
           x-stoplight:
             id: 8oodrxjznyahm
@@ -21666,8 +21661,6 @@ components:
         - name
         - azure_subscription_id
         - azure_tenant_id
-        - azure_client_id
-        - azure_client_secret
       properties:
         name:
           type: string
@@ -21681,14 +21674,6 @@ components:
           type: string
           x-stoplight:
             id: u776tz269mjb0
-        azure_client_id:
-          type: string
-          x-stoplight:
-            id: 6d8yrq1enhyc8
-        azure_client_secret:
-          type: string
-          x-stoplight:
-            id: mj5vuoojyw05b
     TerraformRequest:
       title: TerraformRequest
       x-stoplight:
