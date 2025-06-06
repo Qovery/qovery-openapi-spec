@@ -22011,6 +22011,7 @@ components:
       required:
         - mode
         - type
+        - value
       properties:
         mode:
           $ref: '#/components/schemas/DeploymentRestrictionModeEnum'
