@@ -9,23 +9,14 @@ link: https://api-doc.qovery.com
 
 ## Run locally
 
-### Install dependencies
+To run the openapi generator locally, you can do i.e for Rust
+You will have the sdk in the path `out/qovery-client-rust`
 
-`npm install`
+```
+ openapi-generator-cli generate -g rust \
+       -i openapi.yaml \
+       -o out/qovery-client-rust \
+       -c generator/configs/rust.yaml
+./generator/post_generation_scripts/rust.sh
+```
 
-### Run locally
-
-`npm run preview`
-
-## Design draft document
-
-[DESIGN_DRAFT.md](DESIGN_DRAFT.md)
-
-## Generate API client
-
-`QOVERY_CLIENT_LANGUAGE=go npm run generate`
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
