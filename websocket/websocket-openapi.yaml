@@ -871,6 +871,7 @@ components:
       - databases
       - jobs
       - helms
+      - terraform
       properties:
         applications:
           type: array
@@ -898,6 +899,10 @@ components:
           type: string
         state:
           $ref: '#/components/schemas/ServiceStateDto'
+        terraform:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatusDto'
     KubeVersionStatusDriftValue:
       type: object
       required:
@@ -1417,8 +1422,6 @@ components:
       type: object
       required:
       - name
-      - namespace
-      - pod_name
       - disk_mib_usage
       - disk_percent_usage
       - disk_mib_capacity
@@ -1443,9 +1446,13 @@ components:
         name:
           type: string
         namespace:
-          type: string
+          type:
+          - string
+          - 'null'
         pod_name:
-          type: string
+          type:
+          - string
+          - 'null'
         qovery_service_info:
           oneOf:
           - type: 'null'
