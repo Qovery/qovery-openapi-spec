@@ -977,13 +977,13 @@ components:
           - 'null'
           format: int32
           minimum: 0
-        disk_mib_usage:
+        ephemeral_storage_percent_usage:
           type:
           - integer
           - 'null'
           format: int32
           minimum: 0
-        disk_percent_usage:
+        ephemeral_storage_usage:
           type:
           - integer
           - 'null'
@@ -1107,6 +1107,18 @@ components:
         created_at:
           type: integer
           format: int64
+          minimum: 0
+        ephemeral_storage_mib_limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        ephemeral_storage_mib_request:
+          type:
+          - integer
+          - 'null'
+          format: int32
           minimum: 0
         error_container_statuses:
           type: array
