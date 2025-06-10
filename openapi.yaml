@@ -11809,7 +11809,7 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/defaultTerraformAdvancedSettings':
+  /defaultTerraformAdvancedSettings:
     get:
       summary: List default terraform advanced settings
       tags:
@@ -12645,7 +12645,7 @@ components:
               x-stoplight:
                 id: b8karc43pdxpu
             service_type:
-                $ref: '#/components/schemas/ServiceTypeEnum'
+              $ref: '#/components/schemas/ServiceTypeEnum'
             docker_target_build_stage:
               type: string
               x-stoplight:
@@ -21784,7 +21784,14 @@ components:
                     - git
                   properties:
                     git:
-                      $ref: '#/components/schemas/ApplicationGitRepository'
+                      type: object
+                      x-stoplight:
+                        id: q84y7d4o4zf0z
+                      required:
+                        - git_repository
+                      properties:
+                        git_repository:
+                          $ref: '#/components/schemas/ApplicationGitRepository'
               x-stoplight:
                 id: abfhjb6q74upq
               type: object
