@@ -21747,6 +21747,10 @@ components:
           format: uri
         job_resources:
           $ref: '#/components/schemas/TerraformRequestJobResources'
+        use_cluster_credentials:
+          type: boolean
+          x-stoplight:
+            id: w9ncq63nukwe0
     TerraformResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -21763,6 +21767,7 @@ components:
             - provider_version
             - job_resources
             - environment
+            - use_cluster_credentials
           properties:
             name:
               type: string
@@ -21816,6 +21821,10 @@ components:
               $ref: '#/components/schemas/TerraformJobResourcesResponse'
             environment:
               $ref: '#/components/schemas/ReferenceObject'
+            use_cluster_credentials:
+              type: boolean
+              x-stoplight:
+                id: ixjejij08tgfo
     TerraformRequestJobResources:
       title: TerraformRequestJobResources
       x-stoplight:
