@@ -11723,6 +11723,11 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+      parameters:
+        - schema:
+            type: boolean
+          in: query
+          name: delete_resources_only
   '/terraform/{terraformId}/advancedSettings':
     get:
       summary: Get Advanced settings
