@@ -14660,6 +14660,16 @@ components:
               x-stoplight:
                 id: mzi9w1zsswj47
               description: 'For ECR, you can either set a static access_key or use a role arn that we are going to assume'
+            azure_tenant_id:
+              type: string
+              x-stoplight:
+                id: zjybtgippp0k2
+              description: Required if kind is `AZURE_CR`.
+            azure_subscription_id:
+              type: string
+              x-stoplight:
+                id: eaqm4swmqt9ty
+              description: Required if kind is `AZURE_CR`.
     ContainerRegistryResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -14723,6 +14733,14 @@ components:
                   type: string
                   x-stoplight:
                     id: iusxfgcmg72tl
+                azure_tenant_id:
+                  type: string
+                  x-stoplight:
+                    id: obk7v9hlx3jv4
+                azure_subscription_id:
+                  type: string
+                  x-stoplight:
+                    id: nrvn3j8xq81da
     ContainerRegistryProviderDetailsResponse:
       type: object
       required:
