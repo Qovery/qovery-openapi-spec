@@ -14884,6 +14884,14 @@ components:
                   type: string
                   x-stoplight:
                     id: kbrcr9377ly0q
+                azure_tenant_id:
+                  type: string
+                  x-stoplight:
+                    id: yd92ly1zmep1u
+                azure_subscription_id:
+                  type: string
+                  x-stoplight:
+                    id: rs3gk07qe1oy1
     HelmVersionResponseList:
       type: object
       properties:
