@@ -14773,6 +14773,63 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ContainerVersionResponse'
+    HelmRepositoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+            kind:
+              $ref: '#/components/schemas/HelmRepositoryKindEnum'
+            description:
+              type: string
+            url:
+              type: string
+              description: URL of the helm repository
+            skip_tls_verification:
+              type: boolean
+              description: Bypass tls certificate verification when connecting to repository
+            associated_services_count:
+              type: integer
+              x-stoplight:
+                id: 287g4iunwmf2d
+              description: The number of services using this helm repository
+            config:
+              type: object
+              x-stoplight:
+                id: 224az7um9x51z
+              properties:
+                username:
+                  type: string
+                  x-stoplight:
+                    id: 6xxbs3971acz5
+                region:
+                  type: string
+                  x-stoplight:
+                    id: pvi5oq9omlae8
+                access_key_id:
+                  type: string
+                  x-stoplight:
+                    id: 9tdfunoniwzed
+                scaleway_access_key:
+                  type: string
+                  x-stoplight:
+                    id: pyfdpz1vk4qq1
+                scaleway_project_id:
+                  type: string
+                  x-stoplight:
+                    id: kbrcr9377ly0q
+                azure_tenant_id:
+                  type: string
+                  x-stoplight:
+                    id: yd92ly1zmep1u
+                azure_subscription_id:
+                  type: string
+                  x-stoplight:
+                    id: rs3gk07qe1oy1
     ContainerVersionResponse:
       type: object
       properties:
@@ -14835,63 +14892,16 @@ components:
               x-stoplight:
                 id: 9dw16j7cex4i6
               description: Required if kind is `SCALEWAY_CR`
-    HelmRepositoryResponse:
-      allOf:
-        - $ref: '#/components/schemas/Base'
-        - type: object
-          required:
-            - name
-          properties:
-            name:
+            azure_tenant_id:
               type: string
-            kind:
-              $ref: '#/components/schemas/HelmRepositoryKindEnum'
-            description:
-              type: string
-            url:
-              type: string
-              description: URL of the helm repository
-            skip_tls_verification:
-              type: boolean
-              description: Bypass tls certificate verification when connecting to repository
-            associated_services_count:
-              type: integer
               x-stoplight:
-                id: 287g4iunwmf2d
-              description: The number of services using this helm repository
-            config:
-              type: object
+                id: dxxkwv9xyo1zq
+              description: Required if kind is `AZURE_CR`.
+            azure_subscription_id:
+              type: string
               x-stoplight:
-                id: 224az7um9x51z
-              properties:
-                username:
-                  type: string
-                  x-stoplight:
-                    id: 6xxbs3971acz5
-                region:
-                  type: string
-                  x-stoplight:
-                    id: pvi5oq9omlae8
-                access_key_id:
-                  type: string
-                  x-stoplight:
-                    id: 9tdfunoniwzed
-                scaleway_access_key:
-                  type: string
-                  x-stoplight:
-                    id: pyfdpz1vk4qq1
-                scaleway_project_id:
-                  type: string
-                  x-stoplight:
-                    id: kbrcr9377ly0q
-                azure_tenant_id:
-                  type: string
-                  x-stoplight:
-                    id: yd92ly1zmep1u
-                azure_subscription_id:
-                  type: string
-                  x-stoplight:
-                    id: rs3gk07qe1oy1
+                id: rboo4bgsvgfco
+              description: Required if kind is `AZURE_CR`.
     HelmVersionResponseList:
       type: object
       properties:
