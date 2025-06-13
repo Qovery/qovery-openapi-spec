@@ -6025,6 +6025,12 @@ paths:
       operationId: deleteApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: soft_delete
+          description: if we should delete the service only on the infra side
       tags:
         - Application Main Calls
       responses:
@@ -7112,6 +7118,12 @@ paths:
       operationId: deleteContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: soft_delete
+          description: if we should delete the service only on the infra side
       tags:
         - Container Main Calls
       responses:
@@ -8125,6 +8137,12 @@ paths:
       operationId: deleteDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: soft_delete
+          description: if we should delete the service only on the infra side
       tags:
         - Database Main Calls
       responses:
@@ -8910,6 +8928,12 @@ paths:
       operationId: deleteHelm
       parameters:
         - $ref: '#/components/parameters/helmId'
+        - schema:
+            type: boolean
+            default: fals
+          in: query
+          description: if we should delete the service only on the infra side
+          name: soft_delete
       tags:
         - Helm Main Calls
       responses:
@@ -9707,6 +9731,12 @@ paths:
       operationId: deleteJob
       parameters:
         - $ref: '#/components/parameters/jobId'
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: soft_delete
+          description: if we should delete the service only on the infra side
       tags:
         - Job Main Calls
       responses:
@@ -11726,8 +11756,10 @@ paths:
       parameters:
         - schema:
             type: boolean
+            default: false
           in: query
-          name: delete_resources_only
+          name: soft_delete
+          description: if we should delete the service only on the infra side
   '/terraform/{terraformId}/advancedSettings':
     get:
       summary: Get Advanced settings
