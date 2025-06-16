@@ -6253,7 +6253,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Status'
+                type: object
+                properties: {}
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -7339,7 +7340,11 @@ paths:
       responses:
         '202':
           description: Delete the resources of the container but keep Qovery configuration
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -8446,7 +8451,11 @@ paths:
       responses:
         '202':
           description: Delete the resources of the database but keep Qovery configuration
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -9162,7 +9171,11 @@ paths:
       responses:
         '202':
           description: ''
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -9975,7 +9988,11 @@ paths:
       responses:
         '202':
           description: Deploy job
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -12017,7 +12034,11 @@ paths:
       responses:
         '202':
           description: ''
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
         '400':
           $ref: '#/components/responses/400'
         '401':
