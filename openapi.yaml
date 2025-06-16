@@ -7324,7 +7324,7 @@ paths:
     post:
       summary: Uninstall container
       description: Delete the resources of the container but keep Qovery configuration
-      operationId: UninstallContainer
+      operationId: uninstallContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
       tags:
@@ -8433,7 +8433,7 @@ paths:
   '/database/{databaseId}/uninstall':
     post:
       summary: Uninstall database
-      operationId: UninstallDatabase
+      operationId: uninstallDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
       tags:
@@ -9947,7 +9947,7 @@ paths:
     post:
       summary: Uninstall job
       description: Delete the resources of the job but keep Qovery configuration
-      operationId: deployJob
+      operationId: uninstallJob
       parameters:
         - $ref: '#/components/parameters/jobId'
       tags:
