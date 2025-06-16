@@ -7333,7 +7333,7 @@ paths:
         content: {}
       responses:
         '202':
-          description: Deploy container
+          description: Delete the resources of the container but keep Qovery configuration
           content: {}
         '400':
           $ref: '#/components/responses/400'
@@ -8440,7 +8440,7 @@ paths:
         - Database Actions
       responses:
         '202':
-          description: Delete the resources of the container but keep Qovery configuration
+          description: Delete the resources of the database but keep Qovery configuration
           content: {}
         '401':
           $ref: '#/components/responses/401'
@@ -9137,7 +9137,7 @@ paths:
   '/helm/{helmId}/uninstall':
     post:
       summary: Uninstall helm
-      description: Delete the resources of the container but keep Qovery configuration
+      description: Delete the resources of the helm but keep Qovery configuration
       operationId: uninstallHelm
       parameters:
         - $ref: '#/components/parameters/helmId'
@@ -9946,7 +9946,7 @@ paths:
   '/job/{jobId}/uninstall':
     post:
       summary: Uninstall job
-      description: Delete the resources of the container but keep Qovery configuration
+      description: Delete the resources of the job but keep Qovery configuration
       operationId: deployJob
       parameters:
         - $ref: '#/components/parameters/jobId'
@@ -11984,7 +11984,7 @@ paths:
   '/terraform/{terraformId}/uninstall':
     post:
       summary: Uninstall terraform
-      description: Delete the resources of the container but keep Qovery configuration
+      description: Delete the resources of the terraform but keep Qovery configuration
       operationId: uninstallTerraform
       parameters:
         - $ref: '#/components/parameters/terraformId'
