@@ -1091,6 +1091,7 @@ components:
       - metrics_usage
       - images_version
       - restart_count
+      - status_phase
       properties:
         cpu_milli_limit:
           type:
@@ -1156,6 +1157,8 @@ components:
           type: integer
           format: int32
           minimum: 0
+        status_phase:
+          $ref: '#/components/schemas/PodStatusPhase'
     NodePoolInfoDto:
       type: object
       required:
@@ -1430,6 +1433,14 @@ components:
           type: string
         state_reason:
           type: string
+    PodStatusPhase:
+      type: string
+      enum:
+      - PENDING
+      - RUNNING
+      - SUCCEEDED
+      - FAILED
+      - UNKNOWN
     PvcInfoDto:
       type: object
       required:
