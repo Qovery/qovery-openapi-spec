@@ -6231,6 +6231,46 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/application/{applicationId}/uninstall':
+    post:
+      summary: Uninstall application
+      description: |
+        Delete the resources of an application but keep the Qovery config.
+      operationId: uninstallApplication
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Application Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeployRequest'
+      responses:
+        '202':
+          description: Deploy application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+      x-stoplight:
+        id: vrnx0mllgta48
+    parameters:
+      - schema:
+          type: string
+        name: applicationId
+        in: path
+        required: true
   '/application/{applicationId}/stop':
     post:
       summary: Stop application
@@ -7280,6 +7320,39 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/container/{containerId}/uninstall':
+    post:
+      summary: Uninstall container
+      description: Delete the resources of the container but keep Qovery configuration
+      operationId: UninstallContainer
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+      tags:
+        - Container Actions
+      requestBody:
+        content: {}
+      responses:
+        '202':
+          description: Deploy container
+          content: {}
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+      x-stoplight:
+        id: tyqhmv3tdihmm
+    parameters:
+      - schema:
+          type: string
+        name: containerId
+        in: path
+        required: true
   '/container/{containerId}/stop':
     post:
       summary: Stop container
@@ -8357,6 +8430,34 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/database/{databaseId}/uninstall':
+    post:
+      summary: Uninstall database
+      operationId: UninstallDatabase
+      parameters:
+        - $ref: '#/components/parameters/databaseId'
+      tags:
+        - Database Actions
+      responses:
+        '202':
+          description: Delete the resources of the container but keep Qovery configuration
+          content: {}
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+      x-stoplight:
+        id: dn8xf9tcthfqn
+    parameters:
+      - schema:
+          type: string
+        name: databaseId
+        in: path
+        required: true
   '/database/{databaseId}/deploymentHistory':
     get:
       summary: List database deploys
@@ -9033,6 +9134,39 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/helm/{helmId}/uninstall':
+    post:
+      summary: Uninstall helm
+      description: Delete the resources of the container but keep Qovery configuration
+      operationId: uninstallHelm
+      parameters:
+        - $ref: '#/components/parameters/helmId'
+      tags:
+        - Helm Actions
+      requestBody:
+        content: {}
+      responses:
+        '202':
+          description: ''
+          content: {}
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+      x-stoplight:
+        id: cdps3bcv0l0wa
+    parameters:
+      - schema:
+          type: string
+        name: helmId
+        in: path
+        required: true
   '/helm/{helmId}/redeploy':
     post:
       summary: Redeploy helm
@@ -9809,6 +9943,39 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/job/{jobId}/uninstall':
+    post:
+      summary: Uninstall job
+      description: Delete the resources of the container but keep Qovery configuration
+      operationId: deployJob
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      tags:
+        - Job Actions
+      requestBody:
+        content: {}
+      responses:
+        '202':
+          description: Deploy job
+          content: {}
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+      x-stoplight:
+        id: s4xgct6hdxymt
+    parameters:
+      - schema:
+          type: string
+        name: jobId
+        in: path
+        required: true
   '/job/{jobId}/redeploy':
     post:
       summary: Redeploy job
@@ -11814,6 +11981,39 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/terraform/{terraformId}/uninstall':
+    post:
+      summary: Uninstall terraform
+      description: Delete the resources of the container but keep Qovery configuration
+      operationId: uninstallTerraform
+      parameters:
+        - $ref: '#/components/parameters/terraformId'
+      tags:
+        - Terraform Actions
+      requestBody:
+        content: {}
+      responses:
+        '202':
+          description: ''
+          content: {}
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+      x-stoplight:
+        id: awjvr4y02cr23
+    parameters:
+      - schema:
+          type: string
+        name: terraformId
+        in: path
+        required: true
   /defaultTerraformAdvancedSettings:
     get:
       summary: List default terraform advanced settings
