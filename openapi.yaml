@@ -11164,6 +11164,11 @@ paths:
           in: query
           name: pod_name
           description: The name of the pod to fetch event from
+        - schema:
+            type: string
+          in: query
+          name: reporting_component
+          description: The name of the reporting component used to filter events.
       responses:
         '200':
           description: List Cluster Kubernetes Events
@@ -11199,6 +11204,24 @@ paths:
                         type:
                           type: string
                           description: As of today it can be either Warning or Normal (can evolve in the next releases)
+                        reporting_component:
+                          type: string
+                          x-stoplight:
+                            id: j80d7nbe0d7t5
+                        count:
+                          type: integer
+                          x-stoplight:
+                            id: dg0q4lb53n9bu
+                        first_occurrence:
+                          type: string
+                          x-stoplight:
+                            id: 2gfzxsksepqu1
+                          format: date-time
+                        last_occurrence:
+                          type: string
+                          x-stoplight:
+                            id: 5pap12d1475w9
+                          format: date-time
   '/cluster/{clusterId}/metrics':
     get:
       summary: Fetch cluster metrics
