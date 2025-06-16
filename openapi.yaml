@@ -6245,7 +6245,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeployRequest'
+              type: object
+              properties: {}
       responses:
         '202':
           description: Deploy application
@@ -7330,7 +7331,11 @@ paths:
       tags:
         - Container Actions
       requestBody:
-        content: {}
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
       responses:
         '202':
           description: Delete the resources of the container but keep Qovery configuration
@@ -8452,6 +8457,12 @@ paths:
           description: Operation is in progress
       x-stoplight:
         id: dn8xf9tcthfqn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
     parameters:
       - schema:
           type: string
@@ -9144,7 +9155,10 @@ paths:
       tags:
         - Helm Actions
       requestBody:
-        content: {}
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '202':
           description: ''
@@ -9953,7 +9967,11 @@ paths:
       tags:
         - Job Actions
       requestBody:
-        content: {}
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
       responses:
         '202':
           description: Deploy job
@@ -11991,7 +12009,11 @@ paths:
       tags:
         - Terraform Actions
       requestBody:
-        content: {}
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
       responses:
         '202':
           description: ''
