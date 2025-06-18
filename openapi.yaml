@@ -5264,6 +5264,41 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/environment/{environmentId}/service/uninstall':
+    post:
+      summary: Uninstall services
+      description: uninstall selected services
+      operationId: uninstallSelectedServices
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentServiceIdsAllRequest'
+      responses:
+        '200':
+          description: Services have been triggered to be uninstalled
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+      x-stoplight:
+        id: m4lfkqr1n8s97
+    parameters:
+      - schema:
+          type: string
+        name: environmentId
+        in: path
+        required: true
   '/organization/{organizationId}/container/deploy':
     post:
       summary: Auto deploy containers
@@ -16818,6 +16853,13 @@ components:
           items:
             type: string
             format: uuid
+        terraform_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+            x-stoplight:
+              id: w1tqy39oq25pf
     APIVariableScopeEnum:
       type: string
       enum:
