@@ -22470,21 +22470,24 @@ components:
                 x-stoplight:
                   id: 7o7dzkbyt78bu
                 items:
-                  x-stoplight:
-                    id: syr6b0jbtlr9j
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      x-stoplight:
-                        id: wnvat56nlwu77
-                      format: uuid
-                    name:
-                      type: string
-                      x-stoplight:
-                        id: b3yop31ksrfno
-                    cloud_provider:
-                      $ref: '#/components/schemas/CloudProviderEnum'
+                  $ref: '#/components/schemas/CredentialCluster'
+    CredentialCluster:
+      title: CredentialCluster
+      x-stoplight:
+        id: oyhk9uf5vcqlk
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: ksymb5hxvrlq9
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: skztj7io7an31
+        cloud_provider:
+          $ref: '#/components/schemas/CloudProviderEnum'
   responses:
     '204':
       description: no content
