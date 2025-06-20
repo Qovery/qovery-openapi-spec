@@ -12371,49 +12371,18 @@ paths:
         required: true
     get:
       summary: List credentials of an organization and their associated clusters
-      tags: []
+      tags:
+        - Organization Main Calls
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    x-stoplight:
-                      id: cl66r2zbfnreo
-                    items:
-                      x-stoplight:
-                        id: qyhg1ik1rzaz1
-                      type: object
-                      properties:
-                        credential:
-                          $ref: '#/components/schemas/ClusterCredentials'
-                        clusters:
-                          type: array
-                          x-stoplight:
-                            id: 7g2m9pq5qfos9
-                          items:
-                            x-stoplight:
-                              id: vab972cu2647e
-                            type: object
-                            properties:
-                              id:
-                                type: string
-                                x-stoplight:
-                                  id: o6stt5oblpe6y
-                                format: uuid
-                              name:
-                                type: string
-                                x-stoplight:
-                                  id: h6il8uvbrw1tx
-                              cloud_provider:
-                                $ref: '#/components/schemas/CloudProviderEnum'
+                $ref: '#/components/schemas/OrganizationCrendentialsResponseList'
         '400':
           description: Bad Request
-      operationId: get-organization-organizationId-credentials
+      operationId: listOrganizationCredentials
       x-stoplight:
         id: 2jm9tyqfhw4xf
       description: List credentials of an organization and their associated clusters
@@ -22479,6 +22448,43 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TerraformDeploymentRestrictionResponse'
+    OrganizationCrendentialsResponseList:
+      title: OrganizationCrendentialsResponseList
+      x-stoplight:
+        id: 0tv1xnjgh98nm
+      type: object
+      properties:
+        results:
+          type: array
+          x-stoplight:
+            id: dyld95hlync5e
+          items:
+            x-stoplight:
+              id: qjal2umjmvumz
+            type: object
+            properties:
+              credential:
+                $ref: '#/components/schemas/ClusterCredentials'
+              clusters:
+                type: array
+                x-stoplight:
+                  id: 7o7dzkbyt78bu
+                items:
+                  x-stoplight:
+                    id: syr6b0jbtlr9j
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      x-stoplight:
+                        id: wnvat56nlwu77
+                      format: uuid
+                    name:
+                      type: string
+                      x-stoplight:
+                        id: b3yop31ksrfno
+                    cloud_provider:
+                      $ref: '#/components/schemas/CloudProviderEnum'
   responses:
     '204':
       description: no content
