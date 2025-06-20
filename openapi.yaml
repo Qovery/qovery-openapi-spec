@@ -12362,6 +12362,61 @@ paths:
       operationId: deleteTerraformDeploymentRestriction
       x-stoplight:
         id: d896flm9ibi54
+  '/organization/{organizationId}/credentials':
+    parameters:
+      - schema:
+          type: string
+        name: organizationId
+        in: path
+        required: true
+    get:
+      summary: List credentials of an organization and their associated clusters
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    x-stoplight:
+                      id: cl66r2zbfnreo
+                    items:
+                      x-stoplight:
+                        id: qyhg1ik1rzaz1
+                      type: object
+                      properties:
+                        credential:
+                          $ref: '#/components/schemas/ClusterCredentials'
+                        clusters:
+                          type: array
+                          x-stoplight:
+                            id: 7g2m9pq5qfos9
+                          items:
+                            x-stoplight:
+                              id: vab972cu2647e
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                x-stoplight:
+                                  id: o6stt5oblpe6y
+                                format: uuid
+                              name:
+                                type: string
+                                x-stoplight:
+                                  id: h6il8uvbrw1tx
+                              cloud_provider:
+                                $ref: '#/components/schemas/CloudProviderEnum'
+        '400':
+          description: Bad Request
+      operationId: get-organization-organizationId-credentials
+      x-stoplight:
+        id: 2jm9tyqfhw4xf
+      description: List credentials of an organization and their associated clusters
 components:
   parameters:
     applicationId:
