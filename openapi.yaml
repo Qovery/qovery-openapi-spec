@@ -6317,12 +6317,13 @@ paths:
               properties: {}
       responses:
         '202':
-          description: Deploy application
+          description: 'Delete the compute and data of the service, but keep Qovery configuration'
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/Status'
+        '204':
+          description: No deployment has been triggered
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -7407,12 +7408,13 @@ paths:
               properties: {}
       responses:
         '202':
-          description: Delete the resources of the container but keep Qovery configuration
+          description: 'Delete the compute and data of the service, but keep Qovery configuration'
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/Status'
+        '204':
+          description: No deployment has been triggered
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -8518,12 +8520,13 @@ paths:
         - Database Actions
       responses:
         '202':
-          description: Delete the resources of the database but keep Qovery configuration
+          description: 'Delete the compute and data of the service, but keep Qovery configuration'
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/Status'
+        '204':
+          description: No deployment has been triggered
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -9238,12 +9241,13 @@ paths:
               type: object
       responses:
         '202':
-          description: ''
+          description: 'Delete the compute and data of the service, but keep Qovery configuration'
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/Status'
+        '204':
+          description: No deployment has been triggered
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -10055,12 +10059,13 @@ paths:
               properties: {}
       responses:
         '202':
-          description: Deploy job
+          description: 'Delete the compute and data of the service, but keep Qovery configuration'
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/Status'
+        '204':
+          description: No deployment has been triggered
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -12124,12 +12129,13 @@ paths:
               properties: {}
       responses:
         '202':
-          description: ''
+          description: 'Delete the compute and data of the service, but keep Qovery configuration'
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/Status'
+        '204':
+          description: No deployment has been triggered
         '400':
           $ref: '#/components/responses/400'
         '401':
