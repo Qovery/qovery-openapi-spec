@@ -14022,6 +14022,7 @@ components:
         - $ref: '#/components/schemas/GenericClusterCredentials'
         - $ref: '#/components/schemas/AwsRoleClusterCredentials'
         - $ref: '#/components/schemas/AzureStaticClusterCredentials'
+        - $ref: '#/components/schemas/GcpStaticClusterCredentials'
       discriminator:
         propertyName: object_type
         mapping:
@@ -14030,6 +14031,7 @@ components:
           SCW: '#/components/schemas/ScalewayClusterCredentials'
           OTHER: '#/components/schemas/GenericClusterCredentials'
           AZURE: '#/components/schemas/AzureStaticClusterCredentials'
+          GCP: '#/components/schemas/GcpStaticClusterCredentials'
     AwsStaticClusterCredentials:
       x-stoplight:
         id: s0aosg7la96hp
@@ -22030,6 +22032,24 @@ components:
           format: uuid
         status:
           $ref: '#/components/schemas/StateEnum'
+    GcpStaticClusterCredentials:
+      title: GcpStaticClusterCredentials
+      x-stoplight:
+        id: qtvaepejqookw
+      type: object
+      required:
+        - id
+        - name
+        - object_type
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        object_type:
+          enum:
+            - GCP
     AzureStaticClusterCredentials:
       title: AzureStaticClusterCredentials
       x-stoplight:
