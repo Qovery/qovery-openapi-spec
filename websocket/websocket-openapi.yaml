@@ -278,6 +278,13 @@ paths:
           type:
           - string
           - 'null'
+      - name: deployment_id
+        in: path
+        required: true
+        schema:
+          type:
+            - string
+            - 'null'
       responses:
         '200':
           description: Stream of services logs
