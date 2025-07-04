@@ -5511,7 +5511,13 @@ paths:
       description: 'List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
       operationId: listEnvironmentDeploymentHistoryV2
       parameters:
-        - $ref: '#/components/parameters/startId'
+        - in: query
+          name: pageSize
+          description: The number of deployments to return in the current page
+          schema:
+            type: number
+            nullable: true
+            default: 20
       tags:
         - Environment Deployment History
       responses:
@@ -6440,7 +6446,13 @@ paths:
       description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id'
       operationId: listApplicationDeploymentHistoryV2
       parameters:
-        - $ref: '#/components/parameters/startId'
+        - in: query
+          name: pageSize
+          description: The number of deployments to return in the current page
+          schema:
+            type: number
+            nullable: true
+            default: 20
       tags:
         - Application Deployment History
       responses:
@@ -7291,6 +7303,13 @@ paths:
       operationId: listContainerDeploymentHistoryV2
       parameters:
         - $ref: '#/components/parameters/containerId'
+        - in: query
+          name: pageSize
+          description: The number of deployments to return in the current page
+          schema:
+            type: number
+            nullable: true
+            default: 20
       tags:
         - Container Deployment History
       responses:
@@ -8585,7 +8604,13 @@ paths:
       description: By default it returns the 20 last results. The response is paginated.
       operationId: listDatabaseDeploymentHistoryV2
       parameters:
-        - $ref: '#/components/parameters/startId'
+        - in: query
+          name: pageSize
+          description: The number of deployments to return in the current page
+          schema:
+            type: number
+            nullable: true
+            default: 20
       tags:
         - Database Deployment History
       responses:
@@ -9375,6 +9400,14 @@ paths:
       summary: List helm deployments
       description: Returns the 20 last helm deployments
       operationId: listHelmDeploymentHistoryV2
+      parameters:
+        - in: query
+          name: pageSize
+          description: The number of deployments to return in the current page
+          schema:
+            type: number
+            nullable: true
+            default: 20
       tags:
         - Helm Deployment History
       responses:
@@ -10193,6 +10226,14 @@ paths:
       summary: List job deployments
       description: Returns the 20 last job deployments
       operationId: listJobDeploymentHistoryV2
+      parameters:
+        - in: query
+          name: pageSize
+          description: The number of deployments to return in the current page
+          schema:
+            type: number
+            nullable: true
+            default: 20
       tags:
         - Job Deployment History
       responses:
@@ -12213,6 +12254,14 @@ paths:
     get:
       summary: List terraform deployments
       description: Returns the 20 last terraform deployments
+      parameters:
+        - in: query
+          name: pageSize
+          description: The number of deployments to return in the current page
+          schema:
+            type: number
+            nullable: true
+            default: 20
       tags:
         - Terraform Deployment History
       responses:
