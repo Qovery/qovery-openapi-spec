@@ -15156,6 +15156,14 @@ components:
                   type: string
                   x-stoplight:
                     id: nrvn3j8xq81da
+                azure_application_id:
+                  type: string
+                  x-stoplight:
+                    id: t4jvfihz1ml04
+                azure_application_object_id:
+                  type: string
+                  x-stoplight:
+                    id: 2soynl0stz0lh
     ContainerRegistryProviderDetailsResponse:
       type: object
       required:
