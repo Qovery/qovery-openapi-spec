@@ -22368,12 +22368,21 @@ components:
           $ref: '#/components/schemas/TerraformVarKeyValue'
     TerraformVarKeyValue:
       title: TerraformVarKeyValue
-      type: array
-      description: 'The input is in json array format: [ [$KEY,$VALUE], [...] ]'
-      items:
-        type: array
-        items:
+      type: object
+      description: ''
+      properties:
+        key:
           type: string
+          x-stoplight:
+            id: enwctu8s88umi
+        value:
+          type: string
+          x-stoplight:
+            id: ix1y6viqpaxk6
+        secret:
+          type: boolean
+          x-stoplight:
+            id: df80p2az3whjg
     TerraformFilesSourceRequest:
       title: TerraformFilesSourceRequest
       x-stoplight:
@@ -22415,7 +22424,6 @@ components:
       type: object
       required:
         - tf_var_file_paths
-        - tf_vars
       properties:
         tf_var_file_paths:
           type: array
@@ -22425,8 +22433,6 @@ components:
             x-stoplight:
               id: qsy17gz9fl3n3
             type: string
-        tf_vars:
-          $ref: '#/components/schemas/TerraformVarKeyValue'
     TerraformJobResourcesResponse:
       title: TerraformJobResourcesResponse
       x-stoplight:
