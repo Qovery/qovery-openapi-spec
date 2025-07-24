@@ -16043,6 +16043,7 @@ components:
         - RESTART
         - STOP
         - UNKNOWN
+        - UNINSTALL
     DeploymentHistoryApplication:
       allOf:
         - $ref: '#/components/schemas/Base'
