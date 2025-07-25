@@ -22388,7 +22388,9 @@ components:
               id: 7ns22ue58d2zb
             type: string
         tf_vars:
-          $ref: '#/components/schemas/TerraformVarKeyValue'
+          type: array
+          items:
+            $ref: '#/components/schemas/TerraformVarKeyValue'
     TerraformVarKeyValue:
       title: TerraformVarKeyValue
       type: object
