@@ -22408,9 +22408,9 @@ components:
     TerraformVariableParsingRequest:
       type: object
       required:
-        - gitRepository
+        - git_repository
       properties:
-        gitRepository:
+        git_repository:
           $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
     TerraformVariablesSourceRequest:
       title: TerraformVariablesSourceRequest
