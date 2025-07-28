@@ -22394,7 +22394,7 @@ components:
     TerraformVarKeyValue:
       title: TerraformVarKeyValue
       type: object
-      description: ''
+      description: A Terraform input variable
       properties:
         key:
           type: string
