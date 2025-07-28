@@ -22332,6 +22332,7 @@ components:
               type: boolean
               x-stoplight:
                 id: ixjejij08tgfo
+      description: A Terraform service
     TerraformRequestJobResources:
       title: TerraformRequestJobResources
       x-stoplight:
