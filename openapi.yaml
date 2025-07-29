@@ -22324,7 +22324,11 @@ components:
             auto_deploy:
               type: boolean
             terraform_files_source:
-              $ref: '#/components/schemas/TerraformFilesSource'
+              nullable: false
+              x-stoplight:
+                id: abfhjb6q74upq
+              oneOf:
+                - $ref: '#/components/schemas/TerraformFilesSource'
             icon_uri:
               type: string
               format: uri
