@@ -22325,22 +22325,10 @@ components:
               type: boolean
             terraform_files_source:
               nullable: false
-              oneOf:
-                - required:
-                    - git
-                  properties:
-                    git:
-                      type: object
-                      x-stoplight:
-                        id: q84y7d4o4zf0z
-                      required:
-                        - git_repository
-                      properties:
-                        git_repository:
-                          $ref: '#/components/schemas/ApplicationGitRepository'
               x-stoplight:
                 id: abfhjb6q74upq
-              type: object
+              oneOf:
+                - $ref: '#/components/schemas/TerraformFilesSource'
             icon_uri:
               type: string
               format: uri
@@ -22467,7 +22455,7 @@ components:
         default:
           type: string
           nullable: true
-          description: The default value of the variable, or null if no default is provided
+          description: 'The default value of the variable, or null if no default is provided'
     TerraformFilesSourceRequest:
       title: TerraformFilesSourceRequest
       x-stoplight:
@@ -22672,6 +22660,19 @@ components:
             id: skztj7io7an31
         cloud_provider:
           $ref: '#/components/schemas/CloudProviderEnum'
+    TerraformFilesSource:
+      title: TerraformFilesSource
+      x-stoplight:
+        id: ynhtfa5yo20ee
+      type: object
+      properties:
+        git:
+          x-stoplight:
+            id: iavjewfs0d12k
+          type: object
+          properties:
+            git_repository:
+              $ref: '#/components/schemas/ApplicationGitRepository'
   responses:
     '204':
       description: no content
