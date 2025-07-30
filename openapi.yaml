@@ -10152,8 +10152,6 @@ paths:
     post:
       summary: Redeploy terraform
       operationId: redeployTerrraform
-      parameters:
-        - $ref: '#/components/parameters/jobId'
       responses:
         '202':
           description: Terraform redeploy has been requested
