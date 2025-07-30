@@ -10151,7 +10151,7 @@ paths:
   '/terraform/{terraformId}/redeploy':
     post:
       summary: Redeploy terraform
-      operationId: redeployTerrraform
+      operationId: redeployTerraform
       responses:
         '202':
           description: Terraform redeploy has been requested
