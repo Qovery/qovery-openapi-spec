@@ -10148,6 +10148,35 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
+  '/terraform/{terraformId}/redeploy':
+    post:
+      summary: Redeploy terraform
+      operationId: redeployTerrraform
+      responses:
+        '202':
+          description: Terraform redeploy has been requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Operation is in progress
+      x-stoplight:
+        id: 69fa5itbg5w43
+      tags:
+        - Terraform Actions
+    parameters:
+      - schema:
+          type: string
+        name: terraformId
+        in: path
+        required: true
   '/job/{jobId}/stop':
     post:
       summary: Stop job
