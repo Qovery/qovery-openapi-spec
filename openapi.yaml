@@ -10154,8 +10154,6 @@ paths:
       operationId: redeployTerrraform
       parameters:
         - $ref: '#/components/parameters/jobId'
-      tags:
-        - Job Actions
       responses:
         '202':
           description: Terraform redeploy has been requested
@@ -10173,6 +10171,8 @@ paths:
           description: Operation is in progress
       x-stoplight:
         id: 69fa5itbg5w43
+      tags:
+        - Terraform Actions
     parameters:
       - schema:
           type: string
