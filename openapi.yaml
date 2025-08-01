@@ -13309,10 +13309,10 @@ components:
     ApplicationGitRepositoryRequest:
       type: object
       required:
-        - provider
+        - url
         - owner
         - name
-        - url
+        - provider
       properties:
         url:
           type: string
@@ -13333,6 +13333,8 @@ components:
           format: uuid
           description: The git token id on Qovery side
           nullable: true
+        provider:
+          $ref: '#/components/schemas/GitProviderEnum'
     ApplicationNetwork:
       type: object
       properties:
