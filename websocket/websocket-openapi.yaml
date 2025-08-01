@@ -283,8 +283,8 @@ paths:
         required: true
         schema:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
       responses:
         '200':
           description: Stream of services logs
