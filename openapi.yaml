@@ -12057,6 +12057,28 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Terraform name within the environment is already taken
+
+  '/api/environment/{environmentId}/link':
+    get:
+      summary: List environment services links
+      operationId: listEnvironmentServicesLinks
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment
+      responses:
+        '200':
+          description: List environment services links
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/terraform/{terraformId}':
     parameters:
       - $ref: '#/components/parameters/terraformId'
@@ -18424,9 +18446,24 @@ components:
       default: MANAGED
     Link:
       type: object
+      required:
+        - service_id
+        - service_type
+        - url
+        - internal_port
+        - external_port
+        - is_qovery_domain
+        - is_default
       properties:
+        service_id:
+          type: string
+          format: uuid
+          description: ID of the associated service
+        service_type:
+          $ref: '#/components/schemas/ServiceTypeEnum'
         url:
           type: string
+          description: URL to access the service
         internal_port:
           type: integer
           description: The port from which the service is reachable from within the cluster
