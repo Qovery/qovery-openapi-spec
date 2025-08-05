@@ -17275,6 +17275,14 @@ components:
         workspace:
           type: string
           description: 'Mandatory only for BITBUCKET git provider, to allow us to fetch repositories at creation/edition of a service'
+        git_api_url:
+          type: string
+          x-stoplight:
+            id: 8g38vvoghxzdf
+          format: uri
+          description: |-
+            custom git api url for the given git provider/type.
+            I.e: Self-hosted version of Gitlab
     GitTokenResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -17283,6 +17291,7 @@ components:
             - name
             - type
             - associated_services_count
+            - git_api_url
           properties:
             name:
               type: string
@@ -17299,6 +17308,11 @@ components:
             associated_services_count:
               type: number
               description: The number of services using this git token
+            git_api_url:
+              type: string
+              x-stoplight:
+                id: 27n37ox3lysq4
+              format: uri
     GitTokenResponseList:
       type: object
       properties:
