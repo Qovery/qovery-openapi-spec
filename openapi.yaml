@@ -17251,6 +17251,10 @@ components:
         workspace:
           type: string
           description: 'Mandatory only for BITBUCKET git provider, to allow us to fetch repositories at creation/edition of a service'
+        git_api_url:
+          type: string
+          format: uri
+          description: The API URL for the git provider (self-hosted)
     GitTokenResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -17275,6 +17279,10 @@ components:
             associated_services_count:
               type: number
               description: The number of services using this git token
+            git_api_url:
+              type: string
+              format: uri
+              description: The API URL for the git provider (self-hosted)
     GitTokenResponseList:
       type: object
       properties:
