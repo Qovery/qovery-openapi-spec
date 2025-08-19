@@ -11616,6 +11616,10 @@ paths:
             type: string
           in: query
           name: partial_response
+        - schema:
+            type: string
+          in: query
+          name: max_source_resolution
       responses:
         '200':
           description: Cluster Metrics
@@ -12057,7 +12061,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Terraform name within the environment is already taken
-
   '/api/environment/{environmentId}/link':
     get:
       summary: List environment services links
@@ -12526,6 +12529,66 @@ paths:
       x-stoplight:
         id: 2jm9tyqfhw4xf
       description: List credentials of an organization and their associated clusters
+  '/cluster/{clusterId}/logs':
+    parameters:
+      - schema:
+          type: string
+        name: clusterId
+        in: path
+        required: true
+    get:
+      summary: Fetch cluster logs
+      tags: []
+      responses:
+        '200':
+          description: Cluster Logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterLogsResponse'
+      operationId: get-cluster-logs
+      x-stoplight:
+        id: eodcl3enjp2ax
+      description: Fetch cluster logs
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: endpoint
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: query
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: start
+        - schema:
+            type: string
+          in: query
+          name: end
+        - schema:
+            type: string
+          in: query
+          name: limit
+        - schema:
+            type: string
+          in: query
+          name: since
+        - schema:
+            type: string
+          in: query
+          name: step
+        - schema:
+            type: string
+          in: query
+          name: interval
+        - schema:
+            type: string
+          in: query
+          name: direction
 components:
   parameters:
     applicationId:
@@ -22757,6 +22820,16 @@ components:
           properties:
             git_repository:
               $ref: '#/components/schemas/ApplicationGitRepository'
+    ClusterLogsResponse:
+      title: ClusterLogsResponse
+      x-stoplight:
+        id: 93ntufnd3epke
+      type: object
+      properties:
+        response:
+          type: string
+          x-stoplight:
+            id: 7vk339giarxht
   responses:
     '204':
       description: no content
