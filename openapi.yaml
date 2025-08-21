@@ -11620,6 +11620,14 @@ paths:
             type: string
           in: query
           name: max_source_resolution
+        - schema:
+            type: string
+          in: query
+          name: engine
+        - schema:
+            type: string
+          in: query
+          name: analyse
       responses:
         '200':
           description: Cluster Metrics
