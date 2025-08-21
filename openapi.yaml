@@ -11627,7 +11627,7 @@ paths:
         - schema:
             type: string
           in: query
-          name: analyse
+          name: analyze
       responses:
         '200':
           description: Cluster Metrics
