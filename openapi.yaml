@@ -12069,7 +12069,7 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Terraform name within the environment is already taken
-  '/api/environment/{environmentId}/link':
+  '/environment/{environmentId}/link':
     get:
       summary: List environment services links
       operationId: listEnvironmentServicesLinks
@@ -12090,6 +12090,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+      x-stoplight:
+        id: 94az7c0v1enav
   '/terraform/{terraformId}':
     parameters:
       - $ref: '#/components/parameters/terraformId'
