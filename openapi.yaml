@@ -12092,6 +12092,7 @@ paths:
           $ref: '#/components/responses/404'
       x-stoplight:
         id: 94az7c0v1enav
+      description: List services links of an environment
   '/terraform/{terraformId}':
     parameters:
       - $ref: '#/components/parameters/terraformId'
