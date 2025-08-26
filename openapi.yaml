@@ -14057,6 +14057,8 @@ components:
               $ref: '#/components/schemas/MetricsParameters'
             infrastructure_outputs:
               $ref: '#/components/schemas/InfrastructureOutputs'
+            infrastructure_charts_parameters:
+              $ref: '#/components/schemas/ClusterInfrastructureChartsParameters'
     ClusterDeleteMode:
       type: string
       description: |
@@ -14726,6 +14728,8 @@ components:
                   - $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
         metrics_parameters:
           $ref: '#/components/schemas/MetricsParameters'
+        infrastructure_charts_parameters:
+          $ref: '#/components/schemas/ClusterInfrastructureChartsParameters'
     ClusterResponseList:
       type: object
       properties:
@@ -18532,6 +18536,7 @@ components:
       enum:
         - MANAGED
         - SELF_MANAGED
+        - PARTIALLY_MANAGED
       default: MANAGED
     Link:
       type: object
@@ -22840,6 +22845,59 @@ components:
           type: string
           x-stoplight:
             id: 7vk339giarxht
+    ClusterInfrastructureChartsParameters:
+      $ref: '#/components/schemas/ClusterInfrastructureNginxChartParameters'
+    ClusterInfrastructureNginxChartParameters:
+      title: ClusterInfrastructureNginxChartParameters
+      x-stoplight:
+        id: c9r0h8ey6ugzr
+      type: object
+      properties:
+        replica_count:
+          type: integer
+          x-stoplight:
+            id: zdwoxwir7ygnw
+          minimum: 0
+        default_ssl_certificate:
+          type: string
+          x-stoplight:
+            id: z1l1xmwud3yjq
+        publish_status_address:
+          type: string
+          x-stoplight:
+            id: da9klqdcxew6n
+        annotation_metal_lb_load_balancer_ips:
+          type: string
+          x-stoplight:
+            id: 4ji26purdr956
+        annotation_external_dns_kubernetes_target:
+          type: string
+          x-stoplight:
+            id: ytwsmm8mzre3g
+    ClusterInfrastructureCertManagerChartParameters:
+      title: InfrastructureCertManagerChartParameters
+      x-stoplight:
+        id: xsidu7mikkhq3
+      type: object
+      properties:
+        kubernetes_namespace:
+          type: string
+          x-stoplight:
+            id: y5txd86avhe6j
+    ClusterInfrastructureMetalLbChartParameters:
+      title: InfrastructureMetalLbChartParameters
+      x-stoplight:
+        id: evxswes22ykhd
+      type: object
+      properties:
+        ip_address_pools:
+          type: array
+          x-stoplight:
+            id: sfxtfy7n1uddw
+          items:
+            x-stoplight:
+              id: lstjwwfo9ys6i
+            type: string
   responses:
     '204':
       description: no content
