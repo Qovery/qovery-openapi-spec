@@ -22847,7 +22847,14 @@ components:
           x-stoplight:
             id: 7vk339giarxht
     ClusterInfrastructureChartsParameters:
-      $ref: '#/components/schemas/ClusterInfrastructureNginxChartParameters'
+      type: object
+      properties:
+        nginx_parameters:
+          $ref: '#/components/schemas/ClusterInfrastructureNginxChartParameters'
+        cert_manager_parameters:
+          $ref: '#/components/schemas/ClusterInfrastructureCertManagerChartParameters'
+        metalLb_parameters:
+          $ref: '#/components/schemas/ClusterInfrastructureMetalLbChartParameters'
     ClusterInfrastructureNginxChartParameters:
       title: ClusterInfrastructureNginxChartParameters
       x-stoplight:
