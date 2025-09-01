@@ -22853,7 +22853,7 @@ components:
           $ref: '#/components/schemas/ClusterInfrastructureNginxChartParameters'
         cert_manager_parameters:
           $ref: '#/components/schemas/ClusterInfrastructureCertManagerChartParameters'
-        metalLb_parameters:
+        metal_lb_parameters:
           $ref: '#/components/schemas/ClusterInfrastructureMetalLbChartParameters'
     ClusterInfrastructureNginxChartParameters:
       title: ClusterInfrastructureNginxChartParameters
