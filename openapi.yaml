@@ -13748,6 +13748,16 @@ components:
           properties:
             status:
               $ref: '#/components/schemas/Status'
+    OnPremiseCredentialsRequest_copy:
+      type: object
+      x-stoplight:
+        id: oes5sv0trl4l7
+      required:
+        - name
+      properties:
+        name:
+          type: string
+      title: AwsEksAnywhereCredentialsRequest
     BackupPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
@@ -14235,6 +14245,9 @@ components:
         - $ref: '#/components/schemas/AwsRoleClusterCredentials'
         - $ref: '#/components/schemas/AzureStaticClusterCredentials'
         - $ref: '#/components/schemas/GcpStaticClusterCredentials'
+        - type: object
+          x-stoplight:
+            id: m46c6tj9gdvw1
       discriminator:
         propertyName: object_type
         mapping:
@@ -14271,6 +14284,48 @@ components:
         object_type:
           x-stoplight:
             id: ravczabg8e2sp
+          enum:
+            - AWS
+    AwsStaticClusterCredentials_copy_2:
+      title: AwsStaticClusterCredentials
+      x-stoplight:
+        id: va0nug28h3b2b
+      type: object
+      required:
+        - id
+        - name
+        - access_key_id
+        - object_type
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        access_key_id:
+          type: string
+        object_type:
+          enum:
+            - AWS
+    AwsStaticClusterCredentials_copy:
+      title: AwsStaticClusterCredentials
+      x-stoplight:
+        id: vs9ukr2y9ahsn
+      type: object
+      required:
+        - id
+        - name
+        - access_key_id
+        - object_type
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        access_key_id:
+          type: string
+        object_type:
           enum:
             - AWS
     AwsRoleClusterCredentials:
@@ -22853,7 +22908,7 @@ components:
           $ref: '#/components/schemas/ClusterInfrastructureNginxChartParameters'
         cert_manager_parameters:
           $ref: '#/components/schemas/ClusterInfrastructureCertManagerChartParameters'
-        metalLb_parameters:
+        metal_lb_parameters:
           $ref: '#/components/schemas/ClusterInfrastructureMetalLbChartParameters'
     ClusterInfrastructureNginxChartParameters:
       title: ClusterInfrastructureNginxChartParameters
