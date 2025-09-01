@@ -14235,9 +14235,6 @@ components:
         - $ref: '#/components/schemas/AwsRoleClusterCredentials'
         - $ref: '#/components/schemas/AzureStaticClusterCredentials'
         - $ref: '#/components/schemas/GcpStaticClusterCredentials'
-        - type: object
-          x-stoplight:
-            id: m46c6tj9gdvw1
       discriminator:
         propertyName: object_type
         mapping:
