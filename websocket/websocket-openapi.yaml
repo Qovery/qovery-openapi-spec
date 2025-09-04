@@ -285,6 +285,20 @@ paths:
           type:
           - string
           - 'null'
+      - name: query
+        in: path
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+      - name: start
+        in: path
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: Stream of services logs
@@ -1502,21 +1516,6 @@ components:
           DRIFT: '#/components/schemas/KubeVersionStatusDriftValue'
           OK: '#/components/schemas/KubeVersionStatusOkValue'
           UNKNOWN: '#/components/schemas/KubeVersionStatusUnknownValue'
-    QoveryComponentContainerStatusIssue:
-      type: object
-      required:
-      - level
-      properties:
-        level:
-          $ref: '#/components/schemas/QoveryComponentContainerStatusLevel'
-        message:
-          type:
-          - string
-          - 'null'
-        reason:
-          type:
-          - string
-          - 'null'
     QoveryComponentContainerStatusLevel:
       type: string
       enum:
