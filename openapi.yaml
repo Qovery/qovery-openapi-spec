@@ -20141,6 +20141,7 @@ components:
         - DEPLOYING
         - DEPLOYMENT_ERROR
         - DEPLOYMENT_QUEUED
+        - EXECUTING
         - QUEUED
         - READY
         - RECAP
@@ -20171,6 +20172,7 @@ components:
         - ONGOING
         - SUCCESS
         - ERROR
+        - EXECUTING
         - CANCELED
         - CANCELING
         - NEVER
