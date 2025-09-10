@@ -12549,7 +12549,6 @@ paths:
         required: true
     get:
       summary: Fetch cluster logs
-      tags: []
       responses:
         '200':
           description: Cluster Logs
@@ -12558,6 +12557,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClusterLogsResponse'
       operationId: get-cluster-logs
+      tags:
+        - Clusters
       x-stoplight:
         id: eodcl3enjp2ax
       description: Fetch cluster logs
