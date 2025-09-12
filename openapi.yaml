@@ -22308,10 +22308,10 @@ components:
             id: 38iixcrw933wy
         terraform_files_source:
           oneOf:
-            - type: object
-              properties:
+            - properties:
                 git_repository:
                   $ref: '#/components/schemas/TerraformGitRepositoryRequest'
+          type: object
         terraform_variables_source:
           $ref: '#/components/schemas/TerraformVariablesSourceRequest'
         provider:
@@ -22322,7 +22322,7 @@ components:
         provider_version:
           $ref: '#/components/schemas/TerraformProviderVersion'
         timeout_sec:
-          type: string
+          type: integer
           x-stoplight:
             id: 3e5ngsw45atsd
         icon_uri:
