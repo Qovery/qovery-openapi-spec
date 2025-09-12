@@ -22444,7 +22444,7 @@ components:
         provider_version:
           $ref: '#/components/schemas/TerraformProviderVersion'
         timeout_sec:
-          type: string
+          type: integer
           x-stoplight:
             id: 3e5ngsw45atsd
         icon_uri:
