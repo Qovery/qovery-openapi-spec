@@ -22748,6 +22748,8 @@ components:
             Commit to deploy for chart source.
         dry_run:
           type: boolean
+        force_unlock_state:
+          type: boolean
     TerraformDeploymentRestrictionRequest:
       title: TerraformDeploymentRestrictionRequest
       x-stoplight:
