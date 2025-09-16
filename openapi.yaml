@@ -20758,6 +20758,7 @@ components:
         - DEPLOYMENT
         - ROUTER_DEPLOYMENT
         - MIRROR_IMAGE
+        - EXECUTING
       description: |
         The name of the deployment step at the service level:
         - REGISTRY_CREATE_REPOSITORY: The step to create the repository in the registry.
@@ -20768,6 +20769,7 @@ components:
         - DEPLOYMENT: The step to deploy the service. 
         - ROUTER_DEPLOYMENT: The step to deploy the router. 
         - MIRROR_IMAGE: The step to mirror the image to the private registry.
+        - EXECUTING: The step to execute a job or terraform apply.é
     OrganizationJobAutoDeployRequest:
       type: object
       properties:
