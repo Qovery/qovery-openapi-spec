@@ -20769,7 +20769,7 @@ components:
         - DEPLOYMENT: The step to deploy the service. 
         - ROUTER_DEPLOYMENT: The step to deploy the router. 
         - MIRROR_IMAGE: The step to mirror the image to the private registry.
-        - EXECUTING: The step to execute a job or terraform apply.é
+        - EXECUTING: The step to execute a job or terraform apply.
     OrganizationJobAutoDeployRequest:
       type: object
       properties:
