@@ -22556,7 +22556,7 @@ components:
         id: 1a1hkhvei2wjq
       type: object
       required:
-        - read_from_terraform_block
+        - explicit_version
       properties:
         read_from_terraform_block:
           type: boolean
