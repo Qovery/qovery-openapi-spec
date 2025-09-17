@@ -299,6 +299,15 @@ paths:
           type:
           - string
           - 'null'
+      - name: limit
+        in: path
+        required: true
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
       responses:
         '200':
           description: Stream of services logs
