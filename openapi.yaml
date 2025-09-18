@@ -11628,6 +11628,22 @@ paths:
             type: string
           in: query
           name: analyze
+        - schema:
+            type: string
+          in: query
+          name: board_short_name
+        - schema:
+            type: string
+          in: query
+          name: metric_short_name
+        - schema:
+            type: string
+          in: query
+          name: trace_id
+        - schema:
+            type: string
+          in: query
+          name: range
       responses:
         '200':
           description: Cluster Metrics
