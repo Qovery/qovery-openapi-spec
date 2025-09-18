@@ -11570,7 +11570,7 @@ paths:
   '/cluster/{clusterId}/metrics':
     get:
       summary: Fetch cluster metrics
-      description: Fetch cluster metrics
+      description: Fetch cluster metrics.
       operationId: get-cluster-metrics
       tags:
         - Clusters
