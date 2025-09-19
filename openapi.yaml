@@ -22090,10 +22090,10 @@ components:
             id: 38iixcrw933wy
         terraform_files_source:
           oneOf:
-            - type: object
-              properties:
+            - properties:
                 git_repository:
                   $ref: '#/components/schemas/TerraformGitRepositoryRequest'
+          type: object
         terraform_variables_source:
           $ref: '#/components/schemas/TerraformVariablesSourceRequest'
         provider:
@@ -22118,6 +22118,12 @@ components:
           type: boolean
           x-stoplight:
             id: w9ncq63nukwe0
+        backend:
+          x-stoplight:
+            id: be6k8rdvyellr
+          oneOf:
+            - $ref: '#/components/schemas/TerraformBackendKubernetes'
+            - $ref: '#/components/schemas/TerraformBackendUserProvided'
     TerraformResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -22192,6 +22198,12 @@ components:
               type: boolean
               x-stoplight:
                 id: ixjejij08tgfo
+            backend:
+              x-stoplight:
+                id: mpib9wiy31yer
+              oneOf:
+                - $ref: '#/components/schemas/TerraformBackendKubernetes'
+                - $ref: '#/components/schemas/TerraformBackendUserProvided'
     TerraformRequestJobResources:
       title: TerraformRequestJobResources
       x-stoplight:
@@ -22424,6 +22436,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TerraformDeploymentRestrictionResponse'
+    TerraformBackendKubernetes:
+      title: TerraformBackendKubernetes
+      x-stoplight:
+        id: i12ylzyh5r3zg
+      type: object
+      required:
+        - kubernetes
+      properties:
+        kubernetes:
+          type: object
+          x-stoplight:
+            id: 0peoc6814cxof
+    TerraformBackendUserProvided:
+      title: TerraformBackendUserProvided
+      x-stoplight:
+        id: yhgjkhneuw8xs
+      type: object
+      required:
+        - user_provided
+      properties:
+        user_provided:
+          type: object
+          x-stoplight:
+            id: n7oj0coe5csyg
   responses:
     '204':
       description: no content
