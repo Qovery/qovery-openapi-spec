@@ -22723,7 +22723,7 @@ components:
         id: ipapoxduvpkk7
       type: object
       properties:
-        id:
+        results:
           type: array
           x-stoplight:
             id: mkzx2zfzysbnp
