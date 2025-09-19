@@ -22071,6 +22071,7 @@ components:
         - provider
         - provider_version
         - job_resources
+        - backend
       properties:
         name:
           type: string
@@ -22141,6 +22142,7 @@ components:
             - job_resources
             - environment
             - use_cluster_credentials
+            - backend
           properties:
             name:
               type: string
