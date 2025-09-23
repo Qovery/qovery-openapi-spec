@@ -1645,8 +1645,7 @@ components:
         pod_name:
           type: string
         severity_text:
-          type: integer
-          format: int32
+          type: string
         version:
           type: string
     ServiceMetricsDto:
