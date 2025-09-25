@@ -13004,10 +13004,14 @@ components:
     TerraformBackend:
       oneOf:
         - type: object
+          required:
+            - kubernetes
           properties:
             kubernetes: 
               $ref: '#/components/schemas/TerraformBackendKubernetes'
         - type: object
+          required:
+            - user_provided
           properties:
             user_provided:
               $ref: '#/components/schemas/TerraformBackendUserProvided'
