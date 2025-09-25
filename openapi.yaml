@@ -13549,6 +13549,19 @@ components:
           description: is the default port to use for domain
         protocol:
           $ref: '#/components/schemas/PortProtocolEnum'
+        public_path:
+          type: string
+          description: |- 
+            Indicate the path or regex that must match for traffic to be accepted on your service
+            i.e: /api/ will only accept http calls that start with /api/ 
+            Only valid for publicly_accessible HTTP or GRPC ports. 
+        public_path_rewrite:
+          type: string
+          description: |-
+            Indicate the new path that will be used to reach your service after replacement
+            i.e: public_path -> /(.*)  public_path_rewrite -> /api/$1 will append /api/ on all externaly requested url when reaching the service 
+            external/use url -> example.com/foobar  -> url seen by the service -> example.com/api/foobar
+            Only valid for publicly_accessible HTTP or GRPC ports. 
     ServicePortResponseList:
       type: array
       items:
@@ -13585,6 +13598,19 @@ components:
                 description: is the default port to use for domain
               protocol:
                 $ref: '#/components/schemas/PortProtocolEnum'
+              public_path:
+                type: string
+                description: |- 
+                  Indicate the path or regex that must match for traffic to be accepted on your service
+                  i.e: /api/ will only accept http calls that start with /api/ 
+                  Only valid for publicly_accessible HTTP or GRPC ports. 
+              public_path_rewrite:
+                type: string
+                description: |-
+                  Indicate the new path that will be used to reach your service after replacement
+                  i.e: public_path -> /(.*)  public_path_rewrite -> /api/$1 will append /api/ on all externaly requested url when reaching the service 
+                  external/use url -> example.com/foobar  -> url seen by the service -> example.com/api/foobar
+                  Only valid for publicly_accessible HTTP or GRPC ports. 
     ServiceAnnotationsRequestList:
       type: array
       items:
