@@ -16303,6 +16303,10 @@ components:
               values_override_git_commit_id:
                 type: string
                 description: The commit Id of the override values to deploy. Use only if the helm has a Git override values repository.
+        terraforms:
+          type: array
+          items:
+            $ref: '#/components/schemas/TerraformDeployRequest'
     DeployRequest:
       type: object
       required:
@@ -22880,14 +22884,30 @@ components:
     TerraformDeployRequest:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Terraform service identifier
         git_commit_id:
           type: string
-          description: |
-            Commit to deploy for chart source.
+          description: Commit to deploy for chart source.
         dry_run:
           type: boolean
+          description: 'Deprecated: use action=PLAN instead.'
         force_unlock_state:
           type: boolean
+          nullable: true
+          description: 'Deprecated: use action=FORCE_UNLOCK instead.'
+        action:
+          type: string
+          nullable: true
+          description: Terraform action to execute.
+          enum:
+            - PLAN
+            - PLAN_AND_APPLY
+            - FORCE_UNLOCK
+            - DESTROY
     TerraformDeploymentRestrictionRequest:
       title: TerraformDeploymentRestrictionRequest
       x-stoplight:
