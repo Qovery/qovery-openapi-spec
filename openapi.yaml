@@ -22880,14 +22880,30 @@ components:
     TerraformDeployRequest:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Terraform service identifier
         git_commit_id:
           type: string
-          description: |
-            Commit to deploy for chart source.
+          description: Commit to deploy for chart source.
         dry_run:
           type: boolean
+          description: 'Deprecated: use action=PLAN instead.'
         force_unlock_state:
           type: boolean
+          nullable: true
+          description: 'Deprecated: use action=FORCE_UNLOCK instead.'
+        action:
+          type: string
+          nullable: true
+          description: Terraform action to execute.
+          enum:
+            - PLAN
+            - PLAN_AND_APPLY
+            - FORCE_UNLOCK
+            - DESTROY
     TerraformDeploymentRestrictionRequest:
       title: TerraformDeploymentRestrictionRequest
       x-stoplight:
