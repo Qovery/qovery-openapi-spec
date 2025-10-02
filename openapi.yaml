@@ -12656,7 +12656,7 @@ paths:
               $ref: '#/components/schemas/EnterpriseConnectionDto'
       responses:
         '200':
-          description: Update enterprise connection 
+          description: Update enterprise connection
           content:
             application/json:
               schema:
@@ -12667,8 +12667,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-
-
 components:
   parameters:
     applicationId:
@@ -13007,7 +13005,7 @@ components:
           required:
             - kubernetes
           properties:
-            kubernetes: 
+            kubernetes:
               $ref: '#/components/schemas/TerraformBackendKubernetes'
         - type: object
           required:
@@ -13254,6 +13252,12 @@ components:
               type: integer
               description: Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
               example: 16384
+            maximun_gpu:
+              type: integer
+              x-stoplight:
+                id: ho7l9maiyqe52
+              default: 0
+              minimum: 0
             name:
               type: string
               description: name is case insensitive
@@ -13274,6 +13278,12 @@ components:
               type: integer
               description: unit is MB. 1024 MB = 1GB
               example: 1024
+            gpu:
+              type: integer
+              x-stoplight:
+                id: 3n3pebmhkah3k
+              default: 0
+              minimum: 0
             min_running_instances:
               type: integer
               minimum: 0
@@ -13555,7 +13565,7 @@ components:
           $ref: '#/components/schemas/PortProtocolEnum'
         public_path:
           type: string
-          description: |- 
+          description: |-
             Indicate the path or regex that must match for traffic to be accepted on your service
             i.e: /api/ will only accept http calls that start with /api/ 
             Only valid for publicly_accessible HTTP or GRPC ports. 
@@ -13604,7 +13614,7 @@ components:
                 $ref: '#/components/schemas/PortProtocolEnum'
               public_path:
                 type: string
-                description: |- 
+                description: |-
                   Indicate the path or regex that must match for traffic to be accepted on your service
                   i.e: /api/ will only accept http calls that start with /api/ 
                   Only valid for publicly_accessible HTTP or GRPC ports. 
@@ -13674,6 +13684,13 @@ components:
               description: unit is MB. 1024 MB = 1GB
               default: 512
               example: 1024
+            gpu:
+              type: integer
+              x-stoplight:
+                id: 1jq9ic2dbgx3l
+              default: 0
+              minimum: 0
+              example: 1
             min_running_instances:
               type: integer
               minimum: 0
@@ -15686,6 +15703,13 @@ components:
               description: unit is MB. 1024 MB = 1GB
               default: 512
               example: 1024
+            gpu:
+              type: integer
+              x-stoplight:
+                id: j1i1u2mlnlgfm
+              minimum: 0
+              default: 0
+              example: 1
             min_running_instances:
               type: integer
               minimum: 0
@@ -15733,9 +15757,11 @@ components:
             - environment
             - maximum_cpu
             - maximum_memory
+            - maximum_gpu
             - name
             - cpu
             - memory
+            - gpu
             - min_running_instances
             - max_running_instances
             - healthchecks
@@ -15753,6 +15779,14 @@ components:
               type: integer
               description: Maximum memory that can be allocated to the container based on organization cluster configuration. unit is MB. 1024 MB = 1GB
               example: 16384
+            maximum_gpu:
+              type: integer
+              description: Maximum memory that can be allocated to the container based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+              x-stoplight:
+                id: zdw9ry7s5s0e8
+              minimum: 0
+              default: 0
+              example: 2
             name:
               type: string
               description: name is case insensitive
@@ -15774,6 +15808,13 @@ components:
               type: integer
               description: unit is MB. 1024 MB = 1GB
               example: 1024
+            gpu:
+              type: integer
+              x-stoplight:
+                id: qthonnmak3re3
+              default: 0
+              minimum: 0
+              example: 1
             min_running_instances:
               type: integer
               minimum: 0
@@ -17810,6 +17851,13 @@ components:
               description: unit is MB. 1024 MB = 1GB
               default: 512
               example: 1024
+            gpu:
+              type: integer
+              x-stoplight:
+                id: 4074yrndptih5
+              default: 0
+              minimum: 0
+              example: 1
             max_nb_restart:
               type: integer
               minimum: 0
@@ -21040,9 +21088,11 @@ components:
             - environment
             - maximum_cpu
             - maximum_memory
+            - maximum_gpu
             - name
             - cpu
             - memory
+            - gpu
             - auto_preview
             - source
             - healthchecks
@@ -21059,6 +21109,14 @@ components:
               type: integer
               description: Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
               example: 16384
+            maximum_gpu:
+              type: integer
+              description: Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+              x-stoplight:
+                id: 7o0e6wrgnxgcc
+              minimum: 0
+              default: 0
+              example: 2
             name:
               type: string
               description: name is case insensitive
@@ -21072,6 +21130,13 @@ components:
               type: integer
               description: unit is MB. 1024 MB = 1GB
               example: 1024
+            gpu:
+              type: integer
+              x-stoplight:
+                id: 50sj2wtkdypgg
+              default: 0
+              minimum: 0
+              example: 1
             max_nb_restart:
               type: integer
               minimum: 0
@@ -21103,13 +21168,12 @@ components:
                   properties:
                     image:
                       $ref: '#/components/schemas/ContainerSource'
-                  type: object
                 - required:
                     - docker
                   properties:
                     docker:
                       $ref: '#/components/schemas/JobSourceDockerResponse'
-                  type: object
+              type: object
             healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             auto_deploy:
@@ -21891,7 +21955,8 @@ components:
           $ref: '#/components/schemas/KarpenterStableNodePoolOverride'
         default_override:
           $ref: '#/components/schemas/KarpenterDefaultNodePoolOverride'
-      description: ''
+        gpu_override:
+          $ref: '#/components/schemas/KarpenterGpuNodePoolOverride'
     KarpenterNodePoolRequirementKey:
       title: KarpenterNodePoolRequirementKey
       x-stoplight:
@@ -21938,6 +22003,22 @@ components:
           $ref: '#/components/schemas/KarpenterNodePoolConsolidation'
         limits:
           $ref: '#/components/schemas/KarpenterNodePoolLimits'
+    KarpenterGpuNodePoolOverride:
+      title: KarpenterGpuNodePoolOverride
+      x-stoplight:
+        id: fi2s446xdrdu1
+      type: object
+      properties:
+        consolidation:
+          $ref: '#/components/schemas/KarpenterNodePoolConsolidation'
+        limits:
+          $ref: '#/components/schemas/KarpenterNodePoolLimits'
+        requirements:
+          type: array
+          x-stoplight:
+            id: 38pdri17ozql9
+          items:
+            $ref: '#/components/schemas/KarpenterNodePoolRequirement'
     KarpenterDefaultNodePoolOverride:
       title: KarpenterDefaultNodePoolOverride
       type: object
@@ -22671,6 +22752,7 @@ components:
       required:
         - cpu_milli
         - ram_mib
+        - gpu
         - storage_gib
       properties:
         cpu_milli:
@@ -22681,6 +22763,13 @@ components:
           type: integer
           x-stoplight:
             id: a5y9bv1avatm3
+        gpu:
+          type: integer
+          x-stoplight:
+            id: rql3vn2yhkwec
+          minimum: 0
+          default: 0
+          example: 1
         storage_gib:
           type: integer
           x-stoplight:
@@ -22822,6 +22911,7 @@ components:
       required:
         - cpu_milli
         - ram_mib
+        - gpu
         - storage_gib
       properties:
         cpu_milli:
@@ -22832,6 +22922,13 @@ components:
           type: integer
           x-stoplight:
             id: f6dur44ah2bwe
+        gpu:
+          type: integer
+          x-stoplight:
+            id: y8lomc204l40z
+          default: 0
+          minimum: 0
+          example: 1
         storage_gib:
           type: integer
           x-stoplight:
@@ -23073,17 +23170,17 @@ components:
       title: EnterpriseConnectionDto
       type: object
       required:
-      - default_role
-      - enforce_group_sync
-      - group_mappings
+        - default_role
+        - enforce_group_sync
+        - group_mappings
       properties:
         default_role:
           type: string
-          description: | 
+          description: |
             The purpose of this default role is to be associated to your users if:
             - you choose to not expose your IDPs groups to the SAML / OIDC connection
             - no associated group is found in your `group_mappings` defined
-            
+
             You can define either a Qovery provided role (i.e `viewer`) or one of your custom role`s uuid.
         enforce_group_sync:
           type: boolean
@@ -23101,7 +23198,7 @@ components:
             Example: "I want to associate the Qovery role `devops` to my IDP groups ['Administrators', 'DevSecOps']"
           additionalProperties:
             type: array
-            items: 
+            items:
               type: string
               nullable: false
   responses:
