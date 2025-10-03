@@ -22625,10 +22625,10 @@ components:
         - auto_deploy
         - terraform_files_source
         - terraform_variables_source
+        - backend
         - provider
         - provider_version
         - job_resources
-        - backend
       properties:
         name:
           type: string
@@ -22678,6 +22678,23 @@ components:
           type: boolean
           x-stoplight:
             id: w9ncq63nukwe0
+        action_extra_arguments:
+          type: object
+          x-stoplight:
+            id: guh2uio7aztct
+          description: |-
+            The key represent the action command name i.e: "plan"
+            The value represent the extra arguments to pass to this command
+
+            i.e: {"apply", ["-lock=false"]} is going to prepend `-lock=false` to terraform apply commands
+          additionalProperties:
+            x-stoplight:
+              id: 99o28tw5chbb1
+            type: array
+            items:
+              x-stoplight:
+                id: c6p960bh9qcu4
+              type: string
     TerraformResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -22691,11 +22708,12 @@ components:
             - service_type
             - terraform_variables_source
             - provider
+            - backend
             - provider_version
             - job_resources
             - environment
             - use_cluster_credentials
-            - backend
+            - action_extra_arguments
           properties:
             name:
               type: string
@@ -22743,6 +22761,23 @@ components:
               type: boolean
               x-stoplight:
                 id: ixjejij08tgfo
+            action_extra_arguments:
+              type: object
+              x-stoplight:
+                id: rnkzwlf29dgb5
+              description: |-
+                The key represent the action command name i.e: "plan"
+                The value represent the extra arguments to pass to this command
+
+                i.e: {"apply", ["-lock=false"]} is going to prepend `-lock=false` to terraform apply commands
+              additionalProperties:
+                x-stoplight:
+                  id: 57b09dqz1jwra
+                type: array
+                items:
+                  x-stoplight:
+                    id: 2mkmankga2thw
+                  type: string
       description: A Terraform service
     TerraformRequestJobResources:
       title: TerraformRequestJobResources
