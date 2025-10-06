@@ -22019,6 +22019,13 @@ components:
             id: 38pdri17ozql9
           items:
             $ref: '#/components/schemas/KarpenterNodePoolRequirement'
+        disk_size_in_gib:
+          type: integer
+          x-stoplight:
+            id: xq5ycmme7o025
+          minimum: 0
+          default: 100
+          example: 150
     KarpenterDefaultNodePoolOverride:
       title: KarpenterDefaultNodePoolOverride
       type: object
