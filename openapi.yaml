@@ -13393,6 +13393,13 @@ components:
               description: unit is MB. 1024 MB = 1GB
               default: 512
               example: 1024
+            gpu:
+              type: integer
+              x-stoplight:
+                id: tkd7it621esyj
+              minimum: 0
+              default: 0
+              example: 1
             min_running_instances:
               type: integer
               minimum: 0
@@ -13426,8 +13433,8 @@ components:
               description: optional entrypoint when launching container
             auto_deploy:
               type: boolean
-              nullable: true
               description: Specify if the application will be automatically updated after receiving a new commit.
+              nullable: true
             annotations_groups:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
             labels_groups:
