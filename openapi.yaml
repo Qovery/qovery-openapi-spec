@@ -12619,6 +12619,27 @@ paths:
             type: string
           in: query
           name: direction
+  '/organization/{organizationId}/enterpriseconnection':
+    get:
+      summary: List enterprise connections
+      operationId: listOrganizationEnterpriseConnections
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Enterprise Connection
+      responses:
+        '200':
+          description: List enterprise connections
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterpriseConnectionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/enterpriseconnection/{connectionName}':
     get:
       summary: Get enterprise connection
@@ -23208,6 +23229,14 @@ components:
             x-stoplight:
               id: lstjwwfo9ys6i
             type: string
+    EnterpriseConnectionResponseList:
+      title: EnterpriseConnectionResponseList
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseConnectionDto'
     EnterpriseConnectionDto:
       title: EnterpriseConnectionDto
       type: object
