@@ -23249,10 +23249,14 @@ components:
       title: EnterpriseConnectionDto
       type: object
       required:
+        - connection_name
         - default_role
         - enforce_group_sync
         - group_mappings
       properties:
+        connection_name:
+          type: string
+          description: The connection name
         default_role:
           type: string
           description: |
