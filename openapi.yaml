@@ -21175,12 +21175,13 @@ components:
                   properties:
                     image:
                       $ref: '#/components/schemas/ContainerSource'
+                  type: object
                 - required:
                     - docker
                   properties:
                     docker:
                       $ref: '#/components/schemas/JobSourceDockerResponse'
-              type: object
+                  type: object
             healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             auto_deploy:
