@@ -3101,7 +3101,7 @@ paths:
               - ONLY
               - INCLUDE
               - EXCLUDE
-            default: INCLUD
+            default: INCLUDE
           in: query
           name: gpu
       tags:
