@@ -1627,6 +1627,7 @@ components:
       - version
       - severity_text
       - labels
+      - from_kube
       properties:
         container_name:
           type: string
@@ -1634,6 +1635,8 @@ components:
           type: integer
           format: int64
           minimum: 0
+        from_kube:
+          type: boolean
         labels:
           type: object
           additionalProperties:
