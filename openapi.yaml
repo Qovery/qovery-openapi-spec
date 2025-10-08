@@ -19427,7 +19427,8 @@ components:
         - TRIGGER_DELETE
         - TRIGGER_UNINSTALL
         - TRIGGER_DEPLOY_DRY_RUN
-        - TRIGGER_FORCE_UNLOCK_STATE
+        - TRIGGER_TERRAFORM_FORCE_UNLOCK
+        - TRIGGER_TERRAFORM_MIGRATE_STATE
         - TRIGGER_FORCE_RUN
         - TRIGGER_FORCE_RUN_DEPLOY
         - TRIGGER_FORCE_RUN_STOP
@@ -19439,7 +19440,8 @@ components:
         - RESTARTED
         - DEPLOYED_DRY_RUN
         - FORCE_RUN_SUCCEEDED
-        - FORCE_UNLOCK_STATE_SUCCEEDED
+        - TERRAFORM_FORCE_UNLOCK_SUCCEEDED
+        - TERRAFORM_MIGRATE_STATE_SUCCEEDED
         - DEPLOY_FAILED
         - STOP_FAILED
         - DELETE_FAILED
@@ -19447,7 +19449,8 @@ components:
         - RESTART_FAILED
         - DEPLOYED_DRY_RUN_FAILED
         - FORCE_RUN_FAILED
-        - FORCE_UNLOCK_STATE_FAILED
+        - TERRAFORM_FORCE_UNLOCK_FAILED
+        - TERRAFORM_MIGRATE_STATE_FAILED
         - SHELL
         - SSO
         - PORT_FORWARD
@@ -23075,6 +23078,7 @@ components:
             - PLAN
             - PLAN_AND_APPLY
             - FORCE_UNLOCK
+            - MIGRATE_STATE
             - DESTROY
     TerraformDeploymentRestrictionRequest:
       title: TerraformDeploymentRestrictionRequest
