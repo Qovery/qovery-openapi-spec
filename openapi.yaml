@@ -22660,7 +22660,6 @@ components:
       required:
         - name
         - description
-        - auto_approve
         - auto_deploy
         - terraform_files_source
         - terraform_variables_source
@@ -22677,10 +22676,6 @@ components:
           type: string
           x-stoplight:
             id: ltvpnbhjz1oho
-        auto_approve:
-          type: boolean
-          x-stoplight:
-            id: zxy6gcsq4q6bc
         auto_deploy:
           type: boolean
           x-stoplight:
@@ -22741,7 +22736,6 @@ components:
           required:
             - name
             - timeout_sec
-            - auto_approve
             - auto_deploy
             - icon_uri
             - service_type
@@ -22763,8 +22757,6 @@ components:
               type: integer
               minimum: 0
               default: 600
-            auto_approve:
-              type: boolean
             auto_deploy:
               type: boolean
             terraform_files_source:
