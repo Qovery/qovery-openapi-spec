@@ -3093,6 +3093,17 @@ paths:
             type: boolean
           in: query
           name: with_gpu
+          description: 'deprecated field, use `gpu` instead'
+          deprecated: true
+        - schema:
+            type: string
+            enum:
+              - ONLY
+              - INCLUDE
+              - EXCLUDE
+            default: INCLUDE
+          in: query
+          name: gpu
       tags:
         - Cloud Provider
       responses:
@@ -3122,6 +3133,18 @@ paths:
             type: boolean
           in: query
           name: with_gpu
+          description: 'deprecated field, use `gpu` instead'
+          deprecated: true
+        - schema:
+            type: string
+            enum:
+              - INCLUDE
+              - EXCLUDE
+              - ONLY
+            default: INCLUDE
+          in: query
+          name: gpu
+          deprecated: true
       tags:
         - Cloud Provider
       responses:
