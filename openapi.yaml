@@ -12180,10 +12180,18 @@ paths:
         '404':
           $ref: '#/components/responses/404'
       parameters:
-        - schema:
+        - in: query
+          name: resources_only
+          schema:
             type: boolean
-          in: query
-          name: delete_resources_only
+            default: false
+          description: When true, only resources are deleted and Qovery configuration is kept.
+        - in: query
+          name: force_terraform_action
+          required: false
+          schema:
+            $ref: '#/components/schemas/DeleteTerraformAction'
+          description: Force a specific action to be executed by Terraform during deletion.
   '/terraform/{terraformId}/advancedSettings':
     get:
       summary: Get Advanced settings
@@ -12277,6 +12285,12 @@ paths:
       operationId: uninstallTerraform
       parameters:
         - $ref: '#/components/parameters/terraformId'
+        - in: query
+          name: force_terraform_action
+          required: false
+          schema:
+            $ref: '#/components/schemas/DeleteTerraformAction'
+          description: Force a specific action to be executed by Terraform during uninstall.
       tags:
         - Terraform Actions
       requestBody:
@@ -13041,6 +13055,11 @@ components:
     TerraformBackendUserProvided:
       type: object
       description: User-provided backend configuration
+    DeleteTerraformAction:
+      type: string
+      description: Action to force a specific Terraform behavior during deletion/uninstall.
+      enum:
+        - SKIP_DESTROY
     AccountInfo:
       type: object
       properties:
@@ -13596,14 +13615,14 @@ components:
           description: |-
             Indicate the path or regex that must match for traffic to be accepted on your service
             i.e: /api/ will only accept http calls that start with /api/ 
-            Only valid for publicly_accessible HTTP or GRPC ports. 
+            Only valid for publicly_accessible HTTP or GRPC ports.
         public_path_rewrite:
           type: string
           description: |-
             Indicate the new path that will be used to reach your service after replacement
             i.e: public_path -> /(.*)  public_path_rewrite -> /api/$1 will append /api/ on all externaly requested url when reaching the service 
             external/use url -> example.com/foobar  -> url seen by the service -> example.com/api/foobar
-            Only valid for publicly_accessible HTTP or GRPC ports. 
+            Only valid for publicly_accessible HTTP or GRPC ports.
     ServicePortResponseList:
       type: array
       items:
@@ -13645,14 +13664,14 @@ components:
                 description: |-
                   Indicate the path or regex that must match for traffic to be accepted on your service
                   i.e: /api/ will only accept http calls that start with /api/ 
-                  Only valid for publicly_accessible HTTP or GRPC ports. 
+                  Only valid for publicly_accessible HTTP or GRPC ports.
               public_path_rewrite:
                 type: string
                 description: |-
                   Indicate the new path that will be used to reach your service after replacement
                   i.e: public_path -> /(.*)  public_path_rewrite -> /api/$1 will append /api/ on all externaly requested url when reaching the service 
                   external/use url -> example.com/foobar  -> url seen by the service -> example.com/api/foobar
-                  Only valid for publicly_accessible HTTP or GRPC ports. 
+                  Only valid for publicly_accessible HTTP or GRPC ports.
     ServiceAnnotationsRequestList:
       type: array
       items:
