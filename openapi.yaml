@@ -12208,7 +12208,7 @@ paths:
           schema:
             type: boolean
             default: false
-          description: When true, only resources are deleted and Qovery configuration is kept.
+          description: 'When true, only resources are deleted and Qovery configuration is kept.'
         - in: query
           name: force_terraform_action
           required: false
@@ -22153,6 +22153,7 @@ components:
         - enabled
         - max_cpu_in_vcpu
         - max_memory_in_gibibytes
+        - max_gpu
       properties:
         enabled:
           type: boolean
@@ -22164,6 +22165,14 @@ components:
         max_memory_in_gibibytes:
           type: integer
           description: 'Memory limit that will be applied for the node pool (in Gibibytes unit: 1Gi = 1024 mebibytes)'
+        max_gpu:
+          type: integer
+          x-stoplight:
+            id: fn3k34ck5abe4
+          default: 0
+          example: 10
+          minimum: 0
+          description: GPU limit that will be applied for the node pool
     ClusterLockRequest:
       title: ClusterLockRequest
       x-stoplight:
