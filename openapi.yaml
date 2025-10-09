@@ -12368,6 +12368,25 @@ paths:
       operationId: getDefaultTerraformAdvancedSettings
       x-stoplight:
         id: 5qcyy764ewhk3
+  '/terraform/available-versions':
+    get:
+      summary: List available Terraform versions
+      tags:
+        - Terraform Main Calls
+      operationId: listTerraformVersions
+      responses:
+        '200':
+          description: List available Terraform versions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformVersionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/terraform/{terraformId}/clone':
     post:
       summary: Clone terraform
@@ -23062,6 +23081,19 @@ components:
             id: mkzx2zfzysbnp
           items:
             $ref: '#/components/schemas/TerraformResponse'
+    TerraformVersionResponse:
+      type: object
+      properties:
+        version:
+          type: string
+          description: Terraform version string
+    TerraformVersionResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TerraformVersionResponse'
     TerraformAdvancedSettings:
       title: TerraformAdvancedSettings
       x-stoplight:
