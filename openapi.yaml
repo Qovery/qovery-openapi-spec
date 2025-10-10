@@ -23469,34 +23469,28 @@ components:
       title: AlertReceiverResponse
       x-stoplight:
         id: qyrx61cvx84cz
-      type: object
-      required:
-        - id
-        - created_at
-        - description
-        - type
-        - send_resolved
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: txp2h74yqj7it
-          format: uuid
-        created_at:
-          type: string
-          x-stoplight:
-            id: 6qtk93igfhrfr
-          format: date-time
-        description:
-          type: string
-          x-stoplight:
-            id: aja5apvg882lo
-        type:
-          $ref: '#/components/schemas/AlertReceiverType'
-        send_resolved:
-          type: string
-          x-stoplight:
-            id: xpyx1p6hna34g
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - description
+            - type
+            - send_resolved
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: 5zeqm4fc5c8bf
+            description:
+              type: string
+              x-stoplight:
+                id: aja5apvg882lo
+            type:
+              $ref: '#/components/schemas/AlertReceiverType'
+            send_resolved:
+              type: boolean
+              x-stoplight:
+                id: xpyx1p6hna34g
     AlertReceiverList:
       title: AlertReceiverList
       x-stoplight:
@@ -23506,7 +23500,11 @@ components:
         - results
       properties:
         results:
-          $ref: '#/components/schemas/AlertReceiverResponse'
+          x-stoplight:
+            id: e8a6xqrax75d5
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertReceiverResponse'
   responses:
     '204':
       description: no content
