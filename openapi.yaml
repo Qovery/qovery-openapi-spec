@@ -23427,15 +23427,15 @@ components:
       x-stoplight:
         id: y2od6vkbmt7yr
       type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          SLACK: '#/components/schemas/SlackAlertReceiverEditRequest'
       required:
         - name
         - description
         - type
         - send_resolved
-      discriminator:
-        propertyName: type
-        mapping:
-          SLACK: '#/components/schemas/SlackAlertReceiverEditRequest'
       properties:
         name:
           type: string
@@ -23451,6 +23451,11 @@ components:
           type: boolean
           x-stoplight:
             id: hk2x1t8ixk5sf
+        webhook_url:
+          type: string
+          x-stoplight:
+            id: lj8zru7uhubqd
+          format: uri
     SlackAlertReceiverEditRequest:
       title: SlackAlertReceiverEditRequest
       x-stoplight:
@@ -23473,6 +23478,7 @@ components:
         - $ref: '#/components/schemas/Base'
         - type: object
           required:
+            - name
             - description
             - type
             - send_resolved
