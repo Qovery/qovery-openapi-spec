@@ -12865,8 +12865,6 @@ paths:
       x-stoplight:
         id: vwt0mube2wcb6
       description: Delete an alert receiver
-      requestBody:
-        content: {}
 components:
   parameters:
     alertReceiverId:
