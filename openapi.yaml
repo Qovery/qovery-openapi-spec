@@ -12801,7 +12801,7 @@ paths:
       - $ref: '#/components/parameters/alertReceiverId'
     get:
       summary: Get alert receiver
-      tags: 
+      tags:
         - Alert Receivers
       responses:
         '200':
@@ -12811,7 +12811,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AlertReceiverResponse'
         '400':
-          $ref: '#/components/responses/401'
+          $ref: '#/components/responses/400'
         '403':
           $ref: '#/components/responses/403'
         '404':
@@ -12822,7 +12822,7 @@ paths:
       description: Retrieve a specific alert receiver by its ID
     put:
       summary: Update alert receiver
-      tags: 
+      tags:
         - Alert Receivers
       responses:
         '200':
@@ -12850,7 +12850,7 @@ paths:
               $ref: '#/components/schemas/AlertReceiverEditRequest'
     delete:
       summary: Delete alert receiver
-      tags: 
+      tags:
         - Alert Receivers
       responses:
         '204':
