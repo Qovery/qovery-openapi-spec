@@ -23451,11 +23451,6 @@ components:
           type: boolean
           x-stoplight:
             id: hk2x1t8ixk5sf
-        webhook_url:
-          type: string
-          x-stoplight:
-            id: lj8zru7uhubqd
-          format: uri
     SlackAlertReceiverEditRequest:
       title: SlackAlertReceiverEditRequest
       x-stoplight:
@@ -23470,6 +23465,7 @@ components:
               type: string
               x-stoplight:
                 id: 8c5ze7hwv90q2
+              format: uri
     AlertReceiverResponse:
       title: AlertReceiverResponse
       x-stoplight:
