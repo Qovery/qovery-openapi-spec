@@ -15,6 +15,7 @@ info:
 tags:
   - name: Account
   - name: Account Info
+  - name: Alert Receivers
   - name: Admin
   - name: Application
   - name: Application Actions
@@ -12744,8 +12745,133 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/api/organization/{organizationId}/alert-receivers':
+    get:
+      summary: List alert receivers
+      tags:
+        - Alert Receivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertReceiverList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: getAlertReceivers
+      x-stoplight:
+        id: 3cqb2xpmir9n8
+      description: Retrieve all alert receivers for a specific organization
+    parameters:
+      - $ref: '#/components/parameters/organizationId'
+  /api/alert-receivers:
+    post:
+      summary: Create alert receiver
+      tags:
+        - Alert Receivers
+      responses:
+        '201':
+          description: ' Alert receiver successfully created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertReceiverResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+      operationId: createAlertReceiver
+      x-stoplight:
+        id: 56wdp3pyd4jfy
+      description: Create a new alert receiver
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertReceiverCreationRequest'
+  '/api/alert-receivers/{alertReceiverId}':
+    parameters:
+      - schema:
+          type: string
+        name: alertReceiverId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: alertReceiverId
+        in: path
+        required: true
+      - $ref: '#/components/parameters/alertReceiverId'
+    get:
+      summary: Get alert receiver
+      tags: []
+      responses: {}
+      operationId: getAlertReceiver
+      x-stoplight:
+        id: z0qs6btegz9c3
+      description: Retrieve a specific alert receiver by its ID
+    put:
+      summary: Update alert receiver
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertReceiverEditRequest'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: editAlertReceiver
+      x-stoplight:
+        id: lcy99zdslr1cb
+      description: Update an existing alert receiver
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertReceiverEditRequest'
+    delete:
+      summary: Delete alert receiver
+      tags: []
+      responses:
+        '204':
+          description: Alert receiver successfully deleted
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: deleteAlertReceiver
+      x-stoplight:
+        id: vwt0mube2wcb6
+      description: Delete an alert receiver
+      requestBody:
+        content: {}
 components:
   parameters:
+    alertReceiverId:
+      name: alertReceiverId
+      in: path
+      description: Alert Receiver ID
+      required: true
+      schema:
+        type: string
+        format: uuid
     applicationId:
       name: applicationId
       in: path
