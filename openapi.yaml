@@ -23465,7 +23465,7 @@ components:
               type: string
               x-stoplight:
                 id: 8c5ze7hwv90q2
-              format: uri
+              nullable: true
     AlertReceiverResponse:
       title: AlertReceiverResponse
       x-stoplight:
