@@ -23646,12 +23646,13 @@ components:
           type: string
           x-stoplight:
             id: 4q8s7z1uu8kvm
-        runbookUrl:
+          nullable: true
+        runbook_url:
           type: string
           x-stoplight:
             id: fe7wk13airhnu
-          format: uri
           description: URL to runbook with remediation steps
+          nullable: true
     AlertRuleCreationRequest:
       title: AlertRuleCreationRequest
       x-stoplight:
@@ -23709,19 +23710,18 @@ components:
           type: boolean
           x-stoplight:
             id: 0ksuq2b0flii5
-          description: |
-            Duration the condition must be true before firing (ISO-8601 duration format)
+          description: Whether the alert rule is enabled
         alert_receiver_ids:
           type: array
           x-stoplight:
             id: oy3dbybxgmvs5
           description: List of alert receiver IDs to send notifications to
+          minItems: 1
           items:
             x-stoplight:
               id: cc3sm9sjduuqf
             type: string
             format: uuid
-            minLength: 1
         presentation:
           $ref: '#/components/schemas/AlertPresentation'
     AlertSeverity:
@@ -23783,12 +23783,12 @@ components:
           x-stoplight:
             id: n42yd3ffbfzdq
           description: List of alert receiver IDs to send notifications to
+          minItems: 1
           items:
             x-stoplight:
               id: xt3qvn76g9znl
             type: string
             format: uuid
-            minLength: 1
         presentation:
           $ref: '#/components/schemas/AlertPresentation'
     AlertPresentationResponse:
@@ -23802,12 +23802,13 @@ components:
           x-stoplight:
             id: z5t89ub093022
           description: ' Alert summary template'
+          nullable: true
         runbook_url:
           type: string
           x-stoplight:
             id: kf94o17fes7zl
           description: URL to runbook with remediation steps
-          format: uri
+          nullable: true
     AlertRuleResponse:
       title: AlertRuleResponse
       x-stoplight:
