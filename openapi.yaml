@@ -16,6 +16,7 @@ tags:
   - name: Account
   - name: Account Info
   - name: Alert Receivers
+  - name: Alert Rules
   - name: Admin
   - name: Application
   - name: Application Actions
@@ -12865,12 +12866,116 @@ paths:
       x-stoplight:
         id: vwt0mube2wcb6
       description: Delete an alert receiver
+  /api/alert-rules:
+    post:
+      summary: Create alert rule
+      tags: 
+        - Alert Receivers
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+      operationId: createAlertRule
+      x-stoplight:
+        id: htbtqo7s45dzg
+      description: Create a new alert rule with PromQL expression
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRuleCreationRequest'
+  '/api/alert-rules/{alertRuleId}':
+    parameters:
+      - $ref: '#/components/parameters/alertRuleId'
+    get:
+      summary: Get alert rule
+      tags: 
+        - Alert Receivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: getAlertRule
+      x-stoplight:
+        id: qfitd78wejspk
+      description: Retrieve a specific alert rule by its ID
+    put:
+      summary: Update alert rule
+      tags: 
+       - Alert Receivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: editAlertRule
+      x-stoplight:
+        id: cj5a3t08qw1aj
+      description: Update an existing alert rule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRuleEditRequest'
+    delete:
+      summary: Delete alert rule
+      tags: 
+         - Alert Receivers
+      responses:
+        '204':
+          description: ' Alert rule successfully deleted'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: deleteAlertRule
+      x-stoplight:
+        id: 812453spx2l0f
+      description: Delete an alert rule
 components:
   parameters:
     alertReceiverId:
       name: alertReceiverId
       in: path
       description: Alert Receiver ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    alertRuleId:
+      name: alertRuleId
+      in: path
+      description: Alert Rule ID
       required: true
       schema:
         type: string
