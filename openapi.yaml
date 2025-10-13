@@ -12869,7 +12869,7 @@ paths:
   /api/alert-rules:
     post:
       summary: Create alert rule
-      tags: 
+      tags:
         - Alert Rules
       responses:
         '201':
@@ -12898,7 +12898,7 @@ paths:
       - $ref: '#/components/parameters/alertRuleId'
     get:
       summary: Get alert rule
-      tags: 
+      tags:
         - Alert Rules
       responses:
         '200':
@@ -12919,7 +12919,7 @@ paths:
       description: Retrieve a specific alert rule by its ID
     put:
       summary: Update alert rule
-      tags: 
+      tags:
         - Alert Rules
       responses:
         '200':
@@ -12947,11 +12947,11 @@ paths:
               $ref: '#/components/schemas/AlertRuleEditRequest'
     delete:
       summary: Delete alert rule
-      tags: 
+      tags:
         - Alert Rules
       responses:
         '204':
-          description: ' Alert rule successfully deleted'
+          description: Alert rule successfully deleted
         '401':
           $ref: '#/components/responses/401'
         '403':
