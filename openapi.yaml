@@ -23385,10 +23385,8 @@ components:
           description: Terraform action to execute.
           enum:
             - PLAN
-            - PLAN_AND_APPLY
             - FORCE_UNLOCK
             - MIGRATE_STATE
-            - DESTROY
     TerraformDeploymentRestrictionRequest:
       title: TerraformDeploymentRestrictionRequest
       x-stoplight:
