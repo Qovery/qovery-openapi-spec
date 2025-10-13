@@ -12870,7 +12870,7 @@ paths:
     post:
       summary: Create alert rule
       tags: 
-        - Alert Receivers
+        - Alert Rules
       responses:
         '201':
           description: Created
@@ -12899,7 +12899,7 @@ paths:
     get:
       summary: Get alert rule
       tags: 
-        - Alert Receivers
+        - Alert Rules
       responses:
         '200':
           description: OK
@@ -12920,7 +12920,7 @@ paths:
     put:
       summary: Update alert rule
       tags: 
-       - Alert Receivers
+        - Alert Rules
       responses:
         '200':
           description: OK
@@ -12948,7 +12948,7 @@ paths:
     delete:
       summary: Delete alert rule
       tags: 
-         - Alert Receivers
+        - Alert Rules
       responses:
         '204':
           description: ' Alert rule successfully deleted'
