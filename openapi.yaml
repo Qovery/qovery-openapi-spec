@@ -23652,6 +23652,7 @@ components:
           x-stoplight:
             id: fe7wk13airhnu
           description: URL to runbook with remediation steps
+          format: uri
           nullable: true
     AlertRuleCreationRequest:
       title: AlertRuleCreationRequest
@@ -23808,6 +23809,7 @@ components:
           x-stoplight:
             id: kf94o17fes7zl
           description: URL to runbook with remediation steps
+          format: uri
           nullable: true
     AlertRuleResponse:
       title: AlertRuleResponse
