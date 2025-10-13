@@ -15,6 +15,7 @@ info:
 tags:
   - name: Account
   - name: Account Info
+  - name: Alert Receivers
   - name: Admin
   - name: Application
   - name: Application Actions
@@ -12368,7 +12369,7 @@ paths:
       operationId: getDefaultTerraformAdvancedSettings
       x-stoplight:
         id: 5qcyy764ewhk3
-  '/terraform/available-versions':
+  /terraform/available-versions:
     get:
       summary: List available Terraform versions
       tags:
@@ -12744,8 +12745,136 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/api/organization/{organizationId}/alert-receivers':
+    get:
+      summary: List alert receivers
+      tags:
+        - Alert Receivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertReceiverList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: getAlertReceivers
+      x-stoplight:
+        id: 3cqb2xpmir9n8
+      description: Retrieve all alert receivers for a specific organization
+    parameters:
+      - $ref: '#/components/parameters/organizationId'
+  /api/alert-receivers:
+    post:
+      summary: Create alert receiver
+      tags:
+        - Alert Receivers
+      responses:
+        '201':
+          description: ' Alert receiver successfully created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertReceiverResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+      operationId: createAlertReceiver
+      x-stoplight:
+        id: 56wdp3pyd4jfy
+      description: Create a new alert receiver
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertReceiverCreationRequest'
+  '/api/alert-receivers/{alertReceiverId}':
+    parameters:
+      - $ref: '#/components/parameters/alertReceiverId'
+    get:
+      summary: Get alert receiver
+      tags:
+        - Alert Receivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertReceiverResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: getAlertReceiver
+      x-stoplight:
+        id: z0qs6btegz9c3
+      description: Retrieve a specific alert receiver by its ID
+    put:
+      summary: Update alert receiver
+      tags:
+        - Alert Receivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertReceiverResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: editAlertReceiver
+      x-stoplight:
+        id: lcy99zdslr1cb
+      description: Update an existing alert receiver
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertReceiverEditRequest'
+    delete:
+      summary: Delete alert receiver
+      tags:
+        - Alert Receivers
+      responses:
+        '204':
+          description: Alert receiver successfully deleted
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: deleteAlertReceiver
+      x-stoplight:
+        id: vwt0mube2wcb6
+      description: Delete an alert receiver
 components:
   parameters:
+    alertReceiverId:
+      name: alertReceiverId
+      in: path
+      description: Alert Receiver ID
+      required: true
+      schema:
+        type: string
+        format: uuid
     applicationId:
       name: applicationId
       in: path
@@ -23363,6 +23492,150 @@ components:
             items:
               type: string
               nullable: false
+    AlertReceiverCreationRequest:
+      title: AlertReceiverCreationRequest
+      x-stoplight:
+        id: q1oj36zhkhmvp
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          SLACK: '#/components/schemas/SlackAlertReceiverCreationRequest'
+      x-internal: false
+      required:
+        - organization_id
+        - name
+        - description
+        - type
+        - send_resolved
+      properties:
+        organization_id:
+          type: string
+          x-stoplight:
+            id: bojx2ynimjvnr
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: vhcpsitoy9mm1
+        description:
+          type: string
+          x-stoplight:
+            id: lrlxf8a34veta
+        type:
+          $ref: '#/components/schemas/AlertReceiverType'
+        send_resolved:
+          type: boolean
+          x-stoplight:
+            id: ucf1p0q2vpohv
+    SlackAlertReceiverCreationRequest:
+      title: SlackAlertReceiverCreationRequest
+      x-stoplight:
+        id: awuv9zidg4qxx
+      allOf:
+        - $ref: '#/components/schemas/AlertReceiverCreationRequest'
+        - type: object
+          x-stoplight:
+            id: jw3lis4cbm2nf
+          required:
+            - webhook_url
+          properties:
+            webhook_url:
+              type: string
+              x-stoplight:
+                id: dre0gsq0bs0xv
+              format: uri
+    AlertReceiverType:
+      title: AlertReceiverType
+      x-stoplight:
+        id: 79fodqa89swh7
+      enum:
+        - SLACK
+    AlertReceiverEditRequest:
+      title: AlertReceiverEditRequest
+      x-stoplight:
+        id: y2od6vkbmt7yr
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          SLACK: '#/components/schemas/SlackAlertReceiverEditRequest'
+      required:
+        - name
+        - description
+        - type
+        - send_resolved
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: x7yi5mef1y2le
+        description:
+          type: string
+          x-stoplight:
+            id: 0l6xifjl3s4e2
+        type:
+          $ref: '#/components/schemas/AlertReceiverType'
+        send_resolved:
+          type: boolean
+          x-stoplight:
+            id: hk2x1t8ixk5sf
+    SlackAlertReceiverEditRequest:
+      title: SlackAlertReceiverEditRequest
+      x-stoplight:
+        id: hcxf6sxx1jrv9
+      allOf:
+        - $ref: '#/components/schemas/AlertReceiverEditRequest'
+        - type: object
+          x-stoplight:
+            id: 0nkbeafo42gqk
+          properties:
+            webhook_url:
+              type: string
+              x-stoplight:
+                id: 8c5ze7hwv90q2
+              nullable: true
+    AlertReceiverResponse:
+      title: AlertReceiverResponse
+      x-stoplight:
+        id: qyrx61cvx84cz
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+            - description
+            - type
+            - send_resolved
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: 5zeqm4fc5c8bf
+            description:
+              type: string
+              x-stoplight:
+                id: aja5apvg882lo
+            type:
+              $ref: '#/components/schemas/AlertReceiverType'
+            send_resolved:
+              type: boolean
+              x-stoplight:
+                id: xpyx1p6hna34g
+    AlertReceiverList:
+      title: AlertReceiverList
+      x-stoplight:
+        id: adq5zt8oqtve1
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          x-stoplight:
+            id: e8a6xqrax75d5
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertReceiverResponse'
   responses:
     '204':
       description: no content
