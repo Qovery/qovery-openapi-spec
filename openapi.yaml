@@ -23636,6 +23636,250 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AlertReceiverResponse'
+    AlertPresentation:
+      title: AlertPresentation
+      x-stoplight:
+        id: csg2krsbv2i40
+      type: object
+      properties:
+        summary:
+          type: string
+          x-stoplight:
+            id: 4q8s7z1uu8kvm
+        runbookUrl:
+          type: string
+          x-stoplight:
+            id: fe7wk13airhnu
+          format: uri
+          description: URL to runbook with remediation steps
+    AlertRuleCreationRequest:
+      title: AlertRuleCreationRequest
+      x-stoplight:
+        id: mcgiquvv7m2vp
+      type: object
+      required:
+        - organization_id
+        - cluster_id
+        - name
+        - description
+        - promql_expr
+        - for_duration
+        - severity
+        - enabled
+        - alert_receiver_ids
+        - presentation
+      properties:
+        organization_id:
+          type: string
+          x-stoplight:
+            id: qe8mxuqf5rerq
+          format: uuid
+          description: Organization identifier
+        cluster_id:
+          type: string
+          x-stoplight:
+            id: luojx47y8mgl1
+          format: uuid
+          description: ' Cluster identifier where the rule will be deployed'
+        name:
+          type: string
+          x-stoplight:
+            id: 7ih1egmfghew9
+          description: Name of the alert rule
+        description:
+          type: string
+          x-stoplight:
+            id: jhc5u599bha5a
+          description: |
+            Description of what the alert monitors
+        promql_expr:
+          type: string
+          x-stoplight:
+            id: 2ojznqgimdacq
+          description: PromQL expression to evaluate
+        for_duration:
+          type: string
+          x-stoplight:
+            id: 8jk0kcca7whc6
+          description: Duration the condition must be true before firing (ISO-8601 duration format)
+          format: duration
+        severity:
+          $ref: '#/components/schemas/AlertSeverity'
+        enabled:
+          type: boolean
+          x-stoplight:
+            id: 0ksuq2b0flii5
+          description: |
+            Duration the condition must be true before firing (ISO-8601 duration format)
+        alert_receiver_ids:
+          type: array
+          x-stoplight:
+            id: oy3dbybxgmvs5
+          description: List of alert receiver IDs to send notifications to
+          items:
+            x-stoplight:
+              id: cc3sm9sjduuqf
+            type: string
+            format: uuid
+            minLength: 1
+        presentation:
+          $ref: '#/components/schemas/AlertPresentation'
+    AlertSeverity:
+      title: AlertSeverity
+      x-stoplight:
+        id: 74rrc7nvxpc30
+      description: |-
+        Alert severity level:
+                - WARNING: Non-critical issue requiring attention
+                - CRITICAL: Critical issue requiring immediate action
+      enum:
+        - WARNING
+        - CRITICAL
+    AlertRuleEditRequest:
+      title: AlertRuleEditRequest
+      x-stoplight:
+        id: 6914x54u4sgg0
+      type: object
+      required:
+        - name
+        - description
+        - promql_expr
+        - for_duration
+        - severity
+        - enabled
+        - alert_receiver_ids
+        - presentation
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 7zbib93n861tt
+          description: Name of the alert rule
+        description:
+          type: string
+          x-stoplight:
+            id: 2xpgzz03za6jo
+          description: Description of what the alert monitors
+        promql_expr:
+          type: string
+          x-stoplight:
+            id: 6smsj3iavzowc
+          description: PromQL expression to evaluate
+        for_duration:
+          type: string
+          x-stoplight:
+            id: auoq20czr9ouh
+          format: duration
+          description: Duration the condition must be true before firing (ISO-8601 duration format)
+        severity:
+          $ref: '#/components/schemas/AlertSeverity'
+        enabled:
+          type: boolean
+          x-stoplight:
+            id: uayodiines5vd
+          description: Whether the alert rule is enabled
+        alert_receiver_ids:
+          type: array
+          x-stoplight:
+            id: n42yd3ffbfzdq
+          description: List of alert receiver IDs to send notifications to
+          items:
+            x-stoplight:
+              id: xt3qvn76g9znl
+            type: string
+            format: uuid
+            minLength: 1
+        presentation:
+          $ref: '#/components/schemas/AlertPresentation'
+    AlertPresentationResponse:
+      title: AlertPresentationResponse
+      x-stoplight:
+        id: dx514vxebudw0
+      type: object
+      properties:
+        summary:
+          type: string
+          x-stoplight:
+            id: z5t89ub093022
+          description: ' Alert summary template'
+        runbook_url:
+          type: string
+          x-stoplight:
+            id: kf94o17fes7zl
+          description: URL to runbook with remediation steps
+          format: uri
+    AlertRuleResponse:
+      title: AlertRuleResponse
+      x-stoplight:
+        id: jsi9jy70651hv
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - organization_id
+            - cluster_id
+            - name
+            - description
+            - promql_expr
+            - for_duration
+            - severity
+            - enabled
+            - alert_receiver_ids
+            - presentation
+          properties:
+            organization_id:
+              type: string
+              x-stoplight:
+                id: 40agisyi9s6no
+              format: uuid
+              description: Organization identifier
+            cluster_id:
+              type: string
+              x-stoplight:
+                id: nd3oz9h1qpa6w
+              description: ' Cluster identifier'
+              format: uuid
+            name:
+              type: string
+              x-stoplight:
+                id: 866jtxgaipphh
+              description: |
+                Name of the alert rule
+            description:
+              type: string
+              x-stoplight:
+                id: r728dl0e8ef6x
+              description: Description of what the alert monitors
+            promql_expr:
+              type: string
+              x-stoplight:
+                id: 5e2ku0srk67e7
+              description: PromQL expression to evaluate
+            for_duration:
+              type: string
+              x-stoplight:
+                id: 3aceb4kbdv4pz
+              format: duration
+              description: Duration the condition must be true before firing (ISO-8601 duration format)
+            severity:
+              $ref: '#/components/schemas/AlertSeverity'
+            enabled:
+              type: boolean
+              x-stoplight:
+                id: du2v3ss6fb66f
+              description: Whether the alert rule is enabled
+            alert_receiver_ids:
+              type: array
+              x-stoplight:
+                id: 7lerayyele2ss
+              description: List of alert receiver IDs to send notifications to
+              items:
+                x-stoplight:
+                  id: xdka1kakao7s0
+                type: string
+                format: uuid
+            presentation:
+              $ref: '#/components/schemas/AlertPresentationResponse'
   responses:
     '204':
       description: no content
