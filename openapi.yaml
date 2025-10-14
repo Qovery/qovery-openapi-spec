@@ -16926,6 +16926,7 @@ components:
         - auditing_data
         - details
         - icon_uri
+        - status_details
       properties:
         identifier:
           type: object
