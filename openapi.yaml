@@ -17423,6 +17423,14 @@ components:
             $ref: '#/components/schemas/EnvironmentStats'
     EnvironmentStatuses:
       type: object
+      required:
+        - environment
+        - containers
+        - applications
+        - jobs
+        - databases
+        - helms
+        - terraforms
       properties:
         environment:
           $ref: '#/components/schemas/EnvironmentStatus'
@@ -20745,6 +20753,9 @@ components:
         - state
         - service_deployment_status
         - status_details
+        - is_part_last_deployment
+        - deployment_requests_count
+        - deployment_request_id
       properties:
         id:
           type: string
@@ -21228,6 +21239,10 @@ components:
             $ref: '#/components/schemas/StageStepMetric'
     ServiceStepMetrics:
       type: object
+      required:
+        - total_duration_sec
+        - total_computing_duration_sec
+        - details
       properties:
         total_duration_sec:
           description: The total duration in seconds of the service deployment or null if the deployment is not completed.
