@@ -23775,9 +23775,10 @@ components:
         - promql_expr
         - for_duration
         - severity
+        - presentation
         - enabled
         - alert_receiver_ids
-        - presentation
+        - target
       properties:
         organization_id:
           type: string
@@ -23815,6 +23816,8 @@ components:
           format: duration
         severity:
           $ref: '#/components/schemas/AlertSeverity'
+        presentation:
+          $ref: '#/components/schemas/AlertPresentation'
         enabled:
           type: boolean
           x-stoplight:
@@ -23831,8 +23834,8 @@ components:
               id: cc3sm9sjduuqf
             type: string
             format: uuid
-        presentation:
-          $ref: '#/components/schemas/AlertPresentation'
+        target:
+          $ref: '#/components/schemas/AlertTarget'
     AlertSeverity:
       title: AlertSeverity
       x-stoplight:
@@ -23937,6 +23940,7 @@ components:
             - enabled
             - alert_receiver_ids
             - presentation
+            - target
           properties:
             organization_id:
               type: string
@@ -23991,6 +23995,37 @@ components:
                 format: uuid
             presentation:
               $ref: '#/components/schemas/AlertPresentationResponse'
+            target:
+              $ref: '#/components/schemas/AlertTarget'
+    AlertTargetType:
+      title: AlertTargetType
+      x-stoplight:
+        id: y45ivkwhr7wb4
+      enum:
+        - ' CLUSTER'
+        - ENVIRONMENT
+        - APPLICATION
+        - CONTAINER
+        - JOB
+        - CRONJOB
+        - HELM
+        - TERRAFORM
+    AlertTarget:
+      title: AlertTarget
+      x-stoplight:
+        id: rv11vyq7cy4dn
+      type: object
+      required:
+        - target_type
+        - target_id
+      properties:
+        target_type:
+          $ref: '#/components/schemas/AlertTargetType'
+        target_id:
+          type: string
+          x-stoplight:
+            id: 8begp36fsknxq
+          format: uuid
   responses:
     '204':
       description: no content
