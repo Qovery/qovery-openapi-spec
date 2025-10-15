@@ -22386,6 +22386,11 @@ components:
           minimum: 0
           default: 100
           example: 150
+        spot_enabled:
+          type: boolean
+          x-stoplight:
+            id: rjzxs0e2rn0ij
+          default: false
     KarpenterDefaultNodePoolOverride:
       title: KarpenterDefaultNodePoolOverride
       type: object
