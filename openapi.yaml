@@ -20679,6 +20679,16 @@ components:
         - RESTART
         - STOP
         - UNKNOWN
+    ServiceSubActionEnum:
+      type: string
+      default: NONE
+      enum:
+        - NONE
+        - TERRAFORM_PLAN_ONLY
+        - TERRAFORM_PLAN_AND_APPLY
+        - TERRAFORM_DESTROY
+        - TERRAFORM_FORCE_UNLOCK_STATE
+        - TERRAFORM_MIGRATE_STATE
     ServiceActionStatusEnum:
       type: string
       enum:
@@ -20771,11 +20781,14 @@ components:
       required:
         - action
         - status
+        - sub_action
       properties:
         action:
           $ref: '#/components/schemas/ServiceActionEnum'
         status:
           $ref: '#/components/schemas/ServiceActionStatusEnum'
+        sub_action:
+          $ref: '#/components/schemas/ServiceSubActionEnum'
     Stage:
       type: object
       required:
