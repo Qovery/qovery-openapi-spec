@@ -24010,6 +24010,7 @@ components:
         - CRONJOB
         - HELM
         - TERRAFORM
+      description: The target of an alert
     AlertTarget:
       title: AlertTarget
       x-stoplight:
