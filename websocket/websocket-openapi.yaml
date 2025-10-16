@@ -932,7 +932,7 @@ components:
         terraform:
           type: array
           items:
-            $ref: '#/components/schemas/ApplicationStatusDto'
+            $ref: '#/components/schemas/TerraformStatusDto'
     KubeVersionStatusDriftValue:
       type: object
       required:
@@ -1596,6 +1596,24 @@ components:
       - OK
       - WARNING
       - ALERT
+    ServiceActionDetailsDto:
+      type: object
+      required:
+      - action
+      - sub_action
+      properties:
+        action:
+          $ref: '#/components/schemas/ServiceActionDto'
+        sub_action:
+          $ref: '#/components/schemas/ServiceSubActionDto'
+    ServiceActionDto:
+      type: string
+      enum:
+      - DEPLOY
+      - RESTART
+      - STOP
+      - DELETE
+      - DELETE_RESOURCES_ONLY
     ServiceInfraLogResponseDto:
       type: object
       required:
@@ -1702,6 +1720,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentStatusDto'
+    ServiceSubActionDto:
+      type: string
+      enum:
+      - NONE
+      - TERRAFORM_PLAN_ONLY
+      - TERRAFORM_PLAN_AND_APPLY
+      - TERRAFORM_DESTROY
+      - TERRAFORM_FORCE_UNLOCK_STATE
+      - TERRAFORM_MIGRATE_STATE
     ServiceType:
       type: string
       enum:
@@ -1711,6 +1738,24 @@ components:
       - JOB
       - HELM
       - TERRAFORM
+    TerraformStatusDto:
+      type: object
+      required:
+      - id
+      - state
+      - triggered_action
+      - pods
+      properties:
+        id:
+          type: string
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodStatusDto'
+        state:
+          $ref: '#/components/schemas/ServiceStateDto'
+        triggered_action:
+          $ref: '#/components/schemas/ServiceActionDetailsDto'
     UnitDto:
       type: string
       enum:
