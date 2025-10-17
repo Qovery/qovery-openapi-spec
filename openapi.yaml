@@ -23250,6 +23250,7 @@ components:
       required:
         - key
         - sensitive
+        - source
       properties:
         key:
           type: string
@@ -23261,6 +23262,9 @@ components:
           type: string
           nullable: true
           description: 'The default value of the variable, or null if no default is provided'
+        source:
+          type: string
+          description: The path inside your git repository where the variable is defined
     TerraformFilesSourceRequest:
       title: TerraformFilesSourceRequest
       x-stoplight:
