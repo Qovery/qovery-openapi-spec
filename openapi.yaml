@@ -12681,6 +12681,13 @@ paths:
             type: string
           in: query
           name: direction
+        - schema:
+            type: string
+          in: cookie
+        - schema:
+            type: string
+          in: query
+          name: time
   '/organization/{organizationId}/enterpriseconnection':
     get:
       summary: List enterprise connections
