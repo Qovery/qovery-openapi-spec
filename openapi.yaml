@@ -12981,7 +12981,8 @@ paths:
       - $ref: '#/components/parameters/organizationId'
     get:
       summary: List alert rules
-      tags: []
+      tags: 
+        - Alert Rules
       responses:
         '200':
           description: OK
