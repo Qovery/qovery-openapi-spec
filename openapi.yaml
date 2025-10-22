@@ -12706,6 +12706,36 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/alert-receivers':
+    get:
+      summary: List alert receivers
+      tags:
+        - Alert Receivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertReceiverList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: getAlertReceivers
+      x-stoplight:
+        id: 3cqb2xpmir9n8
+      description: Retrieve all alert receivers for a specific organization
+    parameters:
+      - name: organizationId
+        in: path
+        description: Organization ID
+        required: true
+        schema:
+          type: string
+          format: uuid
   '/organization/{organizationId}/enterpriseconnection/{connectionName}':
     get:
       summary: Get enterprise connection
@@ -12754,30 +12784,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/api/organization/{organizationId}/alert-receivers':
-    get:
-      summary: List alert receivers
-      tags:
-        - Alert Receivers
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AlertReceiverList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-      operationId: getAlertReceivers
-      x-stoplight:
-        id: 3cqb2xpmir9n8
-      description: Retrieve all alert receivers for a specific organization
-    parameters:
-      - $ref: '#/components/parameters/organizationId'
   /api/alert-receivers:
     post:
       summary: Create alert receiver
@@ -12970,6 +12976,29 @@ paths:
       x-stoplight:
         id: 812453spx2l0f
       description: Delete an alert rule
+  '/organization/{organizationId}/alert-rules':
+    parameters:
+      - $ref: '#/components/parameters/organizationId'
+    get:
+      summary: List alert rules
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: getAlertRules
+      x-stoplight:
+        id: xkza3tt52gwse
+      description: Retrieve all alert rules for a specific organization
 components:
   parameters:
     alertReceiverId:
@@ -23982,6 +24011,7 @@ components:
             - alert_receiver_ids
             - presentation
             - target
+            - state
           properties:
             organization_id:
               type: string
@@ -24038,6 +24068,8 @@ components:
               $ref: '#/components/schemas/AlertPresentationResponse'
             target:
               $ref: '#/components/schemas/AlertTarget'
+            state:
+              $ref: '#/components/schemas/AlertRuleState'
     AlertTargetType:
       title: AlertTargetType
       x-stoplight:
@@ -24068,6 +24100,31 @@ components:
           x-stoplight:
             id: 8begp36fsknxq
           format: uuid
+    AlertRuleState:
+      title: AlertRuleState
+      x-stoplight:
+        id: 05u4rv9rrfvcp
+      enum:
+        - UNDEPLOYED
+        - OK
+        - PENDING
+        - FIRING
+        - NOTIFYING
+        - SUPPRESSED
+    AlertRuleList:
+      title: AlertRuleList
+      x-stoplight:
+        id: hawsqfl98nqlz
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          x-stoplight:
+            id: nsk4tfkil7yuf
+          items:
+            $ref: '#/components/schemas/AlertRuleResponse'
   responses:
     '204':
       description: no content
