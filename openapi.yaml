@@ -12981,7 +12981,7 @@ paths:
       - $ref: '#/components/parameters/organizationId'
     get:
       summary: List alert rules
-      tags: 
+      tags:
         - Alert Rules
       responses:
         '200':
@@ -24108,9 +24108,9 @@ components:
       enum:
         - UNDEPLOYED
         - OK
-        - PENDING
-        - FIRING
-        - NOTIFYING
+        - TRIGGERED
+        - FIRED
+        - NOTIFIED
         - SUPPRESSED
     AlertRuleList:
       title: AlertRuleList
