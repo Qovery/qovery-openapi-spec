@@ -24109,9 +24109,10 @@ components:
         - UNDEPLOYED
         - OK
         - TRIGGERED
-        - FIRED
+        - PENDING_NOTIFICATION
         - NOTIFIED
         - SUPPRESSED
+        - UNROUTED
     AlertRuleList:
       title: AlertRuleList
       x-stoplight:
