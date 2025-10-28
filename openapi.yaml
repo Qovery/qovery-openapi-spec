@@ -10,7 +10,7 @@ info:
     url: 'https://www.qovery.com'
     email: support+api+documentation@qovery.com
   x-logo:
-    url: 'https://raw.githubusercontent.com/Qovery/public-resources/master/qovery_new_logo_white.svg'
+    url: 'https://console.qovery.com/assets/logos/logo-white.svg'
     altText: Qovery
 tags:
   - name: Account
