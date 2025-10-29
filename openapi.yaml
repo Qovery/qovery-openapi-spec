@@ -12374,7 +12374,7 @@ paths:
       operationId: getDefaultTerraformAdvancedSettings
       x-stoplight:
         id: 5qcyy764ewhk3
-  /terraform/available-versions:
+  /terraform/availableVersion:
     get:
       summary: List available Terraform versions
       tags:
@@ -23394,6 +23394,10 @@ components:
     TerraformVersionResponse:
       type: object
       properties:
+        engine:
+          type: string
+          description: Terraform engine
+          enum: ["TERRAFORM", "OPEN_TOFU"]
         version:
           type: string
           description: Terraform version string
