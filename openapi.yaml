@@ -11809,6 +11809,40 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/listTfVarsFilesFromGitRepo':
+    post:
+      summary: List Terraform tfvars files from Git repository
+      operationId: listTfVarsFilesFromGitRepo
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Main Calls
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TfVarsListRequest'
+      responses:
+        '200':
+          description: List of Terraform tfvars files with their variables
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TfVarsFileResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/deploymentQueue':
     parameters:
       - schema:
@@ -23349,6 +23383,83 @@ components:
             x-stoplight:
               id: qsy17gz9fl3n3
             type: string
+    TfVarsListRequest:
+      title: TfVarsListRequest
+      type: object
+      description: Request to list Terraform tfvars files from a Git repository
+      required:
+        - git_repository
+      properties:
+        git_repository:
+          $ref: '#/components/schemas/GitRepositoryRequest'
+    GitRepositoryRequest:
+      title: GitRepositoryRequest
+      type: object
+      description: Git repository information for Terraform operations
+      required:
+        - url
+        - provider
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Git repository URL
+          example: 'https://github.com/Qovery/terraform-examples'
+        branch:
+          type: string
+          nullable: true
+          description: Name of the branch to use (optional)
+          example: main
+        root_path:
+          type: string
+          default: /
+          description: Root path within the repository
+        git_token_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: The git token id on Qovery side
+        provider:
+          $ref: '#/components/schemas/GitProvider'
+    GitProvider:
+      title: GitProvider
+      type: object
+      description: Git provider information
+      required:
+        - kind
+      properties:
+        kind:
+          type: string
+          enum:
+            - GITHUB
+            - GITLAB
+            - BITBUCKET
+          description: The type of git provider
+        url:
+          type: string
+          format: uri
+          nullable: true
+          description: Custom git provider URL (for self-hosted instances)
+    TfVarsFileResponse:
+      title: TfVarsFileResponse
+      type: object
+      description: Represents a Terraform tfvars file with its variables
+      required:
+        - source
+        - variables
+      properties:
+        source:
+          type: string
+          description: The path to the tfvars file within the Git repository
+          example: 'environments/prod.tfvars'
+        variables:
+          type: object
+          additionalProperties:
+            type: string
+          description: Map of variable names to their values from the tfvars file
+          example:
+            environment: 'production'
+            region: 'us-east-1'
     TerraformJobResourcesResponse:
       title: TerraformJobResourcesResponse
       x-stoplight:
