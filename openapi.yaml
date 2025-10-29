@@ -23504,6 +23504,9 @@ components:
             $ref: '#/components/schemas/TerraformResponse'
     TerraformVersionResponse:
       type: object
+      required:
+        - engine
+        - version
       properties:
         engine:
           type: string
