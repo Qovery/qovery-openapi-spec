@@ -21889,7 +21889,6 @@ components:
         - value
         - is_enabled
         - gateway_type
-        - dhcp_subnet_cidr
       properties:
         type:
           type: string
@@ -21903,11 +21902,6 @@ components:
           description: Whether static IP is enabled (same as value)
         gateway_type:
           $ref: '#/components/schemas/ScwVpcGatewayTypeEnum'
-        dhcp_subnet_cidr:
-          type: string
-          pattern: '^(\d{1,3}\.){3}\d{1,3}/\d{1,2}$'
-          example: '172.16.0.0/24'
-          description: CIDR block for DHCP subnet in the Private Network
     JobLifecycleTypeEnum:
       title: JobLifecycleTypeEnum
       x-stoplight:
