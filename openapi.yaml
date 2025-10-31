@@ -23392,7 +23392,7 @@ components:
         - mode
       properties:
         git_repository:
-          $ref: '#/components/schemas/GitRepositoryRequest'
+          $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
         mode:
           $ref: '#/components/schemas/TfVarsDiscoveryMode'
     TfVarsDiscoveryMode:
@@ -23439,54 +23439,6 @@ components:
           example:
             - '/environments/prod.tfvars'
             - '/environments/staging.tfvars'
-    GitRepositoryRequest:
-      title: GitRepositoryRequest
-      type: object
-      description: Git repository information for Terraform operations
-      required:
-        - url
-        - provider
-      properties:
-        url:
-          type: string
-          format: uri
-          description: Git repository URL
-          example: 'https://github.com/Qovery/terraform-examples'
-        branch:
-          type: string
-          nullable: true
-          description: Name of the branch to use (optional)
-          example: main
-        root_path:
-          type: string
-          default: /
-          description: Root path within the repository
-        git_token_id:
-          type: string
-          format: uuid
-          nullable: true
-          description: The git token id on Qovery side
-        provider:
-          $ref: '#/components/schemas/GitProvider'
-    GitProvider:
-      title: GitProvider
-      type: object
-      description: Git provider information
-      required:
-        - kind
-      properties:
-        kind:
-          type: string
-          enum:
-            - GITHUB
-            - GITLAB
-            - BITBUCKET
-          description: The type of git provider
-        url:
-          type: string
-          format: uri
-          nullable: true
-          description: Custom git provider URL (for self-hosted instances)
     TfVarsFileResponse:
       title: TfVarsFileResponse
       type: object
