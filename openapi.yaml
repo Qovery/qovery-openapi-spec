@@ -22892,13 +22892,13 @@ components:
             - MANAGED_BY_QOVERY
         resource_profile:
           $ref: '#/components/schemas/ObservabilityResourceProfile'
-        cloudWatchExportConfig:
+        cloud_watch_export_config:
           $ref: '#/components/schemas/CloudWatchExportConfig'
-        highAvailability:
+        high_availability:
           type: boolean
           x-stoplight:
             id: zs2zhdd1p5e6q
-        internalNetworkMonitoring:
+        internal_network_monitoring:
           $ref: '#/components/schemas/InternalNetworkMonitoring'
         alerting:
           $ref: '#/components/schemas/AlertingConfig'
