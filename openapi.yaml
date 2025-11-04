@@ -23152,7 +23152,7 @@ components:
           type: string
           x-stoplight:
             id: u776tz269mjb0
-    TerraformProviderEnum:
+    TerraformEngineEnum:
       enum:
         - TERRAFORM
         - OPEN_TOFU
@@ -23168,7 +23168,7 @@ components:
         - terraform_files_source
         - terraform_variables_source
         - backend
-        - provider
+        - engine
         - provider_version
         - job_resources
       properties:
@@ -23194,8 +23194,8 @@ components:
           $ref: '#/components/schemas/TerraformVariablesSourceRequest'
         backend:
           $ref: '#/components/schemas/TerraformBackend'
-        provider:
-          $ref: '#/components/schemas/TerraformProviderEnum'
+        engine:
+          $ref: '#/components/schemas/TerraformEngineEnum'
         provider_version:
           $ref: '#/components/schemas/TerraformProviderVersion'
         timeout_sec:
@@ -23241,7 +23241,7 @@ components:
             - icon_uri
             - service_type
             - terraform_variables_source
-            - provider
+            - engine
             - backend
             - provider_version
             - job_resources
@@ -23276,8 +23276,8 @@ components:
               $ref: '#/components/schemas/ServiceTypeEnum'
             terraform_variables_source:
               $ref: '#/components/schemas/TerraformVariablesSourceResponse'
-            provider:
-              $ref: '#/components/schemas/TerraformProviderEnum'
+            engine:
+              $ref: '#/components/schemas/TerraformEngineEnum'
             backend:
               $ref: '#/components/schemas/TerraformBackend'
             provider_version:
@@ -23630,7 +23630,7 @@ components:
         - version
       properties:
         engine:
-          $ref: '#/components/schemas/TerraformProviderEnum'
+          $ref: '#/components/schemas/TerraformEngineEnum'
         version:
           type: string
           description: Terraform version string
