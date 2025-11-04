@@ -24271,6 +24271,7 @@ components:
         - enabled
       properties:
         enabled:
+          description: To enable the cloudwatch exporter.
           type: boolean
           x-stoplight:
             id: zxwl3n47xffu4
