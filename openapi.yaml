@@ -23518,9 +23518,7 @@ components:
         - version
       properties:
         engine:
-          type: string
-          description: Terraform engine
-          enum: ["TERRAFORM", "OPEN_TOFU"]
+          $ref: '#/components/schemas/TerraformProviderEnum'
         version:
           type: string
           description: Terraform version string
