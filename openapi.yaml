@@ -22890,6 +22890,18 @@ components:
             id: i8z3rzufjt5uk
           enum:
             - MANAGED_BY_QOVERY
+        resource_profile:
+          $ref: '#/components/schemas/ObservabilityResourceProfile'
+        cloudWatchExportConfig:
+          $ref: '#/components/schemas/CloudWatchExportConfig'
+        highAvailability:
+          type: boolean
+          x-stoplight:
+            id: zs2zhdd1p5e6q
+        internalNetworkMonitoring:
+          $ref: '#/components/schemas/InternalNetworkMonitoring'
+        alerting:
+          $ref: '#/components/schemas/AlertingConfig'
     InfrastructureOutputs:
       type: object
       required:
@@ -24242,6 +24254,66 @@ components:
             id: nsk4tfkil7yuf
           items:
             $ref: '#/components/schemas/AlertRuleResponse'
+    ObservabilityResourceProfile:
+      title: ObservabilityResourceProfile
+      x-stoplight:
+        id: 3a3rea0t85miz
+      enum:
+        - LOW
+        - NORMAL
+        - HIGH
+    CloudWatchExportConfig:
+      title: CloudWatchExportConfig
+      x-stoplight:
+        id: 69hi4weirghk5
+      type: object
+      required:
+        - enabled
+      properties:
+        enabled:
+          type: boolean
+          x-stoplight:
+            id: zxwl3n47xffu4
+    InternalNetworkMonitoring:
+      title: InternalNetworkMonitoring
+      x-stoplight:
+        id: d9zr14swvmont
+      type: object
+      required:
+        - enabled
+      properties:
+        enabled:
+          type: boolean
+          x-stoplight:
+            id: 8fvsh62tnjurc
+    AlertingConfig:
+      title: AlertingConfig
+      x-stoplight:
+        id: 079kamufdt1pm
+      type: object
+      required:
+        - enabled
+      properties:
+        enabled:
+          type: boolean
+          x-stoplight:
+            id: spv3usiee6mc9
+        default_rule_labels:
+          type: string
+          x-stoplight:
+            id: tsp767d421sed
+        spec_config_secret:
+          type: string
+          x-stoplight:
+            id: vhloqa7s6ta17
+        spec_external_url:
+          type: string
+          x-stoplight:
+            id: 53c0p049mktbg
+        config_name:
+          type: string
+          x-stoplight:
+            id: 6ueyhx8jelz3f
   responses:
     '204':
       description: no content
