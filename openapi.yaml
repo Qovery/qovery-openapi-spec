@@ -12630,6 +12630,84 @@ paths:
       operationId: deleteTerraformDeploymentRestriction
       x-stoplight:
         id: d896flm9ibi54
+  '/terraform/{terraformId}/variables':
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: terraformId
+        in: path
+        required: true
+        description: Terraform ID
+    get:
+      summary: Get terraform variables
+      operationId: getTerraformVariables
+      tags:
+        - Terraform Configuration
+      responses:
+        '200':
+          description: Get terraform variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformVariablesResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create or update a terraform variable
+      operationId: updateTerraformVariable
+      tags:
+        - Terraform Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerraformVarKeyValue'
+      responses:
+        '200':
+          description: Variable created or updated successfully
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/terraform/{terraformId}/variables/{key}':
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: terraformId
+        in: path
+        required: true
+        description: Terraform ID
+      - schema:
+          type: string
+        name: key
+        in: path
+        required: true
+        description: Variable key to delete
+    delete:
+      summary: Delete a terraform variable
+      operationId: deleteTerraformVariable
+      tags:
+        - Terraform Configuration
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/credentials':
     parameters:
       - schema:
@@ -23075,7 +23153,7 @@ components:
           x-stoplight:
             id: u776tz269mjb0
     TerraformProviderEnum:
-      enum: 
+      enum:
         - TERRAFORM
         - OPEN_TOFU
     TerraformRequest:
@@ -23321,6 +23399,35 @@ components:
           type: boolean
           x-stoplight:
             id: df80p2az3whjg
+    TerraformVariablesResponse:
+      title: TerraformVariablesResponse
+      type: object
+      description: Response containing list of Terraform variables
+      required:
+        - variables
+      properties:
+        variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/TerraformVariableResponse'
+    TerraformVariableResponse:
+      title: TerraformVariableResponse
+      type: object
+      description: A Terraform variable with its configuration
+      required:
+        - key
+        - secret
+      properties:
+        key:
+          type: string
+          description: The variable key/name
+        value:
+          type: string
+          nullable: true
+          description: The variable value (null if secret and not exposed)
+        secret:
+          type: boolean
+          description: Whether the variable is secret
     TerraformVariableDefinition:
       title: TerraformVariableDefinition
       type: object
@@ -23384,6 +23491,7 @@ components:
       type: object
       required:
         - tf_var_file_paths
+        - tf_vars
       properties:
         tf_var_file_paths:
           type: array
@@ -23393,6 +23501,10 @@ components:
             x-stoplight:
               id: qsy17gz9fl3n3
             type: string
+        tf_vars:
+          type: array
+          items:
+            $ref: '#/components/schemas/TerraformVarKeyValue'
     TfVarsListRequest:
       title: TfVarsListRequest
       type: object
