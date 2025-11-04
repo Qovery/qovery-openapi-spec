@@ -15023,6 +15023,7 @@ components:
             - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
             - $ref: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
             - $ref: '#/components/schemas/ClusterFeatureKarpenterParametersResponse'
+            - $ref: '#/components/schemas/ClusterFeatureStaticIpResponse'
           discriminator:
             propertyName: type
             mapping:
@@ -15031,6 +15032,7 @@ components:
               AWS_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
               GCP_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
               KARPENTER: '#/components/schemas/ClusterFeatureKarpenterParametersResponse'
+              STATIC_IP: '#/components/schemas/ClusterFeatureStaticIpResponse'
         is_value_updatable:
           type: boolean
           default: false
@@ -15048,6 +15050,7 @@ components:
         - AWS_USER_PROVIDED_NETWORK
         - GCP_USER_PROVIDED_NETWORK
         - KARPENTER
+        - STATIC_IP
     ClusterFeatureStringResponse:
       type: object
       required:
@@ -21943,6 +21946,74 @@ components:
           $ref: '#/components/schemas/CpuArchitectureEnum'
         qovery_node_pools:
           $ref: '#/components/schemas/KarpenterNodePool'
+    ScwVpcGatewayTypeEnum:
+      title: ScwVpcGatewayTypeEnum
+      type: string
+      description: Scaleway VPC Gateway type for Static IP configuration
+      enum:
+        - VPC_GW_S
+        - VPC_GW_M
+        - VPC_GW_L
+        - VPC_GW_XL
+    ClusterFeatureStaticIpResponse:
+      title: ClusterFeatureStaticIpResponse
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
+        value:
+          oneOf:
+            - $ref: '#/components/schemas/ClusterFeatureStaticIpCommon'
+            - $ref: '#/components/schemas/ClusterFeatureStaticIpScaleway'
+          discriminator:
+            propertyName: type
+            mapping:
+              common: '#/components/schemas/ClusterFeatureStaticIpCommon'
+              scaleway: '#/components/schemas/ClusterFeatureStaticIpScaleway'
+    ClusterFeatureStaticIpCommon:
+      title: ClusterFeatureStaticIpCommon
+      type: object
+      description: Static IP configuration for AWS and GCP
+      required:
+        - type
+        - value
+        - is_enabled
+      properties:
+        type:
+          type: string
+          enum:
+            - common
+        value:
+          type: boolean
+          description: Whether static IP is enabled
+        is_enabled:
+          type: boolean
+          description: Whether static IP is enabled (same as value)
+    ClusterFeatureStaticIpScaleway:
+      title: ClusterFeatureStaticIpScaleway
+      type: object
+      description: Static IP configuration for Scaleway with VPC Gateway and DHCP subnet
+      required:
+        - type
+        - value
+        - is_enabled
+        - gateway_type
+      properties:
+        type:
+          type: string
+          enum:
+            - scaleway
+        value:
+          type: boolean
+          description: Whether static IP is enabled
+        is_enabled:
+          type: boolean
+          description: Whether static IP is enabled (same as value)
+        gateway_type:
+          $ref: '#/components/schemas/ScwVpcGatewayTypeEnum'
     JobLifecycleTypeEnum:
       title: JobLifecycleTypeEnum
       x-stoplight:
