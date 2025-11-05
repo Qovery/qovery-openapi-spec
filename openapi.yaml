@@ -23368,7 +23368,7 @@ components:
       type: object
       required:
         - tf_var_file_paths
-        - tf_vars
+#        - tf_vars
       properties:
         tf_var_file_paths:
           type: array
@@ -23378,10 +23378,10 @@ components:
             x-stoplight:
               id: 7ns22ue58d2zb
             type: string
-        tf_vars:
-          type: array
-          items:
-            $ref: '#/components/schemas/TerraformVarKeyValue'
+#        tf_vars:
+#          type: array
+#          items:
+#            $ref: '#/components/schemas/TerraformVarKeyValue'
     TerraformVarKeyValue:
       title: TerraformVarKeyValue
       type: object
@@ -23491,7 +23491,7 @@ components:
       type: object
       required:
         - tf_var_file_paths
-        - tf_vars
+#        - tf_vars
       properties:
         tf_var_file_paths:
           type: array
@@ -23501,10 +23501,10 @@ components:
             x-stoplight:
               id: qsy17gz9fl3n3
             type: string
-        tf_vars:
-          type: array
-          items:
-            $ref: '#/components/schemas/TerraformVarKeyValue'
+#        tf_vars:
+#          type: array
+#          items:
+#            $ref: '#/components/schemas/TerraformVarKeyValue'
     TfVarsListRequest:
       title: TfVarsListRequest
       type: object
