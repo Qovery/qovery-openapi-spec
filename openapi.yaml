@@ -12992,7 +12992,7 @@ paths:
       x-stoplight:
         id: vwt0mube2wcb6
       description: Delete an alert receiver
-  /api/alert-rules:
+  /alert-rules:
     post:
       summary: Create alert rule
       tags:
@@ -13019,7 +13019,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AlertRuleCreationRequest'
-  '/api/alert-rules/{alertRuleId}':
+  '/alert-rules/{alertRuleId}':
     parameters:
       - $ref: '#/components/parameters/alertRuleId'
     get:
