@@ -20303,7 +20303,7 @@ components:
           example: 20
     PlanEnum:
       type: string
-      description: BUSINESS & PROFESSIONAL are deprecated
+      description: FREE, BUSINESS & PROFESSIONAL are deprecated. 2025 plans are the new plans available.
       enum:
         - FREE
         - TEAM
@@ -20312,6 +20312,10 @@ components:
         - ENTERPRISE_YEARLY
         - PROFESSIONAL
         - BUSINESS
+        - USER_2025
+        - TEAM_2025
+        - BUSINESS_2025
+        - ENTERPRISE_2025
     PortProtocolEnum:
       type: string
       default: HTTP
