@@ -24293,12 +24293,6 @@ components:
                 id: 3aceb4kbdv4pz
               format: duration
               description: Duration the condition must be true before firing (ISO-8601 duration format)
-            for_duration_copy:
-              type: string
-              x-stoplight:
-                id: vjm0eu8joca60
-              format: duration
-              description: Duration the condition must be true before firing (ISO-8601 duration format)
             severity:
               $ref: '#/components/schemas/AlertSeverity'
             enabled:
