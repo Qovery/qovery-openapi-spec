@@ -20303,7 +20303,7 @@ components:
           example: 20
     PlanEnum:
       type: string
-      description: FREE, BUSINESS & PROFESSIONAL are deprecated. 2025 plans are the new plans available.
+      description: 'FREE, BUSINESS & PROFESSIONAL are deprecated. 2025 plans are the new plans available.'
       enum:
         - FREE
         - TEAM
@@ -23563,8 +23563,8 @@ components:
             type: string
           description: List of specific paths to tfvars files
           example:
-            - '/environments/prod.tfvars'
-            - '/environments/staging.tfvars'
+            - /environments/prod.tfvars
+            - /environments/staging.tfvars
     TfVarsFileResponse:
       title: TfVarsFileResponse
       type: object
@@ -23576,15 +23576,15 @@ components:
         source:
           type: string
           description: The path to the tfvars file within the Git repository
-          example: 'environments/prod.tfvars'
+          example: environments/prod.tfvars
         variables:
           type: object
           additionalProperties:
             type: string
           description: Map of variable names to their values from the tfvars file
           example:
-            environment: 'production'
-            region: 'us-east-1'
+            environment: production
+            region: us-east-1
     TerraformJobResourcesResponse:
       title: TerraformJobResourcesResponse
       x-stoplight:
@@ -24154,10 +24154,14 @@ components:
         id: 74rrc7nvxpc30
       description: |-
         Alert severity level:
-                - WARNING: Non-critical issue requiring attention
-                - CRITICAL: Critical issue requiring immediate action
+                - LOW: Minor issues or informational alerts that don't require immediate attention. Can be addressed during normal business hours.
+                - MEDIUM: Moderate issues that should be investigated soon but don't impact critical services. May cause degraded performance or minor service disruption.
+                - HIGH: Serious issues affecting service quality or availability. Requires prompt attention and resolution within hours.
+                - CRITICAL: Critical issue requiring immediate action. Service outage, data loss risk, or severe performance degradation affecting users.
       enum:
-        - WARNING
+        - LOW
+        - MEDIUM
+        - HIGH
         - CRITICAL
     AlertRuleEditRequest:
       title: AlertRuleEditRequest
@@ -24287,6 +24291,12 @@ components:
               type: string
               x-stoplight:
                 id: 3aceb4kbdv4pz
+              format: duration
+              description: Duration the condition must be true before firing (ISO-8601 duration format)
+            for_duration_copy:
+              type: string
+              x-stoplight:
+                id: vjm0eu8joca60
               format: duration
               description: Duration the condition must be true before firing (ISO-8601 duration format)
             severity:
