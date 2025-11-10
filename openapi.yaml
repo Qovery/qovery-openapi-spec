@@ -24258,6 +24258,7 @@ components:
             - presentation
             - target
             - state
+            - is_up_to_date
           properties:
             organization_id:
               type: string
@@ -24316,6 +24317,13 @@ components:
               $ref: '#/components/schemas/AlertTarget'
             state:
               $ref: '#/components/schemas/AlertRuleState'
+            is_up_to_date:
+              type: boolean
+              x-stoplight:
+                id: 4nfaupf2l1668
+              description: |-
+                Indicates whether the current version of the alert has been synced with the alerting system.
+                If false, an outdated version is currently deployed.
     AlertTargetType:
       title: AlertTargetType
       x-stoplight:
