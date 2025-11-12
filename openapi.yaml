@@ -12657,9 +12657,9 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    post:
-      summary: Create or update a terraform variable
-      operationId: updateTerraformVariable
+    put:
+      summary: Replace all terraform variables
+      operationId: replaceAllTerraformVariables
       tags:
         - Terraform Configuration
       requestBody:
@@ -12667,10 +12667,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TerraformVarKeyValue'
+              $ref: '#/components/schemas/TerraformVariablesReplaceRequest'
       responses:
         '200':
-          description: Variable created or updated successfully
+          description: Variables replaced successfully
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -23414,6 +23414,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TerraformVariableResponse'
+    TerraformVariablesReplaceRequest:
+      title: TerraformVariablesReplaceRequest
+      type: object
+      description: 'Request to atomically replace all Terraform variables. Note: For secret variables, use value "SECRET_VALUE_UNCHANGED" to preserve the existing secret value.'
+      required:
+        - variables
+      properties:
+        variables:
+          type: array
+          description: Complete list of variables to set (replaces all existing variables)
+          items:
+            $ref: '#/components/schemas/TerraformVarKeyValue'
     TerraformVariableResponse:
       title: TerraformVariableResponse
       type: object
