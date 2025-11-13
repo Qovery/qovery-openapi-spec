@@ -19758,6 +19758,9 @@ components:
         user_agent:
           type: string
           nullable: true
+        original_change:
+          type: string
+          nullable: true
       description: ''
       title: ''
     OrganizationEventResponseList:
