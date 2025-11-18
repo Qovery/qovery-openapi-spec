@@ -16104,6 +16104,9 @@ components:
               x-stoplight:
                 id: rboo4bgsvgfco
               description: Required if kind is `AZURE_CR`.
+            role_arn:
+              type: string
+              description: 'For ECR, you can either set a static access_key or use a role arn that we are going to assume'
     HelmVersionResponseList:
       type: object
       properties:
