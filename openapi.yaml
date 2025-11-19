@@ -16465,7 +16465,6 @@ components:
         - cvv
         - expiry_month
         - expiry_year
-        - token
       properties:
         number:
           type: string
