@@ -15182,6 +15182,9 @@ components:
             x-stoplight:
               id: xyjjh50ckrzee
             type: string
+        eks_create_nodes_in_private_subnet:
+          type: boolean
+          default: true
     ClusterFeatureGcpExistingVpc:
       type: object
       required:
