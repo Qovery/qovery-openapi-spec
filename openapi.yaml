@@ -24111,7 +24111,8 @@ components:
         - cluster_id
         - name
         - description
-        - promql_expr
+        - tag
+        - condition
         - for_duration
         - severity
         - presentation
@@ -24142,11 +24143,12 @@ components:
             id: jhc5u599bha5a
           description: |
             Description of what the alert monitors
-        promql_expr:
+        tag:
           type: string
           x-stoplight:
-            id: 2ojznqgimdacq
-          description: PromQL expression to evaluate
+            id: eaisshdmo1xgi
+        condition:
+          $ref: '#/components/schemas/AlertRuleCondition'
         for_duration:
           type: string
           x-stoplight:
@@ -24198,7 +24200,8 @@ components:
       required:
         - name
         - description
-        - promql_expr
+        - tag
+        - condition
         - for_duration
         - severity
         - enabled
@@ -24215,11 +24218,12 @@ components:
           x-stoplight:
             id: 2xpgzz03za6jo
           description: Description of what the alert monitors
-        promql_expr:
+        tag:
           type: string
           x-stoplight:
-            id: 6smsj3iavzowc
-          description: PromQL expression to evaluate
+            id: p754eq1nh7gqp
+        condition:
+          $ref: '#/components/schemas/AlertRuleCondition'
         for_duration:
           type: string
           x-stoplight:
@@ -24277,7 +24281,8 @@ components:
             - cluster_id
             - name
             - description
-            - promql_expr
+            - tag
+            - condition
             - for_duration
             - severity
             - enabled
@@ -24310,11 +24315,12 @@ components:
               x-stoplight:
                 id: r728dl0e8ef6x
               description: Description of what the alert monitors
-            promql_expr:
+            tag:
               type: string
               x-stoplight:
-                id: 5e2ku0srk67e7
-              description: PromQL expression to evaluate
+                id: kloew25gqdxqt
+            condition:
+              $ref: '#/components/schemas/AlertRuleCondition'
             for_duration:
               type: string
               x-stoplight:
@@ -24468,6 +24474,52 @@ components:
           type: string
           x-stoplight:
             id: 6ueyhx8jelz3f
+    AlertRuleCondition:
+      title: AlertRuleCondition
+      x-stoplight:
+        id: x5o1gdqlpoyei
+      type: object
+      required:
+        - kind
+        - promql
+      properties:
+        kind:
+          $ref: '#/components/schemas/AlertRuleConditionKind'
+        operator:
+          $ref: '#/components/schemas/AlertRuleConditionOperator'
+        threshold:
+          type: number
+          x-stoplight:
+            id: ua0w1t89vrl0b
+        function:
+          $ref: '#/components/schemas/AlertRuleConditionFunction'
+        promql:
+          type: string
+          x-stoplight:
+            id: 6xaesnuka2c2q
+    AlertRuleConditionKind:
+      title: AlertRuleConditionKind
+      x-stoplight:
+        id: 275ykwbxqzr24
+      enum:
+        - CUSTOM
+        - BUILT
+    AlertRuleConditionOperator:
+      title: AlertRuleConditionOperator
+      x-stoplight:
+        id: hpxq0ysquqnts
+      enum:
+        - ABOVE
+        - BELOW
+    AlertRuleConditionFunction:
+      title: AlertRuleConditionFunction
+      x-stoplight:
+        id: 7tp2xk2ehojvz
+      enum:
+        - NONE
+        - AVG
+        - MAX
+        - MIN
   responses:
     '204':
       description: no content
