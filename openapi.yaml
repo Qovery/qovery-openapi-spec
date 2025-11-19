@@ -12896,7 +12896,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  /api/alert-receivers:
+  /alert-receivers:
     post:
       summary: Create alert receiver
       tags:
@@ -12923,7 +12923,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AlertReceiverCreationRequest'
-  '/api/alert-receivers/{alertReceiverId}':
+  '/alert-receivers/{alertReceiverId}':
     parameters:
       - $ref: '#/components/parameters/alertReceiverId'
     get:
