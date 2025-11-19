@@ -14936,6 +14936,7 @@ components:
         - AWS_USER_PROVIDED_NETWORK
         - GCP_USER_PROVIDED_NETWORK
         - KARPENTER
+        - STATIC_IP
     ClusterFeatureStringResponse:
       type: object
       required:
@@ -14976,6 +14977,29 @@ components:
           $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
         value:
           $ref: '#/components/schemas/ClusterFeatureGcpExistingVpc'
+    ClusterFeatureGcpExistingVpc:
+      type: object
+      required:
+        - vpc_name
+      properties:
+        vpc_name:
+          type: string
+        vpc_project_id:
+          type: string
+          nullable: true
+        subnetwork_name:
+          type: string
+          nullable: true
+        ip_range_services_name:
+          type: string
+          nullable: true
+        ip_range_pods_name:
+          type: string
+          nullable: true
+        additional_ip_range_pods_names:
+          type: array
+          items:
+            type: string
     ClusterFeatureAwsExistingVpc:
       type: object
       required:
@@ -15070,29 +15094,12 @@ components:
             x-stoplight:
               id: xyjjh50ckrzee
             type: string
-    ClusterFeatureGcpExistingVpc:
-      type: object
-      required:
-        - vpc_name
-      properties:
-        vpc_name:
-          type: string
-        vpc_project_id:
-          type: string
-          nullable: true
-        subnetwork_name:
-          type: string
-          nullable: true
-        ip_range_services_name:
-          type: string
-          nullable: true
-        ip_range_pods_name:
-          type: string
-          nullable: true
-        additional_ip_range_pods_names:
-          type: array
-          items:
-            type: string
+        eks_create_nodes_in_private_subnet:
+          type: boolean
+          x-stoplight:
+            id: 5bt0physew2eo
+          default: false
+      title: ''
     ClusterFeatureResponseList:
       type: object
       properties:
@@ -24126,6 +24133,15 @@ components:
             id: nsk4tfkil7yuf
           items:
             $ref: '#/components/schemas/AlertRuleResponse'
+    ScwVpcGatewayTypeEnum:
+      title: ScwVpcGatewayTypeEnum
+      x-stoplight:
+        id: pfl5pgyr29rt5
+      enum:
+        - VPC_GW_S
+        - VPC_GW_M
+        - VPC_GW_L
+        - VPC_GW_XL
   responses:
     '204':
       description: no content
@@ -24139,6 +24155,8 @@ components:
       description: Resource not found
     204-deletion:
       description: The resource was deleted successfully
+    ClusterFeatureStaticIpResponse:
+      description: ''
   securitySchemes:
     bearerAuth:
       type: http
