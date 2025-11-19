@@ -1,0 +1,31 @@
+name: Build Github Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  gh-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_DEPLOY_DOCUMENTATION }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Clone target repository
+        run: |
+          git clone git@github.com:Qovery/documentation-v2.git documentation
+
+      - name: Copy file and push
+        run: |
+          cp openapi.yaml documentation/docs/api-reference/openapi.yaml
+          cd documentation
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Update openapi spec" || echo "No changes to commit"
+          git push origin main
