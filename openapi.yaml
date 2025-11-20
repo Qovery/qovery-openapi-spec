@@ -16019,6 +16019,8 @@ components:
                   type: string
                   x-stoplight:
                     id: 9tdfunoniwzed
+                role_arn:
+                  type: string
                 scaleway_access_key:
                   type: string
                   x-stoplight:
