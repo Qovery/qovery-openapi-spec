@@ -24391,6 +24391,9 @@ components:
           x-stoplight:
             id: 8begp36fsknxq
           format: uuid
+        service:
+          $ref: '#/components/schemas/ServiceLightResponse'
+          description: Service details when target_type is APPLICATION, CONTAINER, JOB, CRONJOB, HELM or TERRAFORM
     AlertRuleState:
       title: AlertRuleState
       x-stoplight:
