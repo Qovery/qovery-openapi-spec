@@ -24391,6 +24391,19 @@ components:
           x-stoplight:
             id: 8begp36fsknxq
           format: uuid
+      oneOf:
+        - properties:
+            target_type:
+              enum: [ APPLICATION, CONTAINER, JOB, CRONJOB, HELM, TERRAFORM ]
+            service:
+              $ref: '#/components/schemas/ServiceLightResponse'
+          required:
+            - service
+          description: Target is a service - service details are required
+        - properties:
+            target_type:
+              enum: [ CLUSTER, ENVIRONMENT ]
+          description: Target is not a service - no service details
     AlertRuleState:
       title: AlertRuleState
       x-stoplight:
