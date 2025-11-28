@@ -24361,6 +24361,12 @@ components:
               description: |-
                 Indicates whether the current version of the alert has been synced with the alerting system.
                 If false, an outdated version is currently deployed.
+            starts_at:
+              type: string
+              x-stoplight:
+                id: 9r76f8pipu6y5
+              description: when the alert starts firing
+              format: date-time
     AlertTargetType:
       title: AlertTargetType
       x-stoplight:
@@ -24393,7 +24399,7 @@ components:
           format: uuid
         service:
           $ref: '#/components/schemas/ServiceLightResponse'
-          description: Service details when target_type is APPLICATION, CONTAINER, JOB, CRONJOB, HELM or TERRAFORM
+          description: 'Service details when target_type is APPLICATION, CONTAINER, JOB, CRONJOB, HELM or TERRAFORM'
     AlertRuleState:
       title: AlertRuleState
       x-stoplight:
