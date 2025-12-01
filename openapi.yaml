@@ -24403,8 +24403,12 @@ components:
       x-stoplight:
         id: hpxq0ysquqnts
       enum:
+        - NONE
         - ABOVE
         - BELOW
+        - ABOVE_OR_EQUAL
+        - BELOW_OR_EQUAL
+        - EQUAL
     AlertRuleConditionFunction:
       title: AlertRuleConditionFunction
       x-stoplight:
@@ -24414,6 +24418,8 @@ components:
         - AVG
         - MAX
         - MIN
+        - SUM
+        - COUNT
   responses:
     '204':
       description: no content
