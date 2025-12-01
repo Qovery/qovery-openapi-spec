@@ -23601,13 +23601,6 @@ components:
         git_commit_id:
           type: string
           description: Commit to deploy for chart source.
-        dry_run:
-          type: boolean
-          description: 'Deprecated: use action=PLAN instead.'
-        force_unlock_state:
-          type: boolean
-          nullable: true
-          description: 'Deprecated: use action=FORCE_UNLOCK instead.'
         action:
           type: string
           nullable: true
