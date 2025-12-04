@@ -23377,6 +23377,10 @@ components:
         source:
           type: string
           description: The path inside your git repository where the variable is defined
+        description:
+          type: string
+          nullable: true
+          description: The description of the variable, or null if no description is provided
     TerraformFilesSourceRequest:
       title: TerraformFilesSourceRequest
       x-stoplight:
