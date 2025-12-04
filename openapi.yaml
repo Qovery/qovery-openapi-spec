@@ -2600,6 +2600,16 @@ paths:
           name: origin
           schema:
             $ref: '#/components/schemas/OrganizationEventOrigin'
+        - in: query
+          name: serviceProjectId
+          description: The project chosen when filtering on a service type
+          schema:
+            type: string
+        - in: query
+          name: serviceEnvironmentId
+          description: The environment chosen when filtering on a service type
+          schema:
+            type: string
       tags:
         - Organization Event
       responses:
