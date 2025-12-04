@@ -2669,6 +2669,11 @@ paths:
           schema:
             type: string
             format: uuid
+        - in: query
+          name: targetLevelToFetch
+          description: Used only to retrieve projects or environments linked to service typed events
+          schema:
+            $ref: '#/components/schemas/OrganizationEventTargetLevel'
       tags:
         - Organization Event
       responses:
@@ -19744,6 +19749,12 @@ components:
         - QOVERY_INTERNAL
         - TERRAFORM_PROVIDER
       example: API
+    OrganizationEventTargetLevel:
+      type: string
+      description: The target level to fetch
+      enum:
+        - PROJECT
+        - ENVIRONMENT
     OrganizationEventSubTargetType:
       type: string
       description: Type of the organization event
