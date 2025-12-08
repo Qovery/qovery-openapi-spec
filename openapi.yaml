@@ -13095,7 +13095,7 @@ paths:
       operationId: validateNewAlertReceiver
       x-stoplight:
         id: 98ki23k3jdr75
-      description: Validate a futu alert receiver by sending a test message for example
+      description: Validate a future alert receiver by sending a test message for example
       requestBody:
         content:
           application/json:
