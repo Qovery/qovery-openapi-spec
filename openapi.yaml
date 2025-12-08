@@ -13049,6 +13049,58 @@ paths:
       x-stoplight:
         id: xkza3tt52gwse
       description: Retrieve all alert rules for a specific organization
+  '/alert-receivers/{alertReceiverId}/validate':
+    parameters:
+      - $ref: '#/components/parameters/alertReceiverId'
+    post:
+      summary: Validate Existing Alert Receiver
+      tags: 
+         - Alert Receivers
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: validateExistingAlertReceiver
+      x-stoplight:
+        id: uz8sv9wwxy3ib
+      description: Validate an existing alert receiver by sending a test message for example
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertReceiverValidationRequest'
+  /alert-receivers/validate:
+    get:
+      summary: Validate New Alert Receiver
+      tags: 
+         - Alert Receivers
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: validateNewAlertReceiver
+      x-stoplight:
+        id: 98ki23k3jdr75
+      description: Validate a futu alert receiver by sending a test message for example
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertReceiverCreationValidationRequest'
 components:
   parameters:
     alertReceiverId:
@@ -23399,7 +23451,7 @@ components:
         description:
           type: string
           nullable: true
-          description: The description of the variable, or null if no description is provided
+          description: 'The description of the variable, or null if no description is provided'
     TerraformFilesSourceRequest:
       title: TerraformFilesSourceRequest
       x-stoplight:
@@ -24447,6 +24499,30 @@ components:
         - MIN
         - SUM
         - COUNT
+    AlertReceiverValidationRequest:
+      title: AlertReceiverValidationRequest
+      x-stoplight:
+        id: w6fc7rel27rie
+      type: object
+      properties:
+        message:
+          type: string
+          x-stoplight:
+            id: fgi81witawggf
+    AlertReceiverCreationValidationRequest:
+      title: AlertReceiverCreationValidationRequest
+      x-stoplight:
+        id: xbtjouxwa280v
+      type: object
+      required:
+        - alertReceiver
+      properties:
+        alertReceiver:
+          $ref: '#/components/schemas/AlertReceiverCreationRequest'
+        message:
+          type: string
+          x-stoplight:
+            id: s7kbacgdp3fb4
   responses:
     '204':
       description: no content
