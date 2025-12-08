@@ -24233,17 +24233,53 @@ components:
           description: URL to runbook with remediation steps
           format: uri
           nullable: true
+    AlertRuleSource:
+      title: AlertRuleSource
+      x-stoplight:
+        id: alert_rule_source_enum
+      description: |-
+        Source of the alert rule:
+        - MANAGED: Alert rule created and managed through the Qovery API
+        - GHOST: Alert rule that exists in Prometheus but has been deleted from the database
+      enum:
+        - MANAGED
+        - GHOST
+    AlertRuleResponseBase:
+      title: AlertRuleResponseBase
+      x-stoplight:
+        id: alert_rule_response_base
+      description: Base schema for alert rule responses with discriminator
+      type: object
+      required:
+        - source
+        - name
+        - state
+      properties:
+        source:
+          $ref: '#/components/schemas/AlertRuleSource'
+        name:
+          type: string
+          x-stoplight:
+            id: base_name_prop
+          description: Name of the alert rule
+        state:
+          $ref: '#/components/schemas/AlertRuleState'
+      discriminator:
+        propertyName: source
+        mapping:
+          MANAGED: '#/components/schemas/AlertRuleResponse'
+          GHOST: '#/components/schemas/GhostAlertRuleResponse'
     AlertRuleResponse:
       title: AlertRuleResponse
       x-stoplight:
         id: jsi9jy70651hv
       allOf:
         - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/AlertRuleResponseBase'
         - type: object
           required:
             - organization_id
             - cluster_id
-            - name
             - description
             - tag
             - condition
@@ -24253,7 +24289,6 @@ components:
             - alert_receiver_ids
             - presentation
             - target
-            - state
             - is_up_to_date
           properties:
             organization_id:
@@ -24268,12 +24303,6 @@ components:
                 id: nd3oz9h1qpa6w
               description: ' Cluster identifier'
               format: uuid
-            name:
-              type: string
-              x-stoplight:
-                id: 866jtxgaipphh
-              description: |
-                Name of the alert rule
             description:
               type: string
               x-stoplight:
@@ -24312,8 +24341,6 @@ components:
               $ref: '#/components/schemas/AlertPresentationResponse'
             target:
               $ref: '#/components/schemas/AlertTarget'
-            state:
-              $ref: '#/components/schemas/AlertRuleState'
             is_up_to_date:
               type: boolean
               x-stoplight:
@@ -24327,6 +24354,27 @@ components:
                 id: 9r76f8pipu6y5
               description: when the alert starts firing
               format: date-time
+    GhostAlertRuleResponse:
+      title: GhostAlertRuleResponse
+      x-stoplight:
+        id: ghost_alert_rule_response
+      description: Response for ghost alerts that exist in Prometheus but have been deleted from the database
+      allOf:
+        - $ref: '#/components/schemas/AlertRuleResponseBase'
+        - type: object
+          properties:
+            target:
+              allOf:
+                - $ref: '#/components/schemas/AlertTarget'
+                - nullable: true
+              description: May be null if target info couldn't be extracted from Prometheus
+            starts_at:
+              type: string
+              x-stoplight:
+                id: ghost_starts_at
+              description: When the ghost alert started firing
+              format: date-time
+              nullable: true
     AlertTargetType:
       title: AlertTargetType
       x-stoplight:
@@ -24385,7 +24433,14 @@ components:
           x-stoplight:
             id: nsk4tfkil7yuf
           items:
-            $ref: '#/components/schemas/AlertRuleResponse'
+            oneOf:
+              - $ref: '#/components/schemas/AlertRuleResponse'
+              - $ref: '#/components/schemas/GhostAlertRuleResponse'
+            discriminator:
+              propertyName: source
+              mapping:
+                MANAGED: '#/components/schemas/AlertRuleResponse'
+                GHOST: '#/components/schemas/GhostAlertRuleResponse'
     ObservabilityResourceProfile:
       title: ObservabilityResourceProfile
       x-stoplight:
