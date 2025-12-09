@@ -23441,6 +23441,10 @@ components:
         sensitive:
           type: boolean
           description: Whether the variable is marked as sensitive
+        nullable:
+          type: boolean
+          default: true
+          description: Whether the variable accepts null values. If false, the variable is required.
         default:
           type: string
           nullable: true
