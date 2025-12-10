@@ -2310,6 +2310,29 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/webhook/{webhookId}/event':
+    get:
+      summary: List events of a webhook
+      description: List events of a webhooks
+      operationId: listWebhookEvent
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/webhookId'
+      tags:
+        - Organization Webhook
+      responses:
+        '200':
+          description: List of event for the webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEventResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     post:
       summary: Create an organization webhook
       description: Create an organization webhook.
@@ -20069,6 +20092,45 @@ components:
         - STANDARD
         - SLACK
       example: STANDARD
+    WebhookEventResponse:
+      type: object
+      required:
+        - id
+        - createdAt
+        - kind
+        - matchedEvent
+        - targetUrlUsed
+        - request
+        - targetResponseStatusCode
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the webhook event was created
+        kind:
+          $ref: '#/components/schemas/OrganizationWebhookKindEnum'
+        matchedEvent:
+          $ref: '#/components/schemas/OrganizationWebhookEventEnum'
+        targetUrlUsed:
+          type: string
+          format: uri
+          description: The webhook target URL that was invoked
+        request:
+          type: object
+          additionalProperties: true
+          description: The request payload sent to the webhook
+        targetResponseStatusCode:
+          type: integer
+          format: int32
+          description: HTTP status code returned by the webhook target
+        targetResponseBody:
+          type: string
+          nullable: true
+          description: Response body from the webhook target
     OrganizationWebhookResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -20114,6 +20176,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrganizationWebhookResponse'
+    WebhookEventResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookEventResponse'
     OrganizationAnnotationsGroupCreateRequest:
       type: object
       required:
