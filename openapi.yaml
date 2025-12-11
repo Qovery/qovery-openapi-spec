@@ -13077,8 +13077,8 @@ paths:
       - $ref: '#/components/parameters/alertReceiverId'
     post:
       summary: Validate Existing Alert Receiver
-      tags: 
-         - Alert Receivers
+      tags:
+        - Alert Receivers
       responses:
         '200':
           description: OK
@@ -13100,7 +13100,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AlertReceiverValidationRequest'
   /alert-receivers/validate:
-    get:
+    post:
       summary: Validate New Alert Receiver
       tags: 
          - Alert Receivers
@@ -13117,13 +13117,13 @@ paths:
           $ref: '#/components/responses/404'
       operationId: validateNewAlertReceiver
       x-stoplight:
-        id: 98ki23k3jdr75
-      description: Validate a future alert receiver by sending a test message for example
+        id: jqejmmiehaxlm
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/AlertReceiverCreationValidationRequest'
+      description: Validate a future alert receiver by sending a test message for example
 components:
   parameters:
     alertReceiverId:
@@ -23513,7 +23513,7 @@ components:
         nullable:
           type: boolean
           default: true
-          description: Whether the variable accepts null values. If false, the variable is required.
+          description: 'Whether the variable accepts null values. If false, the variable is required.'
         default:
           type: string
           nullable: true
