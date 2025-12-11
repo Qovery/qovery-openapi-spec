@@ -20096,26 +20096,26 @@ components:
       type: object
       required:
         - id
-        - createdAt
+        - created_at
         - kind
-        - matchedEvent
-        - targetUrlUsed
+        - matched_event
+        - target_url_used
         - request
-        - targetResponseStatusCode
+        - target_response_status_code
       properties:
         id:
           type: string
           format: uuid
           description: Unique identifier
-        createdAt:
+        created_at:
           type: string
           format: date-time
           description: Timestamp when the webhook event was created
         kind:
           $ref: '#/components/schemas/OrganizationWebhookKindEnum'
-        matchedEvent:
+        matched_event:
           $ref: '#/components/schemas/OrganizationWebhookEventEnum'
-        targetUrlUsed:
+        target_url_used:
           type: string
           format: uri
           description: The webhook target URL that was invoked
@@ -20123,11 +20123,11 @@ components:
           type: object
           additionalProperties: true
           description: The request payload sent to the webhook
-        targetResponseStatusCode:
+        target_response_status_code:
           type: integer
           format: int32
           description: HTTP status code returned by the webhook target
-        targetResponseBody:
+        target_response_body:
           type: string
           nullable: true
           description: Response body from the webhook target
