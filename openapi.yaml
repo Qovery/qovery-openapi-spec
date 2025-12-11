@@ -2310,7 +2310,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/webhook/event':
+  '/organization/{organizationId}/webhook/{webhookId}/event':
     get:
       summary: List events of a webhook
       description: List events of a webhooks
@@ -2363,11 +2363,8 @@ paths:
       x-stoplight:
         id: ihun7iwf9rffw
     parameters:
-      - schema:
-          type: string
-        name: organizationId
-        in: path
-        required: true
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/webhookId'
   '/organization/{organizationId}/webhook/{webhookId}':
     get:
       summary: Get an Organization webhook
