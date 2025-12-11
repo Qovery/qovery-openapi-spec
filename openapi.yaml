@@ -13129,7 +13129,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AlertReceiverCreationValidationRequest'
-      description: Validate a future alert receiver by sending a test message for example
+      description: Validate a future alert receiver by sending a test message.
 components:
   parameters:
     alertReceiverId:
