@@ -13099,7 +13099,7 @@ paths:
       operationId: validateExistingAlertReceiver
       x-stoplight:
         id: uz8sv9wwxy3ib
-      description: Validate an existing alert receiver by sending a test message for example
+      description: Validate an existing alert receiver by sending a test message for example.
       requestBody:
         content:
           application/json:
