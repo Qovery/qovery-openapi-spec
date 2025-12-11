@@ -2317,7 +2317,6 @@ paths:
       operationId: listWebhookEvent
       parameters:
         - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/webhookId'
       tags:
         - Organization Webhook
       responses:
@@ -2333,6 +2332,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+      x-stoplight:
+        id: y8fczmwndkgie
     post:
       summary: Create an organization webhook
       description: Create an organization webhook.
@@ -2359,6 +2360,11 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+      x-stoplight:
+        id: ihun7iwf9rffw
+    parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/webhookId'
   '/organization/{organizationId}/webhook/{webhookId}':
     get:
       summary: Get an Organization webhook
@@ -13102,8 +13108,8 @@ paths:
   /alert-receivers/validate:
     post:
       summary: Validate New Alert Receiver
-      tags: 
-         - Alert Receivers
+      tags:
+        - Alert Receivers
       responses:
         '200':
           description: OK
