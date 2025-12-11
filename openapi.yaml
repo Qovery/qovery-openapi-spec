@@ -24649,9 +24649,9 @@ components:
         id: xbtjouxwa280v
       type: object
       required:
-        - alertReceiver
+        - alert_receiver
       properties:
-        alertReceiver:
+        alert_receiver:
           $ref: '#/components/schemas/AlertReceiverCreationRequest'
         message:
           type: string
