@@ -13626,6 +13626,9 @@ components:
         build.ram_max_in_gib:
           type: integer
           description: define the max ram resources (in gib)
+        build.disable_buildkit_cache:
+          type: boolean
+          description: disable buildkit registry cache during build
         network.ingress.proxy_body_size_mb:
           type: integer
         network.ingress.force_ssl_redirect:
@@ -18550,6 +18553,9 @@ components:
         build.ram_max_in_gib:
           type: integer
           description: define the max ram resources (in gib)
+        build.disable_buildkit_cache:
+          type: boolean
+          description: disable buildkit registry cache during build
         deployment.termination_grace_period_seconds:
           type: integer
           description: define how long in seconds an application is supposed to be stopped gracefully
