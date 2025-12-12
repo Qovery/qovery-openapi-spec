@@ -2338,9 +2338,6 @@ paths:
           $ref: '#/components/responses/403'
       x-stoplight:
         id: ihun7iwf9rffw
-    parameters:
-      - $ref: '#/components/parameters/organizationId'
-      - $ref: '#/components/parameters/webhookId'
   '/organization/{organizationId}/webhook/{webhookId}/event':
     get:
       summary: List events of a webhook
@@ -2348,6 +2345,7 @@ paths:
       operationId: listWebhookEvent
       parameters:
         - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/webhookId'
       tags:
         - Organization Webhook
       responses:
@@ -2363,8 +2361,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-      x-stoplight:
-        id: y8fczmwndkgie
   '/organization/{organizationId}/webhook/{webhookId}':
     get:
       summary: Get an Organization webhook
