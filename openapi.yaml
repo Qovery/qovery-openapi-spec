@@ -2310,29 +2310,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/webhook/{webhookId}/event':
-    get:
-      summary: List events of a webhook
-      description: List events of a webhooks
-      operationId: listWebhookEvent
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/webhookId'
-      tags:
-        - Organization Webhook
-      responses:
-        '200':
-          description: List of event for the webhook
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WebhookEventResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
     post:
       summary: Create an organization webhook
       description: Create an organization webhook.
@@ -2423,6 +2400,29 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/webhook/{webhookId}/event':
+    get:
+      summary: List events of a webhook
+      description: List events of a webhooks
+      operationId: listWebhookEvent
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/webhookId'
+      tags:
+        - Organization Webhook
+      responses:
+        '200':
+          description: List of event for the webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEventResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
