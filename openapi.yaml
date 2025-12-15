@@ -2390,7 +2390,11 @@ paths:
           $ref: '#/components/responses/404'
     put:
       summary: Edit an organization webhook
-      description: Edit an organization webhook
+      description: |
+        Edit an organization webhook.
+
+        **Secret validation:** If the webhook has an existing secret (`target_secret_set: true`), you must provide a new `target_secret` value.
+        Omitting the secret or sending null/empty will return a 400 Bad Request error.
       operationId: editOrganizationWebhook
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -20014,8 +20018,11 @@ components:
         target_secret:
           type: string
           description: |
-            Make sure you receive a payload to sign the Qovery request with your secret.
-            Qovery will add a HTTP header `Qovery-Signature: <Your Secret>` to every webhook requests sent to your target URL.
+            Optional secret to sign webhook requests. When set, Qovery adds a `Qovery-Signature: <Your Secret>` HTTP header to every request.
+
+            **Important for updates:** If the webhook already has a secret configured (`target_secret_set: true` in the response),
+            you must provide a new secret value when updating. Omitting or sending null/empty will return a 400 error.
+            Once a secret is set, it can only be replaced with a new value, not removed.
         description:
           type: string
         enabled:
@@ -23332,6 +23339,13 @@ components:
               x-stoplight:
                 id: c6p960bh9qcu4
               type: string
+        dockerfile_fragment:
+          nullable: true
+          description: |
+            Custom Dockerfile fragment to inject during build. Optional field.
+            When null, no custom fragment is injected.
+          oneOf:
+            - $ref: '#/components/schemas/DockerfileFragment'
     TerraformResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -23409,6 +23423,13 @@ components:
                   x-stoplight:
                     id: 2mkmankga2thw
                   type: string
+            dockerfile_fragment:
+              nullable: true
+              description: |
+                Custom Dockerfile fragment to inject during build.
+                When null, no custom fragment is injected.
+              oneOf:
+                - $ref: '#/components/schemas/DockerfileFragment'
       description: A Terraform service
     TerraformRequestJobResources:
       title: TerraformRequestJobResources
@@ -23642,6 +23663,87 @@ components:
           example:
             - /environments/prod.tfvars
             - /environments/staging.tfvars
+    DockerfileFragment:
+      title: DockerfileFragment
+      description: |
+        Custom Dockerfile fragment to inject during Terraform/OpenTofu service build.
+        This allows installation of additional tools (AWS CLI, kubectl, jq, etc.) or
+        copying pre-built binaries needed by `local_exec` provisioners.
+
+        Fragment commands are injected after the source code is copied but before
+        switching to a non-root user, allowing full package installation capabilities.
+
+        Two modes are supported:
+        - **file**: Reference a Dockerfile fragment file in your Git repository
+        - **inline**: Define Dockerfile commands directly in the configuration
+
+        Only one mode should be specified at a time.
+      oneOf:
+        - $ref: '#/components/schemas/DockerfileFragmentFile'
+        - $ref: '#/components/schemas/DockerfileFragmentInline'
+      discriminator:
+        propertyName: type
+        mapping:
+          file: '#/components/schemas/DockerfileFragmentFile'
+          inline: '#/components/schemas/DockerfileFragmentInline'
+    DockerfileFragmentFile:
+      title: DockerfileFragmentFile
+      type: object
+      description: |
+        File-based Dockerfile fragment referencing a file in the Git repository.
+        Use this when you want to version your build customizations alongside your Terraform code.
+        The file can contain any valid Dockerfile commands (RUN, COPY, ADD, ARG, ENV, etc.).
+      required:
+        - type
+        - path
+      properties:
+        type:
+          type: string
+          enum:
+            - file
+          description: Discriminator indicating file-based fragment
+        path:
+          type: string
+          maxLength: 512
+          pattern: ^/.*
+          description: |
+            Absolute path to the fragment file within the Git repository.
+            Must start with `/` (e.g., `/custom-build.dockerfile` or `/infra/build-fragment.dockerfile`).
+            The file should contain valid Dockerfile commands that will be injected during build.
+          example: /infra/terraform/custom-build.dockerfile
+    DockerfileFragmentInline:
+      title: DockerfileFragmentInline
+      type: object
+      description: |
+        Inline Dockerfile fragment with commands defined directly in the API configuration.
+        Use this for simple customizations that don't require a separate file in your repository.
+      required:
+        - type
+        - content
+      properties:
+        type:
+          type: string
+          enum:
+            - inline
+          description: Discriminator indicating inline fragment content
+        content:
+          type: string
+          maxLength: 8192
+          description: |
+            Dockerfile commands to inject during build (max 8KB). These commands run as root in an
+            Alpine-based environment. Supports any valid Dockerfile instruction:
+            - RUN: Install packages (apk add), run scripts
+            - COPY/ADD: Copy files from build context (relative to root_path)
+            - ARG/ENV: Define build arguments and environment variables
+            - WORKDIR: Change working directory (default is /data)
+
+            Common use cases:
+            - Install cloud CLIs: `RUN apk add --no-cache aws-cli`
+            - Install kubectl: `RUN curl -LO https://dl.k8s.io/release/v1.28.0/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/`
+            - Install Python packages: `RUN apk add --no-cache python3 py3-pip && pip3 install boto3`
+          example: |
+            RUN apk add --no-cache aws-cli jq curl
+            RUN pip3 install --no-cache-dir boto3
     TfVarsFileResponse:
       title: TfVarsFileResponse
       type: object
