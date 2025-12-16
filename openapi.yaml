@@ -23684,8 +23684,6 @@ components:
           description: Fragment type discriminator
         path:
           type: string
-          maxLength: 512
-          pattern: ^/.*
           description: Absolute path to the fragment file.
           example: /infra/terraform/custom-build.dockerfile
     DockerfileFragmentInline:
@@ -23703,7 +23701,6 @@ components:
           description: Fragment type discriminator
         content:
           type: string
-          maxLength: 8192
           description: Dockerfile commands to inject (max 8KB).
           example: RUN apt-get update && apt-get install -y aws-cli jq curl && rm -rf /var/lib/apt/lists/*
     TfVarsFileResponse:
