@@ -23340,7 +23340,13 @@ components:
             Custom Dockerfile fragment to inject during build. Optional field.
             When null, no custom fragment is injected.
           oneOf:
-            - $ref: '#/components/schemas/DockerfileFragment'
+            - $ref: '#/components/schemas/DockerfileFragmentFile'
+            - $ref: '#/components/schemas/DockerfileFragmentInline'
+          discriminator:
+            propertyName: type
+            mapping:
+              file: '#/components/schemas/DockerfileFragmentFile'
+              inline: '#/components/schemas/DockerfileFragmentInline'
     TerraformResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -23424,7 +23430,13 @@ components:
                 Custom Dockerfile fragment to inject during build.
                 When null, no custom fragment is injected.
               oneOf:
-                - $ref: '#/components/schemas/DockerfileFragment'
+                - $ref: '#/components/schemas/DockerfileFragmentFile'
+                - $ref: '#/components/schemas/DockerfileFragmentInline'
+              discriminator:
+                propertyName: type
+                mapping:
+                  file: '#/components/schemas/DockerfileFragmentFile'
+                  inline: '#/components/schemas/DockerfileFragmentInline'
       description: A Terraform service
     TerraformRequestJobResources:
       title: TerraformRequestJobResources
@@ -23658,17 +23670,6 @@ components:
           example:
             - /environments/prod.tfvars
             - /environments/staging.tfvars
-    DockerfileFragment:
-      title: DockerfileFragment
-      description: Custom Dockerfile commands to inject during build. Use `file` to reference a file in your repository, or `inline` to define commands directly.
-      oneOf:
-        - $ref: '#/components/schemas/DockerfileFragmentFile'
-        - $ref: '#/components/schemas/DockerfileFragmentInline'
-      discriminator:
-        propertyName: type
-        mapping:
-          file: '#/components/schemas/DockerfileFragmentFile'
-          inline: '#/components/schemas/DockerfileFragmentInline'
     DockerfileFragmentFile:
       title: DockerfileFragmentFile
       type: object
