@@ -20493,11 +20493,14 @@ components:
           required:
             - name
             - organization
+            - associated_environments_count
           properties:
             name:
               type: string
             description:
               type: string
+            associated_environments_count:
+              type: integer
             organization:
               $ref: '#/components/schemas/ReferenceObject'
     ProjectCurrentCost:
