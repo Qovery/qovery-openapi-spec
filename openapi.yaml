@@ -624,7 +624,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ListGitDirectoriesRequest'
+              $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
       responses:
         '200':
           description: List of directories at the specified path
@@ -18013,32 +18013,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GitRepository'
-    ListGitDirectoriesRequest:
-      type: object
-      required:
-        - url
-        - branch
-        - provider
-      properties:
-        url:
-          type: string
-          description: Full URL of the git repository
-          example: 'https://github.com/Qovery/terraform-examples'
-        branch:
-          type: string
-          description: Branch name to browse
-          example: main
-        root_path:
-          type: string
-          description: Path within repository to list directories (defaults to root)
-          example: /infra
-          default: /
-        git_token_id:
-          type: string
-          format: uuid
-          description: ID of the stored git token (required for private repositories)
-        provider:
-          $ref: '#/components/schemas/GitProviderEnum'
     GitTokenAssociatedServiceType:
       type: string
       enum:
