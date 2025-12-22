@@ -608,6 +608,44 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/listDirectoriesFromGitRepository':
+    post:
+      summary: List directories from a git repository
+      description: |
+        List immediate subdirectories at a specified path in a git repository.
+        This endpoint is used when creating Terraform services to help users browse
+        and select the appropriate root path.
+      operationId: listDirectoriesFromGitRepository
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Git repositories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListGitDirectoriesRequest'
+      responses:
+        '200':
+          description: List of directories at the specified path
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: string
+                    example: ["infra", "terraform", ".github"]
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/member':
     get:
       summary: Get organization members
@@ -17975,6 +18013,32 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GitRepository'
+    ListGitDirectoriesRequest:
+      type: object
+      required:
+        - url
+        - branch
+        - provider
+      properties:
+        url:
+          type: string
+          description: Full URL of the git repository
+          example: 'https://github.com/Qovery/terraform-examples'
+        branch:
+          type: string
+          description: Branch name to browse
+          example: main
+        root_path:
+          type: string
+          description: Path within repository to list directories (defaults to root)
+          example: /infra
+          default: /
+        git_token_id:
+          type: string
+          format: uuid
+          description: ID of the stored git token (required for private repositories)
+        provider:
+          $ref: '#/components/schemas/GitProviderEnum'
     GitTokenAssociatedServiceType:
       type: string
       enum:
