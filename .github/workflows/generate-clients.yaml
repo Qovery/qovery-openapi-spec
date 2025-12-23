@@ -19,16 +19,19 @@ jobs:
         include:
           - language: go
             version: 7.6.0
+            git-user-id: qovery
             target-branch: master
             deploy-ssh-key: SSH_DEPLOY_KEY_GO
             deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_GO
           - language: typescript-axios
             version: 7.8.0
+            git-user-id: Qovery
             target-branch: main
             deploy-ssh-key: SSH_DEPLOY_KEY_TYPESCRIPT_AXIOS
             deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_TYPESCRIPT_AXIOS
           - language: rust
             version: 7.13.0
+            git-user-id: qovery
             target-branch: main
             deploy-ssh-key: SSH_DEPLOY_KEY_RUST
             deploy-ssh-key-ws: SSH_DEPLOY_KEY_WS_RUST
@@ -71,7 +74,7 @@ jobs:
             -a bearer \
             -o out/qovery-client-${{ matrix.language }} \
             --enable-post-process-file \
-            --git-user-id qovery \
+            --git-user-id ${{ matrix.git-user-id }} \
             --git-repo-id qovery-client-${{ matrix.language }} \
             --package-name qovery \
             --additional-properties packageVersion=$(grep 'version' openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
@@ -90,7 +93,7 @@ jobs:
             -a bearer \
             -o out/qovery-client-ws-${{ matrix.language }} \
             --enable-post-process-file \
-            --git-user-id qovery \
+            --git-user-id ${{ matrix.git-user-id }} \
             --git-repo-id qovery-client-ws-${{ matrix.language }} \
             --package-name qovery-ws \
             --additional-properties packageVersion=$(grep 'version' websocket/websocket-openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
