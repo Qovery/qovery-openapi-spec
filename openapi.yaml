@@ -1060,7 +1060,7 @@ paths:
     get:
       summary: Get organization billing external ID
       description: |
-        This endpoint returns the external ID of the organization's billing account.
+        This endpoint returns the external ID of the organization's billing account
       operationId: getOrganizationBillingExternalId
       parameters:
         - $ref: '#/components/parameters/organizationId'
