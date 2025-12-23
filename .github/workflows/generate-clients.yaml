@@ -74,7 +74,7 @@ jobs:
             -a bearer \
             -o out/qovery-client-${{ matrix.language }} \
             --enable-post-process-file \
-            --git-user-id {{ matrix.git-user-id }} \
+            --git-user-id ${{ matrix.git-user-id }} \
             --git-repo-id qovery-client-${{ matrix.language }} \
             --package-name qovery \
             --additional-properties packageVersion=$(grep 'version' openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
@@ -93,7 +93,7 @@ jobs:
             -a bearer \
             -o out/qovery-client-ws-${{ matrix.language }} \
             --enable-post-process-file \
-            --git-user-id {{ matrix.git-user-id }} \
+            --git-user-id ${{ matrix.git-user-id }} \
             --git-repo-id qovery-client-ws-${{ matrix.language }} \
             --package-name qovery-ws \
             --additional-properties packageVersion=$(grep 'version' websocket/websocket-openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
