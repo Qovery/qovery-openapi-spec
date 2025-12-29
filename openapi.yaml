@@ -14691,6 +14691,8 @@ components:
               $ref: '#/components/schemas/InfrastructureOutputs'
             infrastructure_charts_parameters:
               $ref: '#/components/schemas/ClusterInfrastructureChartsParameters'
+            keda:
+              $ref: '#/components/schemas/ClusterKeda'
     ClusterDeleteMode:
       type: string
       description: |
@@ -15365,6 +15367,8 @@ components:
           $ref: '#/components/schemas/MetricsParameters'
         infrastructure_charts_parameters:
           $ref: '#/components/schemas/ClusterInfrastructureChartsParameters'
+        keda:
+          $ref: '#/components/schemas/ClusterKeda'
     ClusterResponseList:
       type: object
       properties:
@@ -24657,6 +24661,18 @@ components:
           type: string
           x-stoplight:
             id: s7kbacgdp3fb4
+    ClusterKeda:
+      title: ClusterKeda
+      x-stoplight:
+        id: apznbrc98va7j
+      type: object
+      required:
+        - enabled
+      properties:
+        enabled:
+          type: boolean
+          x-stoplight:
+            id: 46c6f1rqdvu55
   responses:
     '204':
       description: no content
