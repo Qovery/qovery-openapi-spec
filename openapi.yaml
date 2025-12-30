@@ -325,7 +325,7 @@ paths:
           $ref: '#/components/responses/404'
     put:
       summary: Edit an organization
-      description: To edit an organization you must have the admin permission
+      description: To edit an organization you must have the admin permission.
       operationId: editOrganization
       parameters:
         - $ref: '#/components/parameters/organizationId'
