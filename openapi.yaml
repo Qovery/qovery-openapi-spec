@@ -23028,6 +23028,7 @@ components:
         - project_name
         - environment_id
         - environment_name
+        - cluster_id
       properties:
         id:
           type: string
@@ -23067,6 +23068,11 @@ components:
           type: string
           x-stoplight:
             id: s8c6hmto9njzg
+        cluster_id:
+          type: string
+          x-stoplight:
+            id: hg9qpxe5z7
+          format: uuid
         job_type:
           x-stoplight:
             id: jwtmqb1fq5a6m
