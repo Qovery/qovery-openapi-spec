@@ -25004,6 +25004,13 @@ components:
                 id: 0dnjwnlkuj3kp
             role:
               $ref: '#/components/schemas/KedaScalerRole'
+            config_json:
+              type: object
+              additionalProperties: true
+              nullable: true
+            config_yaml:
+              type: string
+              nullable: true
     AutoscalingPolicyResponse:
       title: AutoscalingPolicyResponse
       x-stoplight:
