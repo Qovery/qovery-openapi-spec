@@ -30,6 +30,7 @@ tags:
   - name: Application Secret
   - name: Application Annotations Group
   - name: Applications
+  - name: AutoscalingPolicy
   - name: Container
   - name: Container Actions
   - name: Container Configuration
@@ -13164,6 +13165,74 @@ paths:
             schema:
               $ref: '#/components/schemas/AlertReceiverCreationValidationRequest'
       description: Validate a future alert receiver by sending a test message.
+  '/service/{serviceId}/autoscalingPolicy':
+    parameters:
+      - $ref: '#/components/parameters/serviceId'
+    get:
+      summary: getServiceAutoscaling
+      tags:
+        - AutoscalingPolicy
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutoscalingPolicyResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: getServiceAutoscaling
+      x-stoplight:
+        id: zghgbjo672uva
+    put:
+      summary: createOrUpdateServiceAutoscaling
+      tags:
+        - AutoscalingPolicy
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutoscalingPolicyResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: createOrUpdateServiceAutoscaling
+      x-stoplight:
+        id: pdw823mupws7v
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoscalingPolicyRequest'
+    delete:
+      summary: deleteServiceAutoscaling
+      tags:
+        - AutoscalingPolicy
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      operationId: deleteServiceAutoscaling
+      x-stoplight:
+        id: i4qa29t29fl3h
 components:
   parameters:
     alertReceiverId:
@@ -13857,6 +13926,8 @@ components:
                 id: tdxdfoyowutcx
               description: The target build stage in the Dockerfile to build
               nullable: true
+            autoscaling:
+              $ref: '#/components/schemas/AutoscalingPolicyResponse'
     ApplicationDeploymentRestriction:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -14268,6 +14339,8 @@ components:
                 id: xg9q0urac8kdq
               description: The target build stage in the Dockerfile to build
               nullable: true
+            autoscaling:
+              $ref: '#/components/schemas/AutoscalingPolicyRequest'
     ApplicationResponseList:
       type: object
       properties:
@@ -16287,6 +16360,8 @@ components:
               description: Icon URI representing the container.
               x-stoplight:
                 id: jiypvl6nd63dm
+            autoscaling:
+              $ref: '#/components/schemas/AutoscalingPolicyRequest'
     ContainerResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -16395,6 +16470,8 @@ components:
                 id: o2bdci7ak3bmz
             service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
+            autoscaling:
+              $ref: '#/components/schemas/AutoscalingPolicyResponse'
     ContainerResponseList:
       type: object
       properties:
@@ -24782,6 +24859,161 @@ components:
           type: boolean
           x-stoplight:
             id: 46c6f1rqdvu55
+    AutoscalingPolicyRequest:
+      title: AutoscalingPolicyRequest
+      x-stoplight:
+        id: ylgyx3ozik2hf
+      oneOf:
+        - $ref: '#/components/schemas/KedaAutoscalingRequest'
+      discriminator:
+        propertyName: mode
+        mapping:
+          KEDA: '#/components/schemas/KedaAutoscalingRequest'
+    AutoscalingMode:
+      title: AutoscalingMode
+      x-stoplight:
+        id: vmgo27882mrl3
+      type: string
+      enum:
+        - KEDA
+    KedaAutoscalingRequest:
+      title: KedaAutoscalingRequest
+      x-stoplight:
+        id: 4vq8n2a7z3pen
+      type: object
+      required:
+        - mode
+        - scalers
+      properties:
+        mode:
+          $ref: '#/components/schemas/AutoscalingMode'
+        polling_interval_seconds:
+          type: integer
+          x-stoplight:
+            id: wy5blh9au1d85
+          format: int32
+        cooldown_period_seconds:
+          type: integer
+          x-stoplight:
+            id: zy5rt4bh9fyph
+          format: int32
+        scalers:
+          type: array
+          x-stoplight:
+            id: 6oh134v1tqb28
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/KedaScalerRequest'
+    KedaScalerRole:
+      title: KedaScalerRole
+      x-stoplight:
+        id: 1sl0mlxoqzr8w
+      type: string
+      enum:
+        - PRIMARY
+        - SAFETY
+    KedaAutoscalingResponse:
+      title: KedaAutoscalingResponse
+      x-stoplight:
+        id: dgcb902szizvv
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          x-stoplight:
+            id: zjlwqohiiyuwf
+          required:
+            - service_id
+            - mode
+            - polling_interval_seconds
+            - cooldown_period_seconds
+            - scalers
+          properties:
+            service_id:
+              type: string
+              x-stoplight:
+                id: j9bxhtiyyl0iv
+              format: uuid
+            mode:
+              $ref: '#/components/schemas/AutoscalingMode'
+            polling_interval_seconds:
+              type: integer
+              x-stoplight:
+                id: uone6zr48amok
+              format: int32
+            cooldown_period_seconds:
+              type: integer
+              x-stoplight:
+                id: j2dapmjjjiafj
+              format: int32
+            scalers:
+              type: array
+              x-stoplight:
+                id: oyhxgvwg36ixz
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/KedaScalerResponse'
+      description: ''
+    KedaScalerRequest:
+      title: KedaScalerRequest
+      x-stoplight:
+        id: hfn4tfrtivkcs
+      type: object
+      required:
+        - scaler_type
+        - role
+      properties:
+        scaler_type:
+          type: string
+          x-stoplight:
+            id: 3ba9iisjwqgsp
+        enabled:
+          type: boolean
+          x-stoplight:
+            id: 9m67trg9m0ioz
+        role:
+          $ref: '#/components/schemas/KedaScalerRole'
+        config_json:
+          type: object
+          x-stoplight:
+            id: si5ekni2hc6w9
+        config_yaml:
+          type: string
+          x-stoplight:
+            id: 8c7vktd7svl30
+    KedaScalerResponse:
+      title: KedaScalerResponse
+      x-stoplight:
+        id: gaaqg32ivl48h
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          x-stoplight:
+            id: 74tt3hgf95nfe
+          required:
+            - scaler_type
+            - enabled
+            - role
+          properties:
+            scaler_type:
+              type: string
+              x-stoplight:
+                id: 1ckp76ziimkg4
+            enabled:
+              type: boolean
+              x-stoplight:
+                id: 0dnjwnlkuj3kp
+            role:
+              $ref: '#/components/schemas/KedaScalerRole'
+    AutoscalingPolicyResponse:
+      title: AutoscalingPolicyResponse
+      x-stoplight:
+        id: mjawsx6obi237
+      oneOf:
+        - $ref: '#/components/schemas/KedaAutoscalingResponse'
+      discriminator:
+        propertyName: mode
+        mapping:
+          KEDA: '#/components/schemas/KedaAutoscalingResponse'
   responses:
     '204':
       description: no content
