@@ -14039,6 +14039,8 @@ components:
               type: string
               description: The target build stage in the Dockerfile to build
               nullable: true
+            autoscaling:
+              $ref: '#/components/schemas/AutoscalingPolicyRequest'
     ApplicationGitRepository:
       type: object
       required:
