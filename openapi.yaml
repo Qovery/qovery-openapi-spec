@@ -25162,6 +25162,9 @@ components:
           type: string
           x-stoplight:
             id: 8c7vktd7svl30
+        trigger_authentication_id:
+          type: string
+          format: uuid
     KedaScalerResponse:
       title: KedaScalerResponse
       x-stoplight:
@@ -25193,6 +25196,9 @@ components:
             config_yaml:
               type: string
               nullable: true
+            trigger_authentication_id:
+              type: string
+              format: uuid
     AutoscalingPolicyResponse:
       title: AutoscalingPolicyResponse
       x-stoplight:
