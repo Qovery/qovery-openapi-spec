@@ -596,6 +596,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PodStatusDto'
+        scaled_object:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ScaledObjectStatusDto'
         state:
           $ref: '#/components/schemas/ServiceStateDto'
     CertificateStatusDto:
@@ -1596,6 +1600,120 @@ components:
       - OK
       - WARNING
       - ALERT
+    ScaleTargetGvkrDto:
+      type: object
+      required:
+      - group
+      - version
+      - kind
+      - resource
+      properties:
+        group:
+          type: string
+        kind:
+          type: string
+        resource:
+          type: string
+        version:
+          type: string
+    ScaledObjectConditionDto:
+      type: object
+      required:
+      - type
+      - status
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+        reason:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        type:
+          type: string
+    ScaledObjectHealthDto:
+      type: object
+      required:
+      - status
+      properties:
+        number_of_failures:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        status:
+          type: string
+    ScaledObjectStatusDto:
+      type: object
+      required:
+      - name
+      - conditions
+      - external_metric_names
+      - health
+      - last_active_time
+      - resource_metric_names
+      properties:
+        authentications_types:
+          type:
+          - string
+          - 'null'
+        composite_scaler_name:
+          type:
+          - string
+          - 'null'
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScaledObjectConditionDto'
+        external_metric_names:
+          type: array
+          items:
+            type: string
+        health:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ScaledObjectHealthDto'
+          propertyNames:
+            type: string
+        hpa_name:
+          type:
+          - string
+          - 'null'
+        last_active_time:
+          type: integer
+          format: int64
+          minimum: 0
+        name:
+          type: string
+        original_replica_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        paused_replica_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        resource_metric_names:
+          type: array
+          items:
+            type: string
+        scale_target_gvkr:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ScaleTargetGvkrDto'
+        scale_target_kind:
+          type:
+          - string
+          - 'null'
+        triggers_types:
+          type:
+          - string
+          - 'null'
     ServiceActionDetailsDto:
       type: object
       required:
