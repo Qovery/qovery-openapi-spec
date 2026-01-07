@@ -596,6 +596,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PodStatusDto'
+        scaled_object:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ScaledObjectStatusDto'
         state:
           $ref: '#/components/schemas/ServiceStateDto'
     CertificateStatusDto:
@@ -1596,6 +1600,78 @@ components:
       - OK
       - WARNING
       - ALERT
+    ScaledObjectConditionDto:
+      type: object
+      required:
+      - type
+      - status
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+        reason:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        type:
+          type: string
+    ScaledObjectHealthDto:
+      type: object
+      required:
+      - status
+      properties:
+        number_of_failures:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        status:
+          type: string
+    ScaledObjectStatusDto:
+      type: object
+      required:
+      - name
+      - conditions
+      - health
+      - last_active_time
+      properties:
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScaledObjectConditionDto'
+        current_replicas:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        desired_replicas:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        health:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ScaledObjectHealthDto'
+          propertyNames:
+            type: string
+        hpa_name:
+          type:
+          - string
+          - 'null'
+        last_active_time:
+          type: integer
+          format: int64
+          minimum: 0
+        name:
+          type: string
+        scale_target_kind:
+          type:
+          - string
+          - 'null'
     ServiceActionDetailsDto:
       type: object
       required:
