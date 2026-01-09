@@ -11855,6 +11855,30 @@ paths:
         name: organizationId
         in: path
         required: true
+  '/organization/{organizationId}/environments':
+    get:
+      summary: List Environments By OrganizationId
+      tags:
+        - Organization Main Calls
+      responses:
+        '200':
+          description: Environment List
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OrganizationEnvironmentResponse'
+      operationId: listEnvironmentsByOrganizationId
+    parameters:
+      - schema:
+          type: string
+        name: organizationId
+        in: path
+        required: true
   '/organization/{organizationId}/parseTerraformVariablesFromGitRepo':
     post:
       summary: Parse Terraform variables from Git repository
@@ -23287,6 +23311,25 @@ components:
           enum:
             - CRON
             - LIFECYCLE
+    OrganizationEnvironmentResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+            - organization
+            - project
+            - mode
+          properties:
+            name:
+              type: string
+              description: name is case insensitive
+            organization:
+              $ref: '#/components/schemas/ReferenceObject'
+            project:
+              $ref: '#/components/schemas/ReferenceObject'
+            mode:
+              $ref: '#/components/schemas/EnvironmentModeEnum'
     ClusterMetricsResponse:
       title: ClusterMetricsResponse
       x-stoplight:
