@@ -639,7 +639,10 @@ paths:
                     type: array
                     items:
                       type: string
-                    example: ["infra", "terraform", ".github"]
+                    example:
+                      - infra
+                      - terraform
+                      - .github
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -13258,123 +13261,6 @@ paths:
       operationId: deleteServiceAutoscaling
       x-stoplight:
         id: i4qa29t29fl3h
-  '/organization/{organizationId}/keda-trigger-authentications':
-    parameters:
-      - $ref: '#/components/parameters/organizationId'
-    get:
-      summary: list Keda TriggerAuthentications
-      tags:
-        - KedaTriggerAuthentication
-      responses:
-        '200':
-          description: OK
-          headers: { }
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/KedaTriggerAuthenticationResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-      operationId: listKedaTriggerAuthentications
-      x-stoplight:
-        id: ii63vy4wqh8af
-    post:
-      summary: create Keda Trigger Authentications
-      tags:
-        - KedaTriggerAuthentication
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/KedaTriggerAuthenticationResponse'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '404':
-          $ref: '#/components/responses/404'
-      operationId: createKedaTriggerAuthentication
-      x-stoplight:
-        id: ebkcpht10mc5d
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/KedaTriggerAuthenticationRequest'
-  '/organization/{organizationId}/keda-trigger-authentications/{triggerAuthenticationId}':
-    parameters:
-      - $ref: '#/components/parameters/organizationId'
-      - $ref: '#/components/parameters/triggerAuthenticationId'
-    get:
-      summary: Get a KEDA trigger authentication
-      tags:
-        - KedaTriggerAuthentication
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/KedaTriggerAuthenticationResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-      operationId: getKedaTriggerAuthentication
-      x-stoplight:
-        id: hskgxylk3bdko
-    put:
-      summary: Update a KEDA trigger authentication
-      tags:
-        - KedaTriggerAuthentication
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/KedaTriggerAuthenticationResponse'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-      operationId: updateKedaTriggerAuthentication
-      x-stoplight:
-        id: 71icltdzus0p2
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/KedaTriggerAuthenticationRequest'
-    delete:
-      summary: Delete a KEDA trigger authentication
-      tags:
-        - KedaTriggerAuthentication
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-      operationId: deleteKedaTriggerAuthentication
-      x-stoplight:
-        id: vnb6lq8vk3e6l
 components:
   parameters:
     alertReceiverId:
@@ -25205,9 +25091,8 @@ components:
           type: string
           x-stoplight:
             id: 8c7vktd7svl30
-        trigger_authentication_id:
-          type: string
-          format: uuid
+        trigger_authentication:
+          $ref: '#/components/schemas/KedaTriggerAuthenticationRequest'
     KedaScalerResponse:
       title: KedaScalerResponse
       x-stoplight:
@@ -25234,14 +25119,12 @@ components:
               $ref: '#/components/schemas/KedaScalerRole'
             config_json:
               type: object
-              additionalProperties: true
               nullable: true
             config_yaml:
               type: string
               nullable: true
-            trigger_authentication_id:
-              type: string
-              format: uuid
+            trigger_authentication:
+              $ref: '#/components/schemas/KedaTriggerAuthenticationResponse'
     AutoscalingPolicyResponse:
       title: AutoscalingPolicyResponse
       x-stoplight:
