@@ -116,6 +116,7 @@ tags:
   - name: Referral & Rewards
   - name: Terraforms
   - name: Terraform Main Calls
+  - name: Terraform Resources
   - name: Terraform Deployment History
   - name: Terraform Deployment Restriction
   - name: Container Registries
@@ -12737,6 +12738,30 @@ paths:
       operationId: deleteTerraformDeploymentRestriction
       x-stoplight:
         id: d896flm9ibi54
+  '/api/v1/terraform/{terraformId}/terraformResources':
+    parameters:
+      - $ref: '#/components/parameters/terraformId'
+    get:
+      summary: Get terraform resources from latest deployment
+      description: Returns the list of Terraform resources from the most recent deployment execution
+      tags:
+        - Terraform Resources
+      operationId: getTerraformResources
+      x-stoplight:
+        id: terraform-resources-get
+      responses:
+        '200':
+          description: List of terraform resources from latest deployment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformResourcesResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/credentials':
     parameters:
       - schema:
@@ -23470,6 +23495,127 @@ components:
             mapping:
               file: '#/components/schemas/DockerfileFragmentFile'
               inline: '#/components/schemas/DockerfileFragmentInline'
+    TerraformResourceAttribute:
+      type: object
+      title: Resource Attribute
+      description: A single attribute of a Terraform resource with key and value
+      required:
+        - key
+        - value
+      properties:
+        key:
+          type: string
+          description: The attribute key name
+          example: instance_id
+        value:
+          type: string
+          description: The attribute value as a string
+          example: i-1234567890abcdef0
+    TerraformResourceResponse:
+      type: object
+      title: Terraform Resource Response
+      description: A Terraform resource from a deployment execution
+      required:
+        - id
+        - resourceType
+        - name
+        - address
+        - provider
+        - mode
+        - attributes
+        - extractedAt
+        - keyAttributes
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for this resource record
+          example: 550e8400-e29b-41d4-a716-446655440000
+        resourceType:
+          type: string
+          description: Type of the Terraform resource (e.g., aws_instance, aws_s3_bucket)
+          example: aws_instance
+        name:
+          type: string
+          description: Name of the resource as defined in Terraform configuration
+          example: web_server
+        address:
+          type: string
+          description: Full address of the resource (e.g., aws_instance.web_server)
+          example: aws_instance.web_server
+        provider:
+          type: string
+          description: Terraform provider name (e.g., aws, google, azurerm)
+          example: aws
+        mode:
+          type: string
+          enum:
+            - managed
+            - data
+          description: Resource mode (managed or data source)
+          example: managed
+        attributes:
+          type: object
+          description: All resource attributes as key-value pairs
+          additionalProperties: true
+          example:
+            instance_id: i-1234567890abcdef0
+            instance_type: t2.micro
+            public_ip: 10.0.0.1
+            private_ip: 172.31.0.1
+        extractedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the resource was extracted from Terraform state
+          example: '2023-01-15T10:30:00Z'
+        keyAttributes:
+          type: array
+          description: Most important attributes for this resource type (for display)
+          items:
+            $ref: '#/components/schemas/TerraformResourceAttribute'
+          example:
+            - key: instance_id
+              value: i-1234567890abcdef0
+            - key: instance_type
+              value: t2.micro
+    TerraformResourcesResponse:
+      type: object
+      title: Terraform Resources List Response
+      description: List of Terraform resources from the latest deployment
+      required:
+        - resources
+      properties:
+        resources:
+          type: array
+          description: Array of Terraform resources
+          items:
+            $ref: '#/components/schemas/TerraformResourceResponse'
+    TerraformResourcesRequest:
+      type: object
+      title: Terraform Resources Request
+      description: Request to store terraform resources from engine after deployment
+      required:
+        - terraformId
+        - executionId
+        - resourcesJson
+      properties:
+        terraformId:
+          type: string
+          format: uuid
+          description: ID of the Terraform service
+          example: 550e8400-e29b-41d4-a716-446655440000
+        executionId:
+          type: string
+          description: |
+            Execution ID in format "UUID-version" or "UUID-version-timestamp"
+            Example: 550e8400-e29b-41d4-a716-446655440000-1
+          example: 550e8400-e29b-41d4-a716-446655440000-1
+        resourcesJson:
+          type: string
+          description: |
+            JSON array of terraform resources extracted from terraform show output.
+            Each resource contains: resource_type, name, provider, address, mode, attributes
+          example: '[{"resource_type":"aws_instance","name":"web_server","provider":"aws","address":"aws_instance.web_server","mode":"managed","attributes":{"instance_id":"i-1234567890abcdef0","instance_type":"t2.micro"}}]'
     TerraformResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
