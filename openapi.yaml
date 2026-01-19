@@ -12738,7 +12738,7 @@ paths:
       operationId: deleteTerraformDeploymentRestriction
       x-stoplight:
         id: d896flm9ibi54
-  '/api/v1/terraform/{terraformId}/terraformResources':
+  '/terraform/{terraformId}/terraformResources':
     parameters:
       - $ref: '#/components/parameters/terraformId'
     get:
@@ -23583,9 +23583,9 @@ components:
       title: Terraform Resources List Response
       description: List of Terraform resources from the latest deployment
       required:
-        - resources
+        - results
       properties:
-        resources:
+        results:
           type: array
           description: Array of Terraform resources
           items:
