@@ -23516,7 +23516,7 @@ components:
           example: 550e8400-e29b-41d4-a716-446655440000
         resource_type:
           type: string
-          description: Type of the Terraform resource (e.g., aws_instance, aws_s3_bucket)
+          description: 'Type of the Terraform resource (e.g., aws_instance, aws_s3_bucket)'
           example: aws_instance
         name:
           type: string
@@ -23524,11 +23524,11 @@ components:
           example: web_server
         address:
           type: string
-          description: Full address of the resource (e.g., aws_instance.web_server)
+          description: 'Full address of the resource (e.g., aws_instance.web_server)'
           example: aws_instance.web_server
         provider:
           type: string
-          description: Terraform provider name (e.g., aws, google, azurerm)
+          description: 'Terraform provider name (e.g., aws, google, azurerm)'
           example: aws
         mode:
           type: string
@@ -24973,6 +24973,19 @@ components:
           type: boolean
           x-stoplight:
             id: 46c6f1rqdvu55
+        availability_profile:
+          x-stoplight:
+            id: v8evbenoulp3y
+          enum:
+            - NORMAL
+            - HIGH
+        resource_profile:
+          x-stoplight:
+            id: zy13zlp0llwid
+          enum:
+            - LOW
+            - NORMAL
+            - HIGH
     AutoscalingPolicyRequest:
       title: AutoscalingPolicyRequest
       x-stoplight:
@@ -25018,6 +25031,8 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/KedaScalerRequest'
+        fallback:
+          $ref: '#/components/schemas/KedaFallback'
     KedaScalerRole:
       title: KedaScalerRole
       x-stoplight:
@@ -25066,7 +25081,8 @@ components:
               minItems: 1
               items:
                 $ref: '#/components/schemas/KedaScalerResponse'
-      description: ''
+            fallback:
+              $ref: '#/components/schemas/KedaFallback'
     KedaTriggerAuthenticationRequest:
       title: KedaTriggerAuthenticationRequest
       x-stoplight:
@@ -25193,6 +25209,32 @@ components:
         propertyName: mode
         mapping:
           KEDA: '#/components/schemas/KedaAutoscalingResponse'
+    KedaFallback:
+      title: KedaFallback
+      x-stoplight:
+        id: 6uffocped989i
+      type: object
+      required:
+        - behavior
+        - failure_threshold
+        - replicas
+      properties:
+        behavior:
+          x-stoplight:
+            id: 8v91ryeeyltwe
+          enum:
+            - STATIC
+            - CURRENT_REPLICAS
+            - CURRENT_REPLICAS_IF_HIGHER
+            - CURRENT_REPLICAS_IF_LOWER
+        failure_threshold:
+          type: integer
+          x-stoplight:
+            id: 9gg1ociow4q7t
+        replicas:
+          type: integer
+          x-stoplight:
+            id: gv5n5pce49ivo
   responses:
     '204':
       description: no content
