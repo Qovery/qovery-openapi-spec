@@ -23495,43 +23495,26 @@ components:
             mapping:
               file: '#/components/schemas/DockerfileFragmentFile'
               inline: '#/components/schemas/DockerfileFragmentInline'
-    TerraformResourceAttribute:
-      type: object
-      title: Resource Attribute
-      description: A single attribute of a Terraform resource with key and value
-      required:
-        - key
-        - value
-      properties:
-        key:
-          type: string
-          description: The attribute key name
-          example: instance_id
-        value:
-          type: string
-          description: The attribute value as a string
-          example: i-1234567890abcdef0
     TerraformResourceResponse:
       type: object
       title: Terraform Resource Response
       description: A Terraform resource from a deployment execution
       required:
         - id
-        - resourceType
+        - resource_type
         - name
         - address
         - provider
         - mode
         - attributes
-        - extractedAt
-        - keyAttributes
+        - extracted_at
       properties:
         id:
           type: string
           format: uuid
           description: Unique identifier for this resource record
           example: 550e8400-e29b-41d4-a716-446655440000
-        resourceType:
+        resource_type:
           type: string
           description: Type of the Terraform resource (e.g., aws_instance, aws_s3_bucket)
           example: aws_instance
@@ -23568,16 +23551,6 @@ components:
           format: date-time
           description: Timestamp when the resource was extracted from Terraform state
           example: '2023-01-15T10:30:00Z'
-        keyAttributes:
-          type: array
-          description: Most important attributes for this resource type (for display)
-          items:
-            $ref: '#/components/schemas/TerraformResourceAttribute'
-          example:
-            - key: instance_id
-              value: i-1234567890abcdef0
-            - key: instance_type
-              value: t2.micro
     TerraformResourcesResponse:
       type: object
       title: Terraform Resources List Response
