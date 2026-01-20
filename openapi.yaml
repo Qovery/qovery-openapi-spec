@@ -23546,7 +23546,7 @@ components:
             instance_type: t2.micro
             public_ip: 10.0.0.1
             private_ip: 172.31.0.1
-        extractedAt:
+        extracted_at:
           type: string
           format: date-time
           description: Timestamp when the resource was extracted from Terraform state
