@@ -4594,6 +4594,28 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/project/{projectId}/environmentOverview':
+    get:
+      summary: List environments overview
+      description: Returns a list of environments with their overview information including deployment status, service count, and cluster details.
+      operationId: getProjectEnvironmentsOverview
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - Environments
+      responses:
+        '200':
+          description: List environments overview
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentOverviewResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}':
     get:
       summary: Get environment by ID
@@ -17451,6 +17473,62 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Environment'
+    EnvironmentOverviewResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentOverviewResponse'
+    EnvironmentOverviewResponse:
+      type: object
+      required:
+        - id
+        - created_at
+        - updated_at
+        - name
+        - mode
+        - service_count
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+        mode:
+          $ref: '#/components/schemas/EnvironmentModeEnum'
+        cluster:
+          $ref: '#/components/schemas/ClusterOverviewResponse'
+          nullable: true
+        service_count:
+          type: integer
+          format: int32
+        deployment_status:
+          $ref: '#/components/schemas/EnvironmentStatus'
+          nullable: true
+    ClusterOverviewResponse:
+      type: object
+      required:
+        - id
+        - name
+        - cloud_provider
+        - is_demo
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        cloud_provider:
+          $ref: '#/components/schemas/CloudVendorEnum'
+        is_demo:
+          type: boolean
     EnvironmentDeploymentRule:
       allOf:
         - $ref: '#/components/schemas/Base'
