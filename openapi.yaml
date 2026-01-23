@@ -10980,6 +10980,30 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/service/{serviceId}/gitWebhookStatus':
+    get:
+      summary: Get git webhook status for a service
+      description: Returns the webhook status for a git-based service. Checks if the Qovery webhook is correctly configured on the git provider (GitHub, GitLab, or Bitbucket).
+      operationId: getServiceGitWebhookStatus
+      parameters:
+        - $ref: '#/components/parameters/serviceId'
+      tags:
+        - Service Main Calls
+      responses:
+        '200':
+          description: Webhook status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitWebhookStatusResponse'
+        '400':
+          description: Service does not have a git source
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /variable:
     get:
       summary: List variables
@@ -20389,6 +20413,37 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/WebhookEventResponse'
+    GitWebhookStatusResponse:
+      type: object
+      required:
+        - status
+        - provider
+      properties:
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - NOT_CONFIGURED
+            - MISCONFIGURED
+            - UNABLE_TO_VERIFY
+          description: |
+            The webhook configuration status:
+            - ACTIVE: Webhook is properly configured with all required events
+            - NOT_CONFIGURED: No Qovery webhook found on the git rep
+            - MISCONFIGURED: Webhook exists but is missing required events
+            - UNABLE_TO_VERIFY: Could not check webhook status (auth error, rate limit, etc.)
+        provider:
+          type: string
+          enum:
+            - GITHUB
+            - GITLAB
+            - BITBUCKET
+          description: The git provider where the webhook is configured
+        missing_events:
+          type: array
+          items:
+            type: string
+          description: List of required events that are missing from the webhook configuration (only present when status is MISCONFIGURED)
     OrganizationAnnotationsGroupCreateRequest:
       type: object
       required:
