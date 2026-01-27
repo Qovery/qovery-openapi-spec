@@ -11004,6 +11004,39 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/service/{serviceId}/gitWebhook/sync':
+    post:
+      summary: Synchronize git webhook for a service
+      description: |
+        Synchronizes the Qovery webhook configuration for a git-based service.
+        - If no webhook exists, creates one with the correct configuration
+        - If webhook exists but is misconfigured, updates it with the correct events
+        - If webhook is already correctly configured, returns current status
+        Works with GitHub, GitLab, and Bitbucket repositories.
+      operationId: syncServiceGitWebhook
+      parameters:
+        - $ref: '#/components/parameters/serviceId'
+      tags:
+        - Service Main Calls
+      responses:
+        '200':
+          description: Webhook synchronized successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitWebhookStatusResponse'
+        '400':
+          description: Service does not have a git source
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          description: Cannot configure webhook (provider-specific issues, insufficient permissions)
+        '429':
+          description: Git provider rate limit exceeded
   /variable:
     get:
       summary: List variables
