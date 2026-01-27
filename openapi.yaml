@@ -14830,6 +14830,18 @@ components:
               example: 50
               default: 20
               description: Unit is in GB. The disk size to be used for the node configuration
+            disk_iops:
+              type: integer
+              example: 7800
+              minimum: 3000
+              maximum: 16000
+              description: Unit is operation/seconds. The disk IOPS to be used for the node configuration
+            disk_throughput:
+              type: integer
+              example: 255
+              minimum: 125
+              maximum: 1000
+              description: Unit is in MB/s. The disk thoughput to be used for the node configuration
             instance_type:
               type: string
               example: T3A_LARGE
@@ -15519,6 +15531,18 @@ components:
           example: 50
           default: 40
           description: Unit is in GB. The disk size to be used for the node configuration
+        disk_iops:
+          type: integer
+          example: 7800
+          minimum: 3000
+          maximum: 16000
+          description: Unit is operation/seconds. The disk IOPS to be used for the node configuration
+        disk_throughput:
+          type: integer
+          example: 255
+          minimum: 125
+          maximum: 1000
+          description: Unit is in MB/s. The disk thoughput to be used for the node configuration
         instance_type:
           type: string
           example: T3A_LARGE
@@ -22329,6 +22353,10 @@ components:
           x-stoplight:
             id: fuolcs5q8ncp8
         disk_size_in_gib:
+          type: integer
+        disk_iops:  
+          type: integer
+        disk_throuput:  
           type: integer
           x-stoplight:
             id: nwpjqw3bf7px0
