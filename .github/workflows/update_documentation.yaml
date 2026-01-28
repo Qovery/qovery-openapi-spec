@@ -3,6 +3,7 @@ name: Build Github Pages
 on:
   push:
     branches: [main]
+
 jobs:
   update-documentation:
     runs-on: ubuntu-latest
@@ -25,8 +26,6 @@ jobs:
           cd documentation
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          BRANCH_NAME="update-openapi-spec-${{ github.sha }}"
-          git switch -c "$BRANCH_NAME"
           git add .
           git commit -m "Update openapi spec" -m "https://github.com/Qovery/qovery-openapi-spec/blob/main/.github/workflows/update_documentation.yaml" || echo "No changes to commit"
-          git push origin "$BRANCH_NAME"
+          git push origin main
