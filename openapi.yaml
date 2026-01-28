@@ -22354,9 +22354,9 @@ components:
             id: fuolcs5q8ncp8
         disk_size_in_gib:
           type: integer
-        disk_iops:  
+        disk_iops:
           type: integer
-        disk_throuput:  
+        disk_throughput:
           type: integer
           x-stoplight:
             id: nwpjqw3bf7px0
