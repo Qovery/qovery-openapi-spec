@@ -16839,12 +16839,6 @@ components:
               type: string
               format: uri
               description: Icon URI representing the database.
-            apply_immediately:
-              type: boolean
-              default: false
-              description: |
-                Apply changes immediately instead of waiting for the maintenance window.
-                This field is only applicable for managed databases.
             service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
     DatabaseAccessibilityEnum:
@@ -16919,13 +16913,6 @@ components:
           type: string
           format: uri
           description: Icon URI representing the database.
-        apply_immediately:
-          type: boolean
-          default: false
-          description: |
-            Apply changes immediately instead of waiting for the maintenance window.
-            This field is only applicable for managed databases.
-            Warning: Applying changes immediately may cause a brief service interruption.
     DatabaseModeEnum:
       type: string
       enum:
