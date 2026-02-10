@@ -4597,7 +4597,7 @@ paths:
   '/project/{projectId}/environmentOverview':
     get:
       summary: List environments overview
-      description: Returns a list of environments with their overview information including deployment status, service count, and cluster details.
+      description: 'Returns a list of environments with their overview information including deployment status, service count, and cluster details.'
       operationId: getProjectEnvironmentsOverview
       parameters:
         - $ref: '#/components/parameters/projectId'
@@ -10983,7 +10983,7 @@ paths:
   '/service/{serviceId}/gitWebhookStatus':
     get:
       summary: Get git webhook status for a service
-      description: Returns the webhook status for a git-based service. Checks if the Qovery webhook is correctly configured on the git provider (GitHub, GitLab, or Bitbucket).
+      description: 'Returns the webhook status for a git-based service. Checks if the Qovery webhook is correctly configured on the git provider (GitHub, GitLab, or Bitbucket).'
       operationId: getServiceGitWebhookStatus
       parameters:
         - $ref: '#/components/parameters/serviceId'
@@ -11034,7 +11034,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
         '422':
-          description: Cannot configure webhook (provider-specific issues, insufficient permissions)
+          description: 'Cannot configure webhook (provider-specific issues, insufficient permissions)'
         '429':
           description: Git provider rate limit exceeded
   /variable:
@@ -14892,6 +14892,8 @@ components:
               $ref: '#/components/schemas/ClusterInfrastructureChartsParameters'
             keda:
               $ref: '#/components/schemas/ClusterKeda'
+            labels_groups:
+              $ref: '#/components/schemas/ClusterLabelsGroupList'
     ClusterDeleteMode:
       type: string
       description: |
@@ -15580,6 +15582,8 @@ components:
           $ref: '#/components/schemas/ClusterInfrastructureChartsParameters'
         keda:
           $ref: '#/components/schemas/ClusterKeda'
+        labels_groups:
+          $ref: '#/components/schemas/ClusterLabelsGroupList'
     ClusterResponseList:
       type: object
       properties:
@@ -20627,6 +20631,7 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/OrganizationLabelsGroupResponse'
+      title: ''
     OrganizationLabelsGroupResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -20641,6 +20646,7 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Label'
+      title: ''
     OrganizationLabelsGroupAssociatedItemsResponseList:
       type: object
       properties:
@@ -23710,7 +23716,7 @@ components:
           example: 550e8400-e29b-41d4-a716-446655440000
         resource_type:
           type: string
-          description: Type of the Terraform resource (e.g., aws_instance, aws_s3_bucket)
+          description: 'Type of the Terraform resource (e.g., aws_instance, aws_s3_bucket)'
           example: aws_instance
         name:
           type: string
@@ -23718,11 +23724,11 @@ components:
           example: web_server
         address:
           type: string
-          description: Full address of the resource (e.g., aws_instance.web_server)
+          description: 'Full address of the resource (e.g., aws_instance.web_server)'
           example: aws_instance.web_server
         provider:
           type: string
-          description: Terraform provider name (e.g., aws, google, azurerm)
+          description: 'Terraform provider name (e.g., aws, google, azurerm)'
           example: aws
         mode:
           type: string
@@ -24558,26 +24564,26 @@ components:
             to:
               type: string
               format: email
-              description: "Recipient email address"
+              description: Recipient email address
             from:
               type: string
               format: email
-              description: "Sender email address"
+              description: Sender email address
             smarthost:
               type: string
-              description: "SMTP server in format 'host:port'"
-              example: "smtp.example.com:587"
+              description: 'SMTP server in format ''host:port'''
+              example: 'smtp.example.com:587'
             auth_username:
               type: string
               nullable: true
-              description: "SMTP authentication username. Defaults to 'from' if not provided."
+              description: SMTP authentication username. Defaults to 'from' if not provided.
             auth_password:
               type: string
               format: password
-              description: "SMTP authentication password"
+              description: SMTP authentication password
             require_tls:
               type: boolean
-              description: "Whether to require TLS for SMTP connection"
+              description: Whether to require TLS for SMTP connection
     AlertReceiverType:
       title: AlertReceiverType
       x-stoplight:
@@ -24638,7 +24644,7 @@ components:
               type: string
               format: uri
               nullable: true
-              description: "Update webhook URL. If null, keeps existing value."
+              description: 'Update webhook URL. If null, keeps existing value.'
               x-stoplight:
                 id: 8c5ze7hwv90q2
     EmailAlertReceiverEditRequest:
@@ -24660,7 +24666,7 @@ components:
               format: email
             smarthost:
               type: string
-              description: "SMTP server in format 'host:port'"
+              description: 'SMTP server in format ''host:port'''
             auth_username:
               type: string
               nullable: true
@@ -24668,7 +24674,7 @@ components:
               type: string
               format: password
               nullable: true
-              description: "SMTP password. If null, keeps existing password."
+              description: 'SMTP password. If null, keeps existing password.'
             require_tls:
               type: boolean
     AlertReceiverResponse:
@@ -25534,6 +25540,29 @@ components:
         propertyName: mode
         mapping:
           KEDA: '#/components/schemas/KedaAutoscalingResponse'
+    ClusterLabelsGroup:
+      title: ClusterLabelsGroup
+      x-stoplight:
+        id: mmho7lnvhxeqm
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 3b5pacfwyt1p2
+          format: uuid
+    ClusterLabelsGroupList:
+      title: ClusterLabelsGroupList
+      x-stoplight:
+        id: imn8c9l4fab56
+      type: object
+      properties:
+        id:
+          x-stoplight:
+            id: hnblgfxpizpd9
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterLabelsGroup'
   responses:
     '204':
       description: no content
