@@ -14893,7 +14893,7 @@ components:
             keda:
               $ref: '#/components/schemas/ClusterKeda'
             labels_groups:
-              $ref: '#/components/schemas/OrganizationLabelsGroupResponseList'
+              $ref: '#/components/schemas/ClusterLabelsGroupList'
     ClusterDeleteMode:
       type: string
       description: |
@@ -15583,7 +15583,7 @@ components:
         keda:
           $ref: '#/components/schemas/ClusterKeda'
         labels_groups:
-          $ref: '#/components/schemas/ServiceLabelsRequestList'
+          $ref: '#/components/schemas/ClusterLabelsGroupList'
     ClusterResponseList:
       type: object
       properties:
@@ -25540,6 +25540,29 @@ components:
         propertyName: mode
         mapping:
           KEDA: '#/components/schemas/KedaAutoscalingResponse'
+    ClusterLabelsGroup:
+      title: ClusterLabelsGroup
+      x-stoplight:
+        id: mmho7lnvhxeqm
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 3b5pacfwyt1p2
+          format: uuid
+    ClusterLabelsGroupList:
+      title: ClusterLabelsGroupList
+      x-stoplight:
+        id: imn8c9l4fab56
+      type: object
+      properties:
+        id:
+          x-stoplight:
+            id: hnblgfxpizpd9
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterLabelsGroup'
   responses:
     '204':
       description: no content
