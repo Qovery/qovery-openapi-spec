@@ -8580,6 +8580,12 @@ paths:
       operationId: redeployDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
+        - in: query
+          name: applyImmediately
+          schema:
+            type: boolean
+          description: Apply immediately regardless of the maintenance window
+          required: false
       tags:
         - Database Actions
       responses:
@@ -8649,6 +8655,12 @@ paths:
       operationId: deployDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
+        - in: query
+          name: applyImmediately
+          schema:
+            type: boolean
+          description: Apply immediately regardless of the maintenance window
+          required: false
       tags:
         - Database Actions
       responses:
