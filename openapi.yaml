@@ -4860,13 +4860,25 @@ paths:
       summary: Attach service to deployment stage
       description: >-
         Moves the service to the specified deployment stage. To skip a service from
-        environment-level deployments, use the sentinel value deploymentStageId
-        `00000000-0000-0000-0000-000000000000`. The service will be marked as skipped.
-        Moving the service to any real stage automatically un-skips it.
+        environment-level deployments while keeping it in its current stage, set
+        `is_skipped: true` in the request body. Moving the service to a different stage
+        automatically un-skips it (sets `is_skipped: false`).
       operationId: AttachServiceToDeploymentStage
       parameters:
         - $ref: '#/components/parameters/deploymentStageId'
         - $ref: '#/components/parameters/serviceId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                is_skipped:
+                  type: boolean
+                  description: >-
+                    When true, marks the service as skipped (excluded from environment-level
+                    bulk deployments) while keeping it in the specified stage. When false or
+                    omitted, the service is moved to the specified stage and un-skipped.
       tags:
         - Deployment Stage Main Calls
       responses:
@@ -18549,10 +18561,9 @@ components:
             service_type:
               type: string
               description: 'type of the service (i.e APPLICATION, JOB, DATABASE, ...)'
-            skipped:
+            is_skipped:
               type: boolean
               description: whether the service is excluded from environment-level deployments
-              default: false
     DeploymentStageWithServicesStatuses:
       type: object
       properties:
