@@ -11698,20 +11698,20 @@ paths:
         - in: query
           name: from_date_time
           description: |
-            The start date time to fetch events from, following ISO-8601 format.  
-            The `+` character must be escaped (`%2B`)
+            The start date time to fetch events from in UTC, following ISO-8601 format.  
+            The microseconds part can be ignored.
           required: true
-          example: '2025-03-03T09:00:00+00:00'
+          example: '2025-03-03T09:00:00Z'
           schema:
             type: string
             nullable: false
         - in: query
           name: to_date_time
           description: |
-            The end date time to fetch events from, following ISO-8601 format.  
-            The `+` character must be escaped (`%2B`)
+            The end date time to fetch events from in UTC, following ISO-8601 format.  
+            The microseconds part can be ignored.
           required: true
-          example: '2025-03-03T03:00:00+00:00'
+          example: '2025-03-03T03:00:00Z'
           schema:
             type: string
             nullable: false
