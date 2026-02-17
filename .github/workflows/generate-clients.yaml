@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  actions: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -112,25 +116,17 @@ jobs:
           name: output-${{ matrix.language }}
           path: out
 
-      - name: Check post generation script existence
-        id: check_files
-        uses: andstor/file-existence-action@v3
-        with:
-          files: "generator/post_generation_scripts/${{ matrix.language }}.sh"
-
-      - name: Check post websocket generation script existence
-        id: check_files_ws
-        uses: andstor/file-existence-action@v3
-        with:
-          files: "generator/post_generation_scripts/${{ matrix.language }}-ws.sh"
-
       - name: Run ${{ matrix.language }} post generation script
-        if: steps.check_files.outputs.files_exists == 'true'
-        run: generator/post_generation_scripts/${{ matrix.language }}.sh
+        run: |
+          if [ -f "generator/post_generation_scripts/${{ matrix.language }}.sh" ]; then
+            generator/post_generation_scripts/${{ matrix.language }}.sh
+          fi
 
       - name: Run ${{ matrix.language }} websocket post generation script
-        if: steps.check_files.outputs.files_exists == 'true'
-        run: generator/post_generation_scripts/${{ matrix.language }}-ws.sh
+        run: |
+          if [ -f "generator/post_generation_scripts/${{ matrix.language }}-ws.sh" ]; then
+            generator/post_generation_scripts/${{ matrix.language }}-ws.sh
+          fi
 
       - name: Publish ${{ matrix.language }} client
         if: contains(env.PUBLISH_CLIENTS, 'true')
