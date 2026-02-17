@@ -6,9 +6,18 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   generate:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     if: success()
     env:
       # We only want to publish to client repositories when pushing on main branch
@@ -38,23 +47,26 @@ jobs:
 
     steps:
       - name: Check out source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'npm'
 
       - name: Set up Go
-        uses: actions/setup-go@v3
-        if: contains(matrix.include.language, 'go')
+        uses: actions/setup-go@v6
+        if: contains(matrix.language, 'go')
         with:
-          go-version: "1.18"
+          go-version: "1.26"
+          cache: false
 
       - name: Install rust toolchain for Linux
-        if: contains(matrix.include.language, 'rust')
-        uses: actions-rs/toolchain@v1
+        if: contains(matrix.language, 'rust')
+        uses: dtolnay/rust-toolchain@stable
         with:
-          # We setup Rust toolchain and the desired target
-          profile: minimal
           toolchain: "1.86"
-          override: true
-          target: ${{ matrix.platform.target }}
           components: rustfmt
 
       - name: Build OpenApi file
@@ -104,25 +116,17 @@ jobs:
           name: output-${{ matrix.language }}
           path: out
 
-      - name: Check post generation script existence
-        id: check_files
-        uses: andstor/file-existence-action@v1
-        with:
-          files: "generator/post_generation_scripts/${{ matrix.language }}.sh"
-
-      - name: Check post websocket generation script existence
-        id: check_files_ws
-        uses: andstor/file-existence-action@v1
-        with:
-          files: "generator/post_generation_scripts/${{ matrix.language }}-ws.sh"
-
       - name: Run ${{ matrix.language }} post generation script
-        if: steps.check_files.outputs.files_exists == 'true'
-        run: generator/post_generation_scripts/${{ matrix.language }}.sh
+        run: |
+          if [ -f "generator/post_generation_scripts/${{ matrix.language }}.sh" ]; then
+            generator/post_generation_scripts/${{ matrix.language }}.sh
+          fi
 
       - name: Run ${{ matrix.language }} websocket post generation script
-        if: steps.check_files.outputs.files_exists == 'true'
-        run: generator/post_generation_scripts/${{ matrix.language }}-ws.sh
+        run: |
+          if [ -f "generator/post_generation_scripts/${{ matrix.language }}-ws.sh" ]; then
+            generator/post_generation_scripts/${{ matrix.language }}-ws.sh
+          fi
 
       - name: Publish ${{ matrix.language }} client
         if: contains(env.PUBLISH_CLIENTS, 'true')

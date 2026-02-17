@@ -1,20 +1,27 @@
-name: Build Github Pages
+name: Update Documentation
 
 on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   update-documentation:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
+
       - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_DEPLOY_DOCUMENTATION }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_DEPLOY_DOCUMENTATION }}
 
       - name: Clone target repository
         run: |
@@ -25,7 +32,8 @@ jobs:
           cp openapi.yaml documentation/docs/api-reference/openapi.yaml
           cd documentation
           git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
+          # Official github-actions[bot] noreply email (user ID 41898282) so commits are attributed to the bot in the GitHub UI
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Update openapi spec" -m "https://github.com/Qovery/qovery-openapi-spec/blob/main/.github/workflows/update_documentation.yaml" || echo "No changes to commit"
           git push origin main
