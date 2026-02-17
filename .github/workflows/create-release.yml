@@ -9,9 +9,10 @@ jobs:
   create-github-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Create Release Notes
-        uses: actions/github-script@v6
+        uses: actions/github-script@v8
         with:
           github-token: ${{secrets.API_TOKEN_GITHUB}}
           script: |

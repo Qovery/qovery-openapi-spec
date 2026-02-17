@@ -33,12 +33,14 @@ jobs:
       # run that runs on: tag. (Using the GitHub token would
       # not run the workflow to prevent infinite recursion.)
       - name: Check out source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.API_TOKEN_GITHUB }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
-          node-version: '16'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install npm packages
@@ -49,15 +51,8 @@ jobs:
           git config user.name 'Qovery Bot'
           git config user.email 'github@qovery.com'
 
-      - name: Push latest version
-        run: git push origin main --follow-tags
-
       - name: Bump Version
         run: npm version ${{ github.event.inputs.version }}
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.API_TOKEN_GITHUB }}
-          branch: main
-          tags: true
+      - name: Push changes with tags
+        run: git push origin main --follow-tags
