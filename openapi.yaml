@@ -25257,7 +25257,11 @@ components:
           x-stoplight:
             id: spv3usiee6mc9
         default_rule_labels:
-          type: string
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+          description: Key-value pairs of default labels to be applied to alert rules
           x-stoplight:
             id: tsp767d421sed
         spec_config_secret:
