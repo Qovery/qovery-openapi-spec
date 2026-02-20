@@ -15774,6 +15774,16 @@ components:
             Specify the [IMDS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html) version you want to use:
               * `required`: IMDS V2 only
               * `optional`: IMDS V1 + V2
+        aws.eks.ec2.ami:
+          type: string
+          default: AmazonLinux2023
+          description: |
+            Select the AMI to use for EKS worker nodes (Karpenter only):
+              * `AmazonLinux2`: Amazon Linux 2
+              * `AmazonLinux2023`: Amazon Linux 2023 (default)
+              * `Bottlerocket`: Bottlerocket OS
+              * `ami-xxx`: A custom AMI ID (must be AL2023-based)
+              * `my-custom-ami-*`: A custom AMI name pattern (must be AL2023-based)
         pleco.resources_ttl:
           type: integer
           deprecated: true
