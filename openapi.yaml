@@ -15782,8 +15782,10 @@ components:
               * `AmazonLinux2`: Amazon Linux 2
               * `AmazonLinux2023`: Amazon Linux 2023 (default)
               * `Bottlerocket`: Bottlerocket OS
-              * `ami-xxx`: A custom AMI ID (must be AL2023-based)
-              * `my-custom-ami-*`: A custom AMI name pattern (must be AL2023-based)
+              * `ami-xxx` or `my-custom-ami-*`: A custom AMI ID or name pattern (assumes AL2023-based)
+              * `al2:ami-xxx`: A custom AMI based on Amazon Linux 2
+              * `al2023:ami-xxx`: A custom AMI based on Amazon Linux 2023
+              * `bottlerocket:ami-xxx`: A custom AMI based on Bottlerocket
         pleco.resources_ttl:
           type: integer
           deprecated: true
