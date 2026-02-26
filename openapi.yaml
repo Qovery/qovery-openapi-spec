@@ -14916,6 +14916,16 @@ components:
               $ref: '#/components/schemas/ClusterKeda'
             labels_groups:
               $ref: '#/components/schemas/ClusterLabelsGroupList'
+            node_resource_group:
+              type: string
+              nullable: true
+              description: |
+                Custom name for the AKS node resource group (the resource group Azure creates
+                to hold AKS node resources like VMs, load balancers, and networking components).
+                If not specified, Azure uses the default naming convention (MC_<rg>_<cluster>_<region>).
+                Setting this allows customers to pre-create the node resource group and scope their
+                Service Principal permissions to specific resource groups instead of the entire subscription.
+              example: my-aks-nodes-rg
     ClusterDeleteMode:
       type: string
       description: |
@@ -15606,6 +15616,16 @@ components:
           $ref: '#/components/schemas/ClusterKeda'
         labels_groups:
           $ref: '#/components/schemas/ClusterLabelsGroupList'
+        node_resource_group:
+          type: string
+          nullable: true
+          description: |
+            Custom name for the AKS node resource group (the resource group Azure creates
+            to hold AKS node resources like VMs, load balancers, and networking components).
+            If not specified, Azure uses the default naming convention (MC_<rg>_<cluster>_<region>).
+            Setting this allows customers to pre-create the node resource group and scope their
+            Service Principal permissions to specific resource groups instead of the entire subscription.
+          example: my-aks-nodes-rg
     ClusterResponseList:
       type: object
       properties:
@@ -23644,6 +23664,13 @@ components:
           type: string
           x-stoplight:
             id: q20e71qkfsk1k
+        resource_group_scoped_permissions:
+          type: boolean
+          default: false
+          description: |
+            When true, indicates that the Azure Service Principal has permissions scoped
+            to specific resource groups rather than the entire subscription. This adjusts
+            Qovery's behavior to work with resource-group-level permissions.
     AzureCredentialsRequest:
       title: AzureCredentialsRequest
       x-stoplight:
@@ -23666,6 +23693,13 @@ components:
           type: string
           x-stoplight:
             id: u776tz269mjb0
+        resource_group_scoped_permissions:
+          type: boolean
+          default: false
+          description: |
+            When true, indicates that the Azure Service Principal has permissions scoped
+            to specific resource groups rather than the entire subscription. This adjusts
+            Qovery's behavior to work with resource-group-level permissions.
     TerraformEngineEnum:
       enum:
         - TERRAFORM
