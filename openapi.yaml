@@ -23655,13 +23655,6 @@ components:
           type: string
           x-stoplight:
             id: q20e71qkfsk1k
-        resource_group_scoped_permissions:
-          type: boolean
-          default: false
-          description: |
-            When true, indicates that the Azure Service Principal has permissions scoped
-            to specific resource groups rather than the entire subscription. This adjusts
-            Qovery's behavior to work with resource-group-level permissions.
     AzureCredentialsRequest:
       title: AzureCredentialsRequest
       x-stoplight:
@@ -23684,13 +23677,6 @@ components:
           type: string
           x-stoplight:
             id: u776tz269mjb0
-        resource_group_scoped_permissions:
-          type: boolean
-          default: false
-          description: |
-            When true, indicates that the Azure Service Principal has permissions scoped
-            to specific resource groups rather than the entire subscription. This adjusts
-            Qovery's behavior to work with resource-group-level permissions.
     TerraformEngineEnum:
       enum:
         - TERRAFORM
