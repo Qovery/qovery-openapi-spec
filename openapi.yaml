@@ -23678,7 +23678,7 @@ components:
       required:
         - name
         - description
-        - auto_deploy
+        - auto_deploy_config
         - terraform_files_source
         - terraform_variables_source
         - backend
@@ -23694,10 +23694,8 @@ components:
           type: string
           x-stoplight:
             id: ltvpnbhjz1oho
-        auto_deploy:
-          type: boolean
-          x-stoplight:
-            id: 38iixcrw933wy
+        auto_deploy_config:
+          $ref: "#/components/schemas/TerraformAutoDeployConfig"
         terraform_files_source:
           oneOf:
             - type: object
@@ -23881,6 +23879,8 @@ components:
               default: 600
             auto_deploy:
               type: boolean
+            auto_deploy_config:
+              $ref: "#/components/schemas/TerraformAutoDeployConfig"
             terraform_files_source:
               nullable: false
               x-stoplight:
@@ -24073,6 +24073,29 @@ components:
           type: string
           x-stoplight:
             id: vtpiblf7t37xq
+    TerraformAutoDeployConfig:
+          title: TerraformAutoDeployConfig
+          type: object
+          required:
+            - auto_deploy
+            - auto_deploy_action
+          properties:
+            auto_deploy:
+              type: boolean
+            auto_deploy_action:
+              type: string
+              description: |
+                Action to force a specific Terraform behavior on autodeploy.
+                `DEFAULT`: The action is resolved based on the deployment type:
+                  - Start/Restart -> PLAN_AND_APPLY
+                  - Delete -> DESTROY
+                  - Pause -> PLAN_ONLY
+              enum:
+                - DEFAULT
+                - PLAN
+                - FORCE_UNLOCK
+                - MIGRATE_STATE
+                - NOOP
     TerraformGitRepositoryRequest:
       title: TerraformGitRepositoryRequest
       x-stoplight:
