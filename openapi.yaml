@@ -14916,17 +14916,6 @@ components:
               $ref: '#/components/schemas/ClusterKeda'
             labels_groups:
               $ref: '#/components/schemas/ClusterLabelsGroupList'
-            node_resource_group:
-              type: string
-              nullable: true
-              readOnly: true
-              description: |
-                Name of the AKS node resource group (the resource group Azure creates
-                to hold AKS node resources like VMs, load balancers, and networking components).
-                This is automatically set to "{resource_group_name}-nodes" by Qovery and cannot be
-                overridden. The deterministic naming allows customers to pre-scope their Service
-                Principal permissions to specific resource groups.
-              example: qovery-z1234567-nodes
     ClusterDeleteMode:
       type: string
       description: |
