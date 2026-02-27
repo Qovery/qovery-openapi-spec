@@ -15519,6 +15519,15 @@ components:
           type: string
         city:
           type: string
+        zones:
+          type: array
+          description: List of availability zones supported by this region
+          items:
+            type: string
+          example:
+            - "1"
+            - "2"
+            - "3"
     ClusterRegionResponseList:
       type: object
       properties:
