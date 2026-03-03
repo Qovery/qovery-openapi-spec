@@ -16873,6 +16873,9 @@ components:
               type: string
               nullable: true
               description: 'EBS volume type for the database. Always set for MANAGED mode (gp2 or gp3). Always null for CONTAINER mode.'
+              enum:
+                - gp2
+                - gp3
             annotations_groups:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
             labels_groups:
