@@ -16872,7 +16872,7 @@ components:
             disk_type:
               type: string
               nullable: true
-              description: 'EBS volume type for the database. Always set for MANAGED mode (gp2 or gp3). Always null for CONTAINER mode.'
+              description: 'EBS disk type for the database. Only applicable for MANAGED mode (gp2 or gp3). Null for CONTAINER mode.'
               enum:
                 - gp2
                 - gp3
