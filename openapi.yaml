@@ -16878,6 +16878,13 @@ components:
               type: string
               example: db.t3.medium
               description: 'Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field is null for container DB.'
+            disk_type:
+              type: string
+              nullable: true
+              description: 'EBS disk type for the database. Only applicable for MANAGED mode (gp2 or gp3). Null for CONTAINER mode.'
+              enum:
+                - gp2
+                - gp3
             annotations_groups:
               $ref: '#/components/schemas/OrganizationAnnotationsGroupResponseList'
             labels_groups:
@@ -16960,6 +16967,12 @@ components:
           type: string
           format: uri
           description: Icon URI representing the database.
+        disk_type:
+          type: string
+          enum:
+            - gp2
+            - gp3
+          description: 'EBS disk type for MANAGED AWS databases. Allowed values: gp2, gp3. Only applicable for MANAGED mode.'
     DatabaseModeEnum:
       type: string
       enum:
