@@ -24524,10 +24524,6 @@ components:
             Name of the branch to use. This is optional.
             If not specified, the default branch of the repository is used.
           example: main
-        root_path:
-          type: string
-          default: /
-          description: Root path inside the repository
         git_token_id:
           type: string
           format: uuid
