@@ -16972,6 +16972,7 @@ components:
           description: Icon URI representing the database.
         disk_type:
           type: string
+          nullable: true
           enum:
             - gp2
             - gp3
