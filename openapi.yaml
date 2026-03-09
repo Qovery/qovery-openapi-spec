@@ -18,6 +18,7 @@ tags:
   - name: Alert Receivers
   - name: Alert Rules
   - name: Admin
+  - name: ArgoCD
   - name: Application
   - name: Application Actions
   - name: Application Configuration
@@ -3506,6 +3507,106 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClusterStatus'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/cluster/{clusterId}/argoCdConfig':
+    post:
+      summary: Save ArgoCD credentials for a cluster
+      description: Save or update the ArgoCD URL and authentication token for a cluster. Requires ADMIN role.
+      operationId: saveArgoCdCredentials
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - ArgoCD
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArgoCdCredentialsRequest'
+      responses:
+        '200':
+          description: ArgoCD credentials saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArgoCdCredentialsResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    get:
+      summary: Get ArgoCD credentials for a cluster
+      description: Retrieve the stored ArgoCD configuration for a cluster. The token is always returned as REDACTED. Requires VIEWER role.
+      operationId: getArgoCdCredentials
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - ArgoCD
+      responses:
+        '200':
+          description: ArgoCD credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArgoCdCredentialsResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete ArgoCD credentials for a cluster
+      description: Remove the stored ArgoCD configuration for a cluster. Requires ADMIN role.
+      operationId: deleteArgoCdCredentials
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - ArgoCD
+      responses:
+        '204':
+          description: ArgoCD credentials deleted
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/cluster/{clusterId}/argoCdConfig/check':
+    post:
+      summary: Check ArgoCD connection
+      description: |
+        Test an ArgoCD URL and token before saving. The cluster agent attempts to connect to ArgoCD and returns the connection result.
+        Always returns HTTP 200 — check the `status` field for the connection outcome. Requires ADMIN role.
+      operationId: checkArgoCdConnection
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - ArgoCD
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArgoCdCredentialsRequest'
+      responses:
+        '200':
+          description: Connection check result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArgoCdConnectionCheckResponse'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -13674,6 +13775,76 @@ components:
         type: string
       description: KEDA triggerAuthentication ID
   schemas:
+    ArgoCdCredentialsRequest:
+      type: object
+      required:
+        - argocd_url
+        - argocd_token
+      properties:
+        argocd_url:
+          type: string
+          description: The URL of the ArgoCD instance (e.g. https://argocd.example.com)
+          example: 'https://argocd.example.com'
+        argocd_token:
+          type: string
+          description: ArgoCD API authentication token
+    ArgoCdCredentialsResponse:
+      type: object
+      required:
+        - id
+        - cluster_id
+        - argocd_url
+        - argocd_token
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        cluster_id:
+          type: string
+          format: uuid
+        argocd_url:
+          type: string
+          example: 'https://argocd.example.com'
+        argocd_token:
+          type: string
+          description: Always returned as REDACTED
+          example: REDACTED
+        last_checked_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ArgoCdConnectionCheckResponse:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          description: Connection result
+          enum:
+            - connected
+            - error
+          example: connected
+        app_count:
+          type: integer
+          description: Number of ArgoCD applications visible with the provided token. Present only when status is "connected".
+          example: 42
+        reason:
+          type: string
+          description: Failure reason. Present only when status is "error".
+          enum:
+            - authentication_failed
+            - unreachable
+            - insufficient_permissions
+          example: authentication_failed
     TerraformBackend:
       oneOf:
         - type: object
