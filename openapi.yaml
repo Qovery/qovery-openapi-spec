@@ -17945,7 +17945,7 @@ components:
           type: array
           nullable: true
           items:
-            $ref: '#/components/schemas/StageStepsMetrics'
+            $ref: '#/components/schemas/StageStepMetrics'
     EnvironmentStatsResponseList:
       type: object
       properties:
@@ -21876,7 +21876,7 @@ components:
         duration_sec:
           description: The duration of the step in seconds.
           type: integer
-    StageStepsMetrics:
+    StageStepMetrics:
       type: object
       properties:
         stage_id:
@@ -21884,18 +21884,6 @@ components:
           format: uuid
         total_duration_sec:
           description: The total duration in seconds of the stage deployment or null if the deployment is not completed.
-          type: integer
-          nullable: true
-        details:
-          description: A list of metrics for deployment steps of the stage.
-          type: array
-          items:
-            $ref: '#/components/schemas/StageStepMetric'
-    StageStepMetrics:
-      type: object
-      properties:
-        total_duration_sec:
-          description: The total duration in seconds of the stage deployment or null if the deployment is not completed
           type: integer
           nullable: true
         details:
