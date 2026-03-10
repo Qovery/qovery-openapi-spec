@@ -21016,11 +21016,15 @@ components:
             exec:
               type: object
               nullable: true
+              description: "Execute a command inside the container. The probe succeeds if the command exits with status code 0."
               properties:
                 command:
                   type: array
+                  description: "Command to execute inside the container, specified as an array of strings. The first element is the executable, followed by its arguments. Example: [\"sh\", \"-c\", \"test -f /tmp/healthy\"]"
+                  example: ["sh", "-c", "test -f /tmp/healthy"]
                   items:
                     type: string
+                  minItems: 1
             grpc:
               type: object
               nullable: true
