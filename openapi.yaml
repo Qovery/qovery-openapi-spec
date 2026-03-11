@@ -18108,6 +18108,15 @@ components:
           nullable: true
         deployment_status:
           $ref: '#/components/schemas/EnvironmentDeploymentStatusEnum'
+        deployment_request_id:
+          type: string
+          format: uuid
+          nullable: true
+        metrics:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/StageStepMetrics'
     EnvironmentStatsResponseList:
       type: object
       properties:
@@ -22045,8 +22054,11 @@ components:
     StageStepMetrics:
       type: object
       properties:
+        stage_id:
+          type: string
+          format: uuid
         total_duration_sec:
-          description: The total duration in seconds of the stage deployment or null if the deployment is not completed
+          description: The total duration in seconds of the stage deployment or null if the deployment is not completed.
           type: integer
           nullable: true
         details:
@@ -22076,6 +22088,9 @@ components:
     StageStepMetric:
       type: object
       properties:
+        stage_id:
+          type: string
+          format: uuid
         step_name:
           $ref: '#/components/schemas/StageStepMetricNameEnum'
         status:
@@ -22086,10 +22101,12 @@ components:
     StageStepMetricNameEnum:
       type: string
       enum:
+        - TOTAL
         - QUEUEING
         - PROVISION_BUILDER
       description: |
         The name of the deployment step at the stage level:
+        - TOTAL: The total duration of the stage deployment.
         - QUEUEING: The step preceding the actual stage deployment step.
         - PROVISION_BUILDER: The step to provision builders before the actual build.
     StepMetricStatusEnum:
