@@ -1355,6 +1355,39 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/preflightChecks':
+    post:
+      summary: Run preflight checks for cluster creation
+      description: >-
+        Validates AWS prerequisites before cluster deployment.
+        Checks quotas (EKS, EC2, VPC), subnet tags for custom VPC,
+        IAM permissions, and availability zone requirements.
+      operationId: runClusterPreflightChecks
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Clusters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterPreflightCheckRequest'
+      responses:
+        '200':
+          description: Preflight check results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterPreflightCheckResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/cluster/status':
     get:
       summary: List all clusters statuses
@@ -15706,6 +15739,152 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClusterRegion'
+    ClusterPreflightCheckRequest:
+      type: object
+      required:
+        - cloud_provider
+        - region
+      properties:
+        cloud_provider:
+          $ref: '#/components/schemas/CloudVendorEnum'
+        region:
+          type: string
+          description: AWS region where the cluster will be deployed
+          example: eu-west-3
+        cloud_provider_credentials_id:
+          type: string
+          format: uuid
+          description: ID of the cloud provider credentials to use
+        vpc_mode:
+          type: string
+          enum:
+            - MANAGED
+            - CUSTOM_VPC
+            - SELF_MANAGED
+          default: MANAGED
+          description: VPC management mode
+        custom_vpc_config:
+          $ref: '#/components/schemas/ClusterPreflightCustomVpcConfig'
+    ClusterPreflightCustomVpcConfig:
+      type: object
+      description: Required when vpc_mode is CUSTOM_VPC
+      properties:
+        aws_vpc_eks_id:
+          type: string
+          description: VPC ID
+        eks_subnets_zone_a_ids:
+          type: array
+          items:
+            type: string
+        eks_subnets_zone_b_ids:
+          type: array
+          items:
+            type: string
+        eks_subnets_zone_c_ids:
+          type: array
+          items:
+            type: string
+        eks_private_subnets_zone_a_ids:
+          type: array
+          items:
+            type: string
+        eks_private_subnets_zone_b_ids:
+          type: array
+          items:
+            type: string
+        eks_private_subnets_zone_c_ids:
+          type: array
+          items:
+            type: string
+        rds_subnets_zone_a_ids:
+          type: array
+          items:
+            type: string
+        rds_subnets_zone_b_ids:
+          type: array
+          items:
+            type: string
+        rds_subnets_zone_c_ids:
+          type: array
+          items:
+            type: string
+        documentdb_subnets_zone_a_ids:
+          type: array
+          items:
+            type: string
+        documentdb_subnets_zone_b_ids:
+          type: array
+          items:
+            type: string
+        documentdb_subnets_zone_c_ids:
+          type: array
+          items:
+            type: string
+        elasticache_subnets_zone_a_ids:
+          type: array
+          items:
+            type: string
+        elasticache_subnets_zone_b_ids:
+          type: array
+          items:
+            type: string
+        elasticache_subnets_zone_c_ids:
+          type: array
+          items:
+            type: string
+    ClusterPreflightCheckResponse:
+      type: object
+      required:
+        - passed
+        - results
+      properties:
+        passed:
+          type: boolean
+          description: Whether all checks passed (no failures)
+        total_passed:
+          type: integer
+        total_failed:
+          type: integer
+        total_warnings:
+          type: integer
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterPreflightCheckResult'
+    ClusterPreflightCheckResult:
+      type: object
+      required:
+        - check_name
+        - category
+        - status
+        - message
+      properties:
+        check_name:
+          type: string
+          description: Name of the check
+          example: EKS cluster quota
+        category:
+          type: string
+          enum:
+            - QUOTA
+            - NETWORK
+            - IAM
+            - CONFIGURATION
+        status:
+          type: string
+          enum:
+            - PASSED
+            - FAILED
+            - WARNING
+        message:
+          type: string
+          description: Human-readable result message
+          example: 3/100 EKS clusters in use
+        remediation:
+          type: string
+          nullable: true
+          description: Suggested fix if check failed
+          example: Request a quota increase for Elastic IPs via AWS Service Quotas console
     ClusterRequest:
       type: object
       required:
