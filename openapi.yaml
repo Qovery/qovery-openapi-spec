@@ -22627,10 +22627,18 @@ components:
           type: integer
         disk_iops:
           type: integer
+          minimum: 3000
+          maximum: 16000
+          example: 7800
+          description: Unit is operation/seconds. The disk IOPS to be used for the node configuration
         disk_throughput:
           type: integer
           x-stoplight:
             id: nwpjqw3bf7px0
+          minimum: 125
+          maximum: 1000
+          example: 255
+          description: Unit is in MB/s. The disk throughput to be used for the node configuration
         default_service_architecture:
           $ref: '#/components/schemas/CpuArchitectureEnum'
         qovery_node_pools:
@@ -23229,6 +23237,22 @@ components:
           minimum: 0
           default: 100
           example: 150
+        disk_iops:
+          type: integer
+          x-stoplight:
+            id: gpu1d1skiops
+          minimum: 3000
+          maximum: 16000
+          example: 7800
+          description: Unit is operation/seconds. The disk IOPS to be used for the GPU node pool configuration
+        disk_throughput:
+          type: integer
+          x-stoplight:
+            id: gpu1d1skthr
+          minimum: 125
+          maximum: 1000
+          example: 255
+          description: Unit is in MB/s. The disk throughput to be used for the GPU node pool configuration
         spot_enabled:
           type: boolean
           x-stoplight:
