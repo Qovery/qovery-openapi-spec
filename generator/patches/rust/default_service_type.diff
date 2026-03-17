@@ -41,15 +41,18 @@ index 623c769..fda59d1 100644
      #[serde(rename = "schedule")]
      pub schedule: models::CronJobResponseAllOfSchedule,
 diff --git a/src/models/database.rs b/src/models/database.rs
-index bca5733..49f8d64 100644
+index 1e7b9c0..a09eb42 100644
 --- a/src/models/database.rs
 +++ b/src/models/database.rs
-@@ -67,7 +67,7 @@ pub struct Database {
-     /// indicates if the database disk is encrypted or not
-     #[serde(rename = "disk_encrypted", skip_serializing_if = "Option::is_none")]
-     pub disk_encrypted: Option<bool>,
+@@ -75,7 +75,10 @@ pub struct Database {
+         skip_serializing_if = "Option::is_none"
+     )]
+     pub disk_type: Option<Option<DiskType>>,
 -    #[serde(rename = "service_type")]
-+    #[serde(rename = "service_type", default="models::service_type_enum::service_type_database")]
++    #[serde(
++        rename = "service_type",
++        default = "models::service_type_enum::service_type_database"
++    )]
      pub service_type: models::ServiceTypeEnum,
  }
  
