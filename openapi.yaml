@@ -14067,6 +14067,16 @@ components:
           type: string
           description: Allows to define response headers
           example: '{"X-Frame-Options":"DENY ","X-Content-Type-Options":"nosniff"}'
+        network.gateway_api.http_request_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets a timeout (in seconds) for requests proxied through the Gateway API route.
+        network.gateway_api.http_connection_idle_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets the idle timeout (in seconds) for HTTP connections proxied through the Gateway API route.
         hpa.cpu.average_utilization_percent:
           type: integer
           description: Percentage value of cpu usage at which point pods should scale up.
@@ -15986,6 +15996,16 @@ components:
         nginx.memory.limit_in_mib:
           type: integer
           description: memory limit in MiB
+        envoy.gateway_api.http_request_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets the default request timeout (in seconds) applied to Gateway API routes when the service does not override it.
+        envoy.gateway_api.http_connection_idle_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets the default idle connection timeout (in seconds) applied to Gateway API routes when the service does not override it.
         nginx.hpa.cpu_utilization_percentage_threshold:
           type: integer
           description: hpa cpu threshold in percentage
@@ -16160,6 +16180,16 @@ components:
           type: string
           description: Allows to define response headers
           example: '{"X-Frame-Options":"DENY ","X-Content-Type-Options":"nosniff"}'
+        network.gateway_api.http_request_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets a timeout (in seconds) for requests proxied through the Gateway API route.
+        network.gateway_api.http_connection_idle_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets the idle timeout (in seconds) for HTTP connections proxied through the Gateway API route.
         network.ingress.basic_auth_env_var:
           type: string
           description: |
@@ -19592,6 +19622,16 @@ components:
           description: |
             Enable the load balancer to bind a user's session to a specific target.
             This ensures that all requests from the user during the session are sent to the same target
+        network.gateway_api.http_request_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets a timeout (in seconds) for requests proxied through the Gateway API route.
+        network.gateway_api.http_connection_idle_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets the idle timeout (in seconds) for HTTP connections proxied through the Gateway API route.
     HelmDeployRequest:
       type: object
       properties:
