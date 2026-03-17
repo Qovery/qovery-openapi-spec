@@ -172,3 +172,30 @@ index afdc518..f2cf6d5 100644
      pub service_type: models::ServiceTypeEnum,
      #[serde(rename = "terraform_variables_source")]
      pub terraform_variables_source: models::TerraformVariablesSourceResponse,
+diff --git a/src/models/dockerfile_fragment_file.rs b/src/models/dockerfile_fragment_file.rs
+index 80ca55f..e78d792 100644
+--- a/src/models/dockerfile_fragment_file.rs
++++ b/src/models/dockerfile_fragment_file.rs
+@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
+ #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+ pub struct DockerfileFragmentFile {
+     /// Fragment type discriminator
+-    #[serde(rename = "type")]
++    #[serde(rename = "type", default)]
+     pub r#type: Type,
+     /// Absolute path to the fragment file.
+     #[serde(rename = "path")]
+diff --git a/src/models/dockerfile_fragment_inline.rs b/src/models/dockerfile_fragment_inline.rs
+index ea636db..d21633d 100644
+--- a/src/models/dockerfile_fragment_inline.rs
++++ b/src/models/dockerfile_fragment_inline.rs
+@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
+ #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+ pub struct DockerfileFragmentInline {
+     /// Fragment type discriminator
+-    #[serde(rename = "type")]
++    #[serde(rename = "type", default)]
+     pub r#type: Type,
+     /// Dockerfile commands to inject (max 8KB).
+     #[serde(rename = "content")]
+
