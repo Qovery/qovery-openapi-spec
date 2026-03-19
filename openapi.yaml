@@ -5790,6 +5790,35 @@ paths:
         name: environmentId
         in: path
         required: true
+  '/environment/{environmentId}/deploymentBuildUsageReport':
+    post:
+      summary: Generate a Grafana snapshot report showing build runner pod usage for a specific deployment
+      description: Generate a Grafana snapshot report that shows the resource usage (CPU, memory) of build runner pods for a specific deployment execution. The report is publicly accessible for the specified duration.
+      operationId: generateDeploymentBuildUsageReport
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Environment Deployment History
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentBuildUsageReportRequest'
+      responses:
+        '201':
+          description: Build usage report snapshot has been successfully generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentBuildUsageReportResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/environmentVariable':
     get:
       summary: List environment variables
@@ -17650,9 +17679,13 @@ components:
           type: object
           required:
             - commit
+            - build_pod_name
           properties:
             commit:
               $ref: '#/components/schemas/Commit'
+            build_pod_name:
+              type: string
+              description: The build pod name prefix for monitoring build runner usage. Format build-{execution_id}-0
         - description: ContainerDeploymentHistoryData
           type: object
           required:
@@ -17702,6 +17735,10 @@ components:
               enum:
                 - CRON
                 - LIFECYCLE
+            build_pod_name:
+              type: string
+              nullable: true
+              description: The build pod name prefix. Only set for jobs with a git source (Docker build). Null for container-source jobs.
         - description: HelmDeploymentHistoryDetails
           type: object
           properties:
@@ -22488,6 +22525,40 @@ components:
         delete_report_url:
           description: The URL to delete the report. Use this URL to pro-actively delete the report before it expires
           type: string
+    DeploymentBuildUsageReportRequest:
+      type: object
+      x-stoplight:
+        id: deployment-build-usage-report-request
+      required:
+        - execution_id
+        - report_expiration_in_seconds
+      properties:
+        execution_id:
+          type: string
+          description: The deployment execution ID (format environment_id-version)
+          x-stoplight:
+            id: build-report-execution-id
+        report_expiration_in_seconds:
+          type: integer
+          description: The number of seconds the report will be publicly available
+          example: 86400
+          x-stoplight:
+            id: build-report-expiration
+    DeploymentBuildUsageReportResponse:
+      type: object
+      x-stoplight:
+        id: deployment-build-usage-report-response
+      properties:
+        report_url:
+          type: string
+          description: The publicly accessible URL of the Grafana snapshot report showing build pod resource usage
+          x-stoplight:
+            id: build-report-url
+        delete_report_url:
+          type: string
+          description: The URL to pro-actively delete the report before it expires
+          x-stoplight:
+            id: build-report-delete-url
     OrganizationAnnotationsGroupEnrichedResponseList:
       title: OrganizationAnnotationsGroupEnrichedResponseList
       x-stoplight:
