@@ -3515,6 +3515,60 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/eks-anywhere/commits':
+    get:
+      summary: List EKS Anywhere commits
+      description: Returns list of the last commits made on the repository linked to the EKS Anywhere cluster, filtered by the targeted YAML file when supported by provider.
+      operationId: listEksAnywhereCommits
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: List EKS Anywhere commits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/eks-anywhere/commit':
+    put:
+      summary: Update selected EKS Anywhere commit
+      description: Persist selected commit for an EKS Anywhere cluster.
+      operationId: updateEksAnywhereCommit
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EksAnywhereCommitRequest'
+      responses:
+        '200':
+          description: Updated EKS Anywhere commit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EksAnywhereCommitResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/cluster/{clusterId}/argoCdConfig':
     post:
       summary: Save ArgoCD credentials for a cluster
@@ -16110,6 +16164,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Commit'
+    EksAnywhereCommitRequest:
+      type: object
+      required:
+        - commit_id
+      properties:
+        commit_id:
+          type: string
+    EksAnywhereCommitResponse:
+      type: object
+      required:
+        - commit_id
+      properties:
+        commit_id:
+          type: string
     CompanySizeEnum:
       type: string
       enum:
@@ -24879,6 +24947,12 @@ components:
             Name of the branch to use. This is optional.
             If not specified, the default branch of the repository is used.
           example: main
+        commit_id:
+          type: string
+          description: |
+            Optional git commit SHA to pin EKS Anywhere configuration on a specific revision.
+            If omitted, the latest commit from the selected branch is used.
+          example: 4e3128725f47140002fa47d65d83195a51f5140f
         git_token_id:
           type: string
           format: uuid
