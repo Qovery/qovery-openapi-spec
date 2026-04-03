@@ -11737,6 +11737,31 @@ paths:
       operationId: get-cluster-token-by-clusterId
       x-stoplight:
         id: zggx5u9ayalz7
+  '/cluster/{clusterId}/environments':
+    parameters:
+      - schema:
+          type: string
+        name: clusterId
+        in: path
+        required: true
+    get:
+      summary: List environments services by cluster id
+      operationId: get-environments-by-cluster-id
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: List environments services by cluster id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterEnvironmentResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/helm/{helmId}/listServices':
     parameters:
       - schema:
@@ -26133,6 +26158,50 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ClusterLabelsGroup'
+    ClusterEnvironmentResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterEnvironmentResponse'
+    ClusterEnvironmentResponse:
+      type: object
+      required:
+        - environment_id
+        - environment_name
+        - project_id
+        - project_name
+        - services
+      properties:
+        environment_id:
+          type: string
+          format: uuid
+        environment_name:
+          type: string
+        project_id:
+          type: string
+          format: uuid
+        project_name:
+          type: string
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterEnvironmentServiceResponse'
+    ClusterEnvironmentServiceResponse:
+      type: object
+      required:
+        - id
+        - name
+        - type
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/LinkedServiceTypeEnum'
   responses:
     '204':
       description: no content
