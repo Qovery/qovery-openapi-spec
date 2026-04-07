@@ -16122,6 +16122,37 @@ components:
           description: |-
             Enable the AWS ALB controller to manage the load balancer for the cluster.
             Note: Changing this feature will create a 10 min max downtime on your application's public access (time to delete, replace and propagate DNS of the new load balancer) and will requiere to update all services with TCP/UDP open ports.
+        aws.eks.enable_efs_addon:
+          type: boolean
+          description: Enable the AWS EFS CSI driver EKS add-on to provision EFS-backed persistent volumes on the cluster.
+          default: false
+        aws.eks.efs.throughput_mode:
+          type: string
+          description: 'EFS throughput mode. "elastic" scales automatically (pay-per-use), "bursting" uses burst credits based on file system size, "provisioned" requires a fixed throughput value.'
+          default: elastic
+          enum:
+            - bursting
+            - elastic
+            - provisioned
+        aws.eks.efs.performance_mode:
+          type: string
+          description: 'EFS performance mode. "generalPurpose" offers lowest latency (recommended). "maxIO" provides higher aggregate throughput for highly parallelized workloads. Cannot be changed after creation.'
+          default: generalPurpose
+          enum:
+            - generalPurpose
+            - maxIO
+        aws.eks.efs.transition_to_ia:
+          type: string
+          description: 'Lifecycle policy to transition files to Infrequent Access (IA) storage after the specified period. IA storage costs less but has a per-read charge. Empty string disables the policy.'
+          default: AFTER_30_DAYS
+          enum:
+            - AFTER_1_DAY
+            - AFTER_7_DAYS
+            - AFTER_14_DAYS
+            - AFTER_30_DAYS
+            - AFTER_60_DAYS
+            - AFTER_90_DAYS
+            - ''
         load_balancer.size:
           type: string
           description: Select the size of the main load_balancer (only effective for Scaleway)
