@@ -381,6 +381,18 @@ paths:
       operationId: listOrganizationApiTokens
       parameters:
         - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: name
+          schema:
+            type: string
+          required: false
+          description: Name of the token to filter results by.
+        - in: query
+          name: creatorName
+          schema:
+            type: string
+          required: false
+          description: Name of the token creator to filter results by.
       tags:
         - Organization Api Token
       responses:
