@@ -25104,6 +25104,46 @@ components:
           type: string
           description: Path to the EKS Anywhere cluster YAML file in the git repository
           example: /clusters/cluster-a.yaml
+        cluster_backup:
+          $ref: '#/components/schemas/ClusterInfrastructureEksAnywhereBackupParameters'
+    ClusterInfrastructureEksAnywhereBackupParameters:
+      type: object
+      required:
+        - s3
+      properties:
+        enabled:
+          type: boolean
+          default: true
+          description: Enable or disable EKS Anywhere cluster backup.
+        timeout_seconds:
+          type: integer
+          format: int64
+          default: 300
+          description: Timeout in seconds for backup operations.
+        certs_secret_name:
+          type: string
+          description: Optional Kubernetes secret name holding etcd certificates.
+        s3:
+          $ref: '#/components/schemas/ClusterInfrastructureEksAnywhereBackupS3Parameters'
+    ClusterInfrastructureEksAnywhereBackupS3Parameters:
+      type: object
+      required:
+        - bucket
+        - region
+        - role_arn
+      properties:
+        bucket:
+          type: string
+          description: S3 bucket name used to store EKS Anywhere backup artifacts.
+        region:
+          type: string
+          description: AWS region where the backup bucket is hosted.
+        role_arn:
+          type: string
+          description: IAM role ARN assumed to upload backup artifacts.
+        key_prefix:
+          type: string
+          description: Optional S3 key prefix used for backup object keys.
     ClusterEksAnywhereGitRepository:
       type: object
       required:
