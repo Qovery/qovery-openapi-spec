@@ -4786,7 +4786,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/project/{projectId}/environmentOverview':
+  '/project/{projectId}/environment/overview':
     get:
       summary: List environments overview
       description: 'Returns a list of environments with their overview information including deployment status, service count, and cluster details.'
@@ -18152,7 +18152,8 @@ components:
         - updated_at
         - name
         - mode
-        - service_count
+        - services_overview
+        - cluster
       properties:
         id:
           type: string
@@ -18169,13 +18170,27 @@ components:
           $ref: '#/components/schemas/EnvironmentModeEnum'
         cluster:
           $ref: '#/components/schemas/ClusterOverviewResponse'
+        services_overview:
+          $ref: '#/components/schemas/ServicesOverviewResponse'
+        deployment_status:
           nullable: true
+          allOf:
+            - $ref: '#/components/schemas/EnvironmentStatus'
+    ServicesOverviewResponse:
+      type: object
+      required:
+        - service_count
+        - managed_by
+      properties:
         service_count:
           type: integer
           format: int32
-        deployment_status:
-          $ref: '#/components/schemas/EnvironmentStatus'
-          nullable: true
+        managed_by:
+          type: string
+          enum:
+            - QOVERY
+            - ARGOCD
+            - MIXED
     ClusterOverviewResponse:
       type: object
       required:
