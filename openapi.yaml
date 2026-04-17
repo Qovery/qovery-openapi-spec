@@ -4786,7 +4786,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/project/{projectId}/environmentOverview':
+  '/project/{projectId}/environment/overview':
     get:
       summary: List environments overview
       description: 'Returns a list of environments with their overview information including deployment status, service count, and cluster details.'
@@ -4802,6 +4802,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EnvironmentOverviewResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+   #
+  '/project/{projectId}/environmentOverview':
+    get:
+      summary: List environments overview
+      description: 'Returns a list of environments with their overview information including deployment status, service count, and cluster details.'
+      operationId: getProjectEnvironmentsOverviewDeprecated
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      tags:
+        - Environments
+      responses:
+        '200':
+          description: List environments overview
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentOverviewResponseListDeprecated'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -18144,7 +18167,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvironmentOverviewResponse'
-    EnvironmentOverviewResponse:
+    EnvironmentOverviewResponseListDeprecated:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentOverviewResponseDeprecated'
+
+    EnvironmentOverviewResponseDeprecated:
       type: object
       required:
         - id
@@ -18176,6 +18207,53 @@ components:
         deployment_status:
           $ref: '#/components/schemas/EnvironmentStatus'
           nullable: true
+    EnvironmentOverviewResponse:
+      type: object
+      required:
+        - id
+        - created_at
+        - updated_at
+        - name
+        - mode
+        - services_overview
+        - cluster
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+        mode:
+          $ref: '#/components/schemas/EnvironmentModeEnum'
+        cluster:
+          $ref: '#/components/schemas/ClusterOverviewResponse'
+        services_overview:
+          $ref: '#/components/schemas/ServicesOverviewResponse'
+        deployment_status:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/EnvironmentStatus'
+    ServicesOverviewResponse:
+      type: object
+      required:
+        - service_count
+        - managed_by
+      properties:
+        service_count:
+          type: integer
+          format: int32
+        managed_by:
+          type: string
+          enum:
+            - QOVERY
+            - ARGOCD
+            - MIXED
     ClusterOverviewResponse:
       type: object
       required:
