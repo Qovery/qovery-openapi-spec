@@ -21867,6 +21867,7 @@ components:
         - JOB
         - HELM
         - TERRAFORM
+        - ARGOCD_APP
     SignUp:
       allOf:
         - $ref: '#/components/schemas/Base'
