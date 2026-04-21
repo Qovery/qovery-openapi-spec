@@ -11884,7 +11884,7 @@ paths:
                         - $ref: '#/components/schemas/HelmResponse'
                         - $ref: '#/components/schemas/JobResponse'
                         - $ref: '#/components/schemas/TerraformResponse'
-                        - $ref: '#/components/schemas/ArgocdAppResponse'
+                        - $ref: '#/components/schemas/ArgoCdAppResponse'
                       discriminator:
                         propertyName: service_type
                         mapping:
@@ -11894,7 +11894,7 @@ paths:
                           HELM: '#/components/schemas/HelmResponse'
                           JOB: '#/components/schemas/JobResponse'
                           TERRAFORM: '#/components/schemas/TerraformResponse'
-                          ARGOCD_APP: '#/components/schemas/ArgocdAppResponse'
+                          ARGOCD_APP: '#/components/schemas/ArgoCdAppResponse'
       operationId: listServicesByEnvironmentId
       x-stoplight:
         id: 9adquhr5t6qx3
@@ -24674,7 +24674,7 @@ components:
                   file: '#/components/schemas/DockerfileFragmentFile'
                   inline: '#/components/schemas/DockerfileFragmentInline'
       description: A Terraform service
-    ArgocdAppResponse:
+    ArgoCdAppResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
         - type: object
@@ -24682,11 +24682,15 @@ components:
             - service_type
             - name
             - namespace
+            - environment
           properties:
+            environment:
+              $ref: '#/components/schemas/ReferenceObject'
             service_type:
-              type: string
-              enum:
-                - ARGOCD_APP
+              allOf:
+                - $ref: '#/components/schemas/ServiceTypeEnum'
+                - enum:
+                    - ARGOCD_APP
             name:
               type: string
               description: ArgoCD application name
