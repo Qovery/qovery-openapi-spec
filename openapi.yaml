@@ -11861,6 +11861,7 @@ paths:
                         - $ref: '#/components/schemas/HelmResponse'
                         - $ref: '#/components/schemas/JobResponse'
                         - $ref: '#/components/schemas/TerraformResponse'
+                        - $ref: '#/components/schemas/ArgocdAppResponse'
                       discriminator:
                         propertyName: service_type
                         mapping:
@@ -11870,6 +11871,7 @@ paths:
                           HELM: '#/components/schemas/HelmResponse'
                           JOB: '#/components/schemas/JobResponse'
                           TERRAFORM: '#/components/schemas/TerraformResponse'
+                          ARGOCD_APP: '#/components/schemas/ArgocdAppResponse'
       operationId: listServicesByEnvironmentId
       x-stoplight:
         id: 9adquhr5t6qx3
@@ -20188,6 +20190,7 @@ components:
         - JOB
         - HELM
         - TERRAFORM
+        - ARGOCD_APP
     Log:
       type: object
       required:
@@ -26438,6 +26441,23 @@ components:
           type: string
         type:
           $ref: '#/components/schemas/LinkedServiceTypeEnum'
+    ArgocdAppResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+            - service_type
+            - namespace
+          properties:
+            name:
+              type: string
+              description: name is case insensitive
+            service_type:
+              $ref: '#/components/schemas/ServiceTypeEnum'
+            namespace:
+              type: string
+      description: An ArgoCD service
   responses:
     '204':
       description: no content
