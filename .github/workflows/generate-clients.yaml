@@ -66,7 +66,7 @@ jobs:
         if: contains(matrix.language, 'rust')
         uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: "1.86"
+          toolchain: "1.88"
           components: rustfmt
 
       - name: Build OpenApi file
