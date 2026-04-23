@@ -16145,6 +16145,60 @@ components:
         loki.log_retention_in_week:
           type: integer
           description: For how long in week loki is going to keep logs of your applications
+        loki.deployment_mode:
+          type: string
+          description: 'Loki deployment topology. "single_binary" runs Loki as one pod; "simple_scalable" splits it into separate write, read, and backend components for larger clusters.'
+          enum:
+            - single_binary
+            - simple_scalable
+        loki.single_binary.cpu_request_m:
+          type: integer
+          description: CPU request (in milli-CPU) for the Loki pod when running in single_binary mode.
+        loki.single_binary.cpu_limit_m:
+          type: integer
+          description: CPU limit (in milli-CPU) for the Loki pod when running in single_binary mode.
+        loki.single_binary.memory_request_mib:
+          type: integer
+          description: Memory request (in MiB) for the Loki pod when running in single_binary mode.
+        loki.single_binary.memory_limit_mib:
+          type: integer
+          description: Memory limit (in MiB) for the Loki pod when running in single_binary mode.
+        loki.write.cpu_request_m:
+          type: integer
+          description: CPU request (in milli-CPU) for the Loki write component when running in simple_scalable mode.
+        loki.write.cpu_limit_m:
+          type: integer
+          description: CPU limit (in milli-CPU) for the Loki write component when running in simple_scalable mode.
+        loki.write.memory_request_mib:
+          type: integer
+          description: Memory request (in MiB) for the Loki write component when running in simple_scalable mode.
+        loki.write.memory_limit_mib:
+          type: integer
+          description: Memory limit (in MiB) for the Loki write component when running in simple_scalable mode.
+        loki.read.cpu_request_m:
+          type: integer
+          description: CPU request (in milli-CPU) for the Loki read component when running in simple_scalable mode.
+        loki.read.cpu_limit_m:
+          type: integer
+          description: CPU limit (in milli-CPU) for the Loki read component when running in simple_scalable mode.
+        loki.read.memory_request_mib:
+          type: integer
+          description: Memory request (in MiB) for the Loki read component when running in simple_scalable mode.
+        loki.read.memory_limit_mib:
+          type: integer
+          description: Memory limit (in MiB) for the Loki read component when running in simple_scalable mode.
+        loki.backend.cpu_request_m:
+          type: integer
+          description: CPU request (in milli-CPU) for the Loki backend component when running in simple_scalable mode.
+        loki.backend.cpu_limit_m:
+          type: integer
+          description: CPU limit (in milli-CPU) for the Loki backend component when running in simple_scalable mode.
+        loki.backend.memory_request_mib:
+          type: integer
+          description: Memory request (in MiB) for the Loki backend component when running in simple_scalable mode.
+        loki.backend.memory_limit_mib:
+          type: integer
+          description: Memory limit (in MiB) for the Loki backend component when running in simple_scalable mode.
         registry.image_retention_time:
           type: integer
           description: Configure the number of seconds before cleaning images in the registry
