@@ -20190,7 +20190,6 @@ components:
         - JOB
         - HELM
         - TERRAFORM
-        - ARGOCD_APP
     Log:
       type: object
       required:
@@ -21805,6 +21804,7 @@ components:
         - JOB
         - HELM
         - TERRAFORM
+        - ARGOCD_APP
     SignUp:
       allOf:
         - $ref: '#/components/schemas/Base'
