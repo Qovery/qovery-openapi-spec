@@ -145,20 +145,20 @@ index d587142..c608c5b 100644
      #[serde(rename = "schedule")]
      pub schedule: models::LifecycleJobResponseAllOfSchedule,
 diff --git a/src/models/service_type_enum.rs b/src/models/service_type_enum.rs
-index e2d0e98..4a2c2f2 100644
+index ff5604c..f9df852 100644
 --- a/src/models/service_type_enum.rs
 +++ b/src/models/service_type_enum.rs
-@@ -49,3 +49,10 @@ impl Default for ServiceTypeEnum {
+@@ -52,3 +52,10 @@ impl Default for ServiceTypeEnum {
      }
  }
  
-+
 +pub fn service_type_application() -> ServiceTypeEnum { ServiceTypeEnum::Application }
 +pub fn service_type_container() -> ServiceTypeEnum { ServiceTypeEnum::Container }
 +pub fn service_type_database() -> ServiceTypeEnum { ServiceTypeEnum::Database }
 +pub fn service_type_helm() -> ServiceTypeEnum { ServiceTypeEnum::Helm }
 +pub fn service_type_terraform() -> ServiceTypeEnum { ServiceTypeEnum::Terraform }
 +pub fn service_type_job() -> ServiceTypeEnum { ServiceTypeEnum::Job }
++pub fn service_type_argocd_app() -> ServiceTypeEnum { ServiceTypeEnum::ArgocdApp }
 diff --git a/src/models/terraform_response.rs b/src/models/terraform_response.rs
 index afdc518..f2cf6d5 100644
 --- a/src/models/terraform_response.rs
@@ -198,4 +198,17 @@ index ea636db..d21633d 100644
      pub r#type: Type,
      /// Dockerfile commands to inject (max 8KB).
      #[serde(rename = "content")]
+diff --git a/src/models/argocd_app_response.rs b/src/models/argocd_app_response.rs
+index 9f05f76..6a22a21 100644
+--- a/src/models/argocd_app_response.rs
++++ b/src/models/argocd_app_response.rs
+@@ -23,7 +23,7 @@ pub struct ArgocdAppResponse {
+     /// name is case insensitive
+     #[serde(rename = "name")]
+     pub name: String,
+-    #[serde(rename = "service_type")]
++    #[serde(rename = "service_type", default = "models::service_type_enum::service_type_argocd_app")]
+     pub service_type: models::ServiceTypeEnum,
+     #[serde(rename = "namespace")]
+     pub namespace: String,
 
