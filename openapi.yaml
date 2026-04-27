@@ -13111,6 +13111,27 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/argocdApp/{argocdAppId}':
+    get:
+      summary: Get ArgoCD app by ID
+      operationId: getArgoCdApp
+      parameters:
+        - $ref: '#/components/parameters/argocdAppId'
+      tags:
+        - ArgoCD
+      responses:
+        '200':
+          description: Get ArgoCD app by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArgocdAppResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/credentials':
     parameters:
       - schema:
@@ -13866,6 +13887,14 @@ components:
       name: variableId
       in: path
       description: Variable ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    argocdAppId:
+      name: argocdAppId
+      in: path
+      description: ArgoCD App ID
       required: true
       schema:
         type: string
@@ -26503,6 +26532,8 @@ components:
             - name
             - service_type
             - namespace
+            - environment_id
+            - cluster_id
           properties:
             name:
               type: string
@@ -26511,6 +26542,25 @@ components:
               $ref: '#/components/schemas/ServiceTypeEnum'
             namespace:
               type: string
+            environment_id:
+              type: string
+              format: uuid
+            cluster_id:
+              type: string
+              format: uuid
+            last_synced_at:
+              type: string
+              format: date-time
+              nullable: true
+            manifest_revision:
+              type: string
+              nullable: true
+            source_repo_url:
+              type: string
+              nullable: true
+            source_target_revision:
+              type: string
+              nullable: true
       description: An ArgoCD service
   responses:
     '204':
