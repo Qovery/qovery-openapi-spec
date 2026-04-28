@@ -15348,6 +15348,8 @@ components:
               $ref: '#/components/schemas/ClusterKeda'
             labels_groups:
               $ref: '#/components/schemas/ClusterLabelsGroupList'
+            secret_manager_accesses:
+              $ref: '#/components/schemas/SecretManagerAccessResponseList'
     ClusterDeleteMode:
       type: string
       description: |
@@ -16074,6 +16076,8 @@ components:
           $ref: '#/components/schemas/ClusterKeda'
         labels_groups:
           $ref: '#/components/schemas/ClusterLabelsGroupList'
+        secret_manager_accesses:
+          $ref: '#/components/schemas/SecretManagerAccessRequestList'
     ClusterResponseList:
       type: object
       properties:
@@ -26492,6 +26496,167 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ClusterLabelsGroup'
+
+    SecretManagerAccessRequestList:
+      title: SecretManagerAccessRequestList
+      type: array
+      items:
+        $ref: '#/components/schemas/SecretManagerAccessRequest'
+    SecretManagerAccessRequest:
+      type: object
+      required:
+        - name
+        - endpoint
+        - authentication
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        name:
+          type: string
+        endpoint:
+          $ref: '#/components/schemas/SecretManagerEndpointConfigurationDto'
+        authentication:
+          $ref: '#/components/schemas/SecretManagerAuthenticationDto'
+    SecretManagerAccessResponseList:
+      title: SecretManagerAccessResponseList
+      type: array
+      items:
+        $ref: '#/components/schemas/SecretManagerAccessResponse'
+    SecretManagerAccessResponse:
+      type: object
+      required:
+        - id
+        - name
+        - created_at
+        - updated_at
+        - endpoint
+        - authentication
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        endpoint:
+          $ref: '#/components/schemas/SecretManagerEndpointConfigurationDto'
+        authentication:
+          $ref: '#/components/schemas/SecretManagerAuthenticationDto'
+    SecretManagerEndpointConfigurationDto:
+      oneOf:
+        - $ref: '#/components/schemas/AwsSecretManagerEndpointDto'
+        - $ref: '#/components/schemas/AwsParameterStoreEndpointDto'
+        - $ref: '#/components/schemas/GcpSecretManagerEndpointDto'
+      discriminator:
+        propertyName: mode
+        mapping:
+          AWS_SECRET_MANAGER: '#/components/schemas/AwsSecretManagerEndpointDto'
+          AWS_PARAMETER_STORE: '#/components/schemas/AwsParameterStoreEndpointDto'
+          GCP_SECRET_MANAGER: '#/components/schemas/GcpSecretManagerEndpointDto'
+    AwsSecretManagerEndpointDto:
+      type: object
+      required:
+        - mode
+        - region
+      properties:
+        mode:
+          type: string
+          enum: [AWS_SECRET_MANAGER]
+        region:
+          type: string
+    AwsParameterStoreEndpointDto:
+      type: object
+      required:
+        - mode
+        - region
+      properties:
+        mode:
+          type: string
+          enum: [AWS_PARAMETER_STORE]
+        region:
+          type: string
+    GcpSecretManagerEndpointDto:
+      type: object
+      required:
+        - mode
+        - region
+        - projectId
+      properties:
+        mode:
+          type: string
+          enum: [GCP_SECRET_MANAGER]
+        region:
+          type: string
+        projectId:
+          type: string
+    SecretManagerAuthenticationDto:
+      oneOf:
+        - $ref: '#/components/schemas/AutomaticallyConfiguredAuthDto'
+        - $ref: '#/components/schemas/AwsRoleArnAuthDto'
+        - $ref: '#/components/schemas/AwsStaticCredentialsAuthDto'
+        - $ref: '#/components/schemas/GcpJsonCredentialsAuthDto'
+      discriminator:
+        propertyName: mode
+        mapping:
+          AUTOMATICALLY_CONFIGURED: '#/components/schemas/AutomaticallyConfiguredAuthDto'
+          AWS_ROLE_ARN: '#/components/schemas/AwsRoleArnAuthDto'
+          AWS_STATIC_CREDENTIALS: '#/components/schemas/AwsStaticCredentialsAuthDto'
+          GCP_JSON_CREDENTIALS: '#/components/schemas/GcpJsonCredentialsAuthDto'
+    AutomaticallyConfiguredAuthDto:
+      type: object
+      required:
+        - mode
+      properties:
+        mode:
+          type: string
+          enum: [AUTOMATICALLY_CONFIGURED]
+    AwsRoleArnAuthDto:
+      type: object
+      required:
+        - mode
+        - role_arn
+      properties:
+        mode:
+          type: string
+          enum: [AWS_ROLE_ARN]
+        role_arn:
+          type: string
+    AwsStaticCredentialsAuthDto:
+      type: object
+      required:
+        - mode
+        - region
+        - access_key
+      properties:
+        mode:
+          type: string
+          enum: [AWS_STATIC_CREDENTIALS]
+        region:
+          type: string
+        access_key:
+          type: string
+        secret_key:
+          type: string
+          nullable: true
+    GcpJsonCredentialsAuthDto:
+      type: object
+      required:
+        - mode
+      properties:
+        mode:
+          type: string
+          enum: [GCP_JSON_CREDENTIALS]
+        json_credentials:
+          type: string
+          nullable: true
+
     ClusterEnvironmentResponseList:
       type: object
       properties:
