@@ -3760,6 +3760,8 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/cluster/{clusterId}/upgrade':
     post:
       summary: Upgrade a cluster
@@ -14110,17 +14112,9 @@ components:
           description: Display name of the mapped Qovery cluster
           example: 'My EKS Cluster'
         qovery_cluster_cloud_provider:
-          type: string
-          description: Cloud provider of the mapped Qovery cluster
-          example: 'AWS'
+          $ref: '#/components/schemas/CloudVendorEnum'
         qovery_cluster_type:
-          type: string
-          description: Whether the cluster is managed by Qovery or self-managed
-          enum:
-            - MANAGED
-            - SELF_MANAGED
-            - PARTIALLY_MANAGED
-          example: 'MANAGED'
+          $ref: '#/components/schemas/KubernetesEnum'
         applications_count:
           type: integer
           description: Number of ArgoCD applications targeting this destination
