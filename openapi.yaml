@@ -14171,12 +14171,12 @@ components:
           description: Timestamp of the last configuration update (will use last connectivity check in future)
         linked_clusters:
           type: array
-          description: Destination clusters that are both mapped and currently discovered in ArgoCD
+          description: ArgoCD clusters detected and mapped to a Qovery cluster
           items:
             $ref: '#/components/schemas/ArgoCdLinkedClusterDetails'
         unlinked_clusters:
           type: array
-          description: Mapped destinations no longer reported by ArgoCD (stale mappings)
+          description: ArgoCD clusters detected but mapping is missing
           items:
             $ref: '#/components/schemas/ArgoCdUnlinkedClusterDetails'
     ArgoCdInstanceMappingResponseList:
