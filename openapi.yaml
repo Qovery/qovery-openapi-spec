@@ -22367,6 +22367,10 @@ components:
           x-stoplight:
             id: docfts24qtko6
           nullable: true
+        secret_manager_access_id:
+          type: string
+          format: uuid
+          nullable: true
     VariableEditRequest:
       type: object
       required:
@@ -22388,6 +22392,10 @@ components:
           nullable: true
         enable_interpolation_in_file:
           type: boolean
+          nullable: true
+        secret_manager_access_id:
+          type: string
+          format: uuid
           nullable: true
     VariableResponse:
       allOf:
@@ -22438,6 +22446,10 @@ components:
               type: boolean
               x-stoplight:
                 id: 43yxsvszy5k8o
+            secret_manager_access_id:
+              type: string
+              format: uuid
+              nullable: true
     VariableResponseList:
       type: object
       properties:
