@@ -14024,18 +14024,20 @@ components:
         updated_at:
           type: string
           format: date-time
+    ArgoCdConnectionStatusEnum:
+      type: string
+      description: Connection status of an ArgoCD instance
+      enum:
+        - connected
+        - error
+      example: connected
     ArgoCdConnectionCheckResponse:
       type: object
       required:
         - status
       properties:
         status:
-          type: string
-          description: Connection result
-          enum:
-            - connected
-            - error
-          example: connected
+          $ref: '#/components/schemas/ArgoCdConnectionStatusEnum'
         app_count:
           type: integer
           description: Number of ArgoCD applications visible with the provided token. Present only when status is "connected".
@@ -14162,9 +14164,7 @@ components:
           description: URL of the ArgoCD instance
           example: 'https://argocd.example.com'
         status:
-          type: string
-          description: Connection status of the ArgoCD instance
-          example: 'Connected'
+          $ref: '#/components/schemas/ArgoCdConnectionStatusEnum'
         last_checked_at:
           type: string
           format: date-time
