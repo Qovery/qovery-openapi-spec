@@ -3706,6 +3706,62 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/argoCdDestinationClusterMapping':
+    post:
+      summary: Save an ArgoCD destination cluster mapping
+      description: |
+        Map an ArgoCD destination cluster URL to a Qovery cluster for a given agent cluster.
+        If a mapping for the same (agentClusterId, argocdClusterUrl) already exists, it is updated.
+        Requires ADMIN role on the agent cluster.
+      operationId: saveArgoCdDestinationClusterMapping
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - ArgoCD
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArgoCdDestinationClusterMappingRequest'
+      responses:
+        '200':
+          description: Mapping saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArgoCdDestinationClusterMappingResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    get:
+      summary: List ArgoCD instance mappings for an organization
+      description: |
+        Returns one entry per ArgoCD agent cluster that has credentials configured.
+        Each entry lists linked clusters and unlinked clusters. Requires VIEWER role.
+      operationId: listArgoCdDestinationClusterMappings
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - ArgoCD
+      responses:
+        '200':
+          description: ArgoCD instance mapping list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArgoCdInstanceMappingResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/cluster/{clusterId}/upgrade':
     post:
       summary: Upgrade a cluster
@@ -13997,18 +14053,20 @@ components:
         updated_at:
           type: string
           format: date-time
+    ArgoCdConnectionStatusEnum:
+      type: string
+      description: Connection status of an ArgoCD instance
+      enum:
+        - connected
+        - error
+      example: connected
     ArgoCdConnectionCheckResponse:
       type: object
       required:
         - status
       properties:
         status:
-          type: string
-          description: Connection result
-          enum:
-            - connected
-            - error
-          example: connected
+          $ref: '#/components/schemas/ArgoCdConnectionStatusEnum'
         app_count:
           type: integer
           description: Number of ArgoCD applications visible with the provided token. Present only when status is "connected".
@@ -14021,6 +14079,144 @@ components:
             - unreachable
             - insufficient_permissions
           example: authentication_failed
+    ArgoCdDestinationClusterMappingRequest:
+      type: object
+      required:
+        - agent_cluster_id
+        - argocd_cluster_url
+        - cluster_id
+      properties:
+        agent_cluster_id:
+          type: string
+          format: uuid
+          description: ID of the Qovery cluster where the ArgoCD instance is running
+        argocd_cluster_url:
+          type: string
+          description: ArgoCD destination cluster URL as reported by ArgoCD
+          example: 'https://kubernetes.default.svc'
+        cluster_id:
+          type: string
+          format: uuid
+          description: ID of the Qovery cluster to map this ArgoCD destination to
+    ArgoCdDestinationClusterMappingResponse:
+      type: object
+      required:
+        - agent_cluster_id
+        - argocd_cluster_url
+        - cluster_id
+      properties:
+        agent_cluster_id:
+          type: string
+          format: uuid
+        argocd_cluster_url:
+          type: string
+          example: 'https://kubernetes.default.svc'
+        cluster_id:
+          type: string
+          format: uuid
+          nullable: true
+    ArgoCdLinkedClusterDetails:
+      type: object
+      required:
+        - argocd_cluster_url
+        - argocd_cluster_name
+        - qovery_cluster_id
+        - qovery_cluster_name
+        - qovery_cluster_cloud_provider
+        - qovery_cluster_type
+        - applications_count
+      properties:
+        argocd_cluster_url:
+          type: string
+          description: ArgoCD destination cluster URL
+          example: 'https://kubernetes.default.svc'
+        argocd_cluster_name:
+          type: string
+          description: ArgoCD cluster name (currently same as URL; will use ArgoCD alias in future)
+          example: 'https://kubernetes.default.svc'
+        qovery_cluster_id:
+          type: string
+          format: uuid
+          description: ID of the Qovery cluster this destination is mapped to
+        qovery_cluster_name:
+          type: string
+          description: Display name of the mapped Qovery cluster
+          example: 'My EKS Cluster'
+        qovery_cluster_cloud_provider:
+          $ref: '#/components/schemas/CloudVendorEnum'
+        qovery_cluster_type:
+          $ref: '#/components/schemas/KubernetesEnum'
+        applications_count:
+          type: integer
+          description: Number of ArgoCD applications targeting this destination
+          example: 4
+    ArgoCdUnlinkedClusterDetails:
+      type: object
+      required:
+        - argocd_cluster_url
+        - argocd_cluster_name
+        - applications_count
+      properties:
+        argocd_cluster_url:
+          type: string
+          description: ArgoCD destination cluster URL for this stale mapping
+          example: 'https://old-cluster.example.com'
+        argocd_cluster_name:
+          type: string
+          description: ArgoCD cluster name (currently same as URL; will use ArgoCD alias in future)
+          example: 'https://old-cluster.example.com'
+        applications_count:
+          type: integer
+          description: Number of ArgoCD applications targeting this destination
+          example: 0
+    ArgoCdInstanceMappingResponse:
+      type: object
+      required:
+        - agent_cluster_id
+        - credentials_id
+        - argocd_url
+        - status
+        - last_checked_at
+        - linked_clusters
+        - unlinked_clusters
+      properties:
+        agent_cluster_id:
+          type: string
+          format: uuid
+          description: ID of the Qovery cluster where the ArgoCD instance is running
+        credentials_id:
+          type: string
+          format: uuid
+          description: ID of the stored ArgoCD credentials for this instance
+        argocd_url:
+          type: string
+          description: URL of the ArgoCD instance
+          example: 'https://argocd.example.com'
+        status:
+          $ref: '#/components/schemas/ArgoCdConnectionStatusEnum'
+        last_checked_at:
+          type: string
+          format: date-time
+          description: Timestamp of the last configuration update (will use last connectivity check in future)
+        linked_clusters:
+          type: array
+          description: ArgoCD clusters detected and mapped to a Qovery cluster
+          items:
+            $ref: '#/components/schemas/ArgoCdLinkedClusterDetails'
+        unlinked_clusters:
+          type: array
+          description: ArgoCD clusters detected but mapping is missing
+          items:
+            $ref: '#/components/schemas/ArgoCdUnlinkedClusterDetails'
+    ArgoCdInstanceMappingResponseList:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArgoCdInstanceMappingResponse'
     TerraformBackend:
       oneOf:
         - type: object
