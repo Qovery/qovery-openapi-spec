@@ -14173,6 +14173,8 @@ components:
       type: object
       required:
         - agent_cluster_id
+        - agent_cluster_name
+        - agent_cluster_cloud_provider
         - credentials_id
         - argocd_url
         - status
@@ -14184,6 +14186,12 @@ components:
           type: string
           format: uuid
           description: ID of the Qovery cluster where the ArgoCD instance is running
+        agent_cluster_name:
+          type: string
+          description: Display name of the Qovery cluster where the ArgoCD instance is running
+          example: 'My Agent Cluster'
+        agent_cluster_cloud_provider:
+          $ref: '#/components/schemas/CloudVendorEnum'
         credentials_id:
           type: string
           format: uuid
