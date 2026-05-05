@@ -15553,7 +15553,7 @@ components:
             labels_groups:
               $ref: '#/components/schemas/ClusterLabelsGroupList'
             secret_manager_accesses:
-              $ref: '#/components/schemas/SecretManagerAccessResponseList'
+              $ref: '#/components/schemas/SecretManagerAccessList'
     ClusterDeleteMode:
       type: string
       description: |
@@ -26724,12 +26724,12 @@ components:
           $ref: '#/components/schemas/SecretManagerEndpointConfigurationDto'
         authentication:
           $ref: '#/components/schemas/SecretManagerAuthenticationDto'
-    SecretManagerAccessResponseList:
-      title: SecretManagerAccessResponseList
+    SecretManagerAccessList:
+      title: SecretManagerAccessList
       type: array
       items:
-        $ref: '#/components/schemas/SecretManagerAccessResponse'
-    SecretManagerAccessResponse:
+        $ref: '#/components/schemas/SecretManagerAccess'
+    SecretManagerAccess:
       type: object
       required:
         - id
