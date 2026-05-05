@@ -14468,6 +14468,24 @@ components:
           nullable: true
           minimum: 0
           description: Sets the idle timeout (in seconds) for HTTP connections proxied through the Gateway API route.
+        network.gateway_api.retry.num_retries:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets the number of retry attempts for requests proxied through the Gateway API route.
+        network.gateway_api.retry.retry_on:
+          type: string
+          nullable: true
+          description: Comma-separated retry triggers (for example connect-failure,reset,refused-stream,retriable-status-codes) for requests proxied through the Gateway API route.
+        network.gateway_api.retry.http_status_codes:
+          type: string
+          nullable: true
+          description: Comma-separated HTTP status codes (100..599) retried when retry_on includes retriable-status-codes.
+        network.gateway_api.retry.per_try_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 1
+          description: Sets the timeout (in seconds) applied to each retry attempt for requests proxied through the Gateway API route.
         hpa.cpu.average_utilization_percent:
           type: integer
           description: Percentage value of cpu usage at which point pods should scale up.
@@ -16577,6 +16595,24 @@ components:
           nullable: true
           minimum: 0
           description: Sets the default idle connection timeout (in seconds) applied to Gateway API routes when the service does not override it.
+        envoy.gateway_api.retry.num_retries:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets the default number of retry attempts applied to Gateway API routes when the service does not override it.
+        envoy.gateway_api.retry.retry_on:
+          type: string
+          nullable: true
+          description: Default comma-separated retry triggers applied to Gateway API routes when the service does not override them.
+        envoy.gateway_api.retry.http_status_codes:
+          type: string
+          nullable: true
+          description: Default comma-separated HTTP status codes (100..599) retried when retry_on includes retriable-status-codes.
+        envoy.gateway_api.retry.per_try_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 1
+          description: Sets the default timeout (in seconds) applied to each retry attempt when the service does not override it.
         nginx.hpa.cpu_utilization_percentage_threshold:
           type: integer
           description: hpa cpu threshold in percentage
@@ -16793,6 +16829,24 @@ components:
           nullable: true
           minimum: 0
           description: Sets the idle timeout (in seconds) for HTTP connections proxied through the Gateway API route.
+        network.gateway_api.retry.num_retries:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets the number of retry attempts for requests proxied through the Gateway API route.
+        network.gateway_api.retry.retry_on:
+          type: string
+          nullable: true
+          description: Comma-separated retry triggers (for example connect-failure,reset,refused-stream,retriable-status-codes) for requests proxied through the Gateway API route.
+        network.gateway_api.retry.http_status_codes:
+          type: string
+          nullable: true
+          description: Comma-separated HTTP status codes (100..599) retried when retry_on includes retriable-status-codes.
+        network.gateway_api.retry.per_try_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 1
+          description: Sets the timeout (in seconds) applied to each retry attempt for requests proxied through the Gateway API route.
         network.ingress.basic_auth_env_var:
           type: string
           description: |
@@ -20259,6 +20313,24 @@ components:
           nullable: true
           minimum: 0
           description: Sets the idle timeout (in seconds) for HTTP connections proxied through the Gateway API route.
+        network.gateway_api.retry.num_retries:
+          type: integer
+          nullable: true
+          minimum: 0
+          description: Sets the number of retry attempts for requests proxied through the Gateway API route.
+        network.gateway_api.retry.retry_on:
+          type: string
+          nullable: true
+          description: Comma-separated retry triggers (for example connect-failure,reset,refused-stream,retriable-status-codes) for requests proxied through the Gateway API route.
+        network.gateway_api.retry.http_status_codes:
+          type: string
+          nullable: true
+          description: Comma-separated HTTP status codes (100..599) retried when retry_on includes retriable-status-codes.
+        network.gateway_api.retry.per_try_timeout_seconds:
+          type: integer
+          nullable: true
+          minimum: 1
+          description: Sets the timeout (in seconds) applied to each retry attempt for requests proxied through the Gateway API route.
     HelmDeployRequest:
       type: object
       properties:
