@@ -356,20 +356,6 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/ServiceType'
-      - name: argocd_app_name
-        in: path
-        required: true
-        schema:
-          type:
-          - string
-          - 'null'
-      - name: argocd_namespace
-        in: path
-        required: true
-        schema:
-          type:
-          - string
-          - 'null'
       responses:
         '200':
           description: Stream of services metrics
@@ -1870,6 +1856,7 @@ components:
       - JOB
       - HELM
       - TERRAFORM
+      - ARGOCD_APP
     TerraformStatusDto:
       type: object
       required:
