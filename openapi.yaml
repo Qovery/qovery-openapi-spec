@@ -14239,6 +14239,12 @@ components:
           properties:
             user_provided:
               $ref: '#/components/schemas/TerraformBackendUserProvided'
+        - type: object
+          required:
+            - blueprint
+          properties:
+            blueprint:
+              $ref: '#/components/schemas/TerraformBackendBlueprint'
       description: Configuration for Terraform backend - exactly one backend type must be specified
     TerraformBackendKubernetes:
       type: object
@@ -14246,6 +14252,20 @@ components:
     TerraformBackendUserProvided:
       type: object
       description: User-provided backend configuration
+    TerraformBackendBlueprint:
+      type: object
+      description: Blueprint-managed backend configuration. The user provides the backend type and config at blueprint creation time. The platform generates and injects backend.tf for the created service.
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: 'Terraform backend type (e.g. s3, gcs, azurerm)'
+        config:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Static backend configuration (bucket, region, etc.). Credentials should be provided via environment variables, not here.'
     DeleteTerraformAction:
       type: string
       description: Action to force a specific Terraform behavior during deletion/uninstall.
