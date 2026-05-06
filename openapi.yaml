@@ -26914,8 +26914,10 @@ components:
             - name
             - service_type
             - namespace
+            - environment
             - environment_id
             - cluster_id
+            - icon_uri
           properties:
             name:
               type: string
@@ -26924,12 +26926,19 @@ components:
               $ref: '#/components/schemas/ServiceTypeEnum'
             namespace:
               type: string
+            environment:
+              $ref: '#/components/schemas/ReferenceObject'
             environment_id:
               type: string
               format: uuid
             cluster_id:
               type: string
               format: uuid
+            icon_uri:
+              type: string
+              format: uri
+              default: app://qovery-console/argocd
+              description: Icon URI representing the ArgoCD service.
             last_synced_at:
               type: string
               format: date-time
