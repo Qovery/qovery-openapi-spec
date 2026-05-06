@@ -3606,6 +3606,59 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/cluster/{clusterId}/dnsProvider':
+    get:
+      summary: Get cluster DNS provider
+      description: Retrieve the DNS provider currently associated with a cluster. Requires VIEWER role.
+      operationId: getClusterDnsProvider
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: Cluster DNS provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterDnsProviderResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit cluster DNS provider
+      description: |
+        Update the DNS provider associated with a cluster. Requires an Enterprise plan.
+        Cloudflare api_token and Route53 STATIC credentials aws_secret_access_key must be provided on every edit.
+      operationId: editClusterDnsProvider
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterDnsProviderRequest'
+      responses:
+        '200':
+          description: Updated cluster DNS provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterDnsProviderResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/cluster/{clusterId}/argoCdConfig':
     post:
       summary: Save ArgoCD credentials for a cluster
@@ -15724,6 +15777,212 @@ components:
               type: string
         region:
           type: string
+    ClusterDnsProviderRequest:
+      type: object
+      required:
+        - dns_provider
+      properties:
+        dns_provider:
+          $ref: '#/components/schemas/ClusterDnsProviderRequestProvider'
+    ClusterDnsProviderResponse:
+      type: object
+      required:
+        - dns_provider
+      properties:
+        dns_provider:
+          $ref: '#/components/schemas/ClusterDnsProviderResponseProvider'
+    ClusterDnsProviderRequestProvider:
+      oneOf:
+        - $ref: '#/components/schemas/QoveryDnsProviderRequest'
+        - $ref: '#/components/schemas/CloudflareDnsProviderRequest'
+        - $ref: '#/components/schemas/Route53DnsProviderRequest'
+      discriminator:
+        propertyName: provider
+        mapping:
+          QOVERY: '#/components/schemas/QoveryDnsProviderRequest'
+          CLOUDFLARE: '#/components/schemas/CloudflareDnsProviderRequest'
+          ROUTE53: '#/components/schemas/Route53DnsProviderRequest'
+    ClusterDnsProviderResponseProvider:
+      oneOf:
+        - $ref: '#/components/schemas/QoveryDnsProviderResponse'
+        - $ref: '#/components/schemas/CloudflareDnsProviderResponse'
+        - $ref: '#/components/schemas/Route53DnsProviderResponse'
+      discriminator:
+        propertyName: provider
+        mapping:
+          QOVERY: '#/components/schemas/QoveryDnsProviderResponse'
+          CLOUDFLARE: '#/components/schemas/CloudflareDnsProviderResponse'
+          ROUTE53: '#/components/schemas/Route53DnsProviderResponse'
+    QoveryDnsProviderRequest:
+      type: object
+      required:
+        - provider
+        - domain
+      properties:
+        provider:
+          type: string
+          enum:
+            - QOVERY
+        domain:
+          type: string
+          example: example.com
+    CloudflareDnsProviderRequest:
+      type: object
+      required:
+        - provider
+        - domain
+        - email
+        - api_token
+      properties:
+        provider:
+          type: string
+          enum:
+            - CLOUDFLARE
+        domain:
+          type: string
+          example: example.com
+        email:
+          type: string
+          format: email
+          example: admin@example.com
+        api_token:
+          type: string
+          minLength: 1
+          writeOnly: true
+          description: Cloudflare API token. Must be provided when editing Cloudflare DNS provider.
+        proxied:
+          type: boolean
+          default: false
+    Route53DnsProviderRequest:
+      type: object
+      required:
+        - provider
+        - domain
+        - credentials
+        - aws_region
+      properties:
+        provider:
+          type: string
+          enum:
+            - ROUTE53
+        domain:
+          type: string
+          example: example.com
+        credentials:
+          $ref: '#/components/schemas/Route53DnsProviderRequestCredentials'
+        aws_region:
+          type: string
+          example: eu-west-3
+        hosted_zone_id:
+          type: string
+          nullable: true
+          example: Z0965488LE74BWDEVQDB
+    Route53DnsProviderRequestCredentials:
+      oneOf:
+        - $ref: '#/components/schemas/Route53StaticCredentialsRequest'
+      discriminator:
+        propertyName: type
+        mapping:
+          STATIC: '#/components/schemas/Route53StaticCredentialsRequest'
+    Route53StaticCredentialsRequest:
+      type: object
+      required:
+        - type
+        - aws_access_key_id
+        - aws_secret_access_key
+      properties:
+        type:
+          type: string
+          enum:
+            - STATIC
+        aws_access_key_id:
+          type: string
+          minLength: 1
+          description: AWS access key identifier. It is returned by the GET endpoint and must be sent back when editing Route53.
+        aws_secret_access_key:
+          type: string
+          minLength: 1
+          writeOnly: true
+          description: AWS secret access key. Must be provided when editing Route53 DNS provider.
+    QoveryDnsProviderResponse:
+      type: object
+      required:
+        - provider
+        - domain
+      properties:
+        provider:
+          type: string
+          enum:
+            - QOVERY
+        domain:
+          type: string
+          example: example.com
+    CloudflareDnsProviderResponse:
+      type: object
+      required:
+        - provider
+        - domain
+        - email
+        - proxied
+      properties:
+        provider:
+          type: string
+          enum:
+            - CLOUDFLARE
+        domain:
+          type: string
+          example: example.com
+        email:
+          type: string
+          format: email
+          example: admin@example.com
+        proxied:
+          type: boolean
+    Route53DnsProviderResponse:
+      type: object
+      required:
+        - provider
+        - domain
+        - credentials
+        - aws_region
+      properties:
+        provider:
+          type: string
+          enum:
+            - ROUTE53
+        domain:
+          type: string
+          example: example.com
+        credentials:
+          $ref: '#/components/schemas/Route53DnsProviderResponseCredentials'
+        aws_region:
+          type: string
+          example: eu-west-3
+        hosted_zone_id:
+          type: string
+          nullable: true
+          example: Z0965488LE74BWDEVQDB
+    Route53DnsProviderResponseCredentials:
+      oneOf:
+        - $ref: '#/components/schemas/Route53StaticCredentialsResponse'
+      discriminator:
+        propertyName: type
+        mapping:
+          STATIC: '#/components/schemas/Route53StaticCredentialsResponse'
+    Route53StaticCredentialsResponse:
+      type: object
+      required:
+        - type
+        - aws_access_key_id
+      properties:
+        type:
+          type: string
+          enum:
+            - STATIC
+        aws_access_key_id:
+          type: string
+          description: AWS access key identifier.
+
     ClusterKarpenterPrivateSubnetIdsPutRequest:
       type: object
       properties:
