@@ -115,6 +115,7 @@ tags:
   - name: Project Secret
   - name: Projects
   - name: Referral & Rewards
+  - name: Secret Manager Access
   - name: Terraforms
   - name: Terraform Main Calls
   - name: Terraform Resources
@@ -1655,6 +1656,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClusterLogsResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/api/secretManagerAccess/{secretManagerAccessId}/secrets':
+    get:
+      summary: List upstream secrets from secret provider
+      description: List upstream secrets from secret provider
+      operationId: listUpstreamSecretsFromSecretProvider
+      parameters:
+        - $ref: '#/components/parameters/secretManagerAccessId'
+        - name: namePrefix
+          in: query
+          required: false
+          schema:
+            type: string
+      tags:
+        - Secret Manager Access
+      responses:
+        '200':
+          description: List upstream secrets from secret provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderSecrets'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/api/secretManagerAccess/{secretManagerAccessId}/associatedServices':
+    get:
+      summary: List external secrets used by a secret manager access
+      description: List external secrets used by a secret manager access
+      operationId: listSecretManagerAccessExternalSecrets
+      parameters:
+        - $ref: '#/components/parameters/secretManagerAccessId'
+      tags:
+        - Secret Manager Access
+      responses:
+        '200':
+          description: List external secrets used by a secret manager access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalSecretAssociatedServiceResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -14059,6 +14109,14 @@ components:
       schema:
         type: string
       description: KEDA triggerAuthentication ID
+    secretManagerAccessId:
+      name: secretManagerAccessId
+      in: path
+      description: Secret Manager Access ID
+      required: true
+      schema:
+        type: string
+        format: uuid
   schemas:
     ArgoCdCredentialsRequest:
       type: object
@@ -27304,6 +27362,56 @@ components:
               type: string
               nullable: true
       description: An ArgoCD service
+    ProviderSecrets:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            type: string
+    ExternalSecretAssociatedServiceResponseList:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalSecretAssociatedServiceResponse'
+    ExternalSecretAssociatedServiceResponse:
+      type: object
+      required:
+        - project_id
+        - project_name
+        - environment_id
+        - environment_name
+        - variable_name
+        - external_secret_name
+      properties:
+        project_id:
+          type: string
+          format: uuid
+        project_name:
+          type: string
+        environment_id:
+          type: string
+          format: uuid
+        environment_name:
+          type: string
+        service_id:
+          type: string
+          format: uuid
+        service_name:
+          type: string
+        service_type:
+          $ref: '#/components/schemas/APIVariableScopeEnum'
+        variable_name:
+          type: string
+        external_secret_name:
+          type: string
+
   responses:
     '204':
       description: no content
