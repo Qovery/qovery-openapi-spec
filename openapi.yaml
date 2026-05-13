@@ -13291,6 +13291,27 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/argocdApp/{argocdAppId}/manifest':
+    get:
+      summary: Get ArgoCD app manifest enrichment
+      operationId: getArgoCdAppManifest
+      parameters:
+        - $ref: '#/components/parameters/argocdAppId'
+      tags:
+        - ArgoCD
+      responses:
+        '200':
+          description: Manifest enrichment for the ArgoCD app, including managed Kubernetes resources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArgocdAppManifestResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/credentials':
     parameters:
       - schema:
@@ -27362,6 +27383,39 @@ components:
               type: string
               nullable: true
       description: An ArgoCD service
+    ArgocdAppManifestResponse:
+      type: object
+      required:
+        - manifest_metadata
+      properties:
+        manifest_revision:
+          type: string
+          nullable: true
+          description: Git revision the app is currently synced to
+        manifest_metadata:
+          type: object
+          description: Raw enrichment data fetched from the ArgoCD managed-resources API
+          properties:
+            managed_resources:
+              type: array
+              items:
+                $ref: '#/components/schemas/ArgocdManagedResource'
+    ArgocdManagedResource:
+      type: object
+      properties:
+        kind:
+          type: string
+          description: Kubernetes resource kind (e.g. Deployment, Service)
+        name:
+          type: string
+        namespace:
+          type: string
+        targetState:
+          type: string
+          description: JSON-encoded desired Kubernetes manifest
+        liveState:
+          type: string
+          description: JSON-encoded live Kubernetes manifest
     ProviderSecrets:
       type: object
       required:
