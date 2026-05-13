@@ -1662,7 +1662,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/api/secretManagerAccess/{secretManagerAccessId}/secrets':
+  '/secretManagerAccess/{secretManagerAccessId}/secrets':
     get:
       summary: List upstream secrets from secret provider
       description: List upstream secrets from secret provider
@@ -1689,7 +1689,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/api/secretManagerAccess/{secretManagerAccessId}/associatedServices':
+  '/secretManagerAccess/{secretManagerAccessId}/associatedServices':
     get:
       summary: List external secrets used by a secret manager access
       description: List external secrets used by a secret manager access
