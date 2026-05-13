@@ -25,7 +25,7 @@ jobs:
 
       - name: Clone target repository
         run: |
-          git clone git@github.com:Qovery/documentation-v2.git documentation
+          git clone git@github.com:Qovery/documentation.git documentation
 
       - name: Copy file and push
         run: |
