@@ -16307,6 +16307,7 @@ components:
             - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
             - $ref: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
             - $ref: '#/components/schemas/ClusterFeatureKarpenterParametersResponse'
+            - $ref: '#/components/schemas/ClusterFeatureNatGatewayParametersResponse'
           discriminator:
             propertyName: type
             mapping:
@@ -16315,6 +16316,7 @@ components:
               AWS_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureAwsExistingVpcResponse'
               GCP_USER_PROVIDED_NETWORK: '#/components/schemas/ClusterFeatureGcpExistingVpcResponse'
               KARPENTER: '#/components/schemas/ClusterFeatureKarpenterParametersResponse'
+              NAT_GATEWAY: '#/components/schemas/ClusterFeatureNatGatewayParametersResponse'
         is_value_updatable:
           type: boolean
           default: false
@@ -16332,6 +16334,7 @@ components:
         - AWS_USER_PROVIDED_NETWORK
         - GCP_USER_PROVIDED_NETWORK
         - KARPENTER
+        - NAT_GATEWAY
     ClusterFeatureStringResponse:
       type: object
       required:
@@ -16372,6 +16375,18 @@ components:
           $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
         value:
           $ref: '#/components/schemas/ClusterFeatureGcpExistingVpc'
+    ClusterFeatureNatGatewayParametersResponse:
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          $ref: '#/components/schemas/ClusterFeatureResponseTypeEnum'
+        value:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/ClusterFeatureNatGatewayParameters'
     ClusterFeatureAwsExistingVpc:
       type: object
       required:
@@ -16492,6 +16507,53 @@ components:
           type: array
           items:
             type: string
+    ClusterFeatureNatGatewayParameters:
+      type: object
+      properties:
+        nat_gateway_type:
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/ClusterFeatureNatGatewayTypeScaleway'
+            - $ref: '#/components/schemas/ClusterFeatureNatGatewayTypeGcp'
+          discriminator:
+            propertyName: provider
+            mapping:
+              scaleway: '#/components/schemas/ClusterFeatureNatGatewayTypeScaleway'
+              gcp: '#/components/schemas/ClusterFeatureNatGatewayTypeGcp'
+    ClusterFeatureNatGatewayTypeScaleway:
+      type: object
+      required:
+        - provider
+        - type
+      properties:
+        provider:
+          type: string
+          enum:
+            - scaleway
+        type:
+          type: string
+          enum:
+            - VPC-GW-S
+            - VPC-GW-M
+            - VPC-GW-L
+            - VPC-GW-XL
+    ClusterFeatureNatGatewayTypeGcp:
+      type: object
+      required:
+        - provider
+        - static_ips_enabled
+        - static_ips_count
+      properties:
+        provider:
+          type: string
+          enum:
+            - gcp
+        static_ips_enabled:
+          type: boolean
+        static_ips_count:
+          type: integer
+          minimum: 1
+          description: Number of static IPs to allocate. Must be >= 1 when static_ips_enabled is true.
     ClusterFeatureResponseList:
       type: object
       properties:
@@ -16648,6 +16710,7 @@ components:
                   - $ref: '#/components/schemas/ClusterFeatureAwsExistingVpc'
                   - $ref: '#/components/schemas/ClusterFeatureGcpExistingVpc'
                   - $ref: '#/components/schemas/ClusterFeatureKarpenterParameters'
+                  - $ref: '#/components/schemas/ClusterFeatureNatGatewayParameters'
         metrics_parameters:
           $ref: '#/components/schemas/MetricsParameters'
         infrastructure_charts_parameters:
