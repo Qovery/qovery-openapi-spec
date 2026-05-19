@@ -16775,6 +16775,11 @@ components:
                 type: string
     ClusterStatus:
       type: object
+      required:
+        - cluster_id
+        - status
+        - is_deployed
+        - reason
       properties:
         cluster_id:
           type: string
@@ -16789,13 +16794,24 @@ components:
           example: '1.28'
         last_execution_id:
           type: string
+          nullable: true
           example: f73e3833-922a-48a5-9dbd-6163f43f9143-1656410242
         cluster_lock:
-          $ref: '#/components/schemas/ClusterLock'
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/ClusterLock'
         last_deployment_date:
           type: string
           format: date-time
+          nullable: true
           example: '2022-06-22T14:20:17.733084815Z'
+        reason:
+          $ref: '#/components/schemas/DeploymentInfraReason'
+    DeploymentInfraReason:
+      type: string
+      enum:
+        - UNSPECIFIED
+        - MAINTENANCE
     ClusterStatusResponseList:
       type: object
       properties:
