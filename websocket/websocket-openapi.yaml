@@ -602,6 +602,21 @@ components:
           - $ref: '#/components/schemas/ScaledObjectStatusDto'
         state:
           $ref: '#/components/schemas/ServiceStateDto'
+    ArgoCdAppStatusDto:
+      type: object
+      required:
+      - id
+      - state
+      - pods
+      properties:
+        id:
+          type: string
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodStatusDto'
+        state:
+          $ref: '#/components/schemas/ServiceStateDto'
     CertificateStatusDto:
       type: object
       required:
@@ -906,11 +921,16 @@ components:
       - jobs
       - helms
       - terraform
+      - argocd_apps
       properties:
         applications:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationStatusDto'
+        argocd_apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArgoCdAppStatusDto'
         containers:
           type: array
           items:
