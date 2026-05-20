@@ -26937,12 +26937,10 @@ components:
             manifest_revision:
               type: string
               nullable: true
-            source_repo_url:
-              type: string
+            git_repository:
               nullable: true
-            source_target_revision:
-              type: string
-              nullable: true
+              allOf:
+                - $ref: '#/components/schemas/ApplicationGitRepository'
       description: An ArgoCD service
   responses:
     '204':
