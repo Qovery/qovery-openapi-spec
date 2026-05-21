@@ -3865,6 +3865,41 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+    delete:
+      summary: Delete an ArgoCD destination cluster mapping
+      description: |
+        Remove the mapping between an ArgoCD destination cluster URL and a Qovery cluster.
+        Requires ADMIN role on the agent cluster.
+      operationId: deleteArgoCdDestinationClusterMapping
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: agentClusterId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the Qovery cluster where the ArgoCD instance is running
+        - name: argocdClusterUrl
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ArgoCD destination cluster URL as reported by ArgoCD
+          example: 'https://kubernetes.default.svc'
+      tags:
+        - ArgoCD
+      responses:
+        '204':
+          description: Mapping deleted
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/cluster/{clusterId}/upgrade':
     post:
       summary: Upgrade a cluster
