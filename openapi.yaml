@@ -19593,6 +19593,7 @@ components:
           type: string
         gcp_credentials:
           type: string
+          description: The json must be base64 encoded
     GenericObjectCurrentCost:
       type: object
       required:
@@ -27405,6 +27406,7 @@ components:
         json_credentials:
           type: string
           nullable: true
+          description: The json must be base64 encoded
 
     ClusterEnvironmentResponseList:
       type: object
