@@ -27337,14 +27337,14 @@ components:
       required:
         - mode
         - region
-        - projectId
+        - project_id
       properties:
         mode:
           type: string
           enum: [GCP_SECRET_MANAGER]
         region:
           type: string
-        projectId:
+        project_id:
           type: string
     SecretManagerAuthenticationDto:
       oneOf:
