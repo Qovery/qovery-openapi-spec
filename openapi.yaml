@@ -25062,6 +25062,15 @@ components:
           type: string
         vpc_id:
           type: string
+        external_secrets_automatic_authentication:
+          type: object
+          nullable: true
+          required:
+            - eks_role_arn
+          properties:
+            eks_role_arn:
+              type: string
+              description: ARN of the IAM role used by External Secrets Operator on EKS
     GkeInfrastructureOutputs:
       type: object
       required:
@@ -25076,6 +25085,15 @@ components:
           type: string
         cluster_self_link:
           type: string
+        external_secrets_automatic_authentication:
+          type: object
+          nullable: true
+          required:
+            - gke_service_account
+          properties:
+            gke_service_account:
+              type: string
+              description: GCP service account email used by External Secrets Operator on GKE
     KapsuleInfrastructureOutputs:
       type: object
       required:
