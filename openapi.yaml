@@ -24259,6 +24259,7 @@ components:
           $ref: '#/components/schemas/ArgocdAssociatedServiceType'
     ArgocdAssociatedServiceType:
       title: ArgocdAssociatedServiceType
+      type: string
       enum:
         - ARGOCD_APP
     HelmRepositoryAssociatedServiceType:
