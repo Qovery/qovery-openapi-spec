@@ -13347,6 +13347,28 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/cluster/{clusterId}/argocdApps/associatedServices':
+    get:
+      summary: Get ArgoCD associated services for a cluster
+      description: List the ArgoCD discovered apps for a cluster, mapped to their project, environment, and service context. Requires VIEWER role.
+      operationId: getArgoCdAssociatedServices
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - ArgoCD
+      responses:
+        '200':
+          description: ArgoCD associated services for the cluster
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArgocdAssociatedServicesResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/credentials':
     parameters:
       - schema:
@@ -24198,6 +24220,48 @@ components:
         - CONTAINER
         - LIFECYCLE
         - CRON
+    ArgocdAssociatedServicesResponseList:
+      title: ArgocdAssociatedServicesResponseList
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArgocdAssociatedServicesResponse'
+    ArgocdAssociatedServicesResponse:
+      title: ArgocdAssociatedServicesResponse
+      type: object
+      required:
+        - project_id
+        - project_name
+        - environment_id
+        - environment_name
+        - service_id
+        - service_name
+        - service_type
+      properties:
+        project_id:
+          type: string
+          format: uuid
+        project_name:
+          type: string
+        environment_id:
+          type: string
+          format: uuid
+        environment_name:
+          type: string
+        service_id:
+          type: string
+          format: uuid
+        service_name:
+          type: string
+        service_type:
+          $ref: '#/components/schemas/ArgocdAssociatedServiceType'
+    ArgocdAssociatedServiceType:
+      title: ArgocdAssociatedServiceType
+      type: string
+      enum:
+        - ARGOCD_APP
     HelmRepositoryAssociatedServiceType:
       title: HelmRepositoryAssociatedServiceType
       x-stoplight:
