@@ -17158,10 +17158,6 @@ components:
         aws.vpc.enable_nat_gateway_secondary_eip:
           type: boolean
           description: Enable a secondary Elastic IP per NAT Gateway, increasing the number of outbound public IPs. Useful for services with IP-based rate limits.
-        aws.vpc_cni.enable_network_policy:
-          type: boolean
-          default: true
-          description: Enable network policy enforcement for the VPC CNI addon on EKS clusters
         loki.log_retention_in_week:
           type: integer
           description: For how long in week loki is going to keep logs of your applications
