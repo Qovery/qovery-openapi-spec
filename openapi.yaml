@@ -16681,6 +16681,9 @@ components:
           type: string
         city:
           type: string
+        arm_supported:
+          type: boolean
+          description: Whether ARM instance types are available in this region
         zones:
           type: array
           description: List of availability zones supported by this region
