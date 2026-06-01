@@ -11979,12 +11979,6 @@ paths:
     get:
       summary: Get cluster token by clusterId
       tags: []
-      parameters:
-        - schema:
-            type: boolean
-          in: query
-          name: read_only
-          description: 'If true, returns a token for the read-only qovery-readonly service account instead of an admin cloud-provider token'
       responses:
         '200':
           description: OK
