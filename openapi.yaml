@@ -2569,6 +2569,9 @@ paths:
         '200':
           description: README content in Markdown format
           content:
+            text/markdown:
+              schema:
+                type: string
             text/plain:
               schema:
                 type: string
