@@ -127,6 +127,7 @@ tags:
   - name: Variable Main Calls
   - name: Helm Custom Domain
   - name: Lifecycle Template Main Calls
+  - name: Blueprint Main Calls
 x-tagGroups:
   - name: Organization
     tags:
@@ -258,6 +259,9 @@ x-tagGroups:
     tags:
       - Alert Receivers
       - Alert Rules
+  - name: Blueprint
+    tags:
+      - Blueprint Main Calls
 servers:
   - url: 'https://api.qovery.com'
 paths:
@@ -13825,6 +13829,30 @@ paths:
             schema:
               $ref: '#/components/schemas/AlertReceiverCreationValidationRequest'
       description: Validate a future alert receiver by sending a test message.
+  /organization/{organizationId}/blueprint/catalog:
+    get:
+      summary: Get the blueprint service catalog
+      operationId: getBlueprintCatalog
+      tags:
+        - Blueprint Main Calls
+      description: Retrieves the Qovery service catalog from the public GitHub repository (Qovery/service-catalog). The catalog lists all available blueprints that can be deployed.
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      responses:
+        '200':
+          description: Blueprint catalog
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintCatalogResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '502':
+          description: Failed to fetch catalog from GitHub
 components:
   parameters:
     alertReceiverId:
@@ -14196,6 +14224,73 @@ components:
         type: string
         format: uuid
   schemas:
+    BlueprintCatalogResponse:
+      type: object
+      required:
+        - version
+        - generatedAt
+        - blueprints
+      properties:
+        version:
+          type: string
+          example: '1'
+        generatedAt:
+          type: string
+          format: date-time
+        blueprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintItem'
+    BlueprintItem:
+      type: object
+      required:
+        - name
+        - kind
+        - description
+        - icon
+        - categories
+        - provider
+        - serviceFamily
+        - majorVersions
+      properties:
+        name:
+          type: string
+          example: aws-rds-postgresql
+        kind:
+          type: string
+          example: ServiceBlueprint
+        description:
+          type: string
+        icon:
+          type: string
+          format: uri
+          example: 'https://cdn.qovery.com/icons/postgresql.svg'
+        categories:
+          type: array
+          items:
+            type: string
+        provider:
+          type: string
+          example: aws
+        serviceFamily:
+          type: string
+          example: postgres
+        majorVersions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintMajorVersion'
+    BlueprintMajorVersion:
+      type: object
+      required:
+        - serviceVersion
+        - latestTag
+      properties:
+        serviceVersion:
+          type: string
+          example: '17'
+        latestTag:
+          type: string
+          example: aws/postgres/17/1.0.1
     ArgoCdCredentialsRequest:
       type: object
       required:
