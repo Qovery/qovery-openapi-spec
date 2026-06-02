@@ -71,6 +71,7 @@ tags:
   - name: Helms
   - name: Backups
   - name: Billing
+  - name: Blueprint Catalog
   - name: Cloud Provider
   - name: Cloud Provider Credentials
   - name: Clusters
@@ -2542,6 +2543,52 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/blueprint/catalog/{provider}/{serviceFamily}/{serviceVersion}/readme':
+    get:
+      summary: Get the README of a blueprint catalog service
+      operationId: getBlueprintCatalogServiceReadme
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: provider
+          in: path
+          description: 'Cloud provider (e.g. aws, gcp, azure)'
+          required: true
+          schema:
+            type: string
+        - name: serviceFamily
+          in: path
+          description: 'Service family (e.g. mysql, postgresql)'
+          required: true
+          schema:
+            type: string
+        - name: serviceVersion
+          in: path
+          description: 'Service version (e.g. 8, 14)'
+          required: true
+          schema:
+            type: string
+      tags:
+        - Blueprint Catalog
+      responses:
+        '200':
+          description: README content in Markdown format
+          content:
+            text/markdown:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '502':
+          description: Failed to fetch README from GitHub
   '/organization/{organizationId}/customRole':
     get:
       summary: List organization custom roles
