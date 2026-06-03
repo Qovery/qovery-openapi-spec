@@ -17627,7 +17627,32 @@ components:
               description: Required if kind is `SCALEWAY_CR`
             json_credentials:
               type: string
-              description: Required if kind is `GCP_ARTIFACT_REGISTRY`
+              description: Required if kind is `GCP_ARTIFACT_REGISTRY`. For GCP Artifact Registry, you can either set a service account JSON key with json_credentials or use Workload Identity Federation with gcp_credentials_type.
+            gcp_credentials_type:
+              type: string
+              description: For GCP Artifact Registry, you can either set a service account JSON key with json_credentials or use Workload Identity Federation with gcp_credentials_type.
+              enum:
+                - workload_identity_federation
+            project_id:
+              type: string
+              description: Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+            service_account_email:
+              type: string
+              description: Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+            workload_identity_project_number:
+              type: string
+              description: Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+            workload_identity_pool_id:
+              type: string
+              description: Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+            workload_identity_provider_id:
+              type: string
+              description: Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+            token_lifetime_seconds:
+              type: integer
+              format: int32
+              description: Optional if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+              example: 14400
             username:
               type: string
               description: |
@@ -17716,6 +17741,24 @@ components:
                   type: string
                   x-stoplight:
                     id: iusxfgcmg72tl
+                gcp_credentials_type:
+                  type: string
+                  enum:
+                    - workload_identity_federation
+                project_id:
+                  type: string
+                service_account_email:
+                  type: string
+                workload_identity_project_number:
+                  type: string
+                workload_identity_pool_id:
+                  type: string
+                workload_identity_provider_id:
+                  type: string
+                token_lifetime_seconds:
+                  type: integer
+                  format: int32
+                  example: 14400
                 azure_tenant_id:
                   type: string
                   x-stoplight:
