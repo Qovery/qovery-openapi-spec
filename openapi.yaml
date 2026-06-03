@@ -13900,6 +13900,110 @@ paths:
           $ref: '#/components/responses/404'
         '502':
           description: Failed to fetch catalog from GitHub
+  '/environment/{environmentId}/blueprint':
+    get:
+      summary: List undeployed blueprints in an environment
+      operationId: listBlueprintsByEnvironment
+      tags:
+        - Blueprint Main Calls
+      description: |
+        Returns the blueprints created in this environment that have not been deployed yet.
+        Once a blueprint is deployed, the matching helm/terraform service appears in the regular
+        service listing (`/environment/{environmentId}/service`) and is removed from this list.
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      responses:
+        '200':
+          description: List of undeployed blueprints
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a blueprint in an environment
+      operationId: createBlueprint
+      tags:
+        - Blueprint Main Calls
+      description: |
+        Creates a blueprint row in the given environment. The blueprint is not deployed yet —
+        call `POST /blueprint/{blueprintId}/deploy` to materialize it as a helm/terraform service.
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlueprintCreateRequest'
+      responses:
+        '201':
+          description: Blueprint created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/blueprint/{blueprintId}':
+    get:
+      summary: Get a blueprint by id
+      operationId: getBlueprint
+      tags:
+        - Blueprint Main Calls
+      description: Returns the blueprint row for an undeployed blueprint. Once the blueprint has been deployed and materialized as a helm/terraform service, fetch the service via the helm/terraform endpoints instead.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      responses:
+        '200':
+          description: Blueprint
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/blueprint/{blueprintId}/deploy':
+    post:
+      summary: Deploy a blueprint
+      operationId: deployBlueprint
+      tags:
+        - Blueprint Main Calls
+      description: |
+        Triggers deployment of an undeployed blueprint. On success the engine creates a helm
+        or terraform service whose id matches the blueprint id (this id reuse is an invariant —
+        the same UUID identifies the blueprint pre-deploy and the service post-deploy).
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      responses:
+        '202':
+          description: Deployment accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintDeployResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          description: Deployment failed to start
 components:
   parameters:
     alertReceiverId:
@@ -13930,6 +14034,14 @@ components:
       name: backupId
       in: path
       description: Database Backup ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    blueprintId:
+      name: blueprintId
+      in: path
+      description: Blueprint ID
       required: true
       schema:
         type: string
@@ -14338,6 +14450,101 @@ components:
         latestTag:
           type: string
           example: aws/postgres/17/1.0.1
+    BlueprintCreateRequest:
+      type: object
+      required:
+        - name
+        - tag
+        - icon
+      properties:
+        name:
+          type: string
+          description: Display name. Must be unique within the environment.
+          example: my-postgres
+        tag:
+          type: string
+          description: Catalog tag identifying the blueprint to instantiate (provider/family/version/blueprint-version).
+          example: aws/postgres/17/1.0.0
+        icon:
+          type: string
+          format: uri
+          example: 'https://cdn.qovery.com/icons/postgresql.svg'
+        variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintCreateVariableInput'
+        spec_overrides:
+          type: object
+          description: Optional overrides applied on top of the catalog template's spec at deploy time.
+          additionalProperties: true
+          nullable: true
+    BlueprintCreateVariableInput:
+      type: object
+      required:
+        - name
+        - value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        is_secret:
+          type: boolean
+          default: false
+          description: When true, the value is encrypted at rest and not returned by subsequent reads.
+    BlueprintResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+            - kube_name
+            - catalog_url
+            - tag
+            - environment_id
+            - service_type
+            - icon_uri
+          properties:
+            name:
+              type: string
+            kube_name:
+              type: string
+              description: Kubernetes-safe slug derived from `name`.
+            catalog_url:
+              type: string
+              description: Catalog repository URL the blueprint was instantiated from.
+            tag:
+              type: string
+              description: Catalog tag identifying the blueprint template.
+              example: aws/postgres/17/1.0.0
+            environment_id:
+              type: string
+              format: uuid
+            service_type:
+              type: string
+              description: Service type the blueprint will materialize into on deploy. Always HELM or TERRAFORM.
+              enum:
+                - HELM
+                - TERRAFORM
+            icon_uri:
+              type: string
+              format: uri
+    BlueprintResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintResponse'
+    BlueprintDeployResponse:
+      type: object
+      required:
+        - deployment_id
+      properties:
+        deployment_id:
+          type: string
+          format: uuid
+          description: Identifier of the deployment record created for this deploy.
     ArgoCdCredentialsRequest:
       type: object
       required:
