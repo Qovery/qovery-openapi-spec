@@ -17639,15 +17639,10 @@ components:
             service_account_email:
               type: string
               description: Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
-            workload_identity_project_number:
+            workload_identity_provider_resource:
               type: string
               description: Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
-            workload_identity_pool_id:
-              type: string
-              description: Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
-            workload_identity_provider_id:
-              type: string
-              description: Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+              example: projects/123456789/locations/global/workloadIdentityPools/qovery-pool/providers/qovery-aws
             token_lifetime_seconds:
               type: integer
               format: int32
@@ -17749,11 +17744,7 @@ components:
                   type: string
                 service_account_email:
                   type: string
-                workload_identity_project_number:
-                  type: string
-                workload_identity_pool_id:
-                  type: string
-                workload_identity_provider_id:
+                workload_identity_provider_resource:
                   type: string
                 token_lifetime_seconds:
                   type: integer
@@ -25431,9 +25422,7 @@ components:
         - object_type
         - project_id
         - service_account_email
-        - workload_identity_project_number
-        - workload_identity_pool_id
-        - workload_identity_provider_id
+        - workload_identity_provider_resource
         - token_lifetime_seconds
       properties:
         id:
@@ -25448,11 +25437,7 @@ components:
           type: string
         service_account_email:
           type: string
-        workload_identity_project_number:
-          type: string
-        workload_identity_pool_id:
-          type: string
-        workload_identity_provider_id:
+        workload_identity_provider_resource:
           type: string
         token_lifetime_seconds:
           type: integer
