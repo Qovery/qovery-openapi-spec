@@ -20739,6 +20739,12 @@ components:
               description: Icon URI representing the helm service.
               x-stoplight:
                 id: 117p5u95nwx2p
+            blueprintId: 
+              type: string
+              format: uuid
+              nullable: true
+              description: |
+                The blueprint ID the service has been created from 
     HelmResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -25598,6 +25604,12 @@ components:
             mapping:
               file: '#/components/schemas/DockerfileFragmentFile'
               inline: '#/components/schemas/DockerfileFragmentInline'
+        blueprintId: 
+          type: string
+          format: uuid
+          nullable: true
+          description: |
+            The blueprint ID the service has been created from 
     TerraformResourceResponse:
       type: object
       title: Terraform Resource Response
