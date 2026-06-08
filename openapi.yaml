@@ -20740,6 +20740,8 @@ components:
               x-stoplight:
                 id: 117p5u95nwx2p
             blueprintId: 
+              type: string
+              format: uuid
               nullable: true
               description: |
                 The blueprint ID the service has been created from 
@@ -25603,6 +25605,8 @@ components:
               file: '#/components/schemas/DockerfileFragmentFile'
               inline: '#/components/schemas/DockerfileFragmentInline'
         blueprintId: 
+          type: string
+          format: uuid
           nullable: true
           description: |
             The blueprint ID the service has been created from 
