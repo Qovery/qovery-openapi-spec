@@ -20880,6 +20880,12 @@ components:
                 id: i2pvbugqsldhe
             service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
+            blueprintId:
+              type: string
+              format: uuid
+              nullable: true
+              description: |
+                The blueprint ID the service has been created from
     HelmPortResponseBase:
       type: object
       required:
@@ -25796,6 +25802,12 @@ components:
                 mapping:
                   file: '#/components/schemas/DockerfileFragmentFile'
                   inline: '#/components/schemas/DockerfileFragmentInline'
+            blueprintId:
+              type: string
+              format: uuid
+              nullable: true
+              description: |
+                The blueprint ID the service has been created from
       description: A Terraform service
     TerraformRequestJobResources:
       title: TerraformRequestJobResources
