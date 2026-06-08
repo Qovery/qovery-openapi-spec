@@ -14738,6 +14738,9 @@ components:
         build.disable_buildkit_cache:
           type: boolean
           description: disable buildkit registry cache during build
+        build.skip_git_submodules:
+          type: boolean
+          description: skip git submodules update when cloning the repository
         network.ingress.proxy_body_size_mb:
           type: integer
         network.ingress.force_ssl_redirect:
@@ -20498,6 +20501,9 @@ components:
         build.disable_buildkit_cache:
           type: boolean
           description: disable buildkit registry cache during build
+        build.skip_git_submodules:
+          type: boolean
+          description: skip git submodules update when cloning the repository
         deployment.termination_grace_period_seconds:
           type: integer
           description: define how long in seconds an application is supposed to be stopped gracefully
@@ -26193,6 +26199,9 @@ components:
           description: define the max ram resources (in gib)
         build.ephemeral_storage_in_gib:
           type: integer
+        build.skip_git_submodules:
+          type: boolean
+          description: skip git submodules update when cloning the repository
         deployment.termination_grace_period_seconds:
           type: integer
           description: define how long in seconds an application is supposed to be stopped gracefully
