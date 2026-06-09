@@ -20851,12 +20851,12 @@ components:
               description: Icon URI representing the helm service.
               x-stoplight:
                 id: 117p5u95nwx2p
-            blueprintId: 
+            blueprint_id:
               type: string
               format: uuid
               nullable: true
               description: |
-                The blueprint ID the service has been created from 
+                The blueprint ID the service has been created from
     HelmResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -20992,7 +20992,7 @@ components:
                 id: i2pvbugqsldhe
             service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
-            blueprintId:
+            blueprint_id:
               type: string
               format: uuid
               nullable: true
@@ -25722,12 +25722,12 @@ components:
             mapping:
               file: '#/components/schemas/DockerfileFragmentFile'
               inline: '#/components/schemas/DockerfileFragmentInline'
-        blueprintId: 
+        blueprint_id:
           type: string
           format: uuid
           nullable: true
           description: |
-            The blueprint ID the service has been created from 
+            The blueprint ID the service has been created from
     TerraformResourceResponse:
       type: object
       title: Terraform Resource Response
@@ -25914,7 +25914,7 @@ components:
                 mapping:
                   file: '#/components/schemas/DockerfileFragmentFile'
                   inline: '#/components/schemas/DockerfileFragmentInline'
-            blueprintId:
+            blueprint_id:
               type: string
               format: uuid
               nullable: true
