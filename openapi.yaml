@@ -2630,7 +2630,14 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/components/schemas/BlueprintManifestField'
+                      oneOf:
+                        - $ref: '#/components/schemas/BlueprintManifestEditableField'
+                        - $ref: '#/components/schemas/BlueprintManifestContextField'
+                      discriminator:
+                        propertyName: kind
+                        mapping:
+                          editable: '#/components/schemas/BlueprintManifestEditableField'
+                          context: '#/components/schemas/BlueprintManifestContextField'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -14496,15 +14503,20 @@ components:
         environmentId:
           type: string
           format: uuid
-    BlueprintManifestField:
+    BlueprintManifestEditableField:
       type: object
+      description: 'An editable form input the user fills in (from spec.variables).'
       required:
+        - kind
         - name
         - type
         - required
-        - overridable
         - is_secret
       properties:
+        kind:
+          type: string
+          enum:
+            - editable
         name:
           type: string
           example: db_password
@@ -14512,9 +14524,6 @@ components:
           $ref: '#/components/schemas/BlueprintManifestFieldType'
         required:
           type: boolean
-        overridable:
-          type: boolean
-          description: 'False for auto-sourced context variables the user cannot edit'
         is_secret:
           type: boolean
         description:
@@ -14528,10 +14537,24 @@ components:
         default_value:
           type: string
           nullable: true
+    BlueprintManifestContextField:
+      type: object
+      description: 'An auto-sourced, read-only value (from spec.contextVariables); not user-editable.'
+      required:
+        - kind
+        - name
+      properties:
+        kind:
+          type: string
+          enum:
+            - context
+        name:
+          type: string
+          example: region
         source:
           type: string
           nullable: true
-          description: 'Origin of an auto-sourced context variable (e.g. cluster.region)'
+          description: 'Origin of the auto-sourced value (e.g. cluster.region)'
     BlueprintManifestFieldType:
       type: object
       description: 'Field type with its type-specific validation conditions, discriminated by "type".'
@@ -14544,7 +14567,6 @@ components:
             - string
             - bool
             - number
-            - unknown
         min:
           type: integer
           format: int64
