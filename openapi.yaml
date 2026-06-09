@@ -2631,13 +2631,13 @@ paths:
                     type: array
                     items:
                       oneOf:
-                        - $ref: '#/components/schemas/BlueprintManifestEditableField'
-                        - $ref: '#/components/schemas/BlueprintManifestContextField'
+                        - $ref: '#/components/schemas/BlueprintManifestVariableField'
+                        - $ref: '#/components/schemas/BlueprintManifestContextVariableField'
                       discriminator:
                         propertyName: kind
                         mapping:
-                          editable: '#/components/schemas/BlueprintManifestEditableField'
-                          context: '#/components/schemas/BlueprintManifestContextField'
+                          variable: '#/components/schemas/BlueprintManifestVariableField'
+                          contextVariable: '#/components/schemas/BlueprintManifestContextVariableField'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -14503,7 +14503,7 @@ components:
         environmentId:
           type: string
           format: uuid
-    BlueprintManifestEditableField:
+    BlueprintManifestVariableField:
       type: object
       description: 'An editable form input the user fills in (from spec.variables).'
       required:
@@ -14516,7 +14516,7 @@ components:
         kind:
           type: string
           enum:
-            - editable
+            - variable
         name:
           type: string
           example: db_password
@@ -14537,7 +14537,7 @@ components:
         default_value:
           type: string
           nullable: true
-    BlueprintManifestContextField:
+    BlueprintManifestContextVariableField:
       type: object
       description: 'An auto-sourced, read-only value (from spec.contextVariables); not user-editable.'
       required:
@@ -14547,7 +14547,7 @@ components:
         kind:
           type: string
           enum:
-            - context
+            - contextVariable
         name:
           type: string
           example: region
