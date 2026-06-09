@@ -13900,6 +13900,47 @@ paths:
           $ref: '#/components/responses/404'
         '502':
           description: Failed to fetch catalog from GitHub
+  /environment/{environmentId}/blueprint:
+    post:
+      summary: Create a blueprint service in an environment
+      operationId: createBlueprint
+      tags:
+        - Blueprint Main Calls
+      description: Instantiates a blueprint from the service catalog into the given environment. Pass `deploy=true` to trigger an immediate deployment after creation.
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+        - name: deploy
+          in: query
+          description: Trigger a deployment immediately after creation
+          required: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlueprintCreateRequest'
+      responses:
+        '201':
+          description: Blueprint created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          description: Malformed blueprint tag
+        '502':
+          description: Failed to fetch blueprint manifest from GitHub
 components:
   parameters:
     alertReceiverId:
@@ -14338,6 +14379,71 @@ components:
         latestTag:
           type: string
           example: aws/postgres/17/1.0.1
+    BlueprintCreateRequest:
+      type: object
+      required:
+        - name
+        - tag
+        - icon
+      properties:
+        name:
+          type: string
+          description: Display name for the service
+          example: my-postgres
+        tag:
+          type: string
+          description: Catalog tag identifying the blueprint version
+          example: aws/postgres/17/1.0.1
+        icon:
+          type: string
+          format: uri
+          description: Icon URL for the service
+          example: 'https://cdn.qovery.com/icons/postgresql.svg'
+        variables:
+          type: array
+          description: Variable overrides for the blueprint
+          items:
+            $ref: '#/components/schemas/BlueprintVariableRequest'
+          default: []
+        specOverrides:
+          type: object
+          description: Partial spec overrides merged on top of the blueprint manifest
+          additionalProperties: true
+          nullable: true
+    BlueprintVariableRequest:
+      type: object
+      required:
+        - name
+        - value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        isSecret:
+          type: boolean
+          default: false
+    BlueprintResponse:
+      type: object
+      required:
+        - id
+        - catalogUrl
+        - tag
+        - environmentId
+      properties:
+        id:
+          type: string
+          format: uuid
+        catalogUrl:
+          type: string
+          format: uri
+          description: URL to the blueprint catalog entry
+        tag:
+          type: string
+          example: aws/postgres/17/1.0.1
+        environmentId:
+          type: string
+          format: uuid
     ArgoCdCredentialsRequest:
       type: object
       required:
