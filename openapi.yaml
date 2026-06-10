@@ -20031,7 +20031,7 @@ components:
     APIVariableTypeEnum:
       type: string
       description: |
-        type of the environment variable (VALUE, FILE, ALIAS, OVERRIDE, BUIT_IN, EXTERNAL_SECRET)
+        type of the environment variable (VALUE, FILE, ALIAS, OVERRIDE, BUIT_IN, EXTERNAL_SECRET, FILE_EXTERNAL_SECRET)
       enum:
         - VALUE
         - ALIAS
@@ -20039,6 +20039,7 @@ components:
         - BUILT_IN
         - FILE
         - EXTERNAL_SECRET
+        - FILE_EXTERNAL_SECRET
     GcpCredentialsRequest:
       oneOf:
         - $ref: '#/components/schemas/GcpServiceAccountKeyCredentialsRequest'
