@@ -2594,6 +2594,65 @@ paths:
           $ref: '#/components/responses/404'
         '502':
           description: Failed to fetch README from GitHub
+  '/organization/{organizationId}/blueprint/catalog/{provider}/{serviceFamily}/{serviceVersion}/manifest':
+    get:
+      summary: Get the input fields to display for a blueprint catalog service
+      description: >-
+        Returns the list of form fields the console must display to deploy the selected blueprint,
+        derived from the blueprint's qbm.yml manifest. Includes editable variables (overridable=true)
+        and auto-sourced context variables (overridable=false, with a source).
+      operationId: getBlueprintCatalogServiceManifest
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: provider
+          in: path
+          description: 'Cloud provider (e.g. aws, gcp, azure)'
+          required: true
+          schema:
+            type: string
+        - name: serviceFamily
+          in: path
+          description: 'Service family (e.g. mysql, postgresql)'
+          required: true
+          schema:
+            type: string
+        - name: serviceVersion
+          in: path
+          description: 'Service version (e.g. 8, 14)'
+          required: true
+          schema:
+            type: string
+      tags:
+        - Blueprint Catalog
+      responses:
+        '200':
+          description: The list of form fields to display for the selected blueprint
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: '#/components/schemas/BlueprintManifestVariableField'
+                        - $ref: '#/components/schemas/BlueprintManifestContextVariableField'
+                      discriminator:
+                        propertyName: kind
+                        mapping:
+                          variable: '#/components/schemas/BlueprintManifestVariableField'
+                          contextVariable: '#/components/schemas/BlueprintManifestContextVariableField'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '502':
+          description: Failed to fetch or parse the blueprint manifest from GitHub
   '/organization/{organizationId}/customRole':
     get:
       summary: List organization custom roles
@@ -14455,6 +14514,80 @@ components:
         environmentId:
           type: string
           format: uuid
+    BlueprintManifestVariableField:
+      type: object
+      description: 'An editable form input the user fills in (from spec.variables).'
+      required:
+        - kind
+        - name
+        - type
+        - required
+        - is_secret
+      properties:
+        kind:
+          type: string
+          enum:
+            - variable
+        name:
+          type: string
+          example: db_password
+        type:
+          $ref: '#/components/schemas/BlueprintManifestFieldType'
+        required:
+          type: boolean
+        is_secret:
+          type: boolean
+        description:
+          type: string
+          nullable: true
+        allowed_values:
+          type: array
+          nullable: true
+          items:
+            type: string
+        default_value:
+          type: string
+          nullable: true
+    BlueprintManifestContextVariableField:
+      type: object
+      description: 'An auto-sourced, read-only value (from spec.contextVariables); not user-editable.'
+      required:
+        - kind
+        - name
+      properties:
+        kind:
+          type: string
+          enum:
+            - contextVariable
+        name:
+          type: string
+          example: region
+        source:
+          type: string
+          nullable: true
+          description: 'Origin of the auto-sourced value (e.g. cluster.region)'
+    BlueprintManifestFieldType:
+      type: object
+      description: 'Field type with its type-specific validation conditions, discriminated by "type".'
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          enum:
+            - string
+            - bool
+            - number
+        min:
+          type: integer
+          format: int64
+          nullable: true
+          description: 'Lower bound, only present for number fields'
+        max:
+          type: integer
+          format: int64
+          nullable: true
+          description: 'Upper bound, only present for number fields'
     ArgoCdCredentialsRequest:
       type: object
       required:
