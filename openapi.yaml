@@ -16961,6 +16961,9 @@ components:
           type: array
           items:
             type: string
+        private_nodes:
+          type: boolean
+          default: false
     ClusterFeatureNatGatewayParameters:
       type: object
       properties:
