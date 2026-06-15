@@ -2576,14 +2576,11 @@ paths:
         - Blueprint Catalog
       responses:
         '200':
-          description: README content in Markdown format
+          description: README content and repository URL
           content:
-            text/markdown:
+            application/json:
               schema:
-                type: string
-            text/plain:
-              schema:
-                type: string
+                $ref: '#/components/schemas/BlueprintReadmeResponse'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2622,6 +2619,13 @@ paths:
           required: true
           schema:
             type: string
+        - name: environmentId
+          in: query
+          description: Environment ID used to resolve context variables
+          required: true
+          schema:
+            type: string
+            format: uuid
       tags:
         - Blueprint Catalog
       responses:
@@ -13994,7 +13998,13 @@ paths:
               $ref: '#/components/schemas/BlueprintCreateRequest'
       responses:
         '201':
-          description: Blueprint created
+          description: Blueprint created (deploy=false)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintResponse'
+        '202':
+          description: Blueprint created and deployment triggered (deploy=true)
           content:
             application/json:
               schema:
@@ -14011,8 +14021,78 @@ paths:
           description: Malformed blueprint tag
         '502':
           description: Failed to fetch blueprint manifest from GitHub
+  /blueprint/{blueprintId}/update:
+    get:
+      summary: Check if a blueprint service has an available update
+      operationId: checkBlueprintUpdate
+      tags:
+        - Blueprint Main Calls
+      description: >-
+        Returns the update availability for a deployed blueprint service, including
+        the latest tag, and a diff of variables that are new, changed, or removed.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      responses:
+        '200':
+          description: Blueprint update availability
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintUpdateResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          description: Malformed blueprint tag
+        '502':
+          description: Failed to fetch blueprint manifest from GitHub
+  /blueprint/{blueprintId}/update/preview:
+    post:
+      summary: Preview a blueprint update
+      operationId: previewBlueprintUpdate
+      tags:
+        - Blueprint Main Calls
+      description: >-
+        Dry-runs a blueprint update by applying the given variables and spec overrides
+        without persisting any changes. Returns a preview ID and the resolved service type.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlueprintUpdatePreviewRequest'
+      responses:
+        '202':
+          description: Preview accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintUpdatePreviewResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '502':
+          description: Failed to fetch blueprint manifest from GitHub
 components:
   parameters:
+    blueprintId:
+      name: blueprintId
+      in: path
+      description: Blueprint ID
+      required: true
+      schema:
+        type: string
+        format: uuid
     alertReceiverId:
       name: alertReceiverId
       in: path
@@ -14475,7 +14555,7 @@ components:
           items:
             $ref: '#/components/schemas/BlueprintVariableRequest'
           default: []
-        specOverrides:
+        spec_overrides:
           type: object
           description: Partial spec overrides merged on top of the blueprint manifest
           additionalProperties: true
@@ -14490,28 +14570,28 @@ components:
           type: string
         value:
           type: string
-        isSecret:
+        is_secret:
           type: boolean
           default: false
     BlueprintResponse:
       type: object
       required:
         - id
-        - catalogUrl
+        - catalog_url
         - tag
-        - environmentId
+        - environment_id
       properties:
         id:
           type: string
           format: uuid
-        catalogUrl:
+        catalog_url:
           type: string
           format: uri
           description: URL to the blueprint catalog entry
         tag:
           type: string
           example: aws/postgres/17/1.0.1
-        environmentId:
+        environment_id:
           type: string
           format: uuid
     BlueprintManifestVariableField:
@@ -14566,6 +14646,10 @@ components:
           type: string
           nullable: true
           description: 'Origin of the auto-sourced value (e.g. cluster.region)'
+        value:
+          type: string
+          nullable: true
+          description: 'Resolved value of the context variable at the time of the request'
     BlueprintManifestFieldType:
       type: object
       description: 'Field type with its type-specific validation conditions, discriminated by "type".'
@@ -14578,6 +14662,20 @@ components:
             - string
             - bool
             - number
+        pattern:
+          type: string
+          nullable: true
+          description: 'Regex pattern, only present for string fields'
+        min_length:
+          type: integer
+          format: int64
+          nullable: true
+          description: 'Minimum length, only present for string fields'
+        max_length:
+          type: integer
+          format: int64
+          nullable: true
+          description: 'Maximum length, only present for string fields'
         min:
           type: integer
           format: int64
@@ -14588,6 +14686,147 @@ components:
           format: int64
           nullable: true
           description: 'Upper bound, only present for number fields'
+    BlueprintReadmeResponse:
+      type: object
+      required:
+        - content
+        - repository_url
+      properties:
+        content:
+          type: string
+          description: README content in Markdown format
+        repository_url:
+          type: string
+          format: uri
+          description: URL of the GitHub repository hosting the blueprint
+    BlueprintUpdateResponse:
+      type: object
+      required:
+        - is_up_to_date
+        - latest_tag
+        - new_required_values
+        - new_optional_values
+        - now_required_values
+        - updated_values
+        - removed_values
+      properties:
+        is_up_to_date:
+          type: boolean
+        latest_tag:
+          type: string
+          example: aws/postgres/17/1.1.0
+        new_required_values:
+          type: array
+          description: Variables added in the latest version that are required with no default
+          items:
+            $ref: '#/components/schemas/BlueprintUpdateNewRequiredValue'
+        new_optional_values:
+          type: array
+          description: Variables added in the latest version that have a default value
+          items:
+            $ref: '#/components/schemas/BlueprintUpdateNewOptionalValue'
+        now_required_values:
+          type: array
+          description: Variables that were optional but are now required in the latest version
+          items:
+            $ref: '#/components/schemas/BlueprintUpdateNewRequiredValue'
+        updated_values:
+          type: array
+          description: Variables whose default value changed between the current and latest versions
+          items:
+            $ref: '#/components/schemas/BlueprintUpdateUpdatedValue'
+        removed_values:
+          type: array
+          description: Variables that no longer exist in the latest version
+          items:
+            $ref: '#/components/schemas/BlueprintUpdateRemovedValue'
+    BlueprintUpdateNewRequiredValue:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    BlueprintUpdateNewOptionalValue:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        default_value:
+          type: string
+          nullable: true
+    BlueprintUpdateUpdatedValue:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        current_default_value:
+          type: string
+          nullable: true
+        new_default_value:
+          type: string
+          nullable: true
+        current_value:
+          type: string
+          nullable: true
+    BlueprintUpdateRemovedValue:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    BlueprintUpdatePreviewRequest:
+      type: object
+      required:
+        - name
+        - tag
+        - icon
+      properties:
+        name:
+          type: string
+          description: Display name for the service
+          example: my-postgres
+        tag:
+          type: string
+          description: Catalog tag identifying the target blueprint version
+          example: aws/postgres/17/1.1.0
+        icon:
+          type: string
+          format: uri
+          description: Icon URL for the service
+          example: 'https://cdn.qovery.com/icons/postgresql.svg'
+        variables:
+          type: array
+          nullable: true
+          description: Variable overrides to apply in the preview
+          items:
+            $ref: '#/components/schemas/BlueprintVariableRequest'
+        spec_overrides:
+          type: object
+          description: Partial spec overrides merged on top of the blueprint manifest
+          additionalProperties: true
+          nullable: true
+    BlueprintUpdatePreviewResponse:
+      type: object
+      required:
+        - preview_id
+        - service_type
+      properties:
+        preview_id:
+          type: string
+          description: Identifier of the preview execution
+          example: exec-abc-123
+        service_type:
+          type: string
+          enum:
+            - HELM
+            - TERRAFORM
+          description: Type of the underlying service backing this blueprint
     ArgoCdCredentialsRequest:
       type: object
       required:
