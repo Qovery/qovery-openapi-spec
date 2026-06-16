@@ -14083,6 +14083,45 @@ paths:
           $ref: '#/components/responses/404'
         '502':
           description: Failed to fetch blueprint manifest from GitHub
+  /blueprint/{blueprintId}:
+    patch:
+      summary: Update a blueprint service
+      operationId: updateBlueprint
+      tags:
+        - Blueprint Main Calls
+      description: >-
+        Persists new values for a deployed blueprint service. Intended to be
+        called after reviewing the diff returned by GET
+        /blueprint/{blueprintId}/update.
+
+
+        **Variable semantics (replace-all):** when `variables` is provided, the
+        stored list is replaced entirely — omit a variable from the list to
+        remove it. Pass `null` or omit the field to leave the existing variables
+        unchanged. The same null-means-keep rule applies to `spec_overrides`.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlueprintUpdateRequest'
+      responses:
+        '200':
+          description: Blueprint updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   parameters:
     blueprintId:
@@ -14827,6 +14866,42 @@ components:
             - HELM
             - TERRAFORM
           description: Type of the underlying service backing this blueprint
+    BlueprintUpdateRequest:
+      type: object
+      required:
+        - name
+        - tag
+        - icon
+      properties:
+        name:
+          type: string
+          description: Display name for the service
+          example: my-postgres
+        tag:
+          type: string
+          description: Catalog tag identifying the target blueprint version
+          example: aws/postgres/17/1.1.0
+        icon:
+          type: string
+          format: uri
+          description: Icon URL for the service
+          example: 'https://cdn.qovery.com/icons/postgresql.svg'
+        variables:
+          type: array
+          nullable: true
+          description: >-
+            Full replacement list of variable overrides. Omit a variable from
+            the list to remove it. Pass null or omit the field to leave the
+            existing variables unchanged.
+          items:
+            $ref: '#/components/schemas/BlueprintVariableRequest'
+        spec_overrides:
+          type: object
+          nullable: true
+          description: >-
+            Partial spec overrides merged on top of the blueprint manifest.
+            Pass null or omit the field to leave existing overrides unchanged.
+          additionalProperties: true
     ArgoCdCredentialsRequest:
       type: object
       required:
