@@ -14056,8 +14056,10 @@ paths:
       tags:
         - Blueprint Main Calls
       description: >-
-        Dry-runs a blueprint update by applying the given variables and spec overrides
-        without persisting any changes. Returns a preview ID and the resolved service type.
+        Dry-runs a blueprint update without persisting any changes. Returns a
+        preview ID and the resolved service type. Variable semantics match
+        PATCH /blueprint/{blueprintId}: `variables` upserts, `removed_variables`
+        explicitly deletes, everything else is left untouched.
       parameters:
         - $ref: '#/components/parameters/blueprintId'
       requestBody:
@@ -14095,10 +14097,11 @@ paths:
         /blueprint/{blueprintId}/update.
 
 
-        **Variable semantics (replace-all):** when `variables` is provided, the
-        stored list is replaced entirely — omit a variable from the list to
-        remove it. Pass `null` or omit the field to leave the existing variables
-        unchanged. The same null-means-keep rule applies to `spec_overrides`.
+        **Variable semantics (upsert + explicit delete):** `variables` is an
+        upsert list — only the variables you include are added or updated;
+        everything else is left untouched. To delete a variable, include its
+        name in `removed_variables`. `spec_overrides` follows null-means-keep:
+        pass null or omit to preserve the existing value.
       parameters:
         - $ref: '#/components/parameters/blueprintId'
       requestBody:
@@ -14841,10 +14844,16 @@ components:
           example: 'https://cdn.qovery.com/icons/postgresql.svg'
         variables:
           type: array
-          nullable: true
-          description: Variable overrides to apply in the preview
+          description: Variables to upsert for the preview. Untouched variables keep their stored values.
           items:
             $ref: '#/components/schemas/BlueprintVariableRequest'
+          default: []
+        removed_variables:
+          type: array
+          description: Names of variables to exclude from the preview.
+          items:
+            type: string
+          default: []
         spec_overrides:
           type: object
           description: Partial spec overrides merged on top of the blueprint manifest
@@ -14888,13 +14897,21 @@ components:
           example: 'https://cdn.qovery.com/icons/postgresql.svg'
         variables:
           type: array
-          nullable: true
           description: >-
-            Full replacement list of variable overrides. Omit a variable from
-            the list to remove it. Pass null or omit the field to leave the
-            existing variables unchanged.
+            Variables to upsert (add or update). Variables not listed here are
+            left untouched. Use removed_variables to explicitly delete a
+            variable.
           items:
             $ref: '#/components/schemas/BlueprintVariableRequest'
+          default: []
+        removed_variables:
+          type: array
+          description: >-
+            Names of variables to remove from the blueprint. Any name listed
+            here that does not exist is silently ignored.
+          items:
+            type: string
+          default: []
         spec_overrides:
           type: object
           nullable: true
