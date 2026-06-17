@@ -14056,8 +14056,9 @@ paths:
       tags:
         - Blueprint Main Calls
       description: >-
-        Dry-runs a blueprint update by applying the given variables and spec overrides
-        without persisting any changes. Returns a preview ID and the resolved service type.
+        Dry-runs a blueprint update without persisting any changes. Returns a
+        preview ID and the resolved service type. Both `variables` and
+        `spec_overrides` follow RFC 7396 patch semantics.
       parameters:
         - $ref: '#/components/parameters/blueprintId'
       requestBody:
@@ -14083,6 +14084,46 @@ paths:
           $ref: '#/components/responses/404'
         '502':
           description: Failed to fetch blueprint manifest from GitHub
+  /blueprint/{blueprintId}:
+    patch:
+      summary: Update a blueprint service
+      operationId: updateBlueprint
+      tags:
+        - Blueprint Main Calls
+      description: >-
+        Persists new values for a deployed blueprint service. Intended to be
+        called after reviewing the diff returned by GET
+        /blueprint/{blueprintId}/update.
+
+        `variables` and `spec_overrides` follow JSON Merge Patch (RFC 7396)
+        semantics: non-null value on a key upserts it, null value removes it,
+        absent keys are left untouched, and passing null for the whole field
+        leaves all existing values unchanged.
+
+        **Note:** `name`, `tag`, and `icon` are required on every call.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlueprintUpdateRequest'
+      responses:
+        '200':
+          description: Blueprint updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
 components:
   parameters:
     blueprintId:
@@ -14573,6 +14614,19 @@ components:
         is_secret:
           type: boolean
           default: false
+    BlueprintUpdateVariableValue:
+      type: object
+      description: >-
+        Value object for a variable in a patch map.
+        Set the map value to null to remove the variable.
+      required:
+        - value
+      properties:
+        value:
+          type: string
+        is_secret:
+          type: boolean
+          default: false
     BlueprintResponse:
       type: object
       required:
@@ -14801,16 +14855,25 @@ components:
           description: Icon URL for the service
           example: 'https://cdn.qovery.com/icons/postgresql.svg'
         variables:
-          type: array
-          nullable: true
-          description: Variable overrides to apply in the preview
-          items:
-            $ref: '#/components/schemas/BlueprintVariableRequest'
+          type: object
+          description: >-
+            RFC 7396 patch map keyed by variable name. Non-null value upserts
+            the variable; null value removes it. Absent keys are left untouched.
+            Omitting the field entirely is equivalent to an empty map — no
+            variables are modified.
+          additionalProperties:
+            $ref: '#/components/schemas/BlueprintUpdateVariableValue'
+            nullable: true
         spec_overrides:
           type: object
-          description: Partial spec overrides merged on top of the blueprint manifest
-          additionalProperties: true
           nullable: true
+          description: >-
+            JSON Merge Patch (RFC 7396) applied to the stored spec_overrides.
+            Keys with a non-null value are upserted; keys with a null value are
+            removed. Pass null or omit the field to leave all existing overrides
+            unchanged.
+          additionalProperties:
+            nullable: true
     BlueprintUpdatePreviewResponse:
       type: object
       required:
@@ -14827,6 +14890,46 @@ components:
             - HELM
             - TERRAFORM
           description: Type of the underlying service backing this blueprint
+    BlueprintUpdateRequest:
+      type: object
+      required:
+        - name
+        - tag
+        - icon
+      properties:
+        name:
+          type: string
+          description: Display name for the service
+          example: my-postgres
+        tag:
+          type: string
+          description: Catalog tag identifying the target blueprint version
+          example: aws/postgres/17/1.1.0
+        icon:
+          type: string
+          format: uri
+          description: Icon URL for the service
+          example: 'https://cdn.qovery.com/icons/postgresql.svg'
+        variables:
+          type: object
+          description: >-
+            RFC 7396 patch map keyed by variable name. Non-null value upserts
+            the variable; null value removes it. Absent keys are left untouched.
+            Omitting the field entirely is equivalent to an empty map — no
+            variables are modified.
+          additionalProperties:
+            $ref: '#/components/schemas/BlueprintUpdateVariableValue'
+            nullable: true
+        spec_overrides:
+          type: object
+          nullable: true
+          description: >-
+            JSON Merge Patch (RFC 7396) applied to the stored spec_overrides.
+            Keys with a non-null value are upserted; keys with a null value are
+            removed. Pass null or omit the field to leave all existing overrides
+            unchanged.
+          additionalProperties:
+            nullable: true
     ArgoCdCredentialsRequest:
       type: object
       required:
