@@ -14057,8 +14057,7 @@ paths:
         - Blueprint Main Calls
       description: >-
         Dry-runs a blueprint update without persisting any changes. Returns a
-        preview ID and the resolved service type. Variable semantics match
-        PATCH /blueprint/{blueprintId}: `variables` upserts, `removed_variables`
+        preview ID and the resolved service type.`variables` upserts, `removed_variables`
         explicitly deletes, everything else is left untouched.
       parameters:
         - $ref: '#/components/parameters/blueprintId'
@@ -14097,7 +14096,7 @@ paths:
         /blueprint/{blueprintId}/update.
 
 
-        **Variable semantics (upsert + explicit delete):** `variables` is an
+        **Variable semantics:** `variables` is an
         upsert list — only the variables you include are added or updated;
         everything else is left untouched. To delete a variable, include its
         name in `removed_variables`. `spec_overrides` follows null-means-keep:
@@ -14856,9 +14855,14 @@ components:
           default: []
         spec_overrides:
           type: object
-          description: Partial spec overrides merged on top of the blueprint manifest
-          additionalProperties: true
           nullable: true
+          description: >-
+            JSON Merge Patch (RFC 7396) applied to the stored spec_overrides.
+            Keys with a non-null value are upserted; keys with a null value are
+            removed. Pass null or omit the field to leave all existing overrides
+            unchanged.
+          additionalProperties:
+            nullable: true
     BlueprintUpdatePreviewResponse:
       type: object
       required:
@@ -14916,9 +14920,12 @@ components:
           type: object
           nullable: true
           description: >-
-            Partial spec overrides merged on top of the blueprint manifest.
-            Pass null or omit the field to leave existing overrides unchanged.
-          additionalProperties: true
+            JSON Merge Patch (RFC 7396) applied to the stored spec_overrides.
+            Keys with a non-null value are upserted; keys with a null value are
+            removed. Pass null or omit the field to leave all existing overrides
+            unchanged.
+          additionalProperties:
+            nullable: true
     ArgoCdCredentialsRequest:
       type: object
       required:
