@@ -14859,6 +14859,8 @@ components:
           description: >-
             RFC 7396 patch map keyed by variable name. Non-null value upserts
             the variable; null value removes it. Absent keys are left untouched.
+            Omitting the field entirely is equivalent to an empty map — no
+            variables are modified.
           additionalProperties:
             $ref: '#/components/schemas/BlueprintUpdateVariableValue'
             nullable: true
@@ -14913,6 +14915,8 @@ components:
           description: >-
             RFC 7396 patch map keyed by variable name. Non-null value upserts
             the variable; null value removes it. Absent keys are left untouched.
+            Omitting the field entirely is equivalent to an empty map — no
+            variables are modified.
           additionalProperties:
             $ref: '#/components/schemas/BlueprintUpdateVariableValue'
             nullable: true
