@@ -14095,11 +14095,12 @@ paths:
         called after reviewing the diff returned by GET
         /blueprint/{blueprintId}/update.
 
-
-        Both `variables` and `spec_overrides` follow JSON Merge Patch (RFC 7396)
+        `variables` and `spec_overrides` follow JSON Merge Patch (RFC 7396)
         semantics: non-null value on a key upserts it, null value removes it,
         absent keys are left untouched, and passing null for the whole field
         leaves all existing values unchanged.
+
+        **Note:** `name`, `tag`, and `icon` are required on every call.
       parameters:
         - $ref: '#/components/parameters/blueprintId'
       requestBody:
