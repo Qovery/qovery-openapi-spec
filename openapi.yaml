@@ -4045,9 +4045,9 @@ paths:
           $ref: '#/components/responses/404'
   '/organization/{organizationId}/cluster/{clusterId}/karpenterPrivateSubnetIds':
     put:
-      summary: Update karpenter private fargate subnet ids
-      description: Update karpenter private fargate subnet ids
-      operationId: updateKarpenterPrivateFargateSubnetIds
+      summary: Update karpenter private subnet ids
+      description: Update karpenter private subnet ids
+      operationId: updateKarpenterPrivateSubnetIds
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/clusterId'
@@ -16879,15 +16879,15 @@ components:
     ClusterKarpenterPrivateSubnetIdsPutRequest:
       type: object
       properties:
-        eks_karpenter_fargate_subnets_zone_a_ids:
+        eks_private_subnets_zone_a_ids:
           type: array
           items:
             type: string
-        eks_karpenter_fargate_subnets_zone_b_ids:
+        eks_private_subnets_zone_b_ids:
           type: array
           items:
             type: string
-        eks_karpenter_fargate_subnets_zone_c_ids:
+        eks_private_subnets_zone_c_ids:
           type: array
           items:
             type: string
@@ -17250,7 +17250,7 @@ components:
           nullable: true
           items:
             type: string
-        eks_karpenter_fargate_subnets_zone_a_ids:
+        eks_private_subnets_zone_a_ids:
           type: array
           x-stoplight:
             id: 8rttrya00wmkr
@@ -17259,7 +17259,7 @@ components:
             x-stoplight:
               id: rtxx96v011irr
             type: string
-        eks_karpenter_fargate_subnets_zone_b_ids:
+        eks_private_subnets_zone_b_ids:
           type: array
           x-stoplight:
             id: xnbtr8676culs
@@ -17268,7 +17268,7 @@ components:
             x-stoplight:
               id: 1w592qk4spodn
             type: string
-        eks_karpenter_fargate_subnets_zone_c_ids:
+        eks_private_subnets_zone_c_ids:
           type: array
           x-stoplight:
             id: st5domzqqkcoh
