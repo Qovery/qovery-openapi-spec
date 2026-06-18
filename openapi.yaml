@@ -14763,6 +14763,7 @@ components:
         - now_required_values
         - updated_values
         - removed_values
+        - engine_diff
       properties:
         is_up_to_date:
           type: boolean
@@ -14794,6 +14795,19 @@ components:
           description: Variables that no longer exist in the latest version
           items:
             $ref: '#/components/schemas/BlueprintUpdateRemovedValue'
+        engine_diff:
+          $ref: '#/components/schemas/BlueprintUpdateEngineDiff'
+    BlueprintUpdateEngineDiff:
+      type: object
+      description: >-
+        Catalog engine-block deltas between the current and latest blueprint tag.
+      required:
+        - updated_values
+      properties:
+        updated_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintUpdateUpdatedValue'
     BlueprintUpdateNewRequiredValue:
       type: object
       required:
