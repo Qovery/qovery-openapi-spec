@@ -2630,23 +2630,11 @@ paths:
         - Blueprint Catalog
       responses:
         '200':
-          description: The list of form fields to display for the selected blueprint
+          description: The form fields and engine spec for the selected blueprint
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  results:
-                    type: array
-                    items:
-                      oneOf:
-                        - $ref: '#/components/schemas/BlueprintManifestVariableField'
-                        - $ref: '#/components/schemas/BlueprintManifestContextVariableField'
-                      discriminator:
-                        propertyName: kind
-                        mapping:
-                          variable: '#/components/schemas/BlueprintManifestVariableField'
-                          contextVariable: '#/components/schemas/BlueprintManifestContextVariableField'
+                $ref: '#/components/schemas/BlueprintManifestResponse'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -14066,7 +14054,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlueprintUpdatePreviewRequest'
+              $ref: '#/components/schemas/BlueprintUpdateRequest'
       responses:
         '202':
           description: Preview accepted
@@ -14648,6 +14636,198 @@ components:
         environment_id:
           type: string
           format: uuid
+    BlueprintManifestResponse:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          description: Form fields the console renders for the user (variables + auto-sourced context variables).
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/BlueprintManifestVariableField'
+              - $ref: '#/components/schemas/BlueprintManifestContextVariableField'
+            discriminator:
+              propertyName: kind
+              mapping:
+                variable: '#/components/schemas/BlueprintManifestVariableField'
+                contextVariable: '#/components/schemas/BlueprintManifestContextVariableField'
+        engine:
+          $ref: '#/components/schemas/BlueprintManifestEngineSpec'
+    BlueprintManifestEngineSpec:
+      description: Engine spec discriminated by `type`. Catalog-declared execution config + per-knob default/allowedValues/overridable metadata for the console to render.
+      oneOf:
+        - $ref: '#/components/schemas/BlueprintManifestEngineTerraform'
+        - $ref: '#/components/schemas/BlueprintManifestEngineOpenTofu'
+        - $ref: '#/components/schemas/BlueprintManifestEngineHelm'
+      discriminator:
+        propertyName: type
+        mapping:
+          terraform: '#/components/schemas/BlueprintManifestEngineTerraform'
+          opentofu: '#/components/schemas/BlueprintManifestEngineOpenTofu'
+          helm: '#/components/schemas/BlueprintManifestEngineHelm'
+    BlueprintManifestEngineTerraform:
+      type: object
+      required:
+        - type
+        - provider
+        - terraform
+      properties:
+        type:
+          type: string
+          enum:
+            - terraform
+        provider:
+          $ref: '#/components/schemas/CloudVendorEnum'
+        terraform:
+          $ref: '#/components/schemas/BlueprintManifestVersionBlock'
+        credentials:
+          $ref: '#/components/schemas/BlueprintManifestCredentialsConfig'
+        backend:
+          $ref: '#/components/schemas/BlueprintManifestBackendConfig'
+        timeout:
+          type: integer
+          format: int64
+          nullable: true
+          description: Default execution timeout in seconds.
+        resources:
+          $ref: '#/components/schemas/BlueprintManifestResourcesConfig'
+    BlueprintManifestEngineOpenTofu:
+      type: object
+      required:
+        - type
+        - provider
+        - opentofu
+      properties:
+        type:
+          type: string
+          enum:
+            - opentofu
+        provider:
+          $ref: '#/components/schemas/CloudVendorEnum'
+        opentofu:
+          $ref: '#/components/schemas/BlueprintManifestVersionBlock'
+        credentials:
+          $ref: '#/components/schemas/BlueprintManifestCredentialsConfig'
+        backend:
+          $ref: '#/components/schemas/BlueprintManifestBackendConfig'
+        timeout:
+          type: integer
+          format: int64
+          nullable: true
+        resources:
+          $ref: '#/components/schemas/BlueprintManifestResourcesConfig'
+    BlueprintManifestEngineHelm:
+      type: object
+      required:
+        - type
+        - chart
+      properties:
+        type:
+          type: string
+          enum:
+            - helm
+        chart:
+          $ref: '#/components/schemas/BlueprintManifestChartConfig'
+        timeout:
+          type: integer
+          format: int64
+          nullable: true
+        resources:
+          $ref: '#/components/schemas/BlueprintManifestResourcesConfig'
+    BlueprintManifestVersionBlock:
+      type: object
+      required:
+        - version
+      properties:
+        version:
+          type: string
+          description: Catalog-declared default version for this engine.
+          example: '1.9.7'
+        allowed_values:
+          type: array
+          nullable: true
+          description: Versions the user may choose from. Null = unrestricted.
+          items:
+            type: string
+    BlueprintManifestCredentialsConfig:
+      type: object
+      description: Credentials override metadata. Catalog default + which values are allowed and whether the user can override at all.
+      properties:
+        default:
+          type: string
+          nullable: true
+          example: cluster
+        allowed_values:
+          type: array
+          nullable: true
+          items:
+            type: string
+        overridable:
+          type: boolean
+          default: true
+    BlueprintManifestBackendConfig:
+      type: object
+      description: Backend override metadata. Catalog default + which values are allowed, plus the user-provided backend block when the catalog ships one.
+      properties:
+        default:
+          type: string
+          nullable: true
+          example: qovery
+        allowed_values:
+          type: array
+          nullable: true
+          items:
+            type: string
+        overridable:
+          type: boolean
+          default: true
+        user_provided:
+          $ref: '#/components/schemas/BlueprintManifestUserProvidedBackend'
+    BlueprintManifestUserProvidedBackend:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: 'Terraform backend type (e.g. "s3", "gcs", "azurerm").'
+        config:
+          type: object
+          description: Static backend config (bucket, region, etc.).
+          additionalProperties:
+            type: string
+          default: {}
+    BlueprintManifestResourcesConfig:
+      type: object
+      description: Catalog-declared default compute resources for the execution job.
+      properties:
+        cpu:
+          type: string
+          nullable: true
+          example: '500m'
+        ram:
+          type: string
+          nullable: true
+          example: '512Mi'
+        storage:
+          type: string
+          nullable: true
+    BlueprintManifestChartConfig:
+      type: object
+      required:
+        - repository
+        - name
+        - version
+      properties:
+        repository:
+          type: string
+          format: uri
+        name:
+          type: string
+        version:
+          type: string
     BlueprintManifestVariableField:
       type: object
       description: 'An editable form input the user fills in (from spec.variables).'
@@ -14763,6 +14943,7 @@ components:
         - now_required_values
         - updated_values
         - removed_values
+        - engine_diff
       properties:
         is_up_to_date:
           type: boolean
@@ -14794,6 +14975,19 @@ components:
           description: Variables that no longer exist in the latest version
           items:
             $ref: '#/components/schemas/BlueprintUpdateRemovedValue'
+        engine_diff:
+          $ref: '#/components/schemas/BlueprintUpdateEngineDiff'
+    BlueprintUpdateEngineDiff:
+      type: object
+      description: >-
+        Catalog engine-block deltas between the current and latest blueprint tag.
+      required:
+        - updated_values
+      properties:
+        updated_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintUpdateUpdatedValue'
     BlueprintUpdateNewRequiredValue:
       type: object
       required:
@@ -14834,46 +15028,6 @@ components:
       properties:
         name:
           type: string
-    BlueprintUpdatePreviewRequest:
-      type: object
-      required:
-        - name
-        - tag
-        - icon
-      properties:
-        name:
-          type: string
-          description: Display name for the service
-          example: my-postgres
-        tag:
-          type: string
-          description: Catalog tag identifying the target blueprint version
-          example: aws/postgres/17/1.1.0
-        icon:
-          type: string
-          format: uri
-          description: Icon URL for the service
-          example: 'https://cdn.qovery.com/icons/postgresql.svg'
-        variables:
-          type: object
-          description: >-
-            RFC 7396 patch map keyed by variable name. Non-null value upserts
-            the variable; null value removes it. Absent keys are left untouched.
-            Omitting the field entirely is equivalent to an empty map — no
-            variables are modified.
-          additionalProperties:
-            $ref: '#/components/schemas/BlueprintUpdateVariableValue'
-            nullable: true
-        spec_overrides:
-          type: object
-          nullable: true
-          description: >-
-            JSON Merge Patch (RFC 7396) applied to the stored spec_overrides.
-            Keys with a non-null value are upserted; keys with a null value are
-            removed. Pass null or omit the field to leave all existing overrides
-            unchanged.
-          additionalProperties:
-            nullable: true
     BlueprintUpdatePreviewResponse:
       type: object
       required:
