@@ -14054,7 +14054,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlueprintUpdatePreviewRequest'
+              $ref: '#/components/schemas/BlueprintUpdateRequest'
       responses:
         '202':
           description: Preview accepted
@@ -14654,32 +14654,19 @@ components:
                 variable: '#/components/schemas/BlueprintManifestVariableField'
                 contextVariable: '#/components/schemas/BlueprintManifestContextVariableField'
         engine:
-          allOf:
-            - $ref: '#/components/schemas/BlueprintManifestEngineSpec'
-          nullable: true
-          description: Engine block from the catalog manifest. Null for blueprints that don't declare one.
+          $ref: '#/components/schemas/BlueprintManifestEngineSpec'
     BlueprintManifestEngineSpec:
-      type: object
-      description: Engine spec discriminated by `type`.
-      required:
-        - type
-      properties:
-        type:
-          type: string
-          enum:
-            - terraform
-            - opentofu
-            - helm
+      description: Engine spec discriminated by `type`. Catalog-declared execution config + per-knob default/allowedValues/overridable metadata for the console to render.
+      oneOf:
+        - $ref: '#/components/schemas/BlueprintManifestEngineTerraform'
+        - $ref: '#/components/schemas/BlueprintManifestEngineOpenTofu'
+        - $ref: '#/components/schemas/BlueprintManifestEngineHelm'
       discriminator:
         propertyName: type
         mapping:
           terraform: '#/components/schemas/BlueprintManifestEngineTerraform'
           opentofu: '#/components/schemas/BlueprintManifestEngineOpenTofu'
           helm: '#/components/schemas/BlueprintManifestEngineHelm'
-      oneOf:
-        - $ref: '#/components/schemas/BlueprintManifestEngineTerraform'
-        - $ref: '#/components/schemas/BlueprintManifestEngineOpenTofu'
-        - $ref: '#/components/schemas/BlueprintManifestEngineHelm'
     BlueprintManifestEngineTerraform:
       type: object
       required:
@@ -14696,22 +14683,16 @@ components:
         terraform:
           $ref: '#/components/schemas/BlueprintManifestVersionBlock'
         credentials:
-          allOf:
-            - $ref: '#/components/schemas/BlueprintManifestCredentialsConfig'
-          nullable: true
+          $ref: '#/components/schemas/BlueprintManifestCredentialsConfig'
         backend:
-          allOf:
-            - $ref: '#/components/schemas/BlueprintManifestBackendConfig'
-          nullable: true
+          $ref: '#/components/schemas/BlueprintManifestBackendConfig'
         timeout:
           type: integer
           format: int64
           nullable: true
           description: Default execution timeout in seconds.
         resources:
-          allOf:
-            - $ref: '#/components/schemas/BlueprintManifestResourcesConfig'
-          nullable: true
+          $ref: '#/components/schemas/BlueprintManifestResourcesConfig'
     BlueprintManifestEngineOpenTofu:
       type: object
       required:
@@ -14728,21 +14709,15 @@ components:
         opentofu:
           $ref: '#/components/schemas/BlueprintManifestVersionBlock'
         credentials:
-          allOf:
-            - $ref: '#/components/schemas/BlueprintManifestCredentialsConfig'
-          nullable: true
+          $ref: '#/components/schemas/BlueprintManifestCredentialsConfig'
         backend:
-          allOf:
-            - $ref: '#/components/schemas/BlueprintManifestBackendConfig'
-          nullable: true
+          $ref: '#/components/schemas/BlueprintManifestBackendConfig'
         timeout:
           type: integer
           format: int64
           nullable: true
         resources:
-          allOf:
-            - $ref: '#/components/schemas/BlueprintManifestResourcesConfig'
-          nullable: true
+          $ref: '#/components/schemas/BlueprintManifestResourcesConfig'
     BlueprintManifestEngineHelm:
       type: object
       required:
@@ -14760,9 +14735,7 @@ components:
           format: int64
           nullable: true
         resources:
-          allOf:
-            - $ref: '#/components/schemas/BlueprintManifestResourcesConfig'
-          nullable: true
+          $ref: '#/components/schemas/BlueprintManifestResourcesConfig'
     BlueprintManifestVersionBlock:
       type: object
       required:
@@ -14811,9 +14784,7 @@ components:
           type: boolean
           default: true
         user_provided:
-          allOf:
-            - $ref: '#/components/schemas/BlueprintManifestUserProvidedBackend'
-          nullable: true
+          $ref: '#/components/schemas/BlueprintManifestUserProvidedBackend'
     BlueprintManifestUserProvidedBackend:
       type: object
       required:
@@ -15057,46 +15028,6 @@ components:
       properties:
         name:
           type: string
-    BlueprintUpdatePreviewRequest:
-      type: object
-      required:
-        - name
-        - tag
-        - icon
-      properties:
-        name:
-          type: string
-          description: Display name for the service
-          example: my-postgres
-        tag:
-          type: string
-          description: Catalog tag identifying the target blueprint version
-          example: aws/postgres/17/1.1.0
-        icon:
-          type: string
-          format: uri
-          description: Icon URL for the service
-          example: 'https://cdn.qovery.com/icons/postgresql.svg'
-        variables:
-          type: object
-          description: >-
-            RFC 7396 patch map keyed by variable name. Non-null value upserts
-            the variable; null value removes it. Absent keys are left untouched.
-            Omitting the field entirely is equivalent to an empty map — no
-            variables are modified.
-          additionalProperties:
-            $ref: '#/components/schemas/BlueprintUpdateVariableValue'
-            nullable: true
-        spec_overrides:
-          type: object
-          nullable: true
-          description: >-
-            JSON Merge Patch (RFC 7396) applied to the stored spec_overrides.
-            Keys with a non-null value are upserted; keys with a null value are
-            removed. Pass null or omit the field to leave all existing overrides
-            unchanged.
-          additionalProperties:
-            nullable: true
     BlueprintUpdatePreviewResponse:
       type: object
       required:
