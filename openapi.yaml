@@ -15507,6 +15507,11 @@ components:
                 id: 3n3pebmhkah3k
               default: 0
               minimum: 0
+            ephemeral_storage_in_gib:
+              type: integer
+              description: Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+              minimum: 0
+              example: 10
             min_running_instances:
               type: integer
               minimum: 0
@@ -15625,6 +15630,11 @@ components:
               minimum: 0
               default: 0
               example: 1
+            ephemeral_storage_in_gib:
+              type: integer
+              description: Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+              minimum: 0
+              example: 10
             min_running_instances:
               type: integer
               minimum: 0
@@ -15925,6 +15935,11 @@ components:
               default: 0
               minimum: 0
               example: 1
+            ephemeral_storage_in_gib:
+              type: integer
+              description: Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+              minimum: 0
+              example: 10
             min_running_instances:
               type: integer
               minimum: 0
@@ -18609,6 +18624,11 @@ components:
               minimum: 0
               default: 0
               example: 1
+            ephemeral_storage_in_gib:
+              type: integer
+              description: Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+              minimum: 0
+              example: 10
             min_running_instances:
               type: integer
               minimum: 0
@@ -18716,6 +18736,11 @@ components:
               default: 0
               minimum: 0
               example: 1
+            ephemeral_storage_in_gib:
+              type: integer
+              description: Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+              minimum: 0
+              example: 10
             min_running_instances:
               type: integer
               minimum: 0
@@ -20918,6 +20943,11 @@ components:
               default: 0
               minimum: 0
               example: 1
+            ephemeral_storage_in_gib:
+              type: integer
+              description: Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+              minimum: 0
+              example: 10
             max_nb_restart:
               type: integer
               minimum: 0
@@ -24406,6 +24436,11 @@ components:
               default: 0
               minimum: 0
               example: 1
+            ephemeral_storage_in_gib:
+              type: integer
+              description: Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+              minimum: 0
+              example: 10
             max_nb_restart:
               type: integer
               minimum: 0
