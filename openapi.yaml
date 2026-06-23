@@ -14596,9 +14596,10 @@ components:
 
         **Terraform / OpenTofu blueprints**
 
-        `engine_version` is **required** on create. The value must be one of the
-        versions listed in `spec.engine.terraform.allowedValues` (or
-        `opentofu.allowedValues`) in the manifest.
+        `engine_version` is optional. When omitted, the engine falls back to the
+        catalog manifest's `spec.engine.terraform.version` (or `opentofu.version`).
+        When provided, the value must be one of the versions listed in the matching
+        `allowedValues` in the manifest.
 
         **Helm blueprints**
 
@@ -14608,9 +14609,10 @@ components:
         engine_version:
           type: string
           description: >-
-            Terraform or OpenTofu version to use for the apply job.
-            Required when the blueprint engine type is `terraform` or `opentofu`.
-            Must be one of the versions in the manifest's `allowedValues` list.
+            Terraform or OpenTofu version to use for the apply job. Optional —
+            when omitted, the engine uses the manifest's catalog default version.
+            When provided, must be one of the versions in the manifest's
+            `allowedValues` list.
           example: '1.13.3'
         credentials:
           type: string
@@ -14743,6 +14745,8 @@ components:
         - type
         - provider
         - terraform
+        - credentials
+        - backend
       properties:
         type:
           type: string
@@ -14769,6 +14773,8 @@ components:
         - type
         - provider
         - opentofu
+        - credentials
+        - backend
       properties:
         type:
           type: string
@@ -14821,13 +14827,15 @@ components:
           description: Versions the user may choose from. Null = unrestricted.
           items:
             type: string
+        overridable:
+          type: boolean
+          description: Whether the user may override the version. Omitted in the manifest means false — only the catalog default is accepted unless explicitly set to true.
     BlueprintManifestCredentialsConfig:
       type: object
-      description: Credentials override metadata. Catalog default + which values are allowed and whether the user can override at all.
+      description: Credentials override metadata. Which values are allowed and whether the user can override at all.
       properties:
         default:
           type: string
-          nullable: true
           example: cluster
         allowed_values:
           type: array
@@ -14836,14 +14844,13 @@ components:
             type: string
         overridable:
           type: boolean
-          default: true
+          description: Whether the user may override credentials. Omitted in the manifest means false.
     BlueprintManifestBackendConfig:
       type: object
-      description: Backend override metadata. Catalog default + which values are allowed, plus the user-provided backend block when the catalog ships one.
+      description: Backend override metadata. Which values are allowed, plus the user-provided backend block when the catalog ships one.
       properties:
         default:
           type: string
-          nullable: true
           example: qovery
         allowed_values:
           type: array
@@ -14852,7 +14859,7 @@ components:
             type: string
         overridable:
           type: boolean
-          default: true
+          description: Whether the user may override the backend. Omitted in the manifest means false.
         user_provided:
           $ref: '#/components/schemas/BlueprintManifestUserProvidedBackend'
     BlueprintManifestUserProvidedBackend:
