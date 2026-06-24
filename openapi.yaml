@@ -1672,6 +1672,105 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/clusters/{clusterId}/analysis':
+    post:
+      summary: Start cluster analysis
+      description: Starts a read-only analysis for the cluster. The result and logs can be retrieved later from the cluster analysis endpoints.
+      operationId: startClusterAnalysis
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterAnalysisRequest'
+      responses:
+        '202':
+          description: Cluster analysis started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: A cluster analysis is already in progress for this cluster
+    get:
+      summary: List cluster analyses
+      description: Lists previous analysis executions for the cluster.
+      operationId: listClusterAnalyses
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: List cluster analyses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterAnalysisResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/clusters/{clusterId}/analysis/{analysisId}':
+    get:
+      summary: Get cluster analysis
+      description: Returns metadata and status for one cluster analysis execution.
+      operationId: getClusterAnalysis
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+        - $ref: '#/components/parameters/analysisId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: Cluster analysis
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterAnalysisResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/clusters/{clusterId}/analysis/{analysisId}/logs':
+    get:
+      summary: List cluster analysis logs
+      description: Returns the persisted cluster analysis report/log lines in order.
+      operationId: listClusterAnalysisLogs
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+        - $ref: '#/components/parameters/analysisId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: List cluster analysis logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterAnalysisLogResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/secretManagerAccess/{secretManagerAccessId}/secrets':
     get:
       summary: List upstream secrets from secret provider
@@ -14146,6 +14245,14 @@ components:
       schema:
         type: string
         format: uuid
+    analysisId:
+      name: analysisId
+      in: path
+      description: Cluster analysis ID
+      required: true
+      schema:
+        type: string
+        format: uuid
     backupId:
       name: backupId
       in: path
@@ -17769,6 +17876,119 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Cluster'
+    ClusterAnalysisKind:
+      type: string
+      enum:
+        - COST_RECOMMENDATION
+        - DEPRECATED_API_CHECK
+    ClusterAnalysisOutputFormat:
+      type: string
+      enum:
+        - TABLE
+        - JSON
+        - CSV
+    ClusterAnalysisStatus:
+      type: string
+      enum:
+        - PENDING
+        - RUNNING
+        - SUCCEEDED
+        - FAILED
+        - TERMINATED
+    ClusterAnalysisRequest:
+      type: object
+      required:
+        - kind
+        - output_format
+      properties:
+        kind:
+          $ref: '#/components/schemas/ClusterAnalysisKind'
+        output_format:
+          $ref: '#/components/schemas/ClusterAnalysisOutputFormat'
+        prometheus_url:
+          type: string
+          nullable: true
+          description: Optional Prometheus URL for COST_RECOMMENDATION analysis. When omitted, the engine resolves the default Qovery OBS endpoint.
+        history_duration_hours:
+          type: integer
+          nullable: true
+          description: Optional history duration in hours for COST_RECOMMENDATION analysis.
+          example: 336
+        target_kubernetes_version:
+          type: string
+          nullable: true
+          description: Optional target Kubernetes version for DEPRECATED_API_CHECK analysis.
+          example: '1.32'
+    ClusterAnalysisResponse:
+      type: object
+      required:
+        - id
+        - cluster_id
+        - organization_id
+        - kind
+        - status
+        - output_format
+        - created_at
+        - updated_at
+        - triggered_by
+      properties:
+        id:
+          type: string
+          format: uuid
+        cluster_id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        kind:
+          $ref: '#/components/schemas/ClusterAnalysisKind'
+        status:
+          $ref: '#/components/schemas/ClusterAnalysisStatus'
+        output_format:
+          $ref: '#/components/schemas/ClusterAnalysisOutputFormat'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        triggered_by:
+          type: string
+        error_message:
+          type: string
+          nullable: true
+    ClusterAnalysisResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterAnalysisResponse'
+    ClusterAnalysisLogResponse:
+      type: object
+      required:
+        - timestamp
+        - level
+        - message
+        - line_order
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        level:
+          type: string
+        message:
+          type: string
+        line_order:
+          type: integer
+    ClusterAnalysisLogResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterAnalysisLogResponse'
     ClusterLogsResponseList:
       type: object
       properties:
