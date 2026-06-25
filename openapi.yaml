@@ -1325,6 +1325,57 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/onboarding':
+    get:
+      summary: Get the onboarding status of an organization
+      description: Returns the onboarding status for the given organization and the use cases selected by the owner at sign-up.
+      operationId: getOrganizationOnboarding
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Main Calls
+      responses:
+        '200':
+          description: Onboarding status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationOnboardingResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Update the onboarding status of an organization
+      description: Updates the onboarding status for the calling user's organization. Only the authenticated user's own sign-up record is updated.
+      operationId: updateOrganizationOnboarding
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Main Calls
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationOnboardingPatchRequest'
+      responses:
+        '200':
+          description: Updated onboarding status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationOnboardingResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/cluster':
     get:
       summary: List organization clusters
@@ -22870,6 +22921,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Organization'
+    OrganizationOnboardingResponse:
+      type: object
+      properties:
+        use_cases:
+          type: string
+          nullable: true
+          description: Comma-separated list of use cases selected by the organization owner at sign-up (e.g. "ephemeral-environments,rde")
+          example: 'ephemeral-environments,rde'
+        status:
+          $ref: '#/components/schemas/OrganizationOnboardingStatusEnum'
+    OrganizationOnboardingPatchRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          $ref: '#/components/schemas/OrganizationOnboardingStatusEnum'
+    OrganizationOnboardingStatusEnum:
+      type: string
+      enum:
+        - IN_PROGRESS
+        - DISMISSED
+        - COMPLETED
     OrganizationEventResponse:
       type: object
       properties:
