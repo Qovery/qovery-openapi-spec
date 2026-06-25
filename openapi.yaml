@@ -1328,32 +1328,7 @@ paths:
   '/organization/{organizationId}/onboarding':
     get:
       summary: Get the onboarding status of an organization
-      description: |
-        Returns the onboarding status for the given organization and the use cases selected by the owner at sign-up.
-
-        **Example response when onboarding is in progress:**
-        ```json
-        {
-          "use_cases": "ephemeral-environments,rde",
-          "status": "IN_PROGRESS"
-        }
-        ```
-
-        **Example response when the owner dismissed the onboarding:**
-        ```json
-        {
-          "use_cases": "ephemeral-environments",
-          "status": "DISMISSED"
-        }
-        ```
-
-        **Example response for an organization whose owner never went through sign-up questions:**
-        ```json
-        {
-          "use_cases": null,
-          "status": null
-        }
-        ```
+      description: Returns the onboarding status for the given organization and the use cases selected by the owner at sign-up.
       operationId: getOrganizationOnboarding
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -1374,23 +1349,7 @@ paths:
           $ref: '#/components/responses/404'
     post:
       summary: Update the onboarding status of an organization
-      description: |
-        Updates the onboarding status for the calling user's organization. Only the authenticated user's own sign-up record is updated.
-
-        **Mark onboarding as dismissed:**
-        ```json
-        { "status": "DISMISSED" }
-        ```
-
-        **Mark onboarding as completed:**
-        ```json
-        { "status": "COMPLETED" }
-        ```
-
-        **Reset to in-progress:**
-        ```json
-        { "status": "IN_PROGRESS" }
-        ```
+      description: Updates the onboarding status for the calling user's organization. Only the authenticated user's own sign-up record is updated.
       operationId: updateOrganizationOnboarding
       parameters:
         - $ref: '#/components/parameters/organizationId'
