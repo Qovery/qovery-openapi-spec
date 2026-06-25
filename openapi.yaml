@@ -15843,6 +15843,11 @@ components:
               description: Ephemeral storage of the service in GiB. When omitted, the platform default is used.
               minimum: 0
               example: 10
+            cpu_architecture:
+              description: CPU architecture this service runs on. If null, the cluster default architecture is used.
+              nullable: true
+              allOf:
+                - $ref: '#/components/schemas/CpuArchitectureEnum'
             min_running_instances:
               type: integer
               minimum: 0
@@ -16013,6 +16018,11 @@ components:
               type: string
               description: The target build stage in the Dockerfile to build
               nullable: true
+            cpu_architecture:
+              description: CPU architecture to run this service on. If null, the cluster default architecture is used.
+              nullable: true
+              allOf:
+                - $ref: '#/components/schemas/CpuArchitectureEnum'
             autoscaling:
               $ref: '#/components/schemas/AutoscalingPolicyRequest'
     ApplicationGitRepository:
@@ -16320,6 +16330,11 @@ components:
                 id: xg9q0urac8kdq
               description: The target build stage in the Dockerfile to build
               nullable: true
+            cpu_architecture:
+              description: CPU architecture to run this service on. If null, the cluster default architecture is used.
+              nullable: true
+              allOf:
+                - $ref: '#/components/schemas/CpuArchitectureEnum'
             autoscaling:
               $ref: '#/components/schemas/AutoscalingPolicyRequest'
     ApplicationResponseList:
@@ -19073,6 +19088,11 @@ components:
               description: Ephemeral storage of the service in GiB. When omitted, the platform default is used.
               minimum: 0
               example: 10
+            cpu_architecture:
+              description: CPU architecture to run this service on. If null, the cluster default architecture is used.
+              nullable: true
+              allOf:
+                - $ref: '#/components/schemas/CpuArchitectureEnum'
             min_running_instances:
               type: integer
               minimum: 0
@@ -19185,6 +19205,11 @@ components:
               description: Ephemeral storage of the service in GiB. When omitted, the platform default is used.
               minimum: 0
               example: 10
+            cpu_architecture:
+              description: CPU architecture this service runs on. If null, the cluster default architecture is used.
+              nullable: true
+              allOf:
+                - $ref: '#/components/schemas/CpuArchitectureEnum'
             min_running_instances:
               type: integer
               minimum: 0
@@ -21459,6 +21484,11 @@ components:
                         id: qogoqube2vtez
                       description: The target build stage in the Dockerfile to build
                       nullable: true
+            cpu_architecture:
+              description: CPU architecture to run this service on. If null, the cluster default architecture is used.
+              nullable: true
+              allOf:
+                - $ref: '#/components/schemas/CpuArchitectureEnum'
             healthchecks:
               $ref: '#/components/schemas/Healthcheck'
             schedule:
@@ -24885,6 +24915,11 @@ components:
               description: Ephemeral storage of the service in GiB. When omitted, the platform default is used.
               minimum: 0
               example: 10
+            cpu_architecture:
+              description: CPU architecture this service runs on. If null, the cluster default architecture is used.
+              nullable: true
+              allOf:
+                - $ref: '#/components/schemas/CpuArchitectureEnum'
             max_nb_restart:
               type: integer
               minimum: 0
