@@ -17924,11 +17924,27 @@ components:
           type: string
           nullable: true
           description: Optional Prometheus URL for COST_RECOMMENDATION analysis. When omitted, the engine resolves the default Qovery OBS endpoint.
-        history_duration_hours:
-          type: integer
-          nullable: true
-          description: Optional history duration in hours for COST_RECOMMENDATION analysis.
-          example: 336
+        cmd_args:
+          type: array
+          description: Optional allowlisted KRR arguments for COST_RECOMMENDATION analysis. The engine validates and rejects unsupported or unsafe KRR flags.
+          items:
+            type: string
+          example:
+            - --history_duration
+            - '336'
+            - --timeframe_duration
+            - '2.5'
+            - --cpu-request
+            - '99'
+            - --cpu-limit
+            - '99'
+            - --memory-buffer-percentage
+            - '15'
+            - --use-oomkill-data
+            - --oom-memory-buffer-percentage
+            - '25'
+            - -n
+            - default
         target_kubernetes_version:
           type: string
           nullable: true
