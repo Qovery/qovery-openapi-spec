@@ -15215,26 +15215,81 @@ components:
         updated_values:
           type: array
           items:
-            $ref: '#/components/schemas/BlueprintUpdateUpdatedValue'
+            $ref: '#/components/schemas/BlueprintUpdateEngineFieldChange'
     BlueprintUpdateNewRequiredValue:
       type: object
       required:
         - name
+        - type
+        - is_secret
       properties:
         name:
           type: string
+        type:
+          $ref: '#/components/schemas/BlueprintManifestFieldType'
+        allowed_values:
+          type: array
+          nullable: true
+          description: Values the user may choose from. Null = unrestricted.
+          items:
+            type: string
+        is_secret:
+          type: boolean
     BlueprintUpdateNewOptionalValue:
       type: object
       required:
         - name
+        - type
+        - is_secret
       properties:
         name:
           type: string
         default_value:
           type: string
           nullable: true
+        type:
+          $ref: '#/components/schemas/BlueprintManifestFieldType'
+        allowed_values:
+          type: array
+          nullable: true
+          description: Values the user may choose from. Null = unrestricted.
+          items:
+            type: string
+        is_secret:
+          type: boolean
     BlueprintUpdateUpdatedValue:
       type: object
+      required:
+        - name
+        - type
+        - is_secret
+      properties:
+        name:
+          type: string
+        current_default_value:
+          type: string
+          nullable: true
+        new_default_value:
+          type: string
+          nullable: true
+        current_value:
+          type: string
+          nullable: true
+        type:
+          $ref: '#/components/schemas/BlueprintManifestFieldType'
+        allowed_values:
+          type: array
+          nullable: true
+          description: Values the user may choose from. Null = unrestricted.
+          items:
+            type: string
+        is_secret:
+          type: boolean
+    BlueprintUpdateEngineFieldChange:
+      type: object
+      description: >-
+        A single engine-block field delta (e.g. version, cpu, ram). Not a
+        manifest variable, so it carries no field type or constraints.
       required:
         - name
       properties:
