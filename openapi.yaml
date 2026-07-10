@@ -15174,6 +15174,7 @@ components:
         - updated_values
         - removed_values
         - engine_diff
+        - new_major_versions
       properties:
         is_up_to_date:
           type: boolean
@@ -15207,6 +15208,14 @@ components:
             $ref: '#/components/schemas/BlueprintUpdateRemovedValue'
         engine_diff:
           $ref: '#/components/schemas/BlueprintUpdateEngineDiff'
+        new_major_versions:
+          type: array
+          description: >-
+            Major versions of the same blueprint newer than the service's current
+            one (e.g. service on aws/postgres/16 while 17 and 18 exist). Empty when
+            already on the latest major or when the current version is non-numeric.
+          items:
+            $ref: '#/components/schemas/BlueprintUpdateNewMajorVersion'
     BlueprintUpdateEngineDiff:
       type: object
       description: >-
@@ -15313,6 +15322,21 @@ components:
       properties:
         name:
           type: string
+    BlueprintUpdateNewMajorVersion:
+      type: object
+      description: A newer major version of the blueprint available for a major upgrade.
+      required:
+        - service_version
+        - latest_tag
+      properties:
+        service_version:
+          type: string
+          description: The engine major version (e.g. "17").
+          example: "17"
+        latest_tag:
+          type: string
+          description: Latest catalog tag for that major version.
+          example: aws/postgres/17/1.0.1
     BlueprintUpdatePreviewResponse:
       type: object
       required:
