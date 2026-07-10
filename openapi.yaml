@@ -14155,6 +14155,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: A service with this name already exists in the environment
         '422':
           description: Malformed blueprint tag
         '502':
