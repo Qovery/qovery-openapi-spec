@@ -12,6 +12,81 @@ info:
 servers:
 - url: wss://ws.qovery.com
 paths:
+  /blueprint/preview:
+    get:
+      tags:
+      - blueprint_preview
+      operationId: handle_blueprint_preview_request
+      parameters:
+      - name: organization
+        in: path
+        description: Organization id — for permission scoping. Frontend already has it.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        description: Cluster id — for permission scoping. Frontend already has it.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: preview_id
+        in: path
+        description: |-
+          Preview id — the UUIDv7 q-core returned from `POST /api/blueprint/{id}/update/preview`.
+          Doubles as the Pub/Sub channel suffix: `core.blueprint.preview.{preview_id}`.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: 'Terminal frame from the blueprint update-preview broker: one of {"type":"diff",…}, {"type":"error",…}, {"type":"cancelled"}, {"type":"timeout"}. Connection closes after the frame.'
+          content:
+            text/plain:
+              schema:
+                type: string
+  /blueprint/service-created:
+    get:
+      tags:
+      - blueprint_service
+      operationId: handle_blueprint_service_created_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+          format: uuid
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: environment
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: 'Stream of blueprint service-created events. Payload: {"blueprint_id": "<uuid>"}'
+          content:
+            text/plain:
+              schema:
+                type: string
   /cluster/metrics:
     get:
       tags:
