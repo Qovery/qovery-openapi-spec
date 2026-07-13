@@ -43,11 +43,11 @@ paths:
           format: uuid
       responses:
         '200':
-          description: 'Terminal frame from the blueprint update-preview broker: one of {"type":"diff",…}, {"type":"error",…}, {"type":"cancelled"}, {"type":"timeout"}. Connection closes after the frame.'
+          description: Terminal frame from the blueprint update-preview broker, discriminated on `type`. Connection closes after the frame.
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/BlueprintPreviewResult'
   /blueprint/service-created:
     get:
       tags:
@@ -82,11 +82,11 @@ paths:
           format: uuid
       responses:
         '200':
-          description: 'Stream of blueprint service-created events. Payload: {"blueprint_id": "<uuid>"}'
+          description: Stream of blueprint service-created events. One frame per event; the connection stays open.
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/BlueprintServiceCreatedEvent'
   /cluster/metrics:
     get:
       tags:
@@ -692,6 +692,66 @@ components:
             $ref: '#/components/schemas/PodStatusDto'
         state:
           $ref: '#/components/schemas/ServiceStateDto'
+    BlueprintPreviewResult:
+      oneOf:
+      - type: object
+        description: The preview succeeded. `payload` is the human-readable list of changes; `service_type` e.g. "TERRAFORM".
+        required:
+        - payload
+        - service_type
+        - type
+        properties:
+          payload:
+            type: string
+          service_type:
+            type: string
+          type:
+            type: string
+            enum:
+            - diff
+      - type: object
+        description: The preview failed. `message` explains why.
+        required:
+        - message
+        - type
+        properties:
+          message:
+            type: string
+          type:
+            type: string
+            enum:
+            - error
+      - type: object
+        description: The preview was cancelled.
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - cancelled
+      - type: object
+        description: The preview did not complete in time.
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - timeout
+      description: |-
+        Final result of a blueprint update preview. Exactly one frame is sent, then the connection
+        closes. The `type` field selects the variant.
+    BlueprintServiceCreatedEvent:
+      type: object
+      description: One blueprint service-created event. The stream emits these until the connection closes.
+      required:
+      - blueprint_id
+      properties:
+        blueprint_id:
+          type: string
+          format: uuid
+          description: Id of the blueprint whose service was created.
     CertificateStatusDto:
       type: object
       required:
