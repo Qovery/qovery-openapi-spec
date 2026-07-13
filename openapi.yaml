@@ -75,6 +75,7 @@ tags:
   - name: Cloud Provider
   - name: Cloud Provider Credentials
   - name: Clusters
+  - name: Platform Configuration
   - name: Custom Domain
   - name: Container Custom Domain
   - name: Database
@@ -1376,6 +1377,32 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/platformTemplate':
+    get:
+      summary: List platform templates
+      description: >-
+        Returns the published platform templates available to the organization. Each template
+        contains its layers, components, and the configuration fields that the Console can render.
+      operationId: listPlatformTemplates
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Platform Configuration
+      responses:
+        '200':
+          description: Published platform template catalog
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformTemplateCatalogResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          description: The platform template catalog could not be loaded
+        '503':
+          description: A component configuration model is temporarily unavailable
   '/organization/{organizationId}/cluster':
     get:
       summary: List organization clusters
@@ -1496,6 +1523,112 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/platformBinding':
+    get:
+      summary: Get the cluster platform binding
+      description: >-
+        Returns the platform template selected for the cluster, its layer resolution, and the
+        currently stored component configuration.
+      operationId: getClusterPlatformBinding
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Platform Configuration
+      responses:
+        '200':
+          description: Cluster platform binding
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterPlatformBindingResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          description: The selected platform template could not be resolved
+        '503':
+          description: The platform template catalog is temporarily unavailable
+    put:
+      summary: Update the cluster platform binding
+      description: >-
+        Selects a platform template and stores layer selections, component profile values, and
+        customer-provided runtime inputs for the cluster.
+      operationId: updateClusterPlatformBinding
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Platform Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterPlatformBindingRequest'
+      responses:
+        '200':
+          description: Updated cluster platform binding
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterPlatformBindingResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          description: The selected platform template could not be resolved
+        '503':
+          description: The platform template catalog is temporarily unavailable
+  '/organization/{organizationId}/cluster/{clusterId}/platformBinding/component/{componentKey}/resolve':
+    post:
+      summary: Resolve a platform component configuration
+      description: >-
+        Resolves the fields and runtime requirements to display for a component using the cluster
+        context and the values currently entered in the Console. This operation is read-only.
+      operationId: resolvePlatformComponentConfiguration
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+        - name: componentKey
+          in: path
+          description: Platform component key
+          required: true
+          schema:
+            type: string
+      tags:
+        - Platform Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformComponentConfigurationPreviewRequest'
+      responses:
+        '200':
+          description: Resolved component configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformComponentConfigurationPreviewResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '503':
+          description: The platform template catalog is temporarily unavailable
   '/organization/{organizationId}/cluster/{clusterId}/status':
     get:
       summary: Get cluster status
@@ -14651,6 +14784,377 @@ components:
         type: string
         format: uuid
   schemas:
+    PlatformTemplateCatalogResponse:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformTemplateSummaryResponse'
+    PlatformTemplateSummaryResponse:
+      type: object
+      required:
+        - key
+        - version
+        - status
+        - layers
+      properties:
+        key:
+          type: string
+        version:
+          type: string
+        status:
+          $ref: '#/components/schemas/PlatformTemplateReleaseStatus'
+        description:
+          type: string
+          nullable: true
+        layers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformTemplateLayerResponse'
+    PlatformTemplateReleaseStatus:
+      type: string
+      enum:
+        - DRAFT
+        - PUBLISHED
+        - DEPRECATED
+    PlatformTemplateLayerResponse:
+      type: object
+      required:
+        - key
+        - mandatory
+        - enabledByDefault
+        - modes
+        - componentKeys
+        - components
+      properties:
+        key:
+          type: string
+        mandatory:
+          type: boolean
+        enabledByDefault:
+          type: boolean
+        modes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformClusterMode'
+        providers:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/PlatformCloudVendor'
+        componentKeys:
+          type: array
+          items:
+            type: string
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformTemplateComponentResponse'
+        description:
+          type: string
+          nullable: true
+    PlatformClusterMode:
+      type: string
+      enum:
+        - QOVERY_MANAGED
+        - CUSTOMER_MANAGED
+    PlatformCloudVendor:
+      type: string
+      enum:
+        - AWS
+        - SCW
+        - GCP
+        - DO
+        - AZURE
+        - OVH
+        - CIVO
+        - HETZNER
+        - ORACLE
+        - IBM
+        - UNKNOWN
+    PlatformTemplateComponentResponse:
+      type: object
+      required:
+        - key
+        - kind
+        - fields
+      properties:
+        key:
+          type: string
+        kind:
+          $ref: '#/components/schemas/PlatformTemplateComponentKind'
+        description:
+          type: string
+          nullable: true
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformComponentConfigurationFieldResponse'
+    PlatformTemplateComponentKind:
+      type: string
+      enum:
+        - HELM
+        - TERRAFORM
+    PlatformComponentConfigurationFieldResponse:
+      type: object
+      required:
+        - key
+        - type
+        - required
+        - label
+        - sensitive
+        - constraints
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+          description: Field type understood by the Console, such as string, number, or bool
+        required:
+          type: boolean
+        defaultValue:
+          type: string
+          nullable: true
+        label:
+          type: string
+        description:
+          type: string
+          nullable: true
+        sensitive:
+          type: boolean
+        constraints:
+          $ref: '#/components/schemas/PlatformComponentConfigurationConstraintsResponse'
+    PlatformComponentConfigurationConstraintsResponse:
+      type: object
+      properties:
+        allowedValues:
+          type: array
+          nullable: true
+          items:
+            type: string
+        min:
+          type: integer
+          format: int64
+          nullable: true
+        max:
+          type: integer
+          format: int64
+          nullable: true
+        minLength:
+          type: integer
+          format: int64
+          nullable: true
+        maxLength:
+          type: integer
+          format: int64
+          nullable: true
+        pattern:
+          type: string
+          nullable: true
+    ClusterPlatformBindingRequest:
+      type: object
+      required:
+        - templateKey
+        - templateVersion
+      properties:
+        templateKey:
+          type: string
+        templateVersion:
+          type: string
+        layerSelections:
+          $ref: '#/components/schemas/PlatformLayerSelections'
+        managedConfig:
+          $ref: '#/components/schemas/PlatformComponentConfigurationMap'
+        customerProvidedInputs:
+          $ref: '#/components/schemas/PlatformComponentStringValuesMap'
+    ClusterPlatformBindingResponse:
+      type: object
+      required:
+        - clusterId
+        - organizationId
+        - templateKey
+        - templateVersion
+        - layerSelections
+        - managedConfig
+        - customerProvidedInputs
+        - layers
+      properties:
+        clusterId:
+          type: string
+          format: uuid
+        organizationId:
+          type: string
+          format: uuid
+        templateKey:
+          type: string
+        templateVersion:
+          type: string
+        layerSelections:
+          $ref: '#/components/schemas/PlatformLayerSelections'
+        managedConfig:
+          $ref: '#/components/schemas/PlatformComponentConfigurationMap'
+        customerProvidedInputs:
+          $ref: '#/components/schemas/PlatformComponentStringValuesMap'
+        layers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterPlatformBindingLayerResponse'
+    PlatformLayerSelections:
+      type: object
+      additionalProperties:
+        type: boolean
+    PlatformConfigurationValues:
+      type: object
+      description: Configuration values keyed by their catalog field name
+      additionalProperties: {}
+    PlatformComponentConfigurationMap:
+      type: object
+      description: Component configuration values keyed by component key
+      additionalProperties:
+        $ref: '#/components/schemas/PlatformConfigurationValues'
+    PlatformComponentStringValuesMap:
+      type: object
+      description: String values keyed first by component key and then by input key
+      additionalProperties:
+        type: object
+        additionalProperties:
+          type: string
+    ClusterPlatformBindingLayerResponse:
+      type: object
+      required:
+        - key
+        - status
+        - reason
+        - componentKeys
+      properties:
+        key:
+          type: string
+        status:
+          $ref: '#/components/schemas/PlatformLayerResolutionStatus'
+        reason:
+          type: string
+        componentKeys:
+          type: array
+          items:
+            type: string
+    PlatformLayerResolutionStatus:
+      type: string
+      enum:
+        - ENABLED
+        - DISABLED
+        - SKIPPED
+    PlatformComponentConfigurationPreviewRequest:
+      type: object
+      properties:
+        profileConfig:
+          $ref: '#/components/schemas/PlatformConfigurationValues'
+        clusterInputs:
+          type: object
+          additionalProperties:
+            type: string
+        componentOutputs:
+          $ref: '#/components/schemas/PlatformComponentStringValuesMap'
+    PlatformComponentConfigurationPreviewResponse:
+      type: object
+      required:
+        - clusterId
+        - componentKey
+        - fields
+        - requirements
+        - componentBindings
+        - violations
+      properties:
+        clusterId:
+          type: string
+          format: uuid
+        componentKey:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformComponentConfigurationFieldResponse'
+        requirements:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformComponentInputRequirementResponse'
+        componentBindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformComponentOutputBindingResponse'
+        violations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformComponentConfigurationViolationResponse'
+    PlatformComponentInputRequirementResponse:
+      type: object
+      required:
+        - key
+        - type
+        - scope
+        - label
+        - required
+        - sensitive
+        - constraints
+        - status
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+        scope:
+          $ref: '#/components/schemas/PlatformComponentConfigurationInputScope'
+        label:
+          type: string
+        description:
+          type: string
+          nullable: true
+        required:
+          type: boolean
+        sensitive:
+          type: boolean
+        constraints:
+          $ref: '#/components/schemas/PlatformComponentConfigurationConstraintsResponse'
+        status:
+          $ref: '#/components/schemas/PlatformComponentConfigurationRequirementStatus'
+    PlatformComponentConfigurationInputScope:
+      type: string
+      enum:
+        - PLATFORM_PROFILE
+        - CLUSTER
+    PlatformComponentConfigurationRequirementStatus:
+      type: string
+      enum:
+        - MISSING
+        - READY
+    PlatformComponentOutputBindingResponse:
+      type: object
+      required:
+        - input
+        - fromComponent
+        - output
+      properties:
+        input:
+          type: string
+        fromComponent:
+          type: string
+        output:
+          type: string
+    PlatformComponentConfigurationViolationResponse:
+      type: object
+      required:
+        - code
+        - fieldPath
+        - message
+      properties:
+        code:
+          type: string
+        fieldPath:
+          type: string
+        message:
+          type: string
     BlueprintCatalogResponse:
       type: object
       required:
