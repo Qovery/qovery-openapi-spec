@@ -82,11 +82,11 @@ paths:
           format: uuid
       responses:
         '200':
-          description: 'Stream of blueprint service-created events. Payload: {"blueprint_id": "<uuid>"}'
+          description: Stream of blueprint service-created events. One frame per event; the connection stays open.
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/BlueprintServiceCreatedEvent'
   /cluster/metrics:
     get:
       tags:
@@ -742,6 +742,16 @@ components:
       description: |-
         Final result of a blueprint update preview. Exactly one frame is sent, then the connection
         closes. The `type` field selects the variant.
+    BlueprintServiceCreatedEvent:
+      type: object
+      description: One blueprint service-created event. The stream emits these until the connection closes.
+      required:
+      - blueprint_id
+      properties:
+        blueprint_id:
+          type: string
+          format: uuid
+          description: Id of the blueprint whose service was created.
     CertificateStatusDto:
       type: object
       required:
