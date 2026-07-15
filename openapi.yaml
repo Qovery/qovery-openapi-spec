@@ -14934,14 +14934,16 @@ components:
         fields:
           type: array
           items:
-            $ref: '#/components/schemas/PlatformComponentConfigurationFieldResponse'
+            $ref: '#/components/schemas/FieldSchemaResponse'
     PlatformTemplateComponentKind:
       type: string
       enum:
         - HELM
         - TERRAFORM
-    PlatformComponentConfigurationFieldResponse:
+    FieldSchemaResponse:
       type: object
+      description: >-
+        Canonical platform catalog field descriptor. Mirrors the q-core `FieldSchemaResponse` DTO.
       required:
         - key
         - type
@@ -14968,9 +14970,10 @@ components:
         sensitive:
           type: boolean
         constraints:
-          $ref: '#/components/schemas/PlatformComponentConfigurationConstraintsResponse'
-    PlatformComponentConfigurationConstraintsResponse:
+          $ref: '#/components/schemas/FieldSchemaConstraintsResponse'
+    FieldSchemaConstraintsResponse:
       type: object
+      description: Validation constraints attached to a catalog field descriptor.
       properties:
         allowedValues:
           type: array
@@ -15117,7 +15120,7 @@ components:
         fields:
           type: array
           items:
-            $ref: '#/components/schemas/PlatformComponentConfigurationFieldResponse'
+            $ref: '#/components/schemas/FieldSchemaResponse'
         requirements:
           type: array
           items:
@@ -15131,36 +15134,20 @@ components:
           items:
             $ref: '#/components/schemas/PlatformComponentConfigurationViolationResponse'
     PlatformComponentInputRequirementResponse:
-      type: object
-      required:
-        - key
-        - type
-        - scope
-        - label
-        - required
-        - sensitive
-        - constraints
-        - status
-      properties:
-        key:
-          type: string
-        type:
-          type: string
-        scope:
-          $ref: '#/components/schemas/PlatformComponentConfigurationInputScope'
-        label:
-          type: string
-        description:
-          type: string
-          nullable: true
-        required:
-          type: boolean
-        sensitive:
-          type: boolean
-        constraints:
-          $ref: '#/components/schemas/PlatformComponentConfigurationConstraintsResponse'
-        status:
-          $ref: '#/components/schemas/PlatformComponentConfigurationRequirementStatus'
+      description: >-
+        A catalog field the cluster must provide for the selected configuration:
+        the shared field descriptor extended with its resolution scope and readiness.
+      allOf:
+        - $ref: '#/components/schemas/FieldSchemaResponse'
+        - type: object
+          required:
+            - scope
+            - status
+          properties:
+            scope:
+              $ref: '#/components/schemas/PlatformComponentConfigurationInputScope'
+            status:
+              $ref: '#/components/schemas/PlatformComponentConfigurationRequirementStatus'
     PlatformComponentConfigurationInputScope:
       type: string
       enum:
@@ -15193,10 +15180,17 @@ components:
       properties:
         code:
           type: string
+          description: Stable machine-readable violation code.
         fieldPath:
           type: string
+          description: >-
+            Path of the offending field. Convention: profile configuration fields use the
+            bare field key (e.g. `storage`); cluster-provided inputs are prefixed with
+            `clusterInputs.` (e.g. `clusterInputs.s3BucketName`). Consumers match violations
+            to form fields using these exact paths.
         message:
           type: string
+          description: Customer-facing message describing how to fix the violation.
     BlueprintCatalogResponse:
       type: object
       required:
