@@ -15,6 +15,7 @@ info:
 tags:
   - name: Account
   - name: Account Info
+  - name: IPs
   - name: Alert Receivers
   - name: Alert Rules
   - name: Admin
@@ -245,6 +246,7 @@ x-tagGroups:
       - Account Info
       - Git repositories
       - Referral & Rewards
+      - IPs
   - name: Git
     tags:
       - Git repositories
@@ -267,6 +269,32 @@ x-tagGroups:
 servers:
   - url: 'https://api.qovery.com'
 paths:
+  /ips:
+    get:
+      summary: List Qovery NAT gateway IP addresses
+      description: >-
+        Returns the list of static IP addresses used by Qovery's NAT gateways for outbound traffic.
+        Customers can allow-list these IPs on their side. This endpoint is public and does not
+        require authentication.
+      operationId: listQoveryIps
+      security: []
+      tags:
+        - IPs
+      responses:
+        '200':
+          description: List of Qovery NAT gateway IP addresses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QoveryIpsResponse'
+            text/plain:
+              schema:
+                type: string
+                description: The IP addresses, one per line.
+                example: |-
+                  13.59.73.12
+                  18.224.119.19
+                  3.143.66.53
   /organization:
     get:
       summary: List user organizations
@@ -14784,6 +14812,20 @@ components:
         type: string
         format: uuid
   schemas:
+    QoveryIpsResponse:
+      type: object
+      required:
+        - ips
+      properties:
+        ips:
+          type: array
+          description: IP addresses used by Qovery's NAT gateways for outbound traffic.
+          items:
+            type: string
+          example:
+            - 13.59.73.12
+            - 18.224.119.19
+            - 3.143.66.53
     PlatformTemplateCatalogResponse:
       type: object
       required:
