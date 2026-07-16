@@ -1411,9 +1411,23 @@ paths:
       description: >-
         Returns the published platform templates available to the organization. Each template
         contains its layers, components, and the configuration fields that the Console can render.
+        When clusterMode and cloudProvider are supplied together, component field constraints are
+        narrowed to the effective choices for that cluster context.
       operationId: listPlatformTemplates
       parameters:
         - $ref: '#/components/parameters/organizationId'
+        - name: clusterMode
+          in: query
+          required: false
+          description: Cluster management mode. Must be supplied together with cloudProvider.
+          schema:
+            $ref: '#/components/schemas/PlatformClusterMode'
+        - name: cloudProvider
+          in: query
+          required: false
+          description: Cluster cloud provider. Must be supplied together with clusterMode.
+          schema:
+            $ref: '#/components/schemas/PlatformCloudVendor'
       tags:
         - Platform Configuration
       responses:
@@ -1423,6 +1437,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlatformTemplateCatalogResponse'
+        '400':
+          description: clusterMode and cloudProvider must be supplied together
         '401':
           $ref: '#/components/responses/401'
         '403':
