@@ -13241,6 +13241,54 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Terraform name within the environment is already taken
+  '/environment/{environmentId}/agenticWorkflow':
+    get:
+      summary: List agentic workflows
+      operationId: listAgenticWorkflows
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Agentic Workflows
+      responses:
+        '200':
+          description: List agentic workflows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgenticWorkflowResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create an agentic workflow
+      operationId: createAgenticWorkflow
+      parameters:
+        - $ref: '#/components/parameters/environmentId'
+      tags:
+        - Agentic Workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgenticWorkflowRequest'
+      responses:
+        '201':
+          description: Create agentic workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgenticWorkflowResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/link':
     get:
       summary: List environment services links
@@ -13346,6 +13394,70 @@ paths:
           schema:
             $ref: '#/components/schemas/DeleteTerraformAction'
           description: Force a specific action to be executed by Terraform during deletion.
+  '/agenticWorkflow/{agenticWorkflowId}':
+    get:
+      summary: Get an agentic workflow
+      operationId: getAgenticWorkflow
+      parameters:
+        - $ref: '#/components/parameters/agenticWorkflowId'
+      tags:
+        - Agentic Workflows
+      responses:
+        '200':
+          description: Get agentic workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgenticWorkflowResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit an agentic workflow
+      operationId: editAgenticWorkflow
+      parameters:
+        - $ref: '#/components/parameters/agenticWorkflowId'
+      tags:
+        - Agentic Workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgenticWorkflowRequest'
+      responses:
+        '200':
+          description: Edit agentic workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgenticWorkflowResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      summary: Delete an agentic workflow
+      operationId: deleteAgenticWorkflow
+      parameters:
+        - $ref: '#/components/parameters/agenticWorkflowId'
+      tags:
+        - Agentic Workflows
+      responses:
+        '204':
+          description: Delete agentic workflow
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/terraform/{terraformId}/advancedSettings':
     get:
       summary: Get Advanced settings
@@ -14823,6 +14935,13 @@ components:
       name: secretManagerAccessId
       in: path
       description: Secret Manager Access ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    agenticWorkflowId:
+      name: agenticWorkflowId
+      in: path
       required: true
       schema:
         type: string
@@ -29774,7 +29893,189 @@ components:
           type: string
         external_secret_name:
           type: string
-
+    AgenticWorkflowResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+          - id
+          - name
+          - description
+          - whitelist_hosts
+          - model_settings
+          - docker_fragment
+          - enabled
+          - mcp_connectors
+          - outputs
+          - model
+          - project_repositories
+          - webhook
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+            whitelist_hosts:
+              type: array
+              items:
+                type: string
+              description: Hosts the agentic workflow is allowed to reach
+            model_settings:
+              type: string
+            docker_fragment:
+              type: string
+            enabled:
+              type: boolean
+            mcp_connectors:
+              type: array
+              items:
+                $ref: '#/components/schemas/AgenticWorkflowConnector'
+            outputs:
+              type: array
+              items:
+                $ref: '#/components/schemas/AgenticWorkflowOutput'
+            model:
+              $ref: '#/components/schemas/AgenticWorkflowModel'
+            project_repositories:
+              type: array
+              items:
+                $ref: '#/components/schemas/AgenticWorkflowProjectRepository'
+            webhook:
+              $ref: '#/components/schemas/AgenticWorkflowWebhook'
+    AgenticWorkflowResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgenticWorkflowResponse'
+    AgenticWorkflowRequest:
+      allOf:
+        - required:
+            - name
+          properties:
+            name:
+              type: string
+              description: name is case insensitive
+            description:
+              type: string
+              default: ''
+            whitelist_hosts:
+              type: array
+              items:
+                type: string
+              default: []
+              description: Hosts the agentic workflow is allowed to reach
+            model_settings:
+              type: string
+              default: ''
+            docker_fragment:
+              type: string
+              default: ''
+            enabled:
+              type: boolean
+              default: true
+            mcp_connectors:
+              type: array
+              items:
+                $ref: '#/components/schemas/AgenticWorkflowConnector'
+              default: []
+            outputs:
+              type: array
+              items:
+                $ref: '#/components/schemas/AgenticWorkflowOutput'
+              default: []
+            model:
+              allOf:
+                - $ref: '#/components/schemas/AgenticWorkflowModel'
+              default: CLAUDE
+            project_repositories:
+              type: array
+              items:
+                $ref: '#/components/schemas/AgenticWorkflowProjectRepository'
+              default: []
+    AgenticWorkflowModel:
+      type: string
+      enum:
+        - CLAUDE
+        - BEDROCK
+    AgenticWorkflowHeader:
+      type: object
+      required:
+        - name
+        - value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    AgenticWorkflowConnector:
+      type: object
+      required:
+        - name
+        - url
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgenticWorkflowHeader'
+          default: []
+        instructions:
+          type: string
+          default: ''
+    AgenticWorkflowOutput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+          nullable: true
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgenticWorkflowHeader'
+          default: []
+        instructions:
+          type: string
+          default: ''
+    AgenticWorkflowProjectRepository:
+      type: object
+      required:
+        - url
+        - branch
+        - root_path
+        - git_token_id
+      properties:
+        url:
+          type: string
+        branch:
+          type: string
+        root_path:
+          type: string
+        git_token_id:
+          type: string
+          format: uuid
+    AgenticWorkflowWebhook:
+      type: object
+      required:
+        - url
+        - secret
+      properties:
+        url:
+          type: string
+        secret:
+          type: string
   responses:
     '204':
       description: no content
