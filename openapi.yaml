@@ -1447,6 +1447,71 @@ paths:
           description: The platform template catalog could not be loaded
         '503':
           description: A component configuration model is temporarily unavailable
+  '/organization/{organizationId}/platformTemplate/{templateKey}/{templateVersion}/component/{componentKey}/resolve':
+    post:
+      summary: Resolve a platform component configuration before cluster creation
+      description: >-
+        Resolves the fields and runtime requirements to display for a component using an explicit
+        cluster context and the values currently entered in the Console. This operation is read-only
+        and does not require an existing cluster or platform binding.
+      operationId: resolvePlatformTemplateComponentConfiguration
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: templateKey
+          in: path
+          description: Platform template key
+          required: true
+          schema:
+            type: string
+        - name: templateVersion
+          in: path
+          description: Platform template version
+          required: true
+          schema:
+            type: string
+        - name: componentKey
+          in: path
+          description: Platform component key
+          required: true
+          schema:
+            type: string
+        - name: clusterMode
+          in: query
+          description: Cluster management mode used to resolve component applicability
+          required: true
+          schema:
+            $ref: '#/components/schemas/PlatformClusterMode'
+        - name: cloudProvider
+          in: query
+          description: Cluster cloud provider used to resolve component applicability
+          required: true
+          schema:
+            $ref: '#/components/schemas/PlatformCloudVendor'
+      tags:
+        - Platform Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformComponentConfigurationPreviewRequest'
+      responses:
+        '200':
+          description: Resolved component configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformComponentConfigurationResolutionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '503':
+          description: The platform template catalog is temporarily unavailable
   '/organization/{organizationId}/cluster':
     get:
       summary: List organization clusters
@@ -15250,6 +15315,36 @@ components:
         clusterId:
           type: string
           format: uuid
+        componentKey:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldSchemaResponse'
+        requirements:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformComponentInputRequirementResponse'
+        componentBindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformComponentOutputBindingResponse'
+        violations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformComponentConfigurationViolationResponse'
+    PlatformComponentConfigurationResolutionResponse:
+      type: object
+      description: >-
+        Component configuration resolved from an explicit template and cluster context before an
+        actual cluster exists.
+      required:
+        - componentKey
+        - fields
+        - requirements
+        - componentBindings
+        - violations
+      properties:
         componentKey:
           type: string
         fields:
