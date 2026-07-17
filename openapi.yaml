@@ -29996,7 +29996,7 @@ components:
           - id
           - name
           - description
-          - whitelist_hosts
+          - ip_allowlist
           - model_settings
           - docker_fragment
           - enabled
@@ -30014,11 +30014,11 @@ components:
               description: name is case insensitive
             description:
               type: string
-            whitelist_hosts:
+            ip_allowlist:
               type: array
               items:
                 type: string
-              description: Hosts the agentic workflow is allowed to reach
+              description: CIDR ranges the incoming webhook request's source IP is checked against
             model_settings:
               type: string
             docker_fragment:
@@ -30059,12 +30059,12 @@ components:
             description:
               type: string
               default: ''
-            whitelist_hosts:
+            ip_allowlist:
               type: array
               items:
                 type: string
               default: []
-              description: Hosts the agentic workflow is allowed to reach
+              description: CIDR ranges the incoming webhook request's source IP is checked against
             model_settings:
               type: string
               default: ''
@@ -30165,11 +30165,8 @@ components:
       type: object
       required:
         - url
-        - secret
       properties:
         url:
-          type: string
-        secret:
           type: string
   responses:
     '204':
