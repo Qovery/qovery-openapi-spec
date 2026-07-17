@@ -30018,7 +30018,7 @@ components:
               type: array
               items:
                 type: string
-              description: CIDR ranges the incoming webhook request's source IP is checked against
+              description: IP allow list used to validate incoming webhook request source IPs
             model_settings:
               type: string
             docker_fragment:
@@ -30064,7 +30064,7 @@ components:
               items:
                 type: string
               default: []
-              description: CIDR ranges the incoming webhook request's source IP is checked against
+              description: IP allow list used to validate incoming webhook request source IPs
             model_settings:
               type: string
               default: ''
