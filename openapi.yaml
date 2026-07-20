@@ -29996,14 +29996,15 @@ components:
           - id
           - name
           - description
-          - ip_allowlist
-          - model_settings
+          - webhook_ip_allowlist
           - docker_fragment
           - enabled
-          - mcp_connectors
+          - mcp
           - outputs
           - model
           - project_repositories
+          - agent_prompt
+          - governance
           - webhook
           properties:
             id:
@@ -30014,31 +30015,32 @@ components:
               description: name is case insensitive
             description:
               type: string
-            ip_allowlist:
+            webhook_ip_allowlist:
               type: array
               items:
                 type: string
               description: CIDR ranges the incoming webhook request's source IP is checked against
-            model_settings:
-              type: string
             docker_fragment:
               type: string
             enabled:
               type: boolean
-            mcp_connectors:
-              type: array
-              items:
-                $ref: '#/components/schemas/AgenticWorkflowConnector'
+            mcp:
+              type: string
+              description: Raw JSON blob describing the MCP servers configured for this workflow
             outputs:
               type: array
               items:
                 $ref: '#/components/schemas/AgenticWorkflowOutput'
             model:
-              $ref: '#/components/schemas/AgenticWorkflowModel'
+              $ref: '#/components/schemas/AgenticWorkflowModelResponse'
             project_repositories:
               type: array
               items:
                 $ref: '#/components/schemas/AgenticWorkflowProjectRepository'
+            agent_prompt:
+              type: string
+            governance:
+              $ref: '#/components/schemas/AgenticWorkflowGovernance'
             webhook:
               $ref: '#/components/schemas/AgenticWorkflowWebhook'
     AgenticWorkflowResponseList:
@@ -30059,45 +30061,80 @@ components:
             description:
               type: string
               default: ''
-            ip_allowlist:
+            webhook_ip_allowlist:
               type: array
               items:
                 type: string
               default: []
               description: CIDR ranges the incoming webhook request's source IP is checked against
-            model_settings:
-              type: string
-              default: ''
             docker_fragment:
               type: string
               default: ''
             enabled:
               type: boolean
               default: true
-            mcp_connectors:
-              type: array
-              items:
-                $ref: '#/components/schemas/AgenticWorkflowConnector'
-              default: []
+            mcp:
+              type: string
+              default: ''
+              description: Raw JSON blob describing the MCP servers configured for this workflow
             outputs:
               type: array
               items:
                 $ref: '#/components/schemas/AgenticWorkflowOutput'
               default: []
             model:
-              allOf:
-                - $ref: '#/components/schemas/AgenticWorkflowModel'
-              default: CLAUDE
+              $ref: '#/components/schemas/AgenticWorkflowModelRequest'
             project_repositories:
               type: array
               items:
                 $ref: '#/components/schemas/AgenticWorkflowProjectRepository'
               default: []
-    AgenticWorkflowModel:
+            agent_prompt:
+              type: string
+              default: ''
+            governance:
+              $ref: '#/components/schemas/AgenticWorkflowGovernance'
+    AgenticWorkflowGovernance:
+      type: object
+      required:
+        - host_allowlist
+      properties:
+        host_allowlist:
+          type: array
+          items:
+            type: string
+          default: []
+          description: Hostnames the agent is allowed to reach
+    AgenticWorkflowModelType:
       type: string
       enum:
         - CLAUDE
         - BEDROCK
+    AgenticWorkflowModelRequest:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          $ref: '#/components/schemas/AgenticWorkflowModelType'
+        api_key:
+          type: string
+          default: ''
+          writeOnly: true
+          description: Write-only. Provider API key; accepted on create/edit but never returned in responses.
+        settings:
+          type: string
+          default: ''
+    AgenticWorkflowModelResponse:
+      type: object
+      required:
+        - type
+        - settings
+      properties:
+        type:
+          $ref: '#/components/schemas/AgenticWorkflowModelType'
+        settings:
+          type: string
     AgenticWorkflowHeader:
       type: object
       required:
@@ -30108,24 +30145,6 @@ components:
           type: string
         value:
           type: string
-    AgenticWorkflowConnector:
-      type: object
-      required:
-        - name
-        - url
-      properties:
-        name:
-          type: string
-        url:
-          type: string
-        headers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgenticWorkflowHeader'
-          default: []
-        instructions:
-          type: string
-          default: ''
     AgenticWorkflowOutput:
       type: object
       required:
@@ -30149,14 +30168,11 @@ components:
       required:
         - url
         - branch
-        - root_path
         - git_token_id
       properties:
         url:
           type: string
         branch:
-          type: string
-        root_path:
           type: string
         git_token_id:
           type: string
