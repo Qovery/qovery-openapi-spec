@@ -15937,6 +15937,7 @@ components:
       type: object
       required:
         - is_up_to_date
+        - current_tag
         - latest_tag
         - new_required_values
         - new_optional_values
@@ -15948,6 +15949,9 @@ components:
       properties:
         is_up_to_date:
           type: boolean
+        current_tag:
+          type: string
+          example: aws/postgres/17/1.0.0
         latest_tag:
           type: string
           example: aws/postgres/17/1.1.0
