@@ -14578,6 +14578,36 @@ paths:
           $ref: '#/components/responses/404'
         '502':
           description: Failed to fetch blueprint manifest from GitHub
+  /blueprint/{blueprintId}/deploy:
+    post:
+      summary: Deploy (apply) the current blueprint spec
+      operationId: deployBlueprint
+      tags:
+        - Blueprint Main Calls
+      description: >-
+        Deploys the blueprint's currently saved settings to its service. Call this
+        after saving changes with PATCH /blueprint/{blueprintId} (and, optionally,
+        previewing them) to roll them out. No request body: it deploys whatever is
+        currently saved on the blueprint.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      responses:
+        '202':
+          description: Deployment accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintDeploymentAckResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          description: Blueprint deployment failed to dispatch
   /blueprint/{blueprintId}:
     patch:
       summary: Update a blueprint service
@@ -16127,6 +16157,20 @@ components:
             - HELM
             - TERRAFORM
           description: Type of the underlying service backing this blueprint
+    BlueprintDeploymentAckResponse:
+      type: object
+      required:
+        - deployment_id
+        - execution_id
+      properties:
+        deployment_id:
+          type: string
+          format: uuid
+          description: Identifier of the blueprint deployment, used to track its status
+        execution_id:
+          type: string
+          description: Engine execution identifier for this deployment
+          example: exec-abc-123
     BlueprintUpdateRequest:
       type: object
       required:
