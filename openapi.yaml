@@ -1594,7 +1594,7 @@ paths:
           schema:
             $ref: '#/components/schemas/ClusterDeleteMode'
         - in: query
-          name: force
+          name: skipReconcile
           required: false
           schema:
             type: boolean
@@ -5566,7 +5566,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - in: query
-          name: force
+          name: skipReconcile
           required: false
           schema:
             type: boolean
@@ -6324,7 +6324,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/environmentId'
         - in: query
-          name: force
+          name: skipReconcile
           required: false
           schema:
             type: boolean
@@ -7182,7 +7182,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/applicationId'
         - in: query
-          name: force
+          name: skipReconcile
           required: false
           schema:
             type: boolean
@@ -8325,7 +8325,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/containerId'
         - in: query
-          name: force
+          name: skipReconcile
           required: false
           schema:
             type: boolean
@@ -9394,7 +9394,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/databaseId'
         - in: query
-          name: force
+          name: skipReconcile
           required: false
           schema:
             type: boolean
@@ -10243,7 +10243,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/helmId'
         - in: query
-          name: force
+          name: skipReconcile
           required: false
           schema:
             type: boolean
@@ -11096,7 +11096,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/jobId'
         - in: query
-          name: force
+          name: skipReconcile
           required: false
           schema:
             type: boolean
@@ -13510,7 +13510,7 @@ paths:
             default: false
           description: 'When true, only resources are deleted and Qovery configuration is kept.'
         - in: query
-          name: force
+          name: skipReconcile
           required: false
           schema:
             type: boolean
