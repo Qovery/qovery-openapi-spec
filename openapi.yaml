@@ -1593,6 +1593,13 @@ paths:
           name: deleteMode
           schema:
             $ref: '#/components/schemas/ClusterDeleteMode'
+        - in: query
+          name: skipReconcile
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: 'When true, skip the pre-destroy Terraform/Helm apply and tear down best-effort, tolerating already-absent resources. Not allowed with deleteMode=DELETE_QOVERY_CONFIG.'
       tags:
         - Clusters
       responses:
@@ -5558,6 +5565,13 @@ paths:
       operationId: deleteEnvironment
       parameters:
         - $ref: '#/components/parameters/environmentId'
+        - in: query
+          name: skipReconcile
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: 'When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.'
       tags:
         - Environment Main Calls
       responses:
@@ -6309,6 +6323,13 @@ paths:
       operationId: deleteSelectedServices
       parameters:
         - $ref: '#/components/parameters/environmentId'
+        - in: query
+          name: skipReconcile
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: 'When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.'
       tags:
         - Environment Actions
       requestBody:
@@ -7160,6 +7181,13 @@ paths:
       operationId: deleteApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
+        - in: query
+          name: skipReconcile
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: 'When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.'
       tags:
         - Application Main Calls
       responses:
@@ -8296,6 +8324,13 @@ paths:
       operationId: deleteContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
+        - in: query
+          name: skipReconcile
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: 'When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.'
       tags:
         - Container Main Calls
       responses:
@@ -9358,6 +9393,13 @@ paths:
       operationId: deleteDatabase
       parameters:
         - $ref: '#/components/parameters/databaseId'
+        - in: query
+          name: skipReconcile
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: 'When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.'
       tags:
         - Database Main Calls
       responses:
@@ -10200,6 +10242,13 @@ paths:
       operationId: deleteHelm
       parameters:
         - $ref: '#/components/parameters/helmId'
+        - in: query
+          name: skipReconcile
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: 'When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.'
       tags:
         - Helm Main Calls
       responses:
@@ -11046,6 +11095,13 @@ paths:
       operationId: deleteJob
       parameters:
         - $ref: '#/components/parameters/jobId'
+        - in: query
+          name: skipReconcile
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: 'When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.'
       tags:
         - Job Main Calls
       responses:
@@ -13453,6 +13509,13 @@ paths:
             type: boolean
             default: false
           description: 'When true, only resources are deleted and Qovery configuration is kept.'
+        - in: query
+          name: skipReconcile
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: 'When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.'
         - in: query
           name: force_terraform_action
           required: false
