@@ -13572,20 +13572,68 @@ paths:
           $ref: '#/components/responses/404'
     delete:
       summary: Delete an agentic workflow
+      description: >-
+        Delete an agentic workflow. This queues a deployment that removes the workflow's Kubernetes
+        resources, and the workflow is deleted once that deployment completes. A workflow that was
+        never deployed is removed immediately, with no deployment.
       operationId: deleteAgenticWorkflow
       parameters:
         - $ref: '#/components/parameters/agenticWorkflowId'
       tags:
         - Agentic Workflows
       responses:
+        '202':
+          description: agentic workflow deletion has been queued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
         '204':
-          description: Delete agentic workflow
+          description: agentic workflow deleted, no deployment was needed
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: A deployment is already in progress for this environment
+  '/agenticWorkflow/{agenticWorkflowId}/cancelDeployment':
+    post:
+      summary: Cancel agentic workflow deployment
+      description: >-
+        Cancel the deployment currently running the agentic workflow. An agentic workflow only ever
+        runs as part of a deployment of its environment, so this cancels that environment deployment
+        and aborts the workflow's running job.
+      operationId: cancelAgenticWorkflowDeployment
+      parameters:
+        - $ref: '#/components/parameters/agenticWorkflowId'
+      tags:
+        - Agentic Workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                force_cancel:
+                  type: boolean
+                  default: false
+                  description: >-
+                    When false, the engine stops the deployment at the next safe point, letting the
+                    workflow's job terminate on its own. When true it stops waiting for that job and
+                    abandons it immediately.
+      responses:
+        '202':
+          description: agentic workflow deployment cancelling has been requested, no response body
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: The deployment is already cancelled or cannot be cancelled in its current state
   '/terraform/{terraformId}/advancedSettings':
     get:
       summary: Get Advanced settings
