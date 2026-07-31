@@ -12617,6 +12617,7 @@ paths:
                         - $ref: '#/components/schemas/JobResponse'
                         - $ref: '#/components/schemas/TerraformResponse'
                         - $ref: '#/components/schemas/ArgocdAppResponse'
+                        - $ref: '#/components/schemas/AgenticWorkflowResponse'
                       discriminator:
                         propertyName: service_type
                         mapping:
@@ -12627,6 +12628,7 @@ paths:
                           JOB: '#/components/schemas/JobResponse'
                           TERRAFORM: '#/components/schemas/TerraformResponse'
                           ARGOCD_APP: '#/components/schemas/ArgocdAppResponse'
+                          AGENTIC_WORKFLOW: '#/components/schemas/AgenticWorkflowResponse'
       operationId: listServicesByEnvironmentId
       x-stoplight:
         id: 9adquhr5t6qx3
@@ -25095,6 +25097,7 @@ components:
         - HELM
         - TERRAFORM
         - ARGOCD_APP
+        - AGENTIC_WORKFLOW
     SignUp:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -30152,26 +30155,33 @@ components:
         - $ref: '#/components/schemas/Base'
         - type: object
           required:
-          - id
-          - name
-          - description
-          - webhook_ip_allowlist
-          - docker_fragment
-          - enabled
-          - mcp
-          - outputs
-          - model
-          - project_repositories
-          - agent_prompt
-          - governance
-          - webhook
+            - id
+            - service_type
+            - name
+            - slug
+            - description
+            - webhook_ip_allowlist
+            - docker_fragment
+            - enabled
+            - mcp
+            - outputs
+            - model
+            - project_repositories
+            - agent_prompt
+            - governance
+            - webhook
           properties:
             id:
               type: string
               format: uuid
+            service_type:
+              $ref: '#/components/schemas/ServiceTypeEnum'
             name:
               type: string
               description: name is case insensitive
+            slug:
+              type: string
+              description: URL-friendly identifier derived from the name
             description:
               type: string
             webhook_ip_allowlist:

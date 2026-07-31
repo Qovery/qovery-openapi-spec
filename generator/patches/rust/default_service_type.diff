@@ -148,7 +148,7 @@ diff --git a/src/models/service_type_enum.rs b/src/models/service_type_enum.rs
 index ff5604c..f9df852 100644
 --- a/src/models/service_type_enum.rs
 +++ b/src/models/service_type_enum.rs
-@@ -52,3 +52,10 @@ impl Default for ServiceTypeEnum {
+@@ -55,3 +55,11 @@ impl Default for ServiceTypeEnum {
      }
  }
  
@@ -159,6 +159,7 @@ index ff5604c..f9df852 100644
 +pub fn service_type_terraform() -> ServiceTypeEnum { ServiceTypeEnum::Terraform }
 +pub fn service_type_job() -> ServiceTypeEnum { ServiceTypeEnum::Job }
 +pub fn service_type_argocd_app() -> ServiceTypeEnum { ServiceTypeEnum::ArgocdApp }
++pub fn service_type_agentic_workflow() -> ServiceTypeEnum { ServiceTypeEnum::AgenticWorkflow }
 diff --git a/src/models/terraform_response.rs b/src/models/terraform_response.rs
 index afdc518..f2cf6d5 100644
 --- a/src/models/terraform_response.rs
@@ -211,4 +212,15 @@ index 9f05f76..6a22a21 100644
      pub service_type: models::ServiceTypeEnum,
      #[serde(rename = "namespace")]
      pub namespace: String,
-
+diff --git a/src/models/agentic_workflow_response.rs b/src/models/agentic_workflow_response.rs
+--- a/src/models/agentic_workflow_response.rs
++++ b/src/models/agentic_workflow_response.rs
+@@ -19,7 +19,7 @@ pub struct AgenticWorkflowResponse {
+     pub created_at: String,
+     #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
+     pub updated_at: Option<String>,
+-    #[serde(rename = "service_type")]
++    #[serde(rename = "service_type", default = "models::service_type_enum::service_type_agentic_workflow")]
+     pub service_type: models::ServiceTypeEnum,
+     /// name is case insensitive
+     #[serde(rename = "name")]
