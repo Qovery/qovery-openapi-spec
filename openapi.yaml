@@ -30155,21 +30155,21 @@ components:
         - $ref: '#/components/schemas/Base'
         - type: object
           required:
-          - id
-          - service_type
-          - name
-          - slug
-          - description
-          - webhook_ip_allowlist
-          - docker_fragment
-          - enabled
-          - mcp
-          - outputs
-          - model
-          - project_repositories
-          - agent_prompt
-          - governance
-          - webhook
+            - id
+            - service_type
+            - name
+            - slug
+            - description
+            - webhook_ip_allowlist
+            - docker_fragment
+            - enabled
+            - mcp
+            - outputs
+            - model
+            - project_repositories
+            - agent_prompt
+            - governance
+            - webhook
           properties:
             id:
               type: string
