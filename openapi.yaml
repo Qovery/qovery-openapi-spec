@@ -21727,6 +21727,7 @@ components:
         - CONSOLE
         - GIT
         - QOVERY_INTERNAL
+        - SKILL
         - TERRAFORM_PROVIDER
       example: API
     EnvironmentStatusesWithStages:
@@ -24044,6 +24045,7 @@ components:
         - CONSOLE
         - GIT
         - QOVERY_INTERNAL
+        - SKILL
         - TERRAFORM_PROVIDER
       example: API
     OrganizationEventTargetLevel:
