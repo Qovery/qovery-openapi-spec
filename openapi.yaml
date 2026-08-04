@@ -30339,7 +30339,6 @@ components:
       required:
         - url
         - branch
-        - git_token_id
       properties:
         url:
           type: string
@@ -30348,6 +30347,10 @@ components:
         git_token_id:
           type: string
           format: uuid
+          nullable: true
+          description: |
+            Qovery git token id used to clone the repository.
+            Omit it (or send null) for a public repository, which is cloned without credentials.
     AgenticWorkflowWebhook:
       type: object
       required:
