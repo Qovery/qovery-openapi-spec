@@ -30159,6 +30159,7 @@ components:
           required:
             - id
             - service_type
+            - environment_id
             - name
             - slug
             - description
@@ -30178,6 +30179,9 @@ components:
               format: uuid
             service_type:
               $ref: '#/components/schemas/ServiceTypeEnum'
+            environment_id:
+              type: string
+              format: uuid
             name:
               type: string
               description: name is case insensitive
