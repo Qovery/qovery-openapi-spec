@@ -30172,6 +30172,7 @@ components:
             - project_repositories
             - agent_prompt
             - governance
+            - resources
             - webhook
           properties:
             id:
@@ -30215,8 +30216,14 @@ components:
               type: string
             governance:
               $ref: '#/components/schemas/AgenticWorkflowGovernance'
+            resources:
+              $ref: '#/components/schemas/AgenticWorkflowResources'
             webhook:
               $ref: '#/components/schemas/AgenticWorkflowWebhook'
+            icon_uri:
+              type: string
+              format: uri
+              description: Icon URI representing the agentic workflow.
     AgenticWorkflowResponseList:
       type: object
       properties:
@@ -30268,6 +30275,8 @@ components:
               default: ''
             governance:
               $ref: '#/components/schemas/AgenticWorkflowGovernance'
+            resources:
+              $ref: '#/components/schemas/AgenticWorkflowResources'
     AgenticWorkflowGovernance:
       type: object
       required:
@@ -30342,7 +30351,6 @@ components:
       required:
         - url
         - branch
-        - git_token_id
       properties:
         url:
           type: string
@@ -30351,6 +30359,34 @@ components:
         git_token_id:
           type: string
           format: uuid
+          nullable: true
+          description: |
+            Qovery git token id used to clone the repository.
+            Omit it (or send null) for a public repository, which is cloned without credentials.
+    AgenticWorkflowResources:
+      type: object
+      required:
+        - cpu_milli
+        - ram_mib
+        - gpu
+        - storage_gib
+      properties:
+        cpu_milli:
+          type: integer
+          default: 1000
+          description: CPU allocated to the workflow, in milli CPU. Used as both request and limit.
+        ram_mib:
+          type: integer
+          default: 1024
+          description: RAM allocated to the workflow, in MiB. Used as both request and limit.
+        gpu:
+          type: integer
+          default: 0
+          description: Number of GPUs. Accepted and stored, but not yet applied by the engine.
+        storage_gib:
+          type: integer
+          default: 0
+          description: Storage size in GiB. Accepted and stored, but not yet applied by the engine.
     AgenticWorkflowWebhook:
       type: object
       required:
