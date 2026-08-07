@@ -2012,6 +2012,7 @@ components:
       - HELM
       - TERRAFORM
       - ARGOCD_APP
+      - AGENTIC_WORKFLOW
     TerraformStatusDto:
       type: object
       required:
