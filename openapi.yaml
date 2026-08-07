@@ -107,6 +107,7 @@ tags:
   - name: Organization Custom Role
   - name: Organization Event
   - name: Organization Api Token
+  - name: Organization Agent Api Token
   - name: Organization Webhook
   - name: Organization Annotations Group
   - name: Organization Labels Group
@@ -403,6 +404,95 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/agentApiToken':
+    get:
+      summary: List organization agent api tokens
+      description: List the agent api tokens of the organization, each with the Open Policy Agent (rego) policy it carries. The token value itself is never returned here, it is only shown once at creation.
+      operationId: listOrganizationAgentApiTokens
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Agent Api Token
+      responses:
+        '200':
+          description: List organization agent api tokens
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAgentApiTokenResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create an organization agent api token
+      description: >-
+        Create an agent api token, intended for autonomous agents calling the Qovery API.
+
+
+        Unlike a regular api token, an agent api token carries **no organization role**. The Open
+        Policy Agent (rego) policy attached to it is evaluated on every request and is the only
+        thing constraining what the token can do: a policy that allows everything grants full
+        organization admin access. For that reason only an organization owner or admin can create
+        one.
+
+
+        The generated token value is returned only in this response and cannot be retrieved
+        afterwards.
+      operationId: createOrganizationAgentApiToken
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Agent Api Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationAgentApiTokenCreateRequest'
+      responses:
+        '201':
+          description: Organization agent api token created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAgentApiTokenCreate'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: Organization Agent Api Token name is already taken
+  '/organization/{organizationId}/agentApiToken/{agentApiTokenId}':
+    delete:
+      summary: Delete organization agent api token
+      description: Delete organization agent api token
+      operationId: deleteOrganizationAgentApiToken
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: agentApiTokenId
+          in: path
+          description: Organization Agent Api Token ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Organization Agent Api Token
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -23598,6 +23688,74 @@ components:
                 audit_logs_retention_in_days:
                   type: number
                   description: audit logs maximum period available in days
+    OrganizationAgentApiToken:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            opa_policy:
+              type: string
+              description: the Open Policy Agent (rego) policy evaluated on every request made with this token
+            creator_name:
+              type: string
+              nullable: true
+            expires_at:
+              type: string
+              format: date-time
+              nullable: true
+    OrganizationAgentApiTokenCreate:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            token:
+              type: string
+              description: the generated token to send in 'Authorization' header prefixed by 'Token '. It is returned only here and cannot be retrieved afterwards.
+            creator_name:
+              type: string
+              nullable: true
+            user_sub:
+              type: string
+            expires_at:
+              type: string
+              format: date-time
+              nullable: true
+    OrganizationAgentApiTokenCreateRequest:
+      type: object
+      required:
+        - name
+        - opa_policy
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        opa_policy:
+          type: string
+          description: >-
+            Open Policy Agent (rego) rule definitions, without a `package` declaration: Qovery
+            prepends a per-token package so that one token's rules cannot authorize another's. The
+            policy must define an `allow` rule, and the request is denied unless it evaluates to
+            true.
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+    OrganizationAgentApiTokenResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationAgentApiToken'
     OrganizationApiToken:
       allOf:
         - $ref: '#/components/schemas/Base'
