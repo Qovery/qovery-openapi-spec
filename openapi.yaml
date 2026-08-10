@@ -21807,6 +21807,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Status'
+        agentic_workflows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
     EnvironmentStatusEventOriginEnum:
       type: string
       nullable: true
@@ -22481,6 +22485,10 @@ components:
           items:
             $ref: '#/components/schemas/Status'
         terraforms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+        agentic_workflows:
           type: array
           items:
             $ref: '#/components/schemas/Status'

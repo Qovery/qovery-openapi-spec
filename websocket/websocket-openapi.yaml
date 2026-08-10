@@ -1057,7 +1057,12 @@ components:
       - helms
       - terraform
       - argocd_apps
+      - agentic_workflows
       properties:
+        agentic_workflows:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatusDto'
         applications:
           type: array
           items:
