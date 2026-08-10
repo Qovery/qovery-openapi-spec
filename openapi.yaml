@@ -79,6 +79,7 @@ tags:
   - name: Platform Configuration
   - name: Custom Domain
   - name: Container Custom Domain
+  - name: MCP Servers
   - name: Database
   - name: Database Actions
   - name: Database Application
@@ -4680,6 +4681,129 @@ paths:
                 $ref: '#/components/schemas/ContainerRegistryResponse'
         '400':
           $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/mcpServer':
+    get:
+      summary: List organization MCP servers
+      description: List the remote MCP servers configured for an organization. Header values are never returned.
+      operationId: listMcpServers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - MCP Servers
+      responses:
+        '200':
+          description: List MCP servers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpServerResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create an MCP server
+      description: Configure a remote HTTPS MCP server for an organization.
+      operationId: createMcpServer
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - MCP Servers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpServerRequest'
+      responses:
+        '201':
+          description: MCP server created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpServerResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: MCP server name is already taken in the organization
+  '/mcpServer/{mcpServerId}':
+    get:
+      summary: Get an MCP server
+      description: Get a remote MCP server configuration. Header values are never returned.
+      operationId: getMcpServer
+      parameters:
+        - $ref: '#/components/parameters/mcpServerId'
+      tags:
+        - MCP Servers
+      responses:
+        '200':
+          description: The MCP server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpServerResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit an MCP server
+      description: Replace a remote MCP server configuration, including all configured headers.
+      operationId: editMcpServer
+      parameters:
+        - $ref: '#/components/parameters/mcpServerId'
+      tags:
+        - MCP Servers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpServerRequest'
+      responses:
+        '200':
+          description: MCP server edited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpServerResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: MCP server name is already taken in the organization
+    delete:
+      summary: Delete an MCP server
+      description: Delete a remote MCP server configuration.
+      operationId: deleteMcpServer
+      parameters:
+        - $ref: '#/components/parameters/mcpServerId'
+      tags:
+        - MCP Servers
+      responses:
+        '200':
+          description: MCP server deleted
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -14925,6 +15049,14 @@ components:
       schema:
         type: string
         format: uuid
+    mcpServerId:
+      name: mcpServerId
+      in: path
+      description: MCP Server ID
+      required: true
+      schema:
+        type: string
+        format: uuid
     deploymentRequestId:
       name: deploymentRequestId
       in: path
@@ -19914,6 +20046,66 @@ components:
               x-stoplight:
                 id: eaqm4swmqt9ty
               description: Required if kind is `AZURE_CR`.
+    McpServerRequest:
+      type: object
+      required:
+        - name
+        - url
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: Unique MCP server name within the organization
+        description:
+          type: string
+          default: ''
+        url:
+          type: string
+          format: uri
+          pattern: '^https://'
+          description: HTTPS URL of the remote MCP server
+        headers:
+          type: object
+          writeOnly: true
+          description: HTTP headers sent to the MCP server. Header values are encrypted and never returned by the API.
+          default: {}
+          additionalProperties:
+            type: string
+    McpServerResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+            - description
+            - url
+            - header_names
+            - updated_at
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            url:
+              type: string
+              format: uri
+              pattern: '^https://'
+              description: HTTPS URL of the remote MCP server
+            header_names:
+              type: array
+              description: Names of the configured HTTP headers. Header values are never returned.
+              uniqueItems: true
+              items:
+                type: string
+    McpServerResponseList:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/McpServerResponse'
     ContainerRegistryResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
