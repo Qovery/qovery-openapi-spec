@@ -21634,6 +21634,15 @@ components:
             cluster_name:
               type: string
               format: string
+            expires_at:
+              type: string
+              format: date-time
+              nullable: true
+              readOnly: true
+              description: >-
+                Date after which the environment is automatically deleted. Null when the
+                environment never expires, which is the case for every environment except the
+                throwaway ones created for a single agentic workflow run.
     EnvironmentResponseList:
       type: object
       properties:
