@@ -13850,6 +13850,35 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: The deployment is already cancelled or cannot be cancelled in its current state
+  '/agenticWorkflow/{agenticWorkflowId}/deploymentHistoryV2':
+    get:
+      summary: List agentic workflow deployments
+      description: Returns the 20 last agentic workflow deployments
+      operationId: listAgenticWorkflowDeploymentHistoryV2
+      parameters:
+        - $ref: '#/components/parameters/agenticWorkflowId'
+        - in: query
+          name: pageSize
+          description: The number of deployments to return in the current page
+          schema:
+            type: number
+            nullable: true
+            default: 20
+      tags:
+        - Agentic Workflows
+      responses:
+        '200':
+          description: List deployment history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentHistoryServicePaginatedResponseListV2'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/terraform/{terraformId}/advancedSettings':
     get:
       summary: Get Advanced settings
