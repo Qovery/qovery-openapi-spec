@@ -22271,6 +22271,7 @@ components:
         - JOB
         - HELM
         - TERRAFORM
+        - AGENTIC_WORKFLOW
     APIVariableTypeEnum:
       type: string
       description: |
@@ -26255,6 +26256,7 @@ components:
         - JOB
         - HELM
         - TERRAFORM
+        - AGENTIC_WORKFLOW
     JobTypeEnum:
       type: string
       description: type of job
