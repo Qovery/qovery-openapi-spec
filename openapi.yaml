@@ -24579,7 +24579,7 @@ components:
         - IMPORT
         - LOCK
         - UNLOCK
-        - REJECTED
+        - POLICY_FAILED
       example: CREATE
     SecretOverride:
       type: object
