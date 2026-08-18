@@ -26762,6 +26762,21 @@ components:
           type: boolean
           x-stoplight:
             id: fuolcs5q8ncp8
+          deprecated: true
+          description: >-
+            Deprecated: use the per-pool `spot_enabled` fields on
+            `qovery_node_pools.default_override`, `qovery_node_pools.stable_override` and
+            `qovery_node_pools.cronjob_override` instead.
+
+
+            On read, this is a derived value: it is recomputed on every write as the logical OR of
+            the per-pool `spot_enabled` fields (default, stable and cronjob node pools).
+
+
+            On write, it is only honoured for legacy clients: when none of the per-pool
+            `spot_enabled` fields are present in the request, this value is applied to all node
+            pools, including the stable one. As soon as the per-pool fields are present they take
+            precedence and this value is ignored.
         disk_size_in_gib:
           type: integer
         disk_iops:
@@ -27392,6 +27407,12 @@ components:
           $ref: '#/components/schemas/KarpenterNodePoolConsolidation'
         limits:
           $ref: '#/components/schemas/KarpenterNodePoolLimits'
+        spot_enabled:
+          type: boolean
+          description: >-
+            Whether this node pool runs on spot instances. When absent from a request, the
+            deprecated top-level `spot_enabled` of the Karpenter parameters applies to this pool
+            (legacy behavior).
         consolidate_after:
           type: string
           description: 'Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h'
@@ -27454,6 +27475,12 @@ components:
           $ref: '#/components/schemas/KarpenterNodePoolConsolidation'
         limits:
           $ref: '#/components/schemas/KarpenterNodePoolLimits'
+        spot_enabled:
+          type: boolean
+          description: >-
+            Whether this node pool runs on spot instances. When absent from a request, the
+            deprecated top-level `spot_enabled` of the Karpenter parameters applies to this pool
+            (legacy behavior).
         consolidate_after:
           type: string
           description: 'Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h'
@@ -27465,6 +27492,12 @@ components:
       properties:
         limits:
           $ref: '#/components/schemas/KarpenterNodePoolLimits'
+        spot_enabled:
+          type: boolean
+          description: >-
+            Whether this node pool runs on spot instances. When absent from a request, the
+            deprecated top-level `spot_enabled` of the Karpenter parameters applies to this pool
+            (legacy behavior).
         consolidate_after:
           type: string
           description: 'Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h'
