@@ -19580,7 +19580,7 @@ components:
           example: >-
             helm upgrade --install qovery-operator
             oci://public.ecr.aws/r3m4q3r9/charts/qovery-operator --version 0.2.1
-            --namespace qovery --create-namespace -f values.yaml
+            --namespace qovery --create-namespace --atomic --wait --timeout 15m -f values.yaml
     ClusterOperatorStatusResponse:
       type: object
       required:
