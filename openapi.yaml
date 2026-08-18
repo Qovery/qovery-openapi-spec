@@ -1922,6 +1922,44 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           description: The cluster does not exist or has not been attached to the Operator path
+  '/organization/{organizationId}/cluster/{clusterId}/operator/update':
+    post:
+      summary: Update the Qovery Operator on a cluster
+      description: >-
+        Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart
+        version is required; the optional image version overrides the image target selected by
+        q-core. The current Operator must be attached, connected, and protocol-compatible. A
+        successful response means that the execution was accepted, not that Helm has completed.
+        Cluster administrator permission is required.
+      operationId: updateClusterOperator
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Cluster Operator
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterOperatorUpdateRequest'
+      responses:
+        '202':
+          description: The Qovery Operator update was queued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterOperatorUpdateResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '412':
+          description: The Operator is disconnected, incompatible, or its selected release cannot be resolved
   '/admin/operator/clusters':
     get:
       summary: List the Qovery Operator fleet
@@ -19633,6 +19671,43 @@ components:
           nullable: true
           allOf:
             - $ref: '#/components/schemas/ReportedClusterOperatorIdentity'
+    ClusterOperatorUpdateRequest:
+      type: object
+      required:
+        - chart_version
+      properties:
+        chart_version:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Exact Qovery Operator Helm chart version to install.
+          example: 0.2.2
+        image_version:
+          type: string
+          minLength: 1
+          maxLength: 128
+          nullable: true
+          description: Optional Operator image tag overriding the image target selected by q-core.
+          example: v1.204.0
+    ClusterOperatorUpdateResponse:
+      type: object
+      required:
+        - execution_id
+        - image_version
+        - chart_version
+      properties:
+        execution_id:
+          type: string
+          description: Identifier shared by the queued Engine execution and its infrastructure logs.
+          example: 00000000-0000-0000-0000-000000000001-0
+        image_version:
+          type: string
+          description: Operator image tag resolved for this execution.
+          example: v1.204.0
+        chart_version:
+          type: string
+          description: Operator Helm chart version resolved for this execution.
+          example: 0.2.2
     ReportedClusterOperatorIdentity:
       type: object
       required:
