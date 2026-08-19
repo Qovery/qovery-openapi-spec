@@ -26770,7 +26770,8 @@ components:
 
 
             On read, this is a derived value: it is recomputed on every write as the logical OR of
-            the per-pool `spot_enabled` fields (default, stable and cronjob node pools).
+            the per-pool `spot_enabled` fields of the node pools present (the default and stable
+            node pools, plus the cronjob node pool only while its `cronjob_override` block exists).
 
 
             On write, it is only honoured for legacy clients: when none of the per-pool
@@ -27409,10 +27410,22 @@ components:
           $ref: '#/components/schemas/KarpenterNodePoolLimits'
         spot_enabled:
           type: boolean
+          nullable: true
           description: >-
             Whether this node pool runs on spot instances. When absent from a request, the
             deprecated top-level `spot_enabled` of the Karpenter parameters applies to this pool
             (legacy behavior).
+
+
+            On read, only a value that genuinely deviates from the deprecated top-level
+            `spot_enabled` is surfaced, so responses stay as close as possible to their
+            pre-migration shape. When this pool resolves to the global value this field comes back
+            as `null`. Treat `null` and absent identically: in both cases the pool inherits the
+            deprecated top-level `spot_enabled`, so no information is lost.
+
+
+            The `stable_override` block itself is never omitted from the response; only this
+            field's value is affected.
         consolidate_after:
           type: string
           description: 'Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h'
@@ -27477,10 +27490,24 @@ components:
           $ref: '#/components/schemas/KarpenterNodePoolLimits'
         spot_enabled:
           type: boolean
+          nullable: true
           description: >-
             Whether this node pool runs on spot instances. When absent from a request, the
             deprecated top-level `spot_enabled` of the Karpenter parameters applies to this pool
             (legacy behavior).
+
+
+            On read, only a value that genuinely deviates from the deprecated top-level
+            `spot_enabled` is surfaced, so responses stay as close as possible to their
+            pre-migration shape. When this pool resolves to the global value this field comes back
+            as `null`. Treat `null` and absent identically: in both cases the pool inherits the
+            deprecated top-level `spot_enabled`, so no information is lost.
+
+
+            The `cronjob_override` block itself is never omitted from the response, because its
+            presence is what enables the cronjob node pool. For the same reason this field is only
+            meaningful while that pool is enabled: a disabled cronjob node pool has no stored spot
+            preference.
         consolidate_after:
           type: string
           description: 'Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h'
@@ -27494,10 +27521,24 @@ components:
           $ref: '#/components/schemas/KarpenterNodePoolLimits'
         spot_enabled:
           type: boolean
+          nullable: true
           description: >-
             Whether this node pool runs on spot instances. When absent from a request, the
             deprecated top-level `spot_enabled` of the Karpenter parameters applies to this pool
             (legacy behavior).
+
+
+            On read, only a value that genuinely deviates from the deprecated top-level
+            `spot_enabled` is surfaced, so responses stay as close as possible to their
+            pre-migration shape. When this pool resolves to the global value this field comes back
+            as `null`. Treat `null` and absent identically: in both cases the pool inherits the
+            deprecated top-level `spot_enabled`, so no information is lost.
+
+
+            `default_override` is the only override block that can be omitted entirely: when this
+            field is nulled and the block carries neither `limits` nor `consolidate_after`, the
+            whole block is dropped from the response. This restores the pre-migration wire shape
+            that existing clients, notably the Terraform provider, rely on.
         consolidate_after:
           type: string
           description: 'Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h'
