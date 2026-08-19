@@ -31057,7 +31057,6 @@ components:
               description: Raw JSON blob describing the MCP servers configured for this workflow
             mcp_server_ids:
               type: array
-              uniqueItems: true
               items:
                 type: string
                 format: uuid
@@ -31120,7 +31119,6 @@ components:
               description: Raw JSON blob describing the MCP servers configured for this workflow
             mcp_server_ids:
               type: array
-              uniqueItems: true
               items:
                 type: string
                 format: uuid
