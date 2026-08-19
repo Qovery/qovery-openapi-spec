@@ -27412,20 +27412,9 @@ components:
           type: boolean
           nullable: true
           description: >-
-            Whether this node pool runs on spot instances. When absent from a request, the
-            deprecated top-level `spot_enabled` of the Karpenter parameters applies to this pool
-            (legacy behavior).
-
-
-            On read, only a value that genuinely deviates from the deprecated top-level
-            `spot_enabled` is surfaced, so responses stay as close as possible to their
-            pre-migration shape. When this pool resolves to the global value this field comes back
-            as `null`. Treat `null` and absent identically: in both cases the pool inherits the
-            deprecated top-level `spot_enabled`, so no information is lost.
-
-
-            The `stable_override` block itself is never omitted from the response; only this
-            field's value is affected.
+            Whether this node pool runs on spot instances. `null` or absent means the pool
+            inherits the deprecated top-level `spot_enabled`: on write that value applies to this
+            pool, on read only a deviating value is surfaced.
         consolidate_after:
           type: string
           description: 'Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h'
@@ -27492,22 +27481,10 @@ components:
           type: boolean
           nullable: true
           description: >-
-            Whether this node pool runs on spot instances. When absent from a request, the
-            deprecated top-level `spot_enabled` of the Karpenter parameters applies to this pool
-            (legacy behavior).
-
-
-            On read, only a value that genuinely deviates from the deprecated top-level
-            `spot_enabled` is surfaced, so responses stay as close as possible to their
-            pre-migration shape. When this pool resolves to the global value this field comes back
-            as `null`. Treat `null` and absent identically: in both cases the pool inherits the
-            deprecated top-level `spot_enabled`, so no information is lost.
-
-
-            The `cronjob_override` block itself is never omitted from the response, because its
-            presence is what enables the cronjob node pool. For the same reason this field is only
-            meaningful while that pool is enabled: a disabled cronjob node pool has no stored spot
-            preference.
+            Whether this node pool runs on spot instances. `null` or absent means the pool
+            inherits the deprecated top-level `spot_enabled`: on write that value applies to this
+            pool, on read only a deviating value is surfaced. Only meaningful while the cronjob
+            node pool is enabled — the presence of `cronjob_override` is what enables it.
         consolidate_after:
           type: string
           description: 'Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h'
@@ -27523,22 +27500,10 @@ components:
           type: boolean
           nullable: true
           description: >-
-            Whether this node pool runs on spot instances. When absent from a request, the
-            deprecated top-level `spot_enabled` of the Karpenter parameters applies to this pool
-            (legacy behavior).
-
-
-            On read, only a value that genuinely deviates from the deprecated top-level
-            `spot_enabled` is surfaced, so responses stay as close as possible to their
-            pre-migration shape. When this pool resolves to the global value this field comes back
-            as `null`. Treat `null` and absent identically: in both cases the pool inherits the
-            deprecated top-level `spot_enabled`, so no information is lost.
-
-
-            `default_override` is the only override block that can be omitted entirely: when this
-            field is nulled and the block carries neither `limits` nor `consolidate_after`, the
-            whole block is dropped from the response. This restores the pre-migration wire shape
-            that existing clients, notably the Terraform provider, rely on.
+            Whether this node pool runs on spot instances. `null` or absent means the pool
+            inherits the deprecated top-level `spot_enabled`: on write that value applies to this
+            pool, on read only a deviating value is surfaced. `default_override` is omitted from a
+            response when it would carry nothing else.
         consolidate_after:
           type: string
           description: 'Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h'
