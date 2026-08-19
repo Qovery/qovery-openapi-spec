@@ -31019,6 +31019,7 @@ components:
             - docker_fragment
             - enabled
             - mcp
+            - mcp_server_ids
             - outputs
             - model
             - project_repositories
@@ -31054,6 +31055,13 @@ components:
             mcp:
               type: string
               description: Raw JSON blob describing the MCP servers configured for this workflow
+            mcp_server_ids:
+              type: array
+              uniqueItems: true
+              items:
+                type: string
+                format: uuid
+              description: Organization MCP servers used by this workflow
             outputs:
               type: array
               items:
@@ -31110,6 +31118,14 @@ components:
               type: string
               default: ''
               description: Raw JSON blob describing the MCP servers configured for this workflow
+            mcp_server_ids:
+              type: array
+              uniqueItems: true
+              items:
+                type: string
+                format: uuid
+              default: []
+              description: Organization MCP servers used by this workflow
             outputs:
               type: array
               items:
