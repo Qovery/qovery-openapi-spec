@@ -15669,7 +15669,11 @@ components:
           type: string
         type:
           type: string
-          description: Field type understood by the Console, such as string, number, or bool
+          description: Field type understood by the Console.
+          enum:
+            - string
+            - number
+            - bool
         required:
           type: boolean
         defaultValue:
