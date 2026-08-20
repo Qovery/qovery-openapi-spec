@@ -9834,33 +9834,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    put:
-      summary: Edit database  master credentials
-      operationId: editDatabaseCredentials
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-      tags:
-        - Database Main Calls
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CredentialsRequest'
-      responses:
-        '200':
-          description: Edit database credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Credentials'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/database/{databaseId}/application':
     get:
       summary: List applications using the database
@@ -21101,16 +21074,6 @@ components:
           type: string
         port:
           type: integer
-        login:
-          type: string
-        password:
-          type: string
-    CredentialsRequest:
-      type: object
-      required:
-        - login
-        - password
-      properties:
         login:
           type: string
         password:
