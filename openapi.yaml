@@ -26515,6 +26515,11 @@ components:
         duration_sec:
           description: The duration of the step in seconds.
           type: integer
+        started_at:
+          description: The time at which the step started. Present while the step is ongoing and may be retained after completion.
+          type: string
+          format: date-time
+          nullable: true
     StageStepMetrics:
       type: object
       properties:
@@ -26562,6 +26567,11 @@ components:
         duration_sec:
           description: The duration of the step in seconds.
           type: integer
+        started_at:
+          description: The time at which the step started. Present while the step is ongoing and may be retained after completion.
+          type: string
+          format: date-time
+          nullable: true
     StageStepMetricNameEnum:
       type: string
       enum:
@@ -26576,12 +26586,14 @@ components:
     StepMetricStatusEnum:
       type: string
       enum:
+        - ONGOING
         - SUCCESS
         - ERROR
         - CANCEL
         - SKIP
       description: |
-        The status of completion for the step:
+        The lifecycle status of the step:
+        - ONGOING: The step is currently running.
         - SUCCESS: The step completed successfully.
         - ERROR: The step completed with an error.
         - CANCEL: The step was canceled.
