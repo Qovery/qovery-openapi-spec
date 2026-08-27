@@ -31006,6 +31006,7 @@ components:
             - governance
             - resources
             - webhook
+            - schedule
           properties:
             id:
               type: string
@@ -31058,6 +31059,11 @@ components:
               $ref: '#/components/schemas/AgenticWorkflowResources'
             webhook:
               $ref: '#/components/schemas/AgenticWorkflowWebhook'
+            schedule:
+              allOf:
+                - $ref: '#/components/schemas/AgenticWorkflowScheduleResponse'
+              nullable: true
+              description: Cron schedule firing runs of this workflow. Null when the workflow is webhook-only.
             icon_uri:
               type: string
               format: uri
@@ -31122,6 +31128,13 @@ components:
               $ref: '#/components/schemas/AgenticWorkflowGovernance'
             resources:
               $ref: '#/components/schemas/AgenticWorkflowResources'
+            schedule:
+              allOf:
+                - $ref: '#/components/schemas/AgenticWorkflowScheduleRequest'
+              nullable: true
+              description: >-
+                Cron schedule firing runs of this workflow, on top of the webhook every workflow
+                already has. Omit it, or send null, for a webhook-only workflow.
     AgenticWorkflowGovernance:
       type: object
       required:
@@ -31239,6 +31252,44 @@ components:
       properties:
         url:
           type: string
+    AgenticWorkflowScheduleRequest:
+      type: object
+      required:
+        - cron_expression
+        - timezone
+      properties:
+        cron_expression:
+          type: string
+          description: >-
+            Five-field cron expression, the same syntax Kubernetes cron jobs accept. Rejected if it
+            fires more than once every 5 minutes, since each run deploys a full environment.
+          example: 0 8 * * 1-5
+        timezone:
+          type: string
+          description: tz database identifier the expression is evaluated in.
+          example: Europe/Paris
+    AgenticWorkflowScheduleResponse:
+      type: object
+      required:
+        - cron_expression
+        - timezone
+        - next_run_at
+      properties:
+        cron_expression:
+          type: string
+          example: 0 8 * * 1-5
+        timezone:
+          type: string
+          description: tz database identifier the expression is evaluated in.
+          example: Europe/Paris
+        next_run_at:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: >-
+            When the schedule fires next. Null while the workflow is disabled, since a disabled
+            workflow accumulates no occurrences.
   responses:
     '204':
       description: no content
