@@ -31007,6 +31007,7 @@ components:
             - resources
             - webhook
             - schedule
+            - execution_mode
           properties:
             id:
               type: string
@@ -31064,6 +31065,8 @@ components:
                 - $ref: '#/components/schemas/AgenticWorkflowScheduleResponse'
               nullable: true
               description: Cron schedule firing runs of this workflow. Null when the workflow is webhook-only.
+            execution_mode:
+              $ref: '#/components/schemas/AgenticWorkflowExecutionMode'
             icon_uri:
               type: string
               format: uri
@@ -31135,6 +31138,18 @@ components:
               description: >-
                 Cron schedule firing runs of this workflow, on top of the webhook every workflow
                 already has. Omit it, or send null, for a webhook-only workflow.
+            execution_mode:
+              $ref: '#/components/schemas/AgenticWorkflowExecutionMode'
+    AgenticWorkflowExecutionMode:
+      type: string
+      description: >-
+        Where a run executes. IN_PLACE deploys the workflow in the environment it belongs to, and is
+        the default. CLONE_ENVIRONMENT gives each run a throwaway copy of the whole environment,
+        which is the only mode that isolates concurrent runs from each other.
+      default: IN_PLACE
+      enum:
+        - IN_PLACE
+        - CLONE_ENVIRONMENT
     AgenticWorkflowGovernance:
       type: object
       required:
