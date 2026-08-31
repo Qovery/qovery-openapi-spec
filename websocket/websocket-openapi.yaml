@@ -12,6 +12,45 @@ info:
 servers:
 - url: wss://ws.qovery.com
 paths:
+  /blueprint/dispatch:
+    get:
+      tags:
+      - blueprint_dispatch
+      operationId: handle_blueprint_dispatch_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+          format: uuid
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: environment
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Stream of blueprint dispatch events, discriminated on `type`. One frame per event; the connection stays open.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintDispatchEvent'
   /blueprint/preview:
     get:
       tags:
@@ -48,45 +87,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlueprintPreviewResult'
-  /blueprint/service-created:
-    get:
-      tags:
-      - blueprint_service
-      operationId: handle_blueprint_service_created_request
-      parameters:
-      - name: organization
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type:
-          - string
-          - 'null'
-          format: uuid
-      - name: project
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: environment
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
-      responses:
-        '200':
-          description: Stream of blueprint service-created events. One frame per event; the connection stays open.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BlueprintServiceCreatedEvent'
   /cluster/metrics:
     get:
       tags:
@@ -692,6 +692,56 @@ components:
             $ref: '#/components/schemas/PodStatusDto'
         state:
           $ref: '#/components/schemas/ServiceStateDto'
+    BlueprintDispatchEvent:
+      oneOf:
+      - type: object
+        description: The blueprint's service was created.
+        required:
+        - blueprint_id
+        - type
+        properties:
+          blueprint_id:
+            type: string
+            format: uuid
+            description: Id of the blueprint whose service was created.
+          type:
+            type: string
+            enum:
+            - created
+      - type: object
+        description: |-
+          The dispatch failed. `status` says how it ended and `error_message` carries the reason the
+          engine gave, when it gave one.
+        required:
+        - blueprint_id
+        - status
+        - error_message
+        - type
+        properties:
+          blueprint_id:
+            type: string
+            format: uuid
+            description: Id of the blueprint that failed to dispatch.
+          status:
+            $ref: '#/components/schemas/BlueprintDispatchFailureStatus'
+          error_message:
+            type:
+            - string
+            - 'null'
+            description: The engine's failure reason; null when it reported none.
+          type:
+            type: string
+            enum:
+            - failed
+      description: |-
+        One blueprint dispatch event. The stream emits these until the connection closes. The `type`
+        field selects the variant.
+    BlueprintDispatchFailureStatus:
+      type: string
+      enum:
+      - FAILED
+      - INTERNAL_ERROR
+      - CANCELED
     BlueprintPreviewResult:
       oneOf:
       - type: object
@@ -749,16 +799,6 @@ components:
       description: |-
         Final result of a blueprint update preview. Exactly one frame is sent, then the connection
         closes. The `type` field selects the variant.
-    BlueprintServiceCreatedEvent:
-      type: object
-      description: One blueprint service-created event. The stream emits these until the connection closes.
-      required:
-      - blueprint_id
-      properties:
-        blueprint_id:
-          type: string
-          format: uuid
-          description: Id of the blueprint whose service was created.
     CertificateStatusDto:
       type: object
       required:
