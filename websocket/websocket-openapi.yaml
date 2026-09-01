@@ -715,7 +715,6 @@ components:
         required:
         - blueprint_id
         - status
-        - error_message
         - type
         properties:
           blueprint_id:
@@ -728,7 +727,9 @@ components:
             type:
             - string
             - 'null'
-            description: The engine's failure reason; null when it reported none.
+            description: |-
+              The engine's failure reason. The key is always present; its value is null when the
+              engine gave no reason, so a client must branch on null, not on absence.
           type:
             type: string
             enum:
