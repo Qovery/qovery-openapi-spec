@@ -740,10 +740,13 @@ components:
     BlueprintDispatchFailureStatus:
       type: string
       description: |-
-        How a failed dispatch ended. This set is closed by `translateStatus` in q-core's
-        `BlueprintEngineDeploymentProcessor` — not by the wider `DeploymentStatusType` it draws
-        from, whose other members are unreachable on this frame. A new case in `translateStatus`
-        widens the wire set with no signal in this repo.
+        Status q-core settled on for a failed dispatch — a `DeploymentStatusType` serialized as its
+        Kotlin constant name, so SCREAMING_SNAKE and *not* affected by q-core's snake_case property
+        naming strategy.
+
+        Narrower than `DeploymentStatusType`'s 28 values: q-core publishes a failure only for a terminal
+        engine step whose translated status is not RUNNING, and `BlueprintEngineDeploymentProcessor`'s
+        `translateStatus` can only reach these three there. Widen this if that mapping grows a case.
       enum:
       - FAILED
       - INTERNAL_ERROR
