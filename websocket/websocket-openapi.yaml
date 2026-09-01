@@ -739,6 +739,11 @@ components:
         field selects the variant.
     BlueprintDispatchFailureStatus:
       type: string
+      description: |-
+        How a failed dispatch ended. This set is closed by `translateStatus` in q-core's
+        `BlueprintEngineDeploymentProcessor` — not by the wider `DeploymentStatusType` it draws
+        from, whose other members are unreachable on this frame. A new case in `translateStatus`
+        widens the wire set with no signal in this repo.
       enum:
       - FAILED
       - INTERNAL_ERROR
