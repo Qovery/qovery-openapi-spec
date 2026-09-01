@@ -735,8 +735,16 @@ components:
             enum:
             - failed
       description: |-
-        One blueprint dispatch event. The stream emits these until the connection closes. The `type`
+        One blueprint dispatch outcome. The stream emits these until the connection closes; the `type`
         field selects the variant.
+
+        There is no upper bound on time-to-frame, and clients must not assume one. q-core aborts a
+        dispatch after 10 minutes of engine *silence*, not on total duration, so a provision that keeps
+        logging — a large Terraform apply, an RDS creation — legitimately runs far longer, and one that
+        logs indefinitely without reaching a terminal step yields no frame at all. Elapsed time is
+        therefore not evidence of an outcome: a client that waits N minutes and then reports failure is
+        inventing one. Bound the wait if you need to, but resolve it against the blueprint API rather
+        than from the timeout.
     BlueprintDispatchFailureStatus:
       type: string
       description: |-
