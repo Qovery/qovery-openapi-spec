@@ -270,6 +270,9 @@ x-tagGroups:
   - name: Blueprint
     tags:
       - Blueprint Main Calls
+  - name: Cluster
+    tags:
+      - Secret Manager Access
 servers:
   - url: 'https://api.qovery.com'
 paths:
@@ -15512,7 +15515,8 @@ components:
     secretManagerAccessId:
       name: secretManagerAccessId
       in: path
-      description: Secret Manager Access ID
+      description: |
+        Secret Manager Access Id - Use the endpoint [`GET /organization/{organizationId}/cluster`](#operation/listOrganizationCluster) to retrieve your secret manager access
       required: true
       schema:
         type: string
