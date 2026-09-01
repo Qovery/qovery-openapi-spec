@@ -16193,6 +16193,7 @@ components:
         - tag
         - environment_id
         - deployment_id
+        - execution_id
       properties:
         id:
           type: string
@@ -16215,6 +16216,10 @@ components:
             with GET /blueprint/{blueprintId}, and match it against
             `latest_deployment.id` there to confirm that dispatch is this one rather
             than a later re-dispatch.
+        execution_id:
+          type: string
+          description: Engine execution identifier for this dispatch
+          example: exec-abc-123
     BlueprintDetailsResponse:
       type: object
       required:
@@ -16264,6 +16269,7 @@ components:
       type: object
       required:
         - id
+        - execution_id
         - status
         - started_at
         - terminated_at
@@ -16272,6 +16278,10 @@ components:
         id:
           type: string
           format: uuid
+        execution_id:
+          type: string
+          description: Engine execution identifier for this dispatch
+          example: exec-abc-123
         status:
           type: string
           description: >-
