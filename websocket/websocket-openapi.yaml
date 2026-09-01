@@ -747,6 +747,11 @@ components:
         Narrower than `DeploymentStatusType`'s 28 values: q-core publishes a failure only for a terminal
         engine step whose translated status is not RUNNING, and `BlueprintEngineDeploymentProcessor`'s
         `translateStatus` can only reach these three there. Widen this if that mapping grows a case.
+
+        `FAILED` and `CANCELED` are engine-reported, translated from the `DeployedError` and `Cancelled`
+        steps. `INTERNAL_ERROR` is not: the engine's `BlueprintStep` has no `GlobalError` variant, so it
+        can only come from q-core itself — a lifecycle exception, or the 10-minute engine-silence abort.
+        Don't expect engine logs to explain an `INTERNAL_ERROR`.
       enum:
       - FAILED
       - INTERNAL_ERROR
