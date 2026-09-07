@@ -16045,10 +16045,12 @@ components:
       type: object
       required:
         - name
+        - displayName
         - kind
         - description
         - icon
         - categories
+        - primaryCategory
         - provider
         - serviceFamily
         - majorVersions
@@ -16058,7 +16060,7 @@ components:
           example: aws-rds-postgresql
         displayName:
           type: string
-          description: Customer-facing name for the blueprint. Consumers should fall back to `name` when omitted.
+          description: Customer-facing name for the blueprint.
           example: Amazon RDS for PostgreSQL
         kind:
           type: string
