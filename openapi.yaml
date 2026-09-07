@@ -16056,6 +16056,10 @@ components:
         name:
           type: string
           example: aws-rds-postgresql
+        displayName:
+          type: string
+          description: Customer-facing name for the blueprint. Consumers should fall back to `name` when omitted.
+          example: Amazon RDS for PostgreSQL
         kind:
           type: string
           example: ServiceBlueprint
@@ -16069,6 +16073,10 @@ components:
           type: array
           items:
             type: string
+        primaryCategory:
+          type: string
+          description: Customer-facing category used to group blueprints in the service catalog.
+          example: Databases & Caches
         provider:
           type: string
           example: aws
