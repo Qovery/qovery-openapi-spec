@@ -76,6 +76,7 @@ tags:
   - name: Cloud Provider
   - name: Cloud Provider Credentials
   - name: Clusters
+  - name: Cluster Deployment History
   - name: Cluster Operator
   - name: Platform Configuration
   - name: Custom Domain
@@ -2192,8 +2193,9 @@ paths:
   '/organization/{organizationId}/cluster/{clusterId}/logs':
     get:
       summary: List Cluster Logs
-      description: List Cluster Logs
+      description: 'List Cluster Logs. Deprecated: use listClusterDeploymentLogs instead to fetch the logs of a specific cluster deployment.'
       operationId: listClusterLogs
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/clusterId'
@@ -2202,6 +2204,67 @@ paths:
       responses:
         '200':
           description: list cluster logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterLogsResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/deploymentHistoryV2':
+    get:
+      summary: List cluster deployments
+      description: 'List previous and current cluster deployments. It returns actual deployments only: dry-runs and stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results'
+      operationId: listClusterDeploymentHistoryV2
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+        - in: query
+          name: pageSize
+          description: The number of deployments to return in the current page. Must be greater than or equal to 1
+          schema:
+            type: number
+            nullable: true
+            default: 20
+            minimum: 1
+      tags:
+        - Cluster Deployment History
+      responses:
+        '200':
+          description: List cluster deployment history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterDeploymentHistoryPaginatedResponseListV2'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/deployment/{deploymentId}/logs':
+    get:
+      summary: List logs for a specific cluster deployment
+      description: List the logs of a specific cluster deployment
+      operationId: listClusterDeploymentLogs
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+        - schema:
+            type: string
+            format: uuid
+          name: deploymentId
+          in: path
+          required: true
+          description: Deployment ID
+      tags:
+        - Cluster Deployment History
+      responses:
+        '200':
+          description: List cluster deployment logs
           content:
             application/json:
               schema:
@@ -19686,6 +19749,77 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClusterLogs'
+    ClusterDeploymentHistoryAuditingData:
+      type: object
+      required:
+        - created_at
+        - updated_at
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        origin:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/OrganizationEventOrigin'
+        triggered_by:
+          type: string
+          nullable: true
+          description: 'Who triggered the deployment. Null for deployments created before this metadata was recorded'
+    ClusterDeploymentHistory:
+      type: object
+      required:
+        - identifier
+        - auditing_data
+        - status
+        - action_status
+        - trigger_action
+        - reason
+      properties:
+        identifier:
+          type: object
+          required:
+            - deployment_id
+            - cluster_id
+          properties:
+            deployment_id:
+              type: string
+              format: uuid
+            execution_id:
+              type: string
+              nullable: true
+            cluster_id:
+              type: string
+              format: uuid
+        auditing_data:
+          $ref: '#/components/schemas/ClusterDeploymentHistoryAuditingData'
+        status:
+          $ref: '#/components/schemas/StateEnum'
+        action_status:
+          $ref: '#/components/schemas/DeploymentHistoryActionStatus'
+        trigger_action:
+          $ref: '#/components/schemas/DeploymentHistoryTriggerAction'
+        reason:
+          type: string
+          enum:
+            - UNSPECIFIED
+            - MAINTENANCE
+        total_duration:
+          type: string
+          nullable: true
+          format: duration
+    ClusterDeploymentHistoryPaginatedResponseListV2:
+      allOf:
+        - $ref: '#/components/schemas/PaginationData'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/ClusterDeploymentHistory'
     ClusterRoutingTable:
       type: object
       properties:
@@ -28268,6 +28402,7 @@ components:
         - CANCELED
         - CANCELING
         - NEVER
+        - EXECUTING
     QueuedDeploymentRequestWithStages:
       title: QueuedDeploymentRequestWithStages
       x-stoplight:
