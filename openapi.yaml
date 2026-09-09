@@ -19846,9 +19846,6 @@ components:
             Display version reported by the Operator. For the POC version-reporting heartbeat, the
             official chart sets this to the exact installed image tag. Legacy Operators can report
             opaque build metadata instead.
-        controller_version:
-          type: string
-          nullable: true
         request_schema_version:
           type: string
           nullable: true
