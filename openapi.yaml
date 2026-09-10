@@ -14089,24 +14089,39 @@ paths:
       parameters:
         - $ref: '#/components/parameters/agenticWorkflowId'
         - in: query
+          name: page
+          description: >-
+            Page number, starting at 1. Increment this value to retrieve subsequent pages of
+            run history, keeping pageSize and filters unchanged.
+          required: false
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - in: query
           name: pageSize
-          description: The number of runs to return in the current page
+          description: The number of runs to return in the current page. Must be greater than or equal to 1.
+          required: false
           schema:
             type: number
             nullable: true
             default: 20
+            minimum: 1
         - in: query
           name: status
           description: Filter runs by status. When omitted, all statuses are included.
           required: false
           schema:
-            $ref: '#/components/schemas/AgenticWorkflowRunStatusEnum'
+            $ref: '#/components/schemas/AgenticWorkflowRunStatus'
         - in: query
-          name: execution_mode
+          name: executionMode
           description: Filter runs by execution mode. When omitted, both execution modes are included.
           required: false
           schema:
-            $ref: '#/components/schemas/AgenticWorkflowRunExecutionModeEnum'
+            type: string
+            enum:
+              - IN_PLACE
+              - CLONE_ENVIRONMENT
         - in: query
           name: includeNonTriggerTargets
           description: >-
@@ -31587,9 +31602,9 @@ components:
             environment's ID. This is not the engine execution ID with an epoch-seconds suffix.
             Null when no deployment was created, such as a launch failure.
         execution_mode:
-          $ref: '#/components/schemas/AgenticWorkflowRunExecutionModeEnum'
+          $ref: '#/components/schemas/AgenticWorkflowExecutionMode'
         trigger:
-          $ref: '#/components/schemas/AgenticWorkflowRunTriggerEnum'
+          $ref: '#/components/schemas/AgenticWorkflowRunTrigger'
         run_group_id:
           type: string
           format: uuid
@@ -31605,7 +31620,7 @@ components:
             workflow triggered a CLONE_ENVIRONMENT batch. Runs with false are excluded from the
             listing unless includeNonTriggerTargets is true.
         status:
-          $ref: '#/components/schemas/AgenticWorkflowRunStatusEnum'
+          $ref: '#/components/schemas/AgenticWorkflowRunStatus'
         schedule_cron:
           type: string
           nullable: true
@@ -31657,7 +31672,7 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/AgenticWorkflowRun'
-    AgenticWorkflowRunStatusEnum:
+    AgenticWorkflowRunStatus:
       type: string
       description: Run lifecycle status. COMPLETED, FAILED and CANCELLED are terminal and are never rewritten.
       enum:
@@ -31666,16 +31681,7 @@ components:
         - COMPLETED
         - FAILED
         - CANCELLED
-    AgenticWorkflowRunExecutionModeEnum:
-      type: string
-      description: >-
-        Where the run executes. IN_PLACE uses the workflow's environment. CLONE_ENVIRONMENT
-        clones the environment and deploys every agentic workflow in it. This run-history enum
-        has no default; omitting the execution_mode query parameter includes both modes.
-      enum:
-        - IN_PLACE
-        - CLONE_ENVIRONMENT
-    AgenticWorkflowRunTriggerEnum:
+    AgenticWorkflowRunTrigger:
       type: string
       description: >-
         What triggered the run, independently of its execution mode. MANUAL is reserved for
