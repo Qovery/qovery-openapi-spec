@@ -4939,7 +4939,7 @@ paths:
         '403':
           description: >-
             Editing an ORGANIZATION connector requires the MANAGE_INFRASTRUCTURE permission; a USER
-            connector can only be edited by its owner, so an organization admin is refused too.
+            connector can only be edited by its owner, so an organization admin is forbidden as well.
         '404':
           $ref: '#/components/responses/404'
         '409':
