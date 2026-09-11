@@ -20,6 +20,7 @@ tags:
   - name: Alert Rules
   - name: Admin
   - name: ArgoCD
+  - name: Agentic Workflows
   - name: Application
   - name: Application Actions
   - name: Application Configuration
@@ -174,6 +175,7 @@ x-tagGroups:
       - Jobs
       - Helms
       - Terraforms
+      - Agentic Workflows
       - Environment Actions
       - Environment Logs
       - Environment Deployment History
@@ -14041,6 +14043,36 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: The deployment is already cancelled or cannot be cancelled in its current state
+  '/agenticWorkflow/{agenticWorkflowId}/deploy':
+    post:
+      summary: Deploy an agentic workflow
+      description: >-
+        Deploy the agentic workflow service so its configuration can be tested. Routine runs of the
+        workflow are triggered by its webhook or its schedule, not by this endpoint.
+      operationId: deployAgenticWorkflow
+      parameters:
+        - $ref: '#/components/parameters/agenticWorkflowId'
+      tags:
+        - Agentic Workflows
+      responses:
+        '202':
+          description: Deploy agentic workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: >-
+            The deployment request could not be queued because of a concurrent modification of the
+            environment deployment
   '/agenticWorkflow/{agenticWorkflowId}/deploymentHistoryV2':
     get:
       summary: List agentic workflow deployments
@@ -21892,6 +21924,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TerraformDeployRequest'
+        agentic_workflows:
+          type: array
+          items:
+            type: string
+            format: uuid
     DeployRequest:
       type: object
       required:
