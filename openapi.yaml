@@ -4952,6 +4952,50 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: MCP server name is already taken for this scope owner in the organization
+  '/organization/{organizationId}/mcpServer/qovery':
+    post:
+      summary: Create a read-only Qovery MCP connector
+      description: |
+        Create a connector to Qovery's own MCP server in READ-ONLY mode. Scope is always
+        `ORGANIZATION`; this endpoint accepts no scope parameter.
+
+        During the request, an organization API token is generated, bound to the Viewer role,
+        and stored as the encrypted `Authorization` connector header. The token is never returned
+        in the response; `header_names` will contain `Authorization`.
+
+        The generated token is visible and revocable in the organization's API token list.
+        Deleting the connector does not revoke the generated token; revoke it separately from
+        the API token list.
+
+        **403 — Access forbidden:** Requires the `MANAGE_INFRASTRUCTURE` permission. Viewer and
+        Billing callers cannot mint API tokens and are rejected with 403.
+
+        Only one Qovery MCP connector is allowed per organization; a second call returns 409.
+      operationId: createQoveryMcpServer
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - MCP Servers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QoveryMcpServerRequest'
+      responses:
+        '201':
+          description: Qovery MCP connector created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpServerResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '409':
+          description: The Qovery MCP connector already exists for this organization
   '/mcpServer/{mcpServerId}':
     get:
       summary: Get an MCP server
@@ -20831,6 +20875,16 @@ components:
             requires the MANAGE_INFRASTRUCTURE permission; creating a USER connector requires
             CREATE_PROJECT. On edit, omitting it leaves the connector's scope unchanged, and stating
             a scope that differs from the connector's is refused with 400.
+    QoveryMcpServerRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          default: "Qovery MCP"
+        description:
+          type: string
+          default: ''
     McpServerResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
