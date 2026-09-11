@@ -15809,9 +15809,151 @@ components:
         - HELM
         - TERRAFORM
     FieldSchemaResponse:
+      description: >-
+        Generic catalog field descriptor matching the shared q-core field response.
+        Scalar fields retain their existing shape; objects and arrays describe nested
+        configuration without flattening its values. Blueprint keeps its existing
+        BlueprintManifestVariableField response contract through a dedicated adapter.
+      oneOf:
+        - $ref: '#/components/schemas/ScalarFieldSchemaResponse'
+        - $ref: '#/components/schemas/ObjectFieldSchemaResponse'
+        - $ref: '#/components/schemas/ArrayFieldSchemaResponse'
+      discriminator:
+        propertyName: type
+        mapping:
+          string: '#/components/schemas/ScalarFieldSchemaResponse'
+          number: '#/components/schemas/ScalarFieldSchemaResponse'
+          bool: '#/components/schemas/ScalarFieldSchemaResponse'
+          object: '#/components/schemas/ObjectFieldSchemaResponse'
+          array: '#/components/schemas/ArrayFieldSchemaResponse'
+    ObjectFieldSchemaResponse:
+      type: object
+      required:
+        - key
+        - type
+        - required
+        - label
+        - sensitive
+        - fields
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+          enum: [object]
+        required:
+          type: boolean
+        label:
+          type: string
+        description:
+          type: string
+          nullable: true
+        sensitive:
+          type: boolean
+        fields:
+          type: array
+          description: Nested field descriptors for this object's properties.
+          items:
+            $ref: '#/components/schemas/FieldSchemaResponse'
+    ArrayFieldSchemaResponse:
+      type: object
+      required:
+        - key
+        - type
+        - required
+        - label
+        - sensitive
+        - constraints
+        - items
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+          enum: [array]
+        required:
+          type: boolean
+        label:
+          type: string
+        description:
+          type: string
+          nullable: true
+        sensitive:
+          type: boolean
+        constraints:
+          $ref: '#/components/schemas/CollectionConstraintsResponse'
+        items:
+          $ref: '#/components/schemas/ArrayItemResponse'
+        itemFields:
+          type: array
+          description: >-
+            Evaluated field descriptors for each object item, in the same order as the
+            configuration array. Use these row-specific descriptors when available;
+            items.fields describes an object's fields before per-item evaluation.
+            Omitted when unavailable, including scalar arrays. An evaluated empty
+            object array has an empty itemFields array.
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/FieldSchemaResponse'
+    CollectionConstraintsResponse:
+      type: object
+      required:
+        - uniqueItems
+      properties:
+        minItems:
+          type: integer
+          format: int64
+          nullable: true
+        maxItems:
+          type: integer
+          format: int64
+          nullable: true
+        uniqueItems:
+          type: boolean
+    ArrayItemResponse:
+      description: >-
+        Descriptor for an array element. Elements are scalars or objects;
+        an object's fields can themselves contain arrays.
+      oneOf:
+        - $ref: '#/components/schemas/ScalarArrayItemResponse'
+        - $ref: '#/components/schemas/ObjectArrayItemResponse'
+      discriminator:
+        propertyName: type
+        mapping:
+          string: '#/components/schemas/ScalarArrayItemResponse'
+          number: '#/components/schemas/ScalarArrayItemResponse'
+          bool: '#/components/schemas/ScalarArrayItemResponse'
+          object: '#/components/schemas/ObjectArrayItemResponse'
+    ScalarArrayItemResponse:
+      type: object
+      required:
+        - type
+        - constraints
+      properties:
+        type:
+          type: string
+          enum: [string, number, bool]
+        constraints:
+          $ref: '#/components/schemas/FieldSchemaConstraintsResponse'
+    ObjectArrayItemResponse:
+      type: object
+      required:
+        - type
+        - fields
+      properties:
+        type:
+          type: string
+          enum: [object]
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldSchemaResponse'
+    ScalarFieldSchemaResponse:
       type: object
       description: >-
-        Canonical platform catalog field descriptor. Mirrors the q-core `FieldSchemaResponse` DTO.
+        Scalar catalog field descriptor, also used for platform cluster input requirements.
+        FieldSchemaResponse is the union of scalar, object and array descriptors.
       required:
         - key
         - type
@@ -16038,9 +16180,10 @@ components:
     PlatformComponentInputRequirementResponse:
       description: >-
         A catalog field the cluster must provide for the selected configuration:
-        the shared field descriptor extended with its resolution scope and readiness.
+        the scalar field descriptor extended with its resolution scope and readiness.
+        Input requirements cannot be object or array descriptors.
       allOf:
-        - $ref: '#/components/schemas/FieldSchemaResponse'
+        - $ref: '#/components/schemas/ScalarFieldSchemaResponse'
         - type: object
           required:
             - scope
