@@ -14069,6 +14069,10 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: >-
+            The deployment request could not be queued because of a concurrent modification of the
+            environment deployment
   '/agenticWorkflow/{agenticWorkflowId}/deploymentHistoryV2':
     get:
       summary: List agentic workflow deployments
