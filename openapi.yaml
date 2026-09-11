@@ -15802,16 +15802,156 @@ components:
         fields:
           type: array
           items:
-            $ref: '#/components/schemas/FieldSchemaResponse'
+            $ref: '#/components/schemas/PlatformFieldSchemaResponse'
     PlatformTemplateComponentKind:
       type: string
       enum:
         - HELM
         - TERRAFORM
+    PlatformFieldSchemaResponse:
+      description: >-
+        Platform configuration field descriptor. Scalar fields retain their existing shape;
+        objects and arrays describe nested configuration without flattening its values.
+      oneOf:
+        - $ref: '#/components/schemas/FieldSchemaResponse'
+        - $ref: '#/components/schemas/PlatformObjectFieldSchemaResponse'
+        - $ref: '#/components/schemas/PlatformArrayFieldSchemaResponse'
+      discriminator:
+        propertyName: type
+        mapping:
+          string: '#/components/schemas/FieldSchemaResponse'
+          number: '#/components/schemas/FieldSchemaResponse'
+          bool: '#/components/schemas/FieldSchemaResponse'
+          object: '#/components/schemas/PlatformObjectFieldSchemaResponse'
+          array: '#/components/schemas/PlatformArrayFieldSchemaResponse'
+    PlatformObjectFieldSchemaResponse:
+      type: object
+      required:
+        - key
+        - type
+        - required
+        - label
+        - sensitive
+        - fields
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+          enum: [object]
+        required:
+          type: boolean
+        label:
+          type: string
+        description:
+          type: string
+          nullable: true
+        sensitive:
+          type: boolean
+        fields:
+          type: array
+          description: Nested field descriptors for this object's properties.
+          items:
+            $ref: '#/components/schemas/PlatformFieldSchemaResponse'
+    PlatformArrayFieldSchemaResponse:
+      type: object
+      required:
+        - key
+        - type
+        - required
+        - label
+        - sensitive
+        - constraints
+        - items
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+          enum: [array]
+        required:
+          type: boolean
+        label:
+          type: string
+        description:
+          type: string
+          nullable: true
+        sensitive:
+          type: boolean
+        constraints:
+          $ref: '#/components/schemas/PlatformCollectionConstraintsResponse'
+        items:
+          $ref: '#/components/schemas/PlatformArrayItemResponse'
+        itemFields:
+          type: array
+          description: >-
+            Evaluated field descriptors for each object item, in the same order as the
+            configuration array. Use these row-specific descriptors when available;
+            items.fields describes an object's fields before per-item evaluation.
+            Omitted when unavailable, including scalar arrays. An evaluated empty
+            object array has an empty itemFields array.
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/PlatformFieldSchemaResponse'
+    PlatformCollectionConstraintsResponse:
+      type: object
+      required:
+        - uniqueItems
+      properties:
+        minItems:
+          type: integer
+          format: int64
+          nullable: true
+        maxItems:
+          type: integer
+          format: int64
+          nullable: true
+        uniqueItems:
+          type: boolean
+    PlatformArrayItemResponse:
+      description: >-
+        Descriptor for an array element. Elements are scalars or objects;
+        an object's fields can themselves contain arrays.
+      oneOf:
+        - $ref: '#/components/schemas/PlatformScalarArrayItemResponse'
+        - $ref: '#/components/schemas/PlatformObjectArrayItemResponse'
+      discriminator:
+        propertyName: type
+        mapping:
+          string: '#/components/schemas/PlatformScalarArrayItemResponse'
+          number: '#/components/schemas/PlatformScalarArrayItemResponse'
+          bool: '#/components/schemas/PlatformScalarArrayItemResponse'
+          object: '#/components/schemas/PlatformObjectArrayItemResponse'
+    PlatformScalarArrayItemResponse:
+      type: object
+      required:
+        - type
+        - constraints
+      properties:
+        type:
+          type: string
+          enum: [string, number, bool]
+        constraints:
+          $ref: '#/components/schemas/FieldSchemaConstraintsResponse'
+    PlatformObjectArrayItemResponse:
+      type: object
+      required:
+        - type
+        - fields
+      properties:
+        type:
+          type: string
+          enum: [object]
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformFieldSchemaResponse'
     FieldSchemaResponse:
       type: object
       description: >-
-        Canonical platform catalog field descriptor. Mirrors the q-core `FieldSchemaResponse` DTO.
+        Scalar field descriptor, also used for platform cluster input requirements.
+        Platform configuration fields use PlatformFieldSchemaResponse to include objects and arrays.
       required:
         - key
         - type
@@ -15992,7 +16132,7 @@ components:
         fields:
           type: array
           items:
-            $ref: '#/components/schemas/FieldSchemaResponse'
+            $ref: '#/components/schemas/PlatformFieldSchemaResponse'
         requirements:
           type: array
           items:
@@ -16022,7 +16162,7 @@ components:
         fields:
           type: array
           items:
-            $ref: '#/components/schemas/FieldSchemaResponse'
+            $ref: '#/components/schemas/PlatformFieldSchemaResponse'
         requirements:
           type: array
           items:
