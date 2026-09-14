@@ -82,6 +82,7 @@ tags:
   - name: Platform Configuration
   - name: Custom Domain
   - name: Container Custom Domain
+  - name: LLM Providers
   - name: MCP Servers
   - name: Database
   - name: Database Actions
@@ -5020,6 +5021,133 @@ paths:
       responses:
         '200':
           description: MCP server deleted
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/llmProvider':
+    get:
+      summary: List organization LLM providers
+      description: List the reusable LLM provider settings configured for an organization. Credentials are never returned.
+      operationId: listLlmProviders
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - LLM Providers
+      responses:
+        '200':
+          description: List LLM providers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create an LLM provider
+      description: Configure reusable LLM provider settings for an organization.
+      operationId: createLlmProvider
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - LLM Providers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LlmProviderRequest'
+      responses:
+        '201':
+          description: LLM provider created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: LLM provider name is already taken for this scope owner in the organization
+  '/llmProvider/{llmProviderId}':
+    get:
+      summary: Get an LLM provider
+      description: Get reusable LLM provider settings. The credential is never returned.
+      operationId: getLlmProvider
+      parameters:
+        - $ref: '#/components/parameters/llmProviderId'
+      tags:
+        - LLM Providers
+      responses:
+        '200':
+          description: The LLM provider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit an LLM provider
+      description: >-
+        Replace reusable LLM provider settings. Sending a blank credential keeps the stored one;
+        sending a nonblank credential rotates it.
+      operationId: editLlmProvider
+      parameters:
+        - $ref: '#/components/parameters/llmProviderId'
+      tags:
+        - LLM Providers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LlmProviderRequest'
+      responses:
+        '200':
+          description: LLM provider edited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          description: >-
+            Editing an ORGANIZATION provider requires the MANAGE_INFRASTRUCTURE permission; a USER
+            provider can only be edited by its owner, so an organization admin is forbidden as well.
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: LLM provider name is already taken for this scope owner in the organization
+    delete:
+      summary: Delete an LLM provider
+      description: Delete reusable LLM provider settings.
+      operationId: deleteLlmProvider
+      parameters:
+        - $ref: '#/components/parameters/llmProviderId'
+      tags:
+        - LLM Providers
+      responses:
+        '200':
+          description: LLM provider deleted
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -15391,6 +15519,14 @@ components:
       schema:
         type: string
         format: uuid
+    llmProviderId:
+      name: llmProviderId
+      in: path
+      description: LLM Provider ID
+      required: true
+      schema:
+        type: string
+        format: uuid
     deploymentRequestId:
       name: deploymentRequestId
       in: path
@@ -21059,6 +21195,101 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/McpServerResponse'
+    LlmProviderType:
+      type: string
+      enum:
+        - CLAUDE
+        - BEDROCK
+      description: >-
+        The LLM vendor these settings configure. Matches the type an agentic workflow's inline model
+        already uses.
+    LlmProviderScope:
+      type: string
+      enum:
+        - ORGANIZATION
+        - USER
+      description: >-
+        ORGANIZATION: usable by every member who can edit an agentic workflow.
+        USER: personal to the member who created it; only that member can edit it.
+    LlmProviderRequest:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: LLM provider name, unique per scope owner within the organization
+        description:
+          type: string
+          default: ''
+        type:
+          $ref: '#/components/schemas/LlmProviderType'
+        settings:
+          type: string
+          default: ''
+          description: Provider settings, opaque to the API.
+        credential:
+          type: string
+          writeOnly: true
+          default: ''
+          description: >-
+            The provider credential. Encrypted at rest and never returned by the API. Blank means
+            unchanged: on create no credential is stored, on edit the stored one is kept. Sending a
+            nonblank value rotates it.
+        scope:
+          allOf:
+            - $ref: '#/components/schemas/LlmProviderScope'
+          description: >-
+            Cannot be changed after creation. On create, omitting it means ORGANIZATION, which
+            requires the MANAGE_INFRASTRUCTURE permission; creating a USER provider requires
+            CREATE_PROJECT. On edit, omitting it leaves the provider's scope unchanged, and stating
+            a scope that differs from the provider's is refused with 400.
+    LlmProviderResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+            - description
+            - type
+            - settings
+            - has_credential
+            - scope
+            - updated_at
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            type:
+              $ref: '#/components/schemas/LlmProviderType'
+            settings:
+              type: string
+              description: Provider settings, opaque to the API.
+            has_credential:
+              type: boolean
+              description: Whether a credential is stored. The credential itself is never returned.
+            scope:
+              $ref: '#/components/schemas/LlmProviderScope'
+            owner_user_sub:
+              type: string
+              nullable: true
+              description: Identity of the owning member. Null for an ORGANIZATION provider.
+            owner_name:
+              type: string
+              nullable: true
+              description: Display name of the owning member. Null for an ORGANIZATION provider.
+    LlmProviderResponseList:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LlmProviderResponse'
     ContainerRegistryResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
