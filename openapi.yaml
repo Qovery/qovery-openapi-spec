@@ -16017,6 +16017,37 @@ components:
           type: boolean
         constraints:
           $ref: '#/components/schemas/FieldSchemaConstraintsResponse'
+        format:
+          type: string
+          description: >-
+            Optional editor format for a string field, independent of its scalar type.
+            kubernetes-resource-yaml selects a single Kubernetes YAML object editor.
+            Unknown formats should fall back to the ordinary string editor.
+          example: kubernetes-resource-yaml
+        templates:
+          type: array
+          description: >-
+            Optional starting texts for an explicit user choice, with unique IDs within
+            the field. Present only with format. Never apply as defaults or overwrite
+            a saved value. The format selects the editor even when templates are absent.
+          items:
+            $ref: '#/components/schemas/FieldTemplateResponse'
+    FieldTemplateResponse:
+      type: object
+      description: A catalog-owned starting text for a field editor, not an applied default.
+      required:
+        - id
+        - label
+        - value
+      properties:
+        id:
+          type: string
+          minLength: 1
+        label:
+          type: string
+          minLength: 1
+        value:
+          type: string
     FieldSchemaConstraintsResponse:
       type: object
       description: Validation constraints attached to a catalog field descriptor.
