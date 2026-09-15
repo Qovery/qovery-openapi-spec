@@ -31658,6 +31658,8 @@ components:
             - enabled
             - mcp
             - mcp_server_ids
+            - context_service_ids
+            - required_mcp_server_ids
             - outputs
             - model
             - project_repositories
@@ -31703,6 +31705,18 @@ components:
               description: >-
                 MCP connectors attached to this workflow. May include a USER-scoped connector, which only
                 its owner can attach or keep attached when saving.
+            context_service_ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+              description: Qovery services explicitly provided as context to this workflow.
+            required_mcp_server_ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+              description: MCP servers required by the workflow's initial configuration or template.
             outputs:
               type: array
               items:
@@ -31775,6 +31789,22 @@ components:
               description: >-
                 MCP connectors attached to this workflow. May include a USER-scoped connector, which only
                 its owner can attach or keep attached when saving.
+            context_service_ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+              default: []
+              description: Qovery services explicitly provided as context to this workflow.
+            required_mcp_server_ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+              default: []
+              description: >-
+                MCP servers required by the workflow's initial configuration or template. On creation,
+                every ID must also be present in mcp_server_ids; later settings updates may detach it.
             outputs:
               type: array
               items:
