@@ -5030,7 +5030,7 @@ paths:
   '/organization/{organizationId}/llmProvider':
     get:
       summary: List organization LLM providers
-      description: List the reusable LLM provider settings configured for an organization. Credentials are never returned.
+      description: List the LLM providers configured for an organization. Credentials are never returned.
       operationId: listLlmProviders
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -5051,7 +5051,7 @@ paths:
           $ref: '#/components/responses/404'
     post:
       summary: Create an LLM provider
-      description: Configure reusable LLM provider settings for an organization.
+      description: Configure a reusable LLM provider for an organization.
       operationId: createLlmProvider
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -5083,7 +5083,7 @@ paths:
   '/llmProvider/{llmProviderId}':
     get:
       summary: Get an LLM provider
-      description: Get reusable LLM provider settings. The credential is never returned.
+      description: Get an LLM provider. The credential is never returned.
       operationId: getLlmProvider
       parameters:
         - $ref: '#/components/parameters/llmProviderId'
@@ -5105,8 +5105,8 @@ paths:
     put:
       summary: Edit an LLM provider
       description: >-
-        Replace reusable LLM provider settings. Sending a blank credential keeps the stored one;
-        sending a nonblank credential rotates it.
+        Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank
+        credential rotates it.
       operationId: editLlmProvider
       parameters:
         - $ref: '#/components/parameters/llmProviderId'
@@ -5139,7 +5139,7 @@ paths:
           description: LLM provider name is already taken for this scope owner in the organization
     delete:
       summary: Delete an LLM provider
-      description: Delete reusable LLM provider settings.
+      description: Delete an LLM provider.
       operationId: deleteLlmProvider
       parameters:
         - $ref: '#/components/parameters/llmProviderId'
@@ -21201,8 +21201,8 @@ components:
         - CLAUDE
         - BEDROCK
       description: >-
-        The LLM vendor these settings configure. Matches the type an agentic workflow's inline model
-        already uses.
+        The LLM vendor this provider authenticates against. Matches the type an agentic workflow's
+        inline model already uses.
     LlmProviderScope:
       type: string
       enum:
@@ -21226,10 +21226,6 @@ components:
           default: ''
         type:
           $ref: '#/components/schemas/LlmProviderType'
-        settings:
-          type: string
-          default: ''
-          description: Provider settings, opaque to the API.
         credential:
           type: string
           writeOnly: true
@@ -21254,7 +21250,6 @@ components:
             - name
             - description
             - type
-            - settings
             - has_credential
             - scope
             - updated_at
@@ -21265,9 +21260,6 @@ components:
               type: string
             type:
               $ref: '#/components/schemas/LlmProviderType'
-            settings:
-              type: string
-              description: Provider settings, opaque to the API.
             has_credential:
               type: boolean
               description: Whether a credential is stored. The credential itself is never returned.
