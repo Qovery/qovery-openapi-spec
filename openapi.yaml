@@ -31686,6 +31686,8 @@ components:
             - enabled
             - mcp
             - mcp_server_ids
+            - mcp_servers
+            - context_service_ids
             - outputs
             - model
             - project_repositories
@@ -31731,6 +31733,18 @@ components:
               description: >-
                 MCP connectors attached to this workflow. May include a USER-scoped connector, which only
                 its owner can attach or keep attached when saving.
+              deprecated: true
+            mcp_servers:
+              type: array
+              items:
+                $ref: '#/components/schemas/AgenticWorkflowMcpServer'
+              description: MCP connectors attached to this workflow, including their configuration metadata.
+            context_service_ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+              description: Qovery services explicitly provided as context to this workflow.
             outputs:
               type: array
               items:
@@ -31803,6 +31817,21 @@ components:
               description: >-
                 MCP connectors attached to this workflow. May include a USER-scoped connector, which only
                 its owner can attach or keep attached when saving.
+              deprecated: true
+            mcp_servers:
+              type: array
+              items:
+                $ref: '#/components/schemas/AgenticWorkflowMcpServer'
+              description: >-
+                MCP connectors attached to this workflow. A required connector must be present during
+                creation, but may be removed during a later settings update.
+            context_service_ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+              default: []
+              description: Qovery services explicitly provided as context to this workflow.
             outputs:
               type: array
               items:
@@ -31831,6 +31860,19 @@ components:
                 already has. Omit it, or send null, for a webhook-only workflow.
             execution_mode:
               $ref: '#/components/schemas/AgenticWorkflowExecutionMode'
+    AgenticWorkflowMcpServer:
+      type: object
+      required:
+        - id
+        - required
+      properties:
+        id:
+          type: string
+          format: uuid
+        required:
+          type: boolean
+          default: false
+          description: Whether the initial configuration or template requires this MCP server.
     AgenticWorkflowExecutionMode:
       type: string
       description: >-
