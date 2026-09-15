@@ -15879,6 +15879,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FieldSchemaResponse'
+        configurationSections:
+          type: array
+          description: >-
+            Additional configuration sections displayed under this component. Its own
+            configuration and cluster inputs remain available. Omitted or empty keeps
+            the existing editor behavior; fields always remain declared on their owner.
+          items:
+            $ref: '#/components/schemas/PlatformConfigurationSectionResponse'
+    PlatformConfigurationSectionResponse:
+      type: object
+      description: >-
+        Displays selected top-level fields of another component in the same layer.
+        The source component remains the resolver, configuration binding and deployment
+        owner. This declaration does not move data or change Helm releases.
+      required:
+        - sourceComponentKey
+        - fieldKeys
+      properties:
+        sourceComponentKey:
+          type: string
+          description: Component key to use for resolve requests and stored configuration.
+        fieldKeys:
+          type: array
+          minItems: 1
+          description: Unique top-level source fields displayed here instead of in the source component editor.
+          items:
+            type: string
+            minLength: 1
     PlatformTemplateComponentKind:
       type: string
       enum:
