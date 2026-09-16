@@ -32145,6 +32145,14 @@ components:
         settings:
           type: string
           default: ''
+        llm_provider_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: >-
+            An existing LLM provider to take the credential from, instead of `api_key`. The two are
+            mutually exclusive: a request setting both is rejected. The provider must belong to the
+            workflow's organization, be one the caller may use, and match `type`.
     AgenticWorkflowModelResponse:
       type: object
       required:
@@ -32155,6 +32163,13 @@ components:
           $ref: '#/components/schemas/AgenticWorkflowModelType'
         settings:
           type: string
+        llm_provider_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: >-
+            The LLM provider the workflow takes its credential from, or null when it carries its own
+            `api_key`. Unlike `api_key` this is returned: it names a credential rather than carrying one.
     AgenticWorkflowHeader:
       type: object
       required:
