@@ -15355,6 +15355,32 @@ paths:
           description: Malformed blueprint tag
         '502':
           description: Failed to fetch blueprint manifest from GitHub
+  /blueprint/{blueprintId}/variables:
+    get:
+      summary: Get persisted blueprint variables
+      operationId: getBlueprintVariables
+      tags:
+        - Blueprint Main Calls
+      description: >-
+        Returns the persisted variables for a blueprint. Secret variables are
+        identified by `is_secret` and never include their value.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      responses:
+        '200':
+          description: Persisted blueprint variables
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BlueprintConfigurationVariable'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /blueprint/{blueprintId}/update/preview:
     post:
       summary: Preview a blueprint update
@@ -16740,6 +16766,19 @@ components:
         environment_id:
           type: string
           format: uuid
+    BlueprintConfigurationVariable:
+      type: object
+      required:
+        - name
+        - is_secret
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+          description: Omitted for secret variables.
+        is_secret:
+          type: boolean
     BlueprintCreationResponse:
       type: object
       description: >-
