@@ -15966,6 +15966,11 @@ components:
         description:
           type: string
           nullable: true
+        bootstrapComponent:
+          allOf:
+            - $ref: '#/components/schemas/PlatformTemplateComponentResponse'
+          nullable: true
+          description: Mandatory bootstrap component and its configurable fields, when declared by the template.
         layers:
           type: array
           items:
@@ -16415,6 +16420,13 @@ components:
       properties:
         profileConfig:
           $ref: '#/components/schemas/PlatformConfigurationValues'
+        replaceProfileConfig:
+          type: boolean
+          default: false
+          description: >-
+            For an existing cluster, validate profileConfig as a complete draft instead of merging it
+            with saved values. Omitted keys are reset to their catalog defaults. Template previews
+            already use a complete draft and ignore this flag.
         clusterInputs:
           type: object
           additionalProperties:
