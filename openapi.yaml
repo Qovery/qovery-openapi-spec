@@ -83,6 +83,7 @@ tags:
   - name: Custom Domain
   - name: Container Custom Domain
   - name: LLM Providers
+  - name: Bedrock Models
   - name: MCP Servers
   - name: Database
   - name: Database Actions
@@ -5071,6 +5072,58 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/bedrockModel':
+    get:
+      summary: List available Anthropic Bedrock models
+      description: >-
+        List the Anthropic inference profiles reachable on Amazon Bedrock for this organization.
+        Authentication uses the Bedrock API key sent in the X-Bedrock-Api-Key header when present,
+        and otherwise the organization's AWS credentials.
+      operationId: listBedrockModels
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: awsCredentialsId
+          in: query
+          description: >-
+            The organization AWS credentials to use. Defaults to the organization's oldest AWS
+            credentials.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: region
+          in: query
+          description: AWS region to list the models in. Defaults to us-east-1.
+          required: false
+          schema:
+            type: string
+        - name: X-Bedrock-Api-Key
+          in: header
+          description: >-
+            A Bedrock API key to authenticate with. When it is absent or rejected, the organization's
+            AWS credentials are used instead.
+          required: false
+          schema:
+            type: string
+      tags:
+        - Bedrock Models
+      responses:
+        '200':
+          description: List Bedrock models
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BedrockModelResponseList'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '502':
+          description: Amazon Bedrock could not be reached with these credentials
   '/organization/{organizationId}/llmProvider':
     get:
       summary: List organization LLM providers
@@ -21448,6 +21501,24 @@ components:
               type: string
               nullable: true
               description: Display name of the owning member. Null for an ORGANIZATION provider.
+    BedrockModelResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: The Bedrock inference profile id to invoke the model with.
+          example: us.anthropic.claude-sonnet-4-20250514-v1:0
+    BedrockModelResponseList:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/BedrockModelResponse'
     LlmProviderResponseList:
       type: object
       required:
