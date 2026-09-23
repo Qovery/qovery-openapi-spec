@@ -14072,18 +14072,20 @@ paths:
         runs are sorted by created_at descending, then by id descending, so a run cannot appear
         on two pages or on none.
 
-        agenticWorkflowId is matched against the workflow a run was requested for. There is no
-        clone-lineage resolution: a clone executes under its own ID, which is not recorded, so
-        passing a parent workflow's ID does not return runs that executed on its clones.
+        agenticWorkflowId is matched against source_workflow_id, the workflow a run was requested
+        for. A CLONE_ENVIRONMENT run is listed under that workflow, not under the clone that
+        executed it: the clone's own ID is never recorded. There is no lineage resolution either,
+        so a clone's ID returns no runs at all.
 
         Only runs that were launched are recorded. A trigger that failed before launching, such
         as one turned away by the rate limiter, leaves no record. Runs from before history
         recording was introduced are not backfilled.
 
-        A run is recorded on its own row and keeps nothing but the six fields below, so it stays
-        listed after the environment and the deployment it ran on are deleted. Deleting the
-        workflow itself is different: the permission check resolves no project for it and refuses
-        the request, so its runs stay in storage and stop being readable here.
+        A run is stored on its own row with no reference to an environment or a deployment, so it
+        stays listed after a cloned environment is swept and its deployment history is gone. The
+        workflow is the limit: deleting it, or deleting the environment it lives in, leaves the
+        permission check with no project to resolve and it refuses the request, so those runs stay
+        in storage and stop being readable here.
       operationId: listAgenticWorkflowRunHistory
       parameters:
         - $ref: '#/components/parameters/agenticWorkflowId'
@@ -31494,8 +31496,8 @@ components:
     AgenticWorkflowRun:
       type: object
       description: >-
-        One recorded run of an agentic workflow. The record holds only the fields below; no
-        environment or deployment ID is stored, so it survives their deletion.
+        One recorded run of an agentic workflow. It exposes the fields below and no environment or
+        deployment reference, so it outlives the environment the run executed in.
       required:
         - id
         - source_workflow_id
