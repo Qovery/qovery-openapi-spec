@@ -14068,23 +14068,22 @@ paths:
     get:
       summary: List agentic workflow runs
       description: >-
-        Returns run history across the workflow's whole clone lineage. agenticWorkflowId accepts
-        any workflow ID in the lineage, including a clone's ID, and is resolved to root_workflow_id
-        before querying. Run history is retained for 30 days; runs from before history recording
-        was introduced are not backfilled.
+        Returns the runs recorded for this agentic workflow, newest first. Ordering is stable:
+        runs are sorted by created_at descending, then by id descending, so a run cannot appear
+        on two pages or on none.
 
-        A CLONE_ENVIRONMENT event clones the environment and deploys every agentic workflow in it,
-        not only the workflow that triggered the event. Every deployed workflow has a run recorded.
-        run_group_id groups the runs in that batch, and is_trigger_target identifies the workflow
-        that actually triggered it. By default, only runs with is_trigger_target = true are returned.
-        Set includeNonTriggerTargets to true to also include runs in this lineage that were deployed
-        because another workflow triggered a clone batch.
+        agenticWorkflowId is matched against the workflow a run was requested for. There is no
+        clone-lineage resolution: a clone executes under its own ID, which is not recorded, so
+        passing a parent workflow's ID does not return runs that executed on its clones.
 
-        Run records outlive their environments. Cloned environments have a 3-day TTL, so environment_id
-        may refer to a deleted environment and consumers must not assume it can still be resolved.
-        workflow_name, environment_name, environment_mode, prompt, schedule_cron and schedule_timezone
-        are snapshots taken when the run was triggered. Later renames or configuration changes do not
-        alter historical runs.
+        Only runs that were launched are recorded. A trigger that failed before launching, such
+        as one turned away by the rate limiter, leaves no record. Runs from before history
+        recording was introduced are not backfilled.
+
+        A run is recorded on its own row and keeps nothing but the six fields below, so it stays
+        listed after the environment and the deployment it ran on are deleted. Deleting the
+        workflow itself is different: the permission check resolves no project for it and refuses
+        the request, so its runs stay in storage and stop being readable here.
       operationId: listAgenticWorkflowRunHistory
       parameters:
         - $ref: '#/components/parameters/agenticWorkflowId'
@@ -14092,7 +14091,7 @@ paths:
           name: page
           description: >-
             Page number, starting at 1. Increment this value to retrieve subsequent pages of
-            run history, keeping pageSize and filters unchanged.
+            run history, keeping pageSize unchanged.
           required: false
           schema:
             type: integer
@@ -14100,38 +14099,13 @@ paths:
             minimum: 1
         - in: query
           name: pageSize
-          description: The number of runs to return in the current page. Must be greater than or equal to 1.
+          description: The number of runs to return in the current page. Must be between 1 and 100.
           required: false
           schema:
-            type: number
-            nullable: true
+            type: integer
             default: 20
             minimum: 1
-        - in: query
-          name: status
-          description: Filter runs by status. When omitted, all statuses are included.
-          required: false
-          schema:
-            $ref: '#/components/schemas/AgenticWorkflowRunStatus'
-        - in: query
-          name: executionMode
-          description: Filter runs by execution mode. When omitted, both execution modes are included.
-          required: false
-          schema:
-            type: string
-            enum:
-              - IN_PLACE
-              - CLONE_ENVIRONMENT
-        - in: query
-          name: includeNonTriggerTargets
-          description: >-
-            When false (the default), return only runs with is_trigger_target = true. When true,
-            also include runs in this lineage that were deployed as part of another workflow's
-            CLONE_ENVIRONMENT batch.
-          required: false
-          schema:
-            type: boolean
-            default: false
+            maximum: 100
       tags:
         - Agentic Workflows
       responses:
@@ -14141,6 +14115,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AgenticWorkflowRunPaginatedResponseList'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -31518,151 +31494,48 @@ components:
     AgenticWorkflowRun:
       type: object
       description: >-
-        A run retained for 30 days, even after its environment is deleted. Names, environment mode,
-        prompt and schedule are snapshots captured when the run was triggered, not live workflow
-        or environment values.
+        One recorded run of an agentic workflow. The record holds only the fields below; no
+        environment or deployment ID is stored, so it survives their deletion.
       required:
         - id
-        - root_workflow_id
-        - workflow_id
-        - workflow_name
-        - organization_id
-        - project_id
-        - cluster_id
-        - environment_id
-        - environment_name
-        - environment_mode
-        - source_environment_id
-        - deployment_id
-        - execution_mode
+        - source_workflow_id
         - trigger
-        - run_group_id
-        - is_trigger_target
-        - status
-        - schedule_cron
-        - schedule_timezone
         - prompt
-        - error_code
-        - error_message
         - created_at
-        - started_at
-        - finished_at
-        - duration_ms
+        - recorded_at
       properties:
         id:
           type: string
           format: uuid
           description: Run ID.
-        root_workflow_id:
-          type: string
-          format: uuid
-          description: ID of the original workflow anchoring the whole clone lineage.
-        workflow_id:
-          type: string
-          format: uuid
-          description: ID of the concrete workflow that executed; for clone runs, this is the clone's ID.
-        workflow_name:
-          type: string
-          description: Workflow name captured when the run was triggered; later renames do not change it.
-        organization_id:
-          type: string
-          format: uuid
-        project_id:
-          type: string
-          format: uuid
-        cluster_id:
-          type: string
-          format: uuid
-          description: ID of the cluster where the run executes.
-        environment_id:
+        source_workflow_id:
           type: string
           format: uuid
           description: >-
-            ID of the execution environment; for clone runs, this is the cloned environment's ID.
-            It may refer to an environment that has since been deleted. Cloned environments have
-            a 3-day TTL, while run records are retained for 30 days. Consumers must not assume
-            the environment can still be resolved.
-        environment_name:
-          type: string
-          description: Environment name captured when the run was triggered; later renames do not change it.
-        environment_mode:
-          allOf:
-            - $ref: '#/components/schemas/EnvironmentModeEnum'
-          description: Snapshot of the execution environment's mode captured when the run was triggered.
-        source_environment_id:
-          type: string
-          format: uuid
-          nullable: true
-          description: ID of the environment cloned from for CLONE_ENVIRONMENT; null for IN_PLACE.
-        deployment_id:
-          type: string
-          nullable: true
-          description: >-
-            Partial execution ID in the format {environment_id}-{version}, using the execution
-            environment's ID. This is not the engine execution ID with an epoch-seconds suffix.
-            Null when no deployment was created, such as a launch failure.
-        execution_mode:
-          $ref: '#/components/schemas/AgenticWorkflowExecutionMode'
+            ID of the workflow the run was requested for. A CLONE_ENVIRONMENT run executes as a
+            fresh clone carrying its own ID, which is not recorded, so this is never the ID of
+            the workflow that actually executed.
         trigger:
           $ref: '#/components/schemas/AgenticWorkflowRunTrigger'
-        run_group_id:
-          type: string
-          format: uuid
-          nullable: true
-          description: >-
-            Shared ID for every run in one CLONE_ENVIRONMENT batch. A batch deploys every agentic
-            workflow in the cloned environment, including workflows that did not trigger it.
-            Null for runs outside a clone batch.
-        is_trigger_target:
-          type: boolean
-          description: >-
-            True when this workflow triggered the run; false when it was deployed because another
-            workflow triggered a CLONE_ENVIRONMENT batch. Runs with false are excluded from the
-            listing unless includeNonTriggerTargets is true.
-        status:
-          $ref: '#/components/schemas/AgenticWorkflowRunStatus'
-        schedule_cron:
-          type: string
-          nullable: true
-          description: Snapshot of the cron schedule when the run was triggered; null when no schedule was configured.
-        schedule_timezone:
-          type: string
-          nullable: true
-          description: Snapshot of the schedule timezone when the run was triggered; null when no schedule was configured.
         prompt:
           type: string
           nullable: true
-          description: Prompt captured when the run was triggered; later prompt edits do not change it. Null when absent.
-        error_code:
-          type: string
-          nullable: true
-          description: Failure code, such as RATE_LIMITED, CLONE_FAILED or PREPARE_FAILED; null when absent.
-        error_message:
-          type: string
-          nullable: true
-          description: Failure details; null when absent.
+          description: >-
+            Agent prompt captured when the run was requested. It is a snapshot, so later edits to
+            the workflow do not change it. Null when the workflow had no prompt.
         created_at:
           type: string
           format: date-time
-          description: Time the run was recorded at trigger time, before it could fail to launch.
-        started_at:
+          description: Time the run was requested.
+        recorded_at:
           type: string
           format: date-time
-          nullable: true
-          description: Time the run entered RUNNING; null if it has not started.
-        finished_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Time the run entered COMPLETED, FAILED or CANCELLED; null until it reaches a terminal status.
-        duration_ms:
-          type: integer
-          format: int64
           nullable: true
           description: >-
-            Derived elapsed time in milliseconds, calculated as finished_at minus started_at.
-            This value is not stored. Null when either timestamp is absent, including runs
-            that have not finished or failed before starting.
+            Time the history row was written, shortly after the run was requested because the
+            write is asynchronous. This is not a lifecycle start time: nothing reports when the
+            agent itself started, so this value must not be used to measure a run. Null when the
+            row was written without one.
     AgenticWorkflowRunPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
@@ -31672,20 +31545,11 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/AgenticWorkflowRun'
-    AgenticWorkflowRunStatus:
-      type: string
-      description: Run lifecycle status. COMPLETED, FAILED and CANCELLED are terminal and are never rewritten.
-      enum:
-        - QUEUED
-        - RUNNING
-        - COMPLETED
-        - FAILED
-        - CANCELLED
     AgenticWorkflowRunTrigger:
       type: string
       description: >-
-        What triggered the run, independently of its execution mode. MANUAL is reserved for
-        manual runs; no backend producer emits it yet.
+        What triggered the run. MANUAL is reserved for manual runs; no backend producer emits it
+        yet.
       enum:
         - MANUAL
         - SCHEDULE
