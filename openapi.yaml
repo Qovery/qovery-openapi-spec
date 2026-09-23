@@ -17853,18 +17853,27 @@ components:
           description: Define the percentage of the maximum number of pods that can be created over the desired number of pods
         build.timeout_max_sec:
           type: integer
+          deprecated: true
         build.cpu_max_in_milli:
           type: integer
           description: define the max cpu resources (in milli)
+          deprecated: true
         build.ram_max_in_gib:
           type: integer
           description: define the max ram resources (in gib)
+          deprecated: true
         build.disable_buildkit_cache:
           type: boolean
           description: disable buildkit registry cache during build
+          deprecated: true
         build.skip_git_submodules:
           type: boolean
           description: skip git submodules update when cloning the repository
+          deprecated: true
+        build.ephemeral_storage_in_gib:
+          type: integer
+          description: Ephemeral storage for the build (in GiB)
+          deprecated: true
         network.ingress.proxy_body_size_mb:
           type: integer
         network.ingress.force_ssl_redirect:
@@ -18226,6 +18235,8 @@ components:
                 - $ref: '#/components/schemas/CpuArchitectureEnum'
             autoscaling:
               $ref: '#/components/schemas/AutoscalingPolicyRequest'
+            build_settings:
+              $ref: '#/components/schemas/BuildSettings'
     ApplicationGitRepository:
       type: object
       required:
@@ -18538,6 +18549,8 @@ components:
                 - $ref: '#/components/schemas/CpuArchitectureEnum'
             autoscaling:
               $ref: '#/components/schemas/AutoscalingPolicyRequest'
+            build_settings:
+              $ref: '#/components/schemas/BuildSettings'
     ApplicationResponseList:
       type: object
       properties:
@@ -18910,6 +18923,37 @@ components:
       description: |
         `DOCKER` requires `dockerfile_path`
       default: DOCKER
+    BuildSettings:
+      type: object
+      description: |
+        Build configuration settings for the service. When sent, it replaces all six values
+        entirely — omitted properties fall back to their defaults, not to the service's current values.
+      properties:
+        timeout_max_sec:
+          type: integer
+          description: Maximum build timeout in seconds
+          default: 1800
+        cpu_max_in_milli:
+          type: integer
+          description: Maximum CPU resources for the build (in millicores)
+          default: 4000
+        ram_max_in_gib:
+          type: integer
+          description: Maximum RAM resources for the build (in GiB)
+          default: 8
+        ephemeral_storage_in_gib:
+          type: integer
+          description: Ephemeral storage for the build (in GiB). When null, the platform default is used.
+          nullable: true
+          default: null
+        disable_buildkit_cache:
+          type: boolean
+          description: Disable buildkit registry cache during build
+          default: false
+        skip_git_submodules:
+          type: boolean
+          description: Skip git submodules update when cloning the repository
+          default: false
     CloneEnvironmentRequest:
       type: object
       required:
@@ -24295,6 +24339,8 @@ components:
               description: Icon URI representing the job.
               x-stoplight:
                 id: k3gangiisgxpc
+            build_settings:
+              $ref: '#/components/schemas/BuildSettings'
       type: object
     JobResponse:
       oneOf:
@@ -24318,18 +24364,27 @@ components:
         build.timeout_max_sec:
           type: integer
           description: define the max timeout for the build
+          deprecated: true
         build.cpu_max_in_milli:
           type: integer
           description: define the max cpu resources (in milli)
+          deprecated: true
         build.ram_max_in_gib:
           type: integer
           description: define the max ram resources (in gib)
+          deprecated: true
         build.disable_buildkit_cache:
           type: boolean
           description: disable buildkit registry cache during build
+          deprecated: true
         build.skip_git_submodules:
           type: boolean
           description: skip git submodules update when cloning the repository
+          deprecated: true
+        build.ephemeral_storage_in_gib:
+          type: integer
+          description: Ephemeral storage for the build (in GiB)
+          deprecated: true
         deployment.termination_grace_period_seconds:
           type: integer
           description: define how long in seconds an application is supposed to be stopped gracefully
@@ -29640,6 +29695,8 @@ components:
           nullable: true
           description: |
             The blueprint ID the service has been created from
+        build_settings:
+          $ref: '#/components/schemas/BuildSettings'
     TerraformResourceResponse:
       type: object
       title: Terraform Resource Response
@@ -30209,17 +30266,23 @@ components:
         build.timeout_max_sec:
           type: integer
           description: define the max timeout for the build
+          deprecated: true
         build.cpu_max_in_milli:
           type: integer
           description: define the max cpu resources (in milli)
+          deprecated: true
         build.ram_max_in_gib:
           type: integer
           description: define the max ram resources (in gib)
+          deprecated: true
         build.ephemeral_storage_in_gib:
           type: integer
+          description: Ephemeral storage for the build (in GiB)
+          deprecated: true
         build.skip_git_submodules:
           type: boolean
           description: skip git submodules update when cloning the repository
+          deprecated: true
         deployment.termination_grace_period_seconds:
           type: integer
           description: define how long in seconds an application is supposed to be stopped gracefully
