@@ -21550,6 +21550,15 @@ components:
             requires the MANAGE_INFRASTRUCTURE permission; creating a USER provider requires
             CREATE_PROJECT. On edit, omitting it leaves the provider's scope unchanged, and stating
             a scope that differs from the provider's is refused with 400.
+        region:
+          type: string
+          nullable: true
+          example: eu-west-1
+          description: >-
+            AWS region the Bedrock client calls, for example us-east-1 or eu-west-1. Model
+            availability differs by region. Only allowed for a BEDROCK provider; omit it or send
+            null for CLAUDE. Omitting it keeps the engine default region; on edit, omitting it clears a
+            stored region.
     LlmProviderResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -21581,6 +21590,10 @@ components:
               type: string
               nullable: true
               description: Display name of the owning member. Null for an ORGANIZATION provider.
+            region:
+              type: string
+              nullable: true
+              description: AWS region of a BEDROCK provider. Null when unset or for CLAUDE.
     LlmProviderModelResponse:
       type: object
       required:
