@@ -5077,11 +5077,22 @@ paths:
       summary: List available Anthropic Bedrock models
       description: >-
         List the Anthropic inference profiles reachable on Amazon Bedrock for this organization.
-        Authentication uses the Bedrock API key sent in the X-Bedrock-Api-Key header when present,
-        and otherwise the organization's AWS credentials.
+        Authentication uses the Bedrock credential of the LLM provider named by llmProviderId when
+        one is given, and otherwise the organization's AWS credentials.
       operationId: listBedrockModels
       parameters:
         - $ref: '#/components/parameters/organizationId'
+        - name: llmProviderId
+          in: query
+          description: >-
+            An organization LLM provider of type BEDROCK whose credential to authenticate with. It
+            must belong to this organization, and a personal provider can only be used by its owner.
+            When it holds no credential, or its credential is rejected, the organization's AWS
+            credentials are used instead.
+          required: false
+          schema:
+            type: string
+            format: uuid
         - name: awsCredentialsId
           in: query
           description: >-
@@ -5094,14 +5105,6 @@ paths:
         - name: region
           in: query
           description: AWS region to list the models in. Defaults to us-east-1.
-          required: false
-          schema:
-            type: string
-        - name: X-Bedrock-Api-Key
-          in: header
-          description: >-
-            A Bedrock API key to authenticate with. When it is absent or rejected, the organization's
-            AWS credentials are used instead.
           required: false
           schema:
             type: string
