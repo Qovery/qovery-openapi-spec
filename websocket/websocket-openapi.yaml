@@ -346,6 +346,13 @@ paths:
         schema:
           type: string
           format: uuid
+      - name: service_type
+        in: path
+        required: true
+        schema:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ServiceType'
       - name: pod_name
         in: path
         required: true
@@ -644,6 +651,13 @@ paths:
           type: integer
           format: int32
           minimum: 0
+      - name: service_type
+        in: path
+        required: true
+        schema:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ServiceType'
       responses:
         '200':
           description: Allow to shell into your container/pod
@@ -677,7 +691,7 @@ components:
           - $ref: '#/components/schemas/ScaledObjectStatusDto'
         state:
           $ref: '#/components/schemas/ServiceStateDto'
-    ArgoCdAppStatusDto:
+    ArgocdAppStatusDto:
       type: object
       required:
       - id
@@ -732,9 +746,8 @@ components:
             - cancelled
       - type: object
         description: |-
-          The preview did not complete in time. `message` names the step that ran out of time and
-          after how long, when the engine got far enough to report it; it is absent when nothing
-          did — the engine went quiet, or the gateway stopped waiting first.
+          The preview did not complete in time. `message` names the step that ran out, and is absent
+          when nothing reported one — the engine went quiet, or this gateway stopped waiting first.
         required:
         - type
         properties:
@@ -832,6 +845,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/QoveryComponentInFailure'
+        quota_warning:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ClusterQuotaWarningDto'
     ClusterListNodesResponseDto:
       type: object
       required:
@@ -940,6 +957,50 @@ components:
             $ref: '#/components/schemas/NodeTaintDto'
         unschedulable:
           type: boolean
+    ClusterQuotaWarningDto:
+      type: object
+      required:
+      - status
+      - provider
+      - source
+      - quota_code
+      - message
+      - suggested_action
+      - detected_at
+      - last_seen_at
+      properties:
+        detected_at:
+          type: integer
+          format: int64
+          minimum: 0
+        last_seen_at:
+          type: integer
+          format: int64
+          minimum: 0
+        message:
+          type: string
+        provider:
+          type: string
+        quota_code:
+          type: string
+        quota_name:
+          type:
+          - string
+          - 'null'
+        region:
+          type:
+          - string
+          - 'null'
+        resource:
+          type:
+          - string
+          - 'null'
+        source:
+          type: string
+        status:
+          type: string
+        suggested_action:
+          type: string
     ClusterStatusDto:
       type: object
       required:
@@ -1077,7 +1138,7 @@ components:
         argocd_apps:
           type: array
           items:
-            $ref: '#/components/schemas/ArgoCdAppStatusDto'
+            $ref: '#/components/schemas/ArgocdAppStatusDto'
         containers:
           type: array
           items:
@@ -1264,7 +1325,10 @@ components:
       type: object
       required:
       - name
+      - kubelet_version
       properties:
+        kubelet_version:
+          type: string
         name:
           type: string
     NodePodErrorStatusDto:
@@ -1996,6 +2060,7 @@ components:
       - STOPPED
       - COMPLETED
       - WARNING
+      - UNAVAILABLE
     ServiceStatusDto:
       type: object
       required:
