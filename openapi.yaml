@@ -21553,11 +21553,12 @@ components:
         region:
           type: string
           nullable: true
+          pattern: '^[a-z]{2}(-gov)?-[a-z]+-[0-9]+$'
           example: eu-west-1
           description: >-
             AWS region the Bedrock client calls, for example us-east-1 or eu-west-1. Model
             availability differs by region. Only allowed for a BEDROCK provider; omit it or send
-            null for CLAUDE. Omitting it keeps the engine default region; on edit, omitting it clears a
+            null for CLAUDE. Any sent string, blank included, must match the pattern. Omitting it keeps the engine default region; on edit, omitting it clears a
             stored region.
     LlmProviderResponse:
       allOf:
