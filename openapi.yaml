@@ -14068,24 +14068,18 @@ paths:
     get:
       summary: List agentic workflow runs
       description: >-
-        Returns the runs recorded for this agentic workflow, newest first. Ordering is stable:
-        runs are sorted by created_at descending, then by id descending, so a run cannot appear
-        on two pages or on none.
+        Returns the runs recorded for this agentic workflow, newest first: sorted by created_at
+        descending, then by id descending. Runs are added as they are triggered, so a run added
+        between two requests shifts the runs after it towards later pages.
 
         agenticWorkflowId is matched against source_workflow_id, the workflow a run was requested
         for. A CLONE_ENVIRONMENT run is listed under that workflow, not under the clone that
-        executed it: the clone's own ID is never recorded. There is no lineage resolution either,
-        so a clone's ID returns no runs at all.
+        executed it. There is no lineage resolution either, so a clone's own ID returns no runs
+        at all.
 
-        Only runs that were launched are recorded. A trigger that failed before launching, such
-        as one turned away by the rate limiter, leaves no record. Runs from before history
-        recording was introduced are not backfilled.
-
-        A run is stored on its own row with no reference to an environment or a deployment, so it
-        stays listed after a cloned environment is swept and its deployment history is gone. The
-        workflow is the limit: deleting it, or deleting the environment it lives in, leaves the
-        permission check with no project to resolve and it refuses the request, so those runs stay
-        in storage and stop being readable here.
+        Only runs that were launched appear here. A trigger that failed before launching, such as
+        one turned away by the rate limiter, leaves no run. Runs that predate this endpoint are
+        not backfilled.
       operationId: listAgenticWorkflowRunHistory
       parameters:
         - $ref: '#/components/parameters/agenticWorkflowId'
@@ -31495,9 +31489,7 @@ components:
             $ref: '#/components/schemas/AgenticWorkflowResponse'
     AgenticWorkflowRun:
       type: object
-      description: >-
-        One recorded run of an agentic workflow. It exposes the fields below and no environment or
-        deployment reference, so it outlives the environment the run executed in.
+      description: One recorded run of an agentic workflow.
       required:
         - id
         - source_workflow_id
@@ -31515,8 +31507,8 @@ components:
           format: uuid
           description: >-
             ID of the workflow the run was requested for. A CLONE_ENVIRONMENT run executes as a
-            fresh clone carrying its own ID, which is not recorded, so this is never the ID of
-            the workflow that actually executed.
+            fresh clone carrying its own ID, which run history does not report, so this is never
+            the ID of the workflow that actually executed.
         trigger:
           $ref: '#/components/schemas/AgenticWorkflowRunTrigger'
         prompt:
@@ -31534,10 +31526,9 @@ components:
           format: date-time
           nullable: true
           description: >-
-            Time the history row was written, shortly after the run was requested because the
-            write is asynchronous. This is not a lifecycle start time: nothing reports when the
-            agent itself started, so this value must not be used to measure a run. Null when the
-            row was written without one.
+            Time the run was registered in run history, shortly after it was requested. This is
+            not a lifecycle start time: nothing reports when the agent itself started, so this
+            value must not be used to measure a run. Null when it is unknown.
     AgenticWorkflowRunPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
