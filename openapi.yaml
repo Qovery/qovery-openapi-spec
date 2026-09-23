@@ -5124,6 +5124,40 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: LLM provider name is already taken for this scope owner in the organization
+  '/llmProvider/{llmProviderId}/models':
+    get:
+      summary: List the models of an LLM provider
+      description: >-
+        List the models the provider's stored credential can reach, fetched live from the provider.
+        CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1. The
+        credential is never returned. A USER provider can only be listed by its owner.
+      operationId: listLlmProviderModels
+      parameters:
+        - $ref: '#/components/parameters/llmProviderId'
+      tags:
+        - LLM Providers
+      responses:
+        '200':
+          description: The models available with the provider credential
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderModelResponseList'
+        '400':
+          description: >-
+            The provider has no credential, its type does not support listing models, or the
+            provider rejected the credential
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          description: >-
+            Missing access to the provider, or the provider is a USER provider owned by someone else
+        '404':
+          $ref: '#/components/responses/404'
+        '502':
+          description: The provider failed or returned an unexpected response
+        '504':
+          description: The provider did not answer in time
   '/llmProvider/{llmProviderId}':
     get:
       summary: Get an LLM provider
@@ -21547,6 +21581,31 @@ components:
               type: string
               nullable: true
               description: Display name of the owning member. Null for an ORGANIZATION provider.
+    LlmProviderModelResponse:
+      type: object
+      required:
+        - id
+        - display_name
+      properties:
+        id:
+          type: string
+          description: Anthropic model id, or Bedrock inference profile id
+          example: us.anthropic.claude-sonnet-4-20250514-v1:0
+        display_name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+    LlmProviderModelResponseList:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LlmProviderModelResponse'
     LlmProviderResponseList:
       type: object
       required:
