@@ -21556,10 +21556,12 @@ components:
           pattern: '^[a-z]{2}(-gov)?-[a-z]+-[0-9]+$'
           example: eu-west-1
           description: >-
-            AWS region of a BEDROCK provider, for example us-east-1 or eu-west-1. Required for
-            BEDROCK and refused for CLAUDE, with 400 in both cases. Models are listed and workflows
-            run in this region, since model availability differs by region. On edit it must be sent
-            again: unlike credential, omitting it on a BEDROCK provider is refused, not kept.
+            AWS region of a BEDROCK provider, for example us-east-1 or eu-west-1. Qovery lists the
+            provider's models in this region and sends it with the workflow configuration; model
+            availability differs by region. Returns 400 when a BEDROCK provider omits it or sends
+            null, when a CLAUDE provider sends a non-null value, or when the value does not match
+            the pattern. On edit it must be sent again: unlike credential, an omitted region is not
+            kept.
     LlmProviderResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
