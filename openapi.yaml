@@ -21040,7 +21040,7 @@ components:
       type: string
       description: |-
         Who set the current value of an advanced setting.
-        - `DEFAULT`: nobody set it; the value is the default.
+        - `DEFAULT`: the value is the default, whoever set it.
         - `SYSTEM`: Qovery set it, for example when provisioning the cluster.
         - `USER`: a user set it, through the API or the Console.
       enum:
