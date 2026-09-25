@@ -25586,6 +25586,9 @@ components:
                 but demo cluster usage is allowed.
                 Any other value blocks all deployments.
                 null means no restriction.
+            has_enterprise_connection:
+              type: boolean
+              description: Indicates if the organization has SAML or OIDC enabled
         - type: object
           properties:
             organization_plan:
