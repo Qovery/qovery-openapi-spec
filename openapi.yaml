@@ -26105,6 +26105,7 @@ components:
         - LOCK
         - UNLOCK
         - POLICY_FAILED
+        - ACCESS_DENIED
       example: CREATE
     SecretOverride:
       type: object
