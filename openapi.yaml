@@ -2141,6 +2141,31 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/cluster/{clusterId}/advancedSettings/metadata':
+    get:
+      summary: Get advanced settings metadata
+      description: |
+        Get, for each advanced setting of the cluster, its current value, its default value and who set the current value.
+        Use `source` to tell a value set by a user from a value set by Qovery or left at its default.
+      operationId: getClusterAdvancedSettingsMetadata
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: Advanced settings metadata list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdvancedSettingMetadataResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/cluster/{clusterId}/routingTable':
     get:
       summary: Get routing table
@@ -21011,6 +21036,51 @@ components:
             x-stoplight:
               id: v8r1f6alk5abp
             type: string
+    AdvancedSettingSourceEnum:
+      type: string
+      description: |-
+        Who set the current value of an advanced setting.
+        - `DEFAULT`: the value is the default, whoever set it.
+        - `SYSTEM`: Qovery set it, for example when provisioning the cluster.
+        - `USER`: a user set it, through the API or the Console.
+      enum:
+        - DEFAULT
+        - SYSTEM
+        - USER
+    AdvancedSettingMetadata:
+      type: object
+      required:
+        - key
+        - value
+        - default
+        - source
+        - updated_at
+      properties:
+        key:
+          type: string
+          example: storageclass.fast_ssd
+        value:
+          nullable: true
+          description: Current value of the setting. Its type depends on the setting.
+          example: aws-ebs-gp2-0
+        default:
+          nullable: true
+          description: Value the setting takes when nobody sets it. Its type depends on the setting.
+          example: aws-ebs-gp3-0
+        source:
+          $ref: '#/components/schemas/AdvancedSettingSourceEnum'
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When `source` set the current value. Null when `source` is `DEFAULT`, or when the value was set before sources were recorded.
+    AdvancedSettingMetadataResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdvancedSettingMetadata'
     Commit:
       type: object
       nullable: true
