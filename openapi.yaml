@@ -32268,6 +32268,10 @@ components:
         - prompt
         - created_at
         - recorded_at
+        - status
+        - started_at
+        - finished_at
+        - duration_ms
       properties:
         id:
           type: string
@@ -32300,6 +32304,27 @@ components:
             Time the run was registered in run history, shortly after it was requested. This is
             not a lifecycle start time: nothing reports when the agent itself started, so this
             value must not be used to measure a run. Null when it is unknown.
+        status:
+          $ref: '#/components/schemas/AgenticWorkflowRunStatus'
+        started_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: >-
+            Time the run entered RUNNING. Separate from recorded_at. Null until that transition is
+            observed, and null for a run that reached a terminal status without it being observed.
+        finished_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Time the run reached a terminal status. Null until then.
+        duration_ms:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            finished_at minus started_at, in milliseconds. Derived, not stored. Null unless both
+            timestamps are set.
     AgenticWorkflowRunPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
@@ -32309,6 +32334,16 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/AgenticWorkflowRun'
+    AgenticWorkflowRunStatus:
+      type: string
+      description: >-
+        Status of a run. COMPLETED, FAILED and CANCELLED are terminal and never change afterwards.
+      enum:
+        - QUEUED
+        - RUNNING
+        - COMPLETED
+        - FAILED
+        - CANCELLED
     AgenticWorkflowRunTrigger:
       type: string
       description: >-
