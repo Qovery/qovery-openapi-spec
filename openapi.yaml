@@ -5184,8 +5184,8 @@ paths:
       summary: List the models of an LLM provider
       description: >-
         List the models the provider's stored credential can reach, fetched live from the provider.
-        CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1. The
-        credential is never returned. A USER provider can only be listed by its owner.
+        CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in the provider's
+        region. The credential is never returned. A USER provider can only be listed by its owner.
       operationId: listLlmProviderModels
       parameters:
         - $ref: '#/components/parameters/llmProviderId'
@@ -5200,8 +5200,8 @@ paths:
                 $ref: '#/components/schemas/LlmProviderModelResponseList'
         '400':
           description: >-
-            The provider has no credential, its type does not support listing models, or the
-            provider rejected the credential
+            The provider has no credential, a BEDROCK provider has no valid region, its type does
+            not support listing models, or the provider rejected the credential
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -21724,11 +21724,12 @@ components:
           pattern: '^[a-z]{2}(-gov)?-[a-z]+-[0-9]+$'
           example: eu-west-1
           description: >-
-            On edit, omitting it or sending null clears the stored region. This differs from
-            credential, where a blank value keeps the stored one. AWS region the Bedrock client
-            calls, for example us-east-1 or eu-west-1; model availability differs by region. Only
-            allowed for a BEDROCK provider. Any sent string, blank included, must match the pattern.
-            Null keeps the engine default region.
+            AWS region of a BEDROCK provider, for example us-east-1 or eu-west-1. Qovery lists the
+            provider's models in this region and sends it with the workflow configuration; model
+            availability differs by region. Returns 400 when a BEDROCK provider omits it or sends
+            null, when a CLAUDE provider sends a non-null value, or when the value does not match
+            the pattern. On edit it must be sent again: unlike credential, an omitted region is not
+            kept.
     LlmProviderResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -21763,7 +21764,7 @@ components:
             region:
               type: string
               nullable: true
-              description: AWS region of a BEDROCK provider. Null when unset or for CLAUDE.
+              description: AWS region of a BEDROCK provider. Always set for BEDROCK, null for CLAUDE.
     LlmProviderModelResponse:
       type: object
       required:
