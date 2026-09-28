@@ -1799,8 +1799,10 @@ paths:
       summary: Get the cluster platform binding
       description: >-
         Returns the platform template selected for the cluster, its layer resolution, and the
-        currently stored component configuration.
+        currently stored component configuration. Deprecated: use getClusterPlatformConfiguration
+        instead.
       operationId: getClusterPlatformBinding
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/clusterId'
@@ -1827,8 +1829,10 @@ paths:
       summary: Update the cluster platform binding
       description: >-
         Selects a platform template and stores layer selections, component profile values, and
-        customer-provided runtime inputs for the cluster.
+        customer-provided runtime inputs for the cluster. Deprecated: use
+        updateClusterPlatformConfiguration instead.
       operationId: updateClusterPlatformBinding
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/clusterId'
@@ -1865,7 +1869,9 @@ paths:
       description: >-
         Resolves the fields and runtime requirements to display for a component using the cluster
         context and the values currently entered in the Console. This operation is read-only.
+        Deprecated: use resolveClusterPlatformComponentConfiguration instead.
       operationId: resolvePlatformComponentConfiguration
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/organizationId'
         - $ref: '#/components/parameters/clusterId'
@@ -1898,6 +1904,127 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '503':
+          description: The platform template catalog is temporarily unavailable
+  '/v1/cluster/{clusterId}/platformConfiguration':
+    get:
+      summary: Get the cluster platform configuration
+      description: >-
+        Returns the platform selection of the cluster (template release, layer selections and
+        component configuration), its cluster inputs and the resolution of each layer. Sensitive
+        managedConfig values are returned as `"<redacted>"`. Cluster inputs are identifiers, never
+        secrets, and are returned as stored.
+      operationId: getClusterPlatformConfiguration
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Platform Configuration
+      responses:
+        '200':
+          description: Cluster platform configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterPlatformConfigurationResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          description: >-
+            The cluster has no platform configuration, or its stored template release is no longer
+            in the catalog
+        '500':
+          description: >-
+            The stored platform configuration is inconsistent or its template release cannot be
+            resolved
+        '503':
+          description: The platform template catalog is temporarily unavailable
+    put:
+      summary: Update the cluster platform configuration
+      description: >-
+        Replaces the whole platform configuration of the cluster, its platform selection and its
+        cluster inputs, after validating it against the template release. Saving does not deploy
+        it. `"<redacted>"` is not a keep-existing value: never send it back.
+      operationId: updateClusterPlatformConfiguration
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+      tags:
+        - Platform Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterPlatformConfigurationRequest'
+      responses:
+        '200':
+          description: Updated cluster platform configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterPlatformConfigurationResponse'
+        '400':
+          description: >-
+            Invalid body, template release not published, invalid layer selections, component
+            configuration or cluster inputs, or a partially managed cluster
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          description: Template release not found
+        '409':
+          description: >-
+            The cluster uses a platform profile it does not own, which cannot be edited through the
+            cluster
+        '500':
+          description: >-
+            The stored platform configuration is inconsistent or the template release cannot be
+            resolved
+        '503':
+          description: The platform template catalog is temporarily unavailable
+  '/v1/cluster/{clusterId}/platformConfiguration/component/{componentKey}/resolve':
+    post:
+      summary: Resolve a platform component configuration of the cluster
+      description: >-
+        Resolves the fields and runtime requirements of a component from the cluster context, its
+        stored platform configuration (the default template release when it has none) and the
+        draft values of the request. This operation is read-only.
+      operationId: resolveClusterPlatformComponentConfiguration
+      parameters:
+        - $ref: '#/components/parameters/clusterId'
+        - name: componentKey
+          in: path
+          description: Platform component key
+          required: true
+          schema:
+            type: string
+      tags:
+        - Platform Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformComponentConfigurationPreviewRequest'
+      responses:
+        '200':
+          description: Resolved component configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformComponentConfigurationPreviewResponse'
+        '400':
+          description: Invalid body, or the component exposes no configuration evaluator
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          description: The component is not part of the cluster's template release
+        '500':
+          description: The stored platform configuration is inconsistent
         '503':
           description: The platform template catalog is temporarily unavailable
   '/organization/{organizationId}/cluster/{clusterId}/operator/attach':
@@ -16576,6 +16703,42 @@ components:
           $ref: '#/components/schemas/PlatformLayerSelections'
         managedConfig:
           $ref: '#/components/schemas/PlatformComponentConfigurationMap'
+    ClusterPlatformConfigurationRequest:
+      type: object
+      description: >-
+        Complete platform configuration of a cluster. It replaces the stored one; omitted
+        layerSelections and managedConfig are stored empty.
+      required:
+        - platform
+        - clusterInputs
+      properties:
+        platform:
+          $ref: '#/components/schemas/PlatformSelection'
+        clusterInputs:
+          $ref: '#/components/schemas/PlatformComponentStringValuesMap'
+    ClusterPlatformConfigurationResponse:
+      type: object
+      required:
+        - clusterId
+        - organizationId
+        - platform
+        - clusterInputs
+        - layers
+      properties:
+        clusterId:
+          type: string
+          format: uuid
+        organizationId:
+          type: string
+          format: uuid
+        platform:
+          $ref: '#/components/schemas/PlatformSelection'
+        clusterInputs:
+          $ref: '#/components/schemas/PlatformComponentStringValuesMap'
+        layers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterPlatformBindingLayerResponse'
     SelfManagedClusterRequest:
       type: object
       required:
