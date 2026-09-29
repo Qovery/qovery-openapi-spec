@@ -14444,7 +14444,9 @@ paths:
       summary: Deploy an agentic workflow
       description: >-
         Deploy the agentic workflow service so its configuration can be tested. Routine runs of the
-        workflow are triggered by its webhook or its schedule, not by this endpoint.
+        workflow are triggered by its webhook or its schedule, not by this endpoint. Each deploy is
+        recorded in the run history as a MANUAL run before it is queued: if the run cannot be
+        recorded, the deploy is not queued and the call fails with a 500 that is safe to retry.
       operationId: deployAgenticWorkflow
       parameters:
         - $ref: '#/components/parameters/agenticWorkflowId'
@@ -32603,6 +32605,7 @@ components:
         - source_workflow_id
         - trigger
         - prompt
+        - payload
         - created_at
         - recorded_at
         - status
@@ -32629,6 +32632,14 @@ components:
           description: >-
             Agent prompt captured when the run was requested. It is a snapshot, so later edits to
             the workflow do not change it. Null when the workflow had no prompt.
+        payload:
+          type: string
+          nullable: true
+          description: >-
+            Body of the event that triggered the run, as it was received: the webhook request body
+            for a WEBHOOK run, empty for a SCHEDULE or MANUAL run. Request headers are never
+            stored. The value is unredacted and supplied by the caller of the webhook, so treat it
+            as untrusted text. Null when the run has no stored payload.
         created_at:
           type: string
           format: date-time
@@ -32684,8 +32695,8 @@ components:
     AgenticWorkflowRunTrigger:
       type: string
       description: >-
-        What triggered the run. MANUAL is reserved for manual runs; no backend producer emits it
-        yet.
+        What triggered the run. MANUAL is a run started through the deploy endpoint, SCHEDULE a
+        run started by the workflow's cron schedule, WEBHOOK a run started by its webhook.
       enum:
         - MANUAL
         - SCHEDULE
