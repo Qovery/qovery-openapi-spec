@@ -14444,9 +14444,13 @@ paths:
       summary: Deploy an agentic workflow
       description: >-
         Deploy the agentic workflow service so its configuration can be tested. Routine runs of the
-        workflow are triggered by its webhook or its schedule, not by this endpoint. Each deploy is
-        recorded in the run history as a MANUAL run before it is queued: if the run cannot be
-        recorded, the deploy is not queued and the call fails with a 500 that is safe to retry.
+        workflow are triggered by its webhook or its schedule, not by this endpoint.
+
+        The MANUAL run history entry and the deployment queue append, or merge into an identical
+        pending request, are committed in one database transaction, so they succeed together or not
+        at all. If either write fails, neither is
+        committed: no deployment is queued, no run history entry is left behind, and the call fails
+        with the 409 below. A request that fails this way changed nothing and can be retried.
       operationId: deployAgenticWorkflow
       parameters:
         - $ref: '#/components/parameters/agenticWorkflowId'
@@ -14469,8 +14473,9 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: >-
-            The deployment request could not be queued because of a concurrent modification of the
-            environment deployment
+            The deployment request could not be queued, either because of a concurrent modification
+            of the environment deployment or because its MANUAL run history entry could not be
+            written in the same transaction. Nothing was queued and no run history entry was kept.
   '/agenticWorkflow/{agenticWorkflowId}/deploymentHistoryV2':
     get:
       summary: List agentic workflow deployments
