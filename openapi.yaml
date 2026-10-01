@@ -18418,6 +18418,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ServiceStorage'
+        - $ref: '#/components/schemas/ServiceEditWarnings'
         - type: object
           required:
             - environment
@@ -18980,6 +18981,37 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Application'
+    ServiceEditWarnings:
+      type: object
+      properties:
+        warnings:
+          type: array
+          description: |
+            Non-blocking problems found while applying a service edit. Only present on the response of an edit,
+            and only when there is at least one warning. The edit itself is saved.
+          items:
+            $ref: '#/components/schemas/ServiceEditWarning'
+    ServiceEditWarning:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          $ref: '#/components/schemas/ServiceEditWarningCodeEnum'
+        message:
+          type: string
+          description: Human-readable explanation of the warning
+    ServiceEditWarningCodeEnum:
+      type: string
+      enum:
+        - GIT_WEBHOOK_PERMISSION_DENIED
+        - GIT_WEBHOOK_SETUP_FAILED
+        - GIT_REPOSITORY_OWNER_CHANGED
+      description: |
+        - GIT_WEBHOOK_PERMISSION_DENIED: the git account or token used by the service lacks admin rights on the repository, so the auto-deploy webhook could not be created
+        - GIT_WEBHOOK_SETUP_FAILED: the auto-deploy webhook could not be created for another reason
+        - GIT_REPOSITORY_OWNER_CHANGED: the previous git account lost access to the repository, so the account of the user who made the edit is now used for this service
     ServiceStorage:
       type: object
       properties:
@@ -25097,6 +25129,7 @@ components:
     HelmResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/ServiceEditWarnings'
         - type: object
           required:
             - environment
@@ -28247,6 +28280,7 @@ components:
     BaseJobResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/ServiceEditWarnings'
         - type: object
           required:
             - environment
@@ -30270,6 +30304,7 @@ components:
     TerraformResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/ServiceEditWarnings'
         - type: object
           required:
             - name
