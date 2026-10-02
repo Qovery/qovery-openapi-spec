@@ -30,3 +30,12 @@ properties are omitted on existing responses and add no endpoint or request shap
 select the editor by format (currently `kubernetes-resource-yaml`), fall back to an ordinary
 string editor for unknown formats, and apply a template only after an explicit user choice.
 A saved profile remains the source of truth; templates never overwrite it or act as defaults.
+
+### Catalog read-only fields
+
+In the platform component resolve responses, a top-level `ScalarFieldSchemaResponse` can set
+`readOnly: true`; the property is omitted when false, and catalog descriptors are never
+read-only. The response's required `resolvedValues` map holds the value of each read-only
+field, keyed by field key, and is `{}` when there is none; `null` means that no value is set,
+such as no CPU limit. Consumers display that value, never the draft's, and keep the field
+non-editable.

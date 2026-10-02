@@ -16546,6 +16546,13 @@ components:
           nullable: true
         sensitive:
           type: boolean
+        readOnly:
+          type: boolean
+          description: >-
+            Omitted when false. A read-only field is never required or sensitive, and its
+            defaultValue is null. Its value comes from resolvedValues in the same response,
+            never from the client draft. Read-only fields appear only at the top level of the
+            fields of a resolve response; catalog descriptors are never read-only.
         constraints:
           $ref: '#/components/schemas/FieldSchemaConstraintsResponse'
         format:
@@ -16898,6 +16905,7 @@ components:
         - requirements
         - componentBindings
         - violations
+        - resolvedValues
       properties:
         clusterId:
           type: string
@@ -16920,6 +16928,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PlatformComponentConfigurationViolationResponse'
+        resolvedValues:
+          $ref: '#/components/schemas/PlatformResolvedValues'
     PlatformComponentConfigurationResolutionResponse:
       type: object
       description: >-
@@ -16931,6 +16941,7 @@ components:
         - requirements
         - componentBindings
         - violations
+        - resolvedValues
       properties:
         componentKey:
           type: string
@@ -16950,11 +16961,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PlatformComponentConfigurationViolationResponse'
+        resolvedValues:
+          $ref: '#/components/schemas/PlatformResolvedValues'
+    PlatformResolvedValues:
+      type: object
+      description: >-
+        Value of each read-only field in fields, keyed by field key, with no other entry; `{}`
+        when no field is read-only. Values are encoded as strings, like defaultValue, and `null`
+        means that no value is set, such as no CPU limit. A value is the configuration computed
+        for this draft, not proof of what runs on the cluster.
+      additionalProperties:
+        type: string
+        nullable: true
     PlatformComponentInputRequirementResponse:
       description: >-
         A catalog field the cluster must provide for the selected configuration:
         the scalar field descriptor extended with its resolution scope and readiness.
-        Input requirements cannot be object or array descriptors.
+        Input requirements cannot be object or array descriptors and are never read-only.
       allOf:
         - $ref: '#/components/schemas/ScalarFieldSchemaResponse'
         - type: object
