@@ -15641,40 +15641,33 @@ paths:
           description: Failed to fetch blueprint manifest from GitHub
   /blueprint/{blueprintId}/database:
     get:
-      summary: Get information about the database a blueprint manages
+      summary: Get the database a blueprint manages
       operationId: getBlueprintDatabase
       tags:
         - Blueprint Main Calls
       description: >-
-        Returns one kind of information about the database a blueprint manages,
-        read from the outputs of its terraform service. `ENDPOINT` returns the
-        host and port reported by the `DB_ADDRESS` and `DB_PORT` outputs; it is
-        what port-forward dials to reach a blueprint database.
+        Returns the kind of database a blueprint manages and its endpoint, read
+        from the `DB_ADDRESS` and `DB_PORT` outputs of its terraform service.
+        `endpoint` is null until a deploy has reported it. Port-forward dials
+        this endpoint to reach a blueprint database. Only AWS PostgreSQL and
+        MySQL blueprints are classified today.
       parameters:
         - $ref: '#/components/parameters/blueprintId'
-        - name: kind
-          in: query
-          required: true
-          description: Kind of database information to return
-          schema:
-            $ref: '#/components/schemas/BlueprintDatabaseInfoKind'
       responses:
         '200':
-          description: Requested database information
+          description: Database the blueprint manages
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlueprintDatabaseResponse'
-        '400':
-          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
           description: >-
-            Blueprint not found, not linked to a terraform service, or its
-            outputs report no `DB_ADDRESS`
+            Blueprint not found, or not a supported database blueprint (today AWS
+            PostgreSQL and MySQL)
   /blueprint/{blueprintId}/variables:
     get:
       summary: Get persisted blueprint variables
@@ -30368,30 +30361,28 @@ components:
           description: Array of Terraform resources
           items:
             $ref: '#/components/schemas/TerraformResourceResponse'
-    BlueprintDatabaseInfoKind:
-      type: string
-      description: Kind of information about a blueprint database
-      enum:
-        - ENDPOINT
     BlueprintDatabaseResponse:
-      oneOf:
-        - $ref: '#/components/schemas/DatabaseEndpointsResponse'
-      discriminator:
-        propertyName: kind
-        mapping:
-          ENDPOINT: '#/components/schemas/DatabaseEndpointsResponse'
+      type: object
+      title: Blueprint Database Response
+      description: Database a blueprint manages
+      required:
+        - kind
+        - endpoint
+      properties:
+        kind:
+          $ref: '#/components/schemas/DatabaseTypeEnum'
+        endpoint:
+          allOf:
+            - $ref: '#/components/schemas/DatabaseEndpointsResponse'
+          nullable: true
+          description: Null until a deploy has reported the database endpoint
     DatabaseEndpointsResponse:
       type: object
       title: Database Endpoints Response
-      description: Endpoint of the database a blueprint manages
+      description: Endpoint of a database
       required:
-        - kind
         - host
       properties:
-        kind:
-          type: string
-          enum:
-            - ENDPOINT
         host:
           type: string
           description: Database hostname, from the DB_ADDRESS terraform output
