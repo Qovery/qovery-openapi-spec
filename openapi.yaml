@@ -14965,31 +14965,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/terraform/{terraformId}/databaseEndpoint':
-    parameters:
-      - $ref: '#/components/parameters/terraformId'
-    get:
-      summary: Get the database endpoint of a terraform service
-      description: |
-        Returns the host and port of the database a terraform service manages, read from its
-        `DB_ADDRESS` and `DB_PORT` terraform outputs. Used to port-forward to a blueprint database.
-        Returns 404 when the service reports no `DB_ADDRESS` output.
-      tags:
-        - Terraform Main Calls
-      operationId: getTerraformDatabaseEndpoint
-      responses:
-        '200':
-          description: Database endpoint of the terraform service
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TerraformDatabaseEndpointResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/argocdApp/{argocdAppId}':
     get:
       summary: Get ArgoCD app by ID
@@ -15664,6 +15639,42 @@ paths:
           description: Malformed blueprint tag
         '502':
           description: Failed to fetch blueprint manifest from GitHub
+  /blueprint/{blueprintId}/database:
+    get:
+      summary: Get information about the database a blueprint manages
+      operationId: getBlueprintDatabase
+      tags:
+        - Blueprint Main Calls
+      description: >-
+        Returns one kind of information about the database a blueprint manages,
+        read from the outputs of its terraform service. `ENDPOINT` returns the
+        host and port reported by the `DB_ADDRESS` and `DB_PORT` outputs; it is
+        what port-forward dials to reach a blueprint database.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+        - name: kind
+          in: query
+          required: true
+          description: Kind of database information to return
+          schema:
+            $ref: '#/components/schemas/BlueprintDatabaseInfoKind'
+      responses:
+        '200':
+          description: Requested database information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintDatabaseResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          description: >-
+            Blueprint not found, not linked to a terraform service, or its
+            outputs report no `DB_ADDRESS`
   /blueprint/{blueprintId}/variables:
     get:
       summary: Get persisted blueprint variables
@@ -30357,13 +30368,30 @@ components:
           description: Array of Terraform resources
           items:
             $ref: '#/components/schemas/TerraformResourceResponse'
-    TerraformDatabaseEndpointResponse:
+    BlueprintDatabaseInfoKind:
+      type: string
+      description: Kind of information about a blueprint database
+      enum:
+        - ENDPOINT
+    BlueprintDatabaseResponse:
+      oneOf:
+        - $ref: '#/components/schemas/DatabaseEndpointsResponse'
+      discriminator:
+        propertyName: kind
+        mapping:
+          ENDPOINT: '#/components/schemas/DatabaseEndpointsResponse'
+    DatabaseEndpointsResponse:
       type: object
-      title: Terraform Database Endpoint Response
-      description: Endpoint of the database a terraform service manages
+      title: Database Endpoints Response
+      description: Endpoint of the database a blueprint manages
       required:
+        - kind
         - host
       properties:
+        kind:
+          type: string
+          enum:
+            - ENDPOINT
         host:
           type: string
           description: Database hostname, from the DB_ADDRESS terraform output
@@ -30371,7 +30399,7 @@ components:
         port:
           type: integer
           nullable: true
-          description: Database port, from the DB_PORT terraform output; null when the service reports none
+          description: Database port, from the DB_PORT terraform output; null when none is reported
           example: 5432
     TerraformResourcesRequest:
       type: object
