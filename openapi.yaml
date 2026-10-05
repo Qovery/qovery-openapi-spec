@@ -30364,10 +30364,16 @@ components:
       description: Database a blueprint manages
       required:
         - kind
+        - service_id
         - endpoint
       properties:
         kind:
           $ref: '#/components/schemas/DatabaseTypeEnum'
+        service_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Terraform service the blueprint created; null before its first dispatch
         endpoint:
           allOf:
             - $ref: '#/components/schemas/DatabaseEndpointsResponse'
