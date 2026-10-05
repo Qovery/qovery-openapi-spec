@@ -2,4 +2,4 @@ additionalProperties:
   supportsES6: true
   enumPropertyNaming: UPPERCASE
   npmName: qovery-ws-typescript-axios
-  axiosVersion: 1.18.1
+  axiosVersion: 1.20.0
