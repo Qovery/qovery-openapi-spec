@@ -14965,6 +14965,31 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/terraform/{terraformId}/databaseEndpoint':
+    parameters:
+      - $ref: '#/components/parameters/terraformId'
+    get:
+      summary: Get the database endpoint of a terraform service
+      description: |
+        Returns the host and port of the database a terraform service manages, read from its
+        `DB_ADDRESS` and `DB_PORT` terraform outputs. Used to port-forward to a blueprint database.
+        Returns 404 when the service reports no `DB_ADDRESS` output.
+      tags:
+        - Terraform Main Calls
+      operationId: getTerraformDatabaseEndpoint
+      responses:
+        '200':
+          description: Database endpoint of the terraform service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerraformDatabaseEndpointResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/argocdApp/{argocdAppId}':
     get:
       summary: Get ArgoCD app by ID
@@ -30332,6 +30357,22 @@ components:
           description: Array of Terraform resources
           items:
             $ref: '#/components/schemas/TerraformResourceResponse'
+    TerraformDatabaseEndpointResponse:
+      type: object
+      title: Terraform Database Endpoint Response
+      description: Endpoint of the database a terraform service manages
+      required:
+        - host
+      properties:
+        host:
+          type: string
+          description: Database hostname, from the DB_ADDRESS terraform output
+          example: my-db.abc123.eu-west-3.rds.amazonaws.com
+        port:
+          type: integer
+          nullable: true
+          description: Database port, from the DB_PORT terraform output; null when the service reports none
+          example: 5432
     TerraformResourcesRequest:
       type: object
       title: Terraform Resources Request
