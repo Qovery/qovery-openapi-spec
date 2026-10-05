@@ -15649,8 +15649,7 @@ paths:
         Returns the kind of database a blueprint manages and its endpoint, read
         from the `DB_ADDRESS` and `DB_PORT` outputs of its terraform service.
         `endpoint` is null until a deploy has reported it. Port-forward dials
-        this endpoint to reach a blueprint database. Only AWS PostgreSQL and
-        MySQL blueprints are classified today.
+        this endpoint to reach a blueprint database.
       parameters:
         - $ref: '#/components/parameters/blueprintId'
       responses:
@@ -15665,9 +15664,7 @@ paths:
         '403':
           $ref: '#/components/responses/403'
         '404':
-          description: >-
-            Blueprint not found, or not a supported database blueprint (today AWS
-            PostgreSQL and MySQL)
+          description: Blueprint not found, or not a supported database blueprint
   /blueprint/{blueprintId}/variables:
     get:
       summary: Get persisted blueprint variables
