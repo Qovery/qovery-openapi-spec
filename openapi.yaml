@@ -15554,6 +15554,33 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           description: Blueprint not found, or not a supported database blueprint
+  /blueprint/{blueprintId}/database/masterCredentials:
+    get:
+      summary: Get master credentials of a blueprint database
+      operationId: getBlueprintDatabaseMasterCredentials
+      tags:
+        - Blueprint Main Calls
+      description: >-
+        Returns the host, port, login and password of the database a blueprint
+        manages, read from the outputs of its terraform service. Requires the
+        same permission as a managed database's master credentials.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      responses:
+        '200':
+          description: Master credentials of the blueprint database
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credentials'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          description: >-
+            Blueprint not found, not a supported database blueprint, or no
+            credentials reported yet
   /blueprint/{blueprintId}/variables:
     get:
       summary: Get persisted blueprint variables
