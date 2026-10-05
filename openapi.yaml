@@ -1083,31 +1083,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/cluster/{clusterId}/currentCost':
-    get:
-      summary: Get cluster current cost
-      operationId: getClusterCurrentCost
-      description: |
-        Get your cluster cost range. We are unable to give a precise cost of your infrastructure at the moment.
-        But Qovery guarantees that the cost of your cluster will not exceed the max range.
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/clusterId'
-      tags:
-        - Billing
-      responses:
-        '200':
-          description: Get cluster cost
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CostRange'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/organization/{organizationId}/billingInfo':
     get:
       summary: Get organization billing info
@@ -1293,23 +1268,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Link'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/organization/{organizationId}/downloadInvoices':
-    post:
-      summary: Download all invoices
-      operationId: organizationDownloadAllInvoices
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-      tags:
-        - Billing
-      responses:
-        '202':
-          description: You will receive an email containing your invoices
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -2158,28 +2116,6 @@ paths:
           $ref: '#/components/responses/404'
         '412':
           description: The Operator is disconnected, incompatible, or its selected release cannot be resolved
-  '/admin/operator/clusters':
-    get:
-      summary: List the Qovery Operator fleet
-      description: >-
-        Returns every self-managed cluster with its attachment, heartbeat freshness, desired and
-        reported image and Helm chart versions, and a stable drift status. This operation is
-        restricted to Qovery administrators and is the source for internal fleet CLI and dashboard
-        consumers.
-      operationId: listClusterOperatorFleet
-      tags:
-        - Cluster Operator
-      responses:
-        '200':
-          description: Qovery Operator fleet inventory
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClusterOperatorFleetInventoryResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
   '/organization/{organizationId}/cluster/{clusterId}/status':
     get:
       summary: Get cluster status
@@ -3131,6 +3067,112 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/skill-tracking':
+    post:
+      summary: Track a skill call
+      description: Track a skill call
+      operationId: trackSkillCall
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - name: User-Agent
+        in: header
+        required: false
+        schema:
+          type: string
+      tags:
+      - Organization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkillTrackingRequest'
+      responses:
+        '204':
+          description: Skill call tracked
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/account/enterpriseconnection/roles':
+    get:
+      summary: Resolve enterprise connection roles
+      description: Resolve organization access for an Auth0 post-login action.
+      operationId: getEnterpriseConnectionRoles
+      security: []
+      parameters:
+      - name: X-Qovery-Auth0-Post-Login-Token
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: connectionName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: federatedGroups
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: userSub
+        in: query
+        required: true
+        schema:
+          type: string
+      tags:
+      - Organization Enterprise Connection
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterpriseConnectionAccessList'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/account/enterpriseconnection/notifyMemberAccessUpdated':
+    post:
+      summary: Notify enterprise member access changes
+      description: Notify q-core of member access changes from an Auth0 post-login action.
+      operationId: notifyEnterpriseMemberAccessUpdated
+      security: []
+      parameters:
+      - name: X-Qovery-Auth0-Post-Login-Token
+        in: header
+        required: true
+        schema:
+          type: string
+      tags:
+      - Organization Enterprise Connection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnterpriseConnectionMemberAccessUpdateRequest'
+      responses:
+        '200':
+          description: Member access update accepted
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/account/gitAuthProvider':
     get:
       summary: Get git provider accounts
@@ -3148,6 +3190,77 @@ paths:
                 $ref: '#/components/schemas/GitAuthProviderResponseList'
         '401':
           $ref: '#/components/responses/401'
+  '/organization/{organizationId}/account/{gitProviderName}/repository':
+    get:
+      summary: List repositories from a Git provider
+      description: List repositories from a Git provider
+      operationId: getGitProviderRepositories
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - name: gitProviderName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: gitTokenId
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - Organization Account Git Repositories
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/account/{gitProviderName}/repository/branch':
+    get:
+      summary: List repository branches from a Git provider
+      description: List repository branches from a Git provider
+      operationId: getGitProviderRepositoryBranches
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - name: gitProviderName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: gitTokenId
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - Organization Account Git Repositories
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryBranchResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/account/github/repository':
     get:
       summary: Get github repositories of the connected user
@@ -4175,25 +4288,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  /aws/instanceType:
-    get:
-      summary: List AWS available instance types
-      operationId: listAWSInstanceType
-      tags:
-        - Cloud Provider
-      responses:
-        '200':
-          description: list the instance types available for AWS cloud provider
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClusterInstanceTypeResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   /aws/managedDatabase/type:
     get:
       summary: List AWS available managed database types
@@ -4213,13 +4307,14 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/aws/managedDatabase/instanceType/{region}/{databaseType}':
+  '/aws/managedDatabase/instanceType/{region}/{dbType}':
     get:
       summary: List AWS available managed database instance types
+      description: List AWS available managed database instance types
       operationId: listAWSManagedDatabaseInstanceType
       parameters:
         - $ref: '#/components/parameters/region'
-        - $ref: '#/components/parameters/databaseType'
+        - $ref: '#/components/parameters/dbType'
       tags:
         - Cloud Provider
       responses:
@@ -4354,47 +4449,10 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  /scaleway/instanceType:
-    get:
-      summary: List Scaleway available instance types
-      operationId: listScalewayInstanceType
-      tags:
-        - Cloud Provider
-      responses:
-        '200':
-          description: list the instance types available for Scaleway cloud provider
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClusterInstanceTypeResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  /scaleway/managedDatabase/type:
-    get:
-      summary: List Scaleway available managed database types
-      operationId: listSCWManagedDatabaseType
-      tags:
-        - Cloud Provider
-      responses:
-        '200':
-          description: list Scaleway available managed database types
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ManagedDatabaseTypeResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/scaleway/instanceType/{zone}':
     get:
       summary: List Scaleway Kapsule available instance types
+      description: List Scaleway Kapsule available instance types
       operationId: listScalewayKapsuleInstanceType
       parameters:
         - name: zone
@@ -4413,6 +4471,68 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClusterInstanceTypeResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/onPremise/region':
+    get:
+      summary: List on-premise regions
+      description: List on-premise regions
+      operationId: listOnPremiseRegions
+      tags:
+      - Cloud Provider
+      responses:
+        '200':
+          description: List on-premise regions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterRegionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/onPremise/eks/instanceType/{region}':
+    get:
+      summary: List on-premise instance types
+      description: List on-premise instance types
+      operationId: listOnPremiseInstanceTypes
+      parameters:
+      - $ref: '#/components/parameters/region'
+      tags:
+      - Cloud Provider
+      responses:
+        '200':
+          description: List on-premise instance types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterInstanceTypeResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/onPremise/clusterFeature':
+    get:
+      summary: List on-premise cluster features
+      description: List on-premise cluster features
+      operationId: listOnPremiseClusterFeatures
+      tags:
+      - Cloud Provider
+      responses:
+        '200':
+          description: List on-premise cluster features
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterFeatureResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -4451,27 +4571,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClusterFeatureResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/gcp/instanceType/{region}':
-    get:
-      summary: List GCP GKE available instance types
-      operationId: listGcpGkeInstanceType
-      parameters:
-        - $ref: '#/components/parameters/region'
-      tags:
-        - Cloud Provider
-      responses:
-        '200':
-          description: list the instance types available for GCP GKE by region
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClusterInstanceTypeResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -4522,28 +4621,6 @@ paths:
                 $ref: '#/components/schemas/ClusterCloudProviderInfo'
         '400':
           $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/organization/{organizationId}/cluster/{clusterId}/isReady':
-    get:
-      summary: Know if a cluster is ready to be deployed or not
-      operationId: getClusterReadinessStatus
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/clusterId'
-      tags:
-        - Clusters
-      responses:
-        '200':
-          description: Get Cluster Readiness Status
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClusterReadinessStatus'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -6768,6 +6845,73 @@ paths:
         name: environmentId
         in: path
         required: true
+  '/environment/{environmentId}/restart':
+    post:
+      summary: Restart environment
+      description: Restart environment
+      operationId: restartEnvironment
+      parameters:
+      - $ref: '#/components/parameters/environmentId'
+      tags:
+      - Environment Actions
+      responses:
+        '200':
+          description: Environment restart has been requested
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/engine/serviceVersion':
+    get:
+      summary: Get a service version
+      description: Get the version of an engine related service. Worker service types are unavailable through this route.
+      operationId: getPublicServiceVersion
+      security: []
+      parameters:
+      - name: serviceType
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - SHELL_AGENT
+          - CLUSTER_AGENT
+          - ENGINE
+          - PLATFORM_CATALOG
+          - QOVERY_OPERATOR
+          - QOVERY_OPERATOR_CHART
+      tags:
+      - Admin
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EngineVersionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+  '/environment/{environmentId}/moveToProject/{projectId}':
+    post:
+      summary: Move environment to another project and start it
+      description: Move environment to another project and start it
+      operationId: moveEnvironmentToProject
+      parameters:
+      - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/projectId'
+      tags:
+      - Environment Actions
+      responses:
+        '200':
+          description: Environment moved to the target project
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/environment/{environmentId}/stop':
     post:
       summary: Stop environment
@@ -6800,12 +6944,8 @@ paths:
       tags:
         - Environment Actions
       responses:
-        '202':
+        '200':
           description: Environment redeploy has been requested
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentStatus'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -7284,62 +7424,6 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: Operation is in progress
-  '/organization/{organizationId}/job/deploy':
-    post:
-      summary: Auto deploy jobs
-      description: |
-        Triggers a new job deploy in each environment matching the following conditions
-        - environment should have the auto-deploy enabled
-        - the job should have the same image name and a different tag
-      operationId: autoDeployJobEnvironments
-      parameters:
-        - $ref: '#/components/parameters/organizationId'
-      tags:
-        - Jobs
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OrganizationJobAutoDeployRequest'
-      responses:
-        '202':
-          description: Deployed jobs
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Status'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: Operation is in progress
-  '/environment/{environmentId}/log':
-    get:
-      summary: List environment deployment logs
-      operationId: listEnvironmentLog
-      description: This returns the last 1000 environment deployment logs.
-      parameters:
-        - $ref: '#/components/parameters/environmentId'
-      tags:
-        - Environment Logs
-      responses:
-        '200':
-          description: List logs
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EnvironmentLogResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/environment/{environmentId}/logs':
     get:
       summary: List environment deployment logs v2
@@ -8153,27 +8237,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/application/{applicationId}/contributor':
-    get:
-      summary: List contributors
-      operationId: listApplicationContributor
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - Application Main Calls
-      responses:
-        '200':
-          description: List application contributors
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/application/{applicationId}/commit':
     get:
       summary: List last commits
@@ -8834,6 +8897,28 @@ paths:
         '404':
           $ref: '#/components/responses/404'
   '/application/{applicationId}/customDomain/{customDomainId}':
+    get:
+      summary: Get an application custom domain
+      description: Get a custom domain attached to an application.
+      operationId: getApplicationCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/customDomainId'
+      tags:
+        - Application Custom Domain
+      responses:
+        '200':
+          description: Custom domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomDomain'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     put:
       summary: Edit a Custom Domain
       description: To edit a Custom Domain you must have the project user permission
@@ -8881,28 +8966,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/application/{applicationId}/customDomain/{customDomainId}/status':
-    get:
-      summary: Get Custom Domain status
-      operationId: getCustomDomainStatus
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-        - $ref: '#/components/parameters/customDomainId'
-      tags:
-        - Application Custom Domain
-      responses:
-        '200':
-          description: Get status
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomDomain'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/application/{applicationId}/checkCustomDomain':
     get:
       summary: Check Application Custom Domain
@@ -8918,28 +8981,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CheckedCustomDomainsResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/application/{applicationId}/log':
-    get:
-      summary: List logs
-      operationId: listApplicationLog
-      description: This will list the last 1000 logs of the application
-      parameters:
-        - $ref: '#/components/parameters/applicationId'
-      tags:
-        - Application Logs
-      responses:
-        '200':
-          description: List logs
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LogResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -9886,6 +9927,28 @@ paths:
         '404':
           $ref: '#/components/responses/404'
   '/container/{containerId}/customDomain/{customDomainId}':
+    get:
+      summary: Get a container custom domain
+      description: Get a custom domain attached to a container.
+      operationId: getContainerCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/containerId'
+        - $ref: '#/components/parameters/customDomainId'
+      tags:
+        - Container Custom Domain
+      responses:
+        '200':
+          description: Custom domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomDomain'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     put:
       summary: Edit a Custom Domain
       description: To edit a Custom Domain  you must have the project user permission
@@ -9933,28 +9996,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/container/{containerId}/customDomain/{customDomainId}/status':
-    get:
-      summary: Get Custom Domain status
-      operationId: getContainerCustomDomainStatus
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-        - $ref: '#/components/parameters/customDomainId'
-      tags:
-        - Container Custom Domain
-      responses:
-        '200':
-          description: Get status
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomDomain'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/container/{containerId}/checkCustomDomain':
     get:
       summary: Check Container Custom Domain
@@ -9970,28 +10011,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CheckedCustomDomainsResponse'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/container/{containerId}/log':
-    get:
-      summary: List logs
-      operationId: listContainerLog
-      description: This will list the last 1000 logs of the container
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-      tags:
-        - Container Logs
-      responses:
-        '200':
-          description: List logs
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LogResponseList'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -10309,45 +10328,6 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/database/{databaseId}/application':
-    get:
-      summary: List applications using the database
-      operationId: listDatabaseApplication
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-      tags:
-        - Database Application
-      responses:
-        '200':
-          description: List linked applications
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApplicationResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/database/{databaseId}/application/{targetApplicationId}':
-    delete:
-      summary: 'Remove an application from this database '
-      operationId: removeApplicationFromDatabase
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-        - $ref: '#/components/parameters/targetApplicationId'
-      tags:
-        - Database Application
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/database/{databaseId}/redeploy':
     post:
       summary: Redeploy database
@@ -10558,74 +10538,6 @@ paths:
         name: databaseId
         in: path
         required: true
-  '/database/{databaseId}/backup':
-    get:
-      summary: List database  backups
-      description: 'By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter'
-      operationId: listDatabaseBackup
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-        - $ref: '#/components/parameters/startId'
-      tags:
-        - Backups
-      responses:
-        '200':
-          description: List backups
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BackupPaginatedResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    post:
-      summary: 'Add a backup to the Database '
-      operationId: addBackupDatabase
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-      tags:
-        - Backups
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BackupRequest'
-      responses:
-        '201':
-          description: Added backup
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Backup'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/database/{databaseId}/backup/{backupId}':
-    delete:
-      summary: Remove database  backup
-      operationId: removeDatabaseBackup
-      parameters:
-        - $ref: '#/components/parameters/databaseId'
-        - $ref: '#/components/parameters/backupId'
-      tags:
-        - Backups
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
   '/database/{databaseId}/clone':
     post:
       summary: Clone database
@@ -10689,136 +10601,6 @@ paths:
                 $ref: '#/components/schemas/AccountInfo'
         '400':
           $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-  /account/gitAuthProvider:
-    get:
-      deprecated: true
-      summary: Get git provider accounts
-      operationId: getGitProviderAccount
-      tags:
-        - Git repositories
-      responses:
-        '200':
-          description: Get account
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GitAuthProviderResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-  /account/github/repository:
-    get:
-      deprecated: true
-      summary: Get github repositories of the connected user
-      operationId: getGithubRepositories
-      tags:
-        - Git repositories
-      responses:
-        '200':
-          description: Get github repositories
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GitRepositoryResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-  /account/github/repository/branch:
-    get:
-      deprecated: true
-      summary: Get github branches of the specified repository
-      operationId: getGithubRepositoryBranches
-      tags:
-        - Git repositories
-      parameters:
-        - in: query
-          name: name
-          schema:
-            type: string
-          description: The name of the repository where to retrieve the branches
-      responses:
-        '200':
-          description: Get github repository branches
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GitRepositoryBranchResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-  /account/gitlab/repository:
-    get:
-      deprecated: true
-      summary: Get gitlab repositories of the connected user
-      operationId: getGitlabRepositories
-      tags:
-        - Git repositories
-      responses:
-        '200':
-          description: Get gitlab repositories
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GitRepositoryResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-  /account/gitlab/repository/branch:
-    get:
-      deprecated: true
-      summary: Get gitlab branches of the specified repository
-      operationId: getGitlabRepositoryBranches
-      tags:
-        - Git repositories
-      parameters:
-        - in: query
-          name: name
-          schema:
-            type: string
-          description: The name of the repository to retrieve the branches
-      responses:
-        '200':
-          description: Get gitlab repository branches
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GitRepositoryBranchResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-  /account/bitbucket/repository:
-    get:
-      deprecated: true
-      summary: Get bitbucket repositories of the connected user
-      operationId: getBitbucketRepositories
-      tags:
-        - Git repositories
-      responses:
-        '200':
-          description: Get bitbucket repositories
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GitRepositoryResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-  /account/bitbucket/repository/branch:
-    get:
-      deprecated: true
-      summary: Get bitbucket branches of the specified repository
-      operationId: getBitbucketRepositoryBranches
-      tags:
-        - Git repositories
-      parameters:
-        - in: query
-          name: name
-          schema:
-            type: string
-          description: The name of the repository where to retrieve the branches
-      responses:
-        '200':
-          description: Get bitbucket repository branches
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GitRepositoryBranchResponseList'
         '401':
           $ref: '#/components/responses/401'
   /account/referral:
@@ -13381,7 +13163,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/KubernetesServiceResponseList'
         '401':
           description: ' Access token is missing or invalid'
@@ -13928,9 +13709,9 @@ paths:
       - schema:
           type: string
           enum:
-            - CONTAINER
-            - APPLICATION
-            - HELM
+            - container
+            - application
+            - helm
         name: serviceType
         in: path
         required: true
@@ -15053,6 +14834,114 @@ paths:
       x-stoplight:
         id: 2jm9tyqfhw4xf
       description: List credentials of an organization and their associated clusters
+  '/admin/listUserSignUp':
+    get:
+      summary: Search user signups
+      description: Search user signups as a Qovery administrator.
+      operationId: listUserSignUps
+      parameters:
+      - name: search
+        in: query
+        required: true
+        schema:
+          type: string
+      tags:
+      - Admin
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSignUpResponseList'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/admin/demoDebugLog':
+    post:
+      summary: Store CLI demo debug logs
+      description: Store CLI demo debug logs for an organization and cluster.
+      operationId: storeCliDemoDebugLogs
+      parameters:
+      - name: organization
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: clusterName
+        in: query
+        required: true
+        schema:
+          type: string
+      tags:
+      - Admin
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Debug logs stored
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/cluster/{clusterId}/clusterFailureContext/latest':
+    get:
+      summary: Get the latest cluster failure context
+      description: Get the latest cluster failure context
+      operationId: getLatestClusterFailureContext
+      parameters:
+      - $ref: '#/components/parameters/clusterId'
+      tags:
+      - Clusters
+      responses:
+        '200':
+          description: Get the latest cluster failure context
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterFailureContextResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/secret/{secretId}':
+    get:
+      summary: Get a secret by ID
+      description: Get a secret by ID
+      operationId: getSecretById
+      parameters:
+      - $ref: '#/components/parameters/secretId'
+      tags:
+      - Environment Secret
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Secret'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/cluster/{clusterId}/logs':
     parameters:
       - schema:
@@ -15801,6 +15690,13 @@ paths:
           $ref: '#/components/responses/404'
 components:
   parameters:
+    dbType:
+      name: dbType
+      in: path
+      description: Managed database type
+      required: true
+      schema:
+        type: string
     blueprintId:
       name: blueprintId
       in: path
@@ -16210,6 +16106,187 @@ components:
         type: string
         format: uuid
   schemas:
+    UserSignUpResponse:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          format: uuid
+        first_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+        user_email:
+          type: string
+          nullable: true
+        type_of_use:
+          type: string
+          nullable: true
+        company_name:
+          type: string
+          nullable: true
+        company_size:
+          type: string
+          nullable: true
+        user_role:
+          type: string
+          nullable: true
+        qovery_usage:
+          type: string
+          nullable: true
+        qovery_usage_other:
+          type: string
+          nullable: true
+        user_questions:
+          type: string
+          nullable: true
+        dx_auth:
+          type: boolean
+          nullable: true
+        current_step:
+          type: string
+          nullable: true
+        infrastructure_hosting:
+          type: string
+          nullable: true
+    UserSignUpResponseList:
+      type: object
+      required:
+      - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSignUpResponse'
+    MemberAccessRoleUpdated:
+      type: object
+      required:
+      - organization_id
+      - role
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+        role:
+          type: string
+    EnterpriseConnectionMemberAccessUpdateRequest:
+      type: object
+      required:
+      - user_id
+      - added_organization_ids
+      - removed_organization_ids
+      - role_updates_by_organization_id
+      properties:
+        user_id:
+          type: string
+        user_email:
+          type: string
+          nullable: true
+        added_organization_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        removed_organization_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        role_updates_by_organization_id:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberAccessRoleUpdated'
+    EnterpriseConnectionAccess:
+      type: object
+      required:
+      - organization_id
+      - role
+      - enforce_group_sync
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+        role:
+          type: string
+        enforce_group_sync:
+          type: boolean
+    EnterpriseConnectionAccessList:
+      type: object
+      required:
+      - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseConnectionAccess'
+    EngineVersionResponse:
+      type: object
+      required:
+      - version
+      properties:
+        version:
+          type: string
+    GatewayConditionEntryResponse:
+      type: object
+      required:
+        - type
+        - status
+      properties:
+        type:
+          type: string
+        status:
+          type: string
+        reason:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+    GatewayStatusResponse:
+      type: object
+      required:
+        - gateway_name
+        - conditions
+      properties:
+        gateway_name:
+          type: string
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayConditionEntryResponse'
+    ClusterFailureContextResponse:
+      type: object
+      required:
+        - id
+        - cluster_id
+        - gateway_status
+        - created_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        cluster_id:
+          type: string
+          format: uuid
+        gateway_status:
+          $ref: '#/components/schemas/GatewayStatusResponse'
+        created_at:
+          type: string
+          format: date-time
+    SkillTrackingRequest:
+      type: object
+      required:
+        - skill_name
+      properties:
+        skill_name:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[A-Za-z0-9._-]+$
     QoveryIpsResponse:
       type: object
       required:
@@ -16325,12 +16402,17 @@ components:
       required:
         - key
         - kind
+        - dependsOn
         - fields
       properties:
         key:
           type: string
         kind:
           $ref: '#/components/schemas/PlatformTemplateComponentKind'
+        dependsOn:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformTemplateComponentDependencyResponse'
         description:
           type: string
           nullable: true
@@ -16346,6 +16428,19 @@ components:
             the existing editor behavior; fields always remain declared on their owner.
           items:
             $ref: '#/components/schemas/PlatformConfigurationSectionResponse'
+    PlatformTemplateComponentDependencyResponse:
+      type: object
+      required:
+        - component
+        - kind
+      properties:
+        component:
+          type: string
+        kind:
+          type: string
+          enum:
+            - REQUIRES
+            - AFTER
     PlatformConfigurationSectionResponse:
       type: object
       description: >-
@@ -16975,20 +17070,37 @@ components:
         nullable: true
     PlatformComponentInputRequirementResponse:
       description: >-
-        A catalog field the cluster must provide for the selected configuration:
-        the scalar field descriptor extended with its resolution scope and readiness.
-        Input requirements cannot be object or array descriptors and are never read-only.
-      allOf:
-        - $ref: '#/components/schemas/ScalarFieldSchemaResponse'
-        - type: object
-          required:
-            - scope
-            - status
-          properties:
-            scope:
-              $ref: '#/components/schemas/PlatformComponentConfigurationInputScope'
-            status:
-              $ref: '#/components/schemas/PlatformComponentConfigurationRequirementStatus'
+        A scalar catalog field the cluster must provide for the selected configuration.
+      type: object
+      required:
+        - key
+        - type
+        - scope
+        - label
+        - required
+        - sensitive
+        - constraints
+        - status
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+        scope:
+          $ref: '#/components/schemas/PlatformComponentConfigurationInputScope'
+        label:
+          type: string
+        description:
+          type: string
+          nullable: true
+        required:
+          type: boolean
+        sensitive:
+          type: boolean
+        constraints:
+          $ref: '#/components/schemas/FieldSchemaConstraintsResponse'
+        status:
+          $ref: '#/components/schemas/PlatformComponentConfigurationRequirementStatus'
     PlatformComponentConfigurationInputScope:
       type: string
       enum:
@@ -17136,7 +17248,8 @@ components:
             $ref: '#/components/schemas/BlueprintVariableRequest'
           default: []
         spec_overrides:
-          $ref: '#/components/schemas/BlueprintSpecOverrides'
+          allOf:
+            - $ref: '#/components/schemas/BlueprintSpecOverrides'
           nullable: true
     BlueprintSpecOverrides:
       type: object
@@ -17929,7 +18042,8 @@ components:
             Omitting the field entirely is equivalent to an empty map — no
             variables are modified.
           additionalProperties:
-            $ref: '#/components/schemas/BlueprintUpdateVariableValue'
+            allOf:
+              - $ref: '#/components/schemas/BlueprintUpdateVariableValue'
             nullable: true
         spec_overrides:
           allOf:
@@ -18236,7 +18350,6 @@ components:
       required:
         - id
         - key
-        - mount_path
         - scope
         - variable_type
       properties:
@@ -18248,22 +18361,11 @@ components:
           example: QOVERY_DATABASE_PSQL_NAME
         mount_path:
           type: string
+          nullable: true
         scope:
           $ref: '#/components/schemas/APIVariableScopeEnum'
         variable_type:
           $ref: '#/components/schemas/APIVariableTypeEnum'
-        description:
-          type: string
-          x-stoplight:
-            id: 14nham449j6uk
-          maxLength: 255
-          description: optional variable description (255 characters maximum)
-          nullable: true
-        enable_interpolation_in_file:
-          type: boolean
-          x-stoplight:
-            id: bm88z8ltgrcc6
-          nullable: true
     ApplicationAdvancedSettings:
       type: object
       properties:
@@ -18717,6 +18819,9 @@ components:
               $ref: '#/components/schemas/AutoscalingPolicyRequest'
             build_settings:
               $ref: '#/components/schemas/BuildSettings'
+            startup_timeout:
+              type: integer
+              default: 30
     ApplicationGitRepository:
       type: object
       required:
@@ -18942,7 +19047,7 @@ components:
             description:
               type: string
               description: give a description to this application
-              nullable: true
+              default: ''
             git_repository:
               $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
             build_mode:
@@ -18994,7 +19099,7 @@ components:
                 Specify if the environment preview option is activated or not for this application.  
                 If activated, a preview environment will be automatically cloned at each pull request.  
                 If not specified, it takes the value of the `auto_preview` property from the associated environment.
-              default: true
+              nullable: true
             arguments:
               type: array
               items:
@@ -19031,6 +19136,9 @@ components:
               $ref: '#/components/schemas/AutoscalingPolicyRequest'
             build_settings:
               $ref: '#/components/schemas/BuildSettings'
+            startup_timeout:
+              type: integer
+              default: 30
     ApplicationResponseList:
       type: object
       properties:
@@ -19995,16 +20103,20 @@ components:
 
     ClusterKarpenterPrivateSubnetIdsPutRequest:
       type: object
+      required:
+        - eks_private_subnets_zone_a_ids
+        - eks_private_subnets_zone_b_ids
+        - eks_private_subnets_zone_c_ids
       properties:
-        eks_karpenter_fargate_subnets_zone_a_ids:
+        eks_private_subnets_zone_a_ids:
           type: array
           items:
             type: string
-        eks_karpenter_fargate_subnets_zone_b_ids:
+        eks_private_subnets_zone_b_ids:
           type: array
           items:
             type: string
-        eks_karpenter_fargate_subnets_zone_c_ids:
+        eks_private_subnets_zone_c_ids:
           type: array
           items:
             type: string
@@ -20580,7 +20692,7 @@ components:
           default: 1
         max_running_nodes:
           type: integer
-          default: 1
+          default: 10
         disk_size:
           type: integer
           example: 50
@@ -20640,6 +20752,21 @@ components:
           $ref: '#/components/schemas/ClusterLabelsGroupList'
         secret_manager_accesses:
           $ref: '#/components/schemas/SecretManagerAccessRequestList'
+        is_demo:
+          type: boolean
+          default: false
+        wide_permissions_dto:
+          $ref: '#/components/schemas/WidePermissionsDto'
+    WidePermissionsDto:
+      type: object
+      properties:
+        using_restrictive_permissions:
+          type: boolean
+          default: false
+        wide_scope_cloud_account_id:
+          type: string
+          format: uuid
+          nullable: true
     ClusterResponseList:
       type: object
       properties:
@@ -21684,12 +21811,15 @@ components:
           default: false
     ContainerDeployRequest:
       type: object
-      required:
-        - image_tag
       properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
         image_tag:
           type: string
           description: Image tag to deploy
+          nullable: true
     ContainerRegistryKindEnum:
       type: string
       enum:
@@ -22582,9 +22712,6 @@ components:
             * `DOCKER_HUB`: `image` or `repository/image`
             * `PUBLIC_ECR`: `registry_alias/repository`
         tag:
-          type: string
-          description: tag of the image container
-        registry_id:
           type: string
           description: tag of the image container
         registry:
@@ -24968,6 +25095,10 @@ components:
     JobDeployRequest:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
         image_tag:
           type: string
           description: |
@@ -25493,6 +25624,10 @@ components:
     HelmDeployRequest:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
         chart_version:
           type: string
           description: |
@@ -25733,7 +25868,7 @@ components:
         pod_name:
           type: string
           example: app-z4aa76065-57d84cbbdb-xcg8v
-        version:
+        application_commit_id:
           type: string
           example: 2bfd61fe45946c74f318050b26210be486c43a39
     LogResponseList:
@@ -26220,9 +26355,6 @@ components:
         website_url:
           type: string
           nullable: true
-        repository:
-          type: string
-          nullable: true
         logo_url:
           type: string
           nullable: true
@@ -26259,9 +26391,6 @@ components:
         plan:
           $ref: '#/components/schemas/PlanEnum'
         website_url:
-          type: string
-          nullable: true
-        repository:
           type: string
           nullable: true
         logo_url:
@@ -26538,7 +26667,6 @@ components:
       required:
         - id
         - key
-        - mount_path
         - scope
         - variable_type
       properties:
@@ -26549,22 +26677,11 @@ components:
           type: string
         mount_path:
           type: string
+          nullable: true
         scope:
           $ref: '#/components/schemas/APIVariableScopeEnum'
         variable_type:
           $ref: '#/components/schemas/APIVariableTypeEnum'
-        description:
-          type: string
-          x-stoplight:
-            id: edfpfqj87ezos
-          maxLength: 255
-          description: optional variable description (255 characters maximum)
-          nullable: true
-        enable_interpolation_in_file:
-          type: boolean
-          x-stoplight:
-            id: ls2iylkcayehn
-          nullable: true
     OrganizationWebhookCreateRequest:
       type: object
       required:
@@ -27351,6 +27468,9 @@ components:
           type: string
         key:
           type: string
+        mount_path:
+          type: string
+          nullable: true
         description:
           type: string
           x-stoplight:
@@ -30046,7 +30166,7 @@ components:
         id: uebtvs1ouszf2
       type: object
       properties:
-        routerId:
+        router_id:
           type: string
           x-stoplight:
             id: e507c0na5om2i
@@ -30178,12 +30298,8 @@ components:
       type: object
       required:
         - name
-        - description
-        - auto_deploy_config
         - terraform_files_source
         - terraform_variables_source
-        - backend
-        - engine
         - provider_version
         - job_resources
       properties:
@@ -30195,8 +30311,15 @@ components:
           type: string
           x-stoplight:
             id: ltvpnbhjz1oho
+          default: ''
         auto_deploy_config:
           $ref: "#/components/schemas/TerraformAutoDeployConfig"
+        auto_deploy:
+          type: boolean
+          description: Legacy alternative to auto_deploy_config.
+        auto_preview:
+          type: boolean
+          nullable: true
         terraform_files_source:
           oneOf:
             - type: object
@@ -30276,6 +30399,7 @@ components:
         - provider
         - mode
         - attributes
+        - key_attributes
         - extracted_at
       properties:
         id:
@@ -30315,11 +30439,25 @@ components:
             instance_type: t2.micro
             public_ip: 10.0.0.1
             private_ip: 172.31.0.1
+        key_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/TerraformResourceAttribute'
         extracted_at:
           type: string
           format: date-time
           description: Timestamp when the resource was extracted from Terraform state
           example: '2023-01-15T10:30:00Z'
+    TerraformResourceAttribute:
+      type: object
+      required:
+        - key
+        - value
+      properties:
+        key:
+          type: string
+        value:
+          type: string
     TerraformResourcesResponse:
       type: object
       title: Terraform Resources List Response
@@ -30332,32 +30470,6 @@ components:
           description: Array of Terraform resources
           items:
             $ref: '#/components/schemas/TerraformResourceResponse'
-    TerraformResourcesRequest:
-      type: object
-      title: Terraform Resources Request
-      description: Request to store terraform resources from engine after deployment
-      required:
-        - terraformId
-        - executionId
-        - resourcesJson
-      properties:
-        terraformId:
-          type: string
-          format: uuid
-          description: ID of the Terraform service
-          example: 550e8400-e29b-41d4-a716-446655440000
-        executionId:
-          type: string
-          description: |
-            Execution ID in format "UUID-version" or "UUID-version-timestamp"
-            Example: 550e8400-e29b-41d4-a716-446655440000-1
-          example: 550e8400-e29b-41d4-a716-446655440000-1
-        resourcesJson:
-          type: string
-          description: |
-            JSON array of terraform resources extracted from terraform show output.
-            Each resource contains: resource_type, name, provider, address, mode, attributes
-          example: '[{"resource_type":"aws_instance","name":"web_server","provider":"aws","address":"aws_instance.web_server","mode":"managed","attributes":{"instance_id":"i-1234567890abcdef0","instance_type":"t2.micro"}}]'
     TerraformResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -30388,6 +30500,10 @@ components:
               minimum: 0
               default: 600
             auto_deploy:
+              type: boolean
+            auto_preview:
+              type: boolean
+            build_settings_editable:
               type: boolean
             auto_deploy_config:
               $ref: "#/components/schemas/TerraformAutoDeployConfig"
@@ -30579,16 +30695,6 @@ components:
           type: string
           nullable: true
           description: 'The description of the variable, or null if no description is provided'
-    TerraformFilesSourceRequest:
-      title: TerraformFilesSourceRequest
-      x-stoplight:
-        id: n91jcyroi7kt4
-      type: object
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: vtpiblf7t37xq
     TerraformAutoDeployConfig:
           title: TerraformAutoDeployConfig
           type: object
@@ -31827,7 +31933,8 @@ components:
             id: 8begp36fsknxq
           format: uuid
         service:
-          $ref: '#/components/schemas/ServiceLightResponse'
+          allOf:
+            - $ref: '#/components/schemas/ServiceLightResponse'
           description: 'Service details when target_type is APPLICATION, CONTAINER, JOB, CRONJOB, HELM or TERRAFORM'
     AlertRuleState:
       title: AlertRuleState
