@@ -15528,6 +15528,32 @@ paths:
           description: Malformed blueprint tag
         '502':
           description: Failed to fetch blueprint manifest from GitHub
+  /blueprint/{blueprintId}/database:
+    get:
+      summary: Get the database a blueprint manages
+      operationId: getBlueprintDatabase
+      tags:
+        - Blueprint Main Calls
+      description: >-
+        Returns the kind of database a blueprint manages and its endpoint, read
+        from the `DB_ADDRESS` and `DB_PORT` outputs of its terraform service.
+        `endpoint` is null until a deploy has reported it. Port-forward dials
+        this endpoint to reach a blueprint database.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      responses:
+        '200':
+          description: Database the blueprint manages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintDatabaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          description: Blueprint not found, or not a supported database blueprint
   /blueprint/{blueprintId}/variables:
     get:
       summary: Get persisted blueprint variables
@@ -30470,6 +30496,43 @@ components:
           description: Array of Terraform resources
           items:
             $ref: '#/components/schemas/TerraformResourceResponse'
+    BlueprintDatabaseResponse:
+      type: object
+      title: Blueprint Database Response
+      description: Database a blueprint manages
+      required:
+        - kind
+        - service_id
+        - endpoint
+      properties:
+        kind:
+          $ref: '#/components/schemas/DatabaseTypeEnum'
+        service_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Terraform service the blueprint created; null before its first dispatch
+        endpoint:
+          allOf:
+            - $ref: '#/components/schemas/DatabaseEndpointsResponse'
+          nullable: true
+          description: Null until a deploy has reported the database endpoint
+    DatabaseEndpointsResponse:
+      type: object
+      title: Database Endpoints Response
+      description: Endpoint of a database
+      required:
+        - host
+      properties:
+        host:
+          type: string
+          description: Database hostname, from the DB_ADDRESS terraform output
+          example: my-db.abc123.eu-west-3.rds.amazonaws.com
+        port:
+          type: integer
+          nullable: true
+          description: Database port, from the DB_PORT terraform output; null when none is reported
+          example: 5432
     TerraformResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
