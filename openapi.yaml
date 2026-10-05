@@ -16402,12 +16402,17 @@ components:
       required:
         - key
         - kind
+        - dependsOn
         - fields
       properties:
         key:
           type: string
         kind:
           $ref: '#/components/schemas/PlatformTemplateComponentKind'
+        dependsOn:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformTemplateComponentDependencyResponse'
         description:
           type: string
           nullable: true
@@ -16423,6 +16428,19 @@ components:
             the existing editor behavior; fields always remain declared on their owner.
           items:
             $ref: '#/components/schemas/PlatformConfigurationSectionResponse'
+    PlatformTemplateComponentDependencyResponse:
+      type: object
+      required:
+        - component
+        - kind
+      properties:
+        component:
+          type: string
+        kind:
+          type: string
+          enum:
+            - REQUIRES
+            - AFTER
     PlatformConfigurationSectionResponse:
       type: object
       description: >-
@@ -17052,20 +17070,37 @@ components:
         nullable: true
     PlatformComponentInputRequirementResponse:
       description: >-
-        A catalog field the cluster must provide for the selected configuration:
-        the scalar field descriptor extended with its resolution scope and readiness.
-        Input requirements cannot be object or array descriptors and are never read-only.
-      allOf:
-        - $ref: '#/components/schemas/ScalarFieldSchemaResponse'
-        - type: object
-          required:
-            - scope
-            - status
-          properties:
-            scope:
-              $ref: '#/components/schemas/PlatformComponentConfigurationInputScope'
-            status:
-              $ref: '#/components/schemas/PlatformComponentConfigurationRequirementStatus'
+        A scalar catalog field the cluster must provide for the selected configuration.
+      type: object
+      required:
+        - key
+        - type
+        - scope
+        - label
+        - required
+        - sensitive
+        - constraints
+        - status
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+        scope:
+          $ref: '#/components/schemas/PlatformComponentConfigurationInputScope'
+        label:
+          type: string
+        description:
+          type: string
+          nullable: true
+        required:
+          type: boolean
+        sensitive:
+          type: boolean
+        constraints:
+          $ref: '#/components/schemas/FieldSchemaConstraintsResponse'
+        status:
+          $ref: '#/components/schemas/PlatformComponentConfigurationRequirementStatus'
     PlatformComponentConfigurationInputScope:
       type: string
       enum:
@@ -18315,7 +18350,6 @@ components:
       required:
         - id
         - key
-        - mount_path
         - scope
         - variable_type
       properties:
@@ -18327,22 +18361,11 @@ components:
           example: QOVERY_DATABASE_PSQL_NAME
         mount_path:
           type: string
+          nullable: true
         scope:
           $ref: '#/components/schemas/APIVariableScopeEnum'
         variable_type:
           $ref: '#/components/schemas/APIVariableTypeEnum'
-        description:
-          type: string
-          x-stoplight:
-            id: 14nham449j6uk
-          maxLength: 255
-          description: optional variable description (255 characters maximum)
-          nullable: true
-        enable_interpolation_in_file:
-          type: boolean
-          x-stoplight:
-            id: bm88z8ltgrcc6
-          nullable: true
     ApplicationAdvancedSettings:
       type: object
       properties:
@@ -18796,6 +18819,9 @@ components:
               $ref: '#/components/schemas/AutoscalingPolicyRequest'
             build_settings:
               $ref: '#/components/schemas/BuildSettings'
+            startup_timeout:
+              type: integer
+              default: 30
     ApplicationGitRepository:
       type: object
       required:
@@ -19021,7 +19047,7 @@ components:
             description:
               type: string
               description: give a description to this application
-              nullable: true
+              default: ''
             git_repository:
               $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
             build_mode:
@@ -19073,7 +19099,7 @@ components:
                 Specify if the environment preview option is activated or not for this application.  
                 If activated, a preview environment will be automatically cloned at each pull request.  
                 If not specified, it takes the value of the `auto_preview` property from the associated environment.
-              default: true
+              nullable: true
             arguments:
               type: array
               items:
@@ -19110,6 +19136,9 @@ components:
               $ref: '#/components/schemas/AutoscalingPolicyRequest'
             build_settings:
               $ref: '#/components/schemas/BuildSettings'
+            startup_timeout:
+              type: integer
+              default: 30
     ApplicationResponseList:
       type: object
       properties:
@@ -20074,16 +20103,20 @@ components:
 
     ClusterKarpenterPrivateSubnetIdsPutRequest:
       type: object
+      required:
+        - eks_private_subnets_zone_a_ids
+        - eks_private_subnets_zone_b_ids
+        - eks_private_subnets_zone_c_ids
       properties:
-        eks_karpenter_fargate_subnets_zone_a_ids:
+        eks_private_subnets_zone_a_ids:
           type: array
           items:
             type: string
-        eks_karpenter_fargate_subnets_zone_b_ids:
+        eks_private_subnets_zone_b_ids:
           type: array
           items:
             type: string
-        eks_karpenter_fargate_subnets_zone_c_ids:
+        eks_private_subnets_zone_c_ids:
           type: array
           items:
             type: string
@@ -20659,7 +20692,7 @@ components:
           default: 1
         max_running_nodes:
           type: integer
-          default: 1
+          default: 10
         disk_size:
           type: integer
           example: 50
@@ -20719,6 +20752,21 @@ components:
           $ref: '#/components/schemas/ClusterLabelsGroupList'
         secret_manager_accesses:
           $ref: '#/components/schemas/SecretManagerAccessRequestList'
+        is_demo:
+          type: boolean
+          default: false
+        wide_permissions_dto:
+          $ref: '#/components/schemas/WidePermissionsDto'
+    WidePermissionsDto:
+      type: object
+      properties:
+        using_restrictive_permissions:
+          type: boolean
+          default: false
+        wide_scope_cloud_account_id:
+          type: string
+          format: uuid
+          nullable: true
     ClusterResponseList:
       type: object
       properties:
@@ -21763,12 +21811,15 @@ components:
           default: false
     ContainerDeployRequest:
       type: object
-      required:
-        - image_tag
       properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
         image_tag:
           type: string
           description: Image tag to deploy
+          nullable: true
     ContainerRegistryKindEnum:
       type: string
       enum:
@@ -22661,9 +22712,6 @@ components:
             * `DOCKER_HUB`: `image` or `repository/image`
             * `PUBLIC_ECR`: `registry_alias/repository`
         tag:
-          type: string
-          description: tag of the image container
-        registry_id:
           type: string
           description: tag of the image container
         registry:
@@ -25047,6 +25095,10 @@ components:
     JobDeployRequest:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
         image_tag:
           type: string
           description: |
@@ -25572,6 +25624,10 @@ components:
     HelmDeployRequest:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
         chart_version:
           type: string
           description: |
@@ -25812,7 +25868,7 @@ components:
         pod_name:
           type: string
           example: app-z4aa76065-57d84cbbdb-xcg8v
-        version:
+        application_commit_id:
           type: string
           example: 2bfd61fe45946c74f318050b26210be486c43a39
     LogResponseList:
@@ -26299,9 +26355,6 @@ components:
         website_url:
           type: string
           nullable: true
-        repository:
-          type: string
-          nullable: true
         logo_url:
           type: string
           nullable: true
@@ -26338,9 +26391,6 @@ components:
         plan:
           $ref: '#/components/schemas/PlanEnum'
         website_url:
-          type: string
-          nullable: true
-        repository:
           type: string
           nullable: true
         logo_url:
@@ -26617,7 +26667,6 @@ components:
       required:
         - id
         - key
-        - mount_path
         - scope
         - variable_type
       properties:
@@ -26628,22 +26677,11 @@ components:
           type: string
         mount_path:
           type: string
+          nullable: true
         scope:
           $ref: '#/components/schemas/APIVariableScopeEnum'
         variable_type:
           $ref: '#/components/schemas/APIVariableTypeEnum'
-        description:
-          type: string
-          x-stoplight:
-            id: edfpfqj87ezos
-          maxLength: 255
-          description: optional variable description (255 characters maximum)
-          nullable: true
-        enable_interpolation_in_file:
-          type: boolean
-          x-stoplight:
-            id: ls2iylkcayehn
-          nullable: true
     OrganizationWebhookCreateRequest:
       type: object
       required:
@@ -27430,6 +27468,9 @@ components:
           type: string
         key:
           type: string
+        mount_path:
+          type: string
+          nullable: true
         description:
           type: string
           x-stoplight:
@@ -30125,7 +30166,7 @@ components:
         id: uebtvs1ouszf2
       type: object
       properties:
-        routerId:
+        router_id:
           type: string
           x-stoplight:
             id: e507c0na5om2i
@@ -30257,12 +30298,8 @@ components:
       type: object
       required:
         - name
-        - description
-        - auto_deploy_config
         - terraform_files_source
         - terraform_variables_source
-        - backend
-        - engine
         - provider_version
         - job_resources
       properties:
@@ -30274,8 +30311,15 @@ components:
           type: string
           x-stoplight:
             id: ltvpnbhjz1oho
+          default: ''
         auto_deploy_config:
           $ref: "#/components/schemas/TerraformAutoDeployConfig"
+        auto_deploy:
+          type: boolean
+          description: Legacy alternative to auto_deploy_config.
+        auto_preview:
+          type: boolean
+          nullable: true
         terraform_files_source:
           oneOf:
             - type: object
@@ -30355,6 +30399,7 @@ components:
         - provider
         - mode
         - attributes
+        - key_attributes
         - extracted_at
       properties:
         id:
@@ -30394,11 +30439,25 @@ components:
             instance_type: t2.micro
             public_ip: 10.0.0.1
             private_ip: 172.31.0.1
+        key_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/TerraformResourceAttribute'
         extracted_at:
           type: string
           format: date-time
           description: Timestamp when the resource was extracted from Terraform state
           example: '2023-01-15T10:30:00Z'
+    TerraformResourceAttribute:
+      type: object
+      required:
+        - key
+        - value
+      properties:
+        key:
+          type: string
+        value:
+          type: string
     TerraformResourcesResponse:
       type: object
       title: Terraform Resources List Response
@@ -30411,32 +30470,6 @@ components:
           description: Array of Terraform resources
           items:
             $ref: '#/components/schemas/TerraformResourceResponse'
-    TerraformResourcesRequest:
-      type: object
-      title: Terraform Resources Request
-      description: Request to store terraform resources from engine after deployment
-      required:
-        - terraformId
-        - executionId
-        - resourcesJson
-      properties:
-        terraformId:
-          type: string
-          format: uuid
-          description: ID of the Terraform service
-          example: 550e8400-e29b-41d4-a716-446655440000
-        executionId:
-          type: string
-          description: |
-            Execution ID in format "UUID-version" or "UUID-version-timestamp"
-            Example: 550e8400-e29b-41d4-a716-446655440000-1
-          example: 550e8400-e29b-41d4-a716-446655440000-1
-        resourcesJson:
-          type: string
-          description: |
-            JSON array of terraform resources extracted from terraform show output.
-            Each resource contains: resource_type, name, provider, address, mode, attributes
-          example: '[{"resource_type":"aws_instance","name":"web_server","provider":"aws","address":"aws_instance.web_server","mode":"managed","attributes":{"instance_id":"i-1234567890abcdef0","instance_type":"t2.micro"}}]'
     TerraformResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -30467,6 +30500,10 @@ components:
               minimum: 0
               default: 600
             auto_deploy:
+              type: boolean
+            auto_preview:
+              type: boolean
+            build_settings_editable:
               type: boolean
             auto_deploy_config:
               $ref: "#/components/schemas/TerraformAutoDeployConfig"
@@ -30658,16 +30695,6 @@ components:
           type: string
           nullable: true
           description: 'The description of the variable, or null if no description is provided'
-    TerraformFilesSourceRequest:
-      title: TerraformFilesSourceRequest
-      x-stoplight:
-        id: n91jcyroi7kt4
-      type: object
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: vtpiblf7t37xq
     TerraformAutoDeployConfig:
           title: TerraformAutoDeployConfig
           type: object
