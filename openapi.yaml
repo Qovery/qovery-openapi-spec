@@ -15642,6 +15642,73 @@ paths:
           $ref: '#/components/responses/404'
         '502':
           description: Failed to fetch blueprint manifest from GitHub
+  /blueprint/{blueprintId}/stateBackend:
+    get:
+      summary: Get the Terraform state backend of a blueprint
+      operationId: getBlueprintStateBackend
+      tags:
+        - Blueprint Main Calls
+      description: >-
+        Returns where the blueprint's Terraform state is stored, and whether a
+        state migration to that backend is still pending.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      responses:
+        '200':
+          description: Current state backend
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintStateBackendResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Set the Terraform state backend of a blueprint
+      operationId: setBlueprintStateBackend
+      tags:
+        - Blueprint Main Calls
+      description: >-
+        Switches where the blueprint's Terraform state is stored. `s3` stores it
+        in a Qovery-managed S3 bucket in the cluster's AWS account (one bucket per
+        cluster, named `qovery-tfstate-<cluster>`). `qovery` stores it in a
+        Kubernetes secret managed by Qovery.
+
+        Switching is only allowed for Terraform/OpenTofu blueprints using cluster
+        credentials on AWS clusters.
+
+        After a switch, the next deployment automatically migrates the existing
+        state to the new backend. `state_migration_pending` stays true until the
+        migration succeeds.
+      parameters:
+        - $ref: '#/components/parameters/blueprintId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlueprintStateBackendRequest'
+      responses:
+        '200':
+          description: State backend updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintStateBackendResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          description: >-
+            State backend switch not allowed for this blueprint (not
+            Terraform/OpenTofu, not using cluster credentials, or not an AWS
+            cluster)
   /blueprint/{blueprintId}/deploy:
     post:
       summary: Deploy (apply) the current blueprint spec
@@ -17304,36 +17371,6 @@ components:
           allOf:
             - $ref: '#/components/schemas/BlueprintSpecOverrides'
           nullable: true
-    BlueprintBackendConfigOverride:
-      type: object
-      description: >-
-        Customer-provided Terraform state backend, stored as an override on the
-        service. Only the `s3` backend type is supported.
-      required:
-        - type
-        - config
-      properties:
-        type:
-          type: string
-          enum: [s3]
-          description: Terraform backend type. Only `s3` is supported.
-          example: s3
-        config:
-          type: object
-          description: >-
-            S3 backend settings, all values as strings. Required keys: bucket,
-            key, region. Optional keys: dynamodb_table, use_lockfile, encrypt,
-            kms_key_id. Any other key, including credentials, is rejected with
-            422: the Terraform job uses the cluster credentials, so grant them
-            access to the bucket.
-          additionalProperties:
-            type: string
-          example:
-            bucket: my-terraform-state
-            key: blueprints/my-postgres/terraform.tfstate
-            region: eu-west-3
-            encrypt: 'true'
-            use_lockfile: 'true'
     BlueprintSpecOverrides:
       type: object
       description: >-
@@ -17349,7 +17386,7 @@ components:
 
         **Helm blueprints**
 
-        `engine_version`, `credentials`, `backend`, and `backend_config` are ignored. Only
+        `engine_version`, `credentials`, and `backend` are ignored. Only
         `timeout` and the resource fields apply.
       properties:
         engine_version:
@@ -17375,20 +17412,8 @@ components:
             Where the Terraform state is stored.
             `qovery` stores state in a Kubernetes secret managed by Qovery (default).
             `user_provided` delegates to a user-controlled remote backend declared
-            in the manifest's `backend.user_provided` block, or supplied via
-            `backend_config` (which takes precedence over the manifest block).
+            in the manifest's `backend.user_provided` block.
           example: qovery
-        backend_config:
-          type: object
-          allOf:
-            - $ref: '#/components/schemas/BlueprintBackendConfigOverride'
-          nullable: true
-          description: >-
-            Customer-provided Terraform state backend, overriding the manifest's
-            `backend.user_provided` block. Requires `backend: user_provided`;
-            sending it with any other backend returns 422 (on update, also send
-            `backend_config: null` when switching back to `qovery`). See
-            `BlueprintBackendConfigOverride` for the accepted keys.
         timeout:
           type: integer
           description: >-
@@ -17561,6 +17586,42 @@ components:
             - $ref: '#/components/schemas/BlueprintDeploymentStatusResponse'
           nullable: true
           description: Latest dispatch for this blueprint. Null if it was never dispatched.
+    BlueprintStateBackendRequest:
+      type: object
+      required:
+        - backend
+      properties:
+        backend:
+          type: string
+          enum:
+            - qovery
+            - s3
+          description: >-
+            Where to store the Terraform state. `s3` is a Qovery-managed S3 bucket
+            in the cluster's AWS account (one per cluster,
+            `qovery-tfstate-<cluster>`). `qovery` is a Kubernetes secret managed by
+            Qovery.
+    BlueprintStateBackendResponse:
+      type: object
+      required:
+        - backend
+        - state_migration_pending
+      properties:
+        backend:
+          type: string
+          enum:
+            - qovery
+            - s3
+          description: >-
+            Where the Terraform state is stored. `s3` is a Qovery-managed S3 bucket
+            in the cluster's AWS account (one per cluster,
+            `qovery-tfstate-<cluster>`). `qovery` is a Kubernetes secret managed by
+            Qovery.
+        state_migration_pending:
+          type: boolean
+          description: >-
+            True after a backend switch until the next deployment has migrated the
+            existing state to the new backend.
     BlueprintDeploymentStatusResponse:
       type: object
       required:
@@ -18148,8 +18209,6 @@ components:
             JSON Merge Patch (RFC 7396) applied to the stored spec_overrides
             (see `BlueprintSpecOverrides` for the list of valid fields).
             A non-null field value upserts the override; a null value removes it.
-            `backend_config` is replaced as a whole (its `config` map is not
-            merged key by key); `backend_config: null` removes it.
             Pass null or omit the field entirely to leave all existing overrides
             unchanged.
     ArgoCdCredentialsRequest:
