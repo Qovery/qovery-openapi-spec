@@ -2082,11 +2082,14 @@ paths:
     post:
       summary: Update the Qovery Operator on a cluster
       description: >-
-        Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart
-        version is required; the optional image version overrides the image target selected by
-        q-core. The current Operator must be attached, connected, and protocol-compatible. A
-        successful response means that the execution was accepted, not that Helm has completed.
-        Cluster administrator permission is required.
+        Queues an Engine v2 execution that updates only the Qovery Operator. The update follows the
+        runtime reported by the Operator: a Kubernetes Operator gets a Helm upgrade of its release
+        and requires the chart version; a Docker Operator (EKS Anywhere bastion) gets its container
+        replaced and ignores the chart version. An Operator that has not reported its runtime cannot
+        be updated. The optional image version overrides the image target selected by q-core. The
+        current Operator must be connected and protocol-compatible. A successful response means that
+        the execution was accepted, not that the update has completed. Cluster administrator
+        permission is required.
       operationId: updateClusterOperator
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -2115,7 +2118,7 @@ paths:
         '404':
           $ref: '#/components/responses/404'
         '412':
-          description: The Operator is disconnected, incompatible, or its selected release cannot be resolved
+          description: The Operator is disconnected, incompatible, has not reported its runtime, or its selected release cannot be resolved
   '/organization/{organizationId}/cluster/{clusterId}/status':
     get:
       summary: Get cluster status
@@ -20991,6 +20994,7 @@ components:
         - status
         - action_status
         - trigger_action
+        - operation
         - is_dry_run
         - reason
       properties:
@@ -21017,6 +21021,14 @@ components:
           $ref: '#/components/schemas/DeploymentHistoryActionStatus'
         trigger_action:
           $ref: '#/components/schemas/DeploymentHistoryTriggerAction'
+        operation:
+          type: string
+          description: >-
+            OPERATOR_UPDATE for a Qovery Operator update, CLUSTER for any other cluster deployment,
+            stop, or delete. Deployments recorded before this field existed read as CLUSTER.
+          enum:
+            - CLUSTER
+            - OPERATOR_UPDATE
         is_dry_run:
           type: boolean
         reason:
@@ -21176,6 +21188,7 @@ components:
         - cluster_id
         - operator_connected
         - status
+        - reported_runtime
       properties:
         organization_id:
           type: string
@@ -21218,16 +21231,29 @@ components:
           nullable: true
           allOf:
             - $ref: '#/components/schemas/ReportedClusterOperatorIdentity'
+        reported_runtime:
+          $ref: '#/components/schemas/ClusterOperatorRuntime'
+    ClusterOperatorRuntime:
+      type: string
+      description: >-
+        Runtime reported by the Operator heartbeat. KUBERNETES is a Helm-installed Operator in the
+        cluster, DOCKER a container on an EKS Anywhere bastion. UNKNOWN means no heartbeat reported
+        a runtime (Operators that predate the field).
+      enum:
+        - KUBERNETES
+        - DOCKER
+        - UNKNOWN
     ClusterOperatorUpdateRequest:
       type: object
-      required:
-        - chart_version
       properties:
         chart_version:
           type: string
           minLength: 1
           maxLength: 128
-          description: Exact Qovery Operator Helm chart version to install.
+          nullable: true
+          description: >-
+            Exact Qovery Operator Helm chart version to install. Required for a Kubernetes Operator,
+            ignored for a Docker Operator.
           example: 0.2.2
         image_version:
           type: string
@@ -21241,7 +21267,6 @@ components:
       required:
         - execution_id
         - image_version
-        - chart_version
       properties:
         execution_id:
           type: string
@@ -21253,7 +21278,8 @@ components:
           example: v1.204.0
         chart_version:
           type: string
-          description: Operator Helm chart version resolved for this execution.
+          nullable: true
+          description: Operator Helm chart version resolved for this execution. Null for a Docker Operator.
           example: 0.2.2
     ReportedClusterOperatorIdentity:
       type: object
@@ -21296,6 +21322,7 @@ components:
         - SCW_SELF_MANAGED
         - GKE_SELF_MANAGED
         - AKS_SELF_MANAGED
+        - EKS_ANYWHERE
         - SELF_MANAGED
     ClusterOperatorFleetInventoryResponse:
       type: object
@@ -21306,6 +21333,7 @@ components:
         - cluster_kind
         - attached
         - connected
+        - reported_runtime
         - status
       properties:
         organization_id:
@@ -21340,6 +21368,8 @@ components:
         reported_chart_version:
           type: string
           nullable: true
+        reported_runtime:
+          $ref: '#/components/schemas/ClusterOperatorRuntime'
         status:
           $ref: '#/components/schemas/ClusterOperatorFleetStatus'
     ClusterOperatorFleetInventoryResponseList:
