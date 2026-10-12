@@ -19936,6 +19936,14 @@ components:
               type: string
         region:
           type: string
+        wide_permission_credentials:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
     ClusterCloudProviderInfoRequest:
       type: object
       properties:
@@ -19951,6 +19959,14 @@ components:
               type: string
         region:
           type: string
+        wide_permission_credentials:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
     ClusterDnsProviderRequest:
       type: object
       required:
@@ -20823,6 +20839,9 @@ components:
           type: string
           format: uuid
           nullable: true
+        require_wide_access_to_deploy:
+          type: boolean
+          default: false
     ClusterResponseList:
       type: object
       properties:
