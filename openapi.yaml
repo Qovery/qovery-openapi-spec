@@ -21357,6 +21357,23 @@ components:
         aws.cloudwatch.eks_logs_retention_days:
           type: integer
           description: Set the number of retention days for EKS Cloudwatch logs
+        aws.cloudwatch.eks_logs_types:
+          type: array
+          description: EKS control plane log types exported to CloudWatch. Defaults to all log types. Use an empty array to disable exports. Redeploy the cluster for changes to take effect.
+          items:
+            type: string
+            enum:
+              - api
+              - audit
+              - authenticator
+              - controllerManager
+              - scheduler
+          default:
+            - api
+            - audit
+            - authenticator
+            - controllerManager
+            - scheduler
         aws.vpc.enable_s3_flow_logs:
           type: boolean
           description: Enable flow logs for on the VPC and store them in an S3 bucket
