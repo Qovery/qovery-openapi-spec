@@ -26752,6 +26752,8 @@ components:
         - TRIGGER_FORCE_RUN_DEPLOY
         - TRIGGER_FORCE_RUN_STOP
         - TRIGGER_FORCE_RUN_DELETE
+        - OPERATOR_UPDATE
+        - MAINTENANCE_OPERATOR
         - DEPLOYED
         - STOPPED
         - DELETED
