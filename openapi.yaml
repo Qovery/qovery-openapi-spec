@@ -19799,6 +19799,8 @@ components:
               $ref: '#/components/schemas/ClusterLabelsGroupList'
             secret_manager_accesses:
               $ref: '#/components/schemas/SecretManagerAccessList'
+            wide_permissions:
+              $ref: '#/components/schemas/WidePermissionsResponseDto'
     ClusterDeleteMode:
       type: string
       description: |
@@ -20828,8 +20830,8 @@ components:
           type: boolean
           default: false
         wide_permissions:
-          $ref: '#/components/schemas/WidePermissionsDto'
-    WidePermissionsDto:
+          $ref: '#/components/schemas/WidePermissionsRequestDto'
+    WidePermissionsRequestDto:
       type: object
       properties:
         using_restrictive_permissions:
@@ -20839,9 +20841,6 @@ components:
           type: string
           format: uuid
           nullable: true
-        require_wide_access_to_deploy:
-          type: boolean
-          default: false
     ClusterResponseList:
       type: object
       properties:
@@ -32677,6 +32676,20 @@ components:
           type: string
           nullable: true
           description: The json must be base64 encoded
+
+    WidePermissionsResponseDto:
+      type: object
+      properties:
+        using_restrictive_permissions:
+          type: boolean
+          default: false
+        wide_scope_cloud_account_id:
+          type: string
+          format: uuid
+          nullable: true
+        require_wide_access_to_deploy:
+          type: boolean
+          default: false
 
     ClusterEnvironmentResponseList:
       type: object
