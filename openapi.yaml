@@ -20827,7 +20827,7 @@ components:
         is_demo:
           type: boolean
           default: false
-        wide_permissions_dto:
+        wide_permissions:
           $ref: '#/components/schemas/WidePermissionsDto'
     WidePermissionsDto:
       type: object
