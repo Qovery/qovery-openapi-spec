@@ -26134,6 +26134,13 @@ components:
               type: string
               format: date-time
               nullable: true
+            last_used_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: >-
+                Time when token usage was last recorded. Updated periodically, so recent usage may
+                not appear immediately. Null when no usage has been recorded.
     OrganizationPolicyApiTokenCreate:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -26213,6 +26220,13 @@ components:
             role_id:
               type: string
               format: uuid
+            last_used_at:
+              type: string
+              format: date-time
+              nullable: true
+              description: >-
+                Time when token usage was last recorded. Updated periodically, so recent usage may
+                not appear immediately. Null when no usage has been recorded.
     OrganizationApiTokenCreate:
       allOf:
         - $ref: '#/components/schemas/Base'
