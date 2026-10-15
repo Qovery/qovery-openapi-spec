@@ -21606,8 +21606,8 @@ components:
           type: boolean
           default: false
           description: |
-            Run the kubelet with `cpuManagerPolicy: static` on the private Karpenter node pool. Guaranteed pods with an integer CPU request get dedicated cores, so tools that size their worker count from the CPU affinity mask see the pod's CPUs instead of the whole host.
-            Only applies to AL2023 and Bottlerocket nodes. Changing it replaces every node of the pool.
+            Run the kubelet with `cpuManagerPolicy: static` on the private node pool (Karpenter only). Guaranteed pods with an integer CPU request get dedicated cores, so tools that size their worker count from the CPU affinity mask see the pod's CPUs instead of the whole host.
+            Only has an effect on clusters where Qovery has enabled the private node pool, with AL2023 or Bottlerocket nodes. Ignored otherwise. Changing it replaces every node of that pool.
         pleco.resources_ttl:
           type: integer
           deprecated: true
