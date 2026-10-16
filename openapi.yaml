@@ -28245,6 +28245,13 @@ components:
           type: string
           format: uuid
           nullable: true
+        json_target_key:
+          type: string
+          description: "Only for EXTERNAL_SECRET variables (not FILE_EXTERNAL_SECRET). If set, the remote secret is read as a JSON object and only the value of this top-level key is injected. Must be a single key: nested paths are not supported (no '.', '[' or ']')."
+          example: password
+          minLength: 1
+          maxLength: 256
+          nullable: true
     VariableEditRequest:
       type: object
       required:
@@ -28270,6 +28277,13 @@ components:
         secret_manager_access_id:
           type: string
           format: uuid
+          nullable: true
+        json_target_key:
+          type: string
+          description: "Only for EXTERNAL_SECRET variables (not FILE_EXTERNAL_SECRET). If set, the remote secret is read as a JSON object and only the value of this top-level key is injected. Must be a single key: nested paths are not supported (no '.', '[' or ']'). A null or absent value removes the key."
+          example: password
+          minLength: 1
+          maxLength: 256
           nullable: true
     VariableResponse:
       allOf:
@@ -28323,6 +28337,13 @@ components:
             secret_manager_access_id:
               type: string
               format: uuid
+              nullable: true
+            json_target_key:
+              type: string
+              description: "Only for EXTERNAL_SECRET variables (not FILE_EXTERNAL_SECRET). If set, the remote secret is read as a JSON object and only the value of this top-level key is injected. Must be a single key: nested paths are not supported (no '.', '[' or ']')."
+              example: password
+              minLength: 1
+              maxLength: 256
               nullable: true
     VariableResponseList:
       type: object
