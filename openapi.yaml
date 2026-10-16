@@ -7957,6 +7957,8 @@ paths:
   /defaultApplicationAdvancedSettings:
     get:
       summary: List default application advanced settings
+      parameters:
+        - $ref: '#/components/parameters/defaultSettingsEnvironmentId'
       operationId: getDefaultApplicationAdvancedSettings
       description: 'Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)'
       tags:
@@ -8011,6 +8013,8 @@ paths:
   /defaultJobAdvancedSettings:
     get:
       summary: List default job advanced settings
+      parameters:
+        - $ref: '#/components/parameters/defaultSettingsEnvironmentId'
       description: 'Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)'
       operationId: getDefaultJobAdvancedSettings
       tags:
@@ -14487,6 +14491,8 @@ paths:
   /defaultTerraformAdvancedSettings:
     get:
       summary: List default terraform advanced settings
+      parameters:
+        - $ref: '#/components/parameters/defaultSettingsEnvironmentId'
       tags:
         - Terraforms
       responses:
@@ -15954,6 +15960,14 @@ components:
       in: path
       description: Deployment Rule ID
       required: true
+      schema:
+        type: string
+        format: uuid
+    defaultSettingsEnvironmentId:
+      name: environmentId
+      in: query
+      description: When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
+      required: false
       schema:
         type: string
         format: uuid
