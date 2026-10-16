@@ -7957,16 +7957,10 @@ paths:
   /defaultApplicationAdvancedSettings:
     get:
       summary: List default application advanced settings
+      parameters:
+        - $ref: '#/components/parameters/defaultSettingsEnvironmentId'
       operationId: getDefaultApplicationAdvancedSettings
       description: 'Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)'
-      parameters:
-        - name: environmentId
-          in: query
-          description: 'When set, returns the defaults of the cluster running this environment: builds on Qovery-managed builders default to 16 GiB of RAM (build.ram_max_in_gib), builds on a customer cluster to 8 GiB.'
-          required: false
-          schema:
-            type: string
-            format: uuid
       tags:
         - Applications
       responses:
@@ -8019,16 +8013,10 @@ paths:
   /defaultJobAdvancedSettings:
     get:
       summary: List default job advanced settings
+      parameters:
+        - $ref: '#/components/parameters/defaultSettingsEnvironmentId'
       description: 'Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)'
       operationId: getDefaultJobAdvancedSettings
-      parameters:
-        - name: environmentId
-          in: query
-          description: 'When set, returns the defaults of the cluster running this environment: builds on Qovery-managed builders default to 16 GiB of RAM (build.ram_max_in_gib), builds on a customer cluster to 8 GiB.'
-          required: false
-          schema:
-            type: string
-            format: uuid
       tags:
         - Jobs
       responses:
@@ -14503,6 +14491,8 @@ paths:
   /defaultTerraformAdvancedSettings:
     get:
       summary: List default terraform advanced settings
+      parameters:
+        - $ref: '#/components/parameters/defaultSettingsEnvironmentId'
       tags:
         - Terraforms
       responses:
@@ -14522,14 +14512,6 @@ paths:
   /terraform/availableVersion:
     get:
       summary: List available Terraform versions
-      parameters:
-        - name: environmentId
-          in: query
-          description: 'When set, returns the defaults of the cluster running this environment: builds on Qovery-managed builders default to 16 GiB of RAM (build.ram_max_in_gib), builds on a customer cluster to 8 GiB.'
-          required: false
-          schema:
-            type: string
-            format: uuid
       tags:
         - Terraform Main Calls
       operationId: listTerraformVersions
@@ -15978,6 +15960,14 @@ components:
       in: path
       description: Deployment Rule ID
       required: true
+      schema:
+        type: string
+        format: uuid
+    defaultSettingsEnvironmentId:
+      name: environmentId
+      in: query
+      description: When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
+      required: false
       schema:
         type: string
         format: uuid
