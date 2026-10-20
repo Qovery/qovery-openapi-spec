@@ -26451,13 +26451,11 @@ components:
                       description: |
                         Allows opening a shell on the services of this environment type, from the CLI (`qovery shell`) or the console.
                         Cannot be `true` with `NO_ACCESS`.
-                        Required. For backward compatibility, the API still accepts requests without it from older clients: the former rule then applies, whatever the current value: `true` when `permission` is `DEPLOYER` or above, `false` below.
                     port_forward:
                       type: boolean
                       description: |
                         Allows port-forwarding to the services of this environment type (`qovery port-forward`).
                         Cannot be `true` with `NO_ACCESS`.
-                        Required. For backward compatibility, the API still accepts requests without it from older clients: the former rule then applies, whatever the current value: `true` when `permission` is `DEPLOYER` or above, `false` below.
     OrganizationCustomRole:
       type: object
       properties:
