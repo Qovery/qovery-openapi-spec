@@ -26438,11 +26438,24 @@ components:
                 type: array
                 items:
                   type: object
+                  required:
+                    - shell
+                    - port_forward
                   properties:
                     environment_type:
                       $ref: '#/components/schemas/EnvironmentModeEnum'
                     permission:
                       $ref: '#/components/schemas/OrganizationCustomRoleProjectPermission'
+                    shell:
+                      type: boolean
+                      description: |
+                        Allows opening a shell on the services of this environment type, from the CLI (`qovery shell`) or the console.
+                        Cannot be `true` with `NO_ACCESS`.
+                    port_forward:
+                      type: boolean
+                      description: |
+                        Allows port-forwarding to the services of this environment type (`qovery port-forward`).
+                        Cannot be `true` with `NO_ACCESS`.
     OrganizationCustomRole:
       type: object
       properties:
@@ -26488,11 +26501,20 @@ components:
                 type: array
                 items:
                   type: object
+                  required:
+                    - shell
+                    - port_forward
                   properties:
                     environment_type:
                       $ref: '#/components/schemas/EnvironmentModeEnum'
                     permission:
                       $ref: '#/components/schemas/OrganizationCustomRoleProjectPermission'
+                    shell:
+                      type: boolean
+                      description: Allows opening a shell on the services of this environment type, from the CLI (`qovery shell`) or the console
+                    port_forward:
+                      type: boolean
+                      description: Allows port-forwarding to the services of this environment type (`qovery port-forward`)
     OrganizationCustomRoleList:
       type: object
       properties:
@@ -26508,6 +26530,8 @@ components:
         - `VIEWER` user can access the environment (and applications / containers / databases / variables)
         - `DEPLOYER` user can deploy the environment (dependent on the required cluster permission `ENV_CREATOR`)
         - `MANAGER` user can create an environment (and applications / containers / databases / variables)
+
+        Shell and port-forward access are granted separately, with the `shell` and `port_forward` flags.
       enum:
         - NO_ACCESS
         - VIEWER
