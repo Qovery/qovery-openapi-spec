@@ -32719,6 +32719,30 @@ components:
           enum: [AWS_ROLE_ARN]
         role_arn:
           type: string
+        assume_role:
+          allOf:
+            - $ref: '#/components/schemas/AwsAssumeRole'
+          nullable: true
+          description: >-
+            Role that External Secrets Operator assumes with sts:AssumeRole after authenticating with role_arn,
+            typically to read secrets stored in another AWS account. The trust policy of this role must allow
+            role_arn, and role_arn needs sts:AssumeRole on it. Only available with AWS_ROLE_ARN authentication.
+    AwsAssumeRole:
+      type: object
+      required:
+        - role_arn
+      properties:
+        role_arn:
+          type: string
+          description: ARN of the IAM role to assume.
+          pattern: '^arn:aws(-cn|-us-gov)?:iam::\d{12}:role/[\w+=,.@/-]{1,512}$'
+          example: arn:aws:iam::222222222222:role/qovery-ssm-reader
+        external_id:
+          type: string
+          nullable: true
+          description: STS external id expected by the trust policy of the assumed role, if it requires one.
+          pattern: '^[\w+=,.@:/-]{2,1224}$'
+          example: prod-eu-1
     AwsStaticCredentialsAuthDto:
       type: object
       required:
