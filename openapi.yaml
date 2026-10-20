@@ -24087,14 +24087,14 @@ components:
                 name:
                   type: string
                   nullable: true
-            phase:
+            step_name:
               type: string
               nullable: true
               description: |
-                Phase of the deployment this line belongs to: REGISTRY_CREATE_REPOSITORY, GIT_CLONE,
+                Step of the deployment this line belongs to: REGISTRY_CREATE_REPOSITORY, GIT_CLONE,
                 PROVISION_BUILDER, BUILD, IMAGE_PUSH, CACHE_EXPORT, MIRROR_IMAGE, DEPLOYMENT,
                 ROUTER_DEPLOYMENT or EXECUTING. It matches a step's `step_name`, or the `name` of a
-                BUILD sub-step, in the deployment statuses.
+                BUILD sub-step, in the deployment statuses. The phase (build or deploy) is `stage.step`.
                 Absent on older deployments and on pause, delete and restart. Clients must accept
                 values not listed here.
         error:
