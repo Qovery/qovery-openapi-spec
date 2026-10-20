@@ -26438,6 +26438,9 @@ components:
                 type: array
                 items:
                   type: object
+                  required:
+                    - shell
+                    - port_forward
                   properties:
                     environment_type:
                       $ref: '#/components/schemas/EnvironmentModeEnum'
@@ -26447,16 +26450,14 @@ components:
                       type: boolean
                       description: |
                         Allows opening a shell on the services of this environment type, from the CLI (`qovery shell`) or the console.
-                        Cannot be granted with `NO_ACCESS`.
-                        When omitted, the former rule applies, whatever the current value: `true` when `permission` is `DEPLOYER` or above, `false` below.
-                        A client that doesn't send it therefore re-grants it after a revocation: send it to manage it.
+                        Cannot be `true` with `NO_ACCESS`.
+                        Required. For backward compatibility, the API still accepts requests without it from older clients: the former rule then applies, whatever the current value: `true` when `permission` is `DEPLOYER` or above, `false` below.
                     port_forward:
                       type: boolean
                       description: |
                         Allows port-forwarding to the services of this environment type (`qovery port-forward`).
-                        Cannot be granted with `NO_ACCESS`.
-                        When omitted, the former rule applies, whatever the current value: `true` when `permission` is `DEPLOYER` or above, `false` below.
-                        A client that doesn't send it therefore re-grants it after a revocation: send it to manage it.
+                        Cannot be `true` with `NO_ACCESS`.
+                        Required. For backward compatibility, the API still accepts requests without it from older clients: the former rule then applies, whatever the current value: `true` when `permission` is `DEPLOYER` or above, `false` below.
     OrganizationCustomRole:
       type: object
       properties:
