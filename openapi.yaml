@@ -28459,8 +28459,9 @@ components:
       type: object
       description: |
         Resources the builder used during this build, image push and cache export included. Only
-        set on BUILD. Compare them with the service's build CPU and memory settings. A field is
-        absent when it could not be measured, for example on a cluster without a metrics API.
+        set on BUILD. Compare them with the service's build CPU and memory settings. The four usage
+        fields come together, or are all absent when no sample was taken (a build shorter than the
+        sampling interval, or a cluster without a metrics API).
       properties:
         cpu_milli_max:
           description: Highest CPU use seen, in millicores.
@@ -28477,7 +28478,9 @@ components:
             short build has few samples and its peaks can be missed.
           type: integer
         oom_killed:
-          description: True when the builder was killed for running out of memory. Raising the build memory setting fixes it.
+          description: |
+            Present, and true, only when the builder was killed for running out of memory. Absent
+            otherwise: never test it against false. Raising the build memory setting fixes it.
           type: boolean
     ServiceSubStepMetric:
       type: object
