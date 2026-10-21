@@ -24087,6 +24087,16 @@ components:
                 name:
                   type: string
                   nullable: true
+            step_name:
+              type: string
+              nullable: true
+              description: |
+                Step of the deployment this line belongs to: REGISTRY_CREATE_REPOSITORY, GIT_CLONE,
+                PROVISION_BUILDER, BUILD, IMAGE_PUSH, CACHE_EXPORT, MIRROR_IMAGE, DEPLOYMENT,
+                ROUTER_DEPLOYMENT or EXECUTING. It matches a step's `step_name`, or the `name` of a
+                BUILD sub-step, in the deployment statuses. The phase (build or deploy) is `stage.step`.
+                Absent on older deployments and on pause, delete and restart. Clients must accept
+                values not listed here.
         error:
           type: object
           nullable: true
@@ -28433,6 +28443,35 @@ components:
           type: integer
         started_at:
           description: The time at which the step started. Present while the step is ongoing and may be retained after completion.
+          type: string
+          format: date-time
+          nullable: true
+        sub_steps:
+          description: |
+            Steps that ran inside this one. Only set on BUILD. Their time is already part of this
+            step's duration: never add it to a total.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceSubStepMetric'
+    ServiceSubStepMetric:
+      type: object
+      required:
+        - name
+        - status
+        - duration_sec
+      properties:
+        name:
+          description: |
+            PROVISION_BUILDER, IMAGE_PUSH or CACHE_EXPORT. A string, not an enum, so a new
+            sub-step never breaks a client: accept values not listed here.
+          type: string
+        status:
+          $ref: '#/components/schemas/StepMetricStatusEnum'
+        duration_sec:
+          description: The duration of the sub-step in seconds.
+          type: integer
+        started_at:
+          description: The time at which the sub-step started.
           type: string
           format: date-time
           nullable: true
