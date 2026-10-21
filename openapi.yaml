@@ -28453,6 +28453,35 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceSubStepMetric'
+        builder_usage:
+          $ref: '#/components/schemas/BuilderUsage'
+    BuilderUsage:
+      type: object
+      description: |
+        Resources the builder used during this build, image push and cache export included. Only
+        set on BUILD. Compare them with the service's build CPU and memory settings. The four usage
+        fields come together, or are all absent when no sample was taken (a build shorter than the
+        sampling interval, or a cluster without a metrics API).
+      properties:
+        cpu_milli_max:
+          description: Highest CPU use seen, in millicores.
+          type: integer
+        cpu_milli_avg:
+          description: Average CPU use over the samples, in millicores.
+          type: integer
+        memory_mib_max:
+          description: Highest memory use seen, in MiB.
+          type: integer
+        samples:
+          description: |
+            Number of samples the values above come from. Usage is sampled periodically, so a
+            short build has few samples and its peaks can be missed.
+          type: integer
+        oom_killed:
+          description: |
+            Present, and true, only when the builder was killed for running out of memory. Absent
+            otherwise: never test it against false. Raising the build memory setting fixes it.
+          type: boolean
     ServiceSubStepMetric:
       type: object
       required:
