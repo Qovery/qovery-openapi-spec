@@ -33431,7 +33431,8 @@ components:
           description: >-
             An existing LLM provider to take the credential from, instead of `api_key`. The two are
             mutually exclusive: a request setting both is rejected. The provider must belong to the
-            workflow's organization, be one the caller may use, and match `type`.
+            workflow's organization, be one the caller may use, and match `type`. A provider of type
+            ANTHROPIC_COMPATIBLE matches a workflow `type` of CLAUDE.
     AgenticWorkflowModelResponse:
       type: object
       required:
