@@ -33295,6 +33295,7 @@ components:
       allOf:
         - required:
             - name
+            - model
           properties:
             name:
               type: string
@@ -33412,35 +33413,40 @@ components:
     AgenticWorkflowModelRequest:
       type: object
       required:
-        - type
+        - llm_provider_id
       properties:
         type:
-          $ref: '#/components/schemas/AgenticWorkflowModelType'
-        api_key:
-          type: string
-          default: ''
-          writeOnly: true
-          description: Write-only. Provider API key; accepted on create/edit but never returned in responses.
+          allOf:
+            - $ref: '#/components/schemas/AgenticWorkflowModelType'
+          deprecated: true
+          description: >-
+            Deprecated and ignored. The type, credential and region come from the LLM provider
+            named by `llm_provider_id`. Backends that predate this change require it, so callers
+            may keep sending it until those are retired.
         settings:
           type: string
           default: ''
         llm_provider_id:
           type: string
           format: uuid
-          nullable: true
           description: >-
-            An existing LLM provider to take the credential from, instead of `api_key`. The two are
-            mutually exclusive: a request setting both is rejected. The provider must belong to the
-            workflow's organization, be one the caller may use, and match `type`. A provider of type
-            ANTHROPIC_COMPATIBLE matches a workflow `type` of CLAUDE.
+            The LLM provider the workflow runs on. It must belong to the workflow's organization and
+            be one the caller may use. Each deployment takes the model type, credential, region and
+            base URL from this provider, so editing the provider reaches every workflow on it. A
+            request without it is rejected.
     AgenticWorkflowModelResponse:
       type: object
       required:
-        - type
         - settings
+        - llm_provider_id
       properties:
         type:
-          $ref: '#/components/schemas/AgenticWorkflowModelType'
+          allOf:
+            - $ref: '#/components/schemas/AgenticWorkflowModelType'
+          deprecated: true
+          description: >-
+            Deprecated. No longer returned; derive the model type from the LLM provider named by
+            `llm_provider_id`. Only backends that predate this change still set it.
         settings:
           type: string
         llm_provider_id:
@@ -33448,8 +33454,9 @@ components:
           format: uuid
           nullable: true
           description: >-
-            The LLM provider the workflow takes its credential from, or null when it carries its own
-            `api_key`. Unlike `api_key` this is returned: it names a credential rather than carrying one.
+            The LLM provider the workflow runs on. Null for a workflow stored before providers were
+            required, or a clone whose provider was personal to another member. Such a workflow can
+            still be read and listed, but fails to deploy until a provider is set.
     AgenticWorkflowHeader:
       type: object
       required:
