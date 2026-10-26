@@ -19824,6 +19824,10 @@ components:
             is_demo:
               type: boolean
               description: specific flag to indicate that this cluster is a demo one
+            is_catalog_managed:
+              type: boolean
+              readOnly: true
+              description: True when the cluster's infrastructure is managed by the platform catalog, i.e. a self-managed (BYOK) cluster attached to the Qovery Operator and bound to a platform catalog profile. False otherwise.
             production:
               type: boolean
               description: specific flag to indicate that this cluster is a production one
