@@ -24416,6 +24416,10 @@ components:
             owned_by:
               type: string
               description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
+            is_created_by_qovery:
+              type: boolean
+              readOnly: true
+              description: True when Qovery created the variable on its own, such as the alias it adds for each output of a job, Terraform service or blueprint. False for variables a user created and for built-in variables, which `variable_type` already identifies. `owned_by` does not tell these apart. It stays true after a user edits the variable. Clients that sync variables, such as the Terraform provider, can leave these variables out.
     EnvironmentVariableAlias:
       type: object
       required:
@@ -27752,6 +27756,10 @@ components:
             owned_by:
               type: string
               description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
+            is_created_by_qovery:
+              type: boolean
+              readOnly: true
+              description: True when Qovery created the variable on its own, such as the alias it adds for each output of a job, Terraform service or blueprint. False for variables a user created and for built-in variables, which `variable_type` already identifies. `owned_by` does not tell these apart. It stays true after a user edits the variable. Clients that sync variables, such as the Terraform provider, can leave these variables out.
             description:
               type: string
               x-stoplight:
@@ -28434,6 +28442,10 @@ components:
             owned_by:
               type: string
               description: 'Entity that created/own the variable (i.e: Qovery, Doppler)'
+            is_created_by_qovery:
+              type: boolean
+              readOnly: true
+              description: True when Qovery created the variable on its own, such as the alias it adds for each output of a job, Terraform service or blueprint. False for variables a user created and for built-in variables, which `variable_type` already identifies. `owned_by` does not tell these apart. It stays true after a user edits the variable. Clients that sync variables, such as the Terraform provider, can leave these variables out.
             is_secret:
               type: boolean
             description:
