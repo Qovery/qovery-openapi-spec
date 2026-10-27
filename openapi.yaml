@@ -20904,6 +20904,9 @@ components:
           type: string
           format: uuid
           nullable: true
+        slack_webhook_url:
+          type: string
+          nullable: true
     ClusterResponseList:
       type: object
       properties:
@@ -32956,6 +32959,9 @@ components:
         require_wide_access_to_deploy:
           type: boolean
           default: false
+        slack_webhook_url:
+          type: string
+          nullable: true
 
     ClusterEnvironmentResponseList:
       type: object
