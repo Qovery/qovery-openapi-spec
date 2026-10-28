@@ -18707,6 +18707,8 @@ components:
               $ref: '#/components/schemas/ReferenceObject'
             git_repository:
               $ref: '#/components/schemas/ApplicationGitRepository'
+            build_settings:
+              $ref: '#/components/schemas/BuildSettings'
             maximum_cpu:
               type: integer
               description: Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
@@ -28855,6 +28857,8 @@ components:
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
+            build_settings:
+              $ref: '#/components/schemas/BuildSettings'
             maximum_cpu:
               type: integer
               description: Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
@@ -30921,6 +30925,8 @@ components:
               type: boolean
             build_settings_editable:
               type: boolean
+            build_settings:
+              $ref: '#/components/schemas/BuildSettings'
             auto_deploy_config:
               $ref: "#/components/schemas/TerraformAutoDeployConfig"
             terraform_files_source:
