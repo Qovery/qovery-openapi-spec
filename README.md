@@ -31,6 +31,10 @@ select the editor by format (currently `kubernetes-resource-yaml`), fall back to
 string editor for unknown formats, and apply a template only after an explicit user choice.
 A saved profile remains the source of truth; templates never overwrite it or act as defaults.
 
+Blueprint manifest fields expose the same optional `format` on a string field's
+`BlueprintManifestFieldType` (currently `json`), omitted when absent. The variable value stays a
+string; the API rejects malformed JSON, and the same fallback rule applies to unknown formats.
+
 ### Catalog read-only fields
 
 In the platform component resolve responses, a top-level `ScalarFieldSchemaResponse` can set
