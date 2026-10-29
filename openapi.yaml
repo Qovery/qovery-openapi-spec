@@ -17879,6 +17879,14 @@ components:
           format: int64
           nullable: true
           description: 'Maximum length, only present for string fields'
+        format:
+          type: string
+          description: >-
+            Optional editor format, only present for string fields that declare one.
+            json selects a JSON editor; the value is still sent and stored as a string, and the API
+            rejects text that is not one valid JSON document. Unknown formats should fall back to
+            the ordinary string editor.
+          example: json
         min:
           type: integer
           format: int64
