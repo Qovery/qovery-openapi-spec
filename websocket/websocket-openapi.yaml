@@ -824,7 +824,6 @@ components:
       required:
       - status
       - step
-      - progress
       - terminal
       properties:
         message:
@@ -832,12 +831,6 @@ components:
           - string
           - 'null'
           description: Details about the event, e.g. why the analysis failed.
-        progress:
-          type: integer
-          format: int32
-          description: Progress of the analysis, from 0 to 100.
-          maximum: 100
-          minimum: 0
         status:
           $ref: '#/components/schemas/BuildAnalysisStatus'
         step:
