@@ -33971,7 +33971,7 @@ components:
     BuildAnalysisConflict:
       description: The execution is not the latest build of the service, the service has no build, or an analysis is already in progress. Read the build analysis again to get the current `latest_build_execution_id` and the running analysis.
     BuildAnalysisCopilotUnavailable:
-      description: Qovery could not check that the DevOps Copilot is enabled for the organization. Try again later.
+      description: Build analysis is temporarily unavailable. The DevOps Copilot could not be reached or is not configured, or too many analyses are running. Try again later.
     BuildAnalysisDockerfileUnavailable:
       description: Qovery cannot read the Dockerfile of this build, for example a git fetch failure or a path that does not exist at the build commit. Start again with the Dockerfile content in `dockerfile`.
   securitySchemes:
