@@ -12702,6 +12702,10 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           description: A variable with the same key already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableConflictResponse'
   '/variable/{variableId}/alias':
     post:
       summary: Create a variable alias
@@ -28399,6 +28403,67 @@ components:
           nullable: true
           default: false
           description: 'If true and a variable with the same key already exists at a higher scope (project or environment), an override of that variable is created instead of failing with 409. The override follows the usual rules: same secret kind, target must be a value or file variable, strictly lower scope. Defaults to false.'
+    VariableConflictResponse:
+      type: object
+      description: Problem details returned when a variable with the same key already exists
+      required:
+        - status
+        - detail
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+          description: Says which scope holds the existing variable
+        instance:
+          type: string
+        existing_variable:
+          $ref: '#/components/schemas/ExistingVariableResponse'
+    ExistingVariableResponse:
+      type: object
+      description: The variable that blocks the creation. Its value is never returned.
+      nullable: true
+      required:
+        - id
+        - key
+        - scope
+        - variable_type
+        - is_secret
+      properties:
+        id:
+          type: string
+          format: uuid
+        key:
+          type: string
+        scope:
+          $ref: '#/components/schemas/APIVariableScopeEnum'
+        organization_id:
+          type: string
+          format: uuid
+          nullable: true
+        project_id:
+          type: string
+          format: uuid
+          nullable: true
+        environment_id:
+          type: string
+          format: uuid
+          nullable: true
+        service_id:
+          type: string
+          format: uuid
+          nullable: true
+        variable_type:
+          $ref: '#/components/schemas/APIVariableTypeEnum'
+        is_secret:
+          type: boolean
+        mount_path:
+          type: string
+          nullable: true
     VariableEditRequest:
       type: object
       required:
