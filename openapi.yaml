@@ -8500,6 +8500,8 @@ paths:
           $ref: '#/components/responses/BuildAnalysisConflict'
         '422':
           $ref: '#/components/responses/BuildAnalysisDockerfileUnavailable'
+        '503':
+          $ref: '#/components/responses/BuildAnalysisCopilotUnavailable'
   '/application/{applicationId}/deploymentHistoryV2':
     get:
       summary: List application deploys
@@ -12100,6 +12102,8 @@ paths:
           $ref: '#/components/responses/BuildAnalysisConflict'
         '422':
           $ref: '#/components/responses/BuildAnalysisDockerfileUnavailable'
+        '503':
+          $ref: '#/components/responses/BuildAnalysisCopilotUnavailable'
   '/job/{jobId}/deploymentHistoryV2':
     get:
       summary: List job deployments
@@ -33966,6 +33970,8 @@ components:
       description: The resource was deleted successfully
     BuildAnalysisConflict:
       description: The execution is not the latest build of the service, the service has no build, or an analysis is already in progress. Read the build analysis again to get the current `latest_build_execution_id` and the running analysis.
+    BuildAnalysisCopilotUnavailable:
+      description: Qovery could not check that the DevOps Copilot is enabled for the organization. Try again later.
     BuildAnalysisDockerfileUnavailable:
       description: Qovery cannot read the Dockerfile of this build, for example a git fetch failure or a path that does not exist at the build commit. Start again with the Dockerfile content in `dockerfile`.
   securitySchemes:
