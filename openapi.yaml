@@ -19824,9 +19824,9 @@ components:
         - MODEL_ERROR
         - TIMEOUT
         - INTERNAL_ERROR
-    BuildAnalysisFindingConfidence:
+    BuildAnalysisConfidence:
       type: string
-      description: How strongly the build evidence backs the finding. HIGH when the build logs, the cache history or the build metrics show the cause itself, MEDIUM when they show the slow or rerun step but the cause is inferred, LOW when only the Dockerfile suggests it.
+      description: How sure the analysis is. On the result, that applying the fixes saves `estimated_time_saved`, or, with no finding, that the build has nothing left to gain; LOW when there are findings but no time estimate. On a finding, that its fixes save `estimated_gain_seconds`, or, when the finding saves no time, that the problem is real. HIGH when the build logs, the cache history or the build metrics show it, MEDIUM when part of it is inferred, LOW when only the Dockerfile suggests it.
       enum:
         - HIGH
         - MEDIUM
@@ -19844,7 +19844,7 @@ components:
           description: Id of the rule behind the finding.
           example: arg-per-environment-before-install
         confidence:
-          $ref: '#/components/schemas/BuildAnalysisFindingConfidence'
+          $ref: '#/components/schemas/BuildAnalysisConfidence'
         title:
           type: string
         evidence:
@@ -19857,7 +19857,22 @@ components:
         estimated_gain_seconds:
           type: integer
           nullable: true
-          description: Estimated build time saved on each affected build, when it can be estimated.
+          description: Estimated build time saved on each affected build by this finding's fixes, when it can be estimated. `confidence` applies to this estimate.
+    BuildAnalysisTimeSaved:
+      type: object
+      description: Seconds saved on each build, as a range. Always 0 <= min_seconds <= max_seconds and max_seconds > 0; when nothing is saved the field holding it is null instead.
+      required:
+        - min_seconds
+        - max_seconds
+      properties:
+        min_seconds:
+          type: integer
+          minimum: 0
+          example: 50
+        max_seconds:
+          type: integer
+          minimum: 0
+          example: 90
     BuildAnalysisFix:
       type: object
       required:
@@ -19883,10 +19898,18 @@ components:
     BuildAnalysisResult:
       type: object
       required:
+        - confidence
         - findings
         - fixes
         - agent_prompt
       properties:
+        confidence:
+          $ref: '#/components/schemas/BuildAnalysisConfidence'
+        estimated_time_saved:
+          allOf:
+            - $ref: '#/components/schemas/BuildAnalysisTimeSaved'
+          nullable: true
+          description: Build time saved on each build once every fix is applied. Null when there is nothing to save or no timing to base it on. `confidence` applies to this range.
         dockerfile:
           type: string
           nullable: true
@@ -19897,7 +19920,7 @@ components:
           description: Why the reworked Dockerfile is faster.
         findings:
           type: array
-          description: Ordered by impact on build time, highest first. Confidence does not reflect impact.
+          description: Ordered by impact on build time, highest first.
           items:
             $ref: '#/components/schemas/BuildAnalysisFinding'
         fixes:
