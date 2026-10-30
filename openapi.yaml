@@ -12676,6 +12676,7 @@ paths:
       summary: Create a variable
       description: |
         - Create a variable with the scope defined in the request body.
+        - If a variable with the same key already exists, the call fails with 409. When that variable is at a higher scope (project or environment), set `override_if_exists` to true to create an override of it instead.
       operationId: createVariable
       tags:
         - Variable Main Calls
@@ -12699,6 +12700,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: A variable with the same key already exists
   '/variable/{variableId}/alias':
     post:
       summary: Create a variable alias
@@ -28391,6 +28394,11 @@ components:
           type: string
           format: uuid
           nullable: true
+        override_if_exists:
+          type: boolean
+          nullable: true
+          default: false
+          description: 'If true and a variable with the same key already exists at a higher scope (project or environment), an override of that variable is created instead of failing with 409. The override follows the usual rules: same secret kind, target must be a value or file variable, strictly lower scope. Defaults to false.'
     VariableEditRequest:
       type: object
       required:
