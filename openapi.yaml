@@ -23,6 +23,7 @@ tags:
   - name: Agentic Workflows
   - name: Application
   - name: Application Actions
+  - name: Application Build Analysis
   - name: Application Configuration
   - name: Application Database
   - name: Application Deployment Restriction
@@ -49,6 +50,7 @@ tags:
   - name: Deployment Stage Main Calls
   - name: Job
   - name: Job Actions
+  - name: Job Build Analysis
   - name: Job Configuration
   - name: Job Database
   - name: Job Deployment Restriction
@@ -197,6 +199,7 @@ x-tagGroups:
       - Application Logs
       - Application Deployment Restriction
       - Application Deployment History
+      - Application Build Analysis
       - Application Environment Variable
       - Application Secret
       - Application Annotations Group
@@ -231,6 +234,7 @@ x-tagGroups:
       - Job Custom Domain
       - Job Deployment Restriction
       - Job Deployment History
+      - Job Build Analysis
       - Job Environment Variable
       - Job Secret
       - Job Annotations Group
@@ -8438,6 +8442,64 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/buildAnalysis':
+    get:
+      summary: Get the build analysis of an application
+      description: Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+      operationId: getApplicationBuildAnalysis
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Application Build Analysis
+      responses:
+        '200':
+          description: Latest analysable build and latest analysis
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildAnalysisState'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Analyse the latest build of an application
+      description: |-
+        Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`.
+        The result is a reworked Dockerfile when the fix is a Dockerfile change, the findings with the fix to apply, and a prompt for the customer's own AI agent.
+        Starting an analysis replaces the previous one. It never changes the build or the image.
+      operationId: startApplicationBuildAnalysis
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Application Build Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildAnalysisStartRequest'
+      responses:
+        '202':
+          description: Build analysis started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          description: Access forbidden, or the DevOps Copilot is disabled for the organization
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/BuildAnalysisConflict'
+        '422':
+          $ref: '#/components/responses/BuildAnalysisDockerfileUnavailable'
   '/application/{applicationId}/deploymentHistoryV2':
     get:
       summary: List application deploys
@@ -11980,6 +12042,64 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/job/{jobId}/buildAnalysis':
+    get:
+      summary: Get the build analysis of a job
+      description: Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+      operationId: getJobBuildAnalysis
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      tags:
+        - Job Build Analysis
+      responses:
+        '200':
+          description: Latest analysable build and latest analysis
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildAnalysisState'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Analyse the latest build of a job
+      description: |-
+        Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`.
+        The result is a reworked Dockerfile when the fix is a Dockerfile change, the findings with the fix to apply, and a prompt for the customer's own AI agent.
+        Starting an analysis replaces the previous one. It never changes the build or the image.
+      operationId: startJobBuildAnalysis
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      tags:
+        - Job Build Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildAnalysisStartRequest'
+      responses:
+        '202':
+          description: Build analysis started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          description: Access forbidden, or the DevOps Copilot is disabled for the organization
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/BuildAnalysisConflict'
+        '422':
+          $ref: '#/components/responses/BuildAnalysisDockerfileUnavailable'
   '/job/{jobId}/deploymentHistoryV2':
     get:
       summary: List job deployments
@@ -19662,6 +19782,185 @@ components:
         currency_code:
           type: string
           example: USD
+    BuildAnalysisStartRequest:
+      type: object
+      required:
+        - execution_id
+      properties:
+        execution_id:
+          type: string
+          description: Execution id of the build to analyse. It must be the latest build of the service, `latest_build_execution_id` in `BuildAnalysisState`.
+          example: 6e5c1d3a-6b6f-4c35-9a2f-8f1d2c3b4a5e-42
+        dockerfile:
+          type: string
+          nullable: true
+          maxLength: 102400
+          description: Dockerfile content, only needed after a start answered 422 because Qovery cannot read it. It is used for this analysis only and never stored. Values that look like secrets are replaced by `<redacted>` before the analysis.
+    BuildAnalysisStatus:
+      type: string
+      description: PENDING is queued, COLLECTING reads the build logs and the cache history, ANALYSING waits for the model, then DONE or FAILED. The Dockerfile is resolved before the start answers 202.
+      enum:
+        - PENDING
+        - COLLECTING
+        - ANALYSING
+        - DONE
+        - FAILED
+    BuildAnalysisDockerfileSource:
+      type: string
+      description: Where the analysed Dockerfile came from. GIT is the repository at the build commit, INLINE the Dockerfile stored on the job, PASTE the content sent in the start request.
+      enum:
+        - GIT
+        - INLINE
+        - PASTE
+    BuildAnalysisFailureCode:
+      type: string
+      description: COPILOT_DISABLED when the organization turned the DevOps Copilot off, MODEL_ERROR when the model call failed or returned an invalid result, TIMEOUT when the analysis took too long, INTERNAL_ERROR otherwise.
+      enum:
+        - COPILOT_DISABLED
+        - MODEL_ERROR
+        - TIMEOUT
+        - INTERNAL_ERROR
+    BuildAnalysisFindingSeverity:
+      type: string
+      enum:
+        - HIGH
+        - MEDIUM
+        - LOW
+    BuildAnalysisFinding:
+      type: object
+      required:
+        - id
+        - severity
+        - title
+        - evidence
+      properties:
+        id:
+          type: string
+          description: Id of the rule behind the finding.
+          example: arg-per-environment-before-install
+        severity:
+          $ref: '#/components/schemas/BuildAnalysisFindingSeverity'
+        title:
+          type: string
+        evidence:
+          type: string
+          description: What in the Dockerfile, the build logs or the cache history shows the problem.
+        step:
+          type: string
+          nullable: true
+          description: Dockerfile instruction or build step concerned.
+        estimated_gain_seconds:
+          type: integer
+          nullable: true
+          description: Estimated build time saved on each affected build, when it can be estimated.
+    BuildAnalysisFix:
+      type: object
+      required:
+        - action
+      properties:
+        finding_id:
+          type: string
+          nullable: true
+          description: Id of the finding this fix addresses.
+          example: arg-per-environment-before-install
+        action:
+          type: string
+          description: What to change on the customer side.
+        file:
+          type: string
+          nullable: true
+          example: Dockerfile
+        lines:
+          type: string
+          nullable: true
+          description: Lines concerned in `file`.
+          example: 3-5
+    BuildAnalysisResult:
+      type: object
+      required:
+        - findings
+        - fixes
+        - agent_prompt
+      properties:
+        dockerfile:
+          type: string
+          nullable: true
+          description: Reworked Dockerfile to copy. Null when the fix is not a Dockerfile change, for example a variable value. Values hidden from the analysis appear as `<redacted>` and must be put back before use.
+        dockerfile_rationale:
+          type: string
+          nullable: true
+          description: Why the reworked Dockerfile is faster.
+        findings:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuildAnalysisFinding'
+        fixes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuildAnalysisFix'
+        agent_prompt:
+          type: string
+          description: Prompt the customer pastes into their own AI agent to apply the fixes in their repository.
+    BuildAnalysisResponse:
+      type: object
+      required:
+        - service_id
+        - execution_id
+        - status
+        - stale
+        - created_at
+        - updated_at
+      properties:
+        service_id:
+          type: string
+          format: uuid
+        execution_id:
+          type: string
+          description: Execution id of the analysed build.
+          example: 6e5c1d3a-6b6f-4c35-9a2f-8f1d2c3b4a5e-42
+        status:
+          $ref: '#/components/schemas/BuildAnalysisStatus'
+        stale:
+          type: boolean
+          description: True when a newer build exists. The analysis stays readable, but a new one can only be started on the latest build.
+        dockerfile_source:
+          allOf:
+            - $ref: '#/components/schemas/BuildAnalysisDockerfileSource'
+          nullable: true
+        failure_code:
+          allOf:
+            - $ref: '#/components/schemas/BuildAnalysisFailureCode'
+          nullable: true
+          description: Why the analysis failed, when `status` is FAILED.
+        failure_reason:
+          type: string
+          nullable: true
+          description: Human-readable detail of the failure, when `status` is FAILED.
+        result:
+          allOf:
+            - $ref: '#/components/schemas/BuildAnalysisResult'
+          nullable: true
+          description: Set when `status` is DONE.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    BuildAnalysisState:
+      type: object
+      required:
+        - latest_build_execution_id
+      properties:
+        latest_build_execution_id:
+          type: string
+          nullable: true
+          description: Execution id of the latest build of the service, the only build that can be analysed. Null when no deployment in the kept history ran a build.
+        analysis:
+          allOf:
+            - $ref: '#/components/schemas/BuildAnalysisResponse'
+          nullable: true
+          description: The latest analysis of the service. Null when none was run.
     BuildModeEnum:
       type: string
       enum:
@@ -33665,6 +33964,10 @@ components:
       description: Resource not found
     204-deletion:
       description: The resource was deleted successfully
+    BuildAnalysisConflict:
+      description: The execution is not the latest build of the service, the service has no build, or an analysis is already in progress. Read the build analysis again to get the current `latest_build_execution_id` and the running analysis.
+    BuildAnalysisDockerfileUnavailable:
+      description: Qovery cannot read the Dockerfile of this build, for example a git fetch failure or a path that does not exist at the build commit. Start again with the Dockerfile content in `dockerfile`.
   securitySchemes:
     bearerAuth:
       type: http
