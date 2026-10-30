@@ -19824,8 +19824,9 @@ components:
         - MODEL_ERROR
         - TIMEOUT
         - INTERNAL_ERROR
-    BuildAnalysisFindingSeverity:
+    BuildAnalysisFindingConfidence:
       type: string
+      description: How strongly the build evidence backs the finding. HIGH when the build logs, the cache history or the build metrics show the cause itself, MEDIUM when they show the slow or rerun step but the cause is inferred, LOW when only the Dockerfile suggests it.
       enum:
         - HIGH
         - MEDIUM
@@ -19834,7 +19835,7 @@ components:
       type: object
       required:
         - id
-        - severity
+        - confidence
         - title
         - evidence
       properties:
@@ -19842,8 +19843,8 @@ components:
           type: string
           description: Id of the rule behind the finding.
           example: arg-per-environment-before-install
-        severity:
-          $ref: '#/components/schemas/BuildAnalysisFindingSeverity'
+        confidence:
+          $ref: '#/components/schemas/BuildAnalysisFindingConfidence'
         title:
           type: string
         evidence:
@@ -19896,6 +19897,7 @@ components:
           description: Why the reworked Dockerfile is faster.
         findings:
           type: array
+          description: Ordered by impact on build time, highest first. Confidence does not reflect impact.
           items:
             $ref: '#/components/schemas/BuildAnalysisFinding'
         fixes:
