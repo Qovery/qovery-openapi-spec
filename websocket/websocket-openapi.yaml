@@ -87,6 +87,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlueprintServiceCreatedEvent'
+  /build/analysis:
+    get:
+      tags:
+      - build_analysis
+      operationId: handle_build_analysis_request
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: environment
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: service
+        in: path
+        description: Service whose build analysis progress is streamed.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: 'Stream of build analysis progress events: the events already published, then new ones. The connection closes with code 1000 after the event with `terminal: true`. Without that event it closes with 1011 when the progress is unavailable, or 1001 when it timed out (15 min).'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildAnalysisEvent'
   /cluster/metrics:
     get:
       tags:
@@ -772,6 +816,44 @@ components:
           type: string
           format: uuid
           description: Id of the blueprint whose service was created.
+    BuildAnalysisEvent:
+      type: object
+      description: |-
+        One build analysis progress event. Past events are replayed first, then new ones are sent as
+        they come. The connection closes after the event with `terminal: true`.
+      required:
+      - status
+      - step
+      - progress
+      - terminal
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+          description: Details about the event, e.g. why the analysis failed.
+        progress:
+          type: integer
+          format: int32
+          description: Progress of the analysis, from 0 to 100.
+          maximum: 100
+          minimum: 0
+        status:
+          $ref: '#/components/schemas/BuildAnalysisStatus'
+        step:
+          type: string
+          description: Human-readable label of the current step.
+        terminal:
+          type: boolean
+          description: True on the last event of the analysis (`DONE` or `FAILED`).
+    BuildAnalysisStatus:
+      type: string
+      enum:
+      - PENDING
+      - COLLECTING
+      - ANALYSING
+      - DONE
+      - FAILED
     CertificateStatusDto:
       type: object
       required:
