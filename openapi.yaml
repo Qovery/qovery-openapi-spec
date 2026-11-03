@@ -420,11 +420,11 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/copilot':
+  '/organization/{organizationId}/aiFeatures':
     put:
-      summary: Edit the organization's DevOps Copilot opt-in
-      description: To edit the DevOps Copilot opt-in you must have the admin permission. Once set, it replaces `copilot_enabled_by_default`.
-      operationId: editOrganizationCopilot
+      summary: Edit the organization's AI features opt-in
+      description: To edit the AI features opt-in you must have the admin permission. Once set, it replaces `copilot_enabled_by_default`.
+      operationId: editOrganizationAiFeatures
       parameters:
         - $ref: '#/components/parameters/organizationId'
       tags:
@@ -433,10 +433,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrganizationCopilotRequest'
+              $ref: '#/components/schemas/OrganizationAiFeaturesRequest'
       responses:
         '200':
-          description: Edit the organization's DevOps Copilot opt-in
+          description: Edit the organization's AI features opt-in
           content:
             application/json:
               schema:
@@ -26297,11 +26297,11 @@ components:
               description: Indicates if the organization uses SAML or OIDC
             copilot_enabled_by_default:
               type: boolean
-              description: Whether the DevOps Copilot is on for this organization when `copilot_enabled` was never set. Fixed at creation.
-            copilot_enabled:
+              description: Whether AI features are on for this organization when `ai_features_enabled` was never set. Fixed at creation.
+            ai_features_enabled:
               type: boolean
               nullable: true
-              description: The organization's explicit DevOps Copilot opt-in. null when never set, in which case `copilot_enabled_by_default` applies.
+              description: The organization's explicit AI features opt-in (DevOps Copilot, build analysis). null when never set, in which case `copilot_enabled_by_default` applies.
         - type: object
           properties:
             organization_plan:
@@ -26702,14 +26702,14 @@ components:
         - ENV_CREATOR
         - ADMIN
       example: VIEWER
-    OrganizationCopilotRequest:
+    OrganizationAiFeaturesRequest:
       type: object
       required:
         - enabled
       properties:
         enabled:
           type: boolean
-          description: Whether the organization opts in to the DevOps Copilot
+          description: Whether the organization opts in to AI features
     OrganizationEditRequest:
       type: object
       required:
