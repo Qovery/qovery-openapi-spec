@@ -28403,6 +28403,19 @@ components:
           nullable: true
           default: false
           description: 'If true and a variable with the same key already exists at a higher scope (project or environment), an override of that variable is created instead of failing with 409. The override follows the usual rules: same secret kind, target must be a value or file variable, strictly lower scope. Defaults to false.'
+        json_target_key:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 256
+          example: accounts.0.password
+          description: >-
+            Optional JSON member/index path, only supported for `EXTERNAL_SECRET` variables (not external
+            secret files). Use dots for nested members and numeric indexes for arrays, for example
+            `accounts.0.password`. Escape literal dots with `\.` and backslashes with `\\`; other query
+            characters are treated literally. Members must be non-empty, with no leading or trailing
+            whitespace, control characters, or unescaped trailing backslash. Omit or set to null to read the
+            whole secret.
     VariableConflictResponse:
       type: object
       description: Problem details returned when a variable with the same key already exists
@@ -28490,6 +28503,19 @@ components:
           type: string
           format: uuid
           nullable: true
+        json_target_key:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 256
+          example: accounts.0.password
+          description: >-
+            Optional JSON member/index path, only supported for `EXTERNAL_SECRET` variables (not external
+            secret files). Use dots for nested members and numeric indexes for arrays, for example
+            `accounts.0.password`. Escape literal dots with `\.` and backslashes with `\\`; other query
+            characters are treated literally. Members must be non-empty, with no leading or trailing
+            whitespace, control characters, or unescaped trailing backslash. Omit or set to null to clear JSON
+            selection and read the whole secret. Send the current selector on unrelated edits to preserve it.
     VariableResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -28547,6 +28573,19 @@ components:
               type: string
               format: uuid
               nullable: true
+            json_target_key:
+              type: string
+              nullable: true
+              minLength: 1
+              maxLength: 256
+              example: accounts.0.password
+              description: >-
+                Optional JSON member/index path, only supported for `EXTERNAL_SECRET` variables (not external
+                secret files). Use dots for nested members and numeric indexes for arrays, for example
+                `accounts.0.password`. Escape literal dots with `\.` and backslashes with `\\`; other query
+                characters are treated literally. Members must be non-empty, with no leading or trailing
+                whitespace, control characters, or unescaped trailing backslash. Null or absent means that no
+                JSON selection is configured.
     VariableResponseList:
       type: object
       properties:
