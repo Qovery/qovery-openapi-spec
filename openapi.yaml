@@ -420,6 +420,35 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/aiFeatures':
+    put:
+      summary: Edit the organization's AI features opt-in
+      description: To edit the AI features opt-in you must have the admin permission.
+      operationId: editOrganizationAiFeatures
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Organization Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationAiFeaturesRequest'
+      responses:
+        '200':
+          description: Edit the organization's AI features opt-in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/policyApiToken':
     get:
       summary: List organization policy api tokens
@@ -26275,6 +26304,12 @@ components:
             has_enterprise_connection:
               type: boolean
               description: Indicates if the organization uses SAML or OIDC
+            ai_features_enabled_by_default:
+              type: boolean
+              description: Initial value of `ai_features_enabled`, fixed at creation.
+            ai_features_enabled:
+              type: boolean
+              description: Whether the organization opted in to AI features (DevOps Copilot, build analysis). Starts at `ai_features_enabled_by_default`.
         - type: object
           properties:
             organization_plan:
@@ -26675,6 +26710,14 @@ components:
         - ENV_CREATOR
         - ADMIN
       example: VIEWER
+    OrganizationAiFeaturesRequest:
+      type: object
+      required:
+        - enabled
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the organization opts in to AI features
     OrganizationEditRequest:
       type: object
       required:
