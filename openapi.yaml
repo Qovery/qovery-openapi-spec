@@ -423,7 +423,7 @@ paths:
   '/organization/{organizationId}/aiFeatures':
     put:
       summary: Edit the organization's AI features opt-in
-      description: To edit the AI features opt-in you must have the admin permission. Once set, it replaces `copilot_enabled_by_default`.
+      description: To edit the AI features opt-in you must have the admin permission.
       operationId: editOrganizationAiFeatures
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -26295,13 +26295,12 @@ components:
             has_enterprise_connection:
               type: boolean
               description: Indicates if the organization uses SAML or OIDC
-            copilot_enabled_by_default:
+            ai_features_enabled_by_default:
               type: boolean
-              description: Whether AI features are on for this organization when `ai_features_enabled` was never set. Fixed at creation.
+              description: Initial value of `ai_features_enabled`, fixed at creation.
             ai_features_enabled:
               type: boolean
-              nullable: true
-              description: The organization's explicit AI features opt-in (DevOps Copilot, build analysis). null when never set, in which case `copilot_enabled_by_default` applies.
+              description: Whether the organization opted in to AI features (DevOps Copilot, build analysis). Starts at `ai_features_enabled_by_default`.
         - type: object
           properties:
             organization_plan:
