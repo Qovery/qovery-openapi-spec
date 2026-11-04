@@ -23,6 +23,7 @@ tags:
   - name: Agentic Workflows
   - name: Application
   - name: Application Actions
+  - name: Application Build Analysis
   - name: Application Configuration
   - name: Application Database
   - name: Application Deployment Restriction
@@ -49,6 +50,7 @@ tags:
   - name: Deployment Stage Main Calls
   - name: Job
   - name: Job Actions
+  - name: Job Build Analysis
   - name: Job Configuration
   - name: Job Database
   - name: Job Deployment Restriction
@@ -197,6 +199,7 @@ x-tagGroups:
       - Application Logs
       - Application Deployment Restriction
       - Application Deployment History
+      - Application Build Analysis
       - Application Environment Variable
       - Application Secret
       - Application Annotations Group
@@ -231,6 +234,7 @@ x-tagGroups:
       - Job Custom Domain
       - Job Deployment Restriction
       - Job Deployment History
+      - Job Build Analysis
       - Job Environment Variable
       - Job Secret
       - Job Annotations Group
@@ -8467,6 +8471,28 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/application/{applicationId}/buildAnalysis':
+    get:
+      summary: Get the build analysis of an application
+      description: Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+      operationId: getApplicationBuildAnalysis
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Application Build Analysis
+      responses:
+        '200':
+          description: Latest analysable build and latest analysis
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildAnalysisState'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/application/{applicationId}/deploymentHistoryV2':
     get:
       summary: List application deploys
@@ -12003,6 +12029,28 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/DeploymentHistoryJobResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/job/{jobId}/buildAnalysis':
+    get:
+      summary: Get the build analysis of a job
+      description: Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+      operationId: getJobBuildAnalysis
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      tags:
+        - Job Build Analysis
+      responses:
+        '200':
+          description: Latest analysable build and latest analysis
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildAnalysisState'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -19698,6 +19746,171 @@ components:
         currency_code:
           type: string
           example: USD
+    BuildAnalysisStatus:
+      type: string
+      description: PENDING is queued, COLLECTING reads the build logs and the cache history, ANALYSING waits for the model, then DONE or FAILED.
+      enum:
+        - PENDING
+        - COLLECTING
+        - ANALYSING
+        - DONE
+        - FAILED
+    BuildAnalysisDockerfileSource:
+      type: string
+      description: Where the analysed Dockerfile came from. GIT is the repository at the build commit, INLINE the Dockerfile stored on the job, PASTE a Dockerfile pasted by the user.
+      enum:
+        - GIT
+        - INLINE
+        - PASTE
+    BuildAnalysisFailureCode:
+      type: string
+      description: COPILOT_DISABLED when the organization opted out of AI features, MODEL_ERROR when the model call failed or returned an invalid result, TIMEOUT when the analysis took too long, INTERNAL_ERROR otherwise.
+      enum:
+        - COPILOT_DISABLED
+        - MODEL_ERROR
+        - TIMEOUT
+        - INTERNAL_ERROR
+    BuildAnalysisConfidence:
+      type: string
+      description: How sure the analysis is that applying the improvements saves `estimated_time_saved`. HIGH when the build logs, the cache history or the build metrics show both the cause and the time it costs, MEDIUM when one of the two is inferred, LOW when only the Dockerfile suggests it or there is no time estimate. With no improvement, how sure the analysis is that the build has nothing left to gain.
+      enum:
+        - HIGH
+        - MEDIUM
+        - LOW
+    BuildAnalysisTimeSaved:
+      type: object
+      description: Seconds saved on each build, as a range from min_seconds to max_seconds. When nothing is saved, the field holding it is null instead.
+      required:
+        - min_seconds
+        - max_seconds
+      properties:
+        min_seconds:
+          type: integer
+          minimum: 0
+          example: 50
+        max_seconds:
+          type: integer
+          minimum: 0
+          example: 90
+    BuildAnalysisAsset:
+      type: string
+      description: What the analysis read. DOCKERFILE and BUILD_SETTINGS (build configuration and build argument names) are always read, DOCKERIGNORE when Qovery could check the repository for it, BUILD_LOGS when the build or earlier builds sharing its cache have logs.
+      enum:
+        - DOCKERFILE
+        - DOCKERIGNORE
+        - BUILD_LOGS
+        - BUILD_SETTINGS
+    BuildAnalysisResult:
+      type: object
+      required:
+        - confidence
+        - assets_reviewed
+        - summary
+        - improvements
+        - agent_prompt
+        - estimated_time_saved
+        - dockerfile
+        - dockerfile_rationale
+      properties:
+        confidence:
+          $ref: '#/components/schemas/BuildAnalysisConfidence'
+        estimated_time_saved:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/BuildAnalysisTimeSaved'
+          nullable: true
+          description: Build time saved on each build once every improvement is applied. Null when there is nothing to save or no timing to base it on. `confidence` applies to this range.
+        assets_reviewed:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuildAnalysisAsset'
+        summary:
+          type: string
+          description: What slows the build and why, with the evidence from the build.
+        improvements:
+          type: array
+          description: Changes to make, one sentence each, ordered by impact on build time, highest first. Empty when the build is already efficient.
+          items:
+            type: string
+          example:
+            - Copy package.json and package-lock.json before the rest of the code, so the install stays cached until dependencies change
+        dockerfile:
+          type: string
+          nullable: true
+          description: Reworked Dockerfile to copy. Null when no improvement is a Dockerfile change, for example a variable value. Values hidden from the analysis appear as `<redacted>` and must be put back before use.
+        dockerfile_rationale:
+          type: string
+          nullable: true
+          description: Why the reworked Dockerfile is faster.
+        agent_prompt:
+          type: string
+          description: Prompt the customer pastes into their own AI agent to apply the improvements in their repository.
+    BuildAnalysisResponse:
+      type: object
+      required:
+        - service_id
+        - execution_id
+        - status
+        - stale
+        - dockerfile_source
+        - failure_code
+        - failure_reason
+        - result
+        - created_at
+        - updated_at
+      properties:
+        service_id:
+          type: string
+          format: uuid
+        execution_id:
+          type: string
+          description: Execution id of the analysed build.
+          example: 6e5c1d3a-6b6f-4c35-9a2f-8f1d2c3b4a5e-42
+        status:
+          $ref: '#/components/schemas/BuildAnalysisStatus'
+        stale:
+          type: boolean
+          description: True when the latest build of the service is not the analysed one. The analysis stays readable, but only the latest build can be analysed.
+        dockerfile_source:
+          $ref: '#/components/schemas/BuildAnalysisDockerfileSource'
+        failure_code:
+          type: string
+          allOf:
+            - $ref: '#/components/schemas/BuildAnalysisFailureCode'
+          nullable: true
+          description: Why the analysis failed, when `status` is FAILED.
+        failure_reason:
+          type: string
+          nullable: true
+          description: Human-readable detail of the failure, when `status` is FAILED.
+        result:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/BuildAnalysisResult'
+          nullable: true
+          description: Set when `status` is DONE.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    BuildAnalysisState:
+      type: object
+      required:
+        - latest_build_execution_id
+        - analysis
+      properties:
+        latest_build_execution_id:
+          type: string
+          nullable: true
+          description: Execution id of the latest build of the service, the only build that can be analysed. Null when no deployment in the kept history ran a build.
+        analysis:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/BuildAnalysisResponse'
+          nullable: true
+          description: The latest analysis of the service. Null when none was run.
     BuildModeEnum:
       type: string
       enum:
