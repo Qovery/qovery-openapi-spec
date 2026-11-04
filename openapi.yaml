@@ -24857,6 +24857,15 @@ components:
           $ref: '#/components/schemas/Probe'
         liveness_probe:
           $ref: '#/components/schemas/Probe'
+        startup_probe:
+          allOf:
+            - $ref: '#/components/schemas/Probe'
+          nullable: true
+          description: >-
+            Optional probe checking that the container has started. Kubernetes runs the
+            readiness and liveness probes only once it succeeds, so a slow start does not
+            trip the liveness probe. Omitted or null means no startup probe. Like the other
+            probes, an edit that leaves it out removes it.
     InviteMember:
       allOf:
         - $ref: '#/components/schemas/Base'
