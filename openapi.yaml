@@ -8522,7 +8522,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          description: Access forbidden, or the DevOps Copilot is disabled for the organization
+          $ref: '#/components/responses/BuildAnalysisForbidden'
         '404':
           $ref: '#/components/responses/404'
         '409':
@@ -8530,7 +8530,7 @@ paths:
         '422':
           $ref: '#/components/responses/BuildAnalysisDockerfileUnavailable'
         '503':
-          $ref: '#/components/responses/BuildAnalysisCopilotUnavailable'
+          $ref: '#/components/responses/BuildAnalysisNotConfigured'
   '/application/{applicationId}/deploymentHistoryV2':
     get:
       summary: List application deploys
@@ -12124,7 +12124,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          description: Access forbidden, or the DevOps Copilot is disabled for the organization
+          $ref: '#/components/responses/BuildAnalysisForbidden'
         '404':
           $ref: '#/components/responses/404'
         '409':
@@ -12132,7 +12132,7 @@ paths:
         '422':
           $ref: '#/components/responses/BuildAnalysisDockerfileUnavailable'
         '503':
-          $ref: '#/components/responses/BuildAnalysisCopilotUnavailable'
+          $ref: '#/components/responses/BuildAnalysisNotConfigured'
   '/job/{jobId}/deploymentHistoryV2':
     get:
       summary: List job deployments
@@ -19848,9 +19848,8 @@ components:
         - INLINE
     BuildAnalysisFailureCode:
       type: string
-      description: COPILOT_DISABLED when the organization opted out of AI features, MODEL_ERROR when the model call failed or returned an invalid result, TIMEOUT when the analysis took too long, INTERNAL_ERROR otherwise.
+      description: MODEL_ERROR when the model call failed or returned an invalid result, TIMEOUT when the analysis took too long, INTERNAL_ERROR otherwise.
       enum:
-        - COPILOT_DISABLED
         - MODEL_ERROR
         - TIMEOUT
         - INTERNAL_ERROR
@@ -34128,10 +34127,12 @@ components:
       description: The resource was deleted successfully
     BuildAnalysisConflict:
       description: The execution is not the latest build of the service, the service has no build, or an analysis is already in progress. Read the build analysis again to get the current `latest_build_execution_id` and the running analysis.
-    BuildAnalysisCopilotUnavailable:
-      description: Build analysis is temporarily unavailable. The DevOps Copilot could not be reached or is not configured. Try again later.
     BuildAnalysisDockerfileUnavailable:
       description: Qovery cannot read the Dockerfile of this build, for example a git fetch failure or a path that does not exist at the build commit.
+    BuildAnalysisForbidden:
+      description: Access forbidden, or AI features are disabled for the organization (`ai_features_enabled`).
+    BuildAnalysisNotConfigured:
+      description: Build analysis is not available on this Qovery instance because no AI model is configured. Checked before the organization's AI features. Retrying does not help until the instance is configured.
   securitySchemes:
     bearerAuth:
       type: http
