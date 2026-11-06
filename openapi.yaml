@@ -8490,6 +8490,44 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+    post:
+      summary: Analyse the latest build of an application
+      description: |-
+        Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`.
+        The result gives a confidence, the estimated time saved, what was reviewed, a summary, the improvements to make, a prompt for the customer's own AI agent, and a reworked Dockerfile when an improvement is a Dockerfile change.
+        Starting an analysis replaces the previous one. It never changes the build or the image.
+      operationId: startApplicationBuildAnalysis
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      tags:
+        - Application Build Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildAnalysisStartRequest'
+      responses:
+        '202':
+          description: Build analysis started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/BuildAnalysisForbidden'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/BuildAnalysisConflict'
+        '422':
+          $ref: '#/components/responses/BuildAnalysisDockerfileUnavailable'
+        '503':
+          $ref: '#/components/responses/BuildAnalysisNotConfigured'
   '/application/{applicationId}/deploymentHistoryV2':
     get:
       summary: List application deploys
@@ -12054,6 +12092,44 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+    post:
+      summary: Analyse the latest build of a job
+      description: |-
+        Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`.
+        The result gives a confidence, the estimated time saved, what was reviewed, a summary, the improvements to make, a prompt for the customer's own AI agent, and a reworked Dockerfile when an improvement is a Dockerfile change.
+        Starting an analysis replaces the previous one. It never changes the build or the image.
+      operationId: startJobBuildAnalysis
+      parameters:
+        - $ref: '#/components/parameters/jobId'
+      tags:
+        - Job Build Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildAnalysisStartRequest'
+      responses:
+        '202':
+          description: Build analysis started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/BuildAnalysisForbidden'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/BuildAnalysisConflict'
+        '422':
+          $ref: '#/components/responses/BuildAnalysisDockerfileUnavailable'
+        '503':
+          $ref: '#/components/responses/BuildAnalysisNotConfigured'
   '/job/{jobId}/deploymentHistoryV2':
     get:
       summary: List job deployments
@@ -19743,9 +19819,18 @@ components:
         currency_code:
           type: string
           example: USD
+    BuildAnalysisStartRequest:
+      type: object
+      required:
+        - execution_id
+      properties:
+        execution_id:
+          type: string
+          description: Execution id of the build to analyse. It must be the latest build of the service, `latest_build_execution_id` in `BuildAnalysisState`.
+          example: 6e5c1d3a-6b6f-4c35-9a2f-8f1d2c3b4a5e-42
     BuildAnalysisStatus:
       type: string
-      description: PENDING is queued, COLLECTING reads the build logs and the cache history, ANALYSING waits for the model, then DONE or FAILED.
+      description: PENDING is queued, COLLECTING reads the build logs and the cache history, ANALYSING waits for the model, then DONE or FAILED. The Dockerfile is resolved before the start answers 202.
       enum:
         - PENDING
         - COLLECTING
@@ -19754,16 +19839,14 @@ components:
         - FAILED
     BuildAnalysisDockerfileSource:
       type: string
-      description: Where the analysed Dockerfile came from. GIT is the repository at the build commit, INLINE the Dockerfile stored on the job, PASTE a Dockerfile pasted by the user.
+      description: Where the analysed Dockerfile came from. GIT is the repository at the build commit, INLINE the Dockerfile stored on the job.
       enum:
         - GIT
         - INLINE
-        - PASTE
     BuildAnalysisFailureCode:
       type: string
-      description: COPILOT_DISABLED when the organization opted out of AI features, MODEL_ERROR when the model call failed or returned an invalid result, TIMEOUT when the analysis took too long, INTERNAL_ERROR otherwise.
+      description: MODEL_ERROR when the model call failed or returned an invalid result, TIMEOUT when the analysis took too long, INTERNAL_ERROR otherwise.
       enum:
-        - COPILOT_DISABLED
         - MODEL_ERROR
         - TIMEOUT
         - INTERNAL_ERROR
@@ -34039,6 +34122,14 @@ components:
       description: Resource not found
     204-deletion:
       description: The resource was deleted successfully
+    BuildAnalysisConflict:
+      description: The execution is not the latest build of the service, the service has no build, or an analysis is already in progress. Read the build analysis again to get the current `latest_build_execution_id` and the running analysis.
+    BuildAnalysisDockerfileUnavailable:
+      description: Qovery cannot read the Dockerfile of this build, for example a git fetch failure or a path that does not exist at the build commit.
+    BuildAnalysisForbidden:
+      description: Access forbidden, or AI features are disabled for the organization (`ai_features_enabled`).
+    BuildAnalysisNotConfigured:
+      description: Build analysis is not available on this Qovery instance because no AI model is configured. Checked before the organization's AI features. Retrying does not help until the instance is configured.
   securitySchemes:
     bearerAuth:
       type: http
