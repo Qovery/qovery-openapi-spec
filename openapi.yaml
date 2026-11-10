@@ -33181,10 +33181,16 @@ components:
           type: object
           x-stoplight:
             id: si5ekni2hc6w9
+          description: |-
+            Scaler `metadata` only, as an object of string values, e.g. `{"query": "...", "threshold": "10"}`. Other trigger fields (`name`, `metricType`, `useCachedMetrics`) cannot be set here: use `config_yaml`.
+            Exactly one of `config_json` and `config_yaml` must be set.
         config_yaml:
           type: string
           x-stoplight:
             id: 8c7vktd7svl30
+          description: |-
+            Body of the KEDA trigger as YAML, without `type` (set from `scaler_type`) and `authenticationRef` (set from `trigger_authentication`). Scaler settings go under `metadata:`; `name`, `metricType` and `useCachedMetrics` can be set next to it.
+            Exactly one of `config_json` and `config_yaml` must be set.
         trigger_authentication:
           $ref: '#/components/schemas/KedaTriggerAuthenticationRequest'
     KedaScalerResponse:
@@ -33214,9 +33220,13 @@ components:
             config_json:
               type: object
               nullable: true
+              description: |-
+                Scaler `metadata` only, as an object of string values, e.g. `{"query": "...", "threshold": "10"}`. Other trigger fields (`name`, `metricType`, `useCachedMetrics`) cannot be set here: use `config_yaml`.
             config_yaml:
               type: string
               nullable: true
+              description: |-
+                Body of the KEDA trigger as YAML, without `type` (set from `scaler_type`) and `authenticationRef` (set from `trigger_authentication`). Scaler settings go under `metadata:`; `name`, `metricType` and `useCachedMetrics` can be set next to it.
             trigger_authentication:
               $ref: '#/components/schemas/KedaTriggerAuthenticationResponse'
     AutoscalingPolicyResponse:
