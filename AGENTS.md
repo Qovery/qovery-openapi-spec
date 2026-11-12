@@ -1,21 +1,22 @@
 # Agent instructions
 
-This repo holds the hand-maintained OpenAPI 3.0 spec of the Qovery public API:
+This repo holds the specs of the Qovery public API:
 
-- `openapi.yaml` (about 34k lines): the REST API, rendered at <https://api-doc.qovery.com>.
-- `websocket/websocket-openapi.yaml`: the websocket API. It covers every live stream:
-  logs, status, metrics, pods, nodes, shell, build analysis and blueprint previews.
+- `openapi.yaml` (OpenAPI 3.0, about 34k lines): the REST API, **maintained by hand**,
+  rendered at <https://api-doc.qovery.com>.
+- `websocket/websocket-openapi.yaml` (OpenAPI 3.1): the websocket API, **generated**.
+  It comes from rust-backend's websocket-gateway with utoipa
+  (`websocket-gateway/src/generate_api.rs`). Never edit it by hand: change the gateway,
+  then run `just generate_websocket_openapi` in rust-backend, which commits the new
+  file here. Hand edits are lost at the next regeneration.
 
 ## A change here reaches other repos
 
 `.github/workflows/generate-clients.yaml` ("Generate API Clients") runs on every pull
-request to `main` and on every push to `main`:
-
-- **On a pull request** it generates and builds every client (Go, TypeScript axios,
-  Rust, and their websocket variants) without publishing. This check is the one that
-  proves a spec change compiles in every client. A red check on your PR is your problem,
-  not noise.
-- **On a push to `main`** it also publishes the clients to their repos.
+request to `main` and on every push to `main`. On a pull request it generates every
+client without publishing and runs the post-generation scripts in
+`generator/post_generation_scripts/`. On a push to `main` it also publishes the
+clients to their repos.
 
 | Client repo | Built from | Consumers |
 |---|---|---|
@@ -26,9 +27,23 @@ request to `main` and on every push to `main`:
 
 `update_documentation.yaml` also copies `openapi.yaml` into the public documentation.
 
-q-core implements the endpoints by hand. A spec change needs the matching q-core
-change, and the other way round. Consumers can only use a new field once this repo is
-merged and the client is published, so client changes always come after the merge.
+**A green check does not prove every client compiles.** What the post-generation
+scripts actually cover:
+
+| Client | Built on a PR? |
+|---|---|
+| Go | Yes |
+| TypeScript axios, REST and websocket | Yes (`npm run build`) |
+| Rust REST | Built, but `rust.sh` ends with `cargo fmt` and doesn't stop on errors, so a failed `cargo build` still passes. Read the step's log. |
+| Go websocket | No: `go-ws.sh` builds the REST output folder instead |
+| Rust websocket | No: `rust-ws.sh` is empty |
+
+Fixing these scripts belongs in its own pull request, not in a spec change.
+
+q-core implements the REST endpoints by hand. A change to `openapi.yaml` needs the
+matching q-core change, and the other way round. Consumers can only use a new field
+once this repo is merged and the client is published, so client changes always come
+after the merge.
 
 ## Rules
 
@@ -49,24 +64,26 @@ merged and the client is published, so client changes always come after the merg
 4. **Describe behaviour, not just shape.** Every new field gets a `description`
    covering meaning, units, defaults and what `null` or absence means. The README's
    "Catalog" sections show the expected level of detail.
-5. **Follow the neighbours.** `operationId` is lowerCamelCase and starts with a verb
-   (`listOrganization`, `createOrganization`). Request and response bodies are named
+5. **Follow the neighbours in `openapi.yaml`.** `operationId` is lowerCamelCase and
+   starts with a verb (`listOrganization`, `createOrganization`); a few older
+   operations use PascalCase, don't copy them. Request and response bodies are named
    `<Thing>Request` and `<Thing>Response`; enums and shared types use plain names
-   (`PlatformCloudVendor`). Nullable fields use `nullable: true` (OpenAPI 3.0, not 3.1
-   type arrays).
+   (`PlatformCloudVendor`). Nullable fields use `nullable: true`. Names and nullable
+   forms in the websocket spec come from the Rust code; don't use them as a model here.
 6. **Keep the diff small.** Edit only the region you need. Never reformat, re-indent or
    reorder the file.
-7. **Live streams** go in `websocket/websocket-openapi.yaml`, not in `openapi.yaml`.
+7. **Live streams** are added in rust-backend's websocket-gateway, never in
+   `openapi.yaml`. The websocket spec here follows by regeneration.
 
 ## Check before pushing
 
 - `npm test` runs Spectral on `openapi.yaml`. It fetches its ruleset from Stoplight, so
   it needs network access: a failure to fetch the ruleset is not a spec error. CI does
   not run it, so run it yourself.
-- Rely on the "Generate API Clients" check of your pull request to prove the clients
-  build. Don't use `npm run generate` for that: it uses an old generator wrapper (0.0.6,
-  not the 7.x generators CI uses) and skips the build step. The post-generation scripts
-  in `generator/post_generation_scripts/` use GNU tools and fail on macOS.
+- Use the "Generate API Clients" check of your pull request, with the gaps above in
+  mind. Don't use `npm run generate` locally: it uses an old generator wrapper (0.0.6,
+  not the 7.x generators CI uses) and skips the build step. The post-generation
+  scripts use GNU tools and fail on macOS.
 
 ## Commits and pull requests
 
@@ -79,7 +96,9 @@ merged and the client is published, so client changes always come after the merg
 
 ## Qovery Factory
 
-For any public API change, the Qovery Factory builds this repo first, then q-core.
-Each consumer that must expose the change (console, qovery-cli,
-terraform-provider-qovery, rust-backend) is a separate follow-up run, started once this
-repo is merged and its client is published.
+- REST change: the Qovery Factory builds this repo first, then q-core.
+- Websocket change: rust-backend's websocket-gateway first, then the regenerated spec
+  lands here.
+- Each consumer that must expose the change (console, qovery-cli,
+  terraform-provider-qovery, rust-backend) is a separate follow-up run, started once
+  this repo is merged and its client is published.
