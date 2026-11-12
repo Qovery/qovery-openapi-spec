@@ -33047,6 +33047,31 @@ components:
           x-stoplight:
             id: zy5rt4bh9fyph
           format: int32
+        initial_cooldown_period_seconds:
+          type: integer
+          format: int32
+          nullable: true
+          minimum: 0
+          maximum: 3600
+          description: |-
+            KEDA ScaledObject `initialCooldownPeriod`: seconds to wait after the ScaledObject is created before the service can scale to zero.
+            Omitted or null leaves KEDA's default (0).
+        idle_replica_count:
+          type: integer
+          format: int32
+          nullable: true
+          minimum: 0
+          description: |-
+            KEDA ScaledObject `idleReplicaCount`: replicas to keep while no trigger is active.
+            Only 0 is supported by KEDA, and it must be strictly less than the service's minimum running instances.
+            Omitted or null disables the idle state.
+        advanced_yaml:
+          type: string
+          nullable: true
+          description: |-
+            Raw YAML of the KEDA ScaledObject `advanced` field, e.g. `horizontalPodAutoscalerConfig.behavior` to tune how fast the HPA scales up and down.
+            Must be a YAML mapping whose top-level keys are among `horizontalPodAutoscalerConfig`, `restoreToOriginalReplicaCount` and `scalingModifiers`.
+            Omitted, null or blank means no advanced settings.
         scalers:
           type: array
           x-stoplight:
@@ -33095,6 +33120,31 @@ components:
               x-stoplight:
                 id: j2dapmjjjiafj
               format: int32
+            initial_cooldown_period_seconds:
+              type: integer
+              format: int32
+              nullable: true
+              minimum: 0
+              maximum: 3600
+              description: |-
+                KEDA ScaledObject `initialCooldownPeriod`: seconds to wait after the ScaledObject is created before the service can scale to zero.
+                Omitted or null leaves KEDA's default (0).
+            idle_replica_count:
+              type: integer
+              format: int32
+              nullable: true
+              minimum: 0
+              description: |-
+                KEDA ScaledObject `idleReplicaCount`: replicas to keep while no trigger is active.
+                Only 0 is supported by KEDA, and it must be strictly less than the service's minimum running instances.
+                Omitted or null disables the idle state.
+            advanced_yaml:
+              type: string
+              nullable: true
+              description: |-
+                Raw YAML of the KEDA ScaledObject `advanced` field, e.g. `horizontalPodAutoscalerConfig.behavior` to tune how fast the HPA scales up and down.
+                Must be a YAML mapping whose top-level keys are among `horizontalPodAutoscalerConfig`, `restoreToOriginalReplicaCount` and `scalingModifiers`.
+                Omitted, null or blank means no advanced settings.
             scalers:
               type: array
               x-stoplight:
