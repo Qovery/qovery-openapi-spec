@@ -6014,9 +6014,16 @@ paths:
       description: >-
         Return what members' coding agents did on Qovery over a time range, linked to the skills they
         loaded: skill loads (agent loads only, a person's VIEW is not counted), API calls made from a
-        Qovery skill, Qovery MCP server tool calls, and requests refused by a policy or by role
-        permissions. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin);
-        members read their own activity with `getMyAgentActivity`.
+        Qovery skill, Qovery MCP server tool calls, every audited call made by a policy token, and
+        requests refused by a policy or by role permissions. A refusal by a policy token's policy
+        (401) and a refusal by role permissions (403) both count as DENIED. Activity is shown by
+        member, by skill and by policy token. Requires the MANAGE_ORGANIZATION_DATA permission
+        (organization owner or admin); members read their own activity with `getMyAgentActivity`.
+
+
+        Every filter is optional and they combine. `policyTokenId` implies `actorType`
+        POLICY_TOKEN, and neither combines with `userSub`: those combinations, an unknown enum value
+        or a malformed id are refused with 400.
 
 
         Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible.
@@ -6035,8 +6042,8 @@ paths:
 
 
         The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at
-        most 500 rows, `by_skill` 100, `actions_by_type` 200 and `recent` the 100 most recent agent
-        actions. Buckets are cut in UTC; empty buckets are omitted.
+        most 500 rows, `by_skill` 100, `by_policy_token` 100, `actions_by_type` 200 and `recent` the
+        100 most recent agent actions. Buckets are cut in UTC; empty buckets are omitted.
       operationId: getAgentActivity
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -6080,6 +6087,39 @@ paths:
           schema:
             type: string
             pattern: '^[a-z0-9._-]{1,64}$'
+        - name: actorType
+          in: query
+          description: >-
+            Only count members (MEMBER) or policy tokens (POLICY_TOKEN). Cannot be combined with
+            `userSub` when POLICY_TOKEN, otherwise the request is refused with 400.
+          required: false
+          schema:
+            $ref: '#/components/schemas/AgentActorKind'
+        - name: policyTokenId
+          in: query
+          description: >-
+            Only count this policy token, by its id. Implies `actorType` POLICY_TOKEN. Cannot be
+            combined with `actorType` MEMBER or with `userSub`, otherwise the request is refused with
+            400. With `bucket` HOUR, it is required to fill the token's `timeline` in
+            `by_policy_token`.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: outcome
+          in: query
+          description: >-
+            DENIED lists refusals only, and leaves skill loads out. ALLOWED lists everything else,
+            skill loads included.
+          required: false
+          schema:
+            $ref: '#/components/schemas/AgentActionOutcome'
+        - name: source
+          in: query
+          description: Only count the activity from this source.
+          required: false
+          schema:
+            $ref: '#/components/schemas/AgentActivitySource'
       tags:
         - Agent Activity
       responses:
@@ -6091,8 +6131,10 @@ paths:
                 $ref: '#/components/schemas/AgentActivityResponse'
         '400':
           description: >-
-            `to` is not after `from`, the range exceeds 90 days, `bucket` is not HOUR or DAY, or
-            `skillName` does not match its pattern
+            `to` is not after `from`, the range exceeds 90 days, `skillName` does not match its
+            pattern, an enum value or `policyTokenId` is malformed, or the filters do not combine
+            (`policyTokenId` with `actorType` MEMBER, or `userSub` with `policyTokenId` or `actorType`
+            POLICY_TOKEN)
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -6105,7 +6147,9 @@ paths:
       description: >-
         Return the caller's own agent activity: exactly what admins see about them through
         `getAgentActivity`, and nothing about other members. Any organization member can call it
-        (READ_ORGANIZATION_DATA).
+        (READ_ORGANIZATION_DATA). Policy tokens belong to the organization, so this view takes no
+        `actorType` or `policyTokenId` and its `by_policy_token` is always empty. A refusal by
+        policy (401) or by role permissions (403) counts as DENIED.
 
 
         Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible.
@@ -6124,8 +6168,8 @@ paths:
 
 
         The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at
-        most 500 rows, `by_skill` 100, `actions_by_type` 200 and `recent` the 100 most recent agent
-        actions. Buckets are cut in UTC; empty buckets are omitted.
+        most 500 rows, `by_skill` 100, `by_policy_token` 100, `actions_by_type` 200 and `recent` the
+        100 most recent agent actions. Buckets are cut in UTC; empty buckets are omitted.
       operationId: getMyAgentActivity
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -6160,6 +6204,20 @@ paths:
           schema:
             type: string
             pattern: '^[a-z0-9._-]{1,64}$'
+        - name: outcome
+          in: query
+          description: >-
+            DENIED lists refusals only, and leaves skill loads out. ALLOWED lists everything else,
+            skill loads included.
+          required: false
+          schema:
+            $ref: '#/components/schemas/AgentActionOutcome'
+        - name: source
+          in: query
+          description: Only count the activity from this source.
+          required: false
+          schema:
+            $ref: '#/components/schemas/AgentActivitySource'
       tags:
         - Agent Activity
       responses:
@@ -6171,8 +6229,8 @@ paths:
                 $ref: '#/components/schemas/AgentActivityResponse'
         '400':
           description: >-
-            `to` is not after `from`, the range exceeds 90 days, `bucket` is not HOUR or DAY, or
-            `skillName` does not match its pattern
+            `to` is not after `from`, the range exceeds 90 days, `skillName` does not match its
+            pattern, or an enum value is malformed
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -23993,17 +24051,30 @@ components:
         - SKILL_API_ACTION
         - MCP_TOOL_CALL
         - POLICY_DENIAL
+        - POLICY_TOKEN_API_ACTION
       description: >-
         Where agent activity comes from. SKILL_LOAD: a skill an agent loaded (agent loads only).
         SKILL_API_ACTION: an audited API call made with the `QoverySkill/<skill>` user agent.
         MCP_TOOL_CALL: a tool call through the Qovery MCP server. POLICY_DENIAL: a request refused by
-        a policy token's policy, or by role permissions for a call made from a skill.
+        a policy token's policy (401), or by role permissions (403) for a call made from a skill or
+        by a policy token. POLICY_TOKEN_API_ACTION: an audited call made by a policy token without a
+        skill user agent, such as a script, a CI job or an agent's own HTTP client.
     AgentActionOutcome:
       type: string
       enum:
         - ALLOWED
         - DENIED
-      description: Whether Qovery carried out the action (ALLOWED) or refused it (DENIED).
+      description: >-
+        Whether Qovery carried out the action (ALLOWED) or refused it (DENIED). A refusal by policy
+        (401) and a refusal by role permissions (403) are both DENIED.
+    AgentActorKind:
+      type: string
+      enum:
+        - MEMBER
+        - POLICY_TOKEN
+      description: >-
+        Who acted. MEMBER: a person, or their agent on their credentials. POLICY_TOKEN: an
+        organization policy token.
     AgentActivityCoverage:
       type: object
       description: What this view can and cannot see.
@@ -24029,6 +24100,7 @@ components:
         - actions
         - denials
         - members
+        - policy_tokens
       properties:
         skill_loads:
           type: integer
@@ -24045,7 +24117,11 @@ components:
         members:
           type: integer
           format: int64
-          description: Distinct members with any activity.
+          description: Distinct actors with any activity, policy tokens included.
+        policy_tokens:
+          type: integer
+          format: int64
+          description: Distinct policy tokens with any activity.
     AgentActivityPoint:
       type: object
       required:
@@ -24099,7 +24175,15 @@ components:
         - denials
         - top_skills
         - last_activity_at
+        - actor_kind
       properties:
+        actor_kind:
+          $ref: '#/components/schemas/AgentActorKind'
+        policy_token_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: The policy token's id when `actor_kind` is POLICY_TOKEN and the token is known. Null otherwise.
         user_sub:
           type: string
           nullable: true
@@ -24164,7 +24248,15 @@ components:
         - target_type
         - target_name
         - outcome
+        - actor_kind
       properties:
+        actor_kind:
+          $ref: '#/components/schemas/AgentActorKind'
+        policy_token_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: The policy token's id when `actor_kind` is POLICY_TOKEN and the token is known. Null otherwise.
         at:
           type: string
           format: date-time
@@ -24179,8 +24271,9 @@ components:
           allOf:
             - $ref: '#/components/schemas/AgentActivitySource'
           description: >-
-            Where the action comes from: SKILL_API_ACTION, MCP_TOOL_CALL or POLICY_DENIAL. Skill loads
-            are counted, never listed here, so SKILL_LOAD does not appear.
+            Where the action comes from: SKILL_API_ACTION, MCP_TOOL_CALL, POLICY_DENIAL or
+            POLICY_TOKEN_API_ACTION. Skill loads are counted, never listed here, so SKILL_LOAD does not
+            appear.
         skill_name:
           type: string
           nullable: true
@@ -24201,6 +24294,94 @@ components:
           nullable: true
         outcome:
           $ref: '#/components/schemas/AgentActionOutcome'
+    AgentActivityTokenPoint:
+      type: object
+      required:
+        - start
+        - actions
+        - denials
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Start of the hour or day. Buckets are cut in UTC; empty buckets are omitted.
+        actions:
+          type: integer
+          format: int64
+        denials:
+          type: integer
+          format: int64
+    AgentActivityByPolicyToken:
+      type: object
+      description: One policy token's activity, grouped by token id so a renamed token keeps one entry.
+      required:
+        - deleted
+        - skill_loads
+        - actions
+        - denials
+        - last_activity_at
+        - top_actions
+        - top_skills
+        - timeline
+      properties:
+        policy_token_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: >-
+            The token's id. Null groups older role refusals recorded before refusals named the token:
+            a policy token, but not which one.
+        token_name:
+          type: string
+          nullable: true
+          description: The token's current name, or its last audited name when `deleted` is true. Null when unknown.
+        deleted:
+          type: boolean
+          description: Whether the token no longer exists.
+        role_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: The token's current role. Null when the token is deleted or unknown.
+        role_name:
+          type: string
+          nullable: true
+          description: The name of the token's current role. Null when the token is deleted or unknown.
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the token expires. Null when it never expires, or when it is deleted or unknown.
+        skill_loads:
+          type: integer
+          format: int64
+        actions:
+          type: integer
+          format: int64
+        denials:
+          type: integer
+          format: int64
+        last_activity_at:
+          type: string
+          format: date-time
+        top_actions:
+          type: array
+          description: The token's most frequent actions, at most 3, most frequent first.
+          items:
+            $ref: '#/components/schemas/AgentActionsByType'
+        top_skills:
+          type: array
+          description: The token's most used skills, at most 3, most used first.
+          items:
+            type: string
+        timeline:
+          type: array
+          description: >-
+            The token's actions per bucket of the requested size, oldest first, only for buckets
+            where it acted. Filled when `bucket` is DAY, or when `policyTokenId` is set (so HOUR
+            buckets need `policyTokenId`). Empty otherwise.
+          items:
+            $ref: '#/components/schemas/AgentActivityTokenPoint'
     AgentActivityResponse:
       type: object
       required:
@@ -24213,6 +24394,7 @@ components:
         - actions_by_type
         - by_member
         - by_skill
+        - by_policy_token
         - recent
       properties:
         from:
@@ -24249,6 +24431,13 @@ components:
           description: Activity per skill, most active first, at most 100 rows.
           items:
             $ref: '#/components/schemas/AgentActivityBySkill'
+        by_policy_token:
+          type: array
+          description: >-
+            Activity per policy token, most active first, at most 100 rows. Always empty on
+            `getMyAgentActivity`.
+          items:
+            $ref: '#/components/schemas/AgentActivityByPolicyToken'
         recent:
           type: array
           description: The 100 most recent agent actions, newest first.
