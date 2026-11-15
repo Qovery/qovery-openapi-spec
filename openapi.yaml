@@ -5746,8 +5746,9 @@ paths:
         here while the audit log, which records every load as a `LOAD` event, still has it.
 
 
-        The range defaults to the 30 days ending now and spans at most 90 days. Rows in `by_skill`
-        and `by_member` are sorted by loads, most first, and capped at 100 and 500 rows.
+        The range defaults to the 30 days ending now and spans at most 90 days. Timeline buckets are
+        cut in UTC, and buckets with no load are left out rather than returned as zero. Rows in
+        `by_skill` and `by_member` are sorted by loads, most first, and capped at 100 and 500 rows.
       operationId: getSkillUsage
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -23561,7 +23562,7 @@ components:
       enum:
         - HOUR
         - DAY
-      description: Width of each timeline point, an hour or a day.
+      description: Width of each timeline point, an hour or a day, cut in UTC.
     SkillUsageTotals:
       type: object
       required:
@@ -23599,7 +23600,7 @@ components:
         start:
           type: string
           format: date-time
-          description: Start of the hour or day. Points with no load are left out.
+          description: Start of the hour or day, in UTC.
         loads:
           type: integer
           format: int64
@@ -23698,7 +23699,7 @@ components:
           $ref: '#/components/schemas/SkillUsageTotals'
         timeline:
           type: array
-          description: Loads per hour or per day, oldest first.
+          description: Loads per hour or per day, oldest first. Buckets are cut in UTC, and buckets with no load are left out rather than returned as zero.
           items:
             $ref: '#/components/schemas/SkillUsagePoint'
         by_skill:
