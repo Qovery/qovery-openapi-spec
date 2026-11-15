@@ -5726,7 +5726,13 @@ paths:
         Send it in `If-None-Match` to get a 304 with no body when the cached copy is current.
 
 
-        Every call is recorded in the audit log as a `LOAD` event with sub-target `SKILL_PRESET`,
+        Set `purpose` to say who reads the skill. LOAD (the default) is a member's coding agent
+        loading it to follow it. VIEW is a person reading it, for example in the Console: same body
+        and same ETag and 304 behaviour, recorded as a `VIEW` audit event with the same content as a
+        LOAD entry, and not counted in `getSkillUsage`.
+
+
+        Every LOAD call is recorded in the audit log as a `LOAD` event with sub-target `SKILL_PRESET`,
         304s included (with `from_cache` set to true): the entry gives the skill, the preset and
         revision that applied (or `QOVERY_DEFAULT`), the mode, and the SHA-256 of the content and team
         context that were injected. A 404 is not recorded.
@@ -5740,6 +5746,12 @@ paths:
           schema:
             type: string
             example: qovery-deploy
+        - name: purpose
+          in: query
+          description: Who reads the skill. Defaults to LOAD. Any other value than LOAD or VIEW is refused with 400.
+          required: false
+          schema:
+            $ref: '#/components/schemas/SkillLoadPurpose'
         - $ref: '#/components/parameters/skillPresetIfNoneMatch'
       tags:
         - Skill Presets
@@ -5755,6 +5767,8 @@ paths:
                 $ref: '#/components/schemas/SkillPresetResolvedSkillResponse'
         '304':
           $ref: '#/components/responses/SkillPresetNotModified'
+        '400':
+          description: '`purpose` is not LOAD or VIEW'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5772,8 +5786,9 @@ paths:
         MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
 
 
-        A load is one call to `getResolvedSkill` that returned a skill, cached ones included: a 304
-        counts as a cached load, and a 404 is not counted. Loads are counted whether or not a preset
+        Usage counts agent loads only: a load is one call to `getResolvedSkill` with `purpose` LOAD
+        (the default) that returned a skill, cached ones included. A 304 counts as a cached load, a
+        404 is not counted, and VIEW calls (a person reading a skill) are never counted. Loads are counted whether or not a preset
         applies. Recording a load is best effort and never blocks the agent, so a load can be missing
         here while the audit log, which records every load as a `LOAD` event, still has it.
 
@@ -23625,6 +23640,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SkillPresetRevisionResponse'
+    SkillLoadPurpose:
+      type: string
+      enum:
+        - LOAD
+        - VIEW
+      description: >-
+        Who reads a skill. LOAD: a member's coding agent loads it to follow it, audited as `LOAD` and
+        counted in usage. VIEW: a person reads it, for example in the Console, audited as `VIEW` and
+        not counted in usage.
     SkillUsageBucket:
       type: string
       enum:
@@ -28509,6 +28533,7 @@ components:
         - ACCESS_DENIED
         - LOAD
         - REJECTED
+        - VIEW
       example: CREATE
     SecretOverride:
       type: object
