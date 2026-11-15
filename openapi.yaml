@@ -86,6 +86,11 @@ tags:
   - name: Container Custom Domain
   - name: LLM Providers
   - name: MCP Servers
+  - name: Agent Activity
+    description: >-
+      What members' coding agents did on Qovery, linked to the skills they loaded: skill loads, API
+      calls made from a Qovery skill, Qovery MCP server tool calls and policy denials. Built only
+      from what Qovery already records. It returns no prompt text and no request content.
   - name: Skill Presets
     description: >-
       A skill preset is how an organization tells its members' coding agents to use Qovery: which
@@ -161,6 +166,7 @@ x-tagGroups:
       - Organization Labels Group
       - Organization Enterprise Connection
       - Skill Presets
+      - Agent Activity
       - Projects
       - Members
       - Billing
@@ -6002,6 +6008,177 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           description: The skill preset does not exist or was already deleted
+  '/organization/{organizationId}/agentActivity':
+    get:
+      summary: Get agent activity
+      description: >-
+        Return what members' coding agents did on Qovery over a time range, linked to the skills they
+        loaded: skill loads (agent loads only, a person's VIEW is not counted), API calls made from a
+        Qovery skill, Qovery MCP server tool calls, and requests refused by a policy or by role
+        permissions. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin);
+        members read their own activity with `getMyAgentActivity`.
+
+
+        Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible.
+        What an agent does elsewhere, such as in a shell, in git or in a cloud console, is not. The
+        response repeats this in `coverage`.
+
+
+        Attribution is indicative, not proof. A member is matched on the username the audit log
+        records, and an action is attributed to a skill from the `QoverySkill/<skill>` user agent the
+        client sends: a client can claim a skill it does not run, or leave the user agent out. What
+        an agent may actually do is enforced by its token's policy, and every refusal is recorded.
+
+
+        No request content is returned: only what the audit log shows (event, target, project and
+        environment names, time, origin), never prompt text or request bodies.
+
+
+        The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at
+        most 500 rows, `by_skill` 100, `actions_by_type` 200 and `recent` the 100 most recent agent
+        actions. Timeline points with no activity are left out.
+      operationId: getAgentActivity
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: from
+          in: query
+          description: Start of the range, inclusive. Defaults to 30 days before `to`.
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          description: >-
+            End of the range, exclusive. Defaults to now. Must be after `from`, and the range must not
+            exceed 90 days, otherwise the request is refused with 400.
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: bucket
+          in: query
+          description: Width of each point of the timeline. Defaults to DAY.
+          required: false
+          schema:
+            $ref: '#/components/schemas/SkillUsageBucket'
+        - name: userSub
+          in: query
+          description: >-
+            Only show this member, by the id returned by "List organization members". The member is
+            matched on the username of their most recent skill load, so a member with no skill load
+            in the last 90 days shows no action.
+          required: false
+          schema:
+            type: string
+        - name: skillName
+          in: query
+          description: >-
+            Only count the activity attributed to this skill. Lowercase letters, digits, `.`, `_` or
+            `-`, at most 64 characters, otherwise the request is refused with 400.
+          required: false
+          schema:
+            type: string
+            pattern: '^[a-z0-9._-]{1,64}$'
+      tags:
+        - Agent Activity
+      responses:
+        '200':
+          description: Agent activity over the range
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentActivityResponse'
+        '400':
+          description: >-
+            `to` is not after `from`, the range exceeds 90 days, `bucket` is not HOUR or DAY, or
+            `skillName` does not match its pattern
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/agentActivity/me':
+    get:
+      summary: Get my agent activity
+      description: >-
+        Return the caller's own agent activity: exactly what admins see about them through
+        `getAgentActivity`, and nothing about other members. Any organization member can call it
+        (READ_ORGANIZATION_DATA).
+
+
+        Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible.
+        What an agent does elsewhere, such as in a shell, in git or in a cloud console, is not. The
+        response repeats this in `coverage`.
+
+
+        Attribution is indicative, not proof. A member is matched on the username the audit log
+        records, and an action is attributed to a skill from the `QoverySkill/<skill>` user agent the
+        client sends: a client can claim a skill it does not run, or leave the user agent out. What
+        an agent may actually do is enforced by its token's policy, and every refusal is recorded.
+
+
+        No request content is returned: only what the audit log shows (event, target, project and
+        environment names, time, origin), never prompt text or request bodies.
+
+
+        The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at
+        most 500 rows, `by_skill` 100, `actions_by_type` 200 and `recent` the 100 most recent agent
+        actions. Timeline points with no activity are left out.
+      operationId: getMyAgentActivity
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: from
+          in: query
+          description: Start of the range, inclusive. Defaults to 30 days before `to`.
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          description: >-
+            End of the range, exclusive. Defaults to now. Must be after `from`, and the range must not
+            exceed 90 days, otherwise the request is refused with 400.
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: bucket
+          in: query
+          description: Width of each point of the timeline. Defaults to DAY.
+          required: false
+          schema:
+            $ref: '#/components/schemas/SkillUsageBucket'
+        - name: skillName
+          in: query
+          description: >-
+            Only count the activity attributed to this skill. Lowercase letters, digits, `.`, `_` or
+            `-`, at most 64 characters, otherwise the request is refused with 400.
+          required: false
+          schema:
+            type: string
+            pattern: '^[a-z0-9._-]{1,64}$'
+      tags:
+        - Agent Activity
+      responses:
+        '200':
+          description: Agent activity over the range
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentActivityResponse'
+        '400':
+          description: >-
+            `to` is not after `from`, the range exceeds 90 days, `bucket` is not HOUR or DAY, or
+            `skillName` does not match its pattern
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/containerRegistry/{containerRegistryId}/images':
     get:
       summary: List image version for a container registry
@@ -23809,6 +23986,274 @@ components:
           description: Loads per preset, most loaded first. A row with a null preset groups the loads made with no preset.
           items:
             $ref: '#/components/schemas/SkillUsageByPreset'
+    AgentActivitySource:
+      type: string
+      enum:
+        - SKILL_LOAD
+        - SKILL_API_ACTION
+        - MCP_TOOL_CALL
+        - POLICY_DENIAL
+      description: >-
+        Where agent activity comes from. SKILL_LOAD: a skill an agent loaded (agent loads only).
+        SKILL_API_ACTION: an audited API call made with the `QoverySkill/<skill>` user agent.
+        MCP_TOOL_CALL: a tool call through the Qovery MCP server. POLICY_DENIAL: a request refused by
+        a policy token's policy, or by role permissions for a call made from a skill.
+    AgentActionOutcome:
+      type: string
+      enum:
+        - ALLOWED
+        - DENIED
+      description: Whether Qovery carried out the action (ALLOWED) or refused it (DENIED).
+    AgentActivityCoverage:
+      type: object
+      description: What this view can and cannot see.
+      required:
+        - sources
+        - note
+      properties:
+        sources:
+          type: array
+          description: The sources the view is built from.
+          items:
+            $ref: '#/components/schemas/AgentActivitySource'
+        note:
+          type: string
+          description: The coverage limit, in plain words, to show next to the data.
+          example: >-
+            Only actions taken through Qovery (its API, CLI, skills and MCP server) are visible. What
+            an agent does elsewhere, such as in a shell, in git or in a cloud console, is not.
+    AgentActivityTotals:
+      type: object
+      required:
+        - skill_loads
+        - actions
+        - denials
+        - members
+      properties:
+        skill_loads:
+          type: integer
+          format: int64
+          description: Skills loaded by agents.
+        actions:
+          type: integer
+          format: int64
+          description: Agent actions, allowed and denied.
+        denials:
+          type: integer
+          format: int64
+          description: Agent actions that were refused.
+        members:
+          type: integer
+          format: int64
+          description: Distinct members with any activity.
+    AgentActivityPoint:
+      type: object
+      required:
+        - start
+        - skill_loads
+        - actions
+        - denials
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Start of the hour or day.
+        skill_loads:
+          type: integer
+          format: int64
+        actions:
+          type: integer
+          format: int64
+        denials:
+          type: integer
+          format: int64
+    AgentActionsByType:
+      type: object
+      required:
+        - event
+        - target_type
+        - count
+        - denied
+      properties:
+        event:
+          type: string
+          description: The audit event type, as in `OrganizationEventType`.
+          example: DEPLOY_QUEUED
+        target_type:
+          type: string
+          description: The audit target type, as in `OrganizationEventTargetType`.
+          example: APPLICATION
+        count:
+          type: integer
+          format: int64
+        denied:
+          type: integer
+          format: int64
+          description: How many of them were refused.
+    AgentActivityByMember:
+      type: object
+      required:
+        - user_name
+        - skill_loads
+        - actions
+        - denials
+        - top_skills
+        - last_activity_at
+      properties:
+        user_sub:
+          type: string
+          nullable: true
+          description: >-
+            The member's id, as returned by "List organization members". Null for an actor that
+            loaded no skill in the range, such as a policy token.
+        user_name:
+          type: string
+          description: The username the audit log records for the actor.
+        skill_loads:
+          type: integer
+          format: int64
+        actions:
+          type: integer
+          format: int64
+        denials:
+          type: integer
+          format: int64
+        top_skills:
+          type: array
+          description: The member's most used skills, at most 3, most used first.
+          items:
+            type: string
+        last_activity_at:
+          type: string
+          format: date-time
+    AgentActivityBySkill:
+      type: object
+      required:
+        - loads
+        - actions
+        - denials
+        - members
+      properties:
+        skill_name:
+          type: string
+          nullable: true
+          description: >-
+            Null groups the agent actions that name no skill: MCP tool calls and API calls made
+            without a skill user agent, such as by a policy token.
+        loads:
+          type: integer
+          format: int64
+        actions:
+          type: integer
+          format: int64
+        denials:
+          type: integer
+          format: int64
+        members:
+          type: integer
+          format: int64
+          description: Distinct members with activity on this skill.
+    AgentActivityEntry:
+      type: object
+      description: One agent action, as the audit log records it. No request content.
+      required:
+        - at
+        - user_name
+        - origin
+        - event
+        - target_type
+        - target_name
+        - outcome
+      properties:
+        at:
+          type: string
+          format: date-time
+        user_sub:
+          type: string
+          nullable: true
+          description: The member's id. Null when the actor loaded no skill in the range, such as a policy token.
+        user_name:
+          type: string
+          description: The username the audit log records for the actor.
+        origin:
+          allOf:
+            - $ref: '#/components/schemas/AgentActivitySource'
+          description: >-
+            Where the action comes from: SKILL_API_ACTION, MCP_TOOL_CALL or POLICY_DENIAL. Skill loads
+            are counted, never listed here, so SKILL_LOAD does not appear.
+        skill_name:
+          type: string
+          nullable: true
+          description: The skill named in the user agent. Null when the action names none.
+        event:
+          type: string
+          description: The audit event type, as in `OrganizationEventType`.
+        target_type:
+          type: string
+          description: The audit target type, as in `OrganizationEventTargetType`.
+        target_name:
+          type: string
+        project_name:
+          type: string
+          nullable: true
+        environment_name:
+          type: string
+          nullable: true
+        outcome:
+          $ref: '#/components/schemas/AgentActionOutcome'
+    AgentActivityResponse:
+      type: object
+      required:
+        - from
+        - to
+        - bucket
+        - coverage
+        - totals
+        - timeline
+        - actions_by_type
+        - by_member
+        - by_skill
+        - recent
+      properties:
+        from:
+          type: string
+          format: date-time
+          description: Start of the range actually used, after defaults.
+        to:
+          type: string
+          format: date-time
+          description: End of the range actually used, after defaults.
+        bucket:
+          $ref: '#/components/schemas/SkillUsageBucket'
+        coverage:
+          $ref: '#/components/schemas/AgentActivityCoverage'
+        totals:
+          $ref: '#/components/schemas/AgentActivityTotals'
+        timeline:
+          type: array
+          description: Activity per hour or per day, oldest first. Points with no activity are left out.
+          items:
+            $ref: '#/components/schemas/AgentActivityPoint'
+        actions_by_type:
+          type: array
+          description: Agent actions per audit event and target type, most frequent first, at most 200 rows.
+          items:
+            $ref: '#/components/schemas/AgentActionsByType'
+        by_member:
+          type: array
+          description: Activity per member, most active first, at most 500 rows.
+          items:
+            $ref: '#/components/schemas/AgentActivityByMember'
+        by_skill:
+          type: array
+          description: Activity per skill, most active first, at most 100 rows.
+          items:
+            $ref: '#/components/schemas/AgentActivityBySkill'
+        recent:
+          type: array
+          description: The 100 most recent agent actions, newest first.
+          items:
+            $ref: '#/components/schemas/AgentActivityEntry'
     SkillPresetFindingSource:
       type: string
       enum:
