@@ -86,6 +86,14 @@ tags:
   - name: Container Custom Domain
   - name: LLM Providers
   - name: MCP Servers
+  - name: Skill Presets
+    description: >-
+      A skill preset is how an organization tells its members' coding agents to use Qovery: which
+      Qovery skills apply, team instructions on top of them, and skills of the organization's own.
+      Admins manage presets and assign each one to the organization, to roles or to members. Any
+      member can read the preset that applies to them, which is what the agent's Qovery loader skill
+      fetches. Every saved preset is inspected for content that could turn a member's agent against
+      them, and every create, edit, delete and skill load is recorded in the audit log.
   - name: Database
   - name: Database Actions
   - name: Database Application
@@ -152,6 +160,7 @@ x-tagGroups:
       - Organization Annotations Group
       - Organization Labels Group
       - Organization Enterprise Connection
+      - Skill Presets
       - Projects
       - Members
       - Billing
@@ -5534,6 +5543,326 @@ paths:
       responses:
         '200':
           description: LLM provider deleted
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/skillPreset':
+    get:
+      summary: List organization skill presets
+      description: >-
+        List the skill presets of the organization, with their full content and who each one is
+        assigned to. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+      operationId: listSkillPresets
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Skill Presets
+      responses:
+        '200':
+          description: List skill presets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillPresetResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a skill preset
+      description: >-
+        Create a skill preset and its assignments. Requires the MANAGE_ORGANIZATION_DATA permission
+        (organization owner or admin). The preset starts at revision 1.
+
+
+        A preset runs inside each assigned member's coding agent, on their machine. Before saving,
+        Qovery inspects every field that reaches an agent (the preset description, the team context,
+        and each skill's description and content) for content that could turn the agent against its
+        user: overriding its instructions, hiding actions from the user, skipping confirmations,
+        reading local credentials, dumping secrets, sending data out, running remote or obfuscated
+        code, links outside an allowlist of documentation hosts, invisible characters, HTML comments,
+        encoded blobs and pasted credentials. Any finding rejects the whole request with 422 and
+        nothing is saved.
+
+
+        The creation is recorded in the audit log as a `CREATE` event with sub-target
+        `SKILL_PRESET`, holding the saved state with its full text, and as revision 1 in the
+        revision history.
+      operationId: createSkillPreset
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      tags:
+        - Skill Presets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkillPresetRequest'
+      responses:
+        '201':
+          description: Skill preset created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillPresetResponse'
+        '400':
+          description: >-
+            Invalid preset: a field is out of its limits, a skill entry does not fit its mode or the
+            base, or a skill or a target appears more than once
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          description: The organization does not exist, or a role id is not a role of the organization
+        '409':
+          description: >-
+            The preset name is already taken in the organization, or an assignment target already
+            receives another preset
+        '422':
+          $ref: '#/components/responses/SkillPresetRejected'
+  '/organization/{organizationId}/skillPreset/resolved':
+    get:
+      summary: Get the skill preset that applies to the caller
+      description: >-
+        Return the manifest of the skill preset that applies to the caller in this organization: its
+        name, base, revision and, for each skill entry, the mode, the description and the size and
+        SHA-256 of the content, but never the content itself. This is what the Qovery loader skill
+        reads first. It then fetches only the skills a task needs with
+        `getResolvedSkill`. Any organization member can call it (READ_ORGANIZATION_DATA). Assignments
+        and the preset's creator are left out.
+
+
+        The preset is resolved in this order: a preset assigned to the caller as a member, then a
+        preset assigned to the caller's role in the organization, then the organization default. When
+        none applies, `source` is `QOVERY_DEFAULT`, `skill_preset` is null and the agent uses the
+        Qovery skills as published. API tokens have no member behind them, so they only receive a
+        role preset or the organization default.
+
+
+        The response carries an `ETag`: `"<preset id>-<revision>"`, or `"qovery-default"` when no
+        preset applies. It changes when the preset is edited and when the caller moves to another
+        preset. Send it back in `If-None-Match` to get a 304 with no body when nothing changed.
+      operationId: getResolvedSkillPreset
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/skillPresetIfNoneMatch'
+      tags:
+        - Skill Presets
+      responses:
+        '200':
+          description: The manifest of the skill preset that applies to the caller
+          headers:
+            ETag:
+              $ref: '#/components/headers/SkillPresetETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillPresetManifestResponse'
+        '304':
+          $ref: '#/components/responses/SkillPresetNotModified'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/skillPreset/resolved/skill/{skillName}':
+    get:
+      summary: Get what to load for one skill
+      description: >-
+        Return what the caller's agent must load for one skill, under the preset that applies to the
+        caller (resolved as in `getResolvedSkillPreset`): the organization's content for that skill
+        if any, the team context, and the SHA-256 of each, so the member can check that what their
+        agent follows is what an admin saved. Any organization member can call it
+        (READ_ORGANIZATION_DATA).
+
+
+        A Qovery skill (`qovery` or `qovery-*`) that the preset leaves alone, or any Qovery skill when
+        no preset applies, answers 200 with a null `mode`: load the Qovery skill as published, with
+        the team context if there is one. A `DISABLE` mode means the agent must not load the skill.
+        Any other name that is not in the preset answers 404.
+
+
+        The ETag is the same as the manifest's, so a single revision covers every skill of the preset.
+        Send it in `If-None-Match` to get a 304 with no body when the cached copy is current.
+
+
+        Every call is recorded in the audit log as a `LOAD` event with sub-target `SKILL_PRESET`,
+        304s included (with `from_cache` set to true): the entry gives the skill, the preset and
+        revision that applied (or `QOVERY_DEFAULT`), the mode, and the SHA-256 of the content and team
+        context that were injected. A 404 is not recorded.
+      operationId: getResolvedSkill
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: skillName
+          in: path
+          description: Name of the skill to load, for example `qovery-deploy` or a skill the preset adds
+          required: true
+          schema:
+            type: string
+            example: qovery-deploy
+        - $ref: '#/components/parameters/skillPresetIfNoneMatch'
+      tags:
+        - Skill Presets
+      responses:
+        '200':
+          description: What to load for the skill
+          headers:
+            ETag:
+              $ref: '#/components/headers/SkillPresetETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillPresetResolvedSkillResponse'
+        '304':
+          $ref: '#/components/responses/SkillPresetNotModified'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          description: >-
+            The organization does not exist, or the skill is neither a Qovery skill nor a skill of
+            the preset that applies to the caller
+  '/organization/{organizationId}/skillPresetRevision':
+    get:
+      summary: List skill preset revisions
+      description: >-
+        List the saved states of the organization's skill presets, most recent first, each with its
+        full content, who saved it and when. Every create, edit and delete adds one immutable
+        revision. Revisions are kept after a preset is deleted: the deletion adds a final `DELETE`
+        revision holding the state the preset had. A save that fails, for example with a 422, adds
+        nothing. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+      operationId: listSkillPresetRevisions
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: skillPresetId
+          in: query
+          description: Only list the revisions of this preset, deleted or not. Omit it to list the revisions of every preset of the organization.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: limit
+          in: query
+          description: Maximum number of revisions to return. A value outside 1 to 100 is brought back into that range.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+      tags:
+        - Skill Presets
+      responses:
+        '200':
+          description: List skill preset revisions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillPresetRevisionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/skillPreset/{skillPresetId}':
+    get:
+      summary: Get a skill preset
+      description: >-
+        Get a skill preset with its full content and assignments. Requires the
+        MANAGE_ORGANIZATION_DATA permission on the preset's organization.
+      operationId: getSkillPreset
+      parameters:
+        - $ref: '#/components/parameters/skillPresetId'
+      tags:
+        - Skill Presets
+      responses:
+        '200':
+          description: The skill preset
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillPresetResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    put:
+      summary: Edit a skill preset
+      description: >-
+        Replace a skill preset, its skill entries and its assignments with the request body, and
+        increase its revision by one. Requires the MANAGE_ORGANIZATION_DATA permission on the
+        preset's organization. The content is inspected as on creation, and any finding rejects the
+        whole request with 422 and nothing is saved.
+
+
+        The edit is recorded in the audit log as an `UPDATE` event with sub-target `SKILL_PRESET`:
+        the change holds the new state with its full text and a summary of what changed (skills
+        added, removed and modified, and whether the base, the team context or the assignments
+        changed), and the original change holds the previous state. When the text of a preset is
+        larger than 64 KB, the audit entry keeps only the SHA-256 of each text and sets
+        `content_omitted`; the revision history always holds the full text.
+      operationId: editSkillPreset
+      parameters:
+        - $ref: '#/components/parameters/skillPresetId'
+      tags:
+        - Skill Presets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkillPresetRequest'
+      responses:
+        '200':
+          description: Skill preset edited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillPresetResponse'
+        '400':
+          description: >-
+            Invalid preset: a field is out of its limits, a skill entry does not fit its mode or the
+            base, or a skill or a target appears more than once
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          description: The skill preset does not exist, or a role id is not a role of the organization
+        '409':
+          description: >-
+            The preset name is already taken in the organization, or an assignment target already
+            receives another preset
+        '422':
+          $ref: '#/components/responses/SkillPresetRejected'
+    delete:
+      summary: Delete a skill preset
+      description: >-
+        Delete a skill preset and its assignments. Members it applied to fall back to the next
+        preset in the resolution order, or to the Qovery skills as published. Requires the
+        MANAGE_ORGANIZATION_DATA permission on the preset's organization. The deletion is recorded
+        in the audit log as a `DELETE` event with sub-target `SKILL_PRESET`, holding the deleted
+        state, and as a final `DELETE` revision in the revision history.
+      operationId: deleteSkillPreset
+      parameters:
+        - $ref: '#/components/parameters/skillPresetId'
+      tags:
+        - Skill Presets
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -16022,6 +16351,24 @@ components:
       schema:
         type: string
         format: uuid
+    skillPresetId:
+      name: skillPresetId
+      in: path
+      description: Skill Preset ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    skillPresetIfNoneMatch:
+      name: If-None-Match
+      in: header
+      description: >-
+        The ETag of the caller's cached copy. When it matches the current ETag, the response is a
+        304 with no body.
+      required: false
+      schema:
+        type: string
+        example: '"0193f1c2-6b1e-7c3a-9a4f-2d5e8b7c1a90-3"'
     deploymentRequestId:
       name: deploymentRequestId
       in: path
@@ -22737,6 +23084,460 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LlmProviderResponse'
+    SkillPresetBase:
+      type: string
+      enum:
+        - QOVERY_FULL
+        - QOVERY_LEAN
+        - NONE
+      description: >-
+        The Qovery skill set a preset starts from. QOVERY_FULL: every Qovery skill, as published.
+        QOVERY_LEAN: one short CLI-first skill that relies on the `qovery` CLI and its `--help`.
+        NONE: no Qovery skill, only the preset's own skills and team context.
+    SkillPresetSkillMode:
+      type: string
+      enum:
+        - DISABLE
+        - OVERLAY
+        - REPLACE
+        - ADD
+      description: >-
+        What a skill entry does on top of the base. DISABLE: the Qovery skill is never loaded.
+        OVERLAY: the Qovery skill is loaded, then the entry's content as team instructions. REPLACE:
+        the entry's content is loaded in place of the Qovery skill. ADD: a skill of the
+        organization's own. DISABLE, OVERLAY and REPLACE apply to a Qovery skill (named `qovery` or
+        `qovery-*`) and only on the QOVERY_FULL base. ADD applies to any name that does not start
+        with `qovery`, on any base.
+    SkillPresetResolutionSource:
+      type: string
+      enum:
+        - USER
+        - ROLE
+        - ORGANIZATION
+        - QOVERY_DEFAULT
+      description: >-
+        Which assignment made the preset apply to the caller. USER: assigned to the caller as a
+        member. ROLE: assigned to the caller's role in the organization. ORGANIZATION: the
+        organization default. QOVERY_DEFAULT: no preset applies, and the agent uses the Qovery
+        skills as published.
+    SkillPresetChangeType:
+      type: string
+      enum:
+        - CREATE
+        - UPDATE
+        - DELETE
+      description: The change that produced a revision. A DELETE revision holds the state the preset had when it was deleted.
+    SkillPresetAssignedTo:
+      type: object
+      description: >-
+        Who receives the preset. A target (the organization default, a role or a member) receives at
+        most one preset. When several presets could apply to a member, a member assignment wins over
+        a role assignment, which wins over the organization default.
+      properties:
+        organization_default:
+          type: boolean
+          default: false
+          description: Whether the preset applies to every member with no member or role assignment of their own.
+        role_ids:
+          type: array
+          default: []
+          description: Default or custom roles of the organization, as returned by "List organization roles".
+          items:
+            type: string
+            format: uuid
+        user_ids:
+          type: array
+          default: []
+          description: Members of the organization, by the id returned by "List organization members".
+          items:
+            type: string
+    SkillPresetSkillRequest:
+      type: object
+      required:
+        - skill_name
+        - mode
+      properties:
+        skill_name:
+          type: string
+          maxLength: 64
+          pattern: '^[a-z0-9]([a-z0-9-]{0,62}[a-z0-9])?$'
+          description: >-
+            Lowercase letters, digits and hyphens, at most 64 characters. A Qovery skill name
+            (`qovery` or `qovery-*`) for DISABLE, OVERLAY and REPLACE; any other name for ADD.
+          example: qovery-deploy
+        mode:
+          $ref: '#/components/schemas/SkillPresetSkillMode'
+        description:
+          type: string
+          nullable: true
+          maxLength: 1024
+          description: >-
+            When the agent should use the skill, at most 1024 characters. Required for ADD and
+            REPLACE, since agents pick a skill from its description. Ignored for DISABLE.
+        content:
+          type: string
+          nullable: true
+          maxLength: 65536
+          description: Markdown delivered to the agent, at most 64 KB. Required for every mode except DISABLE.
+    SkillPresetSkillResponse:
+      type: object
+      required:
+        - skill_name
+        - mode
+      properties:
+        skill_name:
+          type: string
+        mode:
+          $ref: '#/components/schemas/SkillPresetSkillMode'
+        description:
+          type: string
+          nullable: true
+          description: When the agent should use the skill. Null when the entry has none.
+        content:
+          type: string
+          nullable: true
+          description: Markdown delivered to the agent. Null for DISABLE.
+    SkillPresetRequest:
+      type: object
+      description: Create and edit share this body. An edit replaces the whole preset, skill entries and assignments included.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Preset name, unique in the organization, 1 to 100 characters
+          example: backend
+        description:
+          type: string
+          default: ''
+          maxLength: 1024
+          description: What the preset is for, at most 1024 characters. Shown to the members it applies to.
+        base:
+          allOf:
+            - $ref: '#/components/schemas/SkillPresetBase'
+          default: QOVERY_FULL
+          description: The Qovery skill set the preset starts from. Defaults to QOVERY_FULL.
+        team_context:
+          type: string
+          nullable: true
+          maxLength: 32768
+          description: >-
+            Markdown on how the team uses Qovery, delivered with every skill the agent loads, at most
+            32 KB. Null or blank means none.
+        skills:
+          type: array
+          default: []
+          maxItems: 50
+          description: Changes on top of the base, at most 50, each skill name at most once.
+          items:
+            $ref: '#/components/schemas/SkillPresetSkillRequest'
+        assigned_to:
+          $ref: '#/components/schemas/SkillPresetAssignedTo'
+    SkillPresetResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - type: object
+          required:
+            - name
+            - description
+            - base
+            - skills
+            - revision
+            - assigned_to
+            - updated_at
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            base:
+              $ref: '#/components/schemas/SkillPresetBase'
+            team_context:
+              type: string
+              nullable: true
+              description: Markdown delivered with every skill the agent loads. Null when the preset has none.
+            skills:
+              type: array
+              items:
+                $ref: '#/components/schemas/SkillPresetSkillResponse'
+            revision:
+              type: integer
+              minimum: 1
+              description: Starts at 1 and increases by one on every edit.
+            creator_name:
+              type: string
+              nullable: true
+              description: Name of the member who created the preset. Null when unknown.
+            assigned_to:
+              $ref: '#/components/schemas/SkillPresetAssignedTo'
+    SkillPresetResponseList:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillPresetResponse'
+    SkillPresetContentSummary:
+      type: object
+      description: Enough for the agent to tell the member what will be injected, and for the member to verify it.
+      required:
+        - approx_tokens
+        - sha256
+      properties:
+        approx_tokens:
+          type: integer
+          description: Estimated size in tokens, the number of characters divided by 4. An estimate for the member, not a bill.
+        sha256:
+          type: string
+          description: Hex-encoded SHA-256 of the UTF-8 text.
+    SkillPresetManifestSkill:
+      type: object
+      required:
+        - skill_name
+        - mode
+      properties:
+        skill_name:
+          type: string
+        mode:
+          $ref: '#/components/schemas/SkillPresetSkillMode'
+        description:
+          type: string
+          nullable: true
+          description: When the agent should use the skill. Null when the entry has none.
+        content:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/SkillPresetContentSummary'
+          nullable: true
+          description: Size and hash of the content, never the content itself. Null for DISABLE, which injects nothing.
+    SkillPresetManifest:
+      type: object
+      description: The preset as the member sees it. No content, no assignments, no creator.
+      required:
+        - id
+        - name
+        - base
+        - revision
+        - updated_at
+        - skills
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        base:
+          $ref: '#/components/schemas/SkillPresetBase'
+        revision:
+          type: integer
+          minimum: 1
+        updated_at:
+          type: string
+          format: date-time
+        team_context:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/SkillPresetContentSummary'
+          nullable: true
+          description: Size and hash of the team context, which comes with every skill fetched. Null when the preset has none.
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillPresetManifestSkill'
+    SkillPresetManifestResponse:
+      type: object
+      required:
+        - source
+      properties:
+        source:
+          $ref: '#/components/schemas/SkillPresetResolutionSource'
+        skill_preset:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/SkillPresetManifest'
+          nullable: true
+          description: The preset that applies to the caller. Null when `source` is QOVERY_DEFAULT.
+    SkillPresetReference:
+      type: object
+      required:
+        - id
+        - name
+        - revision
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        revision:
+          type: integer
+          minimum: 1
+    SkillPresetResolvedSkillResponse:
+      type: object
+      description: What the agent loads for one skill, and what it shows the member.
+      required:
+        - source
+        - skill_name
+      properties:
+        source:
+          $ref: '#/components/schemas/SkillPresetResolutionSource'
+        skill_name:
+          type: string
+        skill_preset:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/SkillPresetReference'
+          nullable: true
+          description: The preset that applies to the caller. Null when `source` is QOVERY_DEFAULT.
+        mode:
+          type: string
+          allOf:
+            - $ref: '#/components/schemas/SkillPresetSkillMode'
+          nullable: true
+          description: >-
+            Null when the preset leaves this Qovery skill alone, or when no preset applies: load the
+            Qovery skill as published. DISABLE means the agent must not load the skill.
+        description:
+          type: string
+          nullable: true
+          description: The entry's description. Null when the preset leaves the skill alone or the entry has none.
+        content:
+          type: string
+          nullable: true
+          description: >-
+            Markdown to load: team instructions after the Qovery skill for OVERLAY, the whole skill
+            for REPLACE and ADD. Null for DISABLE and when the preset leaves the skill alone.
+        content_sha256:
+          type: string
+          nullable: true
+          description: Hex-encoded SHA-256 of `content`. Null when `content` is null.
+        team_context:
+          type: string
+          nullable: true
+          description: The preset's team context, delivered with every skill. Null when there is none or no preset applies.
+        team_context_sha256:
+          type: string
+          nullable: true
+          description: Hex-encoded SHA-256 of `team_context`. Null when `team_context` is null.
+    SkillPresetRevisionResponse:
+      type: object
+      description: One saved state of a preset, immutable.
+      required:
+        - skill_preset_id
+        - revision
+        - change_type
+        - edited_by
+        - edited_at
+        - name
+        - description
+        - base
+        - skills
+        - assigned_to
+      properties:
+        skill_preset_id:
+          type: string
+          format: uuid
+          description: The preset's id. Still listed after the preset is deleted.
+        revision:
+          type: integer
+          minimum: 1
+        change_type:
+          $ref: '#/components/schemas/SkillPresetChangeType'
+        edited_by:
+          type: string
+          description: Who saved this state.
+        edited_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+        description:
+          type: string
+        base:
+          $ref: '#/components/schemas/SkillPresetBase'
+        team_context:
+          type: string
+          nullable: true
+          description: Null when the preset had none at this revision.
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillPresetSkillResponse'
+        assigned_to:
+          $ref: '#/components/schemas/SkillPresetAssignedTo'
+    SkillPresetRevisionResponseList:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillPresetRevisionResponse'
+    SkillPresetRejectionFinding:
+      type: object
+      required:
+        - rule_id
+        - location
+        - line
+        - reason
+      properties:
+        rule_id:
+          type: string
+          description: >-
+            The inspection rule that matched, for example `override-instructions`,
+            `conceal-from-user`, `skip-confirmation`, `read-credentials`, `dump-secrets`,
+            `exfiltration-endpoint`, `upload-command`, `remote-exec`, `obfuscated-exec`,
+            `external-url`, `invisible-characters`, `html-comment`, `encoded-blob` or `credential`.
+            New rules can be added.
+          example: dump-secrets
+        location:
+          type: string
+          description: >-
+            The field that holds the finding: `description`, `team context`, `description of skill
+            '<name>'` or `content of skill '<name>'`.
+          example: team context
+        line:
+          type: integer
+          minimum: 1
+          description: 1-based line within that field.
+          example: 3
+        reason:
+          type: string
+          description: Why the content was refused. Never contains the offending text.
+          example: Asks the agent to print or collect secrets
+    SkillPresetRejectionResponse:
+      type: object
+      description: A problem detail (RFC 9457) listing every finding of the security inspection.
+      required:
+        - status
+        - title
+        - detail
+        - findings
+      properties:
+        type:
+          type: string
+          example: about:blank
+        title:
+          type: string
+          example: Skill preset rejected for security
+        status:
+          type: integer
+          example: 422
+        detail:
+          type: string
+          description: Every finding in one sentence, safe to log.
+        instance:
+          type: string
+          description: The request path.
+        findings:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillPresetRejectionFinding'
     ContainerRegistryResponse:
       allOf:
         - $ref: '#/components/schemas/Base'
@@ -27241,6 +28042,7 @@ components:
         - POLICY_API_TOKEN
         - REMOTE_ACCESS
         - SECRET
+        - SKILL_PRESET
         - SSO
         - TERRAFORM
         - TOOL_CALL
@@ -27333,6 +28135,7 @@ components:
         - UNLOCK
         - POLICY_FAILED
         - ACCESS_DENIED
+        - LOAD
       example: CREATE
     SecretOverride:
       type: object
@@ -34197,6 +35000,31 @@ components:
       description: Access forbidden, or AI features are disabled for the organization (`ai_features_enabled`).
     BuildAnalysisNotConfigured:
       description: Build analysis is not available on this Qovery instance because no AI model is configured. Checked before the organization's AI features. Retrying does not help until the instance is configured.
+    SkillPresetNotModified:
+      description: The `If-None-Match` header holds the current ETag, so the cached copy is still current. No body.
+      headers:
+        ETag:
+          $ref: '#/components/headers/SkillPresetETag'
+    SkillPresetRejected:
+      description: >-
+        The preset was rejected for security, to protect the members it applies to. Each finding
+        names the rule, the field and the line, never the offending text. Nothing was saved.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SkillPresetRejectionResponse'
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/SkillPresetRejectionResponse'
+  headers:
+    SkillPresetETag:
+      description: >-
+        Strong ETag of the skill preset that applies to the caller: `"<preset id>-<revision>"`, or
+        `"qovery-default"` when no preset applies. Shared by the manifest and every skill of the
+        preset.
+      schema:
+        type: string
+        example: '"0193f1c2-6b1e-7c3a-9a4f-2d5e8b7c1a90-3"'
   securitySchemes:
     bearerAuth:
       type: http
