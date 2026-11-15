@@ -6036,7 +6036,7 @@ paths:
 
         The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at
         most 500 rows, `by_skill` 100, `actions_by_type` 200 and `recent` the 100 most recent agent
-        actions. Timeline points with no activity are left out.
+        actions. Buckets are cut in UTC; empty buckets are omitted.
       operationId: getAgentActivity
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -6125,7 +6125,7 @@ paths:
 
         The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at
         most 500 rows, `by_skill` 100, `actions_by_type` 200 and `recent` the 100 most recent agent
-        actions. Timeline points with no activity are left out.
+        actions. Buckets are cut in UTC; empty buckets are omitted.
       operationId: getMyAgentActivity
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -24057,7 +24057,7 @@ components:
         start:
           type: string
           format: date-time
-          description: Start of the hour or day.
+          description: Start of the hour or day. Buckets are cut in UTC; empty buckets are omitted.
         skill_loads:
           type: integer
           format: int64
@@ -24231,7 +24231,7 @@ components:
           $ref: '#/components/schemas/AgentActivityTotals'
         timeline:
           type: array
-          description: Activity per hour or per day, oldest first. Points with no activity are left out.
+          description: Activity per hour or per day, oldest first. Buckets are cut in UTC; empty buckets are omitted.
           items:
             $ref: '#/components/schemas/AgentActivityPoint'
         actions_by_type:
