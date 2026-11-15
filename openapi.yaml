@@ -5592,14 +5592,30 @@ paths:
         template is never resolved for a member and cannot have assignments.
 
 
-        A preset runs inside each assigned member's coding agent, on their machine. Before saving,
-        Qovery inspects every field that reaches an agent (the preset description, the team context,
-        and each skill's description and content) for content that could turn the agent against its
-        user: overriding its instructions, hiding actions from the user, skipping confirmations,
-        reading local credentials, dumping secrets, sending data out, running remote or obfuscated
-        code, links outside an allowlist of documentation hosts, invisible characters, HTML comments,
-        encoded blobs and pasted credentials. Any finding rejects the whole request with 422 and
-        nothing is saved.
+        A preset runs inside each assigned member's coding agent, on their machine, so every create
+        and edit is checked before anything reaches members. The check covers every field that
+        reaches an agent (the preset description, the team context, and each skill's description
+        and content) and runs in two steps:
+
+
+        1. Deterministic rules look for content that could turn the agent against its user:
+        overriding its instructions, hiding actions from the user, skipping confirmations, reading
+        local credentials, dumping secrets, sending data out, running remote or obfuscated code,
+        links outside an allowlist of documentation hosts, invisible characters, HTML comments,
+        encoded blobs and pasted credentials. Any finding answers 422 (findings with `source`
+        RULES) and the model is not called.
+
+        2. A model review on AWS Bedrock then reads the content as untrusted data, to catch
+        paraphrased or new attacks the rules miss. A BLOCK verdict answers 422 (findings with
+        `source` MODEL).
+
+
+        The check fails closed: if the model review cannot give a verdict (error, timeout or
+        unusable answer), the request answers 503 and nothing is saved. Because every save is sent
+        to the model, an organization with AI features turned off cannot create or edit presets
+        (403). Reading, resolving, loading and deleting presets are not affected. A save refused for
+        security is recorded in the audit log as a `REJECTED` event with sub-target `SKILL_PRESET`,
+        holding hashes and findings, never the text.
 
 
         The creation is recorded in the audit log as a `CREATE` event with sub-target
@@ -5626,11 +5642,12 @@ paths:
         '400':
           description: >-
             Invalid preset: a field is out of its limits, a skill entry does not fit its mode or the
-            base, a skill or a target appears more than once, or a template has assignments
+            base, a skill or a target appears more than once, a template has assignments, or the
+            preset holds more than 200,000 characters of text in total
         '401':
           $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/responses/SkillPresetForbidden'
         '404':
           description: The organization does not exist, or a role id is not a role of the organization
         '409':
@@ -5639,6 +5656,8 @@ paths:
             receives another preset
         '422':
           $ref: '#/components/responses/SkillPresetRejected'
+        '503':
+          $ref: '#/components/responses/SkillPresetReviewUnavailable'
   '/organization/{organizationId}/skillPreset/resolved':
     get:
       summary: Get the skill preset that applies to the caller
@@ -5895,8 +5914,11 @@ paths:
       description: >-
         Replace a skill preset, its skill entries and its assignments with the request body, and
         increase its revision by one. Requires the MANAGE_ORGANIZATION_DATA permission on the
-        preset's organization. The content is inspected as on creation, and any finding rejects the
-        whole request with 422 and nothing is saved.
+        preset's organization. The content is checked as on creation, by the rules and then by the
+        model review on AWS Bedrock, and the check fails closed: a finding answers 422, an
+        unavailable review answers 503, and in both cases nothing is saved. An organization with AI
+        features turned off cannot edit presets (403). A refusal for security is recorded as a
+        `REJECTED` audit event.
 
 
         The edit is recorded in the audit log as an `UPDATE` event with sub-target `SKILL_PRESET`:
@@ -5926,20 +5948,23 @@ paths:
         '400':
           description: >-
             Invalid preset: a field is out of its limits, a skill entry does not fit its mode or the
-            base, a skill or a target appears more than once, or a template has assignments
+            base, a skill or a target appears more than once, a template has assignments, or the
+            preset holds more than 200,000 characters of text in total
         '401':
           $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/responses/SkillPresetForbidden'
         '404':
           description: The skill preset does not exist, or a role id is not a role of the organization
         '409':
           description: >-
             The preset name is already taken in the organization, an assignment target already
-            receives another preset, or someone else changed the preset during the request (reload it
-            and try again)
+            receives another preset, or someone else changed the preset during the request or during
+            the security review (reload it and try again)
         '422':
           $ref: '#/components/responses/SkillPresetRejected'
+        '503':
+          $ref: '#/components/responses/SkillPresetReviewUnavailable'
     delete:
       summary: Delete a skill preset
       description: >-
@@ -23583,6 +23608,14 @@ components:
             $ref: '#/components/schemas/SkillPresetSkillResponse'
         assigned_to:
           $ref: '#/components/schemas/SkillPresetAssignedTo'
+        security_review:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/SkillPresetSecurityReview'
+          nullable: true
+          description: >-
+            The model review this state passed. Null for a DELETE revision, and when the review was
+            turned off (never in production).
     SkillPresetRevisionResponseList:
       type: object
       required:
@@ -23752,6 +23785,14 @@ components:
           description: Loads per preset, most loaded first. A row with a null preset groups the loads made with no preset.
           items:
             $ref: '#/components/schemas/SkillUsageByPreset'
+    SkillPresetFindingSource:
+      type: string
+      enum:
+        - RULES
+        - MODEL
+      description: >-
+        Who raised a finding. RULES: the deterministic rules, and `rule_id` is a rule. MODEL: the
+        model review, and `rule_id` is a category.
     SkillPresetRejectionFinding:
       type: object
       required:
@@ -23759,15 +23800,20 @@ components:
         - location
         - line
         - reason
+        - source
       properties:
+        source:
+          $ref: '#/components/schemas/SkillPresetFindingSource'
         rule_id:
           type: string
           description: >-
-            The inspection rule that matched, for example `override-instructions`,
+            For `source` RULES, the rule that matched, for example `override-instructions`,
             `conceal-from-user`, `skip-confirmation`, `read-credentials`, `dump-secrets`,
             `exfiltration-endpoint`, `upload-command`, `remote-exec`, `obfuscated-exec`,
             `external-url`, `invisible-characters`, `html-comment`, `encoded-blob` or `credential`.
-            New rules can be added.
+            For `source` MODEL, the category: `prompt-injection`, `concealment`,
+            `credential-access`, `data-exfiltration`, `unsafe-execution`, `approval-bypass`,
+            `social-engineering` or `other`. New rules and categories can be added.
           example: dump-secrets
         location:
           type: string
@@ -23784,6 +23830,58 @@ components:
           type: string
           description: Why the content was refused. Never contains the offending text.
           example: Asks the agent to print or collect secrets
+    SkillPresetProblemResponse:
+      type: object
+      description: A problem detail (RFC 9457).
+      required:
+        - status
+        - title
+        - detail
+      properties:
+        type:
+          type: string
+          example: about:blank
+        title:
+          type: string
+          example: Skill preset security review unavailable
+        status:
+          type: integer
+          example: 503
+        detail:
+          type: string
+          example: The security review is unavailable. Nothing was saved. Try again in a minute.
+        instance:
+          type: string
+          description: The request path.
+    SkillPresetSecurityReviewVerdict:
+      type: string
+      enum:
+        - ALLOW
+        - BLOCK
+      description: The model review's verdict. A saved state always passed with ALLOW.
+    SkillPresetSecurityReview:
+      type: object
+      description: The model review a saved state passed.
+      required:
+        - verdict
+        - model
+        - prompt_version
+        - findings
+      properties:
+        verdict:
+          $ref: '#/components/schemas/SkillPresetSecurityReviewVerdict'
+        model:
+          type: string
+          description: The model that reviewed the content.
+        prompt_version:
+          type: string
+          description: Version of the review instructions the model used.
+          example: skill-preset-review/v1
+        findings:
+          type: array
+          description: Notes the model raised without blocking. Usually empty.
+          items:
+            $ref: '#/components/schemas/SkillPresetRejectionFinding'
     SkillPresetRejectionResponse:
       type: object
       description: A problem detail (RFC 9457) listing every finding of the security inspection.
@@ -28410,6 +28508,7 @@ components:
         - POLICY_FAILED
         - ACCESS_DENIED
         - LOAD
+        - REJECTED
       example: CREATE
     SecretOverride:
       type: object
@@ -35279,10 +35378,29 @@ components:
       headers:
         ETag:
           $ref: '#/components/headers/SkillPresetETag'
+    SkillPresetForbidden:
+      description: >-
+        Access forbidden, or AI features are turned off for the organization
+        (`ai_features_enabled`): every preset is reviewed by a model before it reaches members, so
+        presets cannot be created or edited. Reading and resolving presets stay allowed.
+    SkillPresetReviewUnavailable:
+      description: >-
+        The security review is unavailable: the model review could not give a verdict (error,
+        timeout or unusable answer). The check fails closed, so nothing was saved. Try again in a
+        minute. The body is a problem detail with the title "Skill preset security review
+        unavailable".
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SkillPresetProblemResponse'
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/SkillPresetProblemResponse'
     SkillPresetRejected:
       description: >-
-        The preset was rejected for security, to protect the members it applies to. Each finding
-        names the rule, the field and the line, never the offending text. Nothing was saved.
+        The preset was rejected for security, to protect the members it applies to, by the rules or
+        by the model review. Each finding names its source, the rule or category, the field and the
+        line, never the offending text. Nothing was saved.
       content:
         application/json:
           schema:
