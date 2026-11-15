@@ -5554,10 +5554,18 @@ paths:
       summary: List organization skill presets
       description: >-
         List the skill presets of the organization, with their full content and who each one is
-        assigned to. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+        assigned to. Templates are listed too unless `isTemplate` filters them. Requires the
+        MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
       operationId: listSkillPresets
       parameters:
         - $ref: '#/components/parameters/organizationId'
+        - name: isTemplate
+          in: query
+          description: >-
+            `true` lists templates only, `false` lists assignable presets only. Omit it to list both.
+          required: false
+          schema:
+            type: boolean
       tags:
         - Skill Presets
       responses:
@@ -5578,6 +5586,10 @@ paths:
       description: >-
         Create a skill preset and its assignments. Requires the MANAGE_ORGANIZATION_DATA permission
         (organization owner or admin). The preset starts at revision 1.
+
+
+        Set `is_template` to save a template: a starting point admins copy into new presets. A
+        template is never resolved for a member and cannot have assignments.
 
 
         A preset runs inside each assigned member's coding agent, on their machine. Before saving,
@@ -5614,7 +5626,7 @@ paths:
         '400':
           description: >-
             Invalid preset: a field is out of its limits, a skill entry does not fit its mode or the
-            base, or a skill or a target appears more than once
+            base, a skill or a target appears more than once, or a template has assignments
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5646,9 +5658,10 @@ paths:
         role preset or the organization default.
 
 
-        The response carries an `ETag`: `"<preset id>-<revision>"`, or `"qovery-default"` when no
-        preset applies. It changes when the preset is edited and when the caller moves to another
-        preset. Send it back in `If-None-Match` to get a 304 with no body when nothing changed.
+        The response carries an `ETag`. Treat it as opaque: it changes when the preset is edited,
+        when the caller moves to another preset, and when the caller reaches the same preset through
+        another assignment. Send it back in `If-None-Match` to get a 304 with no body when nothing
+        changed. Templates are never resolved.
       operationId: getResolvedSkillPreset
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -5810,7 +5823,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/organization/{organizationId}/skillPresetRevision':
+  '/organization/{organizationId}/skillPreset/revision':
     get:
       summary: List skill preset revisions
       description: >-
@@ -5888,8 +5901,8 @@ paths:
 
         The edit is recorded in the audit log as an `UPDATE` event with sub-target `SKILL_PRESET`:
         the change holds the new state with its full text and a summary of what changed (skills
-        added, removed and modified, and whether the base, the team context or the assignments
-        changed), and the original change holds the previous state. When the text of a preset is
+        added, removed and modified, and whether the base, the template flag, the team context or the
+        assignments changed), and the original change holds the previous state. When the text of a preset is
         larger than 64 KB, the audit entry keeps only the SHA-256 of each text and sets
         `content_omitted`; the revision history always holds the full text.
       operationId: editSkillPreset
@@ -5913,7 +5926,7 @@ paths:
         '400':
           description: >-
             Invalid preset: a field is out of its limits, a skill entry does not fit its mode or the
-            base, or a skill or a target appears more than once
+            base, a skill or a target appears more than once, or a template has assignments
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5922,8 +5935,9 @@ paths:
           description: The skill preset does not exist, or a role id is not a role of the organization
         '409':
           description: >-
-            The preset name is already taken in the organization, or an assignment target already
-            receives another preset
+            The preset name is already taken in the organization, an assignment target already
+            receives another preset, or someone else changed the preset during the request (reload it
+            and try again)
         '422':
           $ref: '#/components/responses/SkillPresetRejected'
     delete:
@@ -5947,7 +5961,7 @@ paths:
         '403':
           $ref: '#/components/responses/403'
         '404':
-          $ref: '#/components/responses/404'
+          description: The skill preset does not exist or was already deleted
   '/organization/{organizationId}/containerRegistry/{containerRegistryId}/images':
     get:
       summary: List image version for a container registry
@@ -16447,7 +16461,7 @@ components:
       required: false
       schema:
         type: string
-        example: '"0193f1c2-6b1e-7c3a-9a4f-2d5e8b7c1a90-3"'
+        example: '"role-0193f1c2-6b1e-7c3a-9a4f-2d5e8b7c1a90-3"'
     deploymentRequestId:
       name: deploymentRequestId
       in: path
@@ -23232,6 +23246,10 @@ components:
             type: string
     SkillPresetSkillRequest:
       type: object
+      description: >-
+        One skill entry. Each mode takes only some fields: DISABLE takes neither `description` nor
+        `content`, OVERLAY takes `content` only, REPLACE and ADD take both. Sending a field the mode
+        does not take is refused with 400 rather than dropped.
       required:
         - skill_name
         - mode
@@ -23252,12 +23270,15 @@ components:
           maxLength: 1024
           description: >-
             When the agent should use the skill, at most 1024 characters. Required for ADD and
-            REPLACE, since agents pick a skill from its description. Ignored for DISABLE.
+            REPLACE, since agents pick a skill from its description. DISABLE and OVERLAY take none:
+            a non-blank value is refused with 400.
         content:
           type: string
           nullable: true
           maxLength: 65536
-          description: Markdown delivered to the agent, at most 64 KB. Required for every mode except DISABLE.
+          description: >-
+            Markdown delivered to the agent, at most 64 KB. Required for every mode except DISABLE,
+            which takes none: a non-blank value is refused with 400.
     SkillPresetSkillResponse:
       type: object
       required:
@@ -23298,6 +23319,12 @@ components:
             - $ref: '#/components/schemas/SkillPresetBase'
           default: QOVERY_FULL
           description: The Qovery skill set the preset starts from. Defaults to QOVERY_FULL.
+        is_template:
+          type: boolean
+          default: false
+          description: >-
+            Whether this is a template: a starting point admins copy into new presets. A template is
+            never resolved for a member and cannot have assignments (400 otherwise). Defaults to false.
         team_context:
           type: string
           nullable: true
@@ -23322,6 +23349,7 @@ components:
             - name
             - description
             - base
+            - is_template
             - skills
             - revision
             - assigned_to
@@ -23333,6 +23361,9 @@ components:
               type: string
             base:
               $ref: '#/components/schemas/SkillPresetBase'
+            is_template:
+              type: boolean
+              description: Whether this is a template, never resolved for a member and never assigned.
             team_context:
               type: string
               nullable: true
@@ -23514,6 +23545,7 @@ components:
         - name
         - description
         - base
+        - is_template
         - skills
         - assigned_to
       properties:
@@ -23538,6 +23570,9 @@ components:
           type: string
         base:
           $ref: '#/components/schemas/SkillPresetBase'
+        is_template:
+          type: boolean
+          description: Whether the preset was a template at this revision.
         team_context:
           type: string
           nullable: true
@@ -35258,12 +35293,12 @@ components:
   headers:
     SkillPresetETag:
       description: >-
-        Strong ETag of the skill preset that applies to the caller: `"<preset id>-<revision>"`, or
-        `"qovery-default"` when no preset applies. Shared by the manifest and every skill of the
-        preset.
+        Strong ETag of the skill preset that applies to the caller, shared by the manifest and every
+        skill of the preset. Opaque: compare it, don't parse it. Today it is
+        `"<source>-<preset id>-<revision>"`, or `"qovery-default"` when no preset applies.
       schema:
         type: string
-        example: '"0193f1c2-6b1e-7c3a-9a4f-2d5e8b7c1a90-3"'
+        example: '"role-0193f1c2-6b1e-7c3a-9a4f-2d5e8b7c1a90-3"'
   securitySchemes:
     bearerAuth:
       type: http
