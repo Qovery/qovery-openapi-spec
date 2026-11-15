@@ -5731,6 +5731,84 @@ paths:
           description: >-
             The organization does not exist, or the skill is neither a Qovery skill nor a skill of
             the preset that applies to the caller
+  '/organization/{organizationId}/skillPreset/usage':
+    get:
+      summary: Get skill usage
+      description: >-
+        Return how the members' coding agents loaded skills in the organization over a time range:
+        totals, a timeline, and breakdowns by skill, by member and by preset. Requires the
+        MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+
+
+        A load is one call to `getResolvedSkill` that returned a skill, cached ones included: a 304
+        counts as a cached load, and a 404 is not counted. Loads are counted whether or not a preset
+        applies. Recording a load is best effort and never blocks the agent, so a load can be missing
+        here while the audit log, which records every load as a `LOAD` event, still has it.
+
+
+        The range defaults to the 30 days ending now and spans at most 90 days. Rows in `by_skill`
+        and `by_member` are sorted by loads, most first, and capped at 100 and 500 rows.
+      operationId: getSkillUsage
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: from
+          in: query
+          description: Start of the range, inclusive. Defaults to 30 days before `to`.
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          description: >-
+            End of the range, exclusive. Defaults to now. Must be after `from`, and the range must not
+            exceed 90 days, otherwise the request is refused with 400.
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: bucket
+          in: query
+          description: Width of each point of the timeline. Defaults to DAY.
+          required: false
+          schema:
+            $ref: '#/components/schemas/SkillUsageBucket'
+        - name: skillName
+          in: query
+          description: Only count the loads of this skill.
+          required: false
+          schema:
+            type: string
+        - name: userSub
+          in: query
+          description: Only count the loads of this member, by the id returned by "List organization members".
+          required: false
+          schema:
+            type: string
+        - name: skillPresetId
+          in: query
+          description: Only count the loads made under this preset.
+          required: false
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Skill Presets
+      responses:
+        '200':
+          description: Skill usage over the range
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillUsageResponse'
+        '400':
+          description: '`to` is not after `from`, the range exceeds 90 days, or a query parameter is malformed'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/skillPresetRevision':
     get:
       summary: List skill preset revisions
@@ -23478,6 +23556,166 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SkillPresetRevisionResponse'
+    SkillUsageBucket:
+      type: string
+      enum:
+        - HOUR
+        - DAY
+      description: Width of each timeline point, an hour or a day.
+    SkillUsageTotals:
+      type: object
+      required:
+        - loads
+        - cached_loads
+        - members
+        - approx_injected_tokens
+      properties:
+        loads:
+          type: integer
+          format: int64
+          description: Skill loads in the range, cached ones included.
+        cached_loads:
+          type: integer
+          format: int64
+          description: Loads answered with a 304, where the agent reused its cached copy.
+        members:
+          type: integer
+          format: int64
+          description: Distinct members whose agents loaded at least one skill.
+        approx_injected_tokens:
+          type: integer
+          format: int64
+          description: >-
+            Estimated tokens of organization content and team context sent to agents, the number of
+            characters divided by 4. Cached loads send nothing and add zero. The text of the Qovery
+            skills themselves is not counted.
+    SkillUsagePoint:
+      type: object
+      required:
+        - start
+        - loads
+        - cached_loads
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Start of the hour or day. Points with no load are left out.
+        loads:
+          type: integer
+          format: int64
+        cached_loads:
+          type: integer
+          format: int64
+    SkillUsageBySkill:
+      type: object
+      required:
+        - skill_name
+        - loads
+        - cached_loads
+        - members
+        - last_loaded_at
+      properties:
+        skill_name:
+          type: string
+        loads:
+          type: integer
+          format: int64
+        cached_loads:
+          type: integer
+          format: int64
+        members:
+          type: integer
+          format: int64
+          description: Distinct members who loaded this skill.
+        last_loaded_at:
+          type: string
+          format: date-time
+    SkillUsageByMember:
+      type: object
+      required:
+        - user_sub
+        - user_name
+        - loads
+        - skills
+        - last_loaded_at
+      properties:
+        user_sub:
+          type: string
+          description: The member's id, as returned by "List organization members".
+        user_name:
+          type: string
+          description: The member's name at their most recent load in the range.
+        loads:
+          type: integer
+          format: int64
+        skills:
+          type: integer
+          format: int64
+          description: Distinct skills this member's agent loaded.
+        last_loaded_at:
+          type: string
+          format: date-time
+    SkillUsageByPreset:
+      type: object
+      required:
+        - loads
+      properties:
+        skill_preset_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Null groups the loads made when no preset applied.
+        skill_preset_name:
+          type: string
+          nullable: true
+          description: The preset's name at its most recent load in the range. Null when no preset applied.
+        loads:
+          type: integer
+          format: int64
+    SkillUsageResponse:
+      type: object
+      required:
+        - from
+        - to
+        - bucket
+        - totals
+        - timeline
+        - by_skill
+        - by_member
+        - by_preset
+      properties:
+        from:
+          type: string
+          format: date-time
+          description: Start of the range actually used, after defaults.
+        to:
+          type: string
+          format: date-time
+          description: End of the range actually used, after defaults.
+        bucket:
+          $ref: '#/components/schemas/SkillUsageBucket'
+        totals:
+          $ref: '#/components/schemas/SkillUsageTotals'
+        timeline:
+          type: array
+          description: Loads per hour or per day, oldest first.
+          items:
+            $ref: '#/components/schemas/SkillUsagePoint'
+        by_skill:
+          type: array
+          description: Loads per skill, most loaded first, at most 100 rows.
+          items:
+            $ref: '#/components/schemas/SkillUsageBySkill'
+        by_member:
+          type: array
+          description: Loads per member, most active first, at most 500 rows.
+          items:
+            $ref: '#/components/schemas/SkillUsageByMember'
+        by_preset:
+          type: array
+          description: Loads per preset, most loaded first. A row with a null preset groups the loads made with no preset.
+          items:
+            $ref: '#/components/schemas/SkillUsageByPreset'
     SkillPresetRejectionFinding:
       type: object
       required:
