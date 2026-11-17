@@ -112,6 +112,7 @@ tags:
   - name: Organization Cluster Lock
   - name: Organization Main Calls
   - name: Organization Custom Role
+  - name: Organization Custom Domain
   - name: Organization Event
   - name: Organization Api Token
   - name: Organization Policy Api Token
@@ -148,6 +149,7 @@ x-tagGroups:
       - Organization Cluster Lock
       - Organization Webhook
       - Organization Custom Role
+      - Organization Custom Domain
       - Organization Event
       - Organization Annotations Group
       - Organization Labels Group
@@ -3587,6 +3589,65 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/customDomain':
+    get:
+      summary: List organization custom domains
+      description: |
+        List the custom domains of every environment of the organization. Only organization admins can call it.
+        Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result.
+        Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain.
+      operationId: listOrganizationCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: projectId
+          description: Only list the domains of this project. A project of another organization gives an empty list.
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: environmentId
+          description: Only list the domains of this environment. An environment of another organization gives an empty list.
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: search
+          description: Only list the domains whose name contains this text, ignoring case. The text is trimmed and matched literally, with no wildcard. A blank value does not filter.
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: The page to return, starting at 1. A page after the last one has no results.
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - in: query
+          name: pageSize
+          description: The number of domains per page.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      tags:
+        - Organization Custom Domain
+      responses:
+        '200':
+          description: List organization custom domains
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCustomDomainPaginatedResponseList'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -23421,6 +23482,54 @@ components:
                 This will condition the way we are checking CNAME before & during a deployment:
                 * If `true` then we only check the domain points to an IP
                 * If `false` then we check that the domain resolves to the correct service Load Balancer
+    CustomDomainEnvironmentResponse:
+      type: object
+      required:
+        - id
+        - name
+        - routing_mode
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Id of the environment.
+        name:
+          type: string
+          description: Name of the environment.
+        routing_mode:
+          $ref: '#/components/schemas/EnvironmentRoutingModeEnum'
+    CustomDomainPortResponse:
+      type: object
+      required:
+        - id
+        - name
+        - internal_port
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Id of the port.
+        name:
+          type: string
+          description: Name of the port.
+          example: p8080
+        internal_port:
+          type: integer
+          description: The port the service listens on.
+          example: 8080
+    CustomDomainProjectResponse:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Id of the project.
+        name:
+          type: string
+          description: Name of the project.
     CustomDomainRequest:
       type: object
       required:
@@ -23448,6 +23557,57 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomDomain'
+    CustomDomainRouteResponse:
+      type: object
+      description: Requests to the domain on `path` go to `port` of `service`. `port` is null when the service has no public port.
+      required:
+        - id
+        - custom_domain_id
+        - service
+        - port
+        - path
+        - path_rewrite
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Id of the route.
+        custom_domain_id:
+          type: string
+          format: uuid
+          description: Id of this domain in the custom domain API of the service (`/application|container|helm/{id}/customDomain/{customDomainId}`).
+        service:
+          $ref: '#/components/schemas/CustomDomainServiceResponse'
+        port:
+          allOf:
+            - $ref: '#/components/schemas/CustomDomainPortResponse'
+          nullable: true
+        path:
+          type: string
+          description: The path of the requests this route serves.
+          example: /
+        path_rewrite:
+          type: string
+          nullable: true
+          description: The path that replaces `path` before the request reaches the service. Null when the path is not rewritten.
+    CustomDomainServiceResponse:
+      type: object
+      required:
+        - id
+        - type
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Id of the service.
+        type:
+          allOf:
+            - $ref: '#/components/schemas/ServiceTypeEnum'
+          description: Type of the service. Only `APPLICATION`, `CONTAINER` and `HELM` services have custom domains.
+        name:
+          type: string
+          description: Name of the service.
     CustomDomainStatusEnum:
       type: string
       enum:
@@ -24539,6 +24699,16 @@ components:
         - PRODUCTION
         - STAGING
       example: PRODUCTION
+    EnvironmentRoutingModeEnum:
+      type: string
+      description: |
+        How the environment routes its custom domains.
+        * `PER_ROUTER_LISTENER_SET`: a domain belongs to one service and follows its default public port and path.
+        * `PER_HOSTNAME_LISTENER_SET`: several services can share a domain, and each route chooses its port, path and path rewrite.
+      enum:
+        - PER_ROUTER_LISTENER_SET
+        - PER_HOSTNAME_LISTENER_SET
+      example: PER_HOSTNAME_LISTENER_SET
     CreateEnvironmentModeEnum:
       type: string
       enum:
@@ -26830,6 +27000,56 @@ components:
       allOf:
         - $ref: '#/components/schemas/CurrentCost'
         - type: object
+    OrganizationCustomDomainPaginatedResponseList:
+      allOf:
+        - $ref: '#/components/schemas/PaginationData'
+        - type: object
+          required:
+            - results
+            - total_count
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrganizationCustomDomainResponse'
+            total_count:
+              type: integer
+              description: The number of domains matching the query, on all pages.
+    OrganizationCustomDomainResponse:
+      type: object
+      description: One domain name of one environment, with every route that serves it. It has no id of its own; `environment_id` and `domain` identify it.
+      required:
+        - environment_id
+        - domain
+        - project
+        - environment
+        - routes
+        - generate_certificate
+        - use_cdn
+      properties:
+        environment_id:
+          type: string
+          format: uuid
+          description: Id of the environment of the domain.
+        domain:
+          type: string
+          description: The domain name.
+          example: my.domain.tld
+        project:
+          $ref: '#/components/schemas/CustomDomainProjectResponse'
+        environment:
+          $ref: '#/components/schemas/CustomDomainEnvironmentResponse'
+        routes:
+          type: array
+          description: The routes of the domain, one per service and path.
+          items:
+            $ref: '#/components/schemas/CustomDomainRouteResponse'
+        generate_certificate:
+          type: boolean
+          description: Whether Qovery generates a certificate for the domain. `false` when a CDN or another party manages the certificate.
+        use_cdn:
+          type: boolean
+          description: Whether the domain is behind a CDN. If `true`, Qovery only checks that the domain points to an IP; otherwise it checks that the domain resolves to the service load balancer.
     OrganizationCustomRoleCreateRequest:
       type: object
       required:
