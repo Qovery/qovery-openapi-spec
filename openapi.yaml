@@ -23189,7 +23189,6 @@ components:
             - auto_preview
             - icon_uri
             - service_type
-            - source
           properties:
             environment:
               $ref: '#/components/schemas/ReferenceObject'
@@ -23379,6 +23378,8 @@ components:
         Where the container image comes from:
         - `image`: an image from a container registry;
         - `docker`: a Dockerfile in a Git repository that Qovery builds. `dockerfile_raw` is always null for a container.
+
+        Always returned by API servers that support container sources; absent on older servers.
       oneOf:
         - type: object
           required:
