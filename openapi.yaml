@@ -7194,7 +7194,10 @@ paths:
 
         Returns 400 when:
         - `source.docker` is sent: a Git source can only be set on update, with `PUT /container/{containerId}`;
-        - `source` is sent together with `registry_id`, `image_name` or `tag`.
+        - `source` is sent together with `registry_id`, `image_name` or `tag`;
+        - `source` has both `image` and `docker`, or neither;
+        - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent;
+        - `build_settings` is sent.
       operationId: createContainer
       parameters:
         - $ref: '#/components/parameters/environmentId'
@@ -7409,6 +7412,7 @@ paths:
         Triggers a new container deploy in each environment matching the following conditions
         - environment should have the auto-deploy enabled
         - the container should have the same image name and a different tag
+        - the container should have an image source: containers with a Git source are skipped
       operationId: autoDeployContainerEnvironments
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -7443,6 +7447,7 @@ paths:
         Triggers a new container preview for each environment matching the following conditions
         - preview environment feature should be enabled for the container
         - the container should have the same image name and a different tag
+        - the container should have an image source: containers with a Git source are skipped
       operationId: previewContainerEnvironments
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -9278,9 +9283,12 @@ paths:
 
         Returns 400 when:
         - `source` is sent together with `registry_id`, `image_name` or `tag`;
-        - the container has a Git source and `registry_id`, `image_name` or `tag` differ from the current values;
+        - `source` has both `image` and `docker`, or neither;
+        - the container has an image source, `source` is not sent, and only some of `registry_id`, `image_name` and `tag` are sent: send all three, or none to keep the image;
+        - the container has a Git source and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry;
         - `source.docker` is sent and the organization is not enabled for Git-source containers;
-        - `auto_deploy` or `auto_preview` is `true` while `source.docker` is sent, or while the container has a Git source and `source` is not sent.
+        - `auto_deploy` or `auto_preview` is `true` while `source.docker` is sent, or while the container has a Git source and `source` is not sent;
+        - `build_settings` is sent while the container has, or switches to, an image source.
       operationId: editContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -23139,14 +23147,14 @@ components:
                 If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.  
                 If not specified, it takes the value of the `auto_preview` property from the associated environment.
 
-                On a container with a Git source, it must be false: when not specified it is false, and `true` returns 400.
+                On a container with a Git source, it must be false or not specified: `true` returns 400. When not specified on a switch to `docker`, it is set to false.
             auto_deploy:
               type: boolean
               description: |
                 Specify if the container will be automatically updated after receiving a new image tag. 
                 The new image tag shall be communicated via the "Auto Deploy container" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments
 
-                On a container with a Git source, it must be false or not specified: `true` returns 400.
+                On a container with a Git source, it must be false or not specified: `true` returns 400. When not specified on a switch to `docker`, it is set to false.
               nullable: true
             annotations_groups:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
@@ -23161,12 +23169,18 @@ components:
             autoscaling:
               $ref: '#/components/schemas/AutoscalingPolicyRequest'
             build_settings:
-              $ref: '#/components/schemas/BuildSettings'
+              description: |
+                Build settings of a container with a Git source (`source.docker`). They apply only to the build of its image.
+                - On update, when not sent, the stored values are kept.
+                - On a switch to `docker` without it, the defaults of a new application are used.
+                - Sending it when the container has, or switches to, an image source returns 400. This includes create.
+              allOf:
+                - $ref: '#/components/schemas/BuildSettings'
     ContainerResponse:
       description: |
         `registry`, `image_name` and `tag` always hold the image this container runs:
         - with an image source, the configured image;
-        - with a Git source, the image last deployed. Until the first successful build, this is the image from before the switch to Git. After it, this is the built image in the cluster's registry, with its build tag.
+        - with a Git source, the image last deployed. Until the first successful deployment from Git, this is the image from before the switch to Git. After it, this is the built image in the cluster's registry, with its build tag.
 
         `source` says where the image comes from.
       allOf:
@@ -23291,7 +23305,9 @@ components:
             source:
               $ref: '#/components/schemas/ContainerSourceResponse'
             build_settings:
-              $ref: '#/components/schemas/BuildSettings'
+              description: Build settings of a container with a Git source. Absent for a container with an image source.
+              allOf:
+                - $ref: '#/components/schemas/BuildSettings'
     ContainerResponseList:
       type: object
       properties:
@@ -23322,7 +23338,7 @@ components:
     ContainerSourceRequest:
       type: object
       description: |
-        Where the container image comes from. Send exactly one of `image` or `docker`:
+        Where the container image comes from. Send exactly one of `image` or `docker`; both, or neither, returns 400:
         - `image`: an image from a container registry, like the flat `registry_id`, `image_name` and `tag` fields.
         - `docker`: a Dockerfile in a Git repository. Qovery builds the image from the deployed commit. Accepted on update (`PUT /container/{containerId}`) only: sending it on create returns 400.
 
@@ -23331,8 +23347,8 @@ components:
         Rules:
         - `source` cannot be sent together with the flat `registry_id`, `image_name` and `tag` fields: 400.
         - When `source` is not sent, the stored source is kept. Flat fields never switch the source.
-        - On a container with a Git source, flat fields equal to the current values are accepted and change nothing; different values return 400. Send `source.image` to switch back to an image.
-        - A `docker` source requires `auto_deploy` and `auto_preview` to be false or not specified: 400 otherwise.
+        - On a container with a Git source, flat fields equal to the `registry.id`, `image_name` and `tag` that GET returns are accepted and change nothing; different values return 400. A deployment that finishes between the GET and the PUT changes these values: get the container again and retry. Send `source.image` to switch back to an image.
+        - A `docker` source requires `auto_deploy` and `auto_preview` to be false or not specified: 400 otherwise. When not specified on a switch to `docker`, both are set to false.
         - A `docker` source is available only to organizations where it is enabled: 400 otherwise.
       properties:
         image:
@@ -23826,7 +23842,10 @@ components:
                 description: id of the container to be updated.
               image_tag:
                 type: string
-                description: new tag for the container. Can be empty only if the service has been already deployed (in this case the service version won't be changed)
+                description: |
+                  new tag for the container. Can be empty only if the service has been already deployed (in this case the service version won't be changed)
+
+                  For a container with a Git source, an `image_tag` equal to the `tag` that `GET /container/{containerId}` returns deploys the container at its stored commit; a different `image_tag` returns 400.
         jobs:
           type: array
           items:
