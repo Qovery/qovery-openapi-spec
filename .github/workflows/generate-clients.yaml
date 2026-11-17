@@ -47,16 +47,16 @@ jobs:
 
     steps:
       - name: Check out source code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.1.0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v6.5.0
         with:
           node-version: '24'
           cache: 'npm'
 
       - name: Set up Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v6.5.0
         if: contains(matrix.language, 'go')
         with:
           go-version: "1.26"
@@ -111,7 +111,7 @@ jobs:
             --additional-properties packageVersion=$(grep 'version' websocket/websocket-openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ') \
             --additional-properties npmVersion=$(grep 'version' websocket/websocket-openapi.yaml | head -1 | tr ':' '\n' | tail -1 | tr -d ' ')
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4.6.2
         with:
           name: output-${{ matrix.language }}
           path: out
