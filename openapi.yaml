@@ -5581,6 +5581,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SkillPresetResponseList'
+        '400':
+          description: '`isTemplate` is not true or false'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5757,7 +5759,9 @@ paths:
           description: Who reads the skill. Defaults to LOAD. Any other value than LOAD or VIEW is refused with 400.
           required: false
           schema:
-            $ref: '#/components/schemas/SkillLoadPurpose'
+            allOf:
+              - $ref: '#/components/schemas/SkillLoadPurpose'
+            default: LOAD
         - $ref: '#/components/parameters/skillPresetIfNoneMatch'
       tags:
         - Skill Presets
@@ -5826,7 +5830,9 @@ paths:
           description: Width of each point of the timeline. Defaults to DAY.
           required: false
           schema:
-            $ref: '#/components/schemas/SkillUsageBucket'
+            allOf:
+              - $ref: '#/components/schemas/SkillUsageBucket'
+            default: DAY
         - name: skillName
           in: query
           description: Only count the loads of this skill.
@@ -5900,6 +5906,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SkillPresetRevisionResponseList'
+        '400':
+          description: '`skillPresetId` is not a UUID, or `limit` is not an integer'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -6068,7 +6076,9 @@ paths:
           description: Width of each point of the timeline. Defaults to DAY.
           required: false
           schema:
-            $ref: '#/components/schemas/SkillUsageBucket'
+            allOf:
+              - $ref: '#/components/schemas/SkillUsageBucket'
+            default: DAY
         - name: userSub
           in: query
           description: >-
@@ -6194,7 +6204,9 @@ paths:
           description: Width of each point of the timeline. Defaults to DAY.
           required: false
           schema:
-            $ref: '#/components/schemas/SkillUsageBucket'
+            allOf:
+              - $ref: '#/components/schemas/SkillUsageBucket'
+            default: DAY
         - name: skillName
           in: query
           description: >-
