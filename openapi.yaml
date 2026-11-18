@@ -125,6 +125,7 @@ tags:
   - name: Organization Cluster Lock
   - name: Organization Main Calls
   - name: Organization Custom Role
+  - name: Organization Custom Domain
   - name: Organization Event
   - name: Organization Api Token
   - name: Organization Policy Api Token
@@ -161,6 +162,7 @@ x-tagGroups:
       - Organization Cluster Lock
       - Organization Webhook
       - Organization Custom Role
+      - Organization Custom Domain
       - Organization Event
       - Organization Annotations Group
       - Organization Labels Group
@@ -3622,6 +3624,65 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  '/organization/{organizationId}/customDomain':
+    get:
+      summary: List organization custom domains
+      description: |
+        List the custom domains of every environment of the organization. Only organization admins can call it.
+        Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result.
+        Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain.
+      operationId: listOrganizationCustomDomain
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: projectId
+          description: Only list the domains of this project. A project of another organization gives an empty list.
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: environmentId
+          description: Only list the domains of this environment. An environment of another organization gives an empty list.
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: search
+          description: Only list the domains whose name contains this text, ignoring case. The text is trimmed and matched literally, with no wildcard. A blank value does not filter.
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: The page to return, starting at 1. A page after the last one has no results.
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - in: query
+          name: pageSize
+          description: The number of domains per page.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      tags:
+        - Organization Custom Domain
+      responses:
+        '200':
+          description: List organization custom domains
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCustomDomainPaginatedResponseList'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -7918,6 +7979,15 @@ paths:
           $ref: '#/components/responses/404'
     post:
       summary: Create a container
+      description: |
+        A container is created from an image: send `registry_id`, `image_name` and `tag`, or `source.image`.
+
+        Returns 400 when:
+        - `source.git_repository` is sent: a Git repository source can only be set on update, with `PUT /container/{containerId}`;
+        - `source` is sent together with `registry_id`, `image_name` or `tag`;
+        - `source` has both `image` and `git_repository`, or neither;
+        - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent;
+        - `build_settings` is sent.
       operationId: createContainer
       parameters:
         - $ref: '#/components/parameters/environmentId'
@@ -8132,6 +8202,7 @@ paths:
         Triggers a new container deploy in each environment matching the following conditions
         - environment should have the auto-deploy enabled
         - the container should have the same image name and a different tag
+        - the container should have an image source: containers with a Git repository source are skipped
       operationId: autoDeployContainerEnvironments
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -8166,6 +8237,7 @@ paths:
         Triggers a new container preview for each environment matching the following conditions
         - preview environment feature should be enabled for the container
         - the container should have the same image name and a different tag
+        - the container should have an image source: containers with a Git repository source are skipped
       operationId: previewContainerEnvironments
       parameters:
         - $ref: '#/components/parameters/organizationId'
@@ -9997,6 +10069,15 @@ paths:
         - To edit the container you must have the admin permission.
         - For port edition, if you provide a port id, we will update the corresponding port. If you don't we will create a new one. If you remove a port from the payload, we will delete it.
         - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don't we will create a new one. If you remove a storage from the payload, we will delete it.
+        - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept.
+
+        Returns 400 when:
+        - `source` is sent together with `registry_id`, `image_name` or `tag`;
+        - `source` has both `image` and `git_repository`, or neither;
+        - the container has an image source, `source` is not sent, and only some of `registry_id`, `image_name` and `tag` are sent: send all three, or none to keep the image;
+        - the container has a Git repository source and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry;
+        - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent, or while the container has a Git repository source and `source` is not sent;
+        - `build_settings` is sent while the container keeps, or switches to, an image source.
       operationId: editContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -10184,7 +10265,12 @@ paths:
   '/container/{containerId}/deploy':
     post:
       summary: Deploy container
-      description: You must provide a container image tag
+      description: |
+        For a container with an image source, you must provide a container image tag in `image_tag`.
+        For a container with a Git repository source, you can provide a commit in `git_commit_id`.
+
+        Returns 400 when:
+        - `image_tag` is sent for a container with a Git repository source, or `git_commit_id` for a container with an image source.
       operationId: deployContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -23098,7 +23184,15 @@ components:
           nullable: true
         image_tag:
           type: string
-          description: Image tag to deploy
+          description: |
+            Image tag to deploy, for a container with an image source.
+            Sending it for a container with a Git repository source returns 400. A `null` value counts as not sent.
+          nullable: true
+        git_commit_id:
+          type: string
+          description: |
+            Commit to deploy, for a container with a Git repository source. When not specified, the container's stored commit is deployed.
+            Sending it for a container with an image source returns 400. A `null` value counts as not sent.
           nullable: true
     ContainerRegistryKindEnum:
       type: string
@@ -24889,9 +24983,6 @@ components:
         - type: object
           required:
             - name
-            - registry_id
-            - image_name
-            - tag
             - healthchecks
           properties:
             name:
@@ -24902,7 +24993,9 @@ components:
               description: give a description to this container
             registry_id:
               type: string
-              description: id of the linked registry
+              description: |
+                id of the linked registry.
+                Required on create unless `source` is sent. See `source` for the rules on update.
             image_name:
               type: string
               description: |
@@ -24911,9 +25004,15 @@ components:
                 * `SCALEWAY_CR`: `namespace/image`
                 * `DOCKER_HUB`: `image` or `repository/image`
                 * `PUBLIC_ECR`: `registry_alias/repository`
+
+                Required on create unless `source` is sent. See `source` for the rules on update.
             tag:
               type: string
-              description: tag of the image container
+              description: |
+                tag of the image container.
+                Required on create unless `source` is sent. See `source` for the rules on update.
+            source:
+              $ref: '#/components/schemas/ContainerSourceRequest'
             arguments:
               type: array
               items:
@@ -24969,11 +25068,15 @@ components:
                 Indicates if the 'environment preview option' is enabled for this container.  
                 If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.  
                 If not specified, it takes the value of the `auto_preview` property from the associated environment.
+
+                On a container with a Git repository source, it must be false or not specified: `true` returns 400. When not specified on a switch to `git_repository`, it is set to false.
             auto_deploy:
               type: boolean
               description: |
                 Specify if the container will be automatically updated after receiving a new image tag. 
                 The new image tag shall be communicated via the "Auto Deploy container" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments
+
+                On a container with a Git repository source, it must be false or not specified: `true` returns 400. When not specified on a switch to `git_repository`, it is set to false.
               nullable: true
             annotations_groups:
               $ref: '#/components/schemas/ServiceAnnotationsRequestList'
@@ -24987,7 +25090,22 @@ components:
                 id: jiypvl6nd63dm
             autoscaling:
               $ref: '#/components/schemas/AutoscalingPolicyRequest'
+            build_settings:
+              description: |
+                Build settings of a container with a Git repository source (`source.git_repository`). They apply only to the build of its image.
+                - When sent, it replaces all stored values: omitted properties take their defaults, they are not merged.
+                - On update, when not sent, the stored values are kept.
+                - On a switch to `git_repository` without it, the defaults of a new application are used.
+                - Sending it when the container keeps, or switches to, an image source returns 400. This includes create.
+              allOf:
+                - $ref: '#/components/schemas/BuildSettings'
     ContainerResponse:
+      description: |
+        `registry`, `image_name` and `tag` always hold the image this container runs:
+        - with an image source, the configured image;
+        - with a Git repository source, the image last deployed. Until the first successful deployment from Git, this is the image from before the switch to Git. After it, this is the built image in the cluster's registry, with its build tag.
+
+        `source` says where the image comes from.
       allOf:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ServiceStorage'
@@ -25107,6 +25225,12 @@ components:
               $ref: '#/components/schemas/ServiceTypeEnum'
             autoscaling:
               $ref: '#/components/schemas/AutoscalingPolicyResponse'
+            source:
+              $ref: '#/components/schemas/ContainerSourceResponse'
+            build_settings:
+              description: Build settings of a container with a Git repository source. Absent for a container with an image source.
+              allOf:
+                - $ref: '#/components/schemas/BuildSettings'
     ContainerResponseList:
       type: object
       properties:
@@ -25134,6 +25258,103 @@ components:
           description: tag of the image container
         registry:
           $ref: '#/components/schemas/ContainerRegistryProviderDetailsResponse'
+    ContainerSourceRequest:
+      description: |
+        Where the container image comes from. Send exactly one of `image` or `git_repository`; both, or neither, returns 400. A `null` `image` or `git_repository` counts as not sent.
+        - `image`: an image from a container registry, like the flat `registry_id`, `image_name` and `tag` fields.
+        - `git_repository`: a Git repository with a Dockerfile. Qovery builds the image from the deployed commit. Accepted on update (`PUT /container/{containerId}`) only: sending it on create returns 400.
+
+        Switching the source keeps the same container: its id, Kubernetes names, volumes and built-in variables. The switch does not deploy; the next deployment uses the new source.
+
+        Rules:
+        - `source` cannot be sent together with the flat `registry_id`, `image_name` and `tag` fields: 400.
+        - When `source` is not sent, the stored source is kept. Flat fields never switch the source.
+        - On a container with a Git repository source, flat fields equal to the `registry.id`, `image_name` and `tag` that GET returns are accepted and change nothing; different values return 400. A deployment that finishes between the GET and the PUT changes these values: get the container again and retry. Send `source.image` to switch back to an image.
+        - A `git_repository` source requires `auto_deploy` and `auto_preview` to be false or not specified: 400 otherwise. When not specified on a switch to `git_repository`, both are set to false.
+      oneOf:
+        - type: object
+          required:
+            - image
+          properties:
+            image:
+              type: object
+              required:
+                - registry_id
+                - image_name
+                - tag
+              properties:
+                registry_id:
+                  type: string
+                  description: id of the linked registry
+                image_name:
+                  type: string
+                  description: |
+                    The image name pattern differs according to chosen container registry provider:
+                    * `ECR`: `repository`
+                    * `SCALEWAY_CR`: `namespace/image`
+                    * `DOCKER_HUB`: `image` or `repository/image`
+                    * `PUBLIC_ECR`: `registry_alias/repository`
+                tag:
+                  type: string
+                  description: tag of the image container
+        - type: object
+          required:
+            - git_repository
+          properties:
+            git_repository:
+              $ref: '#/components/schemas/ContainerGitRepositorySourceRequest'
+    ContainerSourceResponse:
+      description: |
+        Where the container image comes from:
+        - `image`: an image from a container registry;
+        - `git_repository`: a Git repository with a Dockerfile, that Qovery builds.
+
+        Only the key of the current source is returned. The other key is omitted, never sent as `null`.
+
+        Always returned by API servers that support container sources; absent on older servers.
+      oneOf:
+        - type: object
+          required:
+            - image
+          properties:
+            image:
+              $ref: '#/components/schemas/ContainerSource'
+        - type: object
+          required:
+            - git_repository
+          properties:
+            git_repository:
+              $ref: '#/components/schemas/ContainerGitRepositorySourceResponse'
+    ContainerGitRepositorySourceRequest:
+      description: The Git repository and the Dockerfile that Qovery builds into the container image.
+      allOf:
+        - $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+        - type: object
+          required:
+            - dockerfile_path
+          properties:
+            dockerfile_path:
+              type: string
+              description: The path of the associated Dockerfile
+            docker_target_build_stage:
+              type: string
+              description: The target build stage in the Dockerfile to build. If null, the last stage of the Dockerfile is built.
+              nullable: true
+    ContainerGitRepositorySourceResponse:
+      description: The Git repository and the Dockerfile that Qovery builds into the container image.
+      allOf:
+        - $ref: '#/components/schemas/ApplicationGitRepository'
+        - type: object
+          required:
+            - dockerfile_path
+          properties:
+            dockerfile_path:
+              type: string
+              description: The path of the associated Dockerfile
+            docker_target_build_stage:
+              type: string
+              description: The target build stage in the Dockerfile to build. If null, the last stage of the Dockerfile is built.
+              nullable: true
     Cost:
       type: object
       required:
@@ -25284,6 +25505,54 @@ components:
                 This will condition the way we are checking CNAME before & during a deployment:
                 * If `true` then we only check the domain points to an IP
                 * If `false` then we check that the domain resolves to the correct service Load Balancer
+    CustomDomainEnvironmentResponse:
+      type: object
+      required:
+        - id
+        - name
+        - routing_mode
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Id of the environment.
+        name:
+          type: string
+          description: Name of the environment.
+        routing_mode:
+          $ref: '#/components/schemas/EnvironmentRoutingModeEnum'
+    CustomDomainPortResponse:
+      type: object
+      required:
+        - id
+        - name
+        - internal_port
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Id of the port.
+        name:
+          type: string
+          description: Name of the port.
+          example: p8080
+        internal_port:
+          type: integer
+          description: The port the service listens on.
+          example: 8080
+    CustomDomainProjectResponse:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Id of the project.
+        name:
+          type: string
+          description: Name of the project.
     CustomDomainRequest:
       type: object
       required:
@@ -25311,6 +25580,57 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomDomain'
+    CustomDomainRouteResponse:
+      type: object
+      description: Requests to the domain on `path` go to `port` of `service`. `port` is null when the service has no public port.
+      required:
+        - id
+        - custom_domain_id
+        - service
+        - port
+        - path
+        - path_rewrite
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Id of the route.
+        custom_domain_id:
+          type: string
+          format: uuid
+          description: Id of this domain in the custom domain API of the service (`/application|container|helm/{id}/customDomain/{customDomainId}`).
+        service:
+          $ref: '#/components/schemas/CustomDomainServiceResponse'
+        port:
+          allOf:
+            - $ref: '#/components/schemas/CustomDomainPortResponse'
+          nullable: true
+        path:
+          type: string
+          description: The path of the requests this route serves.
+          example: /
+        path_rewrite:
+          type: string
+          nullable: true
+          description: The path that replaces `path` before the request reaches the service. Null when the path is not rewritten.
+    CustomDomainServiceResponse:
+      type: object
+      required:
+        - id
+        - type
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Id of the service.
+        type:
+          allOf:
+            - $ref: '#/components/schemas/ServiceTypeEnum'
+          description: Type of the service. Only `APPLICATION`, `CONTAINER` and `HELM` services have custom domains.
+        name:
+          type: string
+          description: Name of the service.
     CustomDomainStatusEnum:
       type: string
       enum:
@@ -25567,7 +25887,12 @@ components:
                 description: id of the container to be updated.
               image_tag:
                 type: string
-                description: new tag for the container. Can be empty only if the service has been already deployed (in this case the service version won't be changed)
+                description: |
+                  new tag for the container. Can be empty only if the service has been already deployed (in this case the service version won't be changed)
+
+                  For a container with a Git repository source:
+                  - an absent or empty `image_tag`, or one equal to the `tag` that `GET /container/{containerId}` returns, deploys the container at its stored commit;
+                  - a different `image_tag` returns 400.
         jobs:
           type: array
           items:
@@ -26402,6 +26727,16 @@ components:
         - PRODUCTION
         - STAGING
       example: PRODUCTION
+    EnvironmentRoutingModeEnum:
+      type: string
+      description: |
+        How the environment routes its custom domains.
+        * `PER_ROUTER_LISTENER_SET`: a domain belongs to one service and follows its default public port and path.
+        * `PER_HOSTNAME_LISTENER_SET`: several services can share a domain, and each route chooses its port, path and path rewrite.
+      enum:
+        - PER_ROUTER_LISTENER_SET
+        - PER_HOSTNAME_LISTENER_SET
+      example: PER_HOSTNAME_LISTENER_SET
     CreateEnvironmentModeEnum:
       type: string
       enum:
@@ -28698,6 +29033,56 @@ components:
       allOf:
         - $ref: '#/components/schemas/CurrentCost'
         - type: object
+    OrganizationCustomDomainPaginatedResponseList:
+      allOf:
+        - $ref: '#/components/schemas/PaginationData'
+        - type: object
+          required:
+            - results
+            - total_count
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrganizationCustomDomainResponse'
+            total_count:
+              type: integer
+              description: The number of domains matching the query, on all pages.
+    OrganizationCustomDomainResponse:
+      type: object
+      description: One domain name of one environment, with every route that serves it. It has no id of its own; `environment_id` and `domain` identify it.
+      required:
+        - environment_id
+        - domain
+        - project
+        - environment
+        - routes
+        - generate_certificate
+        - use_cdn
+      properties:
+        environment_id:
+          type: string
+          format: uuid
+          description: Id of the environment of the domain.
+        domain:
+          type: string
+          description: The domain name.
+          example: my.domain.tld
+        project:
+          $ref: '#/components/schemas/CustomDomainProjectResponse'
+        environment:
+          $ref: '#/components/schemas/CustomDomainEnvironmentResponse'
+        routes:
+          type: array
+          description: The routes of the domain, one per service and path.
+          items:
+            $ref: '#/components/schemas/CustomDomainRouteResponse'
+        generate_certificate:
+          type: boolean
+          description: Whether Qovery generates a certificate for the domain. `false` when a CDN or another party manages the certificate.
+        use_cdn:
+          type: boolean
+          description: Whether the domain is behind a CDN. If `true`, Qovery only checks that the domain points to an IP; otherwise it checks that the domain resolves to the service load balancer.
     OrganizationCustomRoleCreateRequest:
       type: object
       required:
