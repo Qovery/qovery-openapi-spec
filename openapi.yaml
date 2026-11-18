@@ -9291,7 +9291,6 @@ paths:
         - `source` has both `image` and `git_repository`, or neither;
         - the container has an image source, `source` is not sent, and only some of `registry_id`, `image_name` and `tag` are sent: send all three, or none to keep the image;
         - the container has a Git repository source and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry;
-        - `source.git_repository` is sent and the organization is not enabled for Git repository sources;
         - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent, or while the container has a Git repository source and `source` is not sent;
         - `build_settings` is sent while the container keeps, or switches to, an image source.
       operationId: editContainer
@@ -9486,8 +9485,7 @@ paths:
         For a container with a Git repository source, you can provide a commit in `git_commit_id`.
 
         Returns 400 when:
-        - `image_tag` is sent for a container with a Git repository source, or `git_commit_id` for a container with an image source;
-        - the container has a Git repository source and its organization is not enabled for Git repository sources.
+        - `image_tag` is sent for a container with a Git repository source, or `git_commit_id` for a container with an image source.
       operationId: deployContainer
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -23354,7 +23352,6 @@ components:
         - When `source` is not sent, the stored source is kept. Flat fields never switch the source.
         - On a container with a Git repository source, flat fields equal to the `registry.id`, `image_name` and `tag` that GET returns are accepted and change nothing; different values return 400. A deployment that finishes between the GET and the PUT changes these values: get the container again and retry. Send `source.image` to switch back to an image.
         - A `git_repository` source requires `auto_deploy` and `auto_preview` to be false or not specified: 400 otherwise. When not specified on a switch to `git_repository`, both are set to false.
-        - A `git_repository` source is available only to organizations where it is enabled: 400 otherwise.
       oneOf:
         - type: object
           required:
@@ -23877,8 +23874,7 @@ components:
 
                   For a container with a Git repository source:
                   - an absent or empty `image_tag`, or one equal to the `tag` that `GET /container/{containerId}` returns, deploys the container at its stored commit;
-                  - a different `image_tag` returns 400;
-                  - when the organization is not enabled for Git repository sources, the request returns 400 for this entry.
+                  - a different `image_tag` returns 400.
         jobs:
           type: array
           items:
