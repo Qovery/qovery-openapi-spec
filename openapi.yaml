@@ -5703,7 +5703,7 @@ paths:
         unusable answer), the request answers 503 and nothing is saved. Because every save is sent
         to the model, an organization with AI features turned off cannot create or edit presets
         (403). Reading, resolving, loading and deleting presets are not affected. A save refused for
-        security is recorded in the audit log as a `REJECTED` event with sub-target `SKILL_PRESET`,
+        security is recorded in the audit log as a `SKILL_PRESET_REJECTED` event with sub-target `SKILL_PRESET`,
         holding hashes and findings, never the text.
 
 
@@ -5731,8 +5731,10 @@ paths:
         '400':
           description: >-
             Invalid preset: a field is out of its limits, a skill entry does not fit its mode or the
-            base, a skill or a target appears more than once, a template has assignments, or the
-            preset holds more than 200,000 characters of text in total
+            base, a skill or a target appears more than once, a template has assignments, the preset
+            has more than 200 assignments, the Owner role is a target (assign the Admin role, which the
+            organization owner resolves as), or the preset holds more than 200,000 characters of text
+            in total
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -5817,11 +5819,11 @@ paths:
 
         Set `purpose` to say who reads the skill. LOAD (the default) is a member's coding agent
         loading it to follow it. VIEW is a person reading it, for example in the Console: same body
-        and same ETag and 304 behaviour, recorded as a `VIEW` audit event with the same content as a
-        LOAD entry, and not counted in `getSkillUsage`.
+        and same ETag and 304 behaviour, recorded as a `SKILL_VIEW` audit event with the same content as a
+        `SKILL_LOAD` entry, and not counted in `getSkillUsage`.
 
 
-        Every LOAD call is recorded in the audit log as a `LOAD` event with sub-target `SKILL_PRESET`,
+        Every LOAD call is recorded in the audit log as a `SKILL_LOAD` event with sub-target `SKILL_PRESET`,
         304s included (with `from_cache` set to true): the entry gives the skill, the preset and
         revision that applied (or `QOVERY_DEFAULT`), the mode, and the SHA-256 of the content and team
         context that were injected. A 404 is not recorded.
@@ -5866,8 +5868,9 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           description: >-
-            The organization does not exist, or the skill is neither a Qovery skill nor a skill of
-            the preset that applies to the caller
+            The organization does not exist, `skillName` is not a valid skill name (lowercase letters,
+            digits and hyphens, at most 64 characters), or the skill is neither a Qovery skill nor a
+            skill of the preset that applies to the caller
   '/organization/{organizationId}/skillPreset/usage':
     get:
       summary: Get skill usage
@@ -5881,7 +5884,7 @@ paths:
         (the default) that returned a skill, cached ones included. A 304 counts as a cached load, a
         404 is not counted, and VIEW calls (a person reading a skill) are never counted. Loads are counted whether or not a preset
         applies. Recording a load is best effort and never blocks the agent, so a load can be missing
-        here while the audit log, which records every load as a `LOAD` event, still has it.
+        here while the audit log, which records every load as a `SKILL_LOAD` event, still has it.
 
 
         The range defaults to the 30 days ending now and spans at most 90 days. Timeline buckets are
@@ -6028,7 +6031,7 @@ paths:
         model review on AWS Bedrock, and the check fails closed: a finding answers 422, an
         unavailable review answers 503, and in both cases nothing is saved. An organization with AI
         features turned off cannot edit presets (403). A refusal for security is recorded as a
-        `REJECTED` audit event.
+        `SKILL_PRESET_REJECTED` audit event.
 
 
         The edit is recorded in the audit log as an `UPDATE` event with sub-target `SKILL_PRESET`:
@@ -6058,8 +6061,10 @@ paths:
         '400':
           description: >-
             Invalid preset: a field is out of its limits, a skill entry does not fit its mode or the
-            base, a skill or a target appears more than once, a template has assignments, or the
-            preset holds more than 200,000 characters of text in total
+            base, a skill or a target appears more than once, a template has assignments, the preset
+            has more than 200 assignments, the Owner role is a target (assign the Admin role, which the
+            organization owner resolves as), or the preset holds more than 200,000 characters of text
+            in total
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -6110,7 +6115,7 @@ paths:
         (organization owner or admin); members read their own activity with `getMyAgentActivity`.
 
 
-        Every filter is optional and they combine. `policyTokenId` implies `actorType`
+        Every filter is optional and they combine. `policyTokenId` implies `actorKind`
         POLICY_TOKEN, and neither combines with `userSub`: those combinations, an unknown enum value
         or a malformed id are refused with 400.
 
@@ -6127,7 +6132,7 @@ paths:
 
 
         No request content is returned: only what the audit log shows (event, target, project and
-        environment names, time, origin), never prompt text or request bodies.
+        environment names, time, source), never prompt text or request bodies.
 
 
         The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at
@@ -6178,7 +6183,7 @@ paths:
           schema:
             type: string
             pattern: '^[a-z0-9._-]{1,64}$'
-        - name: actorType
+        - name: actorKind
           in: query
           description: >-
             Only count members (MEMBER) or policy tokens (POLICY_TOKEN). Cannot be combined with
@@ -6189,8 +6194,8 @@ paths:
         - name: policyTokenId
           in: query
           description: >-
-            Only count this policy token, by its id. Implies `actorType` POLICY_TOKEN. Cannot be
-            combined with `actorType` MEMBER or with `userSub`, otherwise the request is refused with
+            Only count this policy token, by its id. Implies `actorKind` POLICY_TOKEN. Cannot be
+            combined with `actorKind` MEMBER or with `userSub`, otherwise the request is refused with
             400. With `bucket` HOUR, it is required to fill the token's `timeline` in
             `by_policy_token`.
           required: false
@@ -6224,7 +6229,7 @@ paths:
           description: >-
             `to` is not after `from`, the range exceeds 90 days, `skillName` does not match its
             pattern, an enum value or `policyTokenId` is malformed, or the filters do not combine
-            (`policyTokenId` with `actorType` MEMBER, or `userSub` with `policyTokenId` or `actorType`
+            (`policyTokenId` with `actorKind` MEMBER, or `userSub` with `policyTokenId` or `actorKind`
             POLICY_TOKEN)
         '401':
           $ref: '#/components/responses/401'
@@ -6232,6 +6237,10 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '503':
+          description: >-
+            The activity of the range could not be read in time. Narrow the range, or filter by member
+            or skill, and try again.
   '/organization/{organizationId}/agentActivity/me':
     get:
       summary: Get my agent activity
@@ -6239,8 +6248,9 @@ paths:
         Return the caller's own agent activity: exactly what admins see about them through
         `getAgentActivity`, and nothing about other members. Any organization member can call it
         (READ_ORGANIZATION_DATA). Policy tokens belong to the organization, so this view takes no
-        `actorType` or `policyTokenId` and its `by_policy_token` is always empty. A refusal by
-        policy (401) or by role permissions (403) counts as DENIED.
+        `actorKind` or `policyTokenId` and its `by_policy_token` is always empty. A refusal by
+        policy (401) or by role permissions (403) counts as DENIED. API and policy tokens cannot call
+        it (400): they are not members.
 
 
         Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible.
@@ -6255,7 +6265,7 @@ paths:
 
 
         No request content is returned: only what the audit log shows (event, target, project and
-        environment names, time, origin), never prompt text or request bodies.
+        environment names, time, source), never prompt text or request bodies.
 
 
         The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at
@@ -6323,13 +6333,18 @@ paths:
         '400':
           description: >-
             `to` is not after `from`, the range exceeds 90 days, `skillName` does not match its
-            pattern, or an enum value is malformed
+            pattern, an enum value is malformed, or the caller is an API token or a policy token,
+            which is not a member and has no own activity
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '503':
+          description: >-
+            The activity of the range could not be read in time. Narrow the range, or filter by member
+            or skill, and try again.
   '/organization/{organizationId}/containerRegistry/{containerRegistryId}/images':
     get:
       summary: List image version for a container registry
@@ -23581,12 +23596,12 @@ components:
     SkillPresetBase:
       type: string
       enum:
-        - QOVERY_FULL
-        - QOVERY_LEAN
+        - FULL
+        - LEAN
         - NONE
       description: >-
-        The Qovery skill set a preset starts from. QOVERY_FULL: every Qovery skill, as published.
-        QOVERY_LEAN: one short CLI-first skill that relies on the `qovery` CLI and its `--help`.
+        The Qovery skill set a preset starts from. FULL: every Qovery skill, as published.
+        LEAN: one short CLI-first skill that relies on the `qovery` CLI and its `--help`.
         NONE: no Qovery skill, only the preset's own skills and team context.
     SkillPresetSkillMode:
       type: string
@@ -23600,7 +23615,7 @@ components:
         OVERLAY: the Qovery skill is loaded, then the entry's content as team instructions. REPLACE:
         the entry's content is loaded in place of the Qovery skill. ADD: a skill of the
         organization's own. DISABLE, OVERLAY and REPLACE apply to a Qovery skill (named `qovery` or
-        `qovery-*`) and only on the QOVERY_FULL base. ADD applies to any name that does not start
+        `qovery-*`) and only on the FULL base. ADD applies to any name that does not start
         with `qovery`, on any base.
     SkillPresetResolutionSource:
       type: string
@@ -23718,8 +23733,8 @@ components:
         base:
           allOf:
             - $ref: '#/components/schemas/SkillPresetBase'
-          default: QOVERY_FULL
-          description: The Qovery skill set the preset starts from. Defaults to QOVERY_FULL.
+          default: FULL
+          description: The Qovery skill set the preset starts from. Defaults to FULL.
         is_template:
           type: boolean
           default: false
@@ -23990,8 +24005,8 @@ components:
             - $ref: '#/components/schemas/SkillPresetSecurityReview'
           nullable: true
           description: >-
-            The model review this state passed. Null for a DELETE revision, and when the review was
-            turned off (never in production).
+            The model review this state passed. Null for a DELETE revision, and for a save made while
+            the review was turned off, when presets are saved after the rules only.
     SkillPresetRevisionResponseList:
       type: object
       required:
@@ -24007,8 +24022,9 @@ components:
         - LOAD
         - VIEW
       description: >-
-        Who reads a skill. LOAD: a member's coding agent loads it to follow it, audited as `LOAD` and
-        counted in usage. VIEW: a person reads it, for example in the Console, audited as `VIEW` and
+        Who reads a skill. LOAD: a member's coding agent loads it to follow it, audited as `SKILL_LOAD`
+        and counted in usage. VIEW: a person reads it, for example in the Console, audited as
+        `SKILL_VIEW` and
         not counted in usage.
     SkillUsageBucket:
       type: string
@@ -24369,7 +24385,7 @@ components:
       required:
         - at
         - user_name
-        - origin
+        - source
         - event
         - target_type
         - target_name
@@ -24393,7 +24409,7 @@ components:
         user_name:
           type: string
           description: The username the audit log records for the actor.
-        origin:
+        source:
           allOf:
             - $ref: '#/components/schemas/AgentActivitySource'
           description: >-
@@ -29587,9 +29603,9 @@ components:
         - UNLOCK
         - POLICY_FAILED
         - ACCESS_DENIED
-        - LOAD
-        - REJECTED
-        - VIEW
+        - SKILL_LOAD
+        - SKILL_PRESET_REJECTED
+        - SKILL_VIEW
       example: CREATE
     SecretOverride:
       type: object
@@ -36539,8 +36555,8 @@ components:
         presets cannot be created or edited. Reading and resolving presets stay allowed.
     SkillPresetReviewUnavailable:
       description: >-
-        The security review is unavailable: the model review could not give a verdict (error,
-        timeout or unusable answer). The check fails closed, so nothing was saved. Try again in a
+        The security review is unavailable: no model reviewer is configured on this Qovery
+        instance, or the model review could not give a verdict (error, timeout or unusable answer). The check fails closed, so nothing was saved. Try again in a
         minute. The body is a problem detail with the title "Skill preset security review
         unavailable".
       content:
