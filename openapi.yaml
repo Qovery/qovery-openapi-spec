@@ -22067,6 +22067,16 @@ components:
         load_balancer.size:
           type: string
           description: Select the size of the main load_balancer (only effective for Scaleway)
+        cluster.zones_count:
+          type: integer
+          minimum: 1
+          maximum: 3
+          default: 3
+          description: |
+            Number of availability zones the cluster nodes run in, starting with the first zone of the region.
+            A value below 3 is only accepted on non-production AWS EKS clusters with Karpenter.
+            NAT gateways follow the same zones. The VPC keeps one subnet per zone of the region, so managed databases are not affected.
+            It can only be set before the first deployment of the cluster. When absent, the cluster runs in 3 zones.
         database.postgresql.deny_any_access:
           type: boolean
           description: Deny public access to any PostgreSQL database
