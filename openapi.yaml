@@ -22073,9 +22073,11 @@ components:
           maximum: 3
           default: 3
           description: |
-            Number of availability zones the cluster nodes run in, starting with the first zone of the region.
-            A value below 3 is only accepted on non-production AWS EKS clusters with Karpenter.
-            NAT gateways follow the same zones. The VPC keeps one subnet per zone of the region, so managed databases are not affected.
+            Number of availability zones the cluster nodes run in. A value below 3 is only accepted on non-production
+            AWS EKS clusters with Karpenter, Azure AKS clusters and Scaleway Kapsule clusters.
+            AWS: nodes and NAT gateways run in the first zones of the region; the VPC keeps one subnet per zone, so managed databases are not affected.
+            Azure: subnets, NAT gateways and node pools are created in the first zones of the region.
+            Scaleway: node pools are created in the cluster zone first, where the public gateway runs.
             It can only be set before the first deployment of the cluster. When absent, the cluster runs in 3 zones.
         database.postgresql.deny_any_access:
           type: boolean
