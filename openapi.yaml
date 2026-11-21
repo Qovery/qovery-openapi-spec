@@ -22067,6 +22067,18 @@ components:
         load_balancer.size:
           type: string
           description: Select the size of the main load_balancer (only effective for Scaleway)
+        cluster.zones_count:
+          type: integer
+          minimum: 1
+          maximum: 3
+          default: 3
+          description: |
+            Number of availability zones the cluster nodes run in. A value below 3 is only accepted on non-production
+            AWS EKS clusters with Karpenter, Azure AKS clusters and Scaleway Kapsule clusters.
+            AWS: nodes and NAT gateways run in the first zones of the region. The VPC keeps all its subnets in every zone, so managed databases are not affected; the private subnets of the other zones route through the first zone's NAT gateway.
+            Azure: subnets, NAT gateways and node pools are created in the first zones of the region.
+            Scaleway: node pools are created in the cluster zone first, where the public gateway runs.
+            It can only be set before the first deployment of the cluster. When absent, it defaults to 3, which keeps the current zone layout.
         database.postgresql.deny_any_access:
           type: boolean
           description: Deny public access to any PostgreSQL database
