@@ -24323,13 +24323,17 @@ components:
             $ref: '#/components/schemas/CustomDomainErrorResponse'
     PaymentRequiredProblemResponse:
       type: object
+      required:
+        - title
+        - detail
       description: >-
         A problem detail (RFC 9457) explaining why the action is refused: the organization's plan
         does not include this action, or its limit is reached, or the subscription or payment does
-        not allow new actions. The RFC 9457 properties (`type`, `title`, `status`, `detail`,
-        `instance`) are always sent, and clients show `detail`; the other properties can be absent.
-        `offers` and `paywall` are only sent to a caller who can manage the organization's billing
-        (the owner, admin and billing roles); other callers get neither.
+        not allow new actions. `title` and `detail` are required; the other RFC 9457 properties
+        (`type`, `status`, `instance`) are always sent too. Clients show `detail`. The pricing
+        properties, from `message` on, can be absent. `offers` and `paywall` are only sent to a
+        caller who can manage the organization's billing (the owner, admin and billing roles);
+        other callers get neither.
       properties:
         type:
           type: string
@@ -24345,8 +24349,8 @@ components:
         detail:
           type: string
           description: >-
-            Always sent. Why the action is refused and what to do, safe to show to the user: the
-            pricing explanation, or a generic text when there is none.
+            Always sent. Plain text to show to the user, saying why the action is refused and what
+            to do: the pricing explanation, or a generic text when there is none.
         instance:
           type: string
           description: Always sent. The path of the request.
@@ -35544,8 +35548,8 @@ components:
       description: >-
         Payment required. The organization's plan does not include this action, or its limit is
         reached, or its subscription or payment does not allow new actions. Nothing was created, and
-        running resources are not affected. `offers` and `paywall` are only sent to a caller who can manage the organization's
-        billing.
+        running resources are not affected. `offers` and `paywall` are only sent to a caller who
+        can manage the organization's billing.
       content:
         application/problem+json:
           schema:
