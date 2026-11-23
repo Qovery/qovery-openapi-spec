@@ -24324,28 +24324,35 @@ components:
     PaymentRequiredProblemResponse:
       type: object
       description: >-
-        A problem detail (RFC 9457) explaining why the organization's plan, subscription or payment
-        refuses the action. Every property is optional: show `message`, or `detail` when it is
-        absent. `offers` and `paywall` are only sent to a caller who can manage the organization's
-        billing (the owner, admin and billing roles); other callers get neither.
+        A problem detail (RFC 9457) explaining why the action is refused: the organization's plan
+        does not include this action, or its limit is reached, or the subscription or payment does
+        not allow new actions. The RFC 9457 properties (`type`, `title`, `status`, `detail`,
+        `instance`) are always sent, and clients show `detail`; the other properties can be absent.
+        `offers` and `paywall` are only sent to a caller who can manage the organization's billing
+        (the owner, admin and billing roles); other callers get neither.
       properties:
         type:
           type: string
+          description: Always sent, `about:blank`.
         title:
           type: string
+          description: Always sent, `Payment Required`.
           example: Payment Required
         status:
           type: integer
+          description: Always sent, 402.
           example: 402
         detail:
           type: string
-          description: Why the action is refused and what to do, safe to show to the user.
+          description: >-
+            Always sent. Why the action is refused and what to do, safe to show to the user: the
+            pricing explanation, or a generic text when there is none.
         instance:
           type: string
-          description: The path of the request.
+          description: Always sent. The path of the request.
         message:
           type: string
-          description: The same text as `detail`. Absent when the refusal carries no explanation; show `detail` then.
+          description: The same text as `detail`. Absent when the refusal carries no pricing explanation.
           example: Your Growth plan includes 2 clusters and you are using 2. Running resources are not affected.
         sku:
           type: string
@@ -24384,7 +24391,7 @@ components:
           format: uri
           description: >-
             The console page where a billing role changes the plan, the spend limit or the payment
-            method. Absent when there is no page to send the user to.
+            method. Always an `https` URL. Absent when there is no page to send the user to.
         offers:
           type: array
           description: >-
@@ -35535,9 +35542,9 @@ components:
             $ref: '#/components/schemas/CustomDomainProblemResponse'
     PaymentRequired:
       description: >-
-        Payment required. The organization's plan does not include this action, or its subscription
-        or payment does not allow new actions. Nothing was created, and running resources are not
-        affected. `offers` and `paywall` are only sent to a caller who can manage the organization's
+        Payment required. The organization's plan does not include this action, or its limit is
+        reached, or its subscription or payment does not allow new actions. Nothing was created, and
+        running resources are not affected. `offers` and `paywall` are only sent to a caller who can manage the organization's
         billing.
       content:
         application/problem+json:
