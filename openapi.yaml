@@ -9803,6 +9803,8 @@ paths:
       summary: Get container deployment restrictions
       description: |
         Get the deployment restrictions of a container. On a container with a Git repository source and `auto_deploy` true, they filter which pushes to the source branch deploy it, by changed file path.
+
+        Works on any container: restrictions survive a switch to an image source, without effect until the container switches back to a Git repository source.
       operationId: getContainerDeploymentRestrictions
       parameters:
         - $ref: '#/components/parameters/containerId'
@@ -9885,9 +9887,14 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          description: A container deployment restriction with same properties already exists for this container
     delete:
       summary: Delete a container deployment restriction
-      description: Delete a container deployment restriction
+      description: |
+        Delete a deployment restriction of a container.
+
+        Works on any container: restrictions survive a switch to an image source, without effect until the container switches back to a Git repository source.
       operationId: deleteContainerDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/containerId'
