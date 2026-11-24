@@ -988,6 +988,8 @@ paths:
           $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
         '403':
           $ref: '#/components/responses/403'
         '404':
@@ -1686,6 +1688,8 @@ paths:
           $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
         '403':
           $ref: '#/components/responses/403'
         '404':
@@ -1698,7 +1702,8 @@ paths:
         or Scaleway, or an on-premise credential for any other Kubernetes (`provider` `ON_PREMISE`,
         `HETZNER`, `OVH`, `CIVO`, `ORACLE` or `IBM`, in region `on-premise`). The on-premise
         providers are not generally available yet: they are accepted for a short list of Qovery
-        test organizations and answer 400 for the others. The organization's plan is not checked.
+        test organizations and answer 400 for the others. The organization's plan, subscription or
+        payment can refuse the creation: it then answers 402 and creates nothing.
         On AWS the credential only needs ECR permissions for the cluster itself,
         including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the
         credential whatever the cluster region; features that call other AWS services with the
@@ -1743,6 +1748,8 @@ paths:
             registry refusing the credential, or invalid platform configuration
         '401':
           $ref: '#/components/responses/401'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
         '403':
           $ref: '#/components/responses/403'
         '404':
@@ -6873,6 +6880,8 @@ paths:
           $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
         '403':
           $ref: '#/components/responses/403'
         '404':
@@ -7938,6 +7947,8 @@ paths:
                 $ref: '#/components/schemas/Environment'
         '401':
           $ref: '#/components/responses/401'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
         '403':
           $ref: '#/components/responses/403'
         '404':
@@ -26203,6 +26214,98 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomDomainErrorResponse'
+    PaymentRequiredProblemResponse:
+      type: object
+      required:
+        - title
+        - detail
+      description: >-
+        A problem detail (RFC 9457) explaining why the action is refused: the organization's plan
+        does not include this action, or its limit is reached, or the subscription or payment does
+        not allow new actions. `title` and `detail` are required; the other RFC 9457 properties
+        (`type`, `status`, `instance`) are always sent too. Clients show `detail`. The pricing
+        properties, from `message` on, can be absent. `offers` and `paywall` are only sent to a
+        caller who can manage the organization's billing (the owner, admin and billing roles);
+        other callers get neither.
+      properties:
+        type:
+          type: string
+          description: Always sent, `about:blank`.
+        title:
+          type: string
+          description: Always sent, `Payment Required`.
+          example: Payment Required
+        status:
+          type: integer
+          description: Always sent, 402.
+          example: 402
+        detail:
+          type: string
+          description: >-
+            Always sent. Plain text to show to the user, saying why the action is refused and what
+            to do: the pricing explanation, or a generic text when there is none.
+        instance:
+          type: string
+          description: Always sent. The path of the request.
+        message:
+          type: string
+          description: The same text as `detail`. Absent when the refusal carries no pricing explanation.
+          example: Your Growth plan includes 2 clusters and you are using 2. Running resources are not affected.
+        sku:
+          type: string
+          description: >-
+            The plan item that refused the action. Absent when unknown. New items can appear: do not
+            reject an unknown value.
+          example: clusters.managed
+        action:
+          type: string
+          description: >-
+            The checked action: `member.invite`, `cluster.create`, `cluster.create_self_managed` or
+            `environment.create` (also used for a clone). Absent when unknown. New actions can
+            appear: do not reject an unknown value.
+          example: cluster.create
+        limit:
+          description: >-
+            What the plan includes for `sku`: a number of items, `false` when the plan does not
+            include the item at all, `true` when it includes the item without a number, or the
+            string `unlimited`. A refusal by the subscription or the payment carries the plan's
+            value whatever it is. Absent when unknown.
+          oneOf:
+            - type: integer
+            - type: boolean
+            - type: string
+          example: 2
+        used:
+          type: integer
+          description: How many of `sku` the organization uses now. Absent when unknown.
+          example: 2
+        requested:
+          type: integer
+          description: How many of `sku` the action adds. Absent when unknown.
+          example: 1
+        upgrade_url:
+          type: string
+          format: uri
+          description: >-
+            The console page where a billing role changes the plan, the spend limit or the payment
+            method. Always an `https` URL. Absent when there is no page to send the user to.
+        offers:
+          type: array
+          description: >-
+            Ways past the refusal, produced by the pricing service, in the order to show them. Each
+            offer has a `type` (`plan_change`, `addon`, `contact_sales`, `free_up` or
+            `raise_spend_limit`; more can appear) and a `name`; its other properties depend on the
+            type and can change. Absent unless the caller can manage the organization's billing.
+          items:
+            type: object
+            additionalProperties: true
+        paywall:
+          type: object
+          additionalProperties: true
+          description: >-
+            What the refused feature does and the ways to get it, produced by the pricing service
+            for a billing role; its properties can change. Absent unless the caller can manage the
+            organization's billing, and absent when the refusal comes from a spend limit.
     CustomDomainServiceRequest:
       type: object
       required:
@@ -37343,6 +37446,16 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/CustomDomainProblemResponse'
+    PaymentRequired:
+      description: >-
+        Payment required. The organization's plan does not include this action, or its limit is
+        reached, or its subscription or payment does not allow new actions. Nothing was created, and
+        running resources are not affected. `offers` and `paywall` are only sent to a caller who
+        can manage the organization's billing.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/PaymentRequiredProblemResponse'
     BuildAnalysisConflict:
       description: The execution is not the latest build of the service, the service has no build, or an analysis is already in progress. Read the build analysis again to get the current `latest_build_execution_id` and the running analysis.
     BuildAnalysisDockerfileUnavailable:
