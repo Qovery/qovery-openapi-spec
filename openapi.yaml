@@ -13274,6 +13274,8 @@ paths:
         Lists the deployment restrictions of a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.
 
         Works on any container, whatever its source: a container's restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.
+
+        Returns 400 when the service is a kind that cannot have deployment restrictions: a database, an ArgoCD app or an agentic workflow.
       operationId: listServiceDeploymentRestrictions
       parameters:
         - $ref: '#/components/parameters/serviceId'
@@ -13286,6 +13288,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceDeploymentRestrictionResponseList'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -13297,7 +13301,7 @@ paths:
       description: |
         Creates a deployment restriction on a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.
 
-        Returns 400 when the service cannot have restrictions: a job or container with an image source, a Helm or Terraform service not using a Git repository, or a kind without restrictions, such as a database.
+        Returns 400 when the service cannot have restrictions: a job or container with an image source, a Helm or Terraform service not using a Git repository, or a kind without restrictions: a database, an ArgoCD app or an agentic workflow.
       operationId: createServiceDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/serviceId'
@@ -13331,7 +13335,7 @@ paths:
       description: |
         Edits a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.
 
-        Returns 400 when the service cannot have restrictions: a job or container with an image source, a Helm or Terraform service not using a Git repository, or a kind without restrictions, such as a database.
+        Returns 400 when the service cannot have restrictions: a job or container with an image source, a Helm or Terraform service not using a Git repository, or a kind without restrictions: a database, an ArgoCD app or an agentic workflow.
       operationId: editServiceDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/serviceId'
@@ -13366,6 +13370,8 @@ paths:
         Deletes a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.
 
         Works on any container, whatever its source: a container's restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.
+
+        Returns 400 when the service is a kind that cannot have deployment restrictions: a database, an ArgoCD app or an agentic workflow.
       operationId: deleteServiceDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/serviceId'
@@ -13375,6 +13381,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204-deletion'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
