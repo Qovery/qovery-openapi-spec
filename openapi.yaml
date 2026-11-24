@@ -39,7 +39,6 @@ tags:
   - name: Container Actions
   - name: Container Configuration
   - name: Container Database
-  - name: Container Deployment Restriction
   - name: Container Deployment History
   - name: Container Environment Variable
   - name: Container Logs
@@ -142,6 +141,7 @@ tags:
   - name: Helm Custom Domain
   - name: Lifecycle Template Main Calls
   - name: Blueprint Main Calls
+  - name: Service Main Calls
 x-tagGroups:
   - name: Organization
     tags:
@@ -216,7 +216,6 @@ x-tagGroups:
       - Container Custom Domain
       - Container Database
       - Container Logs
-      - Container Deployment Restriction
       - Container Deployment History
       - Container Environment Variable
       - Container Secret
@@ -259,6 +258,9 @@ x-tagGroups:
       - Terraform Configuration
       - Terraform Deployment Restriction
       - Terraform Deployment History
+  - name: Service
+    tags:
+      - Service Main Calls
   - name: Account
     tags:
       - Account Info
@@ -8491,7 +8493,11 @@ paths:
   '/application/{applicationId}/deploymentRestriction':
     get:
       summary: Get application deployment restrictions
-      description: Get application deployment restrictions
+      description: |
+        Get application deployment restrictions
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: getApplicationDeploymentRestrictions
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -8512,7 +8518,11 @@ paths:
           $ref: '#/components/responses/404'
     post:
       summary: Create an application deployment restriction
-      description: Create an application deployment restriction
+      description: |
+        Create an application deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: createApplicationDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -8541,7 +8551,11 @@ paths:
   '/application/{applicationId}/deploymentRestriction/{deploymentRestrictionId}':
     put:
       summary: Edit an application deployment restriction
-      description: Edit an application deployment restriction
+      description: |
+        Edit an application deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: editApplicationDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -8570,7 +8584,11 @@ paths:
           $ref: '#/components/responses/404'
     delete:
       summary: Delete an application deployment restriction
-      description: Delete an application deployment restriction
+      description: |
+        Delete an application deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: deleteApplicationDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -9792,118 +9810,6 @@ paths:
                 $ref: '#/components/schemas/ContainerAdvancedSettings'
         '400':
           $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/container/{containerId}/deploymentRestriction':
-    get:
-      summary: Get container deployment restrictions
-      description: |
-        Get the deployment restrictions of a container. On a container with a Git repository source and `auto_deploy` true, they filter which pushes to the source branch deploy it, by changed file path.
-
-        Works on any container: restrictions survive a switch to an image source, without effect until the container switches back to a Git repository source.
-      operationId: getContainerDeploymentRestrictions
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-      tags:
-        - Container Deployment Restriction
-      responses:
-        '200':
-          description: Get container deployment restrictions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContainerDeploymentRestrictionResponseList'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    post:
-      summary: Create a container deployment restriction
-      description: |
-        Create a deployment restriction on a container. On a container with a Git repository source and `auto_deploy` true, restrictions filter which pushes to the source branch deploy it, by changed file path.
-
-        Returns 400 when the container has an image source: deployment restrictions apply to Git repository sources only.
-      operationId: createContainerDeploymentRestriction
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-      tags:
-        - Container Deployment Restriction
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ContainerDeploymentRestrictionRequest'
-      responses:
-        '201':
-          description: Created a container deployment restriction
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContainerDeploymentRestrictionResponse'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '409':
-          description: A container deployment restriction with same properties already exists for this container
-  '/container/{containerId}/deploymentRestriction/{deploymentRestrictionId}':
-    put:
-      summary: Edit a container deployment restriction
-      description: |
-        Edit a deployment restriction of a container.
-
-        Returns 400 when the container has an image source: deployment restrictions apply to Git repository sources only.
-      operationId: editContainerDeploymentRestriction
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-        - $ref: '#/components/parameters/deploymentRestrictionId'
-      tags:
-        - Container Deployment Restriction
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ContainerDeploymentRestrictionRequest'
-      responses:
-        '200':
-          description: Edit a container deployment restriction
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContainerDeploymentRestrictionResponse'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          description: A container deployment restriction with same properties already exists for this container
-    delete:
-      summary: Delete a container deployment restriction
-      description: |
-        Delete a deployment restriction of a container.
-
-        Works on any container: restrictions survive a switch to an image source, without effect until the container switches back to a Git repository source.
-      operationId: deleteContainerDeploymentRestriction
-      parameters:
-        - $ref: '#/components/parameters/containerId'
-        - $ref: '#/components/parameters/deploymentRestrictionId'
-      tags:
-        - Container Deployment Restriction
-      responses:
-        '204':
-          $ref: '#/components/responses/204-deletion'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -11768,7 +11674,11 @@ paths:
   '/helm/{helmId}/deploymentRestriction':
     get:
       summary: Get helm deployment restrictions
-      description: Get helm deployment restrictions
+      description: |
+        Get helm deployment restrictions
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: getHelmDeploymentRestrictions
       parameters:
         - $ref: '#/components/parameters/helmId'
@@ -11789,7 +11699,11 @@ paths:
           $ref: '#/components/responses/404'
     post:
       summary: Create a helm deployment restriction
-      description: Create a helm deployment restriction
+      description: |
+        Create a helm deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: createHelmDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/helmId'
@@ -11818,7 +11732,11 @@ paths:
   '/helm/{helmId}/deploymentRestriction/{deploymentRestrictionId}':
     put:
       summary: Edit a helm deployment restriction
-      description: Edit a helm deployment restriction
+      description: |
+        Edit a helm deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: editHelmDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/helmId'
@@ -11847,7 +11765,11 @@ paths:
           $ref: '#/components/responses/404'
     delete:
       summary: Delete a helm deployment restriction
-      description: Delete a helm deployment restriction
+      description: |
+        Delete a helm deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: deleteHelmDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/helmId'
@@ -12717,7 +12639,11 @@ paths:
   '/job/{jobId}/deploymentRestriction':
     get:
       summary: Get job deployment restrictions
-      description: Get job deployment restrictions
+      description: |
+        Get job deployment restrictions
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: getJobDeploymentRestrictions
       parameters:
         - $ref: '#/components/parameters/jobId'
@@ -12738,7 +12664,11 @@ paths:
           $ref: '#/components/responses/404'
     post:
       summary: Create a job deployment restriction
-      description: Create a job deployment restriction
+      description: |
+        Create a job deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: createJobDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/jobId'
@@ -12767,7 +12697,11 @@ paths:
   '/job/{jobId}/deploymentRestriction/{deploymentRestrictionId}':
     put:
       summary: Edit a job deployment restriction
-      description: Edit a job deployment restriction
+      description: |
+        Edit a job deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: editJobDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/jobId'
@@ -12796,7 +12730,11 @@ paths:
           $ref: '#/components/responses/404'
     delete:
       summary: Delete a job deployment restriction
-      description: Delete a job deployment restriction
+      description: |
+        Delete a job deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       operationId: deleteJobDeploymentRestriction
       parameters:
         - $ref: '#/components/parameters/jobId'
@@ -13329,6 +13267,120 @@ paths:
             It needs admin rights on the repository, and a git token also needs the webhooks permission.
         '429':
           description: Git provider rate limit exceeded
+  '/service/{serviceId}/deploymentRestriction':
+    get:
+      summary: List service deployment restrictions
+      description: |
+        Lists the deployment restrictions of a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.
+
+        Works on any container, whatever its source: a container's restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.
+      operationId: listServiceDeploymentRestrictions
+      parameters:
+        - $ref: '#/components/parameters/serviceId'
+      tags:
+        - Service Main Calls
+      responses:
+        '200':
+          description: List service deployment restrictions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceDeploymentRestrictionResponseList'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      summary: Create a service deployment restriction
+      description: |
+        Creates a deployment restriction on a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.
+
+        Returns 400 when the service cannot have restrictions: a job or container with an image source, a Helm or Terraform service not using a Git repository, or a kind without restrictions, such as a database.
+      operationId: createServiceDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/serviceId'
+      tags:
+        - Service Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceDeploymentRestrictionRequest'
+      responses:
+        '201':
+          description: Created a service deployment restriction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceDeploymentRestrictionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: A deployment restriction with the same properties already exists for this service
+  '/service/{serviceId}/deploymentRestriction/{deploymentRestrictionId}':
+    put:
+      summary: Edit a service deployment restriction
+      description: |
+        Edits a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.
+
+        Returns 400 when the service cannot have restrictions: a job or container with an image source, a Helm or Terraform service not using a Git repository, or a kind without restrictions, such as a database.
+      operationId: editServiceDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/serviceId'
+        - $ref: '#/components/parameters/deploymentRestrictionId'
+      tags:
+        - Service Main Calls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceDeploymentRestrictionRequest'
+      responses:
+        '200':
+          description: Edit a service deployment restriction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceDeploymentRestrictionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          description: A deployment restriction with the same properties already exists for this service
+    delete:
+      summary: Delete a service deployment restriction
+      description: |
+        Deletes a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.
+
+        Works on any container, whatever its source: a container's restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.
+      operationId: deleteServiceDeploymentRestriction
+      parameters:
+        - $ref: '#/components/parameters/serviceId'
+        - $ref: '#/components/parameters/deploymentRestrictionId'
+      tags:
+        - Service Main Calls
+      responses:
+        '204':
+          $ref: '#/components/responses/204-deletion'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /variable:
     get:
       summary: List variables
@@ -15333,7 +15385,11 @@ paths:
         required: true
     get:
       summary: Get terraform deployment restrictions
-      description: Get terraform deployment restrictions
+      description: |
+        Get terraform deployment restrictions
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       tags:
         - Terraform Deployment Restriction
       responses:
@@ -15354,7 +15410,11 @@ paths:
         id: q3y44x1wdigcd
     post:
       summary: Create a terraform deployment restriction
-      description: Create a terraform deployment restriction
+      description: |
+        Create a terraform deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       tags:
         - Terraform Deployment Restriction
       requestBody:
@@ -15396,7 +15456,11 @@ paths:
         required: true
     put:
       summary: Edit a terraform deployment restriction
-      description: Edit a terraform deployment restriction
+      description: |
+        Edit a terraform deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       tags:
         - Terraform Deployment Restriction
       requestBody:
@@ -15424,7 +15488,11 @@ paths:
         id: w3jp2xci6bogt
     delete:
       summary: Delete a terraform deployment restriction
-      description: Delete a terraform deployment restriction
+      description: |
+        Delete a terraform deployment restriction
+
+        Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working.
+      deprecated: true
       tags:
         - Terraform Deployment Restriction
       responses:
@@ -22957,32 +23025,6 @@ components:
             Commit to deploy, for a container with a Git repository source. When not specified, the container's stored commit is deployed.
             Sending it for a container with an image source returns 400. A `null` value counts as not sent.
           nullable: true
-    ContainerDeploymentRestrictionRequest:
-      type: object
-      required:
-        - mode
-        - type
-        - value
-      properties:
-        mode:
-          $ref: '#/components/schemas/DeploymentRestrictionModeEnum'
-        type:
-          $ref: '#/components/schemas/DeploymentRestrictionTypeEnum'
-        value:
-          type: string
-          description: 'For `PATH` restrictions, the value must not start with `/`'
-          example: container1/src/
-    ContainerDeploymentRestrictionResponse:
-      allOf:
-        - $ref: '#/components/schemas/Base'
-        - $ref: '#/components/schemas/ContainerDeploymentRestrictionRequest'
-    ContainerDeploymentRestrictionResponseList:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContainerDeploymentRestrictionResponse'
     ContainerRegistryKindEnum:
       type: string
       enum:
@@ -23953,7 +23995,7 @@ components:
         - When `source` is not sent, the stored source is kept. Flat fields never switch the source.
         - On a container with a Git repository source, flat fields equal to the `registry.id`, `image_name` and `tag` that GET returns are accepted and change nothing; different values return 400 unless `source.image` asks for the same image. A deployment that finishes between the GET and the PUT changes these values: get the container again and retry. Send `source.image` to switch back to an image.
         - `auto_deploy` and `auto_preview` are accepted with a `git_repository` source. When not sent, they are set to false on a create from, or a switch to, `git_repository`, and keep their stored values on an update that keeps `git_repository`. A switch from `git_repository` to an image without `auto_preview` sets it to false.
-        - With `auto_deploy` true, a push to the source branch deploys the container: anyone who can push to that branch can deploy it. Deployment restrictions (`/container/{containerId}/deploymentRestriction`) limit which changed paths trigger it.
+        - With `auto_deploy` true, a push to the source branch deploys the container: anyone who can push to that branch can deploy it. Deployment restrictions (`/service/{serviceId}/deploymentRestriction`) limit which changed paths trigger it.
         - With `auto_preview` true, a pull request starts a preview environment that builds the pull request's code, pull requests from forks included, and runs it with the environment's variables and secrets. Later pushes to the pull request redeploy the preview's copy of the container only when that copy has `auto_deploy` true, as for applications.
       oneOf:
         - type: object
@@ -29558,6 +29600,32 @@ components:
         - NEVER_DEPLOYED
         - OUT_OF_DATE
         - UP_TO_DATE
+    ServiceDeploymentRestrictionRequest:
+      type: object
+      required:
+        - mode
+        - type
+        - value
+      properties:
+        mode:
+          $ref: '#/components/schemas/DeploymentRestrictionModeEnum'
+        type:
+          $ref: '#/components/schemas/DeploymentRestrictionTypeEnum'
+        value:
+          type: string
+          description: 'For `PATH` restrictions, the value must not start with `/`'
+          example: service1/src/
+    ServiceDeploymentRestrictionResponse:
+      allOf:
+        - $ref: '#/components/schemas/Base'
+        - $ref: '#/components/schemas/ServiceDeploymentRestrictionRequest'
+    ServiceDeploymentRestrictionResponseList:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceDeploymentRestrictionResponse'
     ServiceTotalNumber:
       type: object
       required:
