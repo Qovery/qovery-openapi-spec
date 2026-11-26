@@ -12903,6 +12903,10 @@ paths:
           $ref: '#/components/responses/404'
     post:
       summary: Create a job
+      description: |
+        Returns 404 when `source.image.registry_id` is a registry of another organization. The response does not name the registry.
+
+        Returns 400 when `source.image.image_name` with `source.image.tag` is not found in the registry.
       operationId: createJob
       parameters:
         - $ref: '#/components/parameters/environmentId'
@@ -12981,7 +12985,9 @@ paths:
 
         Returns 404 when `source.image.registry_id` is a registry of another organization. The response does not name the registry.
 
-        Returns 400 when `source.image.image_name` with `source.image.tag` is not found in the registry.
+        Returns 400 when:
+        - `source.image.image_name` with `source.image.tag` is not found in the registry;
+        - `build_settings` is sent with a switch to `image`.
       operationId: editJob
       parameters:
         - $ref: '#/components/parameters/jobId'
@@ -28812,12 +28818,14 @@ components:
               description: |
                 Where the job image comes from:
                 - `image`: an image from a container registry;
-                - `docker`: a Git repository with a Dockerfile, that Qovery builds.
+                - `docker`: an image that Qovery builds from a Git repository, with a Dockerfile read from the repository (`dockerfile_path`) or sent in the request (`dockerfile_raw`).
 
-                On update (`PUT /job/{jobId}`), sending the other key switches the source in place. The job keeps its id, schedule, lifecycle events and variables. The switch does not deploy; the next deployment uses the new source.
-                - A switch from `docker` to `image` removes the job's Git repository link and build settings: `dockerfile_path`, `dockerfile_raw`, `docker_target_build_stage` and `build_settings`. A later switch back to `docker` must send them again.
+                On update (`PUT /job/{jobId}`), sending the other key switches the source in place. The job keeps its id, schedule, lifecycle events and variables. The switch does not deploy: a cron job keeps running its current image on schedule until the next deployment, which uses the new source.
+                - A switch from `docker` to `image` removes the job's Git repository link, its Dockerfile settings (`dockerfile_path`, `dockerfile_raw`, `docker_target_build_stage`) and its build settings. `build_settings` sent with a switch to `image` returns 400.
+                - A switch to `docker` sends `git_repository` and a Dockerfile, as on create. When `build_settings` is not sent, the job takes the default build settings.
                 - When not sent, `auto_preview` is set to false on any switch, and `auto_deploy` is set to false on a switch to `docker`.
                 - The job gets the missing built-in variables of its new source: `QOVERY_JOB_<ID>_GIT_COMMIT_ID` and `QOVERY_JOB_<ID>_GIT_BRANCH` for `docker`, `QOVERY_JOB_<ID>_TAG` for `image`. Those of the previous source are kept, with empty values.
+                - `<ID>` is the job's engine id, the identifier its other built-in variables use, as in `QOVERY_JOB_<ID>_ENVIRONMENT_NAME`: `Z` followed by the first 8 characters of the job id, in upper case. It is not the full job id.
 
                 With `image`, on create and on update:
                 - a `registry_id` of a registry in another organization returns 404, as for an unknown registry. The response does not name the registry;
@@ -28840,7 +28848,7 @@ components:
                       description: tag of the image container
                     registry_id:
                       type: string
-                      description: tag of the image container
+                      description: id of the container registry that holds the image
                 docker:
                   type: object
                   nullable: true
