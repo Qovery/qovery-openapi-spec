@@ -9387,7 +9387,7 @@ paths:
     post:
       summary: Deploy application
       description: |
-        - For an application with a Git repository source, you must provide `git_commit_id`.
+        - For an application with a Git repository source, send `git_commit_id` to deploy another commit; when not sent, the stored commit is deployed.
         - For an application with an image source, send `image_tag` to deploy another tag; when not sent, the stored tag is deployed.
       operationId: deployApplication
       parameters:
@@ -25929,8 +25929,8 @@ components:
         - `source.image.registry_id` must name a container registry of the application's organization. A registry of another organization returns 404, without its name.
         - An image source needs a Qovery engine that supports it. When the cluster runs its own Qovery engine and that engine is older than the minimum version Qovery requires for image sources, creating an application with an image source, switching one to it, or cloning one returns 400 asking to update the engine.
         - On update, when `source` is not sent, the stored source is kept, and `source` is ignored when it repeats the stored source. On an application with an image source, `source.image.registry_id` may be omitted: the stored registry is kept. Flat fields never switch the source. A body built from the GET response is accepted as is, with either source.
-        - With an image source, stored or sent in `source.image`, the flat `git_repository`, `dockerfile_path`, `docker_target_build_stage` or `build_settings` returns 400 naming `source`, and `build_mode` is ignored. A `null` value counts as not sent.
-        - On update of an application with a Git repository source, the flat Git fields keep working. `source` and the flat fields both asking for a change returns 400, unless both name the same repository and Dockerfile.
+        - When the application keeps an image source, or `source.image` is sent, the flat `git_repository`, `dockerfile_path`, `docker_target_build_stage` or `build_settings` returns 400 naming `source`, and `build_mode` is ignored. A `null` value counts as not sent.
+        - On update, when the application keeps, or switches to, a Git repository source, the flat `git_repository`, `build_mode`, `dockerfile_path` and `docker_target_build_stage` are accepted. `source` and the flat fields both asking for a change returns 400, unless both name the same repository and Dockerfile. `build_settings` is accepted with `source.git_repository`, as for containers.
         - A switch never turns a trigger on by itself. When left out, `auto_preview` is set to false on any switch, and `auto_deploy` is set to false on a switch to `git_repository`. An explicit `auto_preview: true`, or `auto_deploy: true` on a switch to `git_repository`, sent with the switch is applied. With an image source, `auto_deploy` is stored as false: nothing deploys the application on its own, and `/organization/{organizationId}/container/deploy` and `/organization/{organizationId}/container/preview` do not cover applications.
         - A switch to an image deletes the Git repository link and the build settings. `QOVERY_APPLICATION_<ID>_GIT_COMMIT_ID` and `QOVERY_APPLICATION_<ID>_GIT_BRANCH` exist on either source, with empty values on an image source.
         - Deploy an application with an image source by tag: `image_tag` in `POST /application/{applicationId}/deploy` or in `POST /environment/{environmentId}/service/deploy`.
@@ -27059,7 +27059,7 @@ components:
         git_commit_id:
           type: string
           description: |
-            Commit ID to deploy. Required for an application with a Git repository source.
+            Commit ID to deploy, for an application with a Git repository source. When not sent, the stored commit is deployed.
             Sending it for an application with an image source returns 400. An empty value counts as not sent.
         image_tag:
           type: string
