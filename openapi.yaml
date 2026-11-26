@@ -9386,7 +9386,9 @@ paths:
   '/application/{applicationId}/deploy':
     post:
       summary: Deploy application
-      description: You must provide a git commit id
+      description: |
+        - For an application with a Git repository source, you must provide `git_commit_id`.
+        - For an application with an image source, send `image_tag` to deploy another tag; when not sent, the stored tag is deployed.
       operationId: deployApplication
       parameters:
         - $ref: '#/components/parameters/applicationId'
@@ -20315,6 +20317,8 @@ components:
           description: |
             Mounts the container's root filesystem as read-only
     Application:
+      description: |
+        `source` says where the application image comes from. `git_repository`, `build_mode` and `dockerfile_path` are returned only for an application with a Git repository source.
       allOf:
         - $ref: '#/components/schemas/Base'
         - $ref: '#/components/schemas/ServiceStorage'
@@ -20331,6 +20335,8 @@ components:
               $ref: '#/components/schemas/ReferenceObject'
             git_repository:
               $ref: '#/components/schemas/ApplicationGitRepository'
+            source:
+              $ref: '#/components/schemas/ContainerSourceResponse'
             build_settings:
               $ref: '#/components/schemas/BuildSettings'
             maximum_cpu:
@@ -20464,6 +20470,8 @@ components:
           items:
             $ref: '#/components/schemas/ApplicationDeploymentRestriction'
     ApplicationEditRequest:
+      description: |
+        `source` switches the application between an image and a Git repository; the flat fields never do. See `source` for the rules.
       allOf:
         - $ref: '#/components/schemas/ServiceStorageRequest'
         - type: object
@@ -20478,6 +20486,8 @@ components:
               description: give a description to this application
             git_repository:
               $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+            source:
+              $ref: '#/components/schemas/ContainerSourceRequest'
             build_mode:
               $ref: '#/components/schemas/BuildModeEnum'
             dockerfile_path:
@@ -20775,13 +20785,14 @@ components:
           type: string
           format: uuid
     ApplicationRequest:
+      description: |
+        `git_repository` is required unless `source` is sent. See `source` for the rules.
       allOf:
         - $ref: '#/components/schemas/ServiceStorageRequest'
         - $ref: '#/components/schemas/ServicePortRequest'
         - type: object
           required:
             - name
-            - git_repository
             - healthchecks
           properties:
             name:
@@ -20793,6 +20804,8 @@ components:
               default: ''
             git_repository:
               $ref: '#/components/schemas/ApplicationGitRepositoryRequest'
+            source:
+              $ref: '#/components/schemas/ContainerSourceRequest'
             build_mode:
               $ref: '#/components/schemas/BuildModeEnum'
             dockerfile_path:
@@ -25887,11 +25900,11 @@ components:
           $ref: '#/components/schemas/ContainerRegistryProviderDetailsResponse'
     ContainerSourceRequest:
       description: |
-        Where the container image comes from. Send exactly one of `image` or `git_repository`; both, or neither, returns 400. A `null` `image` or `git_repository` counts as not sent.
-        - `image`: an image from a container registry, like the flat `registry_id`, `image_name` and `tag` fields.
-        - `git_repository`: a Git repository with a Dockerfile. Qovery builds the image from the deployed commit. Accepted on create (`POST /environment/{environmentId}/container`) and on update (`PUT /container/{containerId}`). Building from Git needs Qovery engine v1.417.0 or later on the cluster: on an older engine, the deployment fails.
+        Where the image of a container or an application comes from. Send exactly one of `image` or `git_repository`; both, or neither, returns 400. A `null` `image` or `git_repository` counts as not sent.
+        - `image`: an image from a container registry. For a container, like the flat `registry_id`, `image_name` and `tag` fields.
+        - `git_repository`: a Git repository with a Dockerfile. Qovery builds the image from the deployed commit. For a container, accepted on create (`POST /environment/{environmentId}/container`) and on update (`PUT /container/{containerId}`); building a container from Git needs Qovery engine v1.417.0 or later on the cluster: on an older engine, the deployment fails.
 
-        Switching the source keeps the same container: its id, Kubernetes names, volumes and built-in variables. The switch does not deploy; the next deployment uses the new source.
+        Switching the source keeps the same service, of the same kind: its id, Kubernetes names, volumes and built-in variables. The switch does not deploy; the next deployment uses the new source.
 
         A container with a Git repository source has three more built-in variables. `<ID>` is the identifier its other built-in variables use, as in `QOVERY_CONTAINER_<ID>_HOST_INTERNAL`:
         - `QOVERY_CONTAINER_<ID>_GIT_COMMIT_ID`: the deployed commit;
@@ -25900,7 +25913,7 @@ components:
 
         They are added when missing, when the container is created from, or switched to, a Git repository. A switch back to an image keeps them, with empty values.
 
-        Rules:
+        Rules for a container:
         - On update (`PUT /container/{containerId}`), `source` is ignored when it repeats the stored source, and the flat `registry_id`, `image_name` and `tag` fields are ignored when every one sent equals the image the container runs (the `registry.id`, `image_name` and `tag` that GET returns). A body built from the GET response is accepted as is; only the side the client changed is applied.
         - On update, `source` and the flat fields both asking for a change returns 400, unless both name the same image. This includes a `source.git_repository` change sent with changed flat fields. On create, sending `source` together with the flat fields still returns 400.
         - On update of a container with an image source, `source.image.registry_id` may be omitted: the stored registry is kept. Switching a container with a Git repository source back to an image, and create, require it.
@@ -25909,6 +25922,18 @@ components:
         - `auto_deploy` and `auto_preview` are accepted with a `git_repository` source. When not sent, they are set to false on a create from, or a switch to, `git_repository`, and keep their stored values on an update that keeps `git_repository`. A switch from `git_repository` to an image without `auto_preview` sets it to false.
         - With `auto_deploy` true, a push to the source branch deploys the container: anyone who can push to that branch can deploy it. Deployment restrictions (`/service/{serviceId}/deploymentRestriction`) limit which changed paths trigger it.
         - With `auto_preview` true, a pull request starts a preview environment that builds the pull request's code, pull requests from forks included, and runs it with the environment's variables and secrets. Later pushes to the pull request redeploy the preview's copy of the container only when that copy has `auto_deploy` true, as for applications.
+
+        Rules for an application:
+        - Accepted on create (`POST /environment/{environmentId}/application`) and on update (`PUT /application/{applicationId}`). On create, the flat `git_repository` is required unless `source` is sent.
+        - `source.image` makes the application run that image as is: Qovery builds nothing. `source.git_repository` builds it from Git with its Dockerfile, as the flat `git_repository`, `dockerfile_path` and `docker_target_build_stage` fields with `build_mode` `DOCKER` do.
+        - `source.image.registry_id` must name a container registry of the application's organization. A registry of another organization returns 404, without its name.
+        - An image source needs a Qovery engine that supports it. When the cluster runs its own Qovery engine and that engine is older than the minimum version Qovery requires for image sources, creating an application with an image source, switching one to it, or cloning one returns 400 asking to update the engine.
+        - On update, when `source` is not sent, the stored source is kept, and `source` is ignored when it repeats the stored source. On an application with an image source, `source.image.registry_id` may be omitted: the stored registry is kept. Flat fields never switch the source. A body built from the GET response is accepted as is, with either source.
+        - With an image source, stored or sent in `source.image`, the flat `git_repository` or `dockerfile_path` returns 400 naming `source`, and `build_mode` is ignored. A `null` value counts as not sent.
+        - With a Git repository source, the flat Git fields keep working. `source` and the flat fields both asking for a change returns 400, unless both name the same repository and Dockerfile.
+        - A switch never turns a trigger on. When not sent, `auto_preview` is set to false on any switch, and `auto_deploy` is set to false on a switch to `git_repository`. With an image source, `auto_deploy` is stored as false: nothing deploys the application on its own, and `/organization/{organizationId}/container/deploy` and `/organization/{organizationId}/container/preview` do not cover applications.
+        - A switch to an image deletes the Git repository link and the build settings. `QOVERY_APPLICATION_<ID>_GIT_COMMIT_ID` and `QOVERY_APPLICATION_<ID>_GIT_BRANCH` exist on either source, with empty values on an image source.
+        - Deploy an application with an image source by tag: `image_tag` in `POST /application/{applicationId}/deploy` or in `POST /environment/{environmentId}/service/deploy`.
       oneOf:
         - type: object
           required:
@@ -25943,13 +25968,13 @@ components:
               $ref: '#/components/schemas/ContainerGitRepositorySourceRequest'
     ContainerSourceResponse:
       description: |
-        Where the container image comes from:
+        Where the image of a container or an application comes from:
         - `image`: an image from a container registry;
         - `git_repository`: a Git repository with a Dockerfile, that Qovery builds.
 
         Only the key of the current source is returned. The other key is omitted, never sent as `null`.
 
-        Always returned by API servers that support container sources; absent on older servers.
+        Always returned by API servers that support sources for that kind of service; absent on older servers.
       oneOf:
         - type: object
           required:
@@ -25965,7 +25990,7 @@ components:
               $ref: '#/components/schemas/ContainerGitRepositorySourceResponse'
     ContainerGitRepositorySourceRequest:
       description: |
-        The Git repository and the Dockerfile that Qovery builds into the container image.
+        The Git repository and the Dockerfile that Qovery builds into the service image.
         `owner` and `name` are not needed: the repository is read from `url`. They are still accepted, and ignored.
       allOf:
         - type: object
@@ -26006,7 +26031,7 @@ components:
               description: The target build stage in the Dockerfile to build. If null, the last stage of the Dockerfile is built.
               nullable: true
     ContainerGitRepositorySourceResponse:
-      description: The Git repository and the Dockerfile that Qovery builds into the container image.
+      description: The Git repository and the Dockerfile that Qovery builds into the service image.
       allOf:
         - $ref: '#/components/schemas/ApplicationGitRepository'
         - type: object
@@ -26949,7 +26974,14 @@ components:
                 description: id of the application to be deployed.
               git_commit_id:
                 type: string
-                description: Commit ID to deploy. Can be empty only if the service has been already deployed (in this case the service version won't be changed)
+                description: |
+                  Commit ID to deploy. Can be empty only if the service has been already deployed (in this case the service version won't be changed)
+                  Ignored for an application with an image source.
+              image_tag:
+                type: string
+                description: |
+                  Image tag to deploy, for an application with an image source. When absent or empty, the stored tag is deployed.
+                  Sending it for an application with a Git repository source returns 400.
         databases:
           type: array
           items:
@@ -27023,12 +27055,17 @@ components:
             format: uuid
     DeployRequest:
       type: object
-      required:
-        - git_commit_id
       properties:
         git_commit_id:
           type: string
-          description: Commit ID to deploy
+          description: |
+            Commit ID to deploy. Required for an application with a Git repository source.
+            Sending it for an application with an image source returns 400.
+        image_tag:
+          type: string
+          description: |
+            Image tag to deploy, for an application with an image source. When not sent, the stored tag is deployed.
+            Sending it for an application with a Git repository source returns 400.
     DeploymentHistory:
       allOf:
         - $ref: '#/components/schemas/Base'
