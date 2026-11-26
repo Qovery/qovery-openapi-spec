@@ -12977,6 +12977,11 @@ paths:
       summary: Edit job
       description: |
         - To edit the job you must have the admin permission.
+        - `source` can switch the job between `image` and `docker` in place. The job keeps its id, schedule, lifecycle events and variables. A switch from `docker` to `image` removes the job's Git repository link and build settings. See `source` in the request body for the details.
+
+        Returns 404 when `source.image.registry_id` is a registry of another organization. The response does not name the registry.
+
+        Returns 400 when `source.image.image_name` with `source.image.tag` is not found in the registry.
       operationId: editJob
       parameters:
         - $ref: '#/components/parameters/jobId'
@@ -28804,6 +28809,19 @@ components:
               nullable: true
             source:
               type: object
+              description: |
+                Where the job image comes from:
+                - `image`: an image from a container registry;
+                - `docker`: a Git repository with a Dockerfile, that Qovery builds.
+
+                On update (`PUT /job/{jobId}`), sending the other key switches the source in place. The job keeps its id, schedule, lifecycle events and variables. The switch does not deploy; the next deployment uses the new source.
+                - A switch from `docker` to `image` removes the job's Git repository link and build settings: `dockerfile_path`, `dockerfile_raw`, `docker_target_build_stage` and `build_settings`. A later switch back to `docker` must send them again.
+                - When not sent, `auto_preview` is set to false on any switch, and `auto_deploy` is set to false on a switch to `docker`.
+                - The job gets the missing built-in variables of its new source: `QOVERY_JOB_<ID>_GIT_COMMIT_ID` and `QOVERY_JOB_<ID>_GIT_BRANCH` for `docker`, `QOVERY_JOB_<ID>_TAG` for `image`. Those of the previous source are kept, with empty values.
+
+                With `image`, on create and on update:
+                - a `registry_id` of a registry in another organization returns 404, as for an unknown registry. The response does not name the registry;
+                - an `image_name` with a `tag` not found in the registry returns 400.
               properties:
                 image:
                   type: object
