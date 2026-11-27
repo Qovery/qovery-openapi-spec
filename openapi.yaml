@@ -19036,10 +19036,13 @@ components:
         versions listed in `spec.engine.terraform.allowedValues` (or
         `opentofu.allowedValues`) in the manifest.
 
+        `role_arn` is optional and available on AWS blueprints only, when the
+        manifest declares `role_arn.overridable: true`.
+
         **Helm blueprints**
 
         `engine_version`, `credentials`, and `backend` are ignored. Only
-        `timeout` and the resource fields apply.
+        `timeout` and the resource fields apply. `role_arn` is refused with 422.
       properties:
         engine_version:
           type: string
@@ -19066,6 +19069,19 @@ components:
             `user_provided` delegates to a user-controlled remote backend declared
             in the manifest's `backend.user_provided` block.
           example: qovery
+        role_arn:
+          type: string
+          description: >-
+            IAM role the blueprint's AWS provider assumes, instead of using the
+            cluster's cloud credentials directly. Optional: when unset, the
+            cluster credentials are used as they are. The role must be in the
+            same account as the cluster credentials.
+            Only accepted on AWS Terraform and OpenTofu blueprints whose
+            manifest declares `role_arn.overridable: true`; any other blueprint
+            returns 422, as does a value that is not an IAM role ARN.
+            A blank string counts as unset. On update, `null` removes the
+            override and omitting the field leaves it unchanged.
+          example: 'arn:aws:iam::123456789012:role/my-role'
         timeout:
           type: integer
           description: >-
@@ -19331,6 +19347,12 @@ components:
           $ref: '#/components/schemas/BlueprintManifestCredentialsConfig'
         backend:
           $ref: '#/components/schemas/BlueprintManifestBackendConfig'
+        role_arn:
+          allOf:
+            - $ref: '#/components/schemas/BlueprintManifestRoleArnConfig'
+          nullable: true
+          description: >-
+            Null when the blueprint does not offer the `role_arn` override.
         timeout:
           type: integer
           format: int64
@@ -19357,6 +19379,12 @@ components:
           $ref: '#/components/schemas/BlueprintManifestCredentialsConfig'
         backend:
           $ref: '#/components/schemas/BlueprintManifestBackendConfig'
+        role_arn:
+          allOf:
+            - $ref: '#/components/schemas/BlueprintManifestRoleArnConfig'
+          nullable: true
+          description: >-
+            Null when the blueprint does not offer the `role_arn` override.
         timeout:
           type: integer
           format: int64
@@ -19430,6 +19458,19 @@ components:
           default: true
         user_provided:
           $ref: '#/components/schemas/BlueprintManifestUserProvidedBackend'
+    BlueprintManifestRoleArnConfig:
+      type: object
+      description: >-
+        `role_arn` override metadata. Present only on AWS Terraform and OpenTofu
+        blueprints that opted in to the override.
+      properties:
+        overridable:
+          type: boolean
+          description: >-
+            Whether `spec_overrides.role_arn` is accepted for this blueprint.
+            A blueprint that does not offer the override returns `role_arn: null`
+            instead of this object.
+          default: false
     BlueprintManifestUserProvidedBackend:
       type: object
       required:
