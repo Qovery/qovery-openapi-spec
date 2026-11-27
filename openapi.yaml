@@ -3709,6 +3709,66 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+  '/organization/{organizationId}/customDomain/check':
+    get:
+      summary: Check the DNS of the organization's custom domains
+      description: |
+        Check the DNS of the custom domains of a page of the organization domains list, in one call. Only organization admins can call it.
+        The query parameters are the ones of `listOrganizationCustomDomain`: the same values select the same domains, in the same order.
+        There is one result per domain name of one environment, and one check per service the domain routes to.
+        A check that could not run (cluster unreachable, timeout, service never deployed) has a `null` `status`; the other checks are still returned.
+      operationId: checkOrganizationCustomDomains
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - in: query
+          name: projectId
+          description: Only check the domains of this project. A project of another organization gives an empty list.
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: environmentId
+          description: Only check the domains of this environment. An environment of another organization gives an empty list.
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: search
+          description: Only check the domains whose name contains this text, ignoring case. The text is trimmed and matched literally, with no wildcard. A blank value does not filter.
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: The page to check, starting at 1. A page after the last one has no results.
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - in: query
+          name: pageSize
+          description: The number of domains per page.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      tags:
+        - Organization Custom Domain
+      responses:
+        '200':
+          description: DNS checks of the organization custom domains
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCustomDomainCheckListResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   '/organization/{organizationId}/customDomain/bulkDelete':
     post:
       summary: Delete custom domains of several environments
@@ -30130,6 +30190,63 @@ components:
       allOf:
         - $ref: '#/components/schemas/CurrentCost'
         - type: object
+    OrganizationCustomDomainCheckListResponse:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          description: One result per domain name of one environment of the page, in the order of `listOrganizationCustomDomain`.
+          items:
+            $ref: '#/components/schemas/OrganizationCustomDomainCheckResponse'
+    OrganizationCustomDomainCheckResponse:
+      type: object
+      description: The DNS checks of one domain name of one environment. `environment_id` and `domain` identify it, as in `OrganizationCustomDomainResponse`.
+      required:
+        - environment_id
+        - domain
+        - checks
+      properties:
+        environment_id:
+          type: string
+          format: uuid
+          description: Id of the environment of the domain.
+        domain:
+          type: string
+          description: The domain name as `listOrganizationCustomDomain` returns it. A wildcard domain keeps its `*.` prefix.
+          example: my.domain.tld
+        checks:
+          type: array
+          description: One check per service the domain routes to. Empty when no service of the domain can be checked.
+          items:
+            $ref: '#/components/schemas/OrganizationCustomDomainServiceCheck'
+    OrganizationCustomDomainServiceCheck:
+      type: object
+      description: The DNS check of a domain for one service it routes to.
+      required:
+        - service_id
+        - service_type
+        - status
+        - error_details
+      properties:
+        service_id:
+          type: string
+          format: uuid
+          description: Id of the service.
+        service_type:
+          allOf:
+            - $ref: '#/components/schemas/ServiceTypeEnum'
+          description: Type of the service. Only `APPLICATION`, `CONTAINER` and `HELM` services have custom domains.
+        status:
+          allOf:
+            - $ref: '#/components/schemas/CheckedCustomDomainStatus'
+          nullable: true
+          description: The result of the check. `null` when the check could not run (cluster unreachable, timeout, service never deployed); `error_details` then gives the reason.
+        error_details:
+          type: string
+          nullable: true
+          description: Why the check failed or could not run. `null` when the check succeeded.
     OrganizationCustomDomainPaginatedResponseList:
       allOf:
         - $ref: '#/components/schemas/PaginationData'
