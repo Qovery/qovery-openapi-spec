@@ -22,7 +22,7 @@
   "homepage": "https://github.com/dgarcia360/openapi-boilerplate#readme",
   "dependencies": {
     "@openapitools/openapi-generator-cli": "^0.0.6",
-    "@stoplight/spectral-cli": "^6.5.1",
+    "@stoplight/spectral-cli": "^6.11.1",
     "react-is": "^18.2.0",
     "redoc-cli": "^0.13.21"
   }
